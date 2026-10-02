@@ -55,7 +55,13 @@ vendored copy.
 ```sh
 just            # list the recipes
 just gate       # everything the pre-commit gate checks
+just xetal-version   # which X_eTaL commit is vendored
+just eval "'+ r_/ 1 2 3"   # evaluate with the vendored xetal
 ```
+
+X_eTaL is vendored in `vendor/xetal/` (a snapshot of a committed
+X_eTaL commit, named in `vendor/xetal/VENDORED`); `just xetal` builds
+its CLI into `target/xetal/`. `just vendor [REF]` refreshes it.
 
 ## Development
 

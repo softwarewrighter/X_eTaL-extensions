@@ -7,6 +7,27 @@ set positional-arguments
 default:
     @just --list
 
+# Snapshot a committed ref of ../X_eTaL into vendor/xetal/ (default HEAD); commit it on its own
+vendor ref="HEAD":
+    scripts/vendor-xetal.sh "$1"
+
+# Build the vendored xetal CLI into target/xetal/
+xetal:
+    @scripts/build-xetal.sh
+
+# The vendored X_eTaL: what was vendored (VENDORED) and the binary's version
+xetal-version:
+    @cat vendor/xetal/VENDORED
+    @"$(scripts/build-xetal.sh)" --version | head -1
+
+# Evaluate an expression with the vendored xetal: just eval "'+ r_/ 1 2 3"
+eval expr:
+    @"$(scripts/build-xetal.sh)" eval -e "$1"
+
+# Check the vendored X_eTaL: the CLI builds, answers and imports a standard library
+check-vendor:
+    scripts/check-vendor.sh
+
 # The full pre-commit gate
 gate:
     scripts/gate.sh

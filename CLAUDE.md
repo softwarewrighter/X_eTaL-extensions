@@ -358,6 +358,9 @@ Read before working:
 ```bash
 just                      # list recipes
 just gate                 # pre-commit gate
+just xetal-version        # which X_eTaL commit is vendored
+just eval "EXPR"          # evaluate with the vendored xetal
+just vendor [REF]         # refresh vendor/xetal/ (own commit)
 agentrail status          # current saga state
 agentrail next            # current step + context
 agentrail plan            # the saga plan

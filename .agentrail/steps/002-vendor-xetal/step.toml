@@ -1,6 +1,6 @@
 number = 2
 slug = "vendor-xetal"
-status = "pending"
+status = "in-progress"
 description = "foundation step 2: vendor X_eTaL as ../X_eTaL-libraries does: scripts/vendor-..."
 role = "production"
 context_files = []
