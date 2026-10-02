@@ -1,0 +1,1 @@
+Vendored X_eTaL 7b70575 (own commit); vendor/build/check scripts copied from X_eTaL-libraries; recipes vendor, xetal, xetal-version, eval, check-vendor; gate runs check-vendor.

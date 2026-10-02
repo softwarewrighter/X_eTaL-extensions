@@ -1,9 +1,10 @@
 number = 2
 slug = "vendor-xetal"
-status = "in-progress"
+status = "completed"
 description = "foundation step 2: vendor X_eTaL as ../X_eTaL-libraries does: scripts/vendor-..."
 role = "production"
 context_files = []
 created_at = "2026-10-02T11:15:19"
+completed_at = "2026-10-02T12:09:19"
 task_type = "vendor"
-commits = []
+commits = ["aa1eefa33802c19fbf1556e3ce63f806587dbe43"]
