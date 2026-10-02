@@ -1,0 +1,1 @@
+Loader xetal-ext-loader (manifest/package, platform library lookup, libloading, validation vs manifest, registry with arity checks, deactivation, help, static provider); 9 tests running hello dynamically and statically; saga 1 retrospective in plan. Saga foundation complete.
