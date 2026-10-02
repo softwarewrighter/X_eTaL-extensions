@@ -36,7 +36,13 @@ Behind the facade:
 
 X_eTaL does not yet have a native hook, so for now programs that use
 extensions run with the bridge host `xetal-x` instead of `xetal` (see
-`docs/xetal-asks.md`, E1). When X_eTaL gains the hook, the facades
+`docs/xetal-asks.md`, E1). `xetal-x` is the vendored `xetal` -- every
+subcommand and message the same -- plus extensions:
+
+```sh
+just ext-list                 # the extensions here and their functions
+just run-x prog.xtl           # xetal-x --ext extensions run prog.xtl
+``` When X_eTaL gains the hook, the facades
 change and the programs do not.
 
 ## Extensions

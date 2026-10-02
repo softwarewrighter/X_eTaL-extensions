@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-02
 
+- 15:36 `feat` The bridge host `crates/xetal-x`: the vendored CLI's modules compiled unchanged (`#[path]`, rustfmt-skipped) with its `main` repeated and the store wrapped in `ExtStore`, which routes `ext:EXT/FN` paths to loaded extensions (calls wired next step; unknown extensions and functions are X_eTaL `error[io]`s). `--ext DIR` / `XETAL_EXT_PATH` load packages; `--ext-list`. `scripts/check-xetal-x.sh` (all 20 vendored demos identical under xetal and xetal-x) and a vendor-untouched check in the gate; 5 host tests; `just run-x`, `ext-list`, `check-xetal-x`; ask E3 (the CLI as a library).
+
 - 15:02 `docs` The X_eTaL logo (the corrected 2026-10-02 version) at the top of the README, `images/modern-xetal-logo.jpg`.
 
 - 13:11 `plan` Saga 2, bridge: `xetal-x` (the vendored interpreter, the loader and an `ext:` store) so X_eTaL programs call native extensions today; steps host-probe, bridge, hello-facade, clock. Saga 1 archived.

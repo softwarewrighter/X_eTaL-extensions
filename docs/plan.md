@@ -137,7 +137,7 @@ directory.
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | host-probe | how a host runs a program with the vendored crates (the CLI's run path, the store hook); `crates/xetal-x` skeleton that runs a program exactly as `xetal run` does (goldens agree); asks for anything missing |
+| 1 | host-probe | how a host runs a program with the vendored crates (the CLI's run path, the store hook); `crates/xetal-x` skeleton that runs a program exactly as `xetal run` does (goldens agree); asks for anything missing (done: the vendored CLI's modules compiled as `#[path]` modules, its `main` repeated with `ExtStore`; all 20 vendored demos identical, `scripts/check-xetal-x.sh` in the gate; ask E3) |
 | 2 | bridge | the `ext:` store (A6): request / reply per function, errors as X_eTaL errors, `xetal-x run --ext DIR`; `just run-x FILE` |
 | 3 | hello-facade | `Hello.xtl`, its `*.xtl` tests and goldens through the bridge, pinned facade types, docs/ext/hello.md, the facade test runner (`just test-ext NAME`) in the gate |
 | 4 | clock | the clock extension end to end (a timing demo: `'+ r_/ r_ange` at growing sizes) |

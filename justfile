@@ -40,6 +40,20 @@ check-rust:
 test crate="":
     @if [ -n "$1" ]; then cargo test -p "$1"; else cargo test --workspace; fi
 
+# Run a program with the bridge host and every extension here: just run-x FILE [ARGS]
+run-x file *args:
+    @cargo build -q --workspace
+    @target/debug/xetal-x --ext extensions run "$@"
+
+# The loaded extensions and their functions
+ext-list:
+    @cargo build -q --workspace
+    @target/debug/xetal-x --ext extensions --ext-list
+
+# xetal-x matches the vendored xetal on every vendored demo
+check-xetal-x:
+    scripts/check-xetal-x.sh
+
 # The full pre-commit gate
 gate:
     scripts/gate.sh

@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# xetal-x is the vendored xetal with an ext: store: every vendored demo
+# must give the same output, errors and exit code under both, and an
+# ext: path must reach the extensions.
+#   scripts/check-xetal-x.sh
+set -euo pipefail
+root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+xetal="$("$root/scripts/build-xetal.sh")"
+(cd "$root" && cargo build -q --workspace)
+xx="$root/target/debug/xetal-x"
+scratch="$(mktemp -d)"
+trap 'rm -rf "$scratch"' EXIT
+n=0
+for f in "$root"/vendor/xetal/demos/*.xtl; do
+  a="$(cd "$scratch" && "$xetal" run --seed 1 "$f" 2>&1 </dev/null; echo "exit $?")"
+  b="$(cd "$scratch" && "$xx" run --seed 1 "$f" 2>&1 </dev/null; echo "exit $?")"
+  [ "$a" = "$b" ] || { echo "check-xetal-x: $(basename "$f") differs:"; diff <(echo "$a") <(echo "$b") | head -20; exit 1; }
+  n=$((n + 1))
+done
+"$xx" --version | grep -q "$(sed -n 's/^commit = "\(.......\).*/\1/p' "$root/vendor/xetal/VENDORED")" \
+  || { echo "check-xetal-x: --version does not name the vendored commit" >&2; exit 1; }
+"$xx" --ext "$root/extensions" --ext-list | grep -q '^  hello/shout : Char -> Char' \
+  || { echo "check-xetal-x: hello not listed" >&2; exit 1; }
+echo "check-xetal-x: ok ($n demos identical)"

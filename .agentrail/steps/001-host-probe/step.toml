@@ -1,6 +1,6 @@
 number = 1
 slug = "host-probe"
-status = "pending"
+status = "in-progress"
 description = "bridge step 1: read the vendored CLI's run path (components/cli xetal-cli, xe..."
 role = "production"
 context_files = []
