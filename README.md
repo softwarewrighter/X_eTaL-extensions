@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="images/modern-xetal-logo.jpg" alt="X_eTaL: X underlined, a raised e, T, a raised a, L" width="360">
+</p>
+
 # X_eTaL extensions
 
 Native extensions for [X_eTaL](https://github.com/softwarewrighter/X_eTaL),
