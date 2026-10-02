@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-02
 
+- 12:29 `abi` ABI V1: the root Cargo workspace and `crates/xetal-ext-abi` (adapted from demo-extensions): the `xetal_extension_v1` descriptor (size and version first; functions with arity 0-2, X_eTaL signature, doc, trampoline), tagged values (Bool, Int, Float, Text, dense Bool/Int/Float/Char arrays of rank 0-9), errors, validation and value decoding that check every bound and copy into owned values, panic containment; 11 contract tests (pinned layout, every rejection, round trips). Gate adds `scripts/check-rust.sh` (fmt, clippy -D warnings, tests); docs/abi-v1.md.
+
 - 12:09 `build` Vendoring: `just vendor [REF]` snapshots a committed ref of ../X_eTaL into vendor/xetal/ (VENDORED records it); `just xetal`, `xetal-version`, `eval`, `check-vendor` (the CLI builds, answers, names the vendored commit, runs life.xtl, imports Stats); in the gate. Scripts as in ../X_eTaL-libraries.
 - 12:05 `vendor` X_eTaL 7b70575 vendored.
 

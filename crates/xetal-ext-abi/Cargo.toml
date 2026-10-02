@@ -1,0 +1,11 @@
+[package]
+name = "xetal-ext-abi"
+version = "0.1.0"
+description = "X_eTaL native extension ABI V1: C layout, owned values, validation"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[lints]
+workspace = true

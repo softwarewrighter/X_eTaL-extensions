@@ -1,0 +1,19 @@
+# This repo's crates and extensions. The vendored X_eTaL (vendor/xetal/)
+# keeps its own workspaces and is never a member.
+[workspace]
+members = ["crates/*"]
+resolver = "3"
+exclude = ["vendor"]
+
+[workspace.package]
+edition = "2024"
+license = "MIT"
+rust-version = "1.85"
+authors = ["Michael A Wright"]
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+unsafe_op_in_unsafe_fn = "deny"
+
+[workspace.lints.clippy]
+all = { level = "deny", priority = -1 }

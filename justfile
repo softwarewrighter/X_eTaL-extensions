@@ -28,6 +28,14 @@ eval expr:
 check-vendor:
     scripts/check-vendor.sh
 
+# This repo's Rust: fmt, clippy (warnings are errors), tests
+check-rust:
+    scripts/check-rust.sh
+
+# Run the Rust tests (optionally one crate): just test xetal-ext-abi
+test crate="":
+    @if [ -n "$1" ]; then cargo test -p "$1"; else cargo test --workspace; fi
+
 # The full pre-commit gate
 gate:
     scripts/gate.sh
