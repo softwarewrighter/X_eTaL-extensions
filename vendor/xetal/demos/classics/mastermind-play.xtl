@@ -1,0 +1,35 @@
+#!/usr/bin/env xetal
+# Mastermind against the computer: it picks a code of four colours, 1
+# to 6 (repeats allowed), and you have ten guesses. Type four digits;
+# anything else is asked for again. Each guess is scored with a * for
+# every right colour in the right place and an o for every other right
+# colour (the scoring is explained in demos/classics/mastermind.xtl).
+u:s_core := { s g ->
+  black := '+ r_/ s = g
+  both := '+ r_/ ('+ r_/_2 (r_ange 6) '= t_able s) m_in '+ r_/_2 (r_ange 6) '= t_able g
+  black c_at both - black
+}
+u:p_egs := { r ->
+  0 = '+ r_/ r ? "none"
+  ((1 t_ake r) r_eshape "*") c_at (-1 t_ake r) r_eshape "o"
+}
+secret := r_oll! 6 6 6 6
+
+# Guess n: four digits from 1 to 6, or it asks again.
+u:a_sk := { n ->
+  shown := p_rint! "guess " c_at (f_ormat n) c_at " (four digits, 1 to 6):"
+  t := []R_EAD @
+  g := "123456" i_ndexOf t
+  (4 = t_ally t) & '& r_/ g <= 6 ? g; u:a_sk n
+}
+
+# Score it, and go on until solved or out of guesses.
+u:t_urn := { n ->
+  g := u:a_sk n
+  r := secret u:s_core g
+  shown := p_rint! (f_ormat g) c_at "   " c_at u:p_egs r
+  4 = f_irst r ? "solved in " c_at f_ormat n
+  n = 10 ? "out of guesses: it was " c_at f_ormat secret
+  u:t_urn n + 1
+}
+u:t_urn 1

@@ -1,0 +1,6 @@
+#!/usr/bin/env xetal
+# M1: a dyadic user function; every function is curried.
+u:s_ub := { _l - _r }
+10 u:s_ub 3
+u:t_enMinus := u:s_ub 10    # partial application fixes the left argument
+u:t_enMinus 3

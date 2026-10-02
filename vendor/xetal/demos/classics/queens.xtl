@@ -1,0 +1,34 @@
+#!/usr/bin/env xetal
+# N-Queens: place n queens on an n by n board, none attacking another.
+# The array way grows every partial placement at once: each row of P is
+# a placement of the first k queens (the column of each); every row is
+# tried with every column for the next queen (r_eplicate each row n
+# times, the columns joined beside them by c_at_2), and the rows where
+# the new queen shares a column or a diagonal with an earlier one are
+# dropped (a mask by r_eplicate).
+u:e_xtend := { n P ->
+  m := t_ally P
+  k := 1 + f_irst 1 d_rop s_hape P
+  M := (n r_eplicate P) c_at_2 (m * n) r_eshape r_ange n
+  c := -1 t_ake_2 M                        # the new queen's column
+  Q := -1 d_rop_2 M                        # the earlier ones
+  C := (k - 1) r_eplicate_2 c              # the new column beside each
+  d := ((m * n) c_at k - 1) r_eshape k - r_ange k - 1   # rows apart
+  (n_ot '| r_/_2 (Q = C) | d = a_bs Q - C) r_eplicate M
+}
+u:p_lace := { n k ->
+  k = 1 ? (n c_at 1) r_eshape r_ange n
+  n u:e_xtend n u:p_lace k - 1
+}
+4 u:p_lace 4
+'{ t_ally _r u:p_lace _r } e_ach 1 2 3 4 5 6 7 8   # solutions for n = 1..8
+
+# The 6 by 6 solutions as boards, one box each: p_artition with keys
+# 1, 2, 3, ... boxes each row, and m_ap draws each as a Char matrix.
+s := 6 u:p_lace 6
+(r_ange t_ally s) p_artition s
+'{ r -> (1 + (r_avel d_isclose r) '= t_able r_ange 6) s_elect ".Q" } m_ap (r_ange t_ally s) p_artition s
+
+# All 92 solutions for 8 queens, drawn one after another.
+e := 8 u:p_lace 8
+shown := []S_HOW []G_RID e '= t_able r_ange 8

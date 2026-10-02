@@ -1,0 +1,12 @@
+[package]
+name = "xetal-chrome"
+description = "Around the live demo's editor: the Help dialog and the footer (with the build's provenance)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+yew.workspace = true
+web-sys.workspace = true

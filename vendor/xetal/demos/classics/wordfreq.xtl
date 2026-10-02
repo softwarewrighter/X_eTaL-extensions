@@ -1,0 +1,23 @@
+#!/usr/bin/env xetal
+# Word frequency: the classic first program with nested arrays. Cut the
+# text into words (p_artition by the mask of non-blanks), find the
+# distinct words, count each by a table of equals over boxes, and list
+# the most frequent first.
+text := "the cat and the hat and the bat sat on the mat with the cat"
+words := (text != f_irst " ") p_artition text
+t_ally words
+u := u_nique words
+u
+n := '+ r_/_2 u '= t_able words
+n
+top := g_rade n_eg n               # most frequent first, ties in order
+4 t_ake top s_elect u
+4 t_ake top s_elect n
+
+# The words with their counts, as a two-row table of boxes.
+k := t_ally u
+(2 c_at k) r_eshape (top s_elect u) c_at '{ f_ormat _r } m_ap top s_elect n
+
+# Word lengths: e_ach for one value per word, after opening its box.
+'{ t_ally d_isclose _r } e_ach words
+'m_ax r_/ '{ t_ally d_isclose _r } e_ach words      # the longest

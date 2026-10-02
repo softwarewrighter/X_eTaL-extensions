@@ -1,0 +1,18 @@
+#!/usr/bin/env xetal
+# Factorial is a reduction: the product of 1 to n (the empty product
+# is 1, so 0 gives 1). Combinations follow, and e as a sum of 1/k!.
+u:f_act := { '* r_/ r_ange _r }
+'u:f_act e_ach o_ffsets 11
+
+# n choose k, for every k of one n: a row of Pascal's triangle.
+u:c_hoose := { k n -> (u:f_act n) d_iv (u:f_act k) * u:f_act n - k }
+(o_ffsets 7) 'u:c_hoose e_ach 6
+'+ r_/ (o_ffsets 7) 'u:c_hoose e_ach 6    # 2^6 subsets
+
+# Permutations of k things from n: the product of n down to n - k + 1.
+u:p_erm := { k n -> '* r_/ k t_ake r_ev r_ange n }
+3 u:p_erm 10
+
+# e is the sum of 1/k! for k from 0: fifteen terms are enough.
+'+ r_/ 1 / f_loat 'u:f_act e_ach o_ffsets 15
+e_xp 1

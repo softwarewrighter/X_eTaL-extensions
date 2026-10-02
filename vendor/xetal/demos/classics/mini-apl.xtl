@@ -1,0 +1,172 @@
+#!/usr/bin/env xetal
+# A tiny APL, written in X_eTaL: text in, the value out. It reads the
+# classic way: tokens, then right to left, each function taking the
+# value of everything to its right, and on its left only the operand
+# next to it (a strand of numbers or a parenthesized expression).
+# Numbers are Floats; one number on one side extends to the other's
+# length, as in APL\360. The index origin is a setting, 1 by default;
+# an experimental (joke) flag sets it to 0.5, and everything that
+# counts or indexes follows.
+
+# -- Tokens -----------------------------------------------------------------
+# Each character's kind: 1 a digit or point, 3 a parenthesis, 2 any
+# other character, 0 a blank. A token starts where the kind changes
+# (every parenthesis is a token of its own); numbering the starts by a
+# running sum, blanks keyed 0, p_artition cuts the text into boxes.
+u:t_okens := { s ->
+  num := 0 + s m_ember? "0123456789."
+  par := 0 + s m_ember? "()"
+  c := num + (3 * par) + 2 * (s != f_irst " ") & (num + par) = 0
+  starts := (c != 0) & (c = 3) | c != 0 c_at -1 d_rop c
+  ((c != 0) * '+ s_\ starts) p_artition s
+}
+t := u:t_okens "2*(3 + 4) - 10"
+t
+
+# A token's kind, as above: 1 number, 2 function, 3 "(", 4 ")".
+u:k_ind := { b ->
+  d := d_isclose b
+  f_irst d m_ember? "0123456789." ? 1
+  d m_atch "(" ? 3
+  d m_atch ")" ? 4
+  2
+}
+'u:k_ind e_ach t
+
+# -- The functions ----------------------------------------------------------
+# Dyadic + - * % max min, x pick v (the items of v at positions x,
+# counted from the origin; a position between two items blends them),
+# v iota x (where each x is in v, counted from the origin); monadic -
+# (negate), i (n numbers counting from the origin), r (reverse), and
+# the reductions +/ */ -/ (a right fold, as APL's). The origin and the
+# operands come in one box each.
+u:e_xt := { a b -> 1 = t_ally a ? (t_ally b) r_eshape a; a }
+u:p_ick := { o pv ->
+  p := (d_isclose 1 s_elect pv) - o
+  v := d_isclose 2 s_elect pv
+  lo := f_loor p
+  f := p - f_loat lo
+  n := t_ally v
+  c_lip := { k -> 1 + 0 m_ax (n - 1) m_in k }
+  ((1 - f) * (c_lip lo) s_elect v) + f * (c_lip lo + 1) s_elect v
+}
+u:d_yad := { op olr ->
+  o := f_irst d_isclose 1 s_elect olr
+  a := d_isclose 2 s_elect olr
+  b := d_isclose 3 s_elect olr
+  op m_atch "pick" ? o u:p_ick (e_nclose a) c_at e_nclose b
+  op m_atch "iota" ? o + f_loat (a i_ndexOf b) - 1
+  l := a u:e_xt b
+  r := b u:e_xt a
+  op m_atch "+" ? l + r
+  op m_atch "-" ? l - r
+  op m_atch "*" ? l * r
+  op m_atch "%" ? l / r
+  op m_atch "max" ? l 'm_ax e_ach r
+  l 'm_in e_ach r
+}
+u:m_onad := { op ov ->
+  o := f_irst d_isclose 1 s_elect ov
+  v := d_isclose 2 s_elect ov
+  op m_atch "-" ? n_eg v
+  op m_atch "i" ? o + f_loat o_ffsets f_loor f_irst v
+  op m_atch "r" ? r_ev v
+  op m_atch "*/" ? 1 r_eshape '* r_/ v
+  op m_atch "-/" ? 1 r_eshape '- r_/ v
+  1 r_eshape '+ r_/ v
+}
+
+# -- Right to left ----------------------------------------------------------
+# The operand at the end of the tokens: how many tokens it takes (a run
+# of numbers, or a parenthesized group found by a running depth count
+# from the right) and its value.
+u:w_idth := { t ->
+  k := 'u:k_ind e_ach t
+  4 != (t_ally k) s_elect k ? '+ r_/ '& s_\ r_ev k = 1
+  depth := '+ s_\ r_ev (k = 4) - k = 3
+  f_irst w_here depth = 0
+}
+u:o_perand := { o t ->
+  w := u:w_idth t
+  g := (n_eg w) t_ake t
+  4 = u:k_ind (t_ally g) s_elect g ? o u:e_val -1 d_rop 1 d_rop g
+  '{ f_irst n_umbers d_isclose _r } e_ach g
+}
+# The tokens to the left of a value: nothing left gives the value; else
+# the function before it, applied monadically when nothing operand-like
+# is left of it, else to the operand there. The origin travels with the
+# value, both boxed.
+u:r_un := { t ov ->
+  o := d_isclose 1 s_elect ov
+  v := d_isclose 2 s_elect ov
+  0 = t_ally t ? v
+  op := d_isclose (t_ally t) s_elect t
+  rest := -1 d_rop t
+  last := 'u:k_ind e_ach rest
+  (0 = t_ally rest) | 2 = f_irst -1 t_ake 0 c_at last ? rest u:r_un (e_nclose o) c_at e_nclose op u:m_onad ov
+  left := (f_irst o) u:o_perand rest
+  w := u:w_idth rest
+  ((n_eg w) d_rop rest) u:r_un (e_nclose o) c_at e_nclose op u:d_yad (e_nclose o) c_at (e_nclose left) c_at e_nclose v
+}
+u:e_val := { o t -> ((n_eg u:w_idth t) d_rop t) u:r_un (e_nclose 1 r_eshape o) c_at e_nclose o u:o_perand t }
+
+# The interpreter, with the index origin as its flag; u:a_pl is the
+# usual origin, 1.
+u:i_nterp := { o s -> o u:e_val u:t_okens s }
+u:a_pl := { s -> 1.0 u:i_nterp s }
+
+# -- A session --------------------------------------------------------------
+u:a_pl "1 2 3 + 10"
+u:a_pl "2 * 3 + 4"             # right to left: 2 * 7
+u:a_pl "(2 * 3) + 4"
+u:a_pl "2*(3 + 4) - 10"        # 2 * ((3 + 4) - 10)
+u:a_pl "+/ i 10"
+u:a_pl "2 * i 5"
+u:a_pl "r i 4"
+u:a_pl "-/ 1 2 3"              # 1 - (2 - 3)
+u:a_pl "1 % 4"
+u:a_pl "(1 2 3 max 3 2 1) * -1"
+u:a_pl "*/ i 6"                # 6 factorial
+u:a_pl "+/ (i 5) * i 5"        # 1 + 4 + 9 + 16 + 25
+u:a_pl "2 4 pick 10 20 30 40"
+u:a_pl "10 20 30 iota 30 10 99"
+
+# -- A session, and )ORIGIN --------------------------------------------------
+# As in APL\360, the index origin is changed by a system command typed
+# in the session, not by an expression: )ORIGIN 0 or )ORIGIN 1 answers
+# with the origin it WAS. A session is a list of lines, run in order,
+# each echoed (indented six, as APL did) with its result under it; the
+# state passed from line to line is the experimental flag and the
+# origin. A whole number prints without its point, as APL prints it.
+u:s_how := { v -> '& r_/ v = f_loat f_loor v ? f_ormat f_loor v; f_ormat v }
+u:s_ay := { st text -> shown := p_rint! text; st }
+u:o_rigin := { st line ->
+  x := 1 s_elect st
+  o := 2 s_elect st
+  v := n_umbers 7 d_rop line
+  n_ot (7 t_ake line) m_atch ")ORIGIN" ? st u:s_ay "INCORRECT COMMAND"
+  0 = t_ally v ? st u:s_ay "IS " c_at u:s_how o
+  ok := (1 = t_ally v) & ((f_irst v) m_ember? 0.0 1.0) | (x = 1) & 0.5 = f_irst v
+  n_ot ok ? st u:s_ay "INCORRECT COMMAND"
+  (x c_at f_irst v) u:s_ay "WAS " c_at u:s_how o
+}
+u:l_ine := { st line ->
+  echo := p_rint! "      " c_at line
+  (f_irst line) = f_irst ")" ? st u:o_rigin line
+  st u:s_ay u:s_how (2 s_elect st) u:i_nterp line
+}
+u:s_ession := { st lines ->
+  0 = t_ally lines ? st
+  next := st u:l_ine d_isclose 1 s_elect lines
+  next u:s_ession 1 d_rop lines
+}
+
+# The flag off (state 0 1: no flag, origin 1). Only 0 and 1 are origins.
+off := 0 1 u:s_ession "i 4" ")ORIGIN 0" "i 4" "1 pick 10 20 30" "10 20 30 iota 20" ")ORIGIN 0.5" ")ORIGIN" ")ORIGIN 1" "i 4"
+
+# -- The experimental flag: index origin 0.5 ---------------------------------
+# With the flag on (state 1 1), )ORIGIN also takes 0.5, halfway between
+# APL's two origins. Counting starts at a half, so the first item is at
+# 0.5 and the second at 1.5; a whole position falls between two items,
+# and pick blends them. i and pick still agree: (i 3) pick v is v.
+on := 1 1 u:s_ession ")ORIGIN 0.5" "i 4" "+/ i 4" "0.5 1.5 pick 10 20 30 40" "1 2 pick 10 20 30 40" "10 20 30 iota 30 10 99" "(i 3) pick 10 20 30" ")ORIGIN 1" "i 4"

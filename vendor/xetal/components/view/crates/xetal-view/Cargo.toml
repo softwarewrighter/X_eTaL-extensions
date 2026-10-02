@@ -1,0 +1,17 @@
+[package]
+name = "xetal-view"
+description = "Front-end-agnostic view model: tolerant styled segments of decorated source with a raw <-> rendered map"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+xetal-base.workspace = true
+xetal-lex.workspace = true
+xetal-render.workspace = true
+unicode-width.workspace = true
+
+[dev-dependencies]
+proptest.workspace = true

@@ -1,0 +1,41 @@
+#!/usr/bin/env xetal
+# Truth tables: every combination of n inputs is a column of the
+# numbers 0 to 2^n - 1 written in binary, so one e_ncode makes the
+# whole table, and a Boolean expression of its rows is evaluated for
+# every combination at once.
+t := 2 2 2 e_ncode o_ffsets 8
+t                                 # a, b and c, one row each
+a := 1 s_elect t
+b := 2 s_elect t
+c := 3 s_elect t
+2 d_ecode t                       # each column read back as its number
+
+# A function of three inputs, under the table it is a row of. A
+# comparison named at the top level is a Bool, and a Bool is not a
+# number, so 0 + makes it an Int, to join to the Int table.
+f := 0 + (a & b) | n_ot c
+t c_at f
+
+# Laws hold when they hold for every column.
+'& r_/ (n_ot a & b) = (n_ot a) | n_ot b      # De Morgan
+'& r_/ (a & b | c) = (a & b) | a & c         # distributive
+'& r_/ (a | b) = a & b                       # not a law
+
+# The columns where a function is true, by replicate along axis 2.
+majority := 0 + 2 <= a + b + c
+majority
+majority r_eplicate_2 t
+
+# A full adder: a + b + c as two binary digits, the carry and the
+# sum. The carry is the majority, and the sum the parity.
+n := a + b + c
+adder := 2 2 e_ncode n
+adder
+'& r_/ majority = 1 s_elect adder
+'& r_/ (a != b != c) = 2 s_elect adder
+
+# A function's outputs, last combination first, read in binary, are
+# its number: the cellular automata's rule 30 is this function of a
+# cell's left neighbour, itself and its right neighbour.
+rule := 2 d_ecode r_ev a != b | c
+rule

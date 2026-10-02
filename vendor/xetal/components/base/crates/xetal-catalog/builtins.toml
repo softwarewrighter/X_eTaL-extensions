@@ -1,0 +1,155 @@
+# The built-in functions (docs/lang-choices.md B1-B10): the one list
+# the type checker and the evaluator read. build.rs turns it into
+# `xetal_catalog::BUILTINS`. Each implemented entry is
+# [name, arity, type signature]; the arity must match the arrows of
+# the signature. Types are rank-erased (T7). Optional [[later]] groups
+# list names that exist but arrive with a later saga.
+
+[[group]]
+rule = "B7, D-10: arithmetic"
+entries = [
+  ["+", 2, "Num a => a -> a -> a"],
+  ["-", 2, "Num a => a -> a -> a"],
+  ["*", 2, "Num a => a -> a -> a"],
+  ["^", 2, "Num a => a -> a -> a"],
+  ["m_ax", 2, "Num a => a -> a -> a"],
+  ["m_in", 2, "Num a => a -> a -> a"],
+  ["/", 2, "Num a => a -> a -> Float"],
+  ["d_iv", 2, "Int -> Int -> Int"],
+  ["m_od", 2, "Int -> Int -> Int"],
+  ["n_eg", 1, "Num a => a -> a"],
+  ["a_bs", 1, "Num a => a -> a"],
+  ["f_loor", 1, "Num a => a -> Int"],
+  ["c_eiling", 1, "Num a => a -> Int"],
+  ["e_xp", 1, "Num a => a -> Float"],
+  ["l_og", 1, "Num a => a -> Float"],
+  ["f_loat", 1, "Num a => a -> Float"],
+]
+
+[[group]]
+rule = "B13: trigonometry (radians)"
+entries = [
+  ["s_in", 1, "Num a => a -> Float"],
+  ["c_os", 1, "Num a => a -> Float"],
+  ["a_tan", 1, "Num a => a -> Float"],
+  ["p_i", 1, "Unit -> Float"],
+]
+
+[[group]]
+rule = "T1, T3, T8: comparisons and logic"
+entries = [
+  ["=", 2, "(Eq a, Truthy b) => a -> a -> b"],
+  ["!=", 2, "(Eq a, Truthy b) => a -> a -> b"],
+  ["<", 2, "(Ord a, Truthy b) => a -> a -> b"],
+  [">", 2, "(Ord a, Truthy b) => a -> a -> b"],
+  ["<=", 2, "(Ord a, Truthy b) => a -> a -> b"],
+  [">=", 2, "(Ord a, Truthy b) => a -> a -> b"],
+  ["e_q~", 2, "(Num a, Truthy b) => a -> a -> b"],
+  ["&", 2, "(Truthy a, Truthy b) => a -> a -> b"],
+  ["|", 2, "(Truthy a, Truthy b) => a -> a -> b"],
+  ["n_ot", 1, "(Truthy a, Truthy b) => a -> b"],
+]
+
+[[group]]
+rule = "B7, B9: effects, identity and the tacks"
+entries = [
+  ["p_rint!", 1, "a -> a"],
+  ["r_oll!", 1, "Int -> Int"],
+  ["i_d", 1, "a -> a"],
+  ["l_eft", 2, "a -> b -> a"],
+  ["r_ight", 2, "a -> b -> b"],
+]
+
+[[group]]
+rule = "QD4: system functions (files, the keyboard) and numbers as text"
+entries = [
+  ["[]N_PUT", 2, "Char -> Char -> Int"],
+  ["[]N_GET", 1, "Char -> Char"],
+  ["[]R_EAD", 1, "Unit -> Char"],
+  ["f_ormat", 1, "a -> Char"],
+  ["n_umbers", 1, "Char -> Float"],
+]
+
+[[group]]
+rule = "QD5: graphics (pure SVG builders, one effect)"
+entries = [
+  ["[]G_RID", 1, "Eq a => a -> Char"],
+  ["[]P_ATH", 1, "Num a => a -> Char"],
+  ["[]S_HOW", 1, "Char -> Char"],
+]
+
+[[group]]
+rule = "B4, B5, B10: structural"
+entries = [
+  ["s_hape", 1, "a -> Int"],
+  ["t_ally", 1, "a -> Int"],
+  ["r_ange", 1, "Int -> Int"],
+  ["o_ffsets", 1, "Int -> Int"],
+  ["f_irst", 1, "a -> a"],
+  ["r_avel", 1, "a -> a"],
+  ["r_eshape", 2, "Int -> a -> a"],
+  ["t_ake", 2, "Int -> a -> a"],
+  ["d_rop", 2, "Int -> a -> a"],
+  ["s_elect", 2, "Int -> a -> a"],
+  ["r_eplicate", 2, "Truthy a => a -> b -> b"],
+  ["c_at", 2, "a -> a -> a"],
+]
+
+[[group]]
+rule = "B6: reduce and scan (leading axis; reduce is a right fold)"
+entries = [
+  ["r_/", 2, "(a -> a -> a) -> a -> a"],
+  ["s_\\", 2, "(a -> a -> a) -> a -> a"],
+]
+
+[[group]]
+rule = "B6: each and table (item by item; dyadic each by currying)"
+entries = [
+  ["e_ach", 2, "(a -> b) -> a -> b"],
+  ["m_ap", 2, "(a -> b) -> a -> Box b"],
+  ["t_able", 3, "(a -> b -> c) -> a -> b -> c"],
+]
+
+[[group]]
+rule = "B6: inner product and combinators (operands nearest-first, F9)"
+entries = [
+  ["i_nner", 4, "(a -> b -> c) -> (c -> c -> c) -> a -> b -> c"],
+  ["c_ompose", 3, "(a -> b) -> (b -> c) -> a -> c"],
+  ["s_wap", 3, "(a -> b -> c) -> b -> a -> c"],
+  ["p_ower", 3, "(a -> a) -> Int -> a -> a"],
+]
+
+[[group]]
+rule = "B7: search and order (over major cells)"
+entries = [
+  ["i_ndexOf", 2, "Eq a => a -> a -> Int"],
+  ["m_ember?", 2, "(Eq a, Truthy b) => a -> a -> b"],
+  ["m_atch", 2, "(Eq a, Truthy b) => a -> a -> b"],
+  ["u_nique", 1, "Eq a => a -> a"],
+  ["s_ort", 1, "Ord a => a -> a"],
+  ["g_rade", 1, "Ord a => a -> Int"],
+  ["w_here", 1, "Truthy a => a -> Int"],
+]
+
+[[group]]
+rule = "A7, B14: nested arrays (Box a)"
+entries = [
+  ["e_nclose", 1, "a -> Box a"],
+  ["d_isclose", 1, "Box a -> a"],
+  ["d_isplay", 1, "a -> Char"],
+  ["p_artition", 2, "Truthy a => a -> b -> Box b"],
+]
+
+[[group]]
+rule = "B12: encode and decode (radix on the left)"
+entries = [
+  ["e_ncode", 2, "Int -> Int -> Int"],
+  ["d_ecode", 2, "Int -> Int -> Int"],
+]
+
+[[group]]
+rule = "A2-A4: rotate and reverse (leading axis)"
+entries = [
+  ["r_ev", 1, "a -> a"],
+  ["o_-", 2, "Int -> a -> a"],
+]

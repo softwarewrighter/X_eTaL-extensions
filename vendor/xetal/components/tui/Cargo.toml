@@ -1,0 +1,29 @@
+# X_eTaL component `tui`: one Cargo workspace (see docs/architecture.md).
+
+[workspace]
+resolver = "3"
+members = ["crates/xetal-buffer", "crates/xetal-keys", "crates/xetal-panes", "crates/xetal-term", "crates/xetal-edit"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+authors = ["Michael A Wright"]
+repository = "https://github.com/softwarewrighter/X_eTaL"
+
+[workspace.dependencies]
+xetal-base = { path = "../base/crates/xetal-base" }
+xetal-lex = { path = "../syntax/crates/xetal-lex" }
+xetal-render = { path = "../render/crates/xetal-render" }
+xetal-view = { path = "../view/crates/xetal-view" }
+xetal-buffer = { path = "crates/xetal-buffer" }
+xetal-keys = { path = "crates/xetal-keys" }
+xetal-panes = { path = "crates/xetal-panes" }
+xetal-term = { path = "crates/xetal-term" }
+xetal-edit = { path = "crates/xetal-edit" }
+xetal-core = { path = "../core/crates/xetal-core" }
+xetal-types = { path = "../types/crates/xetal-types" }
+xetal-eval = { path = "../eval/crates/xetal-eval" }
+xetal-program = { path = "../macro/crates/xetal-program" }
+ratatui = "0.30"
+proptest = "1"

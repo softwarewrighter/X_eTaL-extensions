@@ -1,0 +1,14 @@
+[package]
+name = "xetal-ty"
+description = "Types, unification with an occurs check, the Num and Truthy classes, and type schemes"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+xetal-base.workspace = true
+
+[dev-dependencies]
+proptest.workspace = true

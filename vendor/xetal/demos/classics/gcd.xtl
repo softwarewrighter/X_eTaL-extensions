@@ -1,0 +1,20 @@
+#!/usr/bin/env xetal
+# Euclid's greatest common divisor: the gcd of a and b is the gcd of b
+# and the remainder of a by b, until the remainder is 0. Written as a
+# guard (`?` returns early) and a recursion.
+u:g_cd := { a b -> b = 0 ? a; b u:g_cd a m_od b }
+48 u:g_cd 18
+
+# A dyadic function is an operand like any other: reduce gives the gcd
+# of a whole vector, and each gives it item by item.
+'u:g_cd r_/ 84 126 210
+12 'u:g_cd e_ach 8 9 10 11 12
+
+# The least common multiple, and the smallest number that 1 to 10 all
+# divide.
+u:l_cm := { a b -> (a * b) d_iv a u:g_cd b }
+'u:l_cm r_/ r_ange 10
+
+# Which fractions n/12 are already in lowest terms: gcd 1 with 12.
+n := r_ange 12
+(w_here 1 = 12 'u:g_cd e_ach n) s_elect n

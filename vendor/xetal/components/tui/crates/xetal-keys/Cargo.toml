@@ -1,0 +1,12 @@
+[package]
+name = "xetal-keys"
+description = "The nano-like keymap as data: key events to editing and app commands"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+ratatui.workspace = true
+xetal-buffer.workspace = true

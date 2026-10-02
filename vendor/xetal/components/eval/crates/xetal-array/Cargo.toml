@@ -1,0 +1,11 @@
+[package]
+name = "xetal-array"
+description = "Dense arrays and primitive kernels"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+xetal-base.workspace = true

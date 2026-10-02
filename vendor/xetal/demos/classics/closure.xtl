@@ -1,0 +1,42 @@
+#!/usr/bin/env xetal
+# Transitive closure: which vertices can reach which, by any path. With
+# a Boolean adjacency matrix, the inner product '| '& (or of ands) says
+# whether there is a path of two steps; repeating it until nothing
+# changes gives every path. "just draw demos/classics/closure.xtl"
+# watches Warshall's algorithm fill it in.
+
+# A chain 1 -> 2 -> 3 -> 4.
+a := 4 4 r_eshape 0 1 0 0  0 0 1 0  0 0 0 1  0 0 0 0
+a '| '& i_nner a                 # two steps
+
+u:c_losure := { r ->
+  next := r | r '| '& i_nner r
+  (next m_atch r) ? r
+  u:c_losure next
+}
+u:c_losure a
+
+# Warshall's algorithm: for each vertex k in turn, everything that
+# reaches k now reaches everything k reaches. Column k (`s_elect_2`)
+# against row k, as a table of ands, is exactly those new paths.
+u:w_arshall := { r k ->
+  k > t_ally r ? r
+  through := (k s_elect_2 r) '& t_able k s_elect r
+  (r | through) u:w_arshall k + 1
+}
+(a u:w_arshall 1) m_atch u:c_losure a
+
+# A larger graph: eight vertices, two cycles joined one way.
+g := 8 8 r_eshape 0 1 0 0 0 0 0 0  0 0 1 0 0 0 0 0  1 0 0 1 0 0 0 0  0 0 0 0 1 0 0 0  0 0 0 0 0 1 0 0  0 0 0 0 0 0 1 0  0 0 0 0 0 0 0 1  0 0 0 0 1 0 0 0
+c := g u:w_arshall 1
+c
+'+ r_/_2 c                       # how many each vertex reaches
+
+# Watching it: g, then the matrix after each vertex has been taken in.
+u:p_lane := { m -> (1 c_at s_hape m) r_eshape m }
+u:s_teps := { r k ->
+  k > t_ally r ? u:p_lane r
+  through := (k s_elect_2 r) '& t_able k s_elect r
+  (u:p_lane r) c_at (r | through) u:s_teps k + 1
+}
+watched := []S_HOW []G_RID g u:s_teps 1

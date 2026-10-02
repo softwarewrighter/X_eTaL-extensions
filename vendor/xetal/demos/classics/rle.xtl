@@ -1,0 +1,31 @@
+#!/usr/bin/env xetal
+# Run-length encoding: each run of equal items as the item and how many
+# times it repeats. An excellent idiom exercise: compare each item with
+# the one before, find where runs start, take the item there, and the
+# lengths are the differences of the starts. Decoding is one replicate.
+v := "aaabccddddde"
+starts := 1 c_at (1 d_rop v) != -1 d_rop v
+starts                           # 1 where a run begins
+p := w_here starts
+p s_elect v                      # the items
+((1 d_rop p) c_at 1 + t_ally v) - p     # the lengths
+
+# As one function on numbers: values over lengths, two rows.
+u:r_le := { v ->
+  p := w_here 1 c_at (1 d_rop v) != -1 d_rop v
+  lengths := ((1 d_rop p) c_at 1 + t_ally v) - p
+  (2 c_at t_ally p) r_eshape (p s_elect v) c_at lengths
+}
+u:r_le 5 5 5 2 2 7 7 7 7 1
+
+# Decoding: each item repeated its run's length.
+3 1 2 5 1 r_eplicate "abcde"          # the runs above, decoded
+u:r_ld := { r -> (2 s_elect r) r_eplicate 1 s_elect r }
+u:r_ld u:r_le 5 5 5 2 2 7 7 7 7 1
+w := 1 1 1 1 0 0 0 1 1 0 0 0 0 0 0 1
+(u:r_ld u:r_le w) m_atch w
+
+# The longest run of heads in a fixed sequence of coin tosses.
+tosses := 1 1 0 1 1 1 1 0 0 1 0 1 1 1 0
+runs := u:r_le tosses
+'m_ax r_/ (w_here 1 = 1 s_elect runs) s_elect 2 s_elect runs

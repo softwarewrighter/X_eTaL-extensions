@@ -1,0 +1,29 @@
+[package]
+name = "xetal-eval"
+description = "Strict evaluator over Core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+xetal-base.workspace = true
+xetal-lint.workspace = true
+xetal-catalog.workspace = true
+xetal-lex.workspace = true
+xetal-core.workspace = true
+xetal-types.workspace = true
+xetal-array.workspace = true
+xetal-grid.workspace = true
+xetal-value.workspace = true
+xetal-arith.workspace = true
+xetal-struct.workspace = true
+xetal-hof.workspace = true
+xetal-search.workspace = true
+xetal-radix.workspace = true
+xetal-system.workspace = true
+xetal-rotate.workspace = true
+
+[dev-dependencies]
+proptest.workspace = true

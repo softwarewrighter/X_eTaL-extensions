@@ -1,0 +1,21 @@
+[package]
+name = "xetal-macro"
+description = "The macro phase: u_se< imports found, validated, resolved and loaded into one program (MC1-MC9)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+xetal-base.workspace = true
+xetal-lex.workspace = true
+xetal-sources.workspace = true
+xetal-libs.workspace = true
+xetal-store.workspace = true
+xetal-names.workspace = true
+
+[dev-dependencies]
+xetal-core.workspace = true
+xetal-types.workspace = true
+xetal-eval.workspace = true

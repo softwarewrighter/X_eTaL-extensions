@@ -1,0 +1,13 @@
+[package]
+name = "xetal-explain"
+description = "Notes explaining an error inside a train by what the train means there"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+xetal-base.workspace = true
+xetal-ir.workspace = true
+xetal-syntax.workspace = true

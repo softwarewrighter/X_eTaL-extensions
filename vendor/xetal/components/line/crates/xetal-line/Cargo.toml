@@ -1,0 +1,14 @@
+[package]
+name = "xetal-line"
+description = "The REPL's line editor: type ASCII, see the line decorated as you type, with history"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+ratatui.workspace = true
+xetal-view.workspace = true
+xetal-buffer.workspace = true
+xetal-keys.workspace = true

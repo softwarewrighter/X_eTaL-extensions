@@ -1,0 +1,19 @@
+[package]
+name = "xetal-play"
+description = "The live demo's engine: decorate, check and run a program, its libraries and files in the store the host installed"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+xetal-base.workspace = true
+xetal-view.workspace = true
+xetal-grid.workspace = true
+xetal-program.workspace = true
+xetal-core.workspace = true
+xetal-macro.workspace = true
+xetal-types.workspace = true
+xetal-eval.workspace = true
+xetal-store.workspace = true

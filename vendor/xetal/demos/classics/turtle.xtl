@@ -1,0 +1,48 @@
+#!/usr/bin/env xetal
+# Turtle graphics as arrays, with the Turtle library: a walk is a vector
+# of turns (degrees, one before each step), and the points come from
+# running sums, not a moving turtle. "just draw demos/classics/turtle.xtl"
+# opens the first picture; there are four.
+"t:" u_se< "Turtle"
+
+# -- A square spiral --------------------------------------------------------
+# Steps growing by one, each turned 89 degrees: a right angle and a bit,
+# so the square slowly twists.
+spiral := []S_HOW []P_ATH (r_ange 120) t:w_alk 120 r_eshape 89
+
+# -- Koch's snowflake ---------------------------------------------------------
+# A Koch curve of order n is four of order n - 1, joined by turns of 60,
+# -120 and 60 degrees; order 0 is one step. `60 t:t_urn k` is the walk k
+# with 60 degrees more turned before its first step.
+u:k_och := { n ->
+  n = 0 ? 1 r_eshape 0
+  k := u:k_och n - 1
+  k c_at (60 t:t_urn k) c_at (-120 t:t_urn k) c_at 60 t:t_urn k
+}
+t_ally u:k_och 3                # 4^3 steps
+side := u:k_och 3
+snowflake := []S_HOW []P_ATH t:p_oints side c_at (-120 t:t_urn side) c_at -120 t:t_urn side
+
+# -- Sierpinski's arrowhead ---------------------------------------------------
+# Order n is three curves of order n - 1, the outer two turning the
+# other way, joined by turns of 60 degrees one way (s is 1 or -1):
+# Sierpinski's triangle, drawn without lifting the pen.
+u:a_rrow := { n s ->
+  n = 0 ? 1 r_eshape 0
+  outer := (n - 1) u:a_rrow n_eg s
+  outer c_at ((60 * s) t:t_urn (n - 1) u:a_rrow s) c_at (60 * s) t:t_urn outer
+}
+arrowhead := t:p_oints 6 u:a_rrow 1
+s_hape arrowhead                # 2 rows: 3^6 steps, one more point
+still := []S_HOW []P_ATH arrowhead
+
+# Drawn as it goes: frame k shows the first k/24 of the points (the rest
+# wait on the last one shown: `m_in` caps the column indices, and
+# `s_elect_2` picks columns), 24 frames sharing one fit.
+n := 1 s_elect 1 d_rop s_hape arrowhead
+u:u_pTo := { k -> ((f_loor k * n / 24) m_in r_ange n) s_elect_2 arrowhead }
+u:d_rawing := { k ->
+  k = 1 ? (1 c_at s_hape u:u_pTo 1) r_eshape u:u_pTo 1
+  (u:d_rawing k - 1) c_at u:u_pTo k
+}
+drawing := []S_HOW []P_ATH u:d_rawing 24

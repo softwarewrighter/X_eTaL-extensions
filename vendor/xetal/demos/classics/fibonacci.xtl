@@ -1,0 +1,23 @@
+#!/usr/bin/env xetal
+# Fibonacci three ways: a recursion as a scalar language writes it, a
+# vector grown by adding its last two items, and powers of a matrix
+# (an inner product), the array way.
+
+# 1. The definition, run on each of 0 to 14.
+u:f_ib := { n -> n < 2 ? n; (u:f_ib n - 1) + u:f_ib n - 2 }
+'u:f_ib e_ach o_ffsets 15
+
+# 2. Growing the sequence: each step appends the sum of the last two.
+u:f_ibs := { n ->
+  n <= 2 ? n t_ake 0 1
+  f := u:f_ibs n - 1
+  f c_at '+ r_/ -2 t_ake f
+}
+u:f_ibs 20
+
+# 3. The matrix 1 1 over 1 0, to the power n, holds F(n+1) F(n) over
+# F(n) F(n-1): `'+ '* i_nner` is the matrix product.
+q := 2 2 r_eshape 1 1 1 0
+u:p_ow := { n -> n = 1 ? q; q '+ '* i_nner u:p_ow n - 1 }
+u:p_ow 10
+2 s_elect r_avel u:p_ow 30    # F(30)

@@ -1,0 +1,17 @@
+[package]
+name = "xetal-types"
+description = "Type inference over Core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+xetal-base.workspace = true
+xetal-lex.workspace = true
+xetal-core.workspace = true
+xetal-ty.workspace = true
+xetal-prim-types.workspace = true
+xetal-elab.workspace = true
+

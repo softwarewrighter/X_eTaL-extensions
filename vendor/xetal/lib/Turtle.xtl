@@ -1,0 +1,29 @@
+# Turtle: turtle graphics as arrays (a standard library, built into
+# xetal). Import it with an alias of your choice: "t:" u_se< "Turtle".
+# A walk is a vector of turns in degrees, one before each step forward;
+# the turtle starts at the origin facing east (0 degrees, counting
+# anticlockwise). No turtle moves: the headings are a running sum of
+# the turns, the steps are their cosines and sines, and the positions
+# are running sums of the steps. Draw the points with []P_ATH.
+
+r_adians := { (f_loat _r) * (p_i @) / 180 }   # private
+
+# The points of a walk with steps of the given lengths, 2 rows (x over
+# y), starting at the origin: `lengths l:w_alk turns`; a single length
+# serves every step.
+l:w_alk := { lengths turns ->
+  h := r_adians '+ s_\ turns
+  xs := 0 c_at '+ s_\ (f_loat lengths) * c_os h
+  ys := 0 c_at '+ s_\ (f_loat lengths) * s_in h
+  (2 c_at t_ally xs) r_eshape xs c_at ys
+}
+
+# The points of a walk of unit steps.
+l:p_oints := { turns -> 1 l:w_alk turns }
+
+# The walk with t degrees more turned before its first step: how pieces
+# of a curve are joined (`60 l:t_urn w`).
+l:t_urn := { t w -> (t + 1 t_ake w) c_at 1 d_rop w }
+
+# A regular polygon of n sides, as a walk.
+l:p_olygon := { n -> n r_eshape 360 / n }

@@ -1,0 +1,16 @@
+[package]
+name = "xetal-rotate"
+description = "Rotate and reverse along the leading axis (A2, A3, A4)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+xetal-base.workspace = true
+xetal-array.workspace = true
+xetal-value.workspace = true
+
+[dev-dependencies]
+proptest.workspace = true

@@ -1,0 +1,29 @@
+#!/usr/bin/env xetal
+# Quicksort, the famous recursive APL definition: take a pivot, and
+# the result is the sorted items below it, the items equal to it, and
+# the sorted items above it. The partitions are masks (`v < p`), the
+# selection is `w_here` and `s_elect`: no loop, no swaps.
+u:q_sort := { v ->
+  2 > t_ally v ? v
+  p := f_irst v
+  below := (w_here v < p) s_elect v
+  same := (w_here v = p) s_elect v
+  above := (w_here v > p) s_elect v
+  (u:q_sort below) c_at same c_at u:q_sort above
+}
+u:q_sort 3 1 4 1 5 9 2 6 5 3 5
+u:q_sort "the quick brown fox"      # characters compare in ASCII order
+
+# One partition, as masks over the items.
+v := 3 1 4 1 5 9 2 6 5 3 5
+v < 3
+v > 3
+
+# The built-in s_ort agrees on random data (new data every run; the
+# answer is always 1).
+r := r_oll! 50 r_eshape 100
+(u:q_sort r) m_atch s_ort r
+
+# And the grade: the indices that sort, so s_ort is `(g_rade v) s_elect v`.
+g_rade v
+(g_rade v) s_elect v

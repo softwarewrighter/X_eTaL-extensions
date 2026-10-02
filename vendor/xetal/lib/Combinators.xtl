@@ -1,0 +1,57 @@
+# Combinators: the birds Raymond Smullyan names in "To Mock a
+# Mockingbird" that type-check (a standard library, built into xetal).
+# Import it with an alias of your choice: "c:" u_se< "Combinators".
+# docs/birds.md lists them all; the self-applying birds (L, M, M2, U)
+# have no finite type and are in demos/birds-untyped.xtl.
+#
+# How the definitions read: `a x_ b` is x applied to a and then b (every
+# function is curried); `(e)_ v` applies the function e computes; a
+# function passed along as a value is quoted, `'y_`.
+
+l:I_ := { x -> x }                                  # Idiot Bird (identity)
+l:K_ := { x y -> x }                                # Kestrel
+l:T_ := { x y_ -> y_ x }                            # Thrush
+l:W_ := { x_ y -> y x_ y }                          # Warbler
+l:W_1 := { x y_ -> x y_ x }                         # Converse Warbler
+
+l:B_ := { x_ y_ z -> x_ y_ z }                      # Bluebird: compose
+l:B_1 := { x_ y_ z w -> x_ z y_ w }                 # Blackbird
+l:B_2 := { x_ y_ z w v -> x_ (z y_ w)_ v }          # Bunting
+l:B_3 := { x_ y_ z_ w -> x_ y_ z_ w }               # Becard
+l:C_ := { x_ y z -> z x_ y }                        # Cardinal: swap
+l:D_ := { x_ y z_ w -> y x_ z_ w }                  # Dove
+l:D_1 := { x_ y z w_ v -> (y x_ z)_ w_ v }          # Dickcissel
+l:D_2 := { x_ y_ z w_ v -> (y_ z) x_ w_ v }         # Dovekie
+l:E_ := { x_ y z_ w v -> y x_ w z_ v }              # Eagle
+l:E_h := { x_ a_ b c d_ e f -> (b a_ c) x_ e d_ f } # Bald Eagle
+l:F_ := { x y z_ -> y z_ x }                        # Finch
+l:G_ := { x_ y_ z w -> w x_ y_ z }                  # Goldfinch
+l:H_ := { x_ y z -> (y x_ z)_ y }                   # Hummingbird
+l:J_ := { x_ y z w -> y x_ w x_ z }                 # Jay
+l:O_ := { x_ y_ -> y_ x_ 'y_ }                      # Owl
+l:Q_ := { x_ y_ z -> y_ x_ z }                      # Queer Bird
+l:Q_1 := { x_ y z_ -> x_ z_ y }                     # Quixotic Bird
+l:Q_2 := { x y_ z_ -> y_ z_ x }                     # Quizzical Bird
+l:Q_3 := { x_ y z_ -> z_ x_ y }                     # Quirky Bird
+l:Q_4 := { x y_ z_ -> z_ y_ x }                     # Quacky Bird
+l:R_ := { x y_ z -> z y_ x }                        # Robin
+l:S_ := { x_ y_ z -> z x_ y_ z }                    # Starling
+l:V_ := { x y z_ -> x z_ y }                        # Vireo: a pair
+
+# Once removed: the first argument passes through, then the bird.
+l:C_s := { x_ y z w -> (y x_ w)_ z }
+l:R_s := { x_ y z w -> (z x_ w)_ y }
+l:F_s := { x_ y z w -> (w x_ z)_ y }
+l:V_s := { x_ y z w -> (w x_ y)_ z }
+l:W_s := { x_ y z -> (y x_ z)_ z }
+
+# Twice removed: the first two pass through.
+l:C_ss := { x_ y z w v -> ((y x_ z)_ v)_ w }
+l:R_ss := { x_ y z w v -> ((y x_ w)_ v)_ z }
+l:F_ss := { x_ y z w v -> ((y x_ v)_ w)_ z }
+l:V_ss := { x_ y z w v -> ((y x_ v)_ z)_ w }
+l:W_ss := { x_ y z w -> ((y x_ z)_ w)_ w }
+
+# The Sage Bird by recursion: Y f is f (Y f). It works because a
+# function's parameter is evaluated only when used.
+l:Y_ := { f_ -> f_ l:Y_ 'f_ }

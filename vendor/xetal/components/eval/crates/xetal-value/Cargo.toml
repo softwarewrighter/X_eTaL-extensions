@@ -1,0 +1,14 @@
+[package]
+name = "xetal-value"
+description = "Runtime values, the environment and printed results"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+xetal-base.workspace = true
+xetal-core.workspace = true
+xetal-array.workspace = true
+xetal-grid.workspace = true

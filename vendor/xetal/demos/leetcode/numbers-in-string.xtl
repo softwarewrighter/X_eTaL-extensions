@@ -1,0 +1,74 @@
+#!/usr/bin/env xetal
+# LeetCode 1805, Number of Different Integers in a String: replace every
+# non-digit with a space; how many different integers are left? (Leading
+# zeros do not make a number different: "001" is 1.) The array way: a
+# mask of the digits, runs found where the mask turns on, and every
+# number at once; then the problem, and its cousins, are one line each.
+s := "aa123bc42abc9zyz"
+m := 0 + s m_ember? "0123456789"   # 1 at each digit (0 + makes it an Int)
+m
+
+# The quick way: blank the non-digits and read the numbers. Index 1 is
+# the blank, index 1 + k the k-th character; n_umbers reads Floats.
+(1 + m * r_ange t_ally s) s_elect " " c_at s
+n_umbers (1 + m * r_ange t_ally s) s_elect " " c_at s
+
+# The exact way, in Ints: each digit's value, the run it belongs to (a
+# run starts where the mask turns on: a scan of the starts numbers the
+# runs), how far each digit is from its run's end, and Horner per run as
+# a sum of digit times a power of 10, collected run by run by a table.
+d := -1 + "0123456789" i_ndexOf m r_eplicate s
+g := m r_eplicate '+ s_\ m > 0 c_at -1 d_rop m
+d
+g
+u:n_ums := { s ->
+  m := 0 + s m_ember? "0123456789"
+  d := -1 + "0123456789" i_ndexOf m r_eplicate s
+  g := m r_eplicate '+ s_\ m > 0 c_at -1 d_rop m
+  k := '+ r_/ m > 0 c_at -1 d_rop m
+  c := '+ r_/_2 (r_ange k) '= t_able g
+  e := (g s_elect '+ s_\ c) - r_ange t_ally g
+  '+ r_/_2 ((r_ange k) '= t_able g) * (k c_at t_ally g) r_eshape d * 10 ^ e
+}
+n := u:n_ums s
+n
+(f_loor n_umbers (1 + m * r_ange t_ally s) s_elect " " c_at s) m_atch n   # the two ways agree
+
+# LeetCode 1805: how many different integers. Its three examples.
+t_ally u_nique n
+t_ally u_nique u:n_ums "a123bc34d8ef34"      # 123 34 8 34: 3
+t_ally u_nique u:n_ums "leet1234code234"     # 2
+t_ally u_nique u:n_ums "a1b01c001"           # 1, 01 and 001 are all 1
+
+# Exactly as LeetCode means it, for numbers of any length: the runs of
+# digits as strings (p_artition by the digit mask), each without its
+# leading zeros, compared as strings. Every Int above is a box here.
+u:d_ifferent := { s ->
+  runs := (s m_ember? "0123456789") p_artition s
+  '{ d -> t := d_isclose d; ('| s_\ t != f_irst "0") r_eplicate t } m_ap runs
+}
+t_ally u_nique u:d_ifferent "a123bc34d8ef34"   # 3
+t_ally u_nique u:d_ifferent "a1b01c001"        # 1
+t_ally u_nique u:d_ifferent "x123456789012345678901234567890y0123456789012345678901234567890z"   # 1, past any Int
+
+# Its cousins, on the same numbers.
+'m_ax r_/ n                       # the largest
+'+ r_/ n                          # the sum
+u_nique u:n_ums "x7y7z12w7q12"    # without repeats, first-seen order
+s_ort n                           # in order
+'+ r_/ d                          # the sum of the digits
+w_here m > 0 c_at -1 d_rop m      # where each number starts
+
+# LeetCode 1796, Second Largest Digit in a String (-1 when there is none).
+u:s_econd := { s ->
+  m := 0 + s m_ember? "0123456789"
+  u := r_ev s_ort u_nique -1 + "0123456789" i_ndexOf m r_eplicate s
+  2 > t_ally u ? -1; 2 s_elect u
+}
+u:s_econd "dfa12321afd"           # 3
+u:s_econd "abc1111"               # -1
+
+# LeetCode 2042, Check if Numbers Are Ascending in a Sentence.
+u:a_scending := { s -> n := u:n_ums s; '& r_/ (1 d_rop n) > -1 d_rop n }
+u:a_scending "1 box has 3 blue 4 red 6 green and 12 yellow marbles"
+u:a_scending "hello world 5 x 5"

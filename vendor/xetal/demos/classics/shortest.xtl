@@ -1,0 +1,29 @@
+#!/usr/bin/env xetal
+# Shortest paths in min-plus algebra: the inner product with m_in for
+# sum and + for product. `d 'm_in '+ i_nner d` is, for each pair, the
+# cheapest way through any one vertex between them; repeating it until
+# nothing changes gives the shortest paths of every length (Floyd, in
+# one line repeated). 999 stands for no edge.
+w := 4 4 r_eshape 0 3 999 7  8 0 2 999  5 999 0 1  2 999 999 0
+w 'm_in '+ i_nner w
+
+u:s_hortest := { d ->
+  e := d 'm_in '+ i_nner d
+  (e m_atch d) ? d
+  u:s_hortest e
+}
+d := u:s_hortest w
+d
+
+# The same inner product with other pairs: 'm_ax 'm_in gives the widest
+# path (the best bottleneck), here on capacities.
+c := 4 4 r_eshape 0 5 0 2  5 0 4 0  0 4 0 6  2 0 6 0
+u:w_idest := { d ->
+  e := d m_ax d 'm_ax 'm_in i_nner d
+  (e m_atch d) ? d
+  u:w_idest e
+}
+u:w_idest c                     # (the diagonal is the best round trip)
+
+# Distances drawn: each cell colored from near (dark) to far (yellow).
+shown := []S_HOW []G_RID d

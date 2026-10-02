@@ -1,0 +1,31 @@
+#!/usr/bin/env xetal
+# A histogram, the tiny practical array program: the distinct values,
+# how often each occurs (a table of equals, summed along its rows),
+# and bars. "just draw demos/classics/histogram.xtl" draws the letter
+# counts.
+v := 3 1 4 1 5 9 2 6 5 3 5 8 9 7 9
+u := s_ort u_nique v
+u
+counts := '+ r_/_2 u '= t_able v
+counts
+
+# Most frequent first: grade the negated counts.
+(g_rade 0 - counts) s_elect u
+
+# Bars as text: row i has a star for each of counts[i] (a table of the
+# counts against 1, 2, ... the largest, `>=`, picking space or star).
+bars := (1 + counts '>= t_able r_ange 'm_ax r_/ counts) s_elect " *"
+bars
+
+# The letters of a sentence, the same way.
+text := "the quick brown fox jumps over the lazy dog and the cat"
+space := f_irst " "               # a one-character string is a vector
+letters := s_ort u_nique (w_here text != space) s_elect text
+letters
+n := '+ r_/_2 letters '= t_able text
+n
+(n i_ndexOf 'm_ax r_/ n) s_elect letters    # the first of the most common (e, o, t: 4)
+
+# Drawn: a column per letter, a to z, as tall as its count, from the bottom.
+tall := (r_ev r_ange 'm_ax r_/ n) '<= t_able n
+shown := []S_HOW []G_RID tall

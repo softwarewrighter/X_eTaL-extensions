@@ -1,0 +1,39 @@
+#!/usr/bin/env xetal
+# One-dimensional cellular automata (Wolfram's elementary rules): each
+# cell's next state depends on itself and its two neighbours, eight
+# cases, and the rule number's eight binary digits say what each case
+# becomes. Every cell is updated at once. "just draw
+# demos/classics/automaton.xtl" opens rule 30; rules 90 and 110 follow.
+
+# The rule's bits, case 0 first: rule 30 is 0 1 1 1 1 0 0 0.
+u:b_its := { rule -> (rule d_iv 2 ^ o_ffsets 8) m_od 2 }
+u:b_its 30
+
+# One step: each cell's case is 4 * left + 2 * itself + right, the
+# neighbours by rotating the row (so it wraps round), and the case
+# picks the cell's next state from the rule's bits.
+u:s_tep := { bits row -> (1 + (4 * -1 o_- row) + (2 * row) + 1 o_- row) s_elect bits }
+
+# Every generation, one per row, until the history is as tall as the
+# row is wide.
+u:e_volve := { bits rows ->
+  (t_ally rows) >= t_ally f_irst rows ? rows
+  next := bits u:s_tep r_avel -1 t_ake rows
+  bits u:e_volve rows c_at next
+}
+u:s_tart := { w -> (1 c_at w) r_eshape ((w d_iv 2) r_eshape 0) c_at 1 c_at (w - 1 + w d_iv 2) r_eshape 0 }
+u:s_tart 9
+
+# Rule 30, as text: chaotic, though everything is determined.
+r30 := (u:b_its 30) u:e_volve u:s_tart 31
+(1 + 12 t_ake r30) s_elect " #"
+
+# Drawn, 63 cells wide: rule 30; rule 90, Sierpinski's triangle again
+# (each cell the exclusive or of its neighbours, Pascal modulo 2); and
+# rule 110, which is universal, grown from one cell at the right edge.
+# The first two grow both ways and meet the edges after 32 rows, where
+# the rotation would wrap them round, so 32 rows are drawn.
+thirty := []S_HOW []G_RID 32 t_ake (u:b_its 30) u:e_volve u:s_tart 63
+ninety := []S_HOW []G_RID 32 t_ake (u:b_its 90) u:e_volve u:s_tart 63
+right := 1 63 r_eshape (62 r_eshape 0) c_at 1
+eleven := []S_HOW []G_RID (u:b_its 110) u:e_volve right

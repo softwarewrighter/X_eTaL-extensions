@@ -1,0 +1,20 @@
+#!/usr/bin/env xetal
+# Primes the APL way: a number is prime when it has exactly two
+# divisors. The table of every number's remainder by every number
+# (APL's outer product with residue) answers every question at once.
+a := r_ange 12
+a 'm_od t_able a            # row i: i modulo 1, 2, ..., 12
+0 = a 'm_od t_able a        # 1 where the column divides the row
+
+# Counting the 1s of each row (reduce along axis 2) gives the divisors.
+u:d_ivisors := { a -> '+ r_/_2 0 = a 'm_od t_able a }
+u:d_ivisors r_ange 12
+
+# The primes are the numbers with two; `w_here` finds them.
+u:p_rimes := { n -> a := r_ange n; (w_here 2 = u:d_ivisors a) s_elect a }
+u:p_rimes 50
+
+# Perfect numbers are the sum of their divisors other than themselves:
+# the divisors themselves, by the same table.
+u:p_roperSum := { n -> a := r_ange n - 1; '+ r_/ (w_here 0 = n m_od a) s_elect a }
+'u:p_roperSum e_ach 6 28 12

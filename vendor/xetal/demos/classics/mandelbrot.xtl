@@ -1,0 +1,68 @@
+#!/usr/bin/env xetal
+# The Mandelbrot set, as arrays: every point c of a view iterated at
+# once, z becoming z^2 + c, counting the steps each point stays within
+# 2 of the origin. X_eTaL has no complex numbers, so z is two Float
+# arrays, its real and imaginary parts. "just draw
+# demos/classics/mandelbrot.xtl" opens the still; the zoom and the
+# fly-over are animations.
+
+# A view is its size (rows, columns and the steps to iterate, Ints) and
+# where it looks (centre x, centre y and width, Floats). The real parts
+# of c vary along a row, the imaginary parts down a column, both spaced
+# width / columns.
+u:c_entred := { n -> (f_loat o_ffsets n) - (n - 1) / 2 }
+u:r_e := { size view ->
+  (1 s_elect view) + (3 s_elect view) * (u:c_entred 2 s_elect size) / f_loat 2 s_elect size
+}
+u:i_m := { size view ->
+  (2 s_elect view) - (3 s_elect view) * (u:c_entred 1 s_elect size) / f_loat 2 s_elect size
+}
+
+# A matrix as one plane of a rank-3 array, for stacking with c_at.
+u:p_lane := { m -> (1 c_at s_hape m) r_eshape m }
+
+# `size u:c_ounts view`: for each point, how many of the steps z stays
+# within 2. The state is three planes: z's real part, its imaginary
+# part, and the count. A point that has escaped keeps its z (keep is
+# 0), so nothing grows without bound. Points still inside after all
+# the steps count as 0, so the set itself is drawn dark.
+u:c_ounts := { size view ->
+  n := 3 s_elect size
+  cr := (o_ffsets 1 s_elect size) 'r_ight t_able size u:r_e view
+  ci := (size u:i_m view) 'l_eft t_able o_ffsets 2 s_elect size
+  s_tep := { s ->
+    zr := 1 s_elect s
+    zi := 2 s_elect s
+    keep := f_loat 4 >= (zr * zr) + zi * zi
+    a := (keep * cr + (zr * zr) - zi * zi) + (1 - keep) * zr
+    b := (keep * ci + 2 * zr * zi) + (1 - keep) * zi
+    (u:p_lane a) c_at (u:p_lane b) c_at u:p_lane keep + 3 s_elect s
+  }
+  c := 3 s_elect n 's_tep p_ower (3 c_at 2 t_ake size) r_eshape 0.0
+  c * f_loat c < f_loat n
+}
+
+# -- The whole set ------------------------------------------------------------
+still := []S_HOW []G_RID 90 135 40 u:c_ounts -0.6 0.0 3.0
+
+# -- Zooming in -----------------------------------------------------------
+# Twelve frames, each 0.75 as wide as the one before, closing in on the
+# Seahorse Valley at -0.7436 0.1318 with more steps as the detail grows.
+u:z_oom := { k ->
+  shrink := 0.75 ^ f_loat k
+  t := 1 - shrink
+  view := (-0.6 + t * -0.1436) c_at (0.1318 * t) c_at 3.0 * shrink
+  u:p_lane (60 90 c_at 24 + 4 * k) u:c_ounts view
+}
+u:f_rames := { k -> k = 0 ? u:z_oom 0; (u:f_rames k - 1) c_at u:z_oom k }
+zoom := []S_HOW []G_RID u:f_rames 11
+
+# -- Flying over ------------------------------------------------------------
+# The same width all the way, the centre moving from the left tip of the
+# set to its right edge.
+u:o_ver := { k -> u:p_lane 60 90 30 u:c_ounts (-1.6 + 0.16 * f_loat k) c_at 0.0 1.0 }
+u:p_ass := { k -> k = 0 ? u:o_ver 0; (u:p_ass k - 1) c_at u:o_ver k }
+flyover := []S_HOW []G_RID u:p_ass 11
+
+# The sizes are kept small so the demo runs in a few seconds; a bigger
+# view is only a matter of patience: 240 360 100 u:c_ounts -0.6 0.0 3.0.

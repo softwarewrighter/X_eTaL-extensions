@@ -1,0 +1,37 @@
+# X_eTaL component `system`: one Cargo workspace (see docs/architecture.md).
+
+[workspace]
+resolver = "3"
+members = ["crates/xetal-system"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+authors = ["Michael A Wright"]
+repository = "https://github.com/softwarewrighter/X_eTaL"
+
+[workspace.dependencies]
+xetal-catalog = { path = "../base/crates/xetal-catalog" }
+xetal-ast = { path = "../syntax/crates/xetal-ast" }
+xetal-ir = { path = "../core/crates/xetal-ir" }
+xetal-lint = { path = "../core/crates/xetal-lint" }
+xetal-base = { path = "../base/crates/xetal-base" }
+xetal-lex = { path = "../syntax/crates/xetal-lex" }
+xetal-syntax = { path = "../syntax/crates/xetal-syntax" }
+xetal-render = { path = "../render/crates/xetal-render" }
+xetal-core = { path = "../core/crates/xetal-core" }
+xetal-ty = { path = "../types/crates/xetal-ty" }
+xetal-types = { path = "../types/crates/xetal-types" }
+xetal-array = { path = "../eval/crates/xetal-array" }
+xetal-value = { path = "../eval/crates/xetal-value" }
+xetal-arith = { path = "../eval/crates/xetal-arith" }
+xetal-system = { path = "crates/xetal-system" }
+xetal-store = { path = "../base/crates/xetal-store" }
+xetal-draw = { path = "../draw/crates/xetal-draw" }
+xetal-eval = { path = "../eval/crates/xetal-eval" }
+xetal-spec = { path = "../cli/crates/xetal-spec" }
+clap = { version = "4", features = ["derive"] }
+assert_cmd = "2"
+proptest = "1"
+predicates = "3"
