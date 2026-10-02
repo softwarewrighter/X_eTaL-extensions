@@ -1,0 +1,1 @@
+SDK xetal-ext-sdk (xetal_extension! macro, panic-safe trampolines with arity check and argument decoding, thread-local results, arg helpers) and extensions/hello cdylib (8 functions) with 5 raw-ABI tests; docs/ext/hello.md; README writing-an-extension.

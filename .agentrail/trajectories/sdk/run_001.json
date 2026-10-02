@@ -1,0 +1,11 @@
+{
+  "task_type": "sdk",
+  "state": {
+    "number": 4,
+    "step": "sdk-hello"
+  },
+  "action": "adapted demo-extensions SDK; macro with per-function modules; cargo test/clippy; just gate",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-02T12:39:46"
+}

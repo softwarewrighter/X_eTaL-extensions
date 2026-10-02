@@ -1,9 +1,10 @@
 number = 4
 slug = "sdk-hello"
-status = "pending"
+status = "completed"
 description = "foundation step 4: crates/xetal-ext-sdk (xetal_extension! macro over fn(&[Val..."
 role = "production"
 context_files = []
 created_at = "2026-10-02T11:15:19"
+completed_at = "2026-10-02T12:39:45"
 task_type = "sdk"
-commits = []
+commits = ["4c3e07f7c0ba48486e9a9b2416488d7b555686b3"]
