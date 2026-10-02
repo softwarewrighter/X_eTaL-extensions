@@ -26,7 +26,12 @@ each function exercises one thing a real extension needs.
 ```sh
 cargo build -p xetal-ext-hello        # target/debug/libxetal_ext_hello.dylib (or .so)
 cargo test -p xetal-ext-hello         # the descriptor and every trampoline, through the raw ABI
+cargo test -p xetal-ext-loader        # loaded from its package and linked statically: the same tests
 ```
+
+When `panic` runs, Rust's default panic hook still prints the panic
+message to standard error; the call returns an error and the program
+goes on.
 
 The tests call each trampoline exactly as a host does: encode the
 arguments, call through the C function pointer, copy the result or

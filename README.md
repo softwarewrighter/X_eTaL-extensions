@@ -39,7 +39,7 @@ change and the programs do not.
 
 | Extension | Facade | What | Status |
 | --------- | ------ | ---- | ------ |
-| [hello](docs/ext/hello.md) | `Hello` | the smallest proof of the boundary | native library built and tested; facade waits for the bridge |
+| [hello](docs/ext/hello.md) | `Hello` | the smallest proof of the boundary | native library built, loaded and tested; facade waits for the bridge |
 | clock | `Clock` | wall-clock and monotonic time, timing | planned |
 | digest | `Digest` | SHA-256, CRC-32 | planned |
 | regex | `Regex` | match, find, capture, replace, split | planned |
@@ -71,6 +71,27 @@ xetal_ext_sdk::xetal_extension! {
 See [`extensions/hello`](extensions/hello) and the
 [ABI](docs/abi-v1.md).
 
+## Loading an extension from Rust
+
+A host loads extensions with `xetal-ext-loader`: a package directory
+(its `extension.toml`) names the library; the registry finds it
+(`native/<platform>/` in the package, then any build directories
+given), validates its descriptor against ABI V1 and the manifest, and
+calls its functions by name with owned values:
+
+```rust
+use xetal_ext_loader::{Package, Registry, Value};
+
+let mut registry = Registry::new();
+let package = Package::open("extensions/hello")?;
+registry.load_package(&package, &["target/debug".into()])?;
+let shout = registry.call("hello", "shout", &[Value::Text("hi".into())])?;
+```
+
+Errors, wrong argument counts and panics inside an extension come back
+as `CallError`s; the library stays loaded as long as the registry
+holds it.
+
 ## Build
 
 Requires Rust, [`just`](https://github.com/casey/just), and a checkout
@@ -80,6 +101,8 @@ vendored copy.
 ```sh
 just            # list the recipes
 just gate       # everything the pre-commit gate checks
+just build           # every crate and extension (shared libraries in target/debug/)
+just test [CRATE]    # the Rust tests
 just xetal-version   # which X_eTaL commit is vendored
 just eval "'+ r_/ 1 2 3"   # evaluate with the vendored xetal
 ```

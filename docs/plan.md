@@ -121,7 +121,17 @@ standard libraries' (`c:`, `m:`, `s:`) and `../X_eTaL-libraries`'.
 | 2 | vendor-xetal | `just vendor [REF]`, `vendor/xetal/VENDORED`, `just xetal`, `xetal-version`, `eval`; `scripts/check-vendor.sh` in the gate; the snapshot in its own commit |
 | 3 | abi | the root workspace; `crates/xetal-ext-abi`: descriptor, values, errors, validation and its tests (layout drift, bounds, bad UTF-8, duplicates, version mismatch); `cargo test`, `fmt`, `clippy` in the gate; docs/abi-v1.md (done) |
 | 4 | sdk-hello | `crates/xetal-ext-sdk` (`xetal_extension!`, panic-safe trampolines, results kept until the next call); `extensions/hello` as a cdylib with its manifest; Rust tests of the descriptor (done) |
-| 5 | loader | `crates/xetal-ext-loader`: manifests, the platform's artifact, `libloading`, validation, the registry (namespaces, arity, lifetime); hello loaded dynamically and statically, the same tests on both |
+| 5 | loader | `crates/xetal-ext-loader`: manifests, the platform's artifact, `libloading`, validation, the registry (namespaces, arity, lifetime); hello loaded dynamically and statically, the same tests on both (done) |
+
+Saga 1 retrospective: the boundary works end to end from Rust (25
+tests: ABI contract, hello through raw trampolines, hello loaded from
+its package and statically). Changes from the first plan: results are
+kept in the extension until its next call (demo-extensions' model)
+rather than freed by a callback; descriptors carry X_eTaL signatures
+and arity is 0 to 2, as X_eTaL calls functions; a package's manifest is
+`[extension]` with `name`, `version`, `abi`, `facade`, `library` (the
+file stem), the library found under `native/<platform>/` or a build
+directory.
 
 ## Saga 2 -- the bridge
 

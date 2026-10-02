@@ -1,0 +1,20 @@
+[package]
+name = "xetal-ext-loader"
+version = "0.1.0"
+description = "Finds, loads, validates and calls X_eTaL native extensions"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[dependencies]
+libloading = "0.8"
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"
+xetal-ext-abi = { path = "../xetal-ext-abi" }
+
+[dev-dependencies]
+xetal-ext-hello = { path = "../../extensions/hello" }
+
+[lints]
+workspace = true

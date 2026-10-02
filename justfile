@@ -28,6 +28,10 @@ eval expr:
 check-vendor:
     scripts/check-vendor.sh
 
+# Build every crate and extension (the extensions' shared libraries land in target/debug/)
+build:
+    cargo build --workspace
+
 # This repo's Rust: fmt, clippy (warnings are errors), tests
 check-rust:
     scripts/check-rust.sh
