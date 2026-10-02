@@ -1,0 +1,1 @@
+bridge step 3: extensions/hello/Hello.xtl facade (alias hx:, exports typed as the native signatures where X_eTaL allows), tests/*.xtl programs with expected/ goldens run through xetal-x, expected/types.out pinning xetal type of the facade; scripts/test-ext.sh and just test-ext NAME, in the gate for every extension; docs/ext/hello.md complete; README status.

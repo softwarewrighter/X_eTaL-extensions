@@ -1,6 +1,6 @@
-name = "foundation"
-status = "completed"
-current_step = 5
-created_at = "2026-10-02T10:32:59"
+name = "bridge"
+status = "active"
+current_step = 1
+created_at = "2026-10-02T13:11:05"
 plan_file = ".agentrail/plan.md"
 retroactive = false

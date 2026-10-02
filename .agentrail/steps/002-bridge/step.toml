@@ -1,0 +1,9 @@
+number = 2
+slug = "bridge"
+status = "pending"
+description = "bridge step 2: the ext: store in xetal-x (plan A6): design and document the t..."
+role = "production"
+context_files = []
+created_at = "2026-10-02T13:11:05"
+task_type = "bridge"
+commits = []

@@ -1,0 +1,1 @@
+bridge step 4: extensions/clock (Clock.xtl, alias ck:): wall-clock Unix seconds, ISO 8601 UTC text, a monotonic millisecond counter, elapsed time of repeated work; tests (goldens avoid real times: shapes, monotonicity, formats); a timing demo program; docs/ext/clock.md; consider an ask for a clock quad in X_eTaL.

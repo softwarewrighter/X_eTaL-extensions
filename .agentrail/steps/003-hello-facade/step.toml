@@ -1,0 +1,9 @@
+number = 3
+slug = "hello-facade"
+status = "pending"
+description = "bridge step 3: extensions/hello/Hello.xtl facade (alias hx:, exports typed as..."
+role = "production"
+context_files = []
+created_at = "2026-10-02T13:11:05"
+task_type = "facade"
+commits = []
