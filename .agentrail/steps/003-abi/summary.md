@@ -1,0 +1,1 @@
+ABI V1 crate xetal-ext-abi (descriptor with X_eTaL signatures, values incl. Char arrays, validation, decode/encode, panic containment), 11 contract tests, check-rust in gate, docs/abi-v1.md. Plan change: result storage kept until next call (no free callback); step 4 prompt's free-callback wording superseded by plan A4.
