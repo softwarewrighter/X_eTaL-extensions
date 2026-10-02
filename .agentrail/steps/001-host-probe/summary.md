@@ -1,0 +1,1 @@
+xetal-x bridge host skeleton: vendored CLI modules via #[path] + ExtStore routing ext: paths; 20 vendored demos identical (check-xetal-x.sh in gate); vendor-untouched check; host tests; ask E3.

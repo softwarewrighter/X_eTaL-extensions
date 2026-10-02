@@ -1,0 +1,11 @@
+{
+  "task_type": "host",
+  "state": {
+    "number": 1,
+    "step": "host-probe"
+  },
+  "action": "read vendored CLI; #[path] reuse; cargo build/test; demo comparison; just gate",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-02T15:38:25"
+}

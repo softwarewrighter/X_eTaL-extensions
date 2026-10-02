@@ -1,9 +1,10 @@
 number = 1
 slug = "host-probe"
-status = "in-progress"
+status = "completed"
 description = "bridge step 1: read the vendored CLI's run path (components/cli xetal-cli, xe..."
 role = "production"
 context_files = []
 created_at = "2026-10-02T13:11:05"
+completed_at = "2026-10-02T15:38:25"
 task_type = "host"
-commits = []
+commits = ["204e8d69ea6e96baafa5fa6bfdf6b663be78284e"]
