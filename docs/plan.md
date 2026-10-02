@@ -120,7 +120,7 @@ standard libraries' (`c:`, `m:`, `s:`) and `../X_eTaL-libraries`'.
 | 1 | scaffold | the agentrail saga; CLAUDE.md (AGENTS.md a symlink); README; COPYRIGHT; LICENSE; CHANGES.md; .gitignore; justfile; the gate (markdown); this plan; docs/xetal-asks.md; docs/research.txt (archival copy) |
 | 2 | vendor-xetal | `just vendor [REF]`, `vendor/xetal/VENDORED`, `just xetal`, `xetal-version`, `eval`; `scripts/check-vendor.sh` in the gate; the snapshot in its own commit |
 | 3 | abi | the root workspace; `crates/xetal-ext-abi`: descriptor, values, errors, validation and its tests (layout drift, bounds, bad UTF-8, duplicates, version mismatch); `cargo test`, `fmt`, `clippy` in the gate; docs/abi-v1.md (done) |
-| 4 | sdk-hello | `crates/xetal-ext-sdk` (`xetal_extension!`, panic-safe trampolines, results kept until the next call); `extensions/hello` as a cdylib with its manifest; Rust tests of the descriptor |
+| 4 | sdk-hello | `crates/xetal-ext-sdk` (`xetal_extension!`, panic-safe trampolines, results kept until the next call); `extensions/hello` as a cdylib with its manifest; Rust tests of the descriptor (done) |
 | 5 | loader | `crates/xetal-ext-loader`: manifests, the platform's artifact, `libloading`, validation, the registry (namespaces, arity, lifetime); hello loaded dynamically and statically, the same tests on both |
 
 ## Saga 2 -- the bridge
@@ -179,6 +179,11 @@ l:s_ha256 := { t -> t []N_PUT "ext:digest/sha256"; []N_GET "ext:digest/sha256" }
   the vendor, and mark the ask landed.
 - A function that belongs in X_eTaL itself (a clock is a fair
   candidate for a quad) is proposed as an ask, not kept here silently.
+- Static linking of several extensions into one binary: each
+  extension's `xetal_extension_v1` is unmangled, so two linked into one
+  binary would collide. `__xetal_extension::descriptor()` (mangled) is
+  the static path; when a host links more than one, the unmangled entry
+  moves behind a cargo feature. Not needed while the loader is dynamic.
 - The browser: extensions are native; the web build would need the
   statically linked form (A5) compiled to WebAssembly. Out of scope
   until a demo asks for it.

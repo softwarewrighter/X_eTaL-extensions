@@ -1,0 +1,18 @@
+[package]
+name = "xetal-ext-hello"
+version = "0.1.0"
+description = "The smallest X_eTaL native extension: proves the boundary"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[lib]
+name = "xetal_ext_hello"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+xetal-ext-sdk = { path = "../../crates/xetal-ext-sdk" }
+
+[lints]
+workspace = true

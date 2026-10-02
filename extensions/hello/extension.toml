@@ -1,0 +1,10 @@
+# The hello package: what the loader reads to find and check the
+# native library, and the facade programs import.
+[extension]
+name = "hello"
+version = "0.1.0"
+abi = 1
+facade = "Hello.xtl"
+# The library's file stem: libxetal_ext_hello.dylib on macOS,
+# libxetal_ext_hello.so on Linux.
+library = "xetal_ext_hello"

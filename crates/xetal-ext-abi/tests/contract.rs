@@ -24,6 +24,10 @@ fn function(name: &'static str, arity: u32) -> FunctionDescriptorV1 {
     FunctionDescriptorV1::new(name, arity, "Char -> Char", "a test function", nothing)
 }
 
+fn leak<const N: usize>(f: [FunctionDescriptorV1; N]) -> &'static [FunctionDescriptorV1] {
+    Box::leak(Box::new(f))
+}
+
 fn validate(
     d: &ExtensionDescriptorV1,
 ) -> Result<xetal_ext_abi::ValidatedExtension, DescriptorError> {
@@ -48,7 +52,7 @@ fn a_valid_descriptor_is_copied() {
         function("add", 2),
         function("answer", 0),
     ];
-    let d = ExtensionDescriptorV1::new("hello", "0.1.0", &functions);
+    let d = ExtensionDescriptorV1::new("hello", "0.1.0", leak(functions));
     let v = validate(&d).unwrap();
     assert_eq!(v.name(), "hello");
     assert_eq!(v.version(), "0.1.0");
@@ -128,7 +132,7 @@ fn function_violations_are_rejected() {
     assert_eq!(validate(&d), Err(DescriptorError::TooManyFunctions(1025)));
 
     let f = [function("f", 3)];
-    let d = ExtensionDescriptorV1::new("x", "1", &f);
+    let d = ExtensionDescriptorV1::new("x", "1", leak(f));
     assert_eq!(
         validate(&d),
         Err(DescriptorError::BadArity {
@@ -139,7 +143,7 @@ fn function_violations_are_rejected() {
 
     let mut f = [function("f", 1)];
     f[0].invoke = None;
-    let d = ExtensionDescriptorV1::new("x", "1", &f);
+    let d = ExtensionDescriptorV1::new("x", "1", leak(f));
     assert_eq!(
         validate(&d),
         Err(DescriptorError::MissingInvoke("f".into()))
@@ -147,7 +151,7 @@ fn function_violations_are_rejected() {
 
     let mut f = [function("f", 1)];
     f[0].reserved = 7;
-    let d = ExtensionDescriptorV1::new("x", "1", &f);
+    let d = ExtensionDescriptorV1::new("x", "1", leak(f));
     assert_eq!(
         validate(&d),
         Err(DescriptorError::ReservedField("function"))
@@ -155,14 +159,14 @@ fn function_violations_are_rejected() {
 
     let mut f = [function("f", 1)];
     f[0].signature = AbiSlice::empty();
-    let d = ExtensionDescriptorV1::new("x", "1", &f);
+    let d = ExtensionDescriptorV1::new("x", "1", leak(f));
     assert_eq!(
         validate(&d),
         Err(DescriptorError::EmptyText("function signature"))
     );
 
     let f = [function("f", 1), function("f", 2)];
-    let d = ExtensionDescriptorV1::new("x", "1", &f);
+    let d = ExtensionDescriptorV1::new("x", "1", leak(f));
     assert_eq!(
         validate(&d),
         Err(DescriptorError::DuplicateFunction("f".into()))

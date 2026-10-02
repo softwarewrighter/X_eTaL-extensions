@@ -39,12 +39,37 @@ change and the programs do not.
 
 | Extension | Facade | What | Status |
 | --------- | ------ | ---- | ------ |
-| hello | `Hello` | the smallest proof of the boundary | planned |
+| [hello](docs/ext/hello.md) | `Hello` | the smallest proof of the boundary | native library built and tested; facade waits for the bridge |
 | clock | `Clock` | wall-clock and monotonic time, timing | planned |
 | digest | `Digest` | SHA-256, CRC-32 | planned |
 | regex | `Regex` | match, find, capture, replace, split | planned |
 | linalg | `Linalg` | determinant, inverse, solve, least squares, eigenvalues | planned |
 | png | `Png` | matrices to and from PNG images | planned |
+
+## Writing an extension
+
+An extension is plain Rust: functions taking the X_eTaL arguments and
+returning a value or an error, listed once with their arity, X_eTaL
+type and a line of documentation. The SDK generates the C boundary.
+
+```rust
+use xetal_ext_sdk::{OwnedError, Value, text};
+
+fn shout(args: &[Value]) -> Result<Value, OwnedError> {
+    Ok(Value::Text(text(&args[0])?.to_uppercase()))
+}
+
+xetal_ext_sdk::xetal_extension! {
+    name: "hello",
+    version: env!("CARGO_PKG_VERSION"),
+    functions: {
+        shout: 1, "Char -> Char", "The text in upper case.";
+    }
+}
+```
+
+See [`extensions/hello`](extensions/hello) and the
+[ABI](docs/abi-v1.md).
 
 ## Build
 

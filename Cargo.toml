@@ -1,7 +1,7 @@
 # This repo's crates and extensions. The vendored X_eTaL (vendor/xetal/)
 # keeps its own workspaces and is never a member.
 [workspace]
-members = ["crates/*"]
+members = ["crates/*", "extensions/*"]
 resolver = "3"
 exclude = ["vendor"]
 

@@ -231,14 +231,16 @@ pub struct ExtensionDescriptorV1 {
 }
 
 impl ExtensionDescriptorV1 {
+    /// A V1 descriptor; `const` so an extension can keep it in a static.
     #[must_use]
-    pub fn new(
+    #[allow(clippy::cast_possible_truncation)] // 64 bytes
+    pub const fn new(
         name: &'static str,
         version: &'static str,
-        functions: &[FunctionDescriptorV1],
+        functions: &'static [FunctionDescriptorV1],
     ) -> Self {
         Self {
-            struct_size: u32::try_from(size_of::<Self>()).unwrap_or(u32::MAX),
+            struct_size: size_of::<Self>() as u32,
             abi_version: ABI_VERSION_V1,
             name: AbiSlice::from_bytes(name.as_bytes()),
             version: AbiSlice::from_bytes(version.as_bytes()),

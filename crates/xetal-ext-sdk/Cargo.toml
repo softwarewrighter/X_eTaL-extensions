@@ -1,0 +1,14 @@
+[package]
+name = "xetal-ext-sdk"
+version = "0.1.0"
+description = "What an X_eTaL native extension author writes against: safe handlers, the xetal_extension! macro"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[dependencies]
+xetal-ext-abi = { path = "../xetal-ext-abi" }
+
+[lints]
+workspace = true
