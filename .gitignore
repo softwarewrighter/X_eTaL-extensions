@@ -1,0 +1,23 @@
+# cargo (every workspace shares ./target via .cargo/config.toml)
+/target/
+**/target/
+**/*.rs.bk
+
+# agentrail raw session transcripts (large, local only)
+.agentrail/sessions/*.jsonl
+.agentrail-archive/*/sessions/*.jsonl
+
+# Claude Code local state (shared slash commands may live in .claude/commands/)
+.claude/*
+!.claude/commands/
+
+# editors and OS
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+
+# local scratch and test output
+/tmp/
+work/

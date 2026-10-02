@@ -1,0 +1,1 @@
+foundation step 2: vendor X_eTaL as ../X_eTaL-libraries does: scripts/vendor-xetal.sh (a COMMITTED ref of ../X_eTaL into vendor/xetal/, VENDORED), scripts/build-xetal.sh (target/xetal/), scripts/check-vendor.sh in the gate; just vendor/xetal/xetal-version/eval/check-vendor. The snapshot in its own commit (vendor category), then the scripts.

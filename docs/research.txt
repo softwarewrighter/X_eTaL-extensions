@@ -1,0 +1,893 @@
+softwarewrighter/X_eTaL has one macro "c:" u_se< "Combinators" so far.  What other macros would be useful?  Note that my syntax/convention is a macro function can have a left argument and a right argument, the arguments are generally expected to be Strings, the macro name, being a function has the first letter underscored, and the "<" suffix is what identifies the name as a macro (like Rust "!" macros).  Suggest possible macros to add, justify each one, rank by usefulness.  I do not want to add too many macros.  I do want to provide a way for users to create user macros.  e.g. "my left arg" u:mymacro< "my right arg" ; how would a user define this?  Need a new file type beyond an .xtl file with l:f_unctions, so either a macro library .xtl file with macro defining syntax or tools (maybe a macro library is one that compiles before it can be used?).  Alternatively a new file type, .xtlm or .mxtl for example treats its l:f_unctions< as macro definitions.    Note that Lisp macros let users "extend" the lanuage.  C++ and Rust macros take a different approach (and Rust has several kinds of macros).  I do not want to overengineer this, but I'd like to demo the "eXtensible" promise of X_eTaL.  Also, note that another way to extend is via C ABI dyanmic libraries wrapped in X_eTal libraries (or macros).  We have not defined how an X_eTaL expression can call this ABI, maybe []SVO.  Thoughts?
+
+Your requirements point toward a small macro facility, not a Rust-sized macro subsystem:
+
+Macro invocation already has a distinctive syntax: u_name<.
+Macros are dyadic/monadic like X_eTaL functions; left/right arguments are normally source strings.
+They should demonstrate the “eXtensible” part of X_eTaL.
+Users need to define their own macros in X_eTaL, not Rust.
+Native/C-ABI extensions are another extension mechanism, but should compose naturally with macros.
+You explicitly do not want dozens of built-in macros or a complicated macro language.
+
+I think that leads to a surprisingly small design: perhaps 4–6 built-in macros, .xtlm macro libraries, and ordinary X_eTaL functions as the macro implementation language.
+
+Macro ranking
+
+I would start with this set:
+
+Rank	Macro	Example	Purpose	Add?
+1	u_se<	"c:" u_se< "Combinators"	import/use library	Already
+2	u_if<	"condition" u_if< "then ; else"	conditional source generation	Yes
+3	u_for< / u_each<	"x : 1..10" u_for< "..."	generate repeated expressions/definitions	Probably
+4	u_native<	"math" u_native< "libm.so"	expose native extension library	Yes, eventually
+5	u_include<	u_include< "foo.xtl"	textual/source inclusion	Maybe
+6	u_assert<	"condition" u_assert< "message"	compile-time assertion	Maybe
+—	u_eval<	u_eval< "expression"	explicit compile-time evaluation	Avoid initially
+—	u_quote<	...	manipulate syntax/AST	Avoid initially
+
+The key criterion is:
+
+A macro should do something that an ordinary X_eTaL function cannot naturally do because it needs to happen before normal evaluation.
+
+That keeps the namespace meaningful.
+
+1. u_if< — highest-value new macro
+
+This immediately demonstrates language extension rather than merely library loading.
+
+Conceptually:
+
+"FEATURE_GPU" u_if< "gpu_version ; cpu_version"
+
+or perhaps:
+
+"rank = 2" u_if< "matrix_code ; general_code"
+
+It is useful for conditional definitions, specialization, platform-dependent code, and generated demonstrations.
+
+Most importantly, it gives you an immediate reason macros exist: it chooses which X_eTaL source gets compiled.
+
+2. u_each< or u_for< — source generation
+
+Array languages don't usually need runtime loops, so I prefer u_each< over u_for< if this really means compile-time expansion:
+
+"A B C" u_each< "_r := ..."
+
+This can generate families of definitions, tests, wrappers, etc.
+
+But I'd be careful here. If ordinary array operations solve the use case, it belongs in ordinary X_eTaL. The compelling case is generating definitions, not calculating arrays.
+
+3. Native library loading
+
+I like the concept but would separate loading a native module from calling a native function.
+
+For example:
+
+"m:" u_native< "./libmath.so"
+
+could establish namespace m: from a native library.
+
+Then:
+
+m:sin 1.5
+
+should ideally look like an ordinary X_eTaL function call.
+
+I would not make every foreign call look like:
+
+[]SVO ...
+
+because FFI is an implementation boundary, not something the application programmer should continually see.
+
+More on that below.
+
+4. u_include<
+
+Potentially:
+
+u_include< "generated.xtl"
+
+This is useful, but u_se< may already make it redundant. I'd only add it if there's a real semantic distinction:
+
+u_se< = import compiled/module namespace
+u_include< = insert source here
+
+Otherwise one mechanism is better.
+
+5. u_assert<
+
+Compile-time assertions are especially useful once macros themselves generate programs:
+
+"rank _r = 2" u_assert< "matrix required"
+
+The important distinction would be compile-time versus ordinary runtime assertion.
+
+Useful, but not needed for the first extensibility demo.
+
+The interesting part: user-defined macros
+
+I strongly favor your .xtlm idea.
+
+Specifically:
+
+.xtlm = X_eTaL Macro Library
+
+I prefer .xtlm to .mxtl because it reads as an extension of the existing format:
+
+foo.xtl     X_eTaL source/library
+foo.xtlm    X_eTaL macro library
+
+And I would avoid inventing a special macro-definition grammar.
+
+Instead, the file type changes the interpretation of its functions.
+
+Suppose strings.xtlm contains conceptually:
+
+_l _mymacro _r := ...
+
+In a normal .xtl:
+
+_mymacro
+
+defines an ordinary X_eTaL function.
+
+In an .xtlm:
+
+_mymacro
+
+defines a macro whose:
+
+_l = raw left source string
+_r = raw right source string
+
+and whose result is:
+
+String containing X_eTaL source
+
+That source goes back through the parser/compiler.
+
+So:
+
+"my left arg" u:mymacro< "my right arg"
+
+becomes approximately:
+
+source =
+    macro_library["u:mymacro"](
+        "my left arg",
+        "my right arg"
+    )
+
+AST = parse(source)
+
+That's wonderfully small.
+
+Why I like this better than macro-definition syntax
+
+You don't need:
+
+macro ...
+endmacro
+
+or:
+
+u_macro< ...
+
+or Rust-like:
+
+macro_rules!
+
+You already have a programming language.
+
+Use it.
+
+Rust's declarative macros have a separate matcher/transcriber language, while procedural macros effectively operate as functions transforming syntax. X_eTaL can take the simpler route because your macro contract is intentionally narrower:
+
+(String, String) -> String
+
+That's closer to a tiny compile-time function system than Rust's general token-tree machinery.
+
+A concrete example
+
+Suppose you want a simple unless macro.
+
+control.xtlm:
+
+_l _unless _r := ...
+
+where _l is the condition source and _r is the expression source.
+
+Then:
+
+"x = 0" c:unless< "42"
+
+might expand into whatever actual X_eTaL conditional expression corresponds to:
+
+not (x = 0) ... 42
+
+The macro implementation itself is ordinary string-processing X_eTaL.
+
+That demonstrates something significant:
+
+X_eTaL source
+      |
+      v
+macro invocation
+      |
+      v
+X_eTaL macro function
+(String, String) -> String
+      |
+      v
+generated X_eTaL source
+      |
+      v
+normal parser/type checker
+      |
+      v
+normal X_eTaL program
+
+That's enough to legitimately call the language extensible.
+
+Compile .xtlm first
+
+I would indeed make macro libraries compile before the .xtl that uses them.
+
+That gives a clean phase distinction:
+
+                 X_eTaL compilation
+
+       .xtlm
+         |
+         v
+   macro compiler
+         |
+         v
+   macro library
+         |
+         +------------------+
+                            |
+                            v
+.xtl ---> lexical scan ---> macro expansion
+                            |
+                            v
+                         parser
+                            |
+                            v
+                       type checker
+                            |
+                            v
+                        evaluator
+
+This is conceptually similar to why Rust macros are brought into scope before use, although Rust has substantially more complicated macro scoping and expansion rules.
+
+And it avoids the nasty question:
+
+Can a macro define the macro that expands the rest of the file containing its own definition?
+
+For V1: no.
+
+.xtlm is compiled first. .xtl consumes the resulting macro environment.
+
+Much easier to reason about.
+
+One restriction I would impose immediately
+
+Macro expansion is recursive, but bounded.
+
+For example:
+
+MAX_MACRO_EXPANSION_DEPTH = 32
+
+because:
+
+_a< -> "_b< ..."
+_b< -> "_a< ..."
+
+otherwise gives you an entertaining compiler heater.
+
+Also provide:
+
+xetal --expand foo.xtl
+
+which prints the source after macro expansion.
+
+That is probably more important than adding another built-in macro.
+
+Even better:
+
+xetal --expand-macro foo.xtl:17
+
+showing:
+
+before:
+    "x" u:foo< "y"
+
+expands to:
+    ...
+
+defined:
+    macros/foo.xtlm:23
+
+For a teaching language, macro expansion should be extremely visible.
+
+I would not implement Lisp-style macros yet
+
+Lisp macros are extraordinarily powerful because they're manipulating the language's own natural representation of programs.
+
+X_eTaL doesn't have Lisp's homoiconicity.
+
+Trying to recreate that now leads toward:
+
+AST values
+quote
+unquote
+splice
+hygiene
+gensym
+macro scopes
+syntax objects
+source locations
+
+That's exactly the overengineering you're trying to avoid.
+
+Your String→String mechanism gets you most of the pedagogical payoff:
+
+A user can add something that looks like new X_eTaL syntax.
+
+Later you could introduce:
+
+Syntax -> Syntax
+
+without invalidating .xtlm.
+
+Rust itself illustrates why stopping early is attractive: it has declarative macros plus three forms of procedural macro, operating on token streams, with substantial rules around scope and hygiene. X_eTaL doesn't need that complexity to prove extensibility.
+
+C ABI: make this the second extension axis
+
+I'd describe the architecture as:
+
+                 X_eTaL EXTENSIBILITY
+
+            syntax                 capability
+              |                        |
+              v                        v
+          .xtlm macros             native ABI
+              |                        |
+       String -> String          X_eTaL -> C ABI
+              |                        |
+              +-----------+------------+
+                          |
+                          v
+                       X_eTaL
+
+They solve different problems.
+
+Macros extend what programs can say.
+
+Native libraries extend what programs can do.
+
+That's a nice distinction.
+
+[]SVO could be the low-level mechanism
+
+I think your []SVO idea is reasonable if it is the primitive, rather than the normal user interface.
+
+Something approximately like:
+
+[]SVO "libm.so" "cos" "f64(f64)"
+
+could return a callable function, or bind one.
+
+But I'd probably make the interface slightly more structured if X_eTaL types permit it:
+
+f := []SVO "libm.so" ("cos" ; "f64" ; "f64")
+
+Then:
+
+f 1.2
+
+The exact syntax is secondary to the architecture:
+
+[]SVO
+  |
+  +-- load dynamic library
+  +-- resolve symbol
+  +-- validate ABI signature
+  +-- construct X_eTaL callable
+
+Then an ordinary .xtl library hides this:
+
+Math.xtl
+    |
+    +-- cos := []SVO ...
+    +-- sin := []SVO ...
+    +-- sqrt := []SVO ...
+
+Application:
+
+"m:" u_se< "Math"
+
+m:cos 1.2
+
+Now the user doesn't care whether m:cos is:
+
+interpreted X_eTaL,
+compiled X_eTaL,
+Rust,
+C,
+Fortran,
+BLAS,
+CUDA,
+an FPGA driver,
+
+provided it satisfies the declared X_eTaL type.
+
+That is much more powerful than making u_native< the calling convention.
+
+Macros + native libraries become particularly interesting
+
+The two extension mechanisms can compose.
+
+Suppose somebody ships:
+
+blas.xtlm
+libxetal_blas.so
+
+The macro library can generate bindings/specializations:
+
+"f32[_,_]" blas:gemm< "A B"
+
+which expands to ordinary X_eTaL referencing functions supplied by the native library.
+
+Or an ML extension could have:
+
+"Conv2D" ml:layer< "3 32 3 3"
+
+expand into ordinary typed X_eTaL which ultimately calls optimized native kernels.
+
+Now eXtensible means something substantive rather than merely being part of the acronym.
+
+What I would actually implement
+
+I would keep the first milestone deliberately tiny:
+
+Keep u_se<.
+Add .xtlm.
+In .xtlm, ordinary-looking X_eTaL function definitions define macros with the contract (String, String) -> String.
+Add namespace import of macro libraries, so u: in u:mymacro< identifies the macro library namespace.
+Add --expand and a hard macro-expansion-depth limit.
+Implement one standard .xtlm library containing u_if< and perhaps u_each<, rather than hard-coding them in Rust.
+Later add []SVO as the primitive native-symbol operation, and hide it behind ordinary .xtl libraries.
+
+There is an appealing bootstrap story here:
+
+                 built into compiler
+                        |
+                      u_se<
+                        |
+          +-------------+-------------+
+          |                           |
+        .xtl                        .xtlm
+          |                           |
+    X_eTaL libraries            macro libraries
+          |                           |
+          |                    user-defined u_foo<
+          |                           |
+          +-------------+-------------+
+                        |
+                      X_eTaL
+                        |
+                      []SVO
+                        |
+                  native libraries
+
+And I would stop there until concrete programs demonstrate something missing.
+
+The result is unusually economical: one built-in macro mechanism, one macro-library file type, ordinary X_eTaL as the macro implementation language, and one FFI primitive. You get Lisp-like language extensibility as a user-facing idea, Rust-like obvious macro invocation syntax, and C/Rust-like native extension capability, without inheriting the complexity of any of those macro systems.
+
+One naming tweak I particularly like: reserve u_ for compiler/built-in macros (u_se<, perhaps u_if<) while imported macro libraries naturally use their namespace (c:...<, ml:...<, test:...<). That makes the distinction between the tiny language core and user-created language extensions visible directly in source.
+
+That makes sense, especially once X_eTaL becomes an ecosystem rather than one repository. I would design today's repo names and dependencies assuming that migration will happen, so moving ownership later is mostly administrative.
+
+Target organization
+
+I'd use an organization as the umbrella and keep the repo names explicit:
+
+sw-X_eTaL/
+│
+├── X_eTaL
+├── X_eTaL-demos
+├── X_eTaL-games
+├── X_eTaL-libraries
+└── X_eTaL-extensions
+
+Potential future repos should earn their existence rather than being created preemptively:
+
+├── X_eTaL-course
+├── X_eTaL-workspaces
+├── X_eTaL-vscode
+└── X_eTaL-emacs
+
+I particularly would not split compiler/runtime/macro implementation into separate public repos yet. Keep the implementation cohesive in X_eTaL.
+
+Responsibilities
+X_eTaL
+    language
+    parser/compiler/interpreter
+    pretty printer
+    macro engine
+    use<
+    native ABI / []SVO
+          │
+          ├──────────────┐
+          ▼              ▼
+X_eTaL-libraries    X_eTaL-extensions
+  *.xtl               Rust/C/native
+  *.xtlm              *.xtl wrappers
+  pure X_eTaL         *.xtlm helpers
+       │                    │
+       └─────────┬──────────┘
+                 ▼
+          X_eTaL-demos
+          X_eTaL-games
+
+That is enough separation for quite a while.
+
+Design now for ownership independence
+
+The main thing I'd do before moving anything is remove assumptions that the canonical location is:
+
+softwarewrighter/X_eTaL
+
+For example, avoid having use< ultimately depend on GitHub coordinates such as:
+
+softwarewrighter/X_eTaL-libraries
+
+A library should identify itself as something like:
+
+Combinators
+Conditionals
+Stats
+
+not by its GitHub home.
+
+Similarly, dependencies should preferably be expressed conceptually as:
+
+X_eTaL-libraries
+
+rather than:
+
+github.com/softwarewrighter/X_eTaL-libraries
+
+except where Git/Cargo necessarily needs a URL.
+
+That will also help if someday libraries can come from multiple registries or local directories.
+
+GitHub transfer should be relatively painless
+
+GitHub's repository-transfer documentation explains that repository transfers retain issues, pull requests, releases, stars, watchers, and Git history, and GitHub redirects requests from the old repository location to the new one. You'll still want to update canonical URLs throughout documentation and automation rather than depending permanently on redirects.
+
+I'd therefore migrate the entire family in a fairly short window:
+
+softwarewrighter/X_eTaL
+softwarewrighter/X_eTaL-demos
+softwarewrighter/X_eTaL-games
+softwarewrighter/X_eTaL-libraries
+softwarewrighter/X_eTaL-extensions
+
+                    ↓
+
+sw-X_eTaL/X_eTaL
+sw-X_eTaL/X_eTaL-demos
+sw-X_eTaL/X_eTaL-games
+sw-X_eTaL/X_eTaL-libraries
+sw-X_eTaL/X_eTaL-extensions
+
+Then update README links, badges, Git dependencies, Actions, Pages, submodules if any, demo links, and local remotes together.
+
+One naming question I'd settle first
+
+I'm less convinced by sw-X_eTaL as the organization name than by the architecture itself.
+
+The organization is effectively the project's public identity. Since every repository already starts with X_eTaL, something like:
+
+X-eTaL
+
+or whatever GitHub-compatible spelling you settle on could produce cleaner coordinates:
+
+X-eTaL/X_eTaL
+X-eTaL/X_eTaL-demos
+X-eTaL/X_eTaL-games
+X-eTaL/X_eTaL-libraries
+X-eTaL/X_eTaL-extensions
+
+Whereas sw-X_eTaL preserves the Software Wrighter family identity and distinguishes it from somebody else's similarly named project. Both are defensible; I'd make that decision based on whether you expect X_eTaL ultimately to have an identity independent of Software Wrighter.
+
+More importantly, I would wait exactly as you're proposing. Finish enough of -demos, -games, -libraries, and -extensions to discover the natural ecosystem boundaries first. Then the organization migration can formalize a structure that has emerged from actual use rather than committing you prematurely to a repo taxonomy.
+
+yes, an alternative org name could be sw-array-languages since I have more than one.  sw-MLPL is under sw-ml-study and web-sw-cor24-apl is under sw-embed so may not move to sw-array-languages, and I am working on a new language to be derived from the best of sw-mlpl and X_eTaL for a new ML-oriented array language (known currently by a codename, project "M", or Rosetta M, and a planned language name of OMLETA, pehaps).  This could land under sw-ml-study or sw-array-languages.  sw-ml-study seems ephemeral, only exists while I am studying (but could be kept as a historical artifact)
+
+Yes. With multiple language lines, I think sw-array-languages is a stronger long-term boundary than sw-X_eTaL. It organizes around the enduring subject rather than today's most active language.
+
+I'd separate research provenance from long-term project ownership.
+
+A useful organization model
+softwarewrighter/
+    general Software Wrighter projects
+
+sw-embed/
+    historical/embedded-system projects
+    web-sw-cor24-apl
+    ...
+
+sw-ml-study/
+    ML research notebooks / experiments / prototypes
+    sw-mlpl
+    project-M experiments
+    ...
+
+sw-array-languages/
+    maintained array-language projects
+    X_eTaL
+    X_eTaL-demos
+    X_eTaL-games
+    X_eTaL-libraries
+    X_eTaL-extensions
+
+    OMLETA                 ← eventually, if/when it becomes a language
+    OMLETA-demos
+    ...
+
+The distinction I'd use is:
+
+sw-ml-study is where ideas are investigated; sw-array-languages is where languages live.
+
+That makes the apparent ephemerality of sw-ml-study a feature rather than a problem.
+
+Project M / Rosetta M / OMLETA is the interesting case
+
+I wouldn't move it based simply on the fact that it is an array language.
+
+During the exploratory phase:
+
+sw-ml-study/project-M
+
+makes considerable sense because you're asking research questions such as:
+
+What should be inherited from sw-mlpl?
+What should be inherited from X_eTaL?
+Which array semantics work particularly well for ML?
+Homogeneous tuples?
+Naperian structures?
+Static typing?
+Broadcasting/shape algebra?
+How should ML primitives compose?
+Which experiments actually improve ML expression?
+
+Then there is a natural graduation event:
+
+project-M
+   │
+   │ research produces a coherent language
+   ▼
+OMLETA
+
+At that point:
+
+sw-ml-study/project-M
+          ↓
+sw-array-languages/OMLETA
+
+would tell the history quite nicely.
+
+You don't even necessarily have to transfer/rename the research repository. It could remain frozen:
+
+sw-ml-study/project-M
+    "Research that led to OMLETA.
+     Active development continues at ..."
+
+sw-array-languages/OMLETA
+    actual language
+
+That preserves experimental archaeology, which I think is particularly valuable for this work.
+
+I would probably leave sw-mlpl where it is
+
+Even if OMLETA derives substantially from it.
+
+That gives you a lineage:
+
+                         APL / J / BQN ...
+                               │
+                               │
+                         ┌─────┴─────┐
+                         ▼           ▼
+                     sw-mlpl       X_eTaL
+                         │           │
+                         │           │
+                         └─────┬─────┘
+                               ▼
+                         Project "M"
+                         / Rosetta M
+                               │
+                         experiments
+                               │
+                               ▼
+                            OMLETA
+
+Repository ownership then records two different stages:
+
+sw-ml-study/sw-mlpl
+          │
+          ├──────────────┐
+          │              │
+          ▼              │
+sw-ml-study/project-M    │
+          ▲              │
+          │              │
+          └──── X_eTaL ──┘
+                  │
+                  ▼
+        sw-array-languages/OMLETA
+
+There's no need to rewrite history by moving every ancestor into the new organization.
+
+X_eTaL is already at the "language" stage
+
+That's why I'd treat it differently.
+
+You've already got or are creating:
+
+X_eTaL
+X_eTaL-demos
+X_eTaL-games
+X_eTaL-libraries
+X_eTaL-extensions
+
+That's unmistakably an ecosystem rather than an experiment.
+
+So:
+
+softwarewrighter/X_eTaL*
+             ↓
+sw-array-languages/X_eTaL*
+
+seems like a natural graduation.
+
+sw-array-languages also gives you room for smaller languages
+
+Suppose two years from now you experiment with something unrelated to ML:
+
+sw-array-languages/
+    X_eTaL
+    ...
+    OMLETA
+    ...
+    TinyAPL
+    ArrayCalc
+    TernaryArray
+
+They fit without needing another organization.
+
+Conversely, putting everything under:
+
+sw-X_eTaL
+
+makes OMLETA awkward:
+
+sw-X_eTaL/OMLETA
+
+That incorrectly implies OMLETA is subordinate to X_eTaL rather than a sibling/descendant influenced by it.
+
+So I'd favor:
+
+             sw-array-languages
+                    │
+          ┌─────────┴──────────┐
+          ▼                    ▼
+       X_eTaL                OMLETA
+          │                    │
+     ecosystem             ecosystem
+There's also a useful maturity model hiding here
+
+Rather than deciding organization solely by subject, you could use:
+
+Stage	Home	Meaning
+Exploration	sw-ml-study	"I'm investigating this."
+Prototype language	sw-ml-study	"This may or may not survive."
+Established language	sw-array-languages	"This is now a maintained language."
+Demos/libraries/ecosystem	sw-array-languages	Supporting that language
+Historical experiment	stays where created	Preserve provenance
+
+That prevents endless repository shuffling.
+
+Repositories graduate; their ancestors don't have to follow them.
+
+And I'd keep sw-ml-study
+
+I wouldn't eventually delete or broadly reorganize it.
+
+The name becoming historically dated isn't necessarily bad. It becomes something like a research lab notebook:
+
+sw-ml-study
+201?–2026+
+Research and experimental implementations
+
+Some projects may remain useful forever. Others may become predecessors to maintained projects elsewhere.
+
+You can eventually mark it accordingly:
+
+This organization contains ML research and experimental projects. Some projects have graduated into maintained projects in other Software Wrighter organizations; their original research repositories are retained for historical and educational purposes.
+
+That's useful provenance.
+
+One thing I'd avoid: organizing purely by technology
+
+I wouldn't move:
+
+web-sw-cor24-apl
+
+merely because APL is an array language.
+
+Its reason for existence and context are apparently tied to the sw-embed work. Moving it loses information.
+
+Similarly:
+
+sw-mlpl
+
+being an array-ish language doesn't mean it belongs in sw-array-languages; its identity is closely tied to your ML experimentation.
+
+Think of organization membership as answering:
+
+Why does this repository exist?
+
+rather than:
+
+What category could this repository technically be placed in?
+
+For X_eTaL the answer has evolved into "to develop and support an array programming language." Therefore sw-array-languages fits very well.
+
+For sw-mlpl, it's still "to explore ML through a purpose-built language." sw-ml-study records that nicely.
+
+And if Project M eventually crystallizes into OMLETA, that's an especially nice point at which the project can graduate from ML-language research into a maintained ML-oriented array language under sw-array-languages.
+
+note, what you called project-M is related to the existing sw-ml-study/m-poc repo
+
+Right — I should have tied Project M / Rosetta M directly to the existing sw-ml-study/m-poc repo, rather than depicting project-M as a hypothetical separate repo.
+
+I'd revise the lineage to:
+
+                       APL / J / BQN / etc.
+                              │
+                 ┌────────────┴────────────┐
+                 ▼                         ▼
+       sw-ml-study/sw-mlpl       softwarewrighter/X_eTaL
+                 │                         │
+                 └──────────┬──────────────┘
+                            ▼
+                  sw-ml-study/m-poc
+                    Project "M"
+                     Rosetta M
+                            │
+                   experiments converge
+                            │
+                            ▼
+                         OMLETA?
+                            │
+                    if it graduates
+                            ▼
+             sw-array-languages/OMLETA
+
+I think m-poc should remain where it is, even if OMLETA eventually becomes a separate production/maintained language repo. It records the experimental bridge between sw-mlpl and X_eTaL.
+
+That gives the repositories useful historical semantics:
+
+sw-mlpl — earlier ML-oriented language exploration.
+X_eTaL — independently evolving typed/extensible array language.
+m-poc — explicit experimental convergence point: determine what should be taken from each for an ML-oriented successor.
+OMLETA — created later only when those experiments have converged enough that there really is a distinct language worth naming and maintaining.
+
+In particular, I would not rename m-poc to OMLETA prematurely. Keeping the PoC separate lets you reject experiments without accumulating compatibility baggage in the eventual language. When OMLETA exists, its initial implementation/spec can deliberately say, in effect, these are the ideas from m-poc that survived.
+
+That also strengthens the case for sw-array-languages: X_eTaL and eventual OMLETA can be sibling maintained languages there, while sw-ml-study/m-poc preserves the research lineage that connected sw-mlpl and X_eTaL.
