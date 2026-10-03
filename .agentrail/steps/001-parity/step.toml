@@ -1,9 +1,10 @@
 number = 1
 slug = "parity"
-status = "in-progress"
+status = "completed"
 description = "media step: docs/parity.md (this repo against demo-extensions) and the media ..."
 role = "production"
 context_files = []
 created_at = "2026-10-03T12:06:04"
+completed_at = "2026-10-03T12:06:04"
 task_type = "parity"
-commits = []
+commits = ["4829ebdff2b00d03edef0d0d1ab4676502cbfee9"]

@@ -1,0 +1,11 @@
+{
+  "task_type": "parity",
+  "state": {
+    "number": 1,
+    "step": "parity"
+  },
+  "action": "surveyed demo-extensions; checked X_eTaL eval thread, recursion cap, p_ower",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-03T12:06:04"
+}
