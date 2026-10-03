@@ -1,0 +1,1 @@
+xetal-x --version provenance line (this repo sha + experimental), check-xetal-x checks it and is SIGPIPE-safe; upstream blockers E5/E6 tracked.
