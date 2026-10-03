@@ -1,9 +1,10 @@
 number = 3
 slug = "notebook"
-status = "in-progress"
+status = "completed"
 description = "sqlite step 3: extensions/sqlite/demos/notebook.xtl with a bundled small publ..."
 role = "production"
 context_files = []
 created_at = "2026-10-03T08:33:15"
+completed_at = "2026-10-03T09:56:55"
 task_type = "demo"
-commits = []
+commits = ["30e380c840ff56f4f96376a61a2f9d61f249a67a"]

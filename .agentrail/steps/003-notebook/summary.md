@@ -1,0 +1,1 @@
+Data notebook: Mauna Loa CO2 (NOAA, provenance) via sqlite import; SQL groups + X_eTaL rise, LSQ, residuals, histogram, curve SVG; reg-rs pinned; ask E6.
