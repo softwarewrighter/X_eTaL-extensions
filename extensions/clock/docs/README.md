@@ -39,16 +39,12 @@ Native functions: `now`, `iso`, `iso_of`, `millis` (`just list`).
   100,000-element sum takes about 21 ms in X_eTaL and 20 ms in Rust
   over the bridge (most of it formatting the numbers as text).
 
-## Live
+## Recording
 
-`web/` is clock's live page
-([live](https://softwarewrighter.github.io/X_eTaL-extensions/clock/)):
-the bridge-cost demo run in the browser, with clock and hello both
-compiled to WebAssembly and linked in. In a browser the clock is the
-browser's (`std`'s clocks panic on `wasm32`). One run in Chrome on the
-same laptop: about 16,000 calls per second and 1.7 million Floats per
-second out and back; the 100,000-element sum about 14 ms in X_eTaL and
-25 ms in Rust over the bridge.
+`videos/bridge-cost.webm` (and `.webp`) record the demo at the command
+line (`just videos clock`). `web/` holds an earlier WebAssembly page of
+this extension; it is no longer published (the site shows recordings:
+extensions are native).
 
 ## Build and test
 

@@ -1,6 +1,6 @@
 # Conway's Life in a native window: the board is an X_eTaL array, each
 # generation one array expression, drawn by Rust with every frame.
-# Run: just demo life     (Space: a new board; q or close: quit)
+# Run: just demo canvas life   (Space: a new board; q or close: quit)
 "cv:" u_se< "Canvas"
 
 # Life (as in X_eTaL's demos/life.xtl): every cell plus its neighbours

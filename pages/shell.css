@@ -64,3 +64,9 @@ footer .sep { margin: 0 8px; }
   .layout { grid-template-columns: 1fr; }
   .gen { margin-left: 0; width: 100%; }
 }
+main h2 { margin: 28px 0 4px; font-size: 1.3rem; }
+main h2 a { color: var(--accent); text-decoration: none; }
+.demos { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 16px; }
+.demo h3 { margin: 0 0 4px; font-size: 1rem; }
+.demo video { width: 100%; border-radius: 8px; background: #000; display: block; margin-bottom: 8px; }
+header pre.source { max-width: 80ch; }

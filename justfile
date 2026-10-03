@@ -88,6 +88,18 @@ walkthrough *url:
 status-doc:
     scripts/status.py
 
+# List the demos (EXT NAME and what each shows)
+demos:
+    @scripts/demos.sh
+
+# Run a demo: just demo sqlite notebook (extra args go to xetal-x run, e.g. --echo)
+demo ext name *args:
+    @scripts/demos.sh "$@"
+
+# Record the demo videos (vhs, ffmpeg, gif2webp; headless, nothing on screen): just videos [EXT]
+videos *ext:
+    scripts/videos.sh "$@"
+
 # The full pre-commit gate
 gate:
     scripts/gate.sh

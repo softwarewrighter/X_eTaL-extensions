@@ -1,7 +1,7 @@
 # The data notebook: a CSV in SQLite, SQL to select and group, X_eTaL
 # arrays to compute, pictures to see it. Atmospheric CO2 at Mauna Loa,
 # 1959-2025 (NOAA GML and Scripps; demos/data/PROVENANCE.txt).
-# Run: just demo notebook    (pictures go to XETAL_DRAW, else here)
+# Run: just demo sqlite notebook   (pictures go to work/draw/)
 "sq:" u_se< "Sqlite"
 "s:" u_se< "Stats"
 

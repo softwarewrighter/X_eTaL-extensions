@@ -21,7 +21,8 @@ CAPABILITIES = [
     ("typed facades (`.xtl`)", "yes: every extension's `lib/NAME.xtl`, types pinned by reg-rs"),
     ("macro helpers (`.xtlm`)", "blocked on X_eTaL (ask E2, X_eTaL Saga 19)"),
     ("native ABI", "V1: scalars, text, dense arrays of rank 0 to 9; no handles yet"),
-    ("browser", "yes for extensions that build for wasm32 (hello, clock); sqlite stays on the command line (decision)"),
+    ("browser", "no: extensions are native; the site shows recordings of the demos (the WebAssembly pages were retired, 2026-10-03)"),
+    ("demo recordings", "`just videos`: vhs for terminal demos, headless frames for window demos; nothing on screen"),
     ("native windows", "yes: `xetal-x` serves windows on the main thread for extensions linked into it (canvas)"),
     ("command line", "every extension, with `xetal-x`"),
     ("tests", "Rust tests per extension and crate; reg-rs goldens of every facade, demo and error"),
@@ -55,8 +56,8 @@ def host(d):
 def row(d):
     name = d.name
     demos = sorted(p.stem for p in (d / "demos").glob("*.xtl"))
-    live = (d / "web" / "Cargo.toml").exists()
-    return "| {} | {} | {} | {} | {} | {} | {} | {} |".format(
+    videos = sorted(p.stem for p in (d / "videos").glob("*.webm"))
+    return "| {} | {} | {} | {} | {} | {} | {} | {} | {} |".format(
         f"[{name}](../extensions/{name}/docs/README.md)",
         "release 1" if name in RELEASE_1 else "media (saga 5)" if name in MEDIA else "roadmap",
         facade(d),
@@ -64,7 +65,8 @@ def row(d):
         rust_tests(d),
         len(list((d / "tests").glob("*.rgt"))),
         ", ".join(demos) if demos else "--",
-        f"[live]({LIVE}/{name}/)" if live else "native window (xetal-x)" if host(d) else "command line",
+        ", ".join(f"[{v}](../extensions/{name}/videos/{v}.webm)" for v in videos) or "--",
+        "native window (xetal-x)" if host(d) else "command line",
     )
 
 
@@ -80,8 +82,8 @@ def page():
         "",
         "## Extensions",
         "",
-        "| Extension | Release | Facade (alias) | Native functions | Rust tests | reg-rs tests | Demos | Runs |",
-        "| --------- | ------- | -------------- | ---------------- | ---------- | ------------ | ----- | ---- |",
+        "| Extension | Release | Facade (alias) | Native functions | Rust tests | reg-rs tests | Demos | Recordings | Runs |",
+        "| --------- | ------- | -------------- | ---------------- | ---------- | ------------ | ----- | ---------- | ---- |",
         *[row(d) for d in exts],
         "",
         "Roadmap, not started: " + ", ".join(p for p in planned if not (root / "extensions" / p).exists()) + ".",

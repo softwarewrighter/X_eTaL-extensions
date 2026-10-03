@@ -1,6 +1,6 @@
 # What the text bridge costs (docs/bridge.md): calls per second, and
-# Floats per second carried out and back. Run with every extension:
-#   xetal-x --ext extensions run extensions/clock/demos/bridge-cost.xtl
+# Floats per second carried out and back (it uses hello too).
+# Run: just demo clock bridge-cost
 "ck:" u_se< "Clock"
 "hx:" u_se< "Hello"
 

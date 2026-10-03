@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 13:54 `docs` The site shows recordings instead of live pages (the user's decision: extensions are native): `just videos` records every demo headlessly (vhs tapes typing `just demo EXT NAME --echo`; window demos from headless frames joined by ffmpeg), `just pages` builds a page of the recordings with the commands to run each; root `just demos` and `just demo EXT NAME`; README shows the notebook recording; the WebAssembly pages are no longer published (their code stays in `web/`). CLAUDE.md: the screen protocol.
+
 - 12:46 `feat` canvas without a screen: `XETAL_HEADLESS=1` (no window; `XETAL_EVENTS` scripted, then close) and `XETAL_FRAMES=DIR` (every frame saved as PNG); the Life demo runs headless in the gate with its frames pinned.
 
 - 12:16 `feat` The UI host and canvas: `crates/xetal-ext-ui` (a winit event loop on the main thread, created only when a program opens a window; jobs from the program's thread; event queues with frame ticks); `xetal-x` runs the program on a thread of its own and serves the main thread (all 20 vendored demos still identical); host-linked packages (`host = true`); the canvas extension (`cv:o_pen!`, `cv:s_how!`, `cv:n_ext!`, `cv:c_lose!`; softbuffer) with `demos/life.xtl` (Life in a native window); headless Rust and reg-rs tests, `just smoke` opt-in.

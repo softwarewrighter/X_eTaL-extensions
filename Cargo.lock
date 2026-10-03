@@ -3700,6 +3700,7 @@ dependencies = [
 name = "xetal-ext-ui"
 version = "0.1.0"
 dependencies = [
+ "png",
  "winit",
 ]
 

@@ -5,8 +5,12 @@
 # X_eTaL extensions
 
 <p align="center">
-  <b><a href="https://softwarewrighter.github.io/X_eTaL-extensions/">The live extensions</a></b>
-  -- X_eTaL programs calling Rust, in your browser (WebAssembly)
+  <b><a href="https://softwarewrighter.github.io/X_eTaL-extensions/">The demos, recorded</a></b>
+  -- X_eTaL programs calling native Rust extensions, and how to run them yourself
+</p>
+
+<p align="center">
+  <img src="extensions/sqlite/videos/notebook.webp" alt="The data notebook running at the command line" width="760">
 </p>
 
 Native extensions for [X_eTaL](https://github.com/softwarewrighter/X_eTaL),
@@ -21,9 +25,11 @@ files -- each used from X_eTaL like any other library.
 git clone https://github.com/softwarewrighter/X_eTaL-extensions
 cd X_eTaL-extensions
 cargo build --workspace          # Rust is all it needs: X_eTaL is vendored
-just ext hello demo tour         # X_eTaL arrays handed to Rust and back
-just ext sqlite demo notebook    # CO2 at Mauna Loa: SQLite + X_eTaL, pictures in work/draw/
-just walkthrough                 # a fresh clone, built and run, checked against the goldens
+just demos                      # every demo: EXT NAME and what it shows
+just demo hello tour            # X_eTaL arrays handed to Rust and back
+just demo sqlite notebook       # CO2 at Mauna Loa: SQLite + X_eTaL, pictures in work/draw/
+just demo canvas life           # Life in a native window (Space: new board, q: quit)
+just walkthrough                # a fresh clone, built and run, checked against the goldens
 ```
 
 ([`just`](https://github.com/casey/just) runs the recipes.) What works
@@ -105,8 +111,8 @@ come.
 
 | Extension | Facade | What | Crates | Status |
 | --------- | ------ | ---- | ------ | ------ |
-| [hello](extensions/hello/docs/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-extensions/hello/)) | `Hello` | the smallest proof of the boundary | -- | done: facade, tests, demo, live |
-| [clock](extensions/clock/docs/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-extensions/clock/)) | `Clock` | wall-clock and monotonic time; the bridge's cost | std | done: facade, tests, cost demo, live |
+| [hello](extensions/hello/docs/README.md) | `Hello` | the smallest proof of the boundary | -- | done: facade, tests, demo |
+| [clock](extensions/clock/docs/README.md) | `Clock` | wall-clock and monotonic time; the bridge's cost | std | done: facade, tests, cost demo |
 | [canvas](extensions/canvas/docs/README.md) | `Canvas` | a native window showing arrays as pixels; keys and clicks back | winit, softbuffer | media saga: done, Life demo |
 | [sqlite](extensions/sqlite/docs/README.md) | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | done: facade, CSV import, tests, the data notebook |
 | web | `Web` | serve HTTP: the program takes each request and replies | axum, tokio | roadmap |
@@ -180,7 +186,8 @@ just gate       # everything the pre-commit gate checks
 just build           # every crate and extension (shared libraries in target/debug/)
 just test [CRATE]    # the Rust tests
 just test-exts       # every extension's reg-rs tests (reg-rs on PATH)
-just pages           # build the live site into pages/ (trunk); commit it, a push publishes it
+just videos [EXT]    # record the demos (vhs; window demos from headless frames): nothing on screen
+just pages           # build the site into pages/ (the recordings and how to run them); commit it, a push publishes it
 just serve-pages     # preview it at http://127.0.0.1:8732/X_eTaL-extensions/
 just xetal-version   # which X_eTaL commit is vendored
 just eval "'+ r_/ 1 2 3"   # evaluate with the vendored xetal

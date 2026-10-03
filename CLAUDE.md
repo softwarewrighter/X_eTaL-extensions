@@ -340,10 +340,14 @@ Read before working:
 10. `CHANGES.md` gets a line for every commit (newest first, grouped
     by day, Pacific time, a category), as in `../X_eTaL`.
 11. NEVER run `sw-install` unless the user explicitly asks.
-12. The live site is built locally into `pages/` (`just pages`, trunk)
-    and committed; `.github/workflows/pages.yml` only uploads it.
-    Rebuild it when a live page or what it links changes.
-13. Work is committed directly to `main` and pushed (the user's
+12. The site shows recordings, not live pages (the user's decision,
+    2026-10-03: extensions are native): `just videos` records each demo
+    headlessly (vhs; window demos from saved frames), `just pages`
+    builds `pages/` (commit it); the Pages workflow only uploads it.
+13. Never capture the user's screen or open a window on their desktop
+    without asking first, with an exact duration (the screen protocol
+    agreed 2026-10-03); verify headlessly.
+14. Work is committed directly to `main` and pushed (the user's
     choice); the feat/ -> pr/ branch handoff in the briefing applies
     only to a parallel lane on its own branch.
 

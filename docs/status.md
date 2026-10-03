@@ -6,12 +6,12 @@ of date. Release 1 is hello, clock and sqlite (docs/plan.md).
 
 ## Extensions
 
-| Extension | Release | Facade (alias) | Native functions | Rust tests | reg-rs tests | Demos | Runs |
-| --------- | ------- | -------------- | ---------------- | ---------- | ------------ | ----- | ---- |
-| [canvas](../extensions/canvas/docs/README.md) | media (saga 5) | `Canvas` (`cv:`) | 4 | 2 | 4 | life | native window (xetal-x) |
-| [clock](../extensions/clock/docs/README.md) | release 1 | `Clock` (`ck:`) | 4 | 2 | 5 | bridge-cost | [live](https://softwarewrighter.github.io/X_eTaL-extensions/clock/) |
-| [hello](../extensions/hello/docs/README.md) | release 1 | `Hello` (`hx:`) | 8 | 5 | 11 | tour | [live](https://softwarewrighter.github.io/X_eTaL-extensions/hello/) |
-| [sqlite](../extensions/sqlite/docs/README.md) | release 1 | `Sqlite` (`sq:`) | 6 | 7 | 8 | notebook | command line |
+| Extension | Release | Facade (alias) | Native functions | Rust tests | reg-rs tests | Demos | Recordings | Runs |
+| --------- | ------- | -------------- | ---------------- | ---------- | ------------ | ----- | ---------- | ---- |
+| [canvas](../extensions/canvas/docs/README.md) | media (saga 5) | `Canvas` (`cv:`) | 4 | 2 | 4 | life | [life](../extensions/canvas/videos/life.webm) | native window (xetal-x) |
+| [clock](../extensions/clock/docs/README.md) | release 1 | `Clock` (`ck:`) | 4 | 2 | 5 | bridge-cost | [bridge-cost](../extensions/clock/videos/bridge-cost.webm) | command line |
+| [hello](../extensions/hello/docs/README.md) | release 1 | `Hello` (`hx:`) | 8 | 5 | 11 | tour | [tour](../extensions/hello/videos/tour.webm) | command line |
+| [sqlite](../extensions/sqlite/docs/README.md) | release 1 | `Sqlite` (`sq:`) | 6 | 7 | 8 | notebook | [notebook](../extensions/sqlite/videos/notebook.webm) | command line |
 
 Roadmap, not started: web, image, linalg, http, digest, regex.
 
@@ -25,7 +25,8 @@ This repository's column of the X_eTaL ecosystem's dashboard.
 | typed facades (`.xtl`) | yes: every extension's `lib/NAME.xtl`, types pinned by reg-rs |
 | macro helpers (`.xtlm`) | blocked on X_eTaL (ask E2, X_eTaL Saga 19) |
 | native ABI | V1: scalars, text, dense arrays of rank 0 to 9; no handles yet |
-| browser | yes for extensions that build for wasm32 (hello, clock); sqlite stays on the command line (decision) |
+| browser | no: extensions are native; the site shows recordings of the demos (the WebAssembly pages were retired, 2026-10-03) |
+| demo recordings | `just videos`: vhs for terminal demos, headless frames for window demos; nothing on screen |
 | native windows | yes: `xetal-x` serves windows on the main thread for extensions linked into it (canvas) |
 | command line | every extension, with `xetal-x` |
 | tests | Rust tests per extension and crate; reg-rs goldens of every facade, demo and error |

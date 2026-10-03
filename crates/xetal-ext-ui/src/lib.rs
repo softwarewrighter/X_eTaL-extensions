@@ -268,3 +268,64 @@ impl Events {
         }
     }
 }
+
+/// Whether window programs run without a screen (`XETAL_HEADLESS=1`):
+/// no window opens, events come from [`scripted`].
+#[must_use]
+pub fn headless() -> bool {
+    std::env::var_os("XETAL_HEADLESS").is_some_and(|v| !v.is_empty() && v != "0")
+}
+
+/// The events of a headless window: those in `XETAL_EVENTS` (separated
+/// by commas: `frame,key q`), then `close`.
+#[must_use]
+pub fn scripted() -> Events {
+    let e = Events::new();
+    let script = std::env::var("XETAL_EVENTS").unwrap_or_default();
+    for ev in script.split(',').map(str::trim).filter(|s| !s.is_empty()) {
+        e.push(ev);
+    }
+    e.push("close");
+    e
+}
+
+/// Where frames are saved (`XETAL_FRAMES=DIR`), if anywhere.
+#[must_use]
+pub fn frames_dir() -> Option<std::path::PathBuf> {
+    std::env::var_os("XETAL_FRAMES")
+        .filter(|v| !v.is_empty())
+        .map(std::path::PathBuf::from)
+}
+
+/// Writes `width` by `height` 0RGB pixels as an RGB PNG, making the
+/// directory.
+///
+/// # Errors
+///
+/// When the file cannot be written.
+pub fn save_png(
+    width: usize,
+    height: usize,
+    pixels: &[u32],
+    path: &std::path::Path,
+) -> Result<(), String> {
+    if let Some(dir) = path.parent() {
+        std::fs::create_dir_all(dir).map_err(|e| format!("{}: {e}", dir.display()))?;
+    }
+    let file = std::fs::File::create(path).map_err(|e| format!("{}: {e}", path.display()))?;
+    let w = u32::try_from(width.max(1)).map_err(|e| e.to_string())?;
+    let h = u32::try_from(height.max(1)).map_err(|e| e.to_string())?;
+    let mut enc = png::Encoder::new(std::io::BufWriter::new(file), w, h);
+    enc.set_color(png::ColorType::Rgb);
+    enc.set_depth(png::BitDepth::Eight);
+    let mut writer = enc.write_header().map_err(|e| e.to_string())?;
+    #[allow(clippy::cast_possible_truncation)]
+    let mut data: Vec<u8> = pixels
+        .iter()
+        .flat_map(|p| [(p >> 16) as u8, (p >> 8) as u8, *p as u8])
+        .collect();
+    if data.is_empty() {
+        data = vec![0, 0, 0];
+    }
+    writer.write_image_data(&data).map_err(|e| e.to_string())
+}

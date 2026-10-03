@@ -1,5 +1,5 @@
 # A tour of the hello extension: X_eTaL arrays handed to Rust and back.
-# Run: just demo tour   (or: xetal-x --ext extensions/hello run demos/tour.xtl)
+# Run: just demo hello tour   (or: xetal-x --ext extensions/hello run demos/tour.xtl)
 "hx:" u_se< "Hello"
 
 # Rust answers, upper-cases and adds.

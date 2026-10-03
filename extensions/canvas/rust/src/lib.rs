@@ -6,7 +6,8 @@
 //! Without a screen: `XETAL_HEADLESS=1` opens no window and plays the
 //! events in `XETAL_EVENTS` (separated by commas: `frame,key q`), then
 //! `close`; `XETAL_FRAMES=DIR` saves every frame shown as
-//! `DIR/canvas-ID-N.png`, with or without a window.
+//! `DIR/canvas-ID-N.png`, with or without a window (helpers in
+//! `xetal-ext-ui`).
 
 use std::collections::HashMap;
 use std::num::NonZeroU32;
@@ -19,7 +20,7 @@ use xetal_ext_ui::winit::dpi::LogicalSize;
 use xetal_ext_ui::winit::event::{ElementState, MouseButton, WindowEvent};
 use xetal_ext_ui::winit::keyboard::{Key, NamedKey};
 use xetal_ext_ui::winit::window::{Window, WindowId};
-use xetal_ext_ui::{Events, Surface, on_main};
+use xetal_ext_ui::{Events, Surface, headless, on_main, scripted};
 
 /// A picture: width, height and 0RGB pixels, row by row.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -211,43 +212,13 @@ struct Handle {
     shown: usize,
 }
 
-fn headless() -> bool {
-    std::env::var_os("XETAL_HEADLESS").is_some_and(|v| !v.is_empty() && v != "0")
-}
-
-/// The scripted events of a headless canvas, then `close`.
-fn scripted() -> Events {
-    let e = Events::new();
-    let script = std::env::var("XETAL_EVENTS").unwrap_or_default();
-    for ev in script.split(',').map(str::trim).filter(|s| !s.is_empty()) {
-        e.push(ev);
-    }
-    e.push("close");
-    e
-}
-
 /// Writes a frame as an RGB PNG.
 ///
 /// # Errors
 ///
 /// When the file cannot be written.
 pub fn save_png(f: &Frame, path: &std::path::Path) -> Result<(), String> {
-    let file = std::fs::File::create(path).map_err(|e| format!("{}: {e}", path.display()))?;
-    let w = u32::try_from(f.width).map_err(|e| e.to_string())?;
-    let h = u32::try_from(f.height).map_err(|e| e.to_string())?;
-    let mut enc = png::Encoder::new(std::io::BufWriter::new(file), w.max(1), h.max(1));
-    enc.set_color(png::ColorType::Rgb);
-    enc.set_depth(png::BitDepth::Eight);
-    let mut writer = enc.write_header().map_err(|e| e.to_string())?;
-    let mut data: Vec<u8> = f
-        .pixels
-        .iter()
-        .flat_map(|p| [(p >> 16) as u8, (p >> 8) as u8, *p as u8])
-        .collect();
-    if data.is_empty() {
-        data = vec![0, 0, 0];
-    }
-    writer.write_image_data(&data).map_err(|e| e.to_string())
+    xetal_ext_ui::save_png(f.width, f.height, &f.pixels, path)
 }
 
 fn canvases() -> &'static Mutex<HashMap<i64, Handle>> {
@@ -346,7 +317,7 @@ fn show(args: &[Value]) -> Result<Value, OwnedError> {
     let id = id_of(&args[0])?;
     let (window, _) = handle(id)?;
     let f = frame(&args[1])?;
-    if let Some(dir) = std::env::var_os("XETAL_FRAMES") {
+    if let Some(dir) = xetal_ext_ui::frames_dir() {
         let n = {
             let mut c = lock();
             let h = c
@@ -355,8 +326,6 @@ fn show(args: &[Value]) -> Result<Value, OwnedError> {
             h.shown += 1;
             h.shown
         };
-        let dir = std::path::PathBuf::from(dir);
-        std::fs::create_dir_all(&dir).map_err(|e| OwnedError::failure(e.to_string()))?;
         save_png(&f, &dir.join(format!("canvas-{id}-{n}.png"))).map_err(OwnedError::failure)?;
     }
     let Some(window) = window else {

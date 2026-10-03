@@ -1,0 +1,10 @@
+# extensions/canvas/videos/life.webm and .webp: Life in a window, as the
+# window shows it -- recorded with no window and no screen: headless,
+# every frame saved (XETAL_FRAMES), then joined by ffmpeg (just videos).
+# Read by scripts/videos.sh: the demo, its seed, how many frames, the
+# frame rate, and the size to scale the frames to (nearest pixel).
+demo=life
+seed=1
+frames=150
+fps=15
+scale=480

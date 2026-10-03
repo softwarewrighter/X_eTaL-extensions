@@ -60,9 +60,15 @@ XETAL_HEADLESS=1 XETAL_EVENTS="frame,frame,key Space,frame" XETAL_FRAMES=work/fr
 The reg-rs test `canvas-demo-life-headless` does exactly this and pins
 the three frames.
 
+## Recording
+
+`videos/life.webm` (and `.webp`) are the Life demo as its window shows
+it -- made without a window or a screen: headless, every frame saved,
+joined by ffmpeg (`just videos canvas`, `videos/life.frames`).
+
 ## Demos
 
-- `demos/life.xtl` (`just demo life`): Conway's Life, 96 by 96, in a
+- `demos/life.xtl` (`just demo canvas life`): Conway's Life, 96 by 96, in a
   window; Space for a new board, q or closing the window to quit.
 
 ## Build and test

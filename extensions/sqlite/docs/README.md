@@ -96,6 +96,11 @@ error[io]: []N_GET: ext:sqlite/nums: near "selec": syntax error in selec 1 at of
 (The location is the facade's; X_eTaL does not yet also name the
 program line that called it -- ask E5.)
 
+## Recording
+
+`videos/notebook.webm` (and `.webp`) record the notebook at the
+command line (`just videos sqlite`).
+
 ## Live
 
 None, by decision (2026-10-03): sqlite runs on the command line

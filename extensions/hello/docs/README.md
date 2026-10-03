@@ -86,19 +86,12 @@ sent (`tests/facade-type.xtl`).
 - `demos/tour.xtl` (`just demo tour`): text, numbers, a 10 by 10 times
   table summed in Rust, a rank-3 array out and back with its shape.
 
-## Live
+## Recording
 
-`web/` is hello's live page: the tour, editable and run in the browser,
-hello compiled to WebAssembly and linked into the page (with its
-`static` feature), the facade served by the page's store. Build and
-preview it with trunk:
-
-```sh
-cd web && trunk serve      # http://127.0.0.1:8080/
-```
-
-`web/tests/page.rs` runs the page's program natively and checks it
-against `tests/hello-demo-tour.out`, the command line's golden.
+`videos/tour.webm` (and `.webp`) record the demo at the command
+line (`just videos hello`). `web/` holds an earlier WebAssembly page of
+this extension; it is no longer published (the site shows recordings:
+extensions are native).
 
 ## Layout
 

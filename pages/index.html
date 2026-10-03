@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>X_eTaL extensions -- live</title>
+  <title>X_eTaL extensions -- demos</title>
   <link rel="icon" href="favicon.ico" />
   <link rel="stylesheet" href="shell.css" />
 </head>
@@ -14,17 +14,55 @@
     <h1>X_eTaL extensions</h1>
   </div>
   <p class="lede"><b>Libraries extend the vocabulary; macros extend the language; native
-  extensions extend the machine.</b> These are X_eTaL's native extensions: Rust libraries
-  that give programs in X_eTaL, the eXperimental Extensible Typed Array Language, what
-  the language should not reinvent -- a database, a clock -- behind ordinary typed X_eTaL
-  libraries. The live pages run with the Rust compiled to WebAssembly: edit a program and
-  run it again.</p>
+  extensions extend the machine.</b> These are X_eTaL's native extensions: Rust shared
+  libraries that X_eTaL programs load at run time through a small C ABI, behind ordinary
+  typed X_eTaL libraries -- a database, a clock, a window. They run on your machine, so
+  this page shows them running; the commands under each recording run them yourself.</p>
+  <pre class="source">git clone https://github.com/softwarewrighter/X_eTaL-extensions
+cd X_eTaL-extensions
+cargo build --workspace     # Rust is all it needs: X_eTaL is vendored
+just demos                  # the demos; then: just demo EXT NAME</pre>
 </header>
 <main>
-  <div class="cards">
-    <a class="card" href="clock/"><h2>clock</h2><p>Wall-clock and monotonic time, which X_eTaL does not have (docs/xetal-asks.md in the repository, E4): timestamps for programs, and timing for benchmarks -- including the cost of the bridge itself.</p><p class="how">live in your browser</p></a>
-    <a class="card" href="hello/"><h2>hello</h2><p>The smallest X_eTaL native extension. It exists to prove the boundary: each function exercises one thing a real extension needs.</p><p class="how">live in your browser</p></a>
-    <a class="card" href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/sqlite/docs/README.md"><h2>sqlite</h2><p>SQLite databases for X_eTaL: run statements, and bring query results back as X_eTaL arrays -- numbers as a matrix to compute on, text as a Char matrix -- through rusqlite with SQLite compiled in.</p><p class="how">command line (xetal-x): documentation</p></a>
+  <h2 id="canvas"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/canvas/docs/README.md">canvas</a></h2>
+  <p class="lede">A native window showing X_eTaL arrays as pixels, with keys, clicks and frame ticks back -- the first extension served by the UI host (crates/xetal-ext-ui), and the base of the media saga&#x27;s visualizer.</p>
+  <div class="demos">
+    <section class="panel demo">
+      <h3>canvas / life</h3>
+      <p class="note">Conway&#x27;s Life in a native window: the board is an X_eTaL array, each generation one array expression, drawn by Rust with every frame.</p>
+      <video src="canvas/life.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo canvas life</pre>
+    </section>
+  </div>
+  <h2 id="clock"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/clock/docs/README.md">clock</a></h2>
+  <p class="lede">Wall-clock and monotonic time, which X_eTaL does not have (docs/xetal-asks.md in the repository, E4): timestamps for programs, and timing for benchmarks -- including the cost of the bridge itself.</p>
+  <div class="demos">
+    <section class="panel demo">
+      <h3>clock / bridge-cost</h3>
+      <p class="note">What the text bridge costs (docs/bridge.md): calls per second, and Floats per second carried out and back (it uses hello too).</p>
+      <video src="clock/bridge-cost.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo clock bridge-cost</pre>
+    </section>
+  </div>
+  <h2 id="hello"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/hello/docs/README.md">hello</a></h2>
+  <p class="lede">The smallest X_eTaL native extension. It exists to prove the boundary: each function exercises one thing a real extension needs.</p>
+  <div class="demos">
+    <section class="panel demo">
+      <h3>hello / tour</h3>
+      <p class="note">A tour of the hello extension: X_eTaL arrays handed to Rust and back.</p>
+      <video src="hello/tour.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo hello tour</pre>
+    </section>
+  </div>
+  <h2 id="sqlite"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/sqlite/docs/README.md">sqlite</a></h2>
+  <p class="lede">SQLite databases for X_eTaL: run statements, and bring query results back as X_eTaL arrays -- numbers as a matrix to compute on, text as a Char matrix -- through rusqlite with SQLite compiled in.</p>
+  <div class="demos">
+    <section class="panel demo">
+      <h3>sqlite / notebook</h3>
+      <p class="note">The data notebook: a CSV in SQLite, SQL to select and group, X_eTaL arrays to compute, pictures to see it. Atmospheric CO2 at Mauna Loa, 1959-2025 (NOAA GML and Scripps; demos/data/PROVENANCE.txt).</p>
+      <video src="sqlite/notebook.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo sqlite notebook</pre>
+    </section>
   </div>
 </main>
 <footer>
@@ -34,7 +72,7 @@
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 7b70575</span><span class="sep">&middot;</span>
-  <span>built at fa0f5be</span>
+  <span>built at 0835f1a</span>
 </footer>
 </body>
 </html>
