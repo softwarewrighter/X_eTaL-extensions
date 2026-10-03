@@ -1,0 +1,1 @@
+ext: protocol (text/chars/int/float/bool puts with shape, call on get, ?shape/?kind, errors as error[io]); SDK quiet contained panics; hello reg-rs tests through the channel (6); docs/bridge.md.

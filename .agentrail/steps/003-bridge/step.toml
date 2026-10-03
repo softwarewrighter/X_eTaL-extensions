@@ -1,9 +1,10 @@
 number = 3
 slug = "bridge"
-status = "in-progress"
+status = "completed"
 description = "bridge step 2: the ext: store in xetal-x (plan A6): design and document the t..."
 role = "production"
 context_files = []
 created_at = "2026-10-02T13:11:05"
+completed_at = "2026-10-02T18:41:41"
 task_type = "bridge"
-commits = []
+commits = ["89e68955e0c0b46bf049d8e8bcaff7a805e2d504"]
