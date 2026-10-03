@@ -1,0 +1,2 @@
+# An argument that is not what its kind says is refused at the put.
+a := "1.5" []N_PUT "ext:hello/add?int"

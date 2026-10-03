@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/panic.xtl"
+exit_code = 1
+desc = "a panic inside the extension is contained and reported as an X_eTaL error, with no panic noise"

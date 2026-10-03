@@ -33,6 +33,7 @@ mod once;
 mod stages;
 
 mod ext;
+mod protocol;
 
 use std::process::ExitCode;
 

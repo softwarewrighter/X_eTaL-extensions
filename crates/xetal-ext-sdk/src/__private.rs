@@ -1,9 +1,10 @@
 //! The body of every generated trampoline. Not public API.
 
-use std::cell::RefCell;
+use std::cell::{Cell, RefCell};
 use std::panic::{AssertUnwindSafe, catch_unwind};
 use std::ptr;
 use std::slice;
+use std::sync::Once;
 
 use xetal_ext_abi::{
     AbiErrorV1, AbiValue, EncodedError, EncodedValue, ErrorCode, OwnedError, copy_foreign_value,
@@ -12,6 +13,9 @@ use xetal_ext_abi::{
 use crate::Handler;
 
 thread_local! {
+    // Set while a handler runs, so the panic hook stays quiet for the
+    // panics the trampoline contains and reports as errors.
+    static IN_CALL: Cell<bool> = const { Cell::new(false) };
     // The last result and error on this thread: what the host reads
     // after a call, valid until the next call on the thread.
     static OUTPUT: RefCell<Option<EncodedValue>> = const { RefCell::new(None) };
@@ -68,7 +72,11 @@ pub unsafe fn invoke(
             return unsafe { write_error(&e, output, error) };
         }
     };
-    match catch_unwind(AssertUnwindSafe(|| handler(&values))) {
+    quiet_contained_panics();
+    IN_CALL.set(true);
+    let result = catch_unwind(AssertUnwindSafe(|| handler(&values)));
+    IN_CALL.set(false);
+    match result {
         Ok(Ok(value)) => unsafe { write_value(&value, output, error) },
         Ok(Err(e)) => unsafe { write_error(&e, output, error) },
         Err(payload) => {
@@ -105,4 +113,20 @@ unsafe fn write_error(e: &OwnedError, output: *mut AbiValue, error: *mut AbiErro
     });
     unsafe { ptr::write(output, AbiValue::zero()) };
     e.code() as u32
+}
+
+/// Installs, once, a panic hook that prints nothing for a panic inside
+/// a handler (the trampoline returns its message as an error) and
+/// defers to the previous hook for every other panic. In a shared
+/// library the hook is the extension's own (its own copy of std).
+fn quiet_contained_panics() {
+    static INSTALL: Once = Once::new();
+    INSTALL.call_once(|| {
+        let previous = std::panic::take_hook();
+        std::panic::set_hook(Box::new(move |info| {
+            if !IN_CALL.get() {
+                previous(info);
+            }
+        }));
+    });
 }

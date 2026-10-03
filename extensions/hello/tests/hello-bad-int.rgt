@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/bad-int.xtl"
+exit_code = 1
+desc = "an argument whose text is not its declared kind is refused at the put"

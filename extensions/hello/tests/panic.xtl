@@ -1,0 +1,2 @@
+# A panic inside the extension is contained: an X_eTaL error, not a crash.
+[]N_GET "ext:hello/panic"

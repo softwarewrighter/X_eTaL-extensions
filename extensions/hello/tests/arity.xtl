@@ -1,0 +1,3 @@
+# add takes two arguments; the bridge checks before calling.
+a := "1" []N_PUT "ext:hello/add?int"
+[]N_GET "ext:hello/add"

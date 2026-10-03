@@ -1,0 +1,2 @@
+# A failing native function is an X_eTaL error naming it, with its message.
+[]N_GET "ext:hello/fail"

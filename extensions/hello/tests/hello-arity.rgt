@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/arity.xtl"
+exit_code = 1
+desc = "a call with too few arguments is refused before the extension runs"

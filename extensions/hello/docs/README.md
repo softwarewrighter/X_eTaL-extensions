@@ -45,6 +45,17 @@ arguments, call through the C function pointer, copy the result or
 error. A wrong argument count or a malformed value is refused before
 the Rust function runs.
 
+## From X_eTaL
+
+Until the facade lands, through the raw `ext:` channel of `xetal-x`
+([the bridge](../../../docs/bridge.md)); `tests/bridge.xtl` calls every
+function this way:
+
+```
+n := "x_etal" []N_PUT "ext:hello/shout?text"
+[]N_GET "ext:hello/shout"                      # X_ETAL
+```
+
 ## Layout
 
 ```

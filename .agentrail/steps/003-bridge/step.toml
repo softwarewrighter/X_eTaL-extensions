@@ -1,6 +1,6 @@
 number = 3
 slug = "bridge"
-status = "pending"
+status = "in-progress"
 description = "bridge step 2: the ext: store in xetal-x (plan A6): design and document the t..."
 role = "production"
 context_files = []

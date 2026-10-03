@@ -1,0 +1,1 @@
+error[io]: []N_GET: ext:hello/add: hello/add takes 2 arguments, given 1 at 98..121

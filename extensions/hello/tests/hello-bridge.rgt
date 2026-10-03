@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/bridge.xtl"
+exit_code = 0
+desc = "every hello function through the raw ext: channel: arity 0, text, two Int scalars, a Float matrix and its shape, Bool and Char arrays"

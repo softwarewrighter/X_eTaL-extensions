@@ -42,7 +42,10 @@ subcommand and message the same -- plus extensions:
 ```sh
 just ext-list                 # the extensions here and their functions
 just run-x prog.xtl           # xetal-x --ext extensions run prog.xtl
-``` When X_eTaL gains the hook, the facades
+```
+
+How the channel works, and what its errors look like:
+[docs/bridge.md](docs/bridge.md). When X_eTaL gains the hook, the facades
 change and the programs do not.
 
 ## Extensions

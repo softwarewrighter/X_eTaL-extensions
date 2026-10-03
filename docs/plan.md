@@ -161,7 +161,7 @@ directory.
 | - | --------- | -------- |
 | 1 | host-probe | how a host runs a program with the vendored crates (the CLI's run path, the store hook); `crates/xetal-x` skeleton that runs a program exactly as `xetal run` does (goldens agree); asks for anything missing (done: the vendored CLI's modules compiled as `#[path]` modules, its `main` repeated with `ExtStore`; all 20 vendored demos identical, `scripts/check-xetal-x.sh` in the gate; ask E3) |
 | 2 | layout | each extension a self-contained directory (A7): hello moved to `extensions/hello/{extension.toml,justfile,rust/,lib/,tests/,docs/,demos/}`; reg-rs wired (`scripts/reg-ext.sh`, per-extension `tests/` as `REG_RS_DATA_DIR`, `.tdb*` ignored); the root `just ext NAME RECIPE` and `just test-ext` delegating; `templates/extension/` and `just new-ext NAME`; the gate runs every extension's tests; this plan's new catalog and sagas |
-| 3 | bridge | the `ext:` store (A6): the text protocol for arguments (text, numbers with shape, two arguments), replies and errors; reg-rs tests calling hello |
+| 3 | bridge | the `ext:` store (A6): the text protocol for arguments (text, numbers with shape, two arguments), replies and errors; reg-rs tests calling hello (done: docs/bridge.md; `?text`, `?chars=S`, `?int=S`, `?float=S`, `?bool=S` puts, the call as a get, `?shape` and `?kind`; the SDK keeps contained panics quiet) |
 | 4 | hello-facade | `lib/Hello.xtl`, its reg-rs tests through the bridge, pinned facade types, a demo, hello's docs complete |
 | 5 | clock | the clock extension end to end; the bridge's cost measured (calls per second, bytes per second) |
 
