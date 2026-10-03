@@ -1,6 +1,6 @@
 number = 3
 slug = "hello-live"
-status = "pending"
+status = "in-progress"
 description = "live step 3: extensions/hello/web (its own Cargo workspace, trunk index.html ..."
 role = "production"
 context_files = []

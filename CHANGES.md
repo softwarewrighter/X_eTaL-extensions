@@ -11,6 +11,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-03
+
+- 06:28 `feat` hello live: `extensions/hello/web/` (trunk, Yew, the shell): the tour editable and run in the browser with hello compiled to WebAssembly; checked in Chrome (output equal to the command line's, Run works, no console errors); a native test against the golden.
+
 ## 2026-10-02
 
 - 06:04 `feat` `web/shell` (`xetal-ext-shell`), the live pages' shared Yew crate, adapted from X_eTaL-demos' microscope: `run::install` links extensions statically and installs the bridge store serving facades and `ext:`; `Playground` (an editable program run in the browser with Run and Reset, its decorated source, output or error, the native functions linked in, the command line); header and footer with the vendored X_eTaL commit; `shell.css` in this repo's red. Native test with hello; `scripts/check-web.sh` in the gate (fmt, clippy, tests, wasm32). The loader re-exports the ABI.

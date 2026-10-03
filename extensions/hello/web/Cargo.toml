@@ -1,0 +1,15 @@
+[package]
+name = "hello-web"
+description = "The hello extension live: its tour, editable and run in the browser with hello compiled to WebAssembly"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+
+[dependencies]
+xetal-ext-shell = { path = "../../../web/shell" }
+xetal-ext-hello = { path = "../rust", features = ["static"] }
+yew = { version = "0.21", features = ["csr"] }
+
+# Its own workspace: hello is linked with its `static` feature.
+[workspace]

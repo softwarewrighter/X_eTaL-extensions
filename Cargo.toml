@@ -5,7 +5,7 @@ members = ["crates/*", "extensions/*/rust"]
 resolver = "3"
 # The live pages (web/, extensions/*/web/) are workspaces of their own:
 # they link extensions with the `static` feature.
-exclude = ["vendor", "web", "extensions/hello/web", "extensions/clock/web"]
+exclude = ["vendor", "web", "extensions/*/web"]
 
 [workspace.package]
 edition = "2024"
