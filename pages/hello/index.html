@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>hello -- X_eTaL extensions</title>
+  
+<script type="module">
+import init, * as bindings from '/X_eTaL-extensions/hello/hello-web-19038d766568fd0f.js';
+const wasm = await init({ module_or_path: '/X_eTaL-extensions/hello/hello-web-19038d766568fd0f_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  <link rel="icon" href="/X_eTaL-extensions/hello/favicon-b7262c0ce3e40319.ico" integrity="sha384-LtdCgsGO0xEFvMFZQaLVOi8+k28hqqO5FBYcCFyW1haw9t2//81ksi/e5KHnr5/x"/>
+  <link rel="stylesheet" href="/X_eTaL-extensions/hello/shell-59fd1eee63b7caac.css" integrity="sha384-vv1O6JQ5zG2QpIr48NEACHkFGmL5mZmlqvhmbkRP2DXCw93RB1kk2p9dnS5iFBND"/>
+<link rel="modulepreload" href="/X_eTaL-extensions/hello/hello-web-19038d766568fd0f.js" crossorigin="anonymous" integrity="sha384-nUenD4MAdG7PXXJgfYx58kLhV57iUi1lmPBCZsc8Cgu0dMSfbtbS9me9kK0kKxfV"><link rel="preload" href="/X_eTaL-extensions/hello/hello-web-19038d766568fd0f_bg.wasm" crossorigin="anonymous" integrity="sha384-4JmTFks18yx49sprj2GMx48DIcQNzFibFDveOjFRXgu3rPVIF/xNYbC1f1GaHy24" as="fetch" type="application/wasm"></head>
+<body></body>
+</html>

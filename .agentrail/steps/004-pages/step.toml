@@ -1,6 +1,6 @@
 number = 4
 slug = "pages"
-status = "pending"
+status = "in-progress"
 description = "live step 4: scripts/build-pages.sh (every extensions/*/web built with trunk ..."
 role = "production"
 context_files = []

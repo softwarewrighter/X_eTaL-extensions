@@ -70,6 +70,16 @@ new-ext name alias what:
 check-web:
     scripts/check-web.sh
 
+# Build the live site into pages/ (commit it; a push publishes it)
+pages:
+    scripts/build-pages.sh
+
+# Preview pages/ as GitHub Pages serves it, at http://127.0.0.1:8732/X_eTaL-extensions/
+serve-pages:
+    @rm -rf target/serve && mkdir -p target/serve && ln -s "$PWD/pages" target/serve/X_eTaL-extensions
+    @echo "http://127.0.0.1:8732/X_eTaL-extensions/"
+    @python3 -m http.server 8732 --directory target/serve
+
 # The full pre-commit gate
 gate:
     scripts/gate.sh

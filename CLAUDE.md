@@ -340,7 +340,10 @@ Read before working:
 10. `CHANGES.md` gets a line for every commit (newest first, grouped
     by day, Pacific time, a category), as in `../X_eTaL`.
 11. NEVER run `sw-install` unless the user explicitly asks.
-12. Work is committed directly to `main` and pushed (the user's
+12. The live site is built locally into `pages/` (`just pages`, trunk)
+    and committed; `.github/workflows/pages.yml` only uploads it.
+    Rebuild it when a live page or what it links changes.
+13. Work is committed directly to `main` and pushed (the user's
     choice); the feat/ -> pr/ branch handoff in the briefing applies
     only to a parallel lane on its own branch.
 

@@ -4,6 +4,11 @@
 
 # X_eTaL extensions
 
+<p align="center">
+  <b><a href="https://softwarewrighter.github.io/X_eTaL-extensions/">The live extensions</a></b>
+  -- X_eTaL programs calling Rust, in your browser (WebAssembly)
+</p>
+
 Native extensions for [X_eTaL](https://github.com/softwarewrighter/X_eTaL),
 the eXperimental Extensible Typed Array Language: small Rust libraries
 that give X_eTaL programs what the interpreter cannot do by itself --
@@ -63,7 +68,7 @@ real Rust crate:
 
 | Extension | Facade | What | Crates | Status |
 | --------- | ------ | ---- | ------ | ------ |
-| [hello](extensions/hello/docs/README.md) | `Hello` | the smallest proof of the boundary | -- | done: facade, tests, demo |
+| [hello](extensions/hello/docs/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-extensions/hello/)) | `Hello` | the smallest proof of the boundary | -- | done: facade, tests, demo, live |
 | [clock](extensions/clock/docs/README.md) | `Clock` | wall-clock and monotonic time; the bridge's cost | std | done: facade, tests, cost demo |
 | sqlite | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | planned |
 | web | `Web` | serve HTTP: the program takes each request and replies | axum, tokio | planned |
@@ -137,6 +142,8 @@ just gate       # everything the pre-commit gate checks
 just build           # every crate and extension (shared libraries in target/debug/)
 just test [CRATE]    # the Rust tests
 just test-exts       # every extension's reg-rs tests (reg-rs on PATH)
+just pages           # build the live site into pages/ (trunk); commit it, a push publishes it
+just serve-pages     # preview it at http://127.0.0.1:8732/X_eTaL-extensions/
 just xetal-version   # which X_eTaL commit is vendored
 just eval "'+ r_/ 1 2 3"   # evaluate with the vendored xetal
 ```
