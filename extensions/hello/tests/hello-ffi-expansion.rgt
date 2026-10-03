@@ -1,0 +1,3 @@
+command = "XETAL_PATH=../../docs/ffi xetal-x --ext . run demos/tour.xtl"
+exit_code = 0
+desc = "the tour with docs/ffi/Hello.xtl (what the binding macro is to generate) in place of lib/Hello.xtl: the same output"

@@ -1,0 +1,32 @@
+# What `"... : ..." ffi:b_ind< "hello/..."` expands to (docs/ffi-macro.md),
+# written out by hand: the golden the binding macro must reproduce. The
+# reg-rs test hello-ffi-expansion runs the tour with this file in place
+# of lib/Hello.xtl (it comes first on XETAL_PATH) and expects the tour's
+# golden; hello-ffi-types pins its types, equal to the facade's.
+l:a_nswer := { @ ->
+  f_loor f_irst n_umbers []N_GET "ext:hello/answer"
+}
+l:a_dd := { a b ->
+  pa := (f_ormat r_avel f_loat a) []N_PUT "ext:hello/add?float=" c_at f_ormat s_hape a
+  pb := (f_ormat r_avel f_loat b) []N_PUT "ext:hello/add?float=" c_at f_ormat s_hape b
+  f_irst n_umbers []N_GET "ext:hello/add"
+}
+l:s_hout := { a ->
+  pa := a []N_PUT "ext:hello/shout?text"
+  []N_GET "ext:hello/shout"
+}
+l:s_um := { a ->
+  pa := (f_ormat r_avel f_loat a) []N_PUT "ext:hello/sum?float=" c_at f_ormat s_hape a
+  f_irst n_umbers []N_GET "ext:hello/sum"
+}
+l:e_cho := { a ->
+  pa := (f_ormat r_avel f_loat a) []N_PUT "ext:hello/echo?float=" c_at f_ormat s_hape a
+  v := n_umbers []N_GET "ext:hello/echo"
+  (f_loor n_umbers []N_GET "ext:hello/echo?shape") r_eshape v
+}
+l:f_ail := { @ ->
+  f_loor f_irst n_umbers []N_GET "ext:hello/fail"
+}
+l:p_anic := { @ ->
+  f_loor f_irst n_umbers []N_GET "ext:hello/panic"
+}

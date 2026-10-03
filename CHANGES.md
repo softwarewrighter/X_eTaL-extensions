@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 16:18 `docs` Ready for `.xtlm`: docs/ffi-macro.md designs the binding macro (`"s_hout : text -> text" ffi:b_ind< "hello/shout"`: channel kinds, exact expansions, the plan for the day it lands); docs/ffi/Hello.xtl is hello's facade expanded by those rules, by hand, and two reg-rs tests prove it (types equal to the facade's; the tour's golden through it).
+
 - 15:40 `docs` Cross-repo audit: every ask (E1-E6) is in X_eTaL's queue (E6 Saga 30, E2 Saga 19, E4 Saga 13, E3 after Saga 21, E5 Saga 27, E1 Saga 23) and none has landed (84 commits past the vendored 7b70575), so the vendor stays; statuses updated. `check-vendor.sh` no longer pipes into `grep -q` under pipefail.
 
 - 15:11 `fix` `xetal-x --version` first names itself and this repository's commit (research4's provenance blocker); `check-xetal-x.sh` checks it and no longer pipes into `grep -q`/`head` under pipefail (a SIGPIPE made it flaky).

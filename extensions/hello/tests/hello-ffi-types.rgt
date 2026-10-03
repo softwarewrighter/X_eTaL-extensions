@@ -1,0 +1,3 @@
+command = "xetal-x type ../../docs/ffi/Hello.xtl"
+exit_code = 0
+desc = "the types of the expected expansion: equal to the hand-written facade (hello-types)"

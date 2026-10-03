@@ -85,9 +85,12 @@ Decided upstream as MC10-MC13 (lang-choices), planned as X_eTaL Saga
 macro library generate facade functions from signatures:
 
 ```
-# Ffi.xtlm (sketch)
-m:b_ind< := { sig target -> ... }    # "String -> String" ffi:b_ind< "digest/sha256"
+# Hello.xtl, once .xtlm lands
+"ffi:" u_se< "Ffi"
+"s_hout : text -> text" ffi:b_ind< "hello/shout"
 ```
+
+The design, the exact expansions and their tests: docs/ffi-macro.md.
 
 Workaround: none. Facades are written by hand until it lands.
 
