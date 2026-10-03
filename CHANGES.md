@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 08:52 `plan` research3.txt (../X_eTaL) adopted for this repo: release 1 is hello + clock + sqlite with the data notebook ("Do SQLite"); web, image, linalg, http and digest are roadmap (README and plan); saga 4 gains sqlite-live and release-1 (status matrix, stale-ask sweep, full catalog, fresh-user walkthrough, the three-ways phrase, a release tag proposed).
+
 - 08:42 `ext` The sqlite extension (`extensions/sqlite`, alias `sq:`; rusqlite with bundled SQLite): `db sq:e_xec sql` (rows changed), `sq:n_ums` (a Float matrix, NULL as NaN), `sq:t_exts` (cells as a Char matrix), `sq:c_ols`, `sq:q_uote`; databases named by confined relative paths (or `XETAL_SQLITE_ROOT`) or `:memory:`; 4 Rust tests through the loader, 6 reg-rs tests; ask E5 (errors name the calling line).
 
 - 08:29 `plan` Saga 3 (live) retrospective; saga archived.

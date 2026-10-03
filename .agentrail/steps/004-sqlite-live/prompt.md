@@ -1,0 +1,1 @@
+sqlite step 4: can SQLite run in the browser (rusqlite on wasm32-unknown-unknown via sqlite-wasm-rs or similar, in-memory/OPFS)? If yes with modest work: extensions/sqlite/web, the notebook live. If not: record why; the catalog lists sqlite as command-line only.

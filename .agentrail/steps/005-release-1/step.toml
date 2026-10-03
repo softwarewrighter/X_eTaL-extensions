@@ -1,0 +1,9 @@
+number = 5
+slug = "release-1"
+status = "pending"
+description = "sqlite step 5 (research3, 'Do SQLite'): release 1 = hello + clock + sqlite. R..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T08:51:02"
+task_type = "release"
+commits = []

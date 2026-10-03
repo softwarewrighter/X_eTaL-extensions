@@ -56,26 +56,28 @@ change and the programs do not.
 
 ## Extensions
 
-Four demos are planned, each pairing an X_eTaL array program with a
-real Rust crate:
+Release 1 is **hello, clock and sqlite**, with the data notebook as
+its flagship demo. The rest is a roadmap: the native extension ABI is
+a preview, and the extensions after sqlite are experiments still to
+come.
 
 | Demo | Extensions | What it shows | Status |
 | ---- | ---------- | ------------- | ------ |
-| data notebook | sqlite | a CSV in SQLite; SQL selects, arrays compute group-bys, histograms, a fit; an SVG chart | planned |
-| X_eTaL on the web | web, sqlite | a live page recomputing Life or Mandelbrot per request; a TodoMVC stored in SQLite | planned |
-| photo lab | image, linalg | a photo as an array: filters, edges, SVD compression; PNGs out | planned |
-| fetch and analyze | http | live earthquake data summarized and plotted | planned |
+| data notebook | sqlite | a CSV in SQLite; SQL selects, arrays compute group-bys, histograms, a fit; an SVG chart | release 1, in progress |
+| X_eTaL on the web | web, sqlite | a live page recomputing Life or Mandelbrot per request; a TodoMVC stored in SQLite | roadmap |
+| photo lab | image, linalg | a photo as an array: filters, edges, SVD compression; PNGs out | roadmap |
+| fetch and analyze | http | live earthquake data summarized and plotted | roadmap |
 
 | Extension | Facade | What | Crates | Status |
 | --------- | ------ | ---- | ------ | ------ |
 | [hello](extensions/hello/docs/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-extensions/hello/)) | `Hello` | the smallest proof of the boundary | -- | done: facade, tests, demo, live |
 | [clock](extensions/clock/docs/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-extensions/clock/)) | `Clock` | wall-clock and monotonic time; the bridge's cost | std | done: facade, tests, cost demo, live |
 | [sqlite](extensions/sqlite/docs/README.md) | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | statements and queries done; CSV import and notebook next |
-| web | `Web` | serve HTTP: the program takes each request and replies | axum, tokio | planned |
-| image | `Image` | images to and from arrays | image | planned |
-| linalg | `Linalg` | solve, inverse, least squares, eigenvalues, SVD | nalgebra | planned |
-| http | `Http` | bounded GET | ureq | planned |
-| digest | `Digest` | SHA-256, CRC-32 | sha2, crc32fast | planned |
+| web | `Web` | serve HTTP: the program takes each request and replies | axum, tokio | roadmap |
+| image | `Image` | images to and from arrays | image | roadmap |
+| linalg | `Linalg` | solve, inverse, least squares, eigenvalues, SVD | nalgebra | roadmap |
+| http | `Http` | bounded GET | ureq | roadmap |
+| digest | `Digest` | SHA-256, CRC-32 | sha2, crc32fast | roadmap |
 
 Each extension is a self-contained directory, `extensions/NAME/`: its
 manifest (`extension.toml`), its own `justfile`, its Rust crate

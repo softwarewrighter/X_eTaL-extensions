@@ -1,0 +1,11 @@
+{
+  "task_type": "extension",
+  "state": {
+    "number": 1,
+    "step": "sqlite"
+  },
+  "action": "new-ext; rusqlite bundled; loader-based Rust tests; facade; reg-rs",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-03T08:51:02"
+}

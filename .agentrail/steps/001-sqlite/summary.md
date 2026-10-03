@@ -1,0 +1,1 @@
+sqlite extension: exec/nums/texts/cols/quote, confined paths, 4 Rust + 6 reg-rs tests, docs; ask E5.

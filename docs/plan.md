@@ -106,6 +106,13 @@ scripts/                 the logic behind the just recipes
 
 ## The catalog
 
+Release 1 (research3.txt in ../X_eTaL, "Do SQLite", accepted
+2026-10-03): **hello + clock + sqlite**, with the data notebook as the
+flagship demo -- one serious extension that proves the boundary on
+something X_eTaL should not reinvent, rather than many half-done ones.
+Everything else below is roadmap, labelled so in the README, and waits
+until after release 1.
+
 Chosen with the user (2026-10-02): four flagship demos built on
 practical crates, a few small supporting extensions, and hello as the
 teaching example. Aliases are recommendations (the importer chooses,
@@ -202,15 +209,17 @@ workspace mixed two builds of the ABI crate); std's clocks panic on
 about ten times slower than natively (about 16,000 calls/s), which a
 native hook (E1) would remove.
 
-## Saga 4 -- sqlite and the data notebook
+## Saga 4 -- sqlite, the data notebook, release 1
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
 | 1 | sqlite | (done) the sqlite extension: exec, query (cells as a Char matrix, numeric columns as Float), parameters, confinement to allowed directories, errors; Rust tests and reg-rs tests on a temp database |
 | 2 | csv-import | CSV into a table (native, `rusqlite` + a small CSV reader), and query results back as X_eTaL arrays |
 | 3 | notebook | demos/notebook: a bundled CSV (a public-domain dataset), SQL plus array analytics, an SVG chart; reg-rs golden |
+| 4 | sqlite-live | whether SQLite runs in the browser (rusqlite on wasm32 via sqlite-wasm-rs or similar); if so with modest work, the notebook live; if not, why, and the catalog lists sqlite as command-line only |
+| 5 | release-1 | research3's checklist for this repo: README value proposition and the three-ways phrase ("libraries extend the vocabulary; macros extend the language; native extensions extend the machine"); roadmap extensions labelled; `docs/status.md`, what works today (this repo's column of the ecosystem dashboard, generated from manifests and tests where possible); stale-ask sweep against upstream (vendor refreshed if asks landed); the site's catalog lists every extension; a fresh-user walkthrough (clone, build, hello, clock, the sqlite notebook) as a recipe, run and fixed; retrospective; a release tag proposed to the user |
 
-## Saga 5 -- web
+## Saga 5 -- web (roadmap, after release 1)
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -218,7 +227,7 @@ native hook (E1) would remove.
 | 2 | live-page | demos/live: a page recomputing Life or Mandelbrot as SVG per request; reg-rs test drives it over loopback |
 | 3 | todomvc | demos/todomvc: TodoMVC in X_eTaL with sqlite; loopback test of add, toggle, delete |
 
-## Saga 6 -- photo lab
+## Saga 6 -- photo lab (roadmap)
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -226,7 +235,7 @@ native hook (E1) would remove.
 | 2 | linalg | the linalg extension; small cases cross-checked in pure X_eTaL |
 | 3 | photo-lab | demos/photo-lab: filters and edges by rotation, SVD compression at several ranks, PNGs out |
 
-## Saga 7 -- fetch and analyze
+## Saga 7 -- fetch and analyze (roadmap)
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
