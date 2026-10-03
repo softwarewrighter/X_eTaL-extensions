@@ -1,0 +1,1 @@
+hello live page (Yew/trunk, hello static in wasm), browser-verified, native golden test.
