@@ -1,9 +1,10 @@
 number = 4
 slug = "pages"
-status = "in-progress"
+status = "completed"
 description = "live step 4: scripts/build-pages.sh (every extensions/*/web built with trunk ..."
 role = "production"
 context_files = []
 created_at = "2026-10-02T19:34:51"
+completed_at = "2026-10-03T07:48:24"
 task_type = "web"
-commits = []
+commits = ["38aaaa4b7f1b0c1ddbc41cee49dd6bf7aa0b099f"]

@@ -1,0 +1,1 @@
+Live site: build-pages.sh, build-catalog.py, serve-pages, pages.yml workflow, Pages enabled; deployed and verified https://softwarewrighter.github.io/X_eTaL-extensions/ (hello live).
