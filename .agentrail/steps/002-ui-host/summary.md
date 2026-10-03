@@ -1,0 +1,1 @@
+UI host (main-thread winit service, lazy), xetal-x program off main, host-linked packages, canvas extension + Life demo, headless tests; smoke opt-in.

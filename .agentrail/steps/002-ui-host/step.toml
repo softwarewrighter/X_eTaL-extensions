@@ -1,9 +1,10 @@
 number = 2
 slug = "ui-host"
-status = "in-progress"
+status = "completed"
 description = "media step: crates/xetal-ext-ui: a main-thread UI service with request/event ..."
 role = "production"
 context_files = []
 created_at = "2026-10-03T12:06:04"
+completed_at = "2026-10-03T12:26:56"
 task_type = "host"
-commits = []
+commits = ["56fcbd1edebdfa4cf3e30f7287c274837594b500"]
