@@ -98,8 +98,8 @@ program line that called it -- ask E5.)
 
 ## Live
 
-Not yet; the extension runs on the command line (`xetal-x`). It is
-within reach: rusqlite 0.40 with `bundled` builds SQLite for the
+None, by decision (2026-10-03): sqlite runs on the command line
+(`xetal-x`). For the record, it would have been within reach: rusqlite 0.40 with `bundled` builds SQLite for the
 browser (`wasm32-unknown-unknown`) through `sqlite-wasm-rs`, which
 compiles SQLite's C source with a clang that can target WebAssembly.
 Apple's clang cannot (`--target=wasm32-unknown-unknown` fails), so a
