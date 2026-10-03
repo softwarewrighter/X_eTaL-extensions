@@ -1,0 +1,1 @@
+Hello facade (7 typed exports over private ext: helpers), xetal-x puts facade dirs on XETAL_PATH, 11 reg-rs tests incl. pinned types and demo, tour demo, template facade helpers, docs.
