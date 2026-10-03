@@ -1,0 +1,18 @@
+[package]
+name = "xetal-ext-__NAME__"
+version = "0.1.0"
+description = "__WHAT__"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[lib]
+name = "__STEM__"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+xetal-ext-sdk = { path = "../../../crates/xetal-ext-sdk" }
+
+[lints]
+workspace = true

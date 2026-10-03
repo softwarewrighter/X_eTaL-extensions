@@ -47,14 +47,33 @@ change and the programs do not.
 
 ## Extensions
 
-| Extension | Facade | What | Status |
-| --------- | ------ | ---- | ------ |
-| [hello](docs/ext/hello.md) | `Hello` | the smallest proof of the boundary | native library built, loaded and tested; facade waits for the bridge |
-| clock | `Clock` | wall-clock and monotonic time, timing | planned |
-| digest | `Digest` | SHA-256, CRC-32 | planned |
-| regex | `Regex` | match, find, capture, replace, split | planned |
-| linalg | `Linalg` | determinant, inverse, solve, least squares, eigenvalues | planned |
-| png | `Png` | matrices to and from PNG images | planned |
+Four demos are planned, each pairing an X_eTaL array program with a
+real Rust crate:
+
+| Demo | Extensions | What it shows | Status |
+| ---- | ---------- | ------------- | ------ |
+| data notebook | sqlite | a CSV in SQLite; SQL selects, arrays compute group-bys, histograms, a fit; an SVG chart | planned |
+| X_eTaL on the web | web, sqlite | a live page recomputing Life or Mandelbrot per request; a TodoMVC stored in SQLite | planned |
+| photo lab | image, linalg | a photo as an array: filters, edges, SVD compression; PNGs out | planned |
+| fetch and analyze | http | live earthquake data summarized and plotted | planned |
+
+| Extension | Facade | What | Crates | Status |
+| --------- | ------ | ---- | ------ | ------ |
+| [hello](extensions/hello/docs/README.md) | `Hello` | the smallest proof of the boundary | -- | native library built, loaded and tested; facade waits for the bridge |
+| clock | `Clock` | wall-clock and monotonic time; the bridge's cost | std | planned |
+| sqlite | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | planned |
+| web | `Web` | serve HTTP: the program takes each request and replies | axum, tokio | planned |
+| image | `Image` | images to and from arrays | image | planned |
+| linalg | `Linalg` | solve, inverse, least squares, eigenvalues, SVD | nalgebra | planned |
+| http | `Http` | bounded GET | ureq | planned |
+| digest | `Digest` | SHA-256, CRC-32 | sha2, crc32fast | planned |
+
+Each extension is a self-contained directory, `extensions/NAME/`: its
+manifest (`extension.toml`), its own `justfile`, its Rust crate
+(`rust/`), its X_eTaL sources (`lib/`), its reg-rs tests (`tests/`),
+its docs (`docs/`) and its demos (`demos/`). `just new-ext NAME ALIAS
+"what"` starts one from `templates/extension/`; `just ext NAME RECIPE`
+runs one of its recipes from the repository root.
 
 ## Writing an extension
 
@@ -78,7 +97,7 @@ xetal_ext_sdk::xetal_extension! {
 }
 ```
 
-See [`extensions/hello`](extensions/hello) and the
+See [`extensions/hello`](extensions/hello/rust/src/lib.rs) and the
 [ABI](docs/abi-v1.md).
 
 ## Loading an extension from Rust
@@ -113,6 +132,7 @@ just            # list the recipes
 just gate       # everything the pre-commit gate checks
 just build           # every crate and extension (shared libraries in target/debug/)
 just test [CRATE]    # the Rust tests
+just test-exts       # every extension's reg-rs tests (reg-rs on PATH)
 just xetal-version   # which X_eTaL commit is vendored
 just eval "'+ r_/ 1 2 3"   # evaluate with the vendored xetal
 ```

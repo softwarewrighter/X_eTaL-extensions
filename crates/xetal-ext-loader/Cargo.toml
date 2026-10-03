@@ -14,7 +14,7 @@ toml = "0.8"
 xetal-ext-abi = { path = "../xetal-ext-abi" }
 
 [dev-dependencies]
-xetal-ext-hello = { path = "../../extensions/hello" }
+xetal-ext-hello = { path = "../../extensions/hello/rust" }
 
 [lints]
 workspace = true

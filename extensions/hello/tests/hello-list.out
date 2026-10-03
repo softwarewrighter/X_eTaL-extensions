@@ -1,0 +1,9 @@
+hello 0.1.0
+  hello/answer : Unit -> Int    # The answer: 42.
+  hello/add : Num a => a -> a -> a    # Left plus right (Int if both are Int, else Float).
+  hello/echo : a -> a    # The argument, unchanged.
+  hello/shout : Char -> Char    # The text in upper case.
+  hello/sum : Num a => a -> Float    # The sum of every element.
+  hello/kinds : a -> Int    # How many Bool, Int, Float and Char elements.
+  hello/fail : Unit -> Int    # Always fails.
+  hello/panic : Unit -> Int    # Always panics (contained).

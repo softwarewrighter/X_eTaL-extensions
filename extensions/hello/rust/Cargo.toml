@@ -12,7 +12,7 @@ name = "xetal_ext_hello"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-xetal-ext-sdk = { path = "../../crates/xetal-ext-sdk" }
+xetal-ext-sdk = { path = "../../../crates/xetal-ext-sdk" }
 
 [lints]
 workspace = true

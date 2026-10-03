@@ -34,4 +34,4 @@ sigpipe = "0.1.3"
 xetal-ext-loader = { path = "../xetal-ext-loader" }
 
 [dev-dependencies]
-xetal-ext-hello = { path = "../../extensions/hello" }
+xetal-ext-hello = { path = "../../extensions/hello/rust" }

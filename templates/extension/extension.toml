@@ -1,0 +1,9 @@
+# The __NAME__ package: what the loader reads to find and check the
+# native library, and the facade programs import.
+[extension]
+name = "__NAME__"
+version = "0.1.0"
+abi = 1
+facade = "lib/__CAP__.xtl"
+# The library's file stem: lib__STEM__.dylib on macOS, .so on Linux.
+library = "__STEM__"

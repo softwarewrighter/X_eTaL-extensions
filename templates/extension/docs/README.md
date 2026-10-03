@@ -1,0 +1,26 @@
+# __NAME__
+
+__WHAT__
+
+- Package: `extensions/__NAME__/` (`extension.toml`; library
+  `__STEM__`: `lib__STEM__.dylib` on macOS, `.so` on Linux)
+- Facade: `lib/__CAP__.xtl`, recommended alias `__ALIAS__:`
+- Native crates: none beyond the SDK
+
+## Functions
+
+| Native name | Arity | X_eTaL type | What |
+| ----------- | ----- | ----------- | ---- |
+| `about` | 0 | `Unit -> Char` | the extension's name and version |
+
+## Build and test
+
+```sh
+just build      # the native library and xetal-x
+just test       # Rust tests (rust/tests) and reg-rs tests (tests/)
+just list       # the functions as xetal-x sees them
+```
+
+## Demos
+
+None yet: `demos/NAME.xtl`, run with `just demo NAME`.

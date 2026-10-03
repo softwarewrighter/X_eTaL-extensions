@@ -13,8 +13,8 @@ and the workaround in use.
 | # | Status | Kind | Ask | Extensions | Workaround |
 | - | ------ | ---- | --- | ---------- | ---------- |
 | E1 | open | feature | a native hook: a way for X_eTaL code to call a function in a native library (`[]S_VO`, reserved in lang-choices QD4 / section 15), with the function's X_eTaL type from the library's descriptor | all | the bridge host `xetal-x` (plan A6): a store routing `ext:` paths of `[]N_PUT` / `[]N_GET` to native functions, text only |
+| E2 | open | feature | `.xtlm` macro libraries (MC10-MC13, X_eTaL Saga 19); same as `../X_eTaL-libraries` ask X1 | macro helpers (`ffi:b_ind<`, saga 7) | none: the helpers wait |
 | E3 | open | feature | the CLI as a library: a host entry point (`xetal_cli::run_with(args, store)` or similar) so a host can be `xetal` with its own store | the bridge host `xetal-x` | `xetal-x` compiles the vendored CLI's source files as `#[path]` modules and repeats its 60-line `main` with a different store; breaks if the CLI's modules are reorganized |
-| E2 | open | feature | `.xtlm` macro libraries (MC10-MC13, X_eTaL Saga 19); same as `../X_eTaL-libraries` ask X1 | macro helpers (`ffi:b_ind<`, saga 4) | none: the helpers wait |
 
 Asks already filed by the sibling repos
 (`../X_eTaL-demos/docs/xetal-asks.md`,

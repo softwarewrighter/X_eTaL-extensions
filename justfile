@@ -54,6 +54,18 @@ ext-list:
 check-xetal-x:
     scripts/check-xetal-x.sh
 
+# Run one extension's recipe: just ext hello test (see extensions/NAME/justfile)
+ext name *args:
+    @just -f "extensions/$1/justfile" "${@:2}"
+
+# Every extension's reg-rs tests (and their layout)
+test-exts:
+    scripts/test-exts.sh
+
+# Start an extension from templates/extension: just new-ext sqlite sq "SQLite databases"
+new-ext name alias what:
+    scripts/new-ext.sh "$1" "$2" "$3"
+
 # The full pre-commit gate
 gate:
     scripts/gate.sh

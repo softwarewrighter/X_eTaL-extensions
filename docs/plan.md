@@ -62,18 +62,19 @@ programs.
 | # | Decision | Why |
 | - | -------- | --- |
 | A1 | X_eTaL is **vendored** into `vendor/xetal/` as a source snapshot of a committed ref of `../X_eTaL` (`just vendor [REF]`, default `HEAD`), recorded in `vendor/xetal/VENDORED`; the CLI builds into `target/xetal/` (`just xetal`). Same scripts as the sibling repos. Never edited; refreshed at a saga start or when an ask lands, in its own commit. | X_eTaL moves fast; extensions need a recent but stable interpreter. |
-| A2 | **One Cargo workspace** at the root for this repo's crates (`crates/*`, `extensions/*`), separate from the vendored X_eTaL's own workspaces; everything builds into `./target` (`.cargo/config.toml`). | One `cargo test` covers the ABI, SDK, loader and every extension. |
+| A2 | **One Cargo workspace** at the root for this repo's crates (`crates/*`, `extensions/*/rust`), separate from the vendored X_eTaL's own workspaces; everything builds into `./target` (`.cargo/config.toml`). | One `cargo test` covers the ABI, SDK, loader and every extension. |
 | A3 | **ABI V1** (`crates/xetal-ext-abi`, `docs/abi-v1.md`): every extension exports one symbol, `xetal_extension_v1`, returning a `#[repr(C)]` descriptor: size and ABI version first, name and version (UTF-8 slices), a bounded table of functions (name, arity 0 to 2, the X_eTaL type signature such as `Char -> Char`, a one-line doc, the trampoline), a reserved field that must be zero. Values carry a fixed-width tag and a payload: X_eTaL's scalars (Bool, Int as i64, Float as f64), text (UTF-8, a Char vector) and dense row-major arrays of Bool, Int, Float or Char of rank 0 to 9; an error is a code and a message. Bounded: 64 Mi elements per value, 16 KiB of descriptor text, 1,024 functions. | demo-extensions' ABI V1, reduced to X_eTaL's types; the size/version prefix and zero reserved fields reject layout drift; the signature lets a future native hook (E1) type the function without a facade. |
 | A4 | **Safety at the boundary.** Validation is the only unsafe pointer-reading code; it copies everything into owned Rust values before registration. Rust panics inside an extension are caught in the extension (SDK trampolines) and returned as an error status, never unwound across `extern "C"`. A result lives in storage the extension keeps until its next call on the same thread; the host copies it at once. | Unwinding across C is undefined; a loader that keeps foreign pointers is a use-after-free waiting to happen. |
 | A5 | **SDK and loader.** `crates/xetal-ext-sdk`: what an author writes (a `xetal_extension!` macro over plain Rust functions of `&[Value] -> Result<Value, String>`), generating the descriptor and the panic-safe trampolines, keeping each result until the next call. `crates/xetal-ext-loader`: resolves a package, `libloading`s it, validates, and registers its functions under the extension's namespace, checking arity before every call, keeping the `Library` alive as long as any function. The same descriptor can also be linked statically (tests, the browser later). | The author never writes `unsafe`; the host never trusts the extension. |
 | A6 | **A bridge host until X_eTaL has a native hook.** `crates/xetal-x`: the vendored X_eTaL interpreter plus the loader, installing a store that routes paths starting `ext:` to native functions and everything else to the disk: `request []N_PUT "ext:digest/sha256"` calls the function on the request text and keeps the reply; `[]N_GET "ext:digest/sha256"` takes it. It is a documented workaround (ask E1), text-only (numbers cross as `f_ormat` / `n_umbers` text), and every facade hides it behind ordinary functions so programs never see it. Programs run with `xetal-x run FILE` instead of `xetal run FILE`. | Lets every extension be used end to end from X_eTaL today with no change to X_eTaL; it is APL's shared-variable channel, the model `[]S_VO` names. Replaced when E1 lands. |
-| A7 | **An extension is a sub-project**, `extensions/<name>/`: `Cargo.toml` (a `cdylib` + `rlib`), `src/lib.rs`, `extension.toml` (name, version, ABI, namespace, the facade file, one native artifact per target triple), `<Name>.xtl` (the public facade), `tests/` (Rust tests through the loader, and `*.xtl` programs with `expected/` goldens run through the bridge), and a page `docs/ext/<name>.md`. | demo-extensions' package layout; each extension stands alone. |
+| A7 | **An extension is a self-contained directory**, `extensions/<name>/` (the user's rule, 2026-10-02): `extension.toml` (the manifest); `justfile` (its own recipes: build, test, reg, demos); `rust/` (its Rust library crate, a `cdylib` + `rlib`, with its Rust tests); `lib/` (its X_eTaL sources: the facade `<Name>.xtl`, and `<Name>.xtlm` macros when X_eTaL has them -- one directory, as X_eTaL looks for both together, MC11); `tests/` (reg-rs tests: `*.rgt` commands with committed `.out`/`.err` baselines, `REG_RS_DATA_DIR` pointing there, and the `*.xtl` programs they run); `docs/` (its pages, `docs/README.md` first); `demos/` (programs that show it off, each with a README section and a reg-rs test). The repo's `just` recipes delegate to each extension's. | Each extension can be read, built, tested and moved on its own; the layout is the same for every one. |
 | A8 | **Facade conventions** follow X_eTaL's style guide (lang-choices section 16) and `../X_eTaL-libraries` A6: `UpperCamel.xtl`, exports under `l:`, private helpers unprefixed, predicates `?`, effects `!`, a header with the import line and recommended alias, no export shadowing a built-in, no name shadowing a standard library. Exports are typed as if native (ordinary X_eTaL types), so the facade's types are pinned (`xetal type`) and survive the switch from the bridge to E1. | The facade is the extension's interface; its types are the contract. |
 | A9 | **Pure fallbacks where cheap.** When an extension's function has a reasonable pure X_eTaL definition (CRC-32, a small determinant), the facade's tests compare native and pure results; the pure version is not exported. Where there is none (the clock, regular expressions), there is no fallback. | Golden behavior is cross-checked, not only self-consistent. |
-| A10 | **Macro helpers wait for X_eTaL** (ask E2, X_eTaL MC10-MC13): a `.xtlm` that turns a signature into a facade function (`"f64 f64" ffi:b_ind< "linalg/det"`). Designed on paper only (saga 4), never emulated. | As in `../X_eTaL-libraries` A9. |
+| A10 | **Macro helpers wait for X_eTaL** (ask E2, X_eTaL MC10-MC13): a `.xtlm` that turns a signature into a facade function (`"f64 f64" ffi:b_ind< "linalg/det"`). Designed on paper only (saga 7), never emulated. | As in `../X_eTaL-libraries` A9. |
 | A11 | A missing X_eTaL feature or bug an extension uncovers is **not** fixed here nor hidden: it goes in `docs/xetal-asks.md` (status, kind, extensions, why, minimal repro, workaround) and on the extension's page. | X_eTaL owns its language decisions; this repo is a consumer. |
 | A12 | **Names, not homes**: an extension is identified by its name (`digest`), never a GitHub coordinate (the repos may move to `sw-array-languages`, research.txt). `just` is the entry point (recipes call `scripts/*.sh`); `CHANGES.md` gets a line for every commit; docs are ASCII-only markdown (`sw-markdown-checker`). | Same process as the sibling repos. |
-| A13 | Dependencies are few, well known and permissively licensed (`libloading`, and per extension e.g. `sha2`, `regex`, `png`); each extension's page lists its crates. Nothing is downloaded at run time. | Small, auditable extensions. |
+| A13 | Dependencies are few, well known and permissively licensed (`libloading`, and per extension e.g. `rusqlite` with bundled SQLite, `axum`/`tokio`, `ureq`, `image`, `nalgebra`); each extension's page lists its crates. Nothing is downloaded at run time except by the http extension, on request. | Small, auditable extensions. |
+| A15 | **Practical extensions, state named by path.** ABI V1 has no handles, so state lives where a path names it (an SQLite file per call, opened and closed by the extension) or inside the extension (a server's request queue). Handles (tag 7, reserved) are added only when a demo needs them. The web extension keeps axum's async world inside the extension: a background thread runs the server and queues requests; X_eTaL pulls the next request and posts its reply (callback-free, as demo-extensions' http-server), so the program drives. Network tests use loopback only; live fetches are opt-in recipes. | The user's choices (2026-10-02): practical demos, axum, loopback tests, path-based state. |
 | A14 | **Copied from demo-extensions, never dependent on it.** Design, docs and code from `../../sw-ml-study/demo-extensions` (same author, MIT) may be copied and adapted to X_eTaL's types, with the source file noted in a comment; no Cargo path, git or build dependency on that repo or on sw-MLPL. | Reuse proven work while this repo builds and moves on its own. |
 
 ## Layout
@@ -84,12 +85,15 @@ crates/
   xetal-ext-sdk/         what extension authors use (xetal_extension!)
   xetal-ext-loader/      packages, dynamic loading, registry
   xetal-x/               the bridge host: vendored xetal + loader + ext: store
-extensions/<name>/       one sub-project per extension
-  Cargo.toml src/lib.rs  the cdylib
+extensions/<name>/       one self-contained directory per extension
   extension.toml         the package manifest
-  <Name>.xtl             the public facade
-  tests/                 Rust tests; *.xtl programs and expected/ goldens
-docs/ext/<name>.md       the extension's page
+  justfile               its recipes (build, test, reg, demo)
+  rust/                  its Rust library crate (cdylib + rlib) and Rust tests
+  lib/                   <Name>.xtl, the facade (and <Name>.xtlm, later)
+  tests/                 reg-rs tests: *.rgt, .out/.err baselines, *.xtl programs
+  docs/                  README.md (its page), and any further pages
+  demos/                 programs showing it off
+templates/extension/     what just new-ext copies
 docs/plan.md             this plan
 docs/xetal-asks.md       what the extensions need from X_eTaL
 vendor/xetal/            the vendored X_eTaL (never edited)
@@ -98,20 +102,38 @@ scripts/                 the logic behind the just recipes
 
 ## The catalog
 
-Ranked by what they prove first, then by usefulness. Aliases are
-recommendations (the importer chooses, MC3), distinct from the
-standard libraries' (`c:`, `m:`, `s:`) and `../X_eTaL-libraries`'.
+Chosen with the user (2026-10-02): four flagship demos built on
+practical crates, a few small supporting extensions, and hello as the
+teaching example. Aliases are recommendations (the importer chooses,
+MC3), distinct from the standard libraries' (`c:`, `m:`, `s:`) and
+`../X_eTaL-libraries`'.
 
-| Extension | Facade, alias | What | Native crates | Pure fallback | Saga |
-| --------- | ------------- | ---- | ------------- | ------------- | ---- |
-| hello | `Hello`, `hx:` | the smallest proof: an answer, add two numbers, echo text, a typed error, a contained panic, the sum of a Float array | none | yes (trivial) | 1-2 |
-| clock | `Clock`, `ck:` | wall-clock time (Unix seconds, ISO 8601 text), a monotonic millisecond counter, elapsed time of a block for benchmarks | std | none (X_eTaL has no clock) | 2 |
-| digest | `Digest`, `dg:` | SHA-256 and CRC-32 of text, hex | `sha2`, `crc32fast` | CRC-32 | 3 |
-| regex | `Regex`, `rx:` | match?, find (first, all), capture groups, replace, split by pattern | `regex` | none | 3 |
-| linalg | `Linalg`, `la:` | determinant, inverse, solve, least squares, eigenvalues of a symmetric matrix, on Float matrices | `nalgebra` | small determinant and solve (Gauss-Jordan) | 3 |
-| png | `Png`, `pn:` | write a matrix as a grayscale PNG, an n by m by 3 array as color; read one back as numbers | `png` | none | 3 |
-| sqlite (later) | `Sqlite`, `sq:` | open, parameterized query to a matrix of text | `rusqlite` | none | later |
-| http (later) | `Http`, `ht:` | bounded GET of text | `ureq` | none | later |
+Flagship demos:
+
+| Demo | Extensions | What it shows |
+| ---- | ---------- | ------------- |
+| data notebook | sqlite | a CSV loaded into SQLite, SQL selects, X_eTaL arrays compute group-bys, histograms and a linear fit, an SVG chart (`[]G_RID`); SQL and arrays complement each other |
+| X_eTaL on the web | web, sqlite | a live page recomputing Life or Mandelbrot as SVG on each request; a TodoMVC persisted in SQLite; the X_eTaL program is the request loop |
+| photo lab | image, linalg | a photo as an n by m by 3 array: filters and edges by rotation, PNG out; SVD compression at several ranks |
+| fetch and analyze | http | live data (the USGS earthquake CSV feed, opt-in) summarized and plotted; tests fetch from the web extension on loopback |
+
+Extensions:
+
+| Extension | Facade, alias | What | Native crates | Saga |
+| --------- | ------------- | ---- | ------------- | ---- |
+| hello | `Hello`, `hx:` | the smallest proof of the boundary: an answer, add, echo, shout, sum, kinds, a typed error, a contained panic | none | 1-2 |
+| clock | `Clock`, `ck:` | wall-clock time (Unix seconds, ISO 8601 text), a monotonic millisecond counter; measures the bridge's cost | std | 2 |
+| sqlite | `Sqlite`, `sq:` | `db sq:e_xec sql` (statements, changed-row count), `db sq:q_uery sql` (a result as a Char matrix of cells, or numeric columns), parameters bound from a vector, CSV import; files confined to the directories given | `rusqlite` (bundled) | 3 |
+| web | `Web`, `wb:` | `wb:s_erve! port` (axum on a background thread, loopback by default), `wb:n_ext! @` (the next request: method, path, query, body), `wb:r_eply! response` (status, content type, body); static files from a directory | `axum`, `tokio` | 4 |
+| image | `Image`, `im:` | read PNG/JPEG as an n by m by 3 (or n by m) Int array, write one as PNG, resize | `image` | 5 |
+| linalg | `Linalg`, `la:` | determinant, inverse, solve, least squares, symmetric eigenvalues, SVD on Float matrices | `nalgebra` | 5 |
+| http | `Http`, `ht:` | bounded GET (size, time, redirects limited) of text | `ureq` | 6 |
+| digest | `Digest`, `dg:` | SHA-256 and CRC-32 (supporting: content checks of fetched data) | `sha2`, `crc32fast` | 6 |
+| regex | `Regex`, `rx:` | match?, find, captures, replace, split (supporting: parsing text) | `regex` | later |
+
+Held back: a native window for live animation (macOS wants windows on
+the main thread, which the bridge does not give) and a tokenizer
+(closer to the ML line, OMLETA, than to X_eTaL).
 
 ## Saga 1 -- foundation
 
@@ -138,21 +160,45 @@ directory.
 | # | Step slug | Delivers |
 | - | --------- | -------- |
 | 1 | host-probe | how a host runs a program with the vendored crates (the CLI's run path, the store hook); `crates/xetal-x` skeleton that runs a program exactly as `xetal run` does (goldens agree); asks for anything missing (done: the vendored CLI's modules compiled as `#[path]` modules, its `main` repeated with `ExtStore`; all 20 vendored demos identical, `scripts/check-xetal-x.sh` in the gate; ask E3) |
-| 2 | bridge | the `ext:` store (A6): request / reply per function, errors as X_eTaL errors, `xetal-x run --ext DIR`; `just run-x FILE` |
-| 3 | hello-facade | `Hello.xtl`, its `*.xtl` tests and goldens through the bridge, pinned facade types, docs/ext/hello.md, the facade test runner (`just test-ext NAME`) in the gate |
-| 4 | clock | the clock extension end to end (a timing demo: `'+ r_/ r_ange` at growing sizes) |
+| 2 | layout | each extension a self-contained directory (A7): hello moved to `extensions/hello/{extension.toml,justfile,rust/,lib/,tests/,docs/,demos/}`; reg-rs wired (`scripts/reg-ext.sh`, per-extension `tests/` as `REG_RS_DATA_DIR`, `.tdb*` ignored); the root `just ext NAME RECIPE` and `just test-ext` delegating; `templates/extension/` and `just new-ext NAME`; the gate runs every extension's tests; this plan's new catalog and sagas |
+| 3 | bridge | the `ext:` store (A6): the text protocol for arguments (text, numbers with shape, two arguments), replies and errors; reg-rs tests calling hello |
+| 4 | hello-facade | `lib/Hello.xtl`, its reg-rs tests through the bridge, pinned facade types, a demo, hello's docs complete |
+| 5 | clock | the clock extension end to end; the bridge's cost measured (calls per second, bytes per second) |
 
-## Saga 3 -- sample extensions
+## Saga 3 -- sqlite and the data notebook
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | digest | digest, with the pure CRC-32 cross-check |
-| 2 | regex | regex |
-| 3 | linalg | linalg, numbers as text through the bridge; its cost measured |
-| 4 | png | png (writes images the sibling demos could use) |
-| 5 | release-1 | catalog and pages reviewed, examples re-run, asks reviewed, retrospective here |
+| 1 | sqlite | the sqlite extension: exec, query (cells as a Char matrix, numeric columns as Float), parameters, confinement to allowed directories, errors; Rust tests and reg-rs tests on a temp database |
+| 2 | csv-import | CSV into a table (native, `rusqlite` + a small CSV reader), and query results back as X_eTaL arrays |
+| 3 | notebook | demos/notebook: a bundled CSV (a public-domain dataset), SQL plus array analytics, an SVG chart; reg-rs golden |
 
-## Saga 4 -- native hook and macro helpers (blocked)
+## Saga 4 -- web
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | web | the web extension: axum on a background thread, a bounded request queue, next / reply, timeouts, loopback by default; Rust tests with a real client on loopback |
+| 2 | live-page | demos/live: a page recomputing Life or Mandelbrot as SVG per request; reg-rs test drives it over loopback |
+| 3 | todomvc | demos/todomvc: TodoMVC in X_eTaL with sqlite; loopback test of add, toggle, delete |
+
+## Saga 5 -- photo lab
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | image | the image extension: read, write, resize; test images generated, not downloaded |
+| 2 | linalg | the linalg extension; small cases cross-checked in pure X_eTaL |
+| 3 | photo-lab | demos/photo-lab: filters and edges by rotation, SVD compression at several ranks, PNGs out |
+
+## Saga 6 -- fetch and analyze
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | http | the http extension: bounded GET; tests against the web extension on loopback |
+| 2 | digest | the digest extension (verifying fetched content) |
+| 3 | fetch | demos/quakes: the USGS feed (opt-in `just live-quakes`), a saved copy for the golden |
+| 4 | release-1 | catalog and pages reviewed, demos re-run, asks reviewed, retrospective here |
+
+## Saga 7 -- native hook and macro helpers (blocked)
 
 Blocked on asks E1 (a native hook in X_eTaL) and E2 (`.xtlm`). Until
 then only the designs below are kept current.

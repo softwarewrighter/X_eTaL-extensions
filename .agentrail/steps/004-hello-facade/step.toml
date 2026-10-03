@@ -1,4 +1,4 @@
-number = 3
+number = 4
 slug = "hello-facade"
 status = "pending"
 description = "bridge step 3: extensions/hello/Hello.xtl facade (alias hx:, exports typed as..."

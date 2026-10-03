@@ -13,6 +13,9 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-02
 
+- 17:06 `plan` The catalog and sagas chosen with the user: four flagship demos (data notebook on sqlite; X_eTaL on the web with axum, a live page and TodoMVC; photo lab with image and linalg; fetch and analyze with http), supporting clock and digest, hello as the teaching example; sagas 3-6, the blocked native-hook saga now 7; A15 (path-named state, axum behind a pull interface, loopback-only network tests).
+- 17:06 `build` Each extension a self-contained directory (plan A7, the user's rule): hello moved to `extensions/hello/{extension.toml, justfile, rust/, lib/, tests/, docs/, demos/}`; reg-rs per extension (`scripts/reg-ext.sh`, baselines in its `tests/`) with hello's first test; root `just ext NAME RECIPE`, `test-exts` (in the gate, also checking the layout), `new-ext` from `templates/extension/`.
+
 - 15:36 `feat` The bridge host `crates/xetal-x`: the vendored CLI's modules compiled unchanged (`#[path]`, rustfmt-skipped) with its `main` repeated and the store wrapped in `ExtStore`, which routes `ext:EXT/FN` paths to loaded extensions (calls wired next step; unknown extensions and functions are X_eTaL `error[io]`s). `--ext DIR` / `XETAL_EXT_PATH` load packages; `--ext-list`. `scripts/check-xetal-x.sh` (all 20 vendored demos identical under xetal and xetal-x) and a vendor-untouched check in the gate; 5 host tests; `just run-x`, `ext-list`, `check-xetal-x`; ask E3 (the CLI as a library).
 
 - 15:02 `docs` The X_eTaL logo (the corrected 2026-10-02 version) at the top of the README, `images/modern-xetal-logo.jpg`.

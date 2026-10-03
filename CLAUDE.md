@@ -307,9 +307,13 @@ Read before working:
 
 ## Rules
 
-1. Every extension is a sub-project, `extensions/<name>/` (Cargo
-   cdylib, `extension.toml`, `<Name>.xtl` facade, tests, goldens); its
-   page is `docs/ext/<name>.md`. Shared crates live in `crates/`.
+1. Every extension is a self-contained directory, `extensions/<name>/`
+   (plan A7, the user's rule): `extension.toml`, its own `justfile`,
+   `rust/` (its crate and Rust tests), `lib/` (`<Name>.xtl`, later
+   `<Name>.xtlm`), `tests/` (reg-rs: `.rgt` + `.out`/`.err` baselines
+   via `scripts/reg-ext.sh`), `docs/` (`README.md` is its page),
+   `demos/`. Start one with `just new-ext`. Shared crates live in
+   `crates/`.
 2. Extension authors use the SDK only; `unsafe` lives in the ABI's
    validation and the loader. Panics never cross `extern "C"`.
 3. Facades follow X_eTaL's style guide and plan A8: `l:` exports,
@@ -358,6 +362,9 @@ Read before working:
 ```bash
 just                      # list recipes
 just gate                 # pre-commit gate
+just ext NAME RECIPE      # an extension's own recipe (build, test, reg, list, demo)
+just new-ext NAME AL "W"  # start an extension from templates/extension
+just run-x FILE           # run a program with xetal-x and every extension
 just xetal-version        # which X_eTaL commit is vendored
 just eval "EXPR"          # evaluate with the vendored xetal
 just vendor [REF]         # refresh vendor/xetal/ (own commit)
