@@ -30,8 +30,28 @@ db sq:t_exts "select name from pets"               # Rex / Polly, one per row
 | `db sq:t_exts sql` | `Char -> Char -> Char` | every cell as text: a Char matrix with one row per cell (the first row's cells, then the second's), padded with spaces; NULL is empty |
 | `db sq:c_ols sql` | `Char -> Char -> Char` | the query's column names, one per row |
 | `sq:q_uote t` | `Char -> Char` | the text as an SQL literal (`'O''Brien'`): put a value into a statement as data, never as SQL |
+| `db sq:i_mport spec` | `Char -> Char -> Int` | a CSV file into a new table: `"path.csv"` (the table named after the file) or `"table=path.csv"`; how many rows |
 
-Native functions: `exec`, `nums`, `texts`, `cols`, `quote` (`just list`).
+Native functions: `exec`, `nums`, `texts`, `cols`, `quote`, `import`
+(`just list`).
+
+## CSV import
+
+```
+db sq:i_mport "tests/data/planets.csv"                     # 6 rows, table planets
+m := db sq:n_ums "select au, days from planets order by au"
+a := 1 s_elect_2 m
+t := 2 s_elect_2 m
+f_loor 0.5 + (t * t) / a * a * a                           # Kepler: about 365.25 squared for each
+```
+
+The first record names the columns. A column is INTEGER if every
+non-empty field is an integer, else REAL if every one is a number, else
+TEXT; an empty field is NULL. Fields follow RFC 4180: quoted fields may
+hold commas, doubled quotes and newlines; CRLF or LF line ends. The
+table must not exist yet (drop it first with `sq:e_xec`); a record with
+the wrong number of fields is an error naming it; the whole import is
+one transaction. The file's path is confined as a database's is.
 
 ## Databases are paths
 
@@ -72,5 +92,7 @@ just list       # the functions as xetal-x sees them
 The Rust tests call the extension through the loader on databases in a
 temporary root: numbers and NULL, text cells, column names, empty
 results, `:memory:`, quoting (an injection attempt stays data),
-confinement, SQL errors. The reg-rs tests run `tests/*.xtl` through
+confinement, SQL errors; the CSV reader (quotes, newlines in fields,
+CRLF, malformed input), column types, and imports (a typed table, a
+named table, a repeated or ragged import refused). The reg-rs tests run `tests/*.xtl` through
 `xetal-x`, pin the facade's types, and check the error messages.

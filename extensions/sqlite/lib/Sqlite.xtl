@@ -51,3 +51,13 @@ l:q_uote := { t ->
   n := t t_ext "quote"
   c_all "quote"
 }
+
+# db sq:i_mport "path.csv" (or "table=path.csv"): a CSV file into a new
+# table named after the file; the header names the columns, their types
+# (INTEGER, REAL, TEXT) come from the data; empty fields are NULL. How
+# many rows it imported.
+l:i_mport := { db spec ->
+  a := db t_ext "import"
+  b := spec t_ext "import"
+  f_loor f_irst n_umbers c_all "import"
+}

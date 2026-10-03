@@ -3,6 +3,8 @@
 //! database file, does its work and closes it, so there are no handles
 //! to keep. Paths are confined (see `confine`).
 
+pub mod csv;
+
 use std::path::{Component, Path, PathBuf};
 
 use rusqlite::types::ValueRef;
@@ -171,6 +173,29 @@ fn quote(args: &[Value]) -> Result<Value, OwnedError> {
     Ok(Value::Text(lit))
 }
 
+/// db import spec: a CSV file into a new table. `spec` is `path.csv`
+/// (the table named after the file) or `table=path.csv`; the path is
+/// confined as a database's is. The number of rows imported.
+fn import(args: &[Value]) -> Result<Value, OwnedError> {
+    let mut conn = open(&text(&args[0])?)?;
+    let spec = text(&args[1])?;
+    let (table, path) = match spec.split_once('=') {
+        Some((t, p)) => (t.trim().to_owned(), p.trim().to_owned()),
+        None => (csv::table_name(&spec), spec.trim().to_owned()),
+    };
+    if table.is_empty() {
+        return Err(OwnedError::invalid_argument(format!(
+            "{spec:?}: no table name"
+        )));
+    }
+    let file = confine(&path)?;
+    let body =
+        std::fs::read_to_string(&file).map_err(|e| OwnedError::failure(format!("{path}: {e}")))?;
+    let n = csv::import(&mut conn, &table, &body)
+        .map_err(|e| OwnedError::new(e.code(), format!("{path}: {}", e.message())))?;
+    Ok(Value::Int(i64::try_from(n).unwrap_or(i64::MAX)))
+}
+
 xetal_ext_sdk::xetal_extension! {
     name: "sqlite",
     version: env!("CARGO_PKG_VERSION"),
@@ -180,5 +205,6 @@ xetal_ext_sdk::xetal_extension! {
         texts: 2, "Char -> Char -> Char", "db texts sql: every cell as text, one row per cell.";
         cols: 2, "Char -> Char -> Char", "db cols sql: the column names, one per row.";
         quote: 1, "a -> Char", "x as an SQL literal (text quoted, quotes doubled).";
+        import: 2, "Char -> Char -> Int", "db import path.csv (or table=path.csv): a CSV into a new table; rows.";
     }
 }

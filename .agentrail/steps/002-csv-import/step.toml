@@ -1,6 +1,6 @@
 number = 2
 slug = "csv-import"
-status = "pending"
+status = "in-progress"
 description = "sqlite step 2: db sq:i_mport path.csv: a table named after the file (or TABLE..."
 role = "production"
 context_files = []

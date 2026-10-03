@@ -1,0 +1,11 @@
+6
+planet TEXT  
+au REAL      
+days REAL    
+moons INTEGER
+note TEXT    
+hot, cloudy
+home       
+the "giant"
+rings      
+133608 133595 133371 133339 133173 133149

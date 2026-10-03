@@ -1,0 +1,15 @@
+# A CSV into SQLite, then SQL and X_eTaL on it: Kepler's third law.
+"sq:" u_se< "Sqlite"
+
+db := "work/import.db"
+x := db sq:e_xec "drop table if exists planets"
+db sq:i_mport "tests/data/planets.csv"
+db sq:t_exts "select name || ' ' || type from pragma_table_info('planets')"
+db sq:t_exts "select note from planets where note is not null"
+
+# distance (AU) and year (days) as a matrix; T squared over a cubed is
+# the same for every planet (Kepler), about 365.25 squared
+m := db sq:n_ums "select au, days from planets order by au"
+a := 1 s_elect_2 m
+t := 2 s_elect_2 m
+f_loor 0.5 + (t * t) / a * a * a

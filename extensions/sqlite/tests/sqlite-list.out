@@ -4,3 +4,4 @@ sqlite 0.1.0
   sqlite/texts : Char -> Char -> Char    # db texts sql: every cell as text, one row per cell.
   sqlite/cols : Char -> Char -> Char    # db cols sql: the column names, one per row.
   sqlite/quote : a -> Char    # x as an SQL literal (text quoted, quotes doubled).
+  sqlite/import : Char -> Char -> Int    # db import path.csv (or table=path.csv): a CSV into a new table; rows.
