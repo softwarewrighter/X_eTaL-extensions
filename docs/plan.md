@@ -324,7 +324,7 @@ Research4's work for this repository (see Priorities).
 | - | --------- | -------- |
 | 1 | reprioritize | this section and Priorities; media paused (scene WIP on branch `wip/media-scene`); ABI and bridge labelled experimental |
 | 2 | blockers | (done) this repo's blockers fixed (`xetal-x --version`); upstream ones tracked |
-| 3 | audit | asks and status against upstream; vendor refreshed if anything landed; walkthrough from GitHub |
+| 3 | audit | (done: every ask is in X_eTaL's queue, none landed, vendor kept) asks and status against upstream; vendor refreshed if anything landed; walkthrough from GitHub |
 | 4 | xtlm-ready | `Ffi.xtlm` designed against MC10-MC13, expansions written down, ready for the day `.xtlm` lands |
 | 5 | snapshot | a version for the six-repo compatible snapshot (tag with the user's yes) |
 

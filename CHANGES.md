@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 15:40 `docs` Cross-repo audit: every ask (E1-E6) is in X_eTaL's queue (E6 Saga 30, E2 Saga 19, E4 Saga 13, E3 after Saga 21, E5 Saga 27, E1 Saga 23) and none has landed (84 commits past the vendored 7b70575), so the vendor stays; statuses updated. `check-vendor.sh` no longer pipes into `grep -q` under pipefail.
+
 - 15:11 `fix` `xetal-x --version` first names itself and this repository's commit (research4's provenance blocker); `check-xetal-x.sh` checks it and no longer pipes into `grep -q`/`head` under pipefail (a SIGPIPE made it flaky).
 
 - 13:59 `plan` research4 (../X_eTaL) adopted: the media saga is paused after step 2 (scene WIP on branch `wip/media-scene`; audio and the visualizer post-launch); Saga 6, launch: this repo's promotion blockers, the cross-repo audit, readiness for the `.xtlm` binding macro, the six-repo snapshot; Priorities and a promotion-blocker list in the plan; README labels the ABI and bridge experimental; later sagas renumbered 7-10.
