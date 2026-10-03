@@ -3646,6 +3646,7 @@ dependencies = [
 name = "xetal-ext-canvas"
 version = "0.1.0"
 dependencies = [
+ "png",
  "softbuffer",
  "xetal-ext-sdk",
  "xetal-ext-ui",

@@ -1,0 +1,3 @@
+command = 'rm -rf work && XETAL_HEADLESS=1 XETAL_EVENTS="frame,frame,key Space,frame" XETAL_FRAMES=work/frames xetal-x --ext . run --seed 1 demos/life.xtl && cksum work/frames/*.png'
+exit_code = 0
+desc = "demos/life.xtl with no window: scripted events (two frames, Space, a frame, then close), every frame saved as PNG and pinned"

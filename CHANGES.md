@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 12:46 `feat` canvas without a screen: `XETAL_HEADLESS=1` (no window; `XETAL_EVENTS` scripted, then close) and `XETAL_FRAMES=DIR` (every frame saved as PNG); the Life demo runs headless in the gate with its frames pinned.
+
 - 12:16 `feat` The UI host and canvas: `crates/xetal-ext-ui` (a winit event loop on the main thread, created only when a program opens a window; jobs from the program's thread; event queues with frame ticks); `xetal-x` runs the program on a thread of its own and serves the main thread (all 20 vendored demos still identical); host-linked packages (`host = true`); the canvas extension (`cv:o_pen!`, `cv:s_how!`, `cv:n_ext!`, `cv:c_lose!`; softbuffer) with `demos/life.xtl` (Life in a native window); headless Rust and reg-rs tests, `just smoke` opt-in.
 
 - 12:05 `plan` docs/parity.md: this repo against sw-MLPL's demo-extensions (boundary, extensions, demos). Saga 5, media (the user's request): the MP3 visualizer -- a UI host in `xetal-x` (the window on the main thread, the program pulling events and pushing scene patches), a retained 3D scene extension adapted from demo-extensions, an audio extension (Symphonia, CPAL), and the visualizer with X_eTaL doing the analysis; later sagas renumbered 6-9.

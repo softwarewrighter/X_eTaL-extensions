@@ -41,6 +41,25 @@ demo). `cv:o_pen!` and `cv:s_how!` are jobs run on the main thread;
 the window's events go to a queue that `cv:n_ext!` reads from the
 program's thread. No callbacks: the program pulls.
 
+## Without a screen
+
+Two environment variables let a window program run, and be checked,
+with no screen at all:
+
+- `XETAL_HEADLESS=1`: open no window; `cv:n_ext!` plays the events in
+  `XETAL_EVENTS` (separated by commas, `frame,key Space,frame`), then
+  `close`.
+- `XETAL_FRAMES=DIR`: save every frame shown as `DIR/canvas-ID-N.png`
+  (with a window or without).
+
+```sh
+XETAL_HEADLESS=1 XETAL_EVENTS="frame,frame,key Space,frame" XETAL_FRAMES=work/frames \
+  xetal-x --ext extensions/canvas run --seed 1 extensions/canvas/demos/life.xtl
+```
+
+The reg-rs test `canvas-demo-life-headless` does exactly this and pins
+the three frames.
+
 ## Demos
 
 - `demos/life.xtl` (`just demo life`): Conway's Life, 96 by 96, in a
@@ -55,5 +74,6 @@ just smoke      # opens a window briefly: needs a desktop session
 ```
 
 The gate's tests never open a window: they check the conversion of
-arrays to pixels and the scaling, the facade's types, and errors.
-`just smoke` and the demo do.
+arrays to pixels and the scaling, the facade's types, errors, and the
+Life demo run headless with its frames pinned. `just smoke` and
+`just demo life` open a window.

@@ -8,7 +8,7 @@ of date. Release 1 is hello, clock and sqlite (docs/plan.md).
 
 | Extension | Release | Facade (alias) | Native functions | Rust tests | reg-rs tests | Demos | Runs |
 | --------- | ------- | -------------- | ---------------- | ---------- | ------------ | ----- | ---- |
-| [canvas](../extensions/canvas/docs/README.md) | media (saga 5) | `Canvas` (`cv:`) | 4 | 2 | 3 | life | native window (xetal-x) |
+| [canvas](../extensions/canvas/docs/README.md) | media (saga 5) | `Canvas` (`cv:`) | 4 | 2 | 4 | life | native window (xetal-x) |
 | [clock](../extensions/clock/docs/README.md) | release 1 | `Clock` (`ck:`) | 4 | 2 | 5 | bridge-cost | [live](https://softwarewrighter.github.io/X_eTaL-extensions/clock/) |
 | [hello](../extensions/hello/docs/README.md) | release 1 | `Hello` (`hx:`) | 8 | 5 | 11 | tour | [live](https://softwarewrighter.github.io/X_eTaL-extensions/hello/) |
 | [sqlite](../extensions/sqlite/docs/README.md) | release 1 | `Sqlite` (`sq:`) | 6 | 7 | 8 | notebook | command line |

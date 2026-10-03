@@ -17,6 +17,7 @@ crate-type = ["rlib"]
 xetal-ext-sdk = { path = "../../../crates/xetal-ext-sdk" }
 xetal-ext-ui = { path = "../../../crates/xetal-ext-ui" }
 softbuffer = "0.4"
+png = "0.17"
 
 [features]
 # Always linked statically (several host extensions in one binary): the

@@ -2,6 +2,11 @@
 //! clicks and frame ticks back. Linked into the host, which serves its
 //! windows on the main thread (`xetal-ext-ui`, plan M1); drawn with
 //! softbuffer (a CPU pixel buffer in a winit window, plan M7).
+//!
+//! Without a screen: `XETAL_HEADLESS=1` opens no window and plays the
+//! events in `XETAL_EVENTS` (separated by commas: `frame,key q`), then
+//! `close`; `XETAL_FRAMES=DIR` saves every frame shown as
+//! `DIR/canvas-ID-N.png`, with or without a window.
 
 use std::collections::HashMap;
 use std::num::NonZeroU32;
@@ -198,10 +203,51 @@ impl Surface for Canvas {
     }
 }
 
-/// The program's side of a canvas.
+/// The program's side of a canvas: its window (none when headless),
+/// its events, and how many frames it has shown.
 struct Handle {
-    window: WindowId,
+    window: Option<WindowId>,
     events: Events,
+    shown: usize,
+}
+
+fn headless() -> bool {
+    std::env::var_os("XETAL_HEADLESS").is_some_and(|v| !v.is_empty() && v != "0")
+}
+
+/// The scripted events of a headless canvas, then `close`.
+fn scripted() -> Events {
+    let e = Events::new();
+    let script = std::env::var("XETAL_EVENTS").unwrap_or_default();
+    for ev in script.split(',').map(str::trim).filter(|s| !s.is_empty()) {
+        e.push(ev);
+    }
+    e.push("close");
+    e
+}
+
+/// Writes a frame as an RGB PNG.
+///
+/// # Errors
+///
+/// When the file cannot be written.
+pub fn save_png(f: &Frame, path: &std::path::Path) -> Result<(), String> {
+    let file = std::fs::File::create(path).map_err(|e| format!("{}: {e}", path.display()))?;
+    let w = u32::try_from(f.width).map_err(|e| e.to_string())?;
+    let h = u32::try_from(f.height).map_err(|e| e.to_string())?;
+    let mut enc = png::Encoder::new(std::io::BufWriter::new(file), w.max(1), h.max(1));
+    enc.set_color(png::ColorType::Rgb);
+    enc.set_depth(png::BitDepth::Eight);
+    let mut writer = enc.write_header().map_err(|e| e.to_string())?;
+    let mut data: Vec<u8> = f
+        .pixels
+        .iter()
+        .flat_map(|p| [(p >> 16) as u8, (p >> 8) as u8, *p as u8])
+        .collect();
+    if data.is_empty() {
+        data = vec![0, 0, 0];
+    }
+    writer.write_image_data(&data).map_err(|e| e.to_string())
 }
 
 fn canvases() -> &'static Mutex<HashMap<i64, Handle>> {
@@ -226,7 +272,7 @@ fn id_of(v: &Value) -> Result<i64, OwnedError> {
     }
 }
 
-fn handle(id: i64) -> Result<(WindowId, Events), OwnedError> {
+fn handle(id: i64) -> Result<(Option<WindowId>, Events), OwnedError> {
     lock()
         .get(&id)
         .map(|h| (h.window, h.events.clone()))
@@ -244,6 +290,19 @@ fn open(args: &[Value]) -> Result<Value, OwnedError> {
     let [w, h] = size[..] else {
         return Err(OwnedError::invalid_argument("size is width height"));
     };
+    static NEXT: AtomicI64 = AtomicI64::new(1);
+    if headless() {
+        let id = NEXT.fetch_add(1, Ordering::Relaxed);
+        lock().insert(
+            id,
+            Handle {
+                window: None,
+                events: scripted(),
+                shown: 0,
+            },
+        );
+        return Ok(Value::Int(id));
+    }
     let events = Events::new();
     let main_events = events.clone();
     let window = on_main(move |ui| {
@@ -270,9 +329,15 @@ fn open(args: &[Value]) -> Result<Value, OwnedError> {
     })
     .map_err(host_error)?
     .map_err(host_error)?;
-    static NEXT: AtomicI64 = AtomicI64::new(1);
     let id = NEXT.fetch_add(1, Ordering::Relaxed);
-    lock().insert(id, Handle { window, events });
+    lock().insert(
+        id,
+        Handle {
+            window: Some(window),
+            events,
+            shown: 0,
+        },
+    );
     Ok(Value::Int(id))
 }
 
@@ -281,6 +346,22 @@ fn show(args: &[Value]) -> Result<Value, OwnedError> {
     let id = id_of(&args[0])?;
     let (window, _) = handle(id)?;
     let f = frame(&args[1])?;
+    if let Some(dir) = std::env::var_os("XETAL_FRAMES") {
+        let n = {
+            let mut c = lock();
+            let h = c
+                .get_mut(&id)
+                .ok_or_else(|| OwnedError::invalid_argument(format!("no canvas {id} is open")))?;
+            h.shown += 1;
+            h.shown
+        };
+        let dir = std::path::PathBuf::from(dir);
+        std::fs::create_dir_all(&dir).map_err(|e| OwnedError::failure(e.to_string()))?;
+        save_png(&f, &dir.join(format!("canvas-{id}-{n}.png"))).map_err(OwnedError::failure)?;
+    }
+    let Some(window) = window else {
+        return Ok(Value::Int(id));
+    };
     on_main(move |ui| {
         if let Some(canvas) = ui
             .surface(window)
@@ -306,7 +387,9 @@ fn close(args: &[Value]) -> Result<Value, OwnedError> {
     let id = id_of(&args[0])?;
     let (window, _) = handle(id)?;
     lock().remove(&id);
-    on_main(move |ui| ui.close(window)).map_err(host_error)?;
+    if let Some(window) = window {
+        on_main(move |ui| ui.close(window)).map_err(host_error)?;
+    }
     Ok(Value::Int(1))
 }
 
