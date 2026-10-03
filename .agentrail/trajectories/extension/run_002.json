@@ -1,0 +1,11 @@
+{
+  "task_type": "extension",
+  "state": {
+    "number": 2,
+    "step": "csv-import"
+  },
+  "action": "csv module; loader tests; reg-rs; just gate",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-03T09:05:15"
+}

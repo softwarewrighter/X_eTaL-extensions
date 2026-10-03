@@ -1,0 +1,1 @@
+sqlite CSV import (RFC 4180 reader, type inference, transaction), Rust + reg-rs tests (Kepler from planets.csv), docs.
