@@ -1,6 +1,6 @@
 number = 3
 slug = "scene3d"
-status = "pending"
+status = "blocked"
 description = "media step: the scene extension (statically linked into xetal-x via the UI ho..."
 role = "production"
 context_files = []

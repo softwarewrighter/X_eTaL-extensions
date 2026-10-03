@@ -1,0 +1,1 @@
+launch step 3: cross-repo audit: asks E1-E6 against upstream X_eTaL (E3-E6 taken there by the user), refresh the vendor in its own commit if anything landed (re-run goldens), docs/status.md, README and pages reconciled, walkthrough from GitHub.

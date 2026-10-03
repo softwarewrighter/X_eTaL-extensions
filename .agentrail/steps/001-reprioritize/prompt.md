@@ -1,0 +1,1 @@
+launch step 1: docs/plan.md and README per research4 (priorities, media paused with WIP on wip/media-scene, post-launch list); the ABI and bridge labelled experimental; this repo's promotion-blocker list (docs/blockers.md or a plan section).

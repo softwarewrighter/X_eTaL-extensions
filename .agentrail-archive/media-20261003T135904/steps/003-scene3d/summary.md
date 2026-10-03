@@ -1,0 +1,1 @@
+BLOCKED: Paused per research4 (../X_eTaL/docs/research4.txt): audio/3D are post-launch; scene WIP on branch wip/media-scene. Done in this saga: parity doc, UI host + canvas + headless frames, recordings site.

@@ -1,0 +1,9 @@
+number = 1
+slug = "reprioritize"
+status = "in-progress"
+description = "launch step 1: docs/plan.md and README per research4 (priorities, media pause..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T13:59:04"
+task_type = "plan"
+commits = []

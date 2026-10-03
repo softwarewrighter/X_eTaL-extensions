@@ -1,0 +1,9 @@
+number = 5
+slug = "snapshot"
+status = "pending"
+description = "launch step 5: version and notes for the six-repo compatible snapshot; tag on..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T13:59:04"
+task_type = "release"
+commits = []

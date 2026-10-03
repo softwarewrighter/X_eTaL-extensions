@@ -1,0 +1,9 @@
+number = 2
+slug = "blockers"
+status = "pending"
+description = "launch step 2: fix this repo's promotion blockers: xetal-x --version names it..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T13:59:04"
+task_type = "fix"
+commits = []

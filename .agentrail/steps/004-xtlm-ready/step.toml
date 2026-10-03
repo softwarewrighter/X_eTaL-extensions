@@ -1,0 +1,9 @@
+number = 4
+slug = "xtlm-ready"
+status = "pending"
+description = "launch step 4: Ffi.xtlm designed against MC10-MC13 (m:b_ind< from a signature..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T13:59:04"
+task_type = "design"
+commits = []

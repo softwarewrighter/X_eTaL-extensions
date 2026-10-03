@@ -97,10 +97,13 @@ change and the programs do not.
 
 ## Extensions
 
-Release 1 is **hello, clock and sqlite**, with the data notebook as
-its flagship demo. The rest is a roadmap: the native extension ABI is
-a preview, and the extensions after sqlite are experiments still to
-come.
+**Status: experimental.** Release 1 is **hello, clock and sqlite**,
+with the data notebook as its flagship demo. The native extension ABI
+and the `ext:` bridge (`xetal-x`) are previews: X_eTaL will call native
+code itself one day (docs/xetal-asks.md, E1), and programs will not
+change when it does. Canvas (a native window) is the first piece of
+the media work -- audio and 3D, like the MP3 visualizer -- which
+follows the ecosystem's launch, as do the other roadmap extensions.
 
 | Demo | Extensions | What it shows | Status |
 | ---- | ---------- | ------------- | ------ |
@@ -113,7 +116,7 @@ come.
 | --------- | ------ | ---- | ------ | ------ |
 | [hello](extensions/hello/docs/README.md) | `Hello` | the smallest proof of the boundary | -- | done: facade, tests, demo |
 | [clock](extensions/clock/docs/README.md) | `Clock` | wall-clock and monotonic time; the bridge's cost | std | done: facade, tests, cost demo |
-| [canvas](extensions/canvas/docs/README.md) | `Canvas` | a native window showing arrays as pixels; keys and clicks back | winit, softbuffer | media saga: done, Life demo |
+| [canvas](extensions/canvas/docs/README.md) | `Canvas` | a native window showing arrays as pixels; keys and clicks back | winit, softbuffer | done: Life demo (media work continues after the launch) |
 | [sqlite](extensions/sqlite/docs/README.md) | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | done: facade, CSV import, tests, the data notebook |
 | web | `Web` | serve HTTP: the program takes each request and replies | axum, tokio | roadmap |
 | image | `Image` | images to and from arrays | image | roadmap |

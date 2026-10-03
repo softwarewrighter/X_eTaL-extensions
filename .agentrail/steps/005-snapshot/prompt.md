@@ -1,0 +1,1 @@
+launch step 5: version and notes for the six-repo compatible snapshot; tag only with the user's yes.

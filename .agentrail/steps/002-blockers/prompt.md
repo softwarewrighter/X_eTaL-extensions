@@ -1,0 +1,1 @@
+launch step 2: fix this repo's promotion blockers: xetal-x --version names itself and both commits (this repo and the vendored X_eTaL); anything a first user trips on (just demos/demo, walkthrough, errors); track upstream ones (E5 caller context, E6 --draw order).
