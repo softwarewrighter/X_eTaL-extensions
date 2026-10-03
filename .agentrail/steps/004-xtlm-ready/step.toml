@@ -1,9 +1,10 @@
 number = 4
 slug = "xtlm-ready"
-status = "pending"
+status = "completed"
 description = "launch step 4: Ffi.xtlm designed against MC10-MC13 (m:b_ind< from a signature..."
 role = "production"
 context_files = []
 created_at = "2026-10-03T13:59:04"
+completed_at = "2026-10-03T16:21:16"
 task_type = "design"
-commits = []
+commits = ["b677abe52a407f45db855a8cb7a19fde3d1aecd9"]

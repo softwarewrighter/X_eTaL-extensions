@@ -1,0 +1,1 @@
+Ffi.xtlm designed (docs/ffi-macro.md); expected expansion docs/ffi/Hello.xtl proven by 2 reg-rs tests; blocked on .xtlm for implementation.
