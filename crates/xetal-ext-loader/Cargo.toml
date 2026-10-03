@@ -8,10 +8,15 @@ rust-version.workspace = true
 authors.workspace = true
 
 [dependencies]
-libloading = "0.8"
+libloading = { version = "0.8", optional = true }
 serde = { version = "1", features = ["derive"] }
 toml = "0.8"
 xetal-ext-abi = { path = "../xetal-ext-abi" }
+
+[features]
+# Loading shared libraries (not in a browser: wasm32 has none).
+default = ["dynamic"]
+dynamic = ["dep:libloading"]
 
 [dev-dependencies]
 xetal-ext-hello = { path = "../../extensions/hello/rust" }

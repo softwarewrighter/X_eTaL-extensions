@@ -42,7 +42,10 @@ pub type Handler = fn(&[Value]) -> Result<Value, OwnedError>;
 ///
 /// Generates `xetal_extension_v1` (unmangled, the symbol the loader
 /// looks up) and `__xetal_extension::descriptor()` (the same
-/// descriptor, for linking the extension statically).
+/// descriptor, for linking the extension statically). With the
+/// extension's `static` feature the entry point is an ordinary
+/// (mangled) function, so several extensions link into one binary (a
+/// browser page); a shared library is built without it.
 #[macro_export]
 macro_rules! xetal_extension {
     (
@@ -93,7 +96,7 @@ macro_rules! xetal_extension {
             }
 
             /// The ABI V1 entry point.
-            #[unsafe(no_mangle)]
+            #[cfg_attr(not(feature = "static"), unsafe(no_mangle))]
             pub extern "C" fn xetal_extension_v1() -> *const ExtensionDescriptorV1 {
                 descriptor()
             }

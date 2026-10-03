@@ -32,6 +32,7 @@ xetal-grid = { path = "../../vendor/xetal/components/view/crates/xetal-grid" }
 clap = { version = "4", features = ["derive"] }
 sigpipe = "0.1.3"
 xetal-ext-loader = { path = "../xetal-ext-loader" }
+xetal-ext-bridge = { path = "../xetal-ext-bridge" }
 
 [dev-dependencies]
 xetal-ext-hello = { path = "../../extensions/hello/rust" }

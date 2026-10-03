@@ -34,7 +34,6 @@ mod once;
 mod stages;
 
 mod ext;
-mod protocol;
 
 use std::process::ExitCode;
 
@@ -132,5 +131,7 @@ fn install_store(draw: Option<String>, command: &Command, registry: xetal_ext_lo
         );
     let notify = |path: &std::path::Path| eprintln!("drawn {}", path.display());
     let inner = xetal_store::Drawing::new(dir, &stem, notify);
-    xetal_store::install(std::sync::Arc::new(ext::ExtStore::new(inner, registry)));
+    xetal_store::install(std::sync::Arc::new(xetal_ext_bridge::ExtStore::new(
+        inner, registry,
+    )));
 }

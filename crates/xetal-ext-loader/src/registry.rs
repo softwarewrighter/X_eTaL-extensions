@@ -1,16 +1,21 @@
 //! Loaded extensions and calls into them.
 
+use std::any::Any;
 use std::collections::BTreeMap;
-use std::path::{Path, PathBuf};
+#[cfg(feature = "dynamic")]
+use std::path::Path;
+use std::path::PathBuf;
 use std::sync::Arc;
 
+#[cfg(feature = "dynamic")]
 use libloading::Library;
-use xetal_ext_abi::{
-    ENTRY_SYMBOL_V1, ExtensionDescriptorV1, ExtensionEntryV1, ValidatedExtension, Value,
-    validate_descriptor,
-};
+use xetal_ext_abi::{ExtensionDescriptorV1, ValidatedExtension, Value, validate_descriptor};
 
-use crate::{CallError, LoadError, Manifest, Package, foreign};
+#[cfg(feature = "dynamic")]
+use crate::Package;
+use crate::{CallError, LoadError, Manifest, foreign};
+#[cfg(feature = "dynamic")]
+use xetal_ext_abi::{ENTRY_SYMBOL_V1, ExtensionEntryV1};
 
 /// Where an extension's code lives.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -27,7 +32,7 @@ struct Loaded {
     active: bool,
     // Declared last so it is dropped after the function pointers above
     // can no longer be reached.
-    _library: Option<Arc<Library>>,
+    _library: Option<Arc<dyn Any + Send + Sync>>,
 }
 
 /// What a caller can know about a function.
@@ -52,6 +57,7 @@ impl Registry {
         Self::default()
     }
 
+    #[cfg(feature = "dynamic")]
     /// Loads a package's library (see [`Package::library`]) and checks
     /// its descriptor against the manifest. Returns the extension's name.
     ///
@@ -68,6 +74,7 @@ impl Registry {
         self.load_library(&path, Some(package.manifest()))
     }
 
+    #[cfg(feature = "dynamic")]
     /// Loads a shared library directly, optionally checking it against
     /// a manifest. Returns the extension's name.
     ///
@@ -96,7 +103,7 @@ impl Registry {
         self.register(
             ext,
             Provider::Dynamic(path.to_owned()),
-            Some(library),
+            Some(library as Arc<dyn Any + Send + Sync>),
             manifest,
         )
     }
@@ -121,7 +128,7 @@ impl Registry {
         &mut self,
         ext: ValidatedExtension,
         provider: Provider,
-        library: Option<Arc<Library>>,
+        library: Option<Arc<dyn Any + Send + Sync>>,
         manifest: Option<&Manifest>,
     ) -> Result<String, LoadError> {
         if let Some(m) = manifest {

@@ -1,0 +1,19 @@
+[package]
+name = "xetal-ext-bridge"
+version = "0.1.0"
+description = "The ext: channel: an X_eTaL store that sends ext: paths to native extensions and serves their facades"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[dependencies]
+xetal-ext-loader = { path = "../xetal-ext-loader", default-features = false }
+xetal-store = { path = "../../vendor/xetal/components/base/crates/xetal-store" }
+
+[dev-dependencies]
+xetal-ext-hello = { path = "../../extensions/hello/rust" }
+xetal-play = { path = "../../vendor/xetal/components/web/crates/xetal-play" }
+
+[lints]
+workspace = true

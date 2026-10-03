@@ -84,7 +84,8 @@ crates/
   xetal-ext-abi/         the C ABI V1: layout, values, validation
   xetal-ext-sdk/         what extension authors use (xetal_extension!)
   xetal-ext-loader/      packages, dynamic loading, registry
-  xetal-x/               the bridge host: vendored xetal + loader + ext: store
+  xetal-ext-bridge/      the ext: channel: ExtStore and the protocol, for any host
+  xetal-x/               the bridge host: vendored xetal + loader + ExtStore
 extensions/<name>/       one self-contained directory per extension
   extension.toml         the package manifest
   justfile               its recipes (build, test, reg, demo)
@@ -180,7 +181,7 @@ linalg); sqlite, web and http stay native.
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | bridge-lib | `crates/xetal-ext-bridge`: `ExtStore` and the protocol out of `xetal-x`, generic over the inner store, also serving each extension's facade by name; a `static` feature on every extension (no unmangled entry, so several link into one binary; never enabled inside the root workspace); a native test running hello's tour through `xetal-play` with hello linked statically, matching its reg-rs golden |
+| 1 | bridge-lib | (done) `crates/xetal-ext-bridge`: `ExtStore` and the protocol out of `xetal-x`, generic over the inner store, also serving each extension's facade by name; a `static` feature on every extension (no unmangled entry, so several link into one binary; never enabled inside the root workspace); a native test running hello's tour through `xetal-play` with hello linked statically, matching its reg-rs golden; the loader's `libloading` behind a default `dynamic` feature, off for the browser |
 | 2 | shell | `web/shell`, the pages' shared Yew crate (adapted from X_eTaL-demos' microscope, copied not depended on): header with the logo, an editable program panel run in the browser, the output, decorated source, footer naming the vendored X_eTaL commit; its stylesheet; the red favicon |
 | 3 | hello-live | `extensions/hello/web/`: the tour, editable and run live; native tests of the page's model |
 | 4 | pages | `scripts/build-pages.sh` (trunk into `pages/NAME/`, a catalog `pages/index.html`), `.github/workflows/pages.yml` (publishes `pages/`), GitHub Pages enabled, README link |

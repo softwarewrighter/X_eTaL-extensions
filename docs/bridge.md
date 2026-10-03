@@ -88,6 +88,15 @@ bridge pays off for work that is heavy per element (an SVD, a regular
 expression, an image codec), not for a sum. Values are bounded by
 ABI V1 (64 Mi elements).
 
+## In code
+
+The channel is `crates/xetal-ext-bridge`: `ExtStore` wraps a host's
+store and a loader `Registry`. `xetal-x` wraps the CLI's store with it;
+a browser page wraps `xetal-play`'s memory store and also registers
+each facade's source (`ExtStore::with_facade("Hello.xtl", ...)`), since
+there `u_se<` reads libraries from the store. The protocol itself is
+`xetal_ext_bridge::protocol`.
+
 ## What replaces it
 
 When X_eTaL has a native hook (E1), each facade calls the native

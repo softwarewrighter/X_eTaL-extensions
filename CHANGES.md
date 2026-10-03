@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-02
 
+- 19:53 `refactor` `crates/xetal-ext-bridge`: `ExtStore` and the protocol moved out of `xetal-x` (behavior unchanged: gate and goldens), and it serves facade sources by file name for store-only hosts; a native test runs hello's tour through the vendored `xetal-play` with hello linked statically, output identical to the command line's golden. The SDK's entry point is mangled under an extension's `static` feature (hello, clock, the template); the loader's `libloading` sits behind a default `dynamic` feature; hello, clock and the bridge build for wasm32.
+
 - 19:35 `plan` Saga 3, live (the user's request): the extensions in the browser with Rust, Yew and WebAssembly, published with GitHub Pages like X_eTaL-demos; steps bridge-lib, shell, hello-live, pages, clock-live; later sagas renumbered 4-8. `images/favicon.ico`: the peers' favicon with its lavender ground turned red. Saga 2 archived.
 
 - 19:20 `ext` The clock extension (`extensions/clock`, alias `ck:`): now, iso, iso_of (Hinnant civil dates, years 0000-9999), millis (monotonic), and `ck:t_ime` in the facade; Rust tests of dates, 5 reg-rs tests; `demos/bridge-cost.xtl` measures the bridge (about 220,000 calls/s, 2.6 M Floats/s out and back, release); docs/bridge.md cost section; ask E4 (a clock quad).

@@ -14,5 +14,10 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 xetal-ext-sdk = { path = "../../../crates/xetal-ext-sdk" }
 
+[features]
+# Link statically beside other extensions (a browser page): no unmangled
+# entry point. Never enabled inside the root workspace.
+static = []
+
 [lints]
 workspace = true

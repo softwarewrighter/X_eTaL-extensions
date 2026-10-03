@@ -2086,6 +2086,16 @@ name = "xetal-ext-abi"
 version = "0.1.0"
 
 [[package]]
+name = "xetal-ext-bridge"
+version = "0.1.0"
+dependencies = [
+ "xetal-ext-hello",
+ "xetal-ext-loader",
+ "xetal-play",
+ "xetal-store",
+]
+
+[[package]]
 name = "xetal-ext-clock"
 version = "0.1.0"
 dependencies = [
@@ -2218,6 +2228,21 @@ version = "0.1.0"
 dependencies = [
  "ratatui",
  "xetal-buffer",
+ "xetal-view",
+]
+
+[[package]]
+name = "xetal-play"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-core",
+ "xetal-eval",
+ "xetal-grid",
+ "xetal-macro",
+ "xetal-program",
+ "xetal-store",
+ "xetal-types",
  "xetal-view",
 ]
 
@@ -2400,6 +2425,7 @@ dependencies = [
  "xetal-diagram",
  "xetal-edit",
  "xetal-eval",
+ "xetal-ext-bridge",
  "xetal-ext-hello",
  "xetal-ext-loader",
  "xetal-grid",
