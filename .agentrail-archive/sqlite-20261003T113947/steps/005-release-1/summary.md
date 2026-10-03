@@ -1,0 +1,1 @@
+Release 1 (hello+clock+sqlite): README start-here + three-ways phrase, generated docs/status.md (gate-checked), full catalog on site, walkthrough passing from local and GitHub clones, ask sweep, retrospective. Release tag proposed to user, not created.
