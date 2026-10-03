@@ -217,7 +217,19 @@ native hook (E1) would remove.
 | 2 | csv-import | (done) CSV into a table (native, `rusqlite` + a small CSV reader), and query results back as X_eTaL arrays |
 | 3 | notebook | (done; NOAA/Scripps Mauna Loa CO2) demos/notebook: a bundled CSV (a public-domain dataset), SQL plus array analytics, an SVG chart; reg-rs golden |
 | 4 | sqlite-live | (probed: feasible with rusqlite 0.40 + `sqlite-wasm-rs`, but it needs LLVM's clang to compile SQLite for wasm32 -- Apple's clang cannot; waiting on the user's choice to install it; sqlite stays command-line only meanwhile) whether SQLite runs in the browser (rusqlite on wasm32 via sqlite-wasm-rs or similar); if so with modest work, the notebook live; if not, why, and the catalog lists sqlite as command-line only |
-| 5 | release-1 | research3's checklist for this repo: README value proposition and the three-ways phrase ("libraries extend the vocabulary; macros extend the language; native extensions extend the machine"); roadmap extensions labelled; `docs/status.md`, what works today (this repo's column of the ecosystem dashboard, generated from manifests and tests where possible); stale-ask sweep against upstream (vendor refreshed if asks landed); the site's catalog lists every extension; a fresh-user walkthrough (clone, build, hello, clock, the sqlite notebook) as a recipe, run and fixed; retrospective; a release tag proposed to the user |
+| 5 | release-1 | (done) research3's checklist for this repo: README value proposition and the three-ways phrase ("libraries extend the vocabulary; macros extend the language; native extensions extend the machine"); roadmap extensions labelled; `docs/status.md`, what works today (this repo's column of the ecosystem dashboard, generated from manifests and tests where possible); stale-ask sweep against upstream (vendor refreshed if asks landed); the site's catalog lists every extension; a fresh-user walkthrough (clone, build, hello, clock, the sqlite notebook) as a recipe, run and fixed; retrospective; a release tag proposed to the user |
+
+Saga 4 retrospective (release 1): sqlite is the serious extension
+research3 asked for -- statements, numeric and text results, quoting,
+confined paths, CSV import -- and the data notebook shows SQL and
+X_eTaL each doing what it is good at on real data (Mauna Loa CO2).
+Release 1 is hello + clock + sqlite: `docs/status.md` (generated,
+checked by the gate) says what works today; the site's catalog lists
+all three; a fresh clone builds with nothing but Rust and runs release
+1's programs against their goldens (`just walkthrough`). Found on the
+way: asks E5 (errors name the calling line) and E6 (`--draw` before
+the subcommand); SQLite in the browser needs LLVM's clang. Upstream,
+E1 is X_eTaL Saga 23 and E2 Saga 19; none of our asks has landed yet.
 
 ## Saga 5 -- web (roadmap, after release 1)
 

@@ -59,6 +59,7 @@ footer .sep { margin: 0 8px; }
 .card:hover { border-color: var(--accent); }
 .card h2 { margin: 0 0 6px; font-size: 1.1rem; color: var(--accent); }
 .card p { margin: 0; color: var(--muted); }
+.card p.how { margin-top: 8px; font-size: .85rem; color: var(--accent); }
 @media (max-width: 760px) {
   .layout { grid-template-columns: 1fr; }
   .gen { margin-left: 0; width: 100%; }

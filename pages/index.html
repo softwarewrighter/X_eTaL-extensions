@@ -13,15 +13,18 @@
     <img class="logo" src="modern-xetal-logo.jpg" alt="X_eTaL" />
     <h1>X_eTaL extensions</h1>
   </div>
-  <p class="lede">Native Rust extensions for X_eTaL, the eXperimental Extensible Typed
-  Array Language, compiled to WebAssembly and running in your browser: each page runs an
-  X_eTaL program that calls Rust through an ordinary X_eTaL library. Edit the program and
+  <p class="lede"><b>Libraries extend the vocabulary; macros extend the language; native
+  extensions extend the machine.</b> These are X_eTaL's native extensions: Rust libraries
+  that give programs in X_eTaL, the eXperimental Extensible Typed Array Language, what
+  the language should not reinvent -- a database, a clock -- behind ordinary typed X_eTaL
+  libraries. The live pages run with the Rust compiled to WebAssembly: edit a program and
   run it again.</p>
 </header>
 <main>
   <div class="cards">
-    <a class="card" href="clock/"><h2>clock</h2><p>Wall-clock and monotonic time, which X_eTaL does not have (docs/xetal-asks.md in the repository, E4): timestamps for programs, and timing for benchmarks -- including the cost of the bridge itself.</p></a>
-    <a class="card" href="hello/"><h2>hello</h2><p>The smallest X_eTaL native extension. It exists to prove the boundary: each function exercises one thing a real extension needs.</p></a>
+    <a class="card" href="clock/"><h2>clock</h2><p>Wall-clock and monotonic time, which X_eTaL does not have (docs/xetal-asks.md in the repository, E4): timestamps for programs, and timing for benchmarks -- including the cost of the bridge itself.</p><p class="how">live in your browser</p></a>
+    <a class="card" href="hello/"><h2>hello</h2><p>The smallest X_eTaL native extension. It exists to prove the boundary: each function exercises one thing a real extension needs.</p><p class="how">live in your browser</p></a>
+    <a class="card" href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/sqlite/docs/README.md"><h2>sqlite</h2><p>SQLite databases for X_eTaL: run statements, and bring query results back as X_eTaL arrays -- numbers as a matrix to compute on, text as a Char matrix -- through rusqlite with SQLite compiled in.</p><p class="how">command line (xetal-x): documentation</p></a>
   </div>
 </main>
 <footer>
@@ -31,7 +34,7 @@
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 7b70575</span><span class="sep">&middot;</span>
-  <span>built at 5c442b5</span>
+  <span>built at fa0f5be</span>
 </footer>
 </body>
 </html>

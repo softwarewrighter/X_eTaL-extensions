@@ -15,13 +15,48 @@ that give X_eTaL programs what the interpreter cannot do by itself --
 a clock, hashing, regular expressions, fast linear algebra, image
 files -- each used from X_eTaL like any other library.
 
+## Start here
+
+```sh
+git clone https://github.com/softwarewrighter/X_eTaL-extensions
+cd X_eTaL-extensions
+cargo build --workspace          # Rust is all it needs: X_eTaL is vendored
+just ext hello demo tour         # X_eTaL arrays handed to Rust and back
+just ext sqlite demo notebook    # CO2 at Mauna Loa: SQLite + X_eTaL, pictures in work/draw/
+just walkthrough                 # a fresh clone, built and run, checked against the goldens
+```
+
+([`just`](https://github.com/casey/just) runs the recipes.) What works
+today, extension by extension: [docs/status.md](docs/status.md).
+
 ## What this is
 
-X_eTaL is extensible on two axes: what programs can *say* (macro
-libraries, see
-[X_eTaL-libraries](https://github.com/softwarewrighter/X_eTaL-libraries))
-and what programs can *do*. This repository is the second: native
-code behind an ordinary X_eTaL facade.
+**Libraries extend the vocabulary; macros extend the language; native
+extensions extend the machine.** X_eTaL is extensible three ways:
+ordinary `.xtl` libraries add typed array code, `.xtlm` macro
+libraries add notation that expands into ordinary X_eTaL (both in
+[X_eTaL-libraries](https://github.com/softwarewrighter/X_eTaL-libraries)),
+and native extensions -- this repository -- add capabilities the
+language should not reinvent: a database engine, a clock, image
+codecs, fast numerical code. Each is a Rust library behind an
+ordinary, statically typed X_eTaL facade, so a program imports it like
+any other library and the type checker sees its functions' types; the
+language core stays small.
+
+For example, the data notebook loads a CSV into SQLite, lets SQL do
+what it is good at (selecting, grouping) and X_eTaL what it is good at
+(whole-array arithmetic: the yearly rise of CO2 at Mauna Loa, a
+least-squares line, its residuals, a histogram), and draws the result:
+
+```
+"sq:" u_se< "Sqlite"
+db sq:i_mport "co2=demos/data/co2-mlo-annual.csv"
+m := db sq:n_ums "select year, mean from co2 order by year"
+c := 2 s_elect_2 m
+d := (1 d_rop c) - -1 d_rop c            # the rise each year, as one array
+```
+
+A smaller example:
 
 ```
 "hx:" u_se< "Hello"
@@ -37,7 +72,7 @@ Behind the facade:
   table of typed functions;
 - a loader validates the descriptor, copies it, and calls the
   functions, containing errors and panics;
-- a facade library (`Digest.xtl`) gives each function an X_eTaL name
+- a facade library (`Sqlite.xtl`) gives each function an X_eTaL name
   and type.
 
 X_eTaL does not yet have a native hook, so for now programs that use

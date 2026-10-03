@@ -80,6 +80,14 @@ serve-pages:
     @echo "http://127.0.0.1:8732/X_eTaL-extensions/"
     @python3 -m http.server 8732 --directory target/serve
 
+# A fresh user's first run: clone, build, run release 1's programs (just walkthrough [URL])
+walkthrough *url:
+    scripts/walkthrough.sh "$@"
+
+# docs/status.md, what works today, regenerated
+status-doc:
+    scripts/status.py
+
 # The full pre-commit gate
 gate:
     scripts/gate.sh

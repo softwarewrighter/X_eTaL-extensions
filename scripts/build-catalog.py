@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""pages/index.html: the catalog of live extension pages, one card per
-extensions/NAME/web/, its title the extension's name and its text the
-first paragraph of extensions/NAME/docs/README.md.
+"""pages/index.html: the catalog of every extension, one card each: its
+name, the first paragraph of extensions/NAME/docs/README.md, and a link
+to its live page (extensions/NAME/web/) or, for an extension that runs
+only on the command line, to its documentation.
     scripts/build-catalog.py
 """
 import html
@@ -25,11 +26,19 @@ def vendored():
     return "unknown"
 
 
-names = sorted(p.parent.parent.name for p in root.glob("extensions/*/web/Cargo.toml"))
-cards = "\n".join(
-    f'    <a class="card" href="{n}/"><h2>{html.escape(n)}</h2><p>{html.escape(lede(n))}</p></a>'
-    for n in names
-)
+REPO = "https://github.com/softwarewrighter/X_eTaL-extensions"
+names = sorted(p.parent.name for p in root.glob("extensions/*/extension.toml"))
+
+
+def card(n):
+    live = (root / "extensions" / n / "web" / "Cargo.toml").exists()
+    href = f"{n}/" if live else f"{REPO}/blob/main/extensions/{n}/docs/README.md"
+    how = "live in your browser" if live else "command line (xetal-x): documentation"
+    return (f'    <a class="card" href="{href}"><h2>{html.escape(n)}</h2>'
+            f'<p>{html.escape(lede(n))}</p><p class="how">{how}</p></a>')
+
+
+cards = "\n".join(card(n) for n in names)
 sha = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=root,
                      capture_output=True, text=True).stdout.strip() or "unknown"
 page = f"""<!doctype html>
@@ -47,9 +56,11 @@ page = f"""<!doctype html>
     <img class="logo" src="modern-xetal-logo.jpg" alt="X_eTaL" />
     <h1>X_eTaL extensions</h1>
   </div>
-  <p class="lede">Native Rust extensions for X_eTaL, the eXperimental Extensible Typed
-  Array Language, compiled to WebAssembly and running in your browser: each page runs an
-  X_eTaL program that calls Rust through an ordinary X_eTaL library. Edit the program and
+  <p class="lede"><b>Libraries extend the vocabulary; macros extend the language; native
+  extensions extend the machine.</b> These are X_eTaL's native extensions: Rust libraries
+  that give programs in X_eTaL, the eXperimental Extensible Typed Array Language, what
+  the language should not reinvent -- a database, a clock -- behind ordinary typed X_eTaL
+  libraries. The live pages run with the Rust compiled to WebAssembly: edit a program and
   run it again.</p>
 </header>
 <main>
