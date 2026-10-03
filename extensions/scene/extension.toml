@@ -1,0 +1,10 @@
+# The scene package: what the loader reads to find and check the
+# native library, and the facade programs import.
+[extension]
+name = "scene"
+version = "0.1.0"
+abi = 1
+facade = "lib/Scene.xtl"
+# Linked into the host (xetal-x serves its windows on the main thread).
+library = "xetal_ext_scene"
+host = true
