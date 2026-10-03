@@ -14,6 +14,11 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 xetal-ext-sdk = { path = "../../../crates/xetal-ext-sdk" }
 
+# In a browser (wasm32) std's clocks panic: the browser's are used.
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+js-sys = "0.3"
+web-sys = { version = "0.3", features = ["Window", "Performance"] }
+
 [features]
 # Link statically beside other extensions (a browser page): no unmangled
 # entry point. Never enabled inside the root workspace.

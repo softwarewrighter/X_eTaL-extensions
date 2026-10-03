@@ -1,6 +1,6 @@
 number = 5
 slug = "clock-live"
-status = "pending"
+status = "in-progress"
 description = "live step 5: clock builds for wasm32 (js-sys Date.now and performance.now beh..."
 role = "production"
 context_files = []

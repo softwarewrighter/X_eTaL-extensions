@@ -188,7 +188,7 @@ linalg); sqlite, web and http stay native.
 | 2 | shell | (done) `web/shell`, the pages' shared Yew crate (adapted from X_eTaL-demos' microscope, copied not depended on): header with the logo, an editable program panel run in the browser, the output, decorated source, footer naming the vendored X_eTaL commit; its stylesheet; the red favicon |
 | 3 | hello-live | (done) `extensions/hello/web/`: the tour, editable and run live; native tests of the page's model |
 | 4 | pages | (done: https://softwarewrighter.github.io/X_eTaL-extensions/) `scripts/build-pages.sh` (trunk into `pages/NAME/`, a catalog `pages/index.html`), `.github/workflows/pages.yml` (publishes `pages/`), GitHub Pages enabled, README link |
-| 5 | clock-live | clock for `wasm32` (the browser's clock through `js-sys`), `extensions/clock/web/`: the bridge-cost demo live |
+| 5 | clock-live | (done) clock for `wasm32` (the browser's clock through `js-sys`), `extensions/clock/web/`: the bridge-cost demo live |
 
 ## Saga 4 -- sqlite and the data notebook
 

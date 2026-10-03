@@ -7,7 +7,8 @@ benchmarks -- including the cost of the bridge itself.
 - Package: `extensions/clock/` (`extension.toml`; library
   `xetal_ext_clock`: `libxetal_ext_clock.dylib` on macOS, `.so` on Linux)
 - Facade: `lib/Clock.xtl`, recommended alias `ck:`
-- Native crates: none beyond the SDK (std's `SystemTime` and `Instant`)
+- Native crates: none beyond the SDK (std's `SystemTime` and `Instant`;
+  in a browser, `js-sys`/`web-sys` for `Date.now` and `performance.now`)
 
 ## From X_eTaL
 
@@ -37,6 +38,17 @@ Native functions: `now`, `iso`, `iso_of`, `millis` (`just list`).
   second, 2.6 million Floats per second out to Rust and back, and a
   100,000-element sum takes about 21 ms in X_eTaL and 20 ms in Rust
   over the bridge (most of it formatting the numbers as text).
+
+## Live
+
+`web/` is clock's live page
+([live](https://softwarewrighter.github.io/X_eTaL-extensions/clock/)):
+the bridge-cost demo run in the browser, with clock and hello both
+compiled to WebAssembly and linked in. In a browser the clock is the
+browser's (`std`'s clocks panic on `wasm32`). One run in Chrome on the
+same laptop: about 16,000 calls per second and 1.7 million Floats per
+second out and back; the 100,000-element sum about 14 ms in X_eTaL and
+25 ms in Rust over the bridge.
 
 ## Build and test
 

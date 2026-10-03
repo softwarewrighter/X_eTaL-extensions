@@ -1,0 +1,16 @@
+[package]
+name = "clock-web"
+description = "The clock extension live: the time and what the bridge costs, measured in the browser with clock and hello compiled to WebAssembly"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+
+[dependencies]
+xetal-ext-shell = { path = "../../../web/shell" }
+xetal-ext-clock = { path = "../rust", features = ["static"] }
+xetal-ext-hello = { path = "../../hello/rust", features = ["static"] }
+yew = { version = "0.21", features = ["csr"] }
+
+# Its own workspace: clock and hello are linked with its `static` feature.
+[workspace]
