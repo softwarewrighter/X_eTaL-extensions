@@ -20,4 +20,5 @@ mod registry;
 pub use error::{CallError, LoadError};
 pub use manifest::{Manifest, Package, platform_triple};
 pub use registry::{FunctionInfo, Provider, Registry};
+pub use xetal_ext_abi as abi;
 pub use xetal_ext_abi::{Array, ArrayData, ErrorCode, OwnedError, Value};

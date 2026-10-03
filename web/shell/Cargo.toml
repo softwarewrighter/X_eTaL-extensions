@@ -1,0 +1,22 @@
+[package]
+name = "xetal-ext-shell"
+description = "The shared shell of the X_eTaL-extensions live pages: a program run in the browser with native extensions linked in, its output, header and footer"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+
+[dependencies]
+xetal-play = { path = "../../vendor/xetal/components/web/crates/xetal-play" }
+xetal-store = { path = "../../vendor/xetal/components/base/crates/xetal-store" }
+xetal-ext-bridge = { path = "../../crates/xetal-ext-bridge" }
+xetal-ext-loader = { path = "../../crates/xetal-ext-loader", default-features = false }
+yew = { version = "0.21", features = ["csr"] }
+web-sys = { version = "0.3", features = ["Window", "Performance", "HtmlTextAreaElement"] }
+
+[dev-dependencies]
+xetal-ext-hello = { path = "../../extensions/hello/rust", features = ["static"] }
+
+# Its own workspace: pages link extensions with their `static` feature,
+# which must never reach the root workspace's shared libraries.
+[workspace]

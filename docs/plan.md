@@ -86,6 +86,8 @@ crates/
   xetal-ext-loader/      packages, dynamic loading, registry
   xetal-ext-bridge/      the ext: channel: ExtStore and the protocol, for any host
   xetal-x/               the bridge host: vendored xetal + loader + ExtStore
+web/shell/               the live pages' shared Yew crate and stylesheet
+images/                  the logo and the red favicon
 extensions/<name>/       one self-contained directory per extension
   extension.toml         the package manifest
   justfile               its recipes (build, test, reg, demo)
@@ -94,6 +96,7 @@ extensions/<name>/       one self-contained directory per extension
   tests/                 reg-rs tests: *.rgt, .out/.err baselines, *.xtl programs
   docs/                  README.md (its page), and any further pages
   demos/                 programs showing it off
+  web/                   its live page (a Yew app; its own Cargo workspace)
 templates/extension/     what just new-ext copies
 docs/plan.md             this plan
 docs/xetal-asks.md       what the extensions need from X_eTaL
@@ -182,7 +185,7 @@ linalg); sqlite, web and http stay native.
 | # | Step slug | Delivers |
 | - | --------- | -------- |
 | 1 | bridge-lib | (done) `crates/xetal-ext-bridge`: `ExtStore` and the protocol out of `xetal-x`, generic over the inner store, also serving each extension's facade by name; a `static` feature on every extension (no unmangled entry, so several link into one binary; never enabled inside the root workspace); a native test running hello's tour through `xetal-play` with hello linked statically, matching its reg-rs golden; the loader's `libloading` behind a default `dynamic` feature, off for the browser |
-| 2 | shell | `web/shell`, the pages' shared Yew crate (adapted from X_eTaL-demos' microscope, copied not depended on): header with the logo, an editable program panel run in the browser, the output, decorated source, footer naming the vendored X_eTaL commit; its stylesheet; the red favicon |
+| 2 | shell | (done) `web/shell`, the pages' shared Yew crate (adapted from X_eTaL-demos' microscope, copied not depended on): header with the logo, an editable program panel run in the browser, the output, decorated source, footer naming the vendored X_eTaL commit; its stylesheet; the red favicon |
 | 3 | hello-live | `extensions/hello/web/`: the tour, editable and run live; native tests of the page's model |
 | 4 | pages | `scripts/build-pages.sh` (trunk into `pages/NAME/`, a catalog `pages/index.html`), `.github/workflows/pages.yml` (publishes `pages/`), GitHub Pages enabled, README link |
 | 5 | clock-live | clock for `wasm32` (the browser's clock through `js-sys`), `extensions/clock/web/`: the bridge-cost demo live |

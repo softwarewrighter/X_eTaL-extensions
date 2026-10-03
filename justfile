@@ -66,6 +66,10 @@ test-exts:
 new-ext name alias what:
     scripts/new-ext.sh "$1" "$2" "$3"
 
+# The live pages' crates: fmt, clippy, native tests, wasm32 build
+check-web:
+    scripts/check-web.sh
+
 # The full pre-commit gate
 gate:
     scripts/gate.sh

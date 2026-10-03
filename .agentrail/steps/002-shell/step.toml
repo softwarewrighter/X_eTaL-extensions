@@ -1,6 +1,6 @@
 number = 2
 slug = "shell"
-status = "pending"
+status = "in-progress"
 description = "live step 2: web/shell, the pages' shared Yew 0.21 crate adapted (copied) fro..."
 role = "production"
 context_files = []

@@ -1,0 +1,5 @@
+# The live pages' crates build into target/web/, apart from the root
+# workspace's target/: they compile the same crates (extensions with
+# the `static` feature), and sharing one deps/ directory mixes them.
+[build]
+target-dir = "../target/web"

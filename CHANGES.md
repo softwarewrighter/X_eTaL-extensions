@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-02
 
+- 06:04 `feat` `web/shell` (`xetal-ext-shell`), the live pages' shared Yew crate, adapted from X_eTaL-demos' microscope: `run::install` links extensions statically and installs the bridge store serving facades and `ext:`; `Playground` (an editable program run in the browser with Run and Reset, its decorated source, output or error, the native functions linked in, the command line); header and footer with the vendored X_eTaL commit; `shell.css` in this repo's red. Native test with hello; `scripts/check-web.sh` in the gate (fmt, clippy, tests, wasm32). The loader re-exports the ABI.
+
 - 19:53 `refactor` `crates/xetal-ext-bridge`: `ExtStore` and the protocol moved out of `xetal-x` (behavior unchanged: gate and goldens), and it serves facade sources by file name for store-only hosts; a native test runs hello's tour through the vendored `xetal-play` with hello linked statically, output identical to the command line's golden. The SDK's entry point is mangled under an extension's `static` feature (hello, clock, the template); the loader's `libloading` sits behind a default `dynamic` feature; hello, clock and the bridge build for wasm32.
 
 - 19:35 `plan` Saga 3, live (the user's request): the extensions in the browser with Rust, Yew and WebAssembly, published with GitHub Pages like X_eTaL-demos; steps bridge-lib, shell, hello-live, pages, clock-live; later sagas renumbered 4-8. `images/favicon.ico`: the peers' favicon with its lavender ground turned red. Saga 2 archived.
