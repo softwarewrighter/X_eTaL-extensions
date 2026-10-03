@@ -1,0 +1,9 @@
+number = 4
+slug = "pages"
+status = "pending"
+description = "live step 4: scripts/build-pages.sh (every extensions/*/web built with trunk ..."
+role = "production"
+context_files = []
+created_at = "2026-10-02T19:34:51"
+task_type = "web"
+commits = []

@@ -1,0 +1,1 @@
+live step 4: scripts/build-pages.sh (every extensions/*/web built with trunk --release into pages/NAME/ under /X_eTaL-extensions/NAME/; pages/index.html catalog; logo and favicon copied; .nojekyll), just pages / serve-pages, .github/workflows/pages.yml uploading pages/ (as X_eTaL-demos), GitHub Pages enabled for the repo (workflow source), README live link; pages/ committed.

@@ -70,7 +70,7 @@ programs.
 | A7 | **An extension is a self-contained directory**, `extensions/<name>/` (the user's rule, 2026-10-02): `extension.toml` (the manifest); `justfile` (its own recipes: build, test, reg, demos); `rust/` (its Rust library crate, a `cdylib` + `rlib`, with its Rust tests); `lib/` (its X_eTaL sources: the facade `<Name>.xtl`, and `<Name>.xtlm` macros when X_eTaL has them -- one directory, as X_eTaL looks for both together, MC11); `tests/` (reg-rs tests: `*.rgt` commands with committed `.out`/`.err` baselines, `REG_RS_DATA_DIR` pointing there, and the `*.xtl` programs they run); `docs/` (its pages, `docs/README.md` first); `demos/` (programs that show it off, each with a README section and a reg-rs test). The repo's `just` recipes delegate to each extension's. | Each extension can be read, built, tested and moved on its own; the layout is the same for every one. |
 | A8 | **Facade conventions** follow X_eTaL's style guide (lang-choices section 16) and `../X_eTaL-libraries` A6: `UpperCamel.xtl`, exports under `l:`, private helpers unprefixed, predicates `?`, effects `!`, a header with the import line and recommended alias, no export shadowing a built-in, no name shadowing a standard library. Exports are typed as if native (ordinary X_eTaL types), so the facade's types are pinned (`xetal type`) and survive the switch from the bridge to E1. | The facade is the extension's interface; its types are the contract. |
 | A9 | **Pure fallbacks where cheap.** When an extension's function has a reasonable pure X_eTaL definition (CRC-32, a small determinant), the facade's tests compare native and pure results; the pure version is not exported. Where there is none (the clock, regular expressions), there is no fallback. | Golden behavior is cross-checked, not only self-consistent. |
-| A10 | **Macro helpers wait for X_eTaL** (ask E2, X_eTaL MC10-MC13): a `.xtlm` that turns a signature into a facade function (`"f64 f64" ffi:b_ind< "linalg/det"`). Designed on paper only (saga 7), never emulated. | As in `../X_eTaL-libraries` A9. |
+| A10 | **Macro helpers wait for X_eTaL** (ask E2, X_eTaL MC10-MC13): a `.xtlm` that turns a signature into a facade function (`"f64 f64" ffi:b_ind< "linalg/det"`). Designed on paper only (saga 8), never emulated. | As in `../X_eTaL-libraries` A9. |
 | A11 | A missing X_eTaL feature or bug an extension uncovers is **not** fixed here nor hidden: it goes in `docs/xetal-asks.md` (status, kind, extensions, why, minimal repro, workaround) and on the extension's page. | X_eTaL owns its language decisions; this repo is a consumer. |
 | A12 | **Names, not homes**: an extension is identified by its name (`digest`), never a GitHub coordinate (the repos may move to `sw-array-languages`, research.txt). `just` is the entry point (recipes call `scripts/*.sh`); `CHANGES.md` gets a line for every commit; docs are ASCII-only markdown (`sw-markdown-checker`). | Same process as the sibling repos. |
 | A13 | Dependencies are few, well known and permissively licensed (`libloading`, and per extension e.g. `rusqlite` with bundled SQLite, `axum`/`tokio`, `ureq`, `image`, `nalgebra`); each extension's page lists its crates. Nothing is downloaded at run time except by the http extension, on request. | Small, auditable extensions. |
@@ -165,7 +165,28 @@ directory.
 | 4 | hello-facade | `lib/Hello.xtl`, its reg-rs tests through the bridge, pinned facade types, a demo, hello's docs complete (done; `xetal-x` puts each package's `lib/` on `XETAL_PATH`; facade helpers apply `f_loat` so facade types match the native signatures; the template's facade carries the helpers) |
 | 5 | clock | the clock extension end to end; the bridge's cost measured (calls per second, bytes per second) (done: now, iso, iso_of, millis; `ck:t_ime`; about 220,000 calls/s and 2.6 M Floats/s out and back; ask E4) |
 
-## Saga 3 -- sqlite and the data notebook
+## Saga 3 -- live
+
+The extensions running in the browser (the user's request,
+2026-10-02): Rust, Yew and WebAssembly pages published with GitHub
+Pages, as `../X_eTaL-demos` publishes its demos, with the peers'
+favicon in red (`images/favicon.ico`). A browser cannot load a shared
+library, so a page links its extensions statically; the vendored
+`xetal-play` runs programs against the store the page installs, and the
+same `ExtStore` that `xetal-x` uses serves the facades (`u_se<` reads
+`Name.xtl` from the store) and the `ext:` channel. Extensions whose
+crates build for `wasm32` go live (hello, clock, digest, image,
+linalg); sqlite, web and http stay native.
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | bridge-lib | `crates/xetal-ext-bridge`: `ExtStore` and the protocol out of `xetal-x`, generic over the inner store, also serving each extension's facade by name; a `static` feature on every extension (no unmangled entry, so several link into one binary; never enabled inside the root workspace); a native test running hello's tour through `xetal-play` with hello linked statically, matching its reg-rs golden |
+| 2 | shell | `web/shell`, the pages' shared Yew crate (adapted from X_eTaL-demos' microscope, copied not depended on): header with the logo, an editable program panel run in the browser, the output, decorated source, footer naming the vendored X_eTaL commit; its stylesheet; the red favicon |
+| 3 | hello-live | `extensions/hello/web/`: the tour, editable and run live; native tests of the page's model |
+| 4 | pages | `scripts/build-pages.sh` (trunk into `pages/NAME/`, a catalog `pages/index.html`), `.github/workflows/pages.yml` (publishes `pages/`), GitHub Pages enabled, README link |
+| 5 | clock-live | clock for `wasm32` (the browser's clock through `js-sys`), `extensions/clock/web/`: the bridge-cost demo live |
+
+## Saga 4 -- sqlite and the data notebook
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -173,7 +194,7 @@ directory.
 | 2 | csv-import | CSV into a table (native, `rusqlite` + a small CSV reader), and query results back as X_eTaL arrays |
 | 3 | notebook | demos/notebook: a bundled CSV (a public-domain dataset), SQL plus array analytics, an SVG chart; reg-rs golden |
 
-## Saga 4 -- web
+## Saga 5 -- web
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -181,7 +202,7 @@ directory.
 | 2 | live-page | demos/live: a page recomputing Life or Mandelbrot as SVG per request; reg-rs test drives it over loopback |
 | 3 | todomvc | demos/todomvc: TodoMVC in X_eTaL with sqlite; loopback test of add, toggle, delete |
 
-## Saga 5 -- photo lab
+## Saga 6 -- photo lab
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -189,7 +210,7 @@ directory.
 | 2 | linalg | the linalg extension; small cases cross-checked in pure X_eTaL |
 | 3 | photo-lab | demos/photo-lab: filters and edges by rotation, SVD compression at several ranks, PNGs out |
 
-## Saga 6 -- fetch and analyze
+## Saga 7 -- fetch and analyze
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -198,7 +219,7 @@ directory.
 | 3 | fetch | demos/quakes: the USGS feed (opt-in `just live-quakes`), a saved copy for the golden |
 | 4 | release-1 | catalog and pages reviewed, demos re-run, asks reviewed, retrospective here |
 
-## Saga 7 -- native hook and macro helpers (blocked)
+## Saga 8 -- native hook and macro helpers (blocked)
 
 Blocked on asks E1 (a native hook in X_eTaL) and E2 (`.xtlm`). Until
 then only the designs below are kept current.
@@ -237,9 +258,8 @@ l:s_ha256 := { t -> t []N_PUT "ext:digest/sha256"; []N_GET "ext:digest/sha256" }
   candidate for a quad) is proposed as an ask, not kept here silently.
 - Static linking of several extensions into one binary: each
   extension's `xetal_extension_v1` is unmangled, so two linked into one
-  binary would collide. `__xetal_extension::descriptor()` (mangled) is
-  the static path; when a host links more than one, the unmangled entry
-  moves behind a cargo feature. Not needed while the loader is dynamic.
-- The browser: extensions are native; the web build would need the
-  statically linked form (A5) compiled to WebAssembly. Out of scope
-  until a demo asks for it.
+  binary would collide; saga 3 step 1 puts it behind a `static`
+  feature, used only outside the root workspace (feature unification
+  would otherwise strip the symbol from the shared libraries).
+- The browser: saga 3. Each later extension whose crate builds for
+  `wasm32` gets a live page in the step that builds it.

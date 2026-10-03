@@ -1,0 +1,1 @@
+live step 3: extensions/hello/web (its own Cargo workspace, trunk index.html linking the shell css, logo, red favicon): the tour program editable and run live with hello linked statically; native tests; trunk build works; hello docs.

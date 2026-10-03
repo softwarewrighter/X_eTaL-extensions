@@ -1,0 +1,9 @@
+number = 3
+slug = "hello-live"
+status = "pending"
+description = "live step 3: extensions/hello/web (its own Cargo workspace, trunk index.html ..."
+role = "production"
+context_files = []
+created_at = "2026-10-02T19:34:51"
+task_type = "web"
+commits = []
