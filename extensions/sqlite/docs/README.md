@@ -53,6 +53,27 @@ table must not exist yet (drop it first with `sq:e_xec`); a record with
 the wrong number of fields is an error naming it; the whole import is
 one transaction. The file's path is confined as a database's is.
 
+## The data notebook
+
+`demos/notebook.xtl` (`just demo notebook`; pictures in `work/draw/`):
+atmospheric CO2 at Mauna Loa, 1959-2025 (NOAA GML and Scripps;
+`demos/data/PROVENANCE.txt`), loaded from CSV into SQLite and analysed
+by SQL and X_eTaL together -- each doing what it is good at:
+
+| Step | Who | What it finds |
+| ---- | --- | ------------- |
+| what is there | SQL | 67 years, 315.98 to 427.35 ppm |
+| decade means | SQL `group by` | 316.0 in the 1950s to 420.4 in the 2020s |
+| the rise each year | X_eTaL: the series minus itself shifted | 1.69 ppm a year on average; 0.86 in the first decade, 2.63 in the last |
+| a least-squares line | X_eTaL, with the standard `Stats` library | 1.67 ppm a year; at 2025 the line says 416.43, the air says 427.35 |
+| what the line misses | X_eTaL: residuals by thirds | +2.1, -4.14, +2.2 ppm: a curve bending up -- the rise is speeding up |
+| a histogram of the rises | X_eTaL: a table of comparisons | half-ppm bins 1 13 12 18 13 7 1 1, drawn as an APL bar chart (`[]G_RID`) |
+| the curve | X_eTaL: `[]P_ATH` | the Keeling curve, as SVG |
+
+One program uses a native extension (`Sqlite`), a standard X_eTaL
+library (`Stats`) and X_eTaL's own pictures. Its reg-rs test pins the
+output and both pictures.
+
 ## Databases are paths
 
 There are no handles (ABI V1 has none; plan A15): `db` names a file,

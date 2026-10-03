@@ -215,7 +215,7 @@ native hook (E1) would remove.
 | - | --------- | -------- |
 | 1 | sqlite | (done) the sqlite extension: exec, query (cells as a Char matrix, numeric columns as Float), parameters, confinement to allowed directories, errors; Rust tests and reg-rs tests on a temp database |
 | 2 | csv-import | (done) CSV into a table (native, `rusqlite` + a small CSV reader), and query results back as X_eTaL arrays |
-| 3 | notebook | demos/notebook: a bundled CSV (a public-domain dataset), SQL plus array analytics, an SVG chart; reg-rs golden |
+| 3 | notebook | (done; NOAA/Scripps Mauna Loa CO2) demos/notebook: a bundled CSV (a public-domain dataset), SQL plus array analytics, an SVG chart; reg-rs golden |
 | 4 | sqlite-live | whether SQLite runs in the browser (rusqlite on wasm32 via sqlite-wasm-rs or similar); if so with modest work, the notebook live; if not, why, and the catalog lists sqlite as command-line only |
 | 5 | release-1 | research3's checklist for this repo: README value proposition and the three-ways phrase ("libraries extend the vocabulary; macros extend the language; native extensions extend the machine"); roadmap extensions labelled; `docs/status.md`, what works today (this repo's column of the ecosystem dashboard, generated from manifests and tests where possible); stale-ask sweep against upstream (vendor refreshed if asks landed); the site's catalog lists every extension; a fresh-user walkthrough (clone, build, hello, clock, the sqlite notebook) as a recipe, run and fixed; retrospective; a release tag proposed to the user |
 

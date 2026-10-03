@@ -1,0 +1,16 @@
+co2-mlo-annual.csv: annual mean atmospheric CO2 at Mauna Loa
+Observatory, Hawaii, 1959-2025 (ppm, mole fraction in dry air), with
+its estimated uncertainty.
+
+Source: NOAA Global Monitoring Laboratory (GML),
+https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_annmean_mlo.csv
+(file created 2026-09-05; fetched 2026-10-03). Data from March 1958
+through April 1974 were obtained by C. David Keeling of the Scripps
+Institution of Oceanography (SIO), scrippsco2.ucsd.edu.
+
+Credit: Dr. Xin Lan, NOAA/GML (gml.noaa.gov/ccgg/trends/) and
+Dr. Ralph Keeling, Scripps Institution of Oceanography
+(scrippsco2.ucsd.edu/). NOAA: "These data are made freely available to
+the public and the scientific community"; this copy keeps only the
+data rows (the file's comment header is summarized here). The last
+year is provisional and may be revised by GML.

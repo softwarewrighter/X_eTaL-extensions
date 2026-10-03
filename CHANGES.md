@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 09:53 `ext` The data notebook (`extensions/sqlite/demos/notebook.xtl`): Mauna Loa CO2 1959-2025 (NOAA GML and Scripps, provenance bundled) imported into SQLite; SQL for the overview and decade means, X_eTaL (with `Stats`) for the yearly rise, a least-squares line and its residuals (the rise is speeding up), a histogram as an APL bar chart and the curve, both SVG; checked in Chrome; reg-rs pins output and pictures. Demo recipes load every extension and draw into `work/draw`. Ask E6 (`xetal --draw DIR run FILE` misparses).
+
 - 09:02 `ext` sqlite CSV import: `db sq:i_mport "path.csv"` or `"table=path.csv"` (an RFC 4180 reader; INTEGER, REAL or TEXT inferred per column; empty fields NULL; one transaction; existing table or ragged records refused; confined paths); Rust tests of the reader, types and imports; reg-rs `sqlite-import` (planets.csv: Kepler's third law from SQL and X_eTaL); list and types goldens rebased for the new function.
 
 - 08:52 `plan` research3.txt (../X_eTaL) adopted for this repo: release 1 is hello + clock + sqlite with the data notebook ("Do SQLite"); web, image, linalg, http and digest are roadmap (README and plan); saga 4 gains sqlite-live and release-1 (status matrix, stale-ask sweep, full catalog, fresh-user walkthrough, the three-ways phrase, a release tag proposed).

@@ -17,6 +17,7 @@ and the workaround in use.
 | E3 | open | feature | the CLI as a library: a host entry point (`xetal_cli::run_with(args, store)` or similar) so a host can be `xetal` with its own store | the bridge host `xetal-x` | `xetal-x` compiles the vendored CLI's source files as `#[path]` modules and repeats its 60-line `main` with a different store; breaks if the CLI's modules are reorganized |
 | E4 | open | feature | the time: a quad giving the current time (APL's quad TS) and a monotonic or CPU clock (quad AI) | clock (and anything timing itself) | the clock extension, through the bridge |
 | E5 | open | feature | an error raised inside a library function also names the program line that called it (a call trace) | every facade (errors point into the facade's helper, not the caller) | the extension's message names the function (`ext:sqlite/nums: ...`) |
+| E6 | open | bug | `xetal --draw DIR run FILE` fails (clap takes `run` as the SCRIPT argument and FILE as a subcommand); `xetal run --draw DIR FILE` works | the sqlite notebook's test and every demo recipe | `--draw` written after `run` |
 
 Asks already filed by the sibling repos
 (`../X_eTaL-demos/docs/xetal-asks.md`,
@@ -133,3 +134,17 @@ error[io]: []N_GET: ext:sqlite/nums: near "selec": syntax error in selec 1 at of
 Wanted: the program's line as well (`called from main.xtl:2:1`), as a
 short trace of library calls. Workaround: each native error message
 names its function, so the user can find the call.
+
+### E6: `--draw` before the subcommand
+
+```
+xetal --draw out run prog.xtl
+error: the subcommand 'prog.xtl' cannot be used with:
+  --draw <DIR>
+```
+
+`xetal --help` lists `--draw <DIR>` as an option of `xetal` itself, so
+it reads as if it may come first; clap then takes `run` as the
+optional SCRIPT positional. `xetal run --draw out prog.xtl` works, as
+does `XETAL_DRAW=out xetal run prog.xtl`. Workaround: `--draw` after
+`run` (the demo recipes and the notebook's reg-rs test).

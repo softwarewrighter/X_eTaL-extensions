@@ -63,7 +63,7 @@ come.
 
 | Demo | Extensions | What it shows | Status |
 | ---- | ---------- | ------------- | ------ |
-| data notebook | sqlite | a CSV in SQLite; SQL selects, arrays compute group-bys, histograms, a fit; an SVG chart | release 1, in progress |
+| [data notebook](extensions/sqlite/docs/README.md#the-data-notebook) | sqlite | CO2 at Mauna Loa: a CSV in SQLite; SQL groups, X_eTaL computes the yearly rise, a least-squares line and its residuals, a histogram; SVG pictures | release 1, done |
 | X_eTaL on the web | web, sqlite | a live page recomputing Life or Mandelbrot per request; a TodoMVC stored in SQLite | roadmap |
 | photo lab | image, linalg | a photo as an array: filters, edges, SVD compression; PNGs out | roadmap |
 | fetch and analyze | http | live earthquake data summarized and plotted | roadmap |
@@ -72,7 +72,7 @@ come.
 | --------- | ------ | ---- | ------ | ------ |
 | [hello](extensions/hello/docs/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-extensions/hello/)) | `Hello` | the smallest proof of the boundary | -- | done: facade, tests, demo, live |
 | [clock](extensions/clock/docs/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-extensions/clock/)) | `Clock` | wall-clock and monotonic time; the bridge's cost | std | done: facade, tests, cost demo, live |
-| [sqlite](extensions/sqlite/docs/README.md) | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | statements and queries done; CSV import and notebook next |
+| [sqlite](extensions/sqlite/docs/README.md) | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | done: facade, CSV import, tests, the data notebook |
 | web | `Web` | serve HTTP: the program takes each request and replies | axum, tokio | roadmap |
 | image | `Image` | images to and from arrays | image | roadmap |
 | linalg | `Linalg` | solve, inverse, least squares, eigenvalues, SVD | nalgebra | roadmap |

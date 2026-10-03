@@ -36,6 +36,6 @@ rebase test:
 list: build
     {{root}}/target/debug/xetal-x --ext . --ext-list
 
-# Run a demo: just demo NAME (demos/NAME.xtl)
+# Run a demo: just demo NAME (demos/NAME.xtl; pictures go to work/draw/)
 demo name: build
-    {{root}}/target/debug/xetal-x --ext . run "demos/$1.xtl"
+    {{root}}/target/debug/xetal-x --ext {{root}}/extensions run --draw work/draw "demos/$1.xtl"

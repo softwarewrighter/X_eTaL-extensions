@@ -1,0 +1,56 @@
+# The data notebook: a CSV in SQLite, SQL to select and group, X_eTaL
+# arrays to compute, pictures to see it. Atmospheric CO2 at Mauna Loa,
+# 1959-2025 (NOAA GML and Scripps; demos/data/PROVENANCE.txt).
+# Run: just demo notebook    (pictures go to XETAL_DRAW, else here)
+"sq:" u_se< "Sqlite"
+"s:" u_se< "Stats"
+
+db := "work/notebook.db"
+x := db sq:e_xec "drop table if exists co2"
+n := db sq:i_mport "co2=demos/data/co2-mlo-annual.csv"
+
+# -- 1. SQL: what is there (rows, first and last year, lowest and highest ppm)
+db sq:n_ums "select count(*), min(year), max(year), min(mean), max(mean) from co2"
+
+# -- 2. SQL groups: the mean of each decade, and its years
+db sq:n_ums "select (year / 10) * 10, round(avg(mean), 1), count(*) from co2 group by 1 order by 1"
+
+# -- 3. arrays: the whole series, then what SQL is awkward at
+m := db sq:n_ums "select year, mean from co2 order by year"
+y := 1 s_elect_2 m
+c := 2 s_elect_2 m
+u:r_ound := { v -> (f_loat f_loor 0.5 + 100.0 * v) / 100.0 }
+
+# the rise each year: the series minus itself shifted by one
+d := (1 d_rop c) - -1 d_rop c
+"mean rise per year (ppm), first decade, last decade:"
+u:r_ound (s:m_ean d) c_at (s:m_ean 10 t_ake d) c_at s:m_ean -10 t_ake d
+
+# a least-squares line through all of it: slope and where it is in 2025
+yb := s:m_ean y
+cb := s:m_ean c
+s := ('+ r_/ (y - yb) * c - cb) / '+ r_/ (y - yb) * y - yb
+"least-squares slope (ppm per year), the line at 2025, the data at 2025:"
+u:r_ound s c_at (cb + s * 2025.0 - yb) c_at -1 t_ake c
+
+# the line misses in a curve: high at both ends, low in the middle --
+# the rise is speeding up (residuals averaged by thirds)
+e := c - cb + s * y - yb
+k := f_loor (t_ally e) / 3
+"mean residual (ppm): first third, middle third, last third:"
+u:r_ound (s:m_ean k t_ake e) c_at (s:m_ean k t_ake k d_rop e) c_at s:m_ean (0 - k) t_ake e
+
+# -- 4. pictures
+# the yearly rise as a histogram: half-ppm bins, one column per bin,
+# drawn as an APL bar chart (a 0/1 matrix, 1s dark)
+b := 1 + f_loor d / 0.5
+h := '+ r_/_2 (r_ange 8) '= t_able b
+"years with a rise in [0, 0.5), [0.5, 1), ... [3.5, 4) ppm:"
+h
+p := []S_HOW []G_RID (r_ev r_ange 'm_ax r_/ h) '<= t_able h
+
+# the series as a line, years across and ppm up (scaled to a wide box)
+w := 3.0 * (y - 1959.0) / 66.0
+v := (c - 315.0) / 115.0
+p := []S_HOW []P_ATH (2 c_at t_ally y) r_eshape w c_at v
+"drawn: the histogram and the curve"
