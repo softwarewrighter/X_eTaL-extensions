@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-02
 
+- 18:58 `ext` The Hello facade (`extensions/hello/lib/Hello.xtl`, alias `hx:`): a_nswer, a_dd, s_hout, s_um, e_cho, f_ail, p_anic over private ext: helpers, typed like the native signatures (a wrong argument is a type error before any call); `xetal-x` puts each loaded package's `lib/` on `XETAL_PATH`; reg-rs tests of the facade, its pinned types, a type error, a failure, and `demos/tour.xtl`; hello's page complete; the template's facade carries the helpers.
+
 - 18:39 `feat` The bridge protocol: `xetal-x`'s `ext:` store takes arguments as `[]N_PUT` to `ext:E/F?KIND=SHAPE` (text, chars, int, float, bool), calls on `[]N_GET "ext:E/F"`, and gives the reply's `?shape` and `?kind`; every failure is an X_eTaL `error[io]` naming the path; floats cross in shortest round-trip form. The SDK keeps contained panics quiet. hello's reg-rs tests: every function through the channel, failure, panic, arity, a bad argument. docs/bridge.md.
 
 - 17:06 `plan` The catalog and sagas chosen with the user: four flagship demos (data notebook on sqlite; X_eTaL on the web with axum, a live page and TodoMVC; photo lab with image and linalg; fetch and analyze with http), supporting clock and digest, hello as the teaching example; sagas 3-6, the blocked native-hook saga now 7; A15 (path-named state, axum behind a pull interface, loopback-only network tests).

@@ -1,0 +1,1 @@
+error[type-mismatch]: expected a number, found Char at tests/facade-type.xtl:3:1

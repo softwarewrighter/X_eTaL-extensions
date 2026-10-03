@@ -13,6 +13,16 @@ __WHAT__
 | ----------- | ----- | ----------- | ---- |
 | `about` | 0 | `Unit -> Char` | the extension's name and version |
 
+## From X_eTaL
+
+```
+"__ALIAS__:" u_se< "__CAP__"
+__ALIAS__:a_bout @
+```
+
+Run with `xetal-x --ext extensions/__NAME__ run PROGRAM` (see the
+repository's docs/bridge.md).
+
 ## Build and test
 
 ```sh

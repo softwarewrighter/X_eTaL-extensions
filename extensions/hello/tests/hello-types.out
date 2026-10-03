@@ -1,0 +1,7 @@
+l:a_nswer : Unit -> Int
+l:a_dd : (Num a, Num b) => a -> b -> Float
+l:s_hout : Char -> Char
+l:s_um : Num a => a -> Float
+l:e_cho : Num a => a -> Float
+l:f_ail : Unit -> Int
+l:p_anic : Unit -> Int

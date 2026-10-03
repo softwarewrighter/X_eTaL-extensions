@@ -1,0 +1,11 @@
+# The Hello facade: every export, as a program would use it.
+"hx:" u_se< "Hello"
+
+hx:a_nswer @
+40 hx:a_dd 2
+1.5 hx:a_dd 0.25
+hx:s_hout "café x_etal"
+hx:s_um 2 3 r_eshape r_ange 6
+hx:s_um 0.1 0.2
+hx:e_cho 2 2 r_eshape 0.5 1.5 2.5 3.5
+s_hape hx:e_cho 2 3 4 r_eshape 1.0

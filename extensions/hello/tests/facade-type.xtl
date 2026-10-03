@@ -1,0 +1,3 @@
+# The facade is typed: a non-numeric argument is a type error before any call.
+"hx:" u_se< "Hello"
+hx:s_um "abc"

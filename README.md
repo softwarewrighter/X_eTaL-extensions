@@ -19,11 +19,12 @@ and what programs can *do*. This repository is the second: native
 code behind an ordinary X_eTaL facade.
 
 ```
-"dg:" u_se< "Digest"
-dg:s_ha256 "abc"
+"hx:" u_se< "Hello"
+hx:s_hout "x_etal"                          # X_ETAL, upper-cased in Rust
+hx:s_um (r_ange 10) '* t_able r_ange 10      # 3025.0, a 10 by 10 array summed in Rust
 ```
 
-The program does not know whether `dg:s_ha256` is X_eTaL, Rust or C.
+The program does not know whether `hx:s_um` is X_eTaL, Rust or C.
 Behind the facade:
 
 - each extension is a Rust shared library (`.dylib` / `.so`) that
@@ -62,7 +63,7 @@ real Rust crate:
 
 | Extension | Facade | What | Crates | Status |
 | --------- | ------ | ---- | ------ | ------ |
-| [hello](extensions/hello/docs/README.md) | `Hello` | the smallest proof of the boundary | -- | native library built, loaded and tested; facade waits for the bridge |
+| [hello](extensions/hello/docs/README.md) | `Hello` | the smallest proof of the boundary | -- | done: facade, tests, demo |
 | clock | `Clock` | wall-clock and monotonic time; the bridge's cost | std | planned |
 | sqlite | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | planned |
 | web | `Web` | serve HTTP: the program takes each request and replies | axum, tokio | planned |

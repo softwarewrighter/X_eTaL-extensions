@@ -1,0 +1,18 @@
+# A tour of the hello extension: X_eTaL arrays handed to Rust and back.
+# Run: just demo tour   (or: xetal-x --ext extensions/hello run demos/tour.xtl)
+"hx:" u_se< "Hello"
+
+# Rust answers, upper-cases and adds.
+hx:a_nswer @
+hx:s_hout "hello from x_etal, à la rust"
+1.5 hx:a_dd 2.25
+
+# A 10 by 10 times table crosses the boundary as one array, summed in
+# Rust: 55 squared.
+t := (r_ange 10) '* t_able r_ange 10
+hx:s_um t
+
+# A rank-3 array goes out and comes back with its shape intact.
+c := 2 3 4 r_eshape r_ange 24
+s_hape hx:e_cho c
+(f_loat c) m_atch hx:e_cho c

@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/facade.xtl"
+exit_code = 0
+desc = "every Hello facade export as a program uses it: Int, Float, text, a matrix sum, a rank-3 echo"

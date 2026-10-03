@@ -76,3 +76,14 @@ fn a_bad_ext_dir_is_reported() {
     assert!(!ok);
     assert!(err.contains("--ext needs a directory"), "{err}");
 }
+
+#[test]
+fn facades_are_on_the_library_path() {
+    let program = "\"hx:\" u_se< \"Hello\"\nhx:s_hout \"x_etal\"";
+    let (out, err, ok) = run(xx()
+        .arg("--ext")
+        .arg(extensions())
+        .args(["eval", "-e", program]));
+    assert!(ok, "{err}");
+    assert_eq!(out, "X_ETAL\n");
+}

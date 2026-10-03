@@ -7,7 +7,8 @@
 //! Extensions are packages (directories with an `extension.toml`) found
 //! through `--ext DIR` (repeatable, before the subcommand) and the
 //! colon-separated `XETAL_EXT_PATH`; a directory given is a package or
-//! holds packages. Their native libraries are looked for under each
+//! holds packages. Each package's facade directory is added to
+//! `XETAL_PATH`, after the user's, so programs import facades by name. Their native libraries are looked for under each
 //! package's `native/<platform>/`, then beside this executable (where
 //! Cargo builds the workspace's extensions).
 
@@ -52,7 +53,17 @@ fn main() -> ExitCode {
         }
     };
     let registry = match ext::load(&ext_dirs) {
-        Ok(registry) => registry,
+        Ok((registry, facades)) => {
+            if let Some(path) = ext::library_path(&facades) {
+                // SAFETY: no other thread exists yet; the vendored CLI
+                // reads XETAL_PATH when a program imports a library.
+                #[allow(unsafe_code)]
+                unsafe {
+                    std::env::set_var("XETAL_PATH", path);
+                }
+            }
+            registry
+        }
         Err(diag) => {
             eprintln!("{diag}");
             return ExitCode::FAILURE;

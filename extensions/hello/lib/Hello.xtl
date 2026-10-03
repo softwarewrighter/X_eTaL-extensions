@@ -1,0 +1,48 @@
+# Hello.xtl -- the facade of the hello extension, the smallest X_eTaL
+# native extension: each function proves one thing about the boundary.
+# Import: "hx:" u_se< "Hello"
+# Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH)
+# until X_eTaL can call native code itself; the private helpers below
+# speak the ext: channel (docs/bridge.md) so programs never do.
+
+# private: the ext: channel
+c_all := { p -> []N_GET "ext:hello/" c_at p }
+s_hapeOf := { p -> f_loor n_umbers c_all p c_at "?shape" }
+t_ext := { t p -> t []N_PUT "ext:hello/" c_at p c_at "?text" }
+f_loats := { x p -> (f_ormat r_avel f_loat x) []N_PUT "ext:hello/" c_at p c_at "?float=" c_at f_ormat s_hape x }
+n_umber := { p -> f_irst n_umbers c_all p }
+
+# The answer, 42.
+l:a_nswer := { @ -> f_loor n_umber "answer" }
+
+# Left plus right, added natively.
+l:a_dd := { a b ->
+  x := a f_loats "add"
+  y := b f_loats "add"
+  n_umber "add"
+}
+
+# The text in upper case (Unicode).
+l:s_hout := { t ->
+  n := t t_ext "shout"
+  c_all "shout"
+}
+
+# The sum of every element of a numeric array.
+l:s_um := { x ->
+  n := x f_loats "sum"
+  n_umber "sum"
+}
+
+# A numeric array sent across and back: the same values and shape.
+l:e_cho := { x ->
+  n := x f_loats "echo"
+  v := n_umbers c_all "echo"
+  (s_hapeOf "echo") r_eshape v
+}
+
+# Always fails: a native error is an X_eTaL error.
+l:f_ail := { @ -> f_loor n_umber "fail" }
+
+# Always panics inside Rust: contained, reported as an X_eTaL error.
+l:p_anic := { @ -> f_loor n_umber "panic" }

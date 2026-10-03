@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run demos/tour.xtl"
+exit_code = 0
+desc = "demos/tour.xtl, the hello tour"

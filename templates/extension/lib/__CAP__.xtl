@@ -1,4 +1,15 @@
 # __CAP__.xtl -- the facade of the __NAME__ extension: __WHAT__
-# Import: "__ALIAS__:" u_se< "__CAP__"    (put this lib/ directory on XETAL_PATH)
-# Run programs that use it with xetal-x (the bridge host; see the
-# repository README) until X_eTaL can call native code itself.
+# Import: "__ALIAS__:" u_se< "__CAP__"
+# Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH)
+# until X_eTaL can call native code itself; the private helpers below
+# speak the ext: channel (docs/bridge.md) so programs never do.
+
+# private: the ext: channel
+c_all := { p -> []N_GET "ext:__NAME__/" c_at p }
+s_hapeOf := { p -> f_loor n_umbers c_all p c_at "?shape" }
+t_ext := { t p -> t []N_PUT "ext:__NAME__/" c_at p c_at "?text" }
+f_loats := { x p -> (f_ormat r_avel f_loat x) []N_PUT "ext:__NAME__/" c_at p c_at "?float=" c_at f_ormat s_hape x }
+n_umber := { p -> f_irst n_umbers c_all p }
+
+# The extension's name and version.
+l:a_bout := { @ -> c_all "about" }

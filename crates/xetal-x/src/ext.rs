@@ -47,18 +47,38 @@ pub fn split_args(
 }
 
 /// The packages in `dirs` (each a package or a directory of packages),
-/// loaded into a registry.
-pub fn load(dirs: &[PathBuf]) -> Result<Registry, Diagnostic> {
+/// loaded into a registry, and the directories of their facades.
+pub fn load(dirs: &[PathBuf]) -> Result<(Registry, Vec<PathBuf>), Diagnostic> {
     let mut registry = Registry::new();
+    let mut facades = Vec::new();
     let build = build_dirs();
     for dir in dirs {
         for package in packages(dir)? {
             registry
                 .load_package(&package, &build)
                 .map_err(|e| Diagnostic::new("ext", e.to_string()))?;
+            if let Some(d) = package.facade().parent() {
+                if !facades.contains(&d.to_path_buf()) {
+                    facades.push(d.to_path_buf());
+                }
+            }
         }
     }
-    Ok(registry)
+    Ok((registry, facades))
+}
+
+/// `XETAL_PATH` with the facades' directories after the user's own,
+/// so `"hx:" u_se< "Hello"` finds `Hello.xtl` (a library of the user's
+/// with the same name still wins).
+pub fn library_path(facades: &[PathBuf]) -> Option<OsString> {
+    if facades.is_empty() {
+        return None;
+    }
+    let mut dirs: Vec<PathBuf> = std::env::var_os("XETAL_PATH")
+        .map(|p| std::env::split_paths(&p).collect())
+        .unwrap_or_default();
+    dirs.extend(facades.iter().cloned());
+    std::env::join_paths(dirs).ok()
 }
 
 fn packages(dir: &Path) -> Result<Vec<Package>, Diagnostic> {
