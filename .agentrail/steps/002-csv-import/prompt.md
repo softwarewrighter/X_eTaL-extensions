@@ -1,0 +1,1 @@
+sqlite step 2: db sq:i_mport path.csv: a table named after the file (or TABLE=path), columns from the header, types inferred (INTEGER, REAL, TEXT), quoted fields; returns rows imported; confinement as step 1; tests.

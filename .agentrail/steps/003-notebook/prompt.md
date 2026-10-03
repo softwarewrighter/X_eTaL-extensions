@@ -1,0 +1,1 @@
+sqlite step 3: extensions/sqlite/demos/notebook.xtl with a bundled small public-domain dataset (provenance stated): import, SQL selects and group-bys, array analytics in X_eTaL (means, a histogram, a least-squares line), an SVG chart via []G_RID/[]S_HOW; reg-rs golden; docs and README.

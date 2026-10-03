@@ -1,0 +1,9 @@
+number = 2
+slug = "csv-import"
+status = "pending"
+description = "sqlite step 2: db sq:i_mport path.csv: a table named after the file (or TABLE..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T08:33:15"
+task_type = "extension"
+commits = []
