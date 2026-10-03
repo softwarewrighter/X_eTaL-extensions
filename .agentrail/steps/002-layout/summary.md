@@ -1,0 +1,1 @@
+Per-extension layout (extension.toml, justfile, rust/, lib/, tests/ reg-rs, docs/, demos/); hello moved; reg-ext.sh, test-exts.sh in gate; templates/extension + new-ext; plan catalog/sagas per user's choices (sqlite notebook, axum web, photo lab, fetch; A15).
