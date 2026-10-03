@@ -16,6 +16,7 @@ and the workaround in use.
 | E2 | open | feature | `.xtlm` macro libraries (MC10-MC13, X_eTaL Saga 19); same as `../X_eTaL-libraries` ask X1 | macro helpers (`ffi:b_ind<`, saga 7) | none: the helpers wait |
 | E3 | open | feature | the CLI as a library: a host entry point (`xetal_cli::run_with(args, store)` or similar) so a host can be `xetal` with its own store | the bridge host `xetal-x` | `xetal-x` compiles the vendored CLI's source files as `#[path]` modules and repeats its 60-line `main` with a different store; breaks if the CLI's modules are reorganized |
 | E4 | open | feature | the time: a quad giving the current time (APL's quad TS) and a monotonic or CPU clock (quad AI) | clock (and anything timing itself) | the clock extension, through the bridge |
+| E5 | open | feature | an error raised inside a library function also names the program line that called it (a call trace) | every facade (errors point into the facade's helper, not the caller) | the extension's message names the function (`ext:sqlite/nums: ...`) |
 
 Asks already filed by the sibling repos
 (`../X_eTaL-demos/docs/xetal-asks.md`,
@@ -113,3 +114,22 @@ information (quad AI: CPU and connect time). A quad pair such as
 (`extensions/clock`, `ck:n_ow`, `ck:i_so`, `ck:m_illis`, `ck:t_ime`)
 is the workaround; it needs `xetal-x`. Proposed here rather than kept
 silently as an extension (plan, cross-cutting).
+
+### E5: errors name the calling line
+
+An error raised inside a library function is reported at the
+library's line, not the program's. Every facade calls native code from
+a private helper, so every native error points into the facade:
+
+```
+"sq:" u_se< "Sqlite"
+":memory:" sq:n_ums "selec 1"
+```
+
+```
+error[io]: []N_GET: ext:sqlite/nums: near "selec": syntax error in selec 1 at offset 0 at ./lib/Sqlite.xtl:12:17
+```
+
+Wanted: the program's line as well (`called from main.xtl:2:1`), as a
+short trace of library calls. Workaround: each native error message
+names its function, so the user can find the call.

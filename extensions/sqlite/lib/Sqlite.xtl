@@ -1,0 +1,53 @@
+# Sqlite.xtl -- the facade of the sqlite extension: SQLite databases
+# for X_eTaL (rusqlite, SQLite compiled in).
+# Import: "sq:" u_se< "Sqlite"
+# A database is named by its path, relative to the working directory
+# (or XETAL_SQLITE_ROOT), or ":memory:" for one call's scratch database;
+# each call opens it and closes it.
+# Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH)
+# until X_eTaL can call native code itself; the private helpers below
+# speak the ext: channel (docs/bridge.md) so programs never do.
+
+# private: the ext: channel
+c_all := { p -> []N_GET "ext:sqlite/" c_at p }
+s_hapeOf := { p -> f_loor n_umbers c_all p c_at "?shape" }
+t_ext := { t p -> t []N_PUT "ext:sqlite/" c_at p c_at "?text" }
+
+# db sq:e_xec sql: run the statements; how many rows they changed.
+l:e_xec := { db sql ->
+  a := db t_ext "exec"
+  b := sql t_ext "exec"
+  f_loor f_irst n_umbers c_all "exec"
+}
+
+# db sq:n_ums sql: the result as a Float matrix, rows by columns (NULL is NaN).
+l:n_ums := { db sql ->
+  a := db t_ext "nums"
+  b := sql t_ext "nums"
+  v := n_umbers c_all "nums"
+  (s_hapeOf "nums") r_eshape v
+}
+
+# db sq:t_exts sql: every cell as text, a Char matrix with one row per
+# cell (the first row's cells, then the second's; padded with spaces).
+l:t_exts := { db sql ->
+  a := db t_ext "texts"
+  b := sql t_ext "texts"
+  v := c_all "texts"
+  (s_hapeOf "texts") r_eshape v
+}
+
+# db sq:c_ols sql: the query's column names, one per row.
+l:c_ols := { db sql ->
+  a := db t_ext "cols"
+  b := sql t_ext "cols"
+  v := c_all "cols"
+  (s_hapeOf "cols") r_eshape v
+}
+
+# sq:q_uote t: the text as an SQL literal ('O''Brien'), to put a value
+# into a statement as data, never as SQL.
+l:q_uote := { t ->
+  n := t t_ext "quote"
+  c_all "quote"
+}

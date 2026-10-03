@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/not-a-number.xtl"
+exit_code = 1
+desc = "Text that is not a number cannot come back as numbers."

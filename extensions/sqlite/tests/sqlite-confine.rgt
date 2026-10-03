@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/confine.xtl"
+exit_code = 1
+desc = "A database outside the working directory is refused."

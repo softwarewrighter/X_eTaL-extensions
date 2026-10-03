@@ -1,0 +1,5 @@
+l:e_xec : Char -> Char -> Int
+l:n_ums : Char -> Char -> Float
+l:t_exts : Char -> Char -> Char
+l:c_ols : Char -> Char -> Char
+l:q_uote : Char -> Char

@@ -1,0 +1,3 @@
+# A database outside the working directory is refused.
+"sq:" u_se< "Sqlite"
+"../escape.db" sq:e_xec "select 1"

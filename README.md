@@ -70,7 +70,7 @@ real Rust crate:
 | --------- | ------ | ---- | ------ | ------ |
 | [hello](extensions/hello/docs/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-extensions/hello/)) | `Hello` | the smallest proof of the boundary | -- | done: facade, tests, demo, live |
 | [clock](extensions/clock/docs/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-extensions/clock/)) | `Clock` | wall-clock and monotonic time; the bridge's cost | std | done: facade, tests, cost demo, live |
-| sqlite | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | planned |
+| [sqlite](extensions/sqlite/docs/README.md) | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | statements and queries done; CSV import and notebook next |
 | web | `Web` | serve HTTP: the program takes each request and replies | axum, tokio | planned |
 | image | `Image` | images to and from arrays | image | planned |
 | linalg | `Linalg` | solve, inverse, least squares, eigenvalues, SVD | nalgebra | planned |

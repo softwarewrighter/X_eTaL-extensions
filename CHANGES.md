@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 08:42 `ext` The sqlite extension (`extensions/sqlite`, alias `sq:`; rusqlite with bundled SQLite): `db sq:e_xec sql` (rows changed), `sq:n_ums` (a Float matrix, NULL as NaN), `sq:t_exts` (cells as a Char matrix), `sq:c_ols`, `sq:q_uote`; databases named by confined relative paths (or `XETAL_SQLITE_ROOT`) or `:memory:`; 4 Rust tests through the loader, 6 reg-rs tests; ask E5 (errors name the calling line).
+
 - 08:29 `plan` Saga 3 (live) retrospective; saga archived.
 
 - 08:26 `feat` clock live: clock reads the browser's clocks on wasm32 (`Date.now`, `performance.now`; std's panic there); `extensions/clock/web/` runs the bridge-cost demo in the browser with clock and hello both linked statically (the `static` feature with two extensions); native test against the masked golden; pages rebuilt and checked in Chrome (about 16,000 calls/s and 1.7 M Floats/s in the browser).

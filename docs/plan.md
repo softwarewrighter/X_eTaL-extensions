@@ -206,7 +206,7 @@ native hook (E1) would remove.
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | sqlite | the sqlite extension: exec, query (cells as a Char matrix, numeric columns as Float), parameters, confinement to allowed directories, errors; Rust tests and reg-rs tests on a temp database |
+| 1 | sqlite | (done) the sqlite extension: exec, query (cells as a Char matrix, numeric columns as Float), parameters, confinement to allowed directories, errors; Rust tests and reg-rs tests on a temp database |
 | 2 | csv-import | CSV into a table (native, `rusqlite` + a small CSV reader), and query results back as X_eTaL arrays |
 | 3 | notebook | demos/notebook: a bundled CSV (a public-domain dataset), SQL plus array analytics, an SVG chart; reg-rs golden |
 

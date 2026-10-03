@@ -1,0 +1,29 @@
+[package]
+name = "xetal-ext-sqlite"
+version = "0.1.0"
+description = "SQLite databases: statements, numeric and text results, CSV import"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[lib]
+name = "xetal_ext_sqlite"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+xetal-ext-sdk = { path = "../../../crates/xetal-ext-sdk" }
+# SQLite itself is compiled in (no system library needed).
+rusqlite = { version = "0.32", features = ["bundled"] }
+
+[features]
+# Link statically beside other extensions (a browser page): no unmangled
+# entry point. Never enabled inside the root workspace.
+static = []
+
+[dev-dependencies]
+tempfile = "3"
+xetal-ext-loader = { path = "../../../crates/xetal-ext-loader" }
+
+[lints]
+workspace = true

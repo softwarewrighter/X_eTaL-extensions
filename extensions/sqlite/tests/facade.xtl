@@ -1,0 +1,31 @@
+# The Sqlite facade on a scratch database under the working directory
+# (work/, removed and remade by each run).
+"sq:" u_se< "Sqlite"
+
+db := "work/facade.db"
+db sq:e_xec "drop table if exists pets; create table pets (name text, kind text, kg real, legs integer)"
+db sq:e_xec "insert into pets values ('Rex', 'dog', 31.5, 4), ('Tom', 'cat', 4.2, 4), ('Polly', 'bird', 0.4, 2), ('Fido', 'dog', 12.0, 4)"
+
+# numbers come back as a matrix: rows by columns
+m := db sq:n_ums "select kg, legs from pets order by kg"
+s_hape m
+m
+
+# X_eTaL does the arithmetic on what SQL selects
+'+ r_/ 1 s_elect_2 m
+"kg per leg:"
+(1 s_elect_2 m) / 2 s_elect_2 m
+
+# text: one row per cell; column names one per row
+db sq:t_exts "select name from pets where kind = 'dog' order by name"
+db sq:c_ols "select name, kg as weight from pets"
+
+# a value put into a statement as data
+n := sq:q_uote "O'Brien"
+n
+db sq:e_xec "insert into pets values (" c_at n c_at ", 'cat', 5.0, 4)"
+db sq:t_exts "select name from pets where name like 'O%'"
+
+# a group-by in SQL, compared with the same sum in X_eTaL
+db sq:n_ums "select sum(kg) from pets where kind = 'dog'"
+":memory:" sq:n_ums "select 6 * 7"
