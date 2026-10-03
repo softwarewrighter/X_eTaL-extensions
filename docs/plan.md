@@ -190,6 +190,18 @@ linalg); sqlite, web and http stay native.
 | 4 | pages | (done: https://softwarewrighter.github.io/X_eTaL-extensions/) `scripts/build-pages.sh` (trunk into `pages/NAME/`, a catalog `pages/index.html`), `.github/workflows/pages.yml` (publishes `pages/`), GitHub Pages enabled, README link |
 | 5 | clock-live | (done) clock for `wasm32` (the browser's clock through `js-sys`), `extensions/clock/web/`: the bridge-cost demo live |
 
+Saga 3 retrospective: hello and clock are live at
+https://softwarewrighter.github.io/X_eTaL-extensions/ -- programs
+editable and run in the browser, the extensions compiled to
+WebAssembly and linked statically (the `static` feature lets two link
+into one page), the same `ExtStore` serving facades and `ext:` in the
+browser as on the command line. Found on the way: page crates must
+build into their own `target/web/` (sharing `deps/` with the root
+workspace mixed two builds of the ABI crate); std's clocks panic on
+`wasm32`, so clock reads the browser's. In a browser the channel is
+about ten times slower than natively (about 16,000 calls/s), which a
+native hook (E1) would remove.
+
 ## Saga 4 -- sqlite and the data notebook
 
 | # | Step slug | Delivers |

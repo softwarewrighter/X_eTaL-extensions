@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 08:29 `plan` Saga 3 (live) retrospective; saga archived.
+
 - 08:26 `feat` clock live: clock reads the browser's clocks on wasm32 (`Date.now`, `performance.now`; std's panic there); `extensions/clock/web/` runs the bridge-cost demo in the browser with clock and hello both linked statically (the `static` feature with two extensions); native test against the masked golden; pages rebuilt and checked in Chrome (about 16,000 calls/s and 1.7 M Floats/s in the browser).
 
 - 07:16 `build` The live site: `scripts/build-pages.sh` (`just pages`: every `extensions/NAME/web` built with trunk into `pages/NAME/` under `/X_eTaL-extensions/`), `scripts/build-catalog.py` (`pages/index.html`, a card per live page), `just serve-pages`, `.github/workflows/pages.yml` (uploads the committed `pages/`, as X_eTaL-demos); GitHub Pages enabled (workflow); README link. Checked at the real base path in Chrome.
