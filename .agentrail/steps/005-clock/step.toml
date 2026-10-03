@@ -1,9 +1,10 @@
 number = 5
 slug = "clock"
-status = "in-progress"
+status = "completed"
 description = "bridge step 4: extensions/clock (Clock.xtl, alias ck:): wall-clock Unix secon..."
 role = "production"
 context_files = []
 created_at = "2026-10-02T13:11:05"
+completed_at = "2026-10-02T19:25:05"
 task_type = "extension"
-commits = []
+commits = ["d7c2b811e3bd5145f677048555129854cefb1b17"]
