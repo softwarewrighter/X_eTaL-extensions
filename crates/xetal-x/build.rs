@@ -14,6 +14,16 @@ fn main() {
         .find_map(|l| l.strip_prefix("commit = \""))
         .map_or("unknown", |s| s.get(..7).unwrap_or(s));
     println!("cargo:rustc-env=GIT_HASH={sha}");
+    // this repository's own commit, for xetal-x's first --version line
+    let here = std::process::Command::new("git")
+        .args(["rev-parse", "--short", "HEAD"])
+        .output()
+        .ok()
+        .map(|o| String::from_utf8_lossy(&o.stdout).trim().to_string())
+        .filter(|s| !s.is_empty())
+        .unwrap_or_else(|| "unknown".into());
+    println!("cargo:rustc-env=XETAL_X_SHA={here}");
+    println!("cargo:rerun-if-changed=../../.git/HEAD");
     let host = std::env::var("XETAL_BUILD_HOST")
         .ok()
         .or_else(|| {

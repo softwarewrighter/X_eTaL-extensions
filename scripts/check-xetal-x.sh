@@ -17,8 +17,11 @@ for f in "$root"/vendor/xetal/demos/*.xtl; do
   [ "$a" = "$b" ] || { echo "check-xetal-x: $(basename "$f") differs:"; diff <(echo "$a") <(echo "$b") | head -20; exit 1; }
   n=$((n + 1))
 done
-"$xx" --version | grep -q "$(sed -n 's/^commit = "\(.......\).*/\1/p' "$root/vendor/xetal/VENDORED")" \
+version="$("$xx" --version)"
+printf '%s\n' "$version" | grep -q "$(sed -n 's/^commit = "\(.......\).*/\1/p' "$root/vendor/xetal/VENDORED")" \
   || { echo "check-xetal-x: --version does not name the vendored commit" >&2; exit 1; }
-"$xx" --ext "$root/extensions" --ext-list | grep -q '^  hello/shout : Char -> Char' \
+case "$version" in xetal-x*X_eTaL-extensions*) ;; *) echo "check-xetal-x: --version does not name xetal-x" >&2; exit 1 ;; esac
+listing="$("$xx" --ext "$root/extensions" --ext-list)"
+printf '%s\n' "$listing" | grep -q '^  hello/shout : Char -> Char' \
   || { echo "check-xetal-x: hello not listed" >&2; exit 1; }
 echo "check-xetal-x: ok ($n demos identical)"

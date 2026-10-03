@@ -72,6 +72,14 @@ fn main() -> ExitCode {
         print!("{}", ext::listing(&registry));
         return ExitCode::SUCCESS;
     }
+    // --version: say what this is before the vendored CLI's block
+    if argv.get(1).is_some_and(|a| a == "--version" || a == "-V") {
+        println!(
+            "xetal-x {} (X_eTaL-extensions {}): the vendored X_eTaL CLI below, with native extensions (experimental)",
+            env!("CARGO_PKG_VERSION"),
+            env!("XETAL_X_SHA")
+        );
+    }
     // From here on, the vendored CLI's main.
     let cli = Cli::parse_from(argv);
     let draw = cli.draw.clone();

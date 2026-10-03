@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 15:11 `fix` `xetal-x --version` first names itself and this repository's commit (research4's provenance blocker); `check-xetal-x.sh` checks it and no longer pipes into `grep -q`/`head` under pipefail (a SIGPIPE made it flaky).
+
 - 13:59 `plan` research4 (../X_eTaL) adopted: the media saga is paused after step 2 (scene WIP on branch `wip/media-scene`; audio and the visualizer post-launch); Saga 6, launch: this repo's promotion blockers, the cross-repo audit, readiness for the `.xtlm` binding macro, the six-repo snapshot; Priorities and a promotion-blocker list in the plan; README labels the ABI and bridge experimental; later sagas renumbered 7-10.
 
 - 13:54 `docs` The site shows recordings instead of live pages (the user's decision: extensions are native): `just videos` records every demo headlessly (vhs tapes typing `just demo EXT NAME --echo`; window demos from headless frames joined by ffmpeg), `just pages` builds a page of the recordings with the commands to run each; root `just demos` and `just demo EXT NAME`; README shows the notebook recording; the WebAssembly pages are no longer published (their code stays in `web/`). CLAUDE.md: the screen protocol.

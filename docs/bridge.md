@@ -24,6 +24,8 @@ xetal-x --ext extensions --ext-list        # what is loaded, with X_eTaL types
 just run-x prog.xtl                        # the same, from the repository root
 ```
 
+`xetal-x --version` names itself and this repository's commit above the
+vendored CLI's block (which names the vendored X_eTaL commit).
 `--ext DIR` (repeatable) and `--ext-list` come before the subcommand; a
 directory is a package (it has an `extension.toml`) or holds packages.
 A package's library is looked for under its `native/<platform>/`, then

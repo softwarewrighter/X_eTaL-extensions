@@ -48,7 +48,7 @@ Order now: Saga 6 (launch) first; Saga 10's binding macro as soon as
 
 | Blocker | Where | State |
 | ------- | ----- | ----- |
-| `xetal-x --version` does not say it is `xetal-x`, nor this repository's commit (it prints the vendored CLI's block) | here | launch step 2 |
+| `xetal-x --version` does not say it is `xetal-x`, nor this repository's commit (it prints the vendored CLI's block) | here | fixed: a first line `xetal-x 0.1.0 (X_eTaL-extensions SHA): the vendored X_eTaL CLI below, with native extensions (experimental)`; checked in the gate |
 | an extension's error points into its facade, not the calling line | upstream (E5) | filed |
 | `xetal --draw DIR run FILE` misparses (`run --draw` works) | upstream (E6) | filed; worked around in recipes |
 | programs need `xetal-x`, not `xetal` (the text bridge) | upstream (E1, Saga 23) | filed; labelled experimental |
@@ -323,7 +323,7 @@ Research4's work for this repository (see Priorities).
 | # | Step slug | Delivers |
 | - | --------- | -------- |
 | 1 | reprioritize | this section and Priorities; media paused (scene WIP on branch `wip/media-scene`); ABI and bridge labelled experimental |
-| 2 | blockers | this repo's blockers fixed (`xetal-x --version`); upstream ones tracked |
+| 2 | blockers | (done) this repo's blockers fixed (`xetal-x --version`); upstream ones tracked |
 | 3 | audit | asks and status against upstream; vendor refreshed if anything landed; walkthrough from GitHub |
 | 4 | xtlm-ready | `Ffi.xtlm` designed against MC10-MC13, expansions written down, ready for the day `.xtlm` lands |
 | 5 | snapshot | a version for the six-repo compatible snapshot (tag with the user's yes) |
