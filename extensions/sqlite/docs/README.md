@@ -98,9 +98,18 @@ program line that called it -- ask E5.)
 
 ## Live
 
-None: rusqlite compiles SQLite's C source, which does not build for the
-browser's WebAssembly target without more work. The extension runs on
-the command line (`xetal-x`).
+Not yet; the extension runs on the command line (`xetal-x`). It is
+within reach: rusqlite 0.40 with `bundled` builds SQLite for the
+browser (`wasm32-unknown-unknown`) through `sqlite-wasm-rs`, which
+compiles SQLite's C source with a clang that can target WebAssembly.
+Apple's clang cannot (`--target=wasm32-unknown-unknown` fails), so a
+live notebook needs LLVM's clang (`brew install llvm`, then
+`CC_wasm32_unknown_unknown` and `AR_wasm32_unknown_unknown` pointing at
+it) on the machine that builds the pages, and rusqlite moved from 0.32
+to 0.40. Probed 2026-10-03 (`sqlite-wasm-rs` 0.5.5 has no precompiled
+option). In the browser a database would live in memory (or the
+browser's private file system), the notebook's CSV bundled into the
+page.
 
 ## Build and test
 

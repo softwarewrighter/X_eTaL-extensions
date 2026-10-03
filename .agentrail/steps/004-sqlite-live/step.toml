@@ -1,6 +1,6 @@
 number = 4
 slug = "sqlite-live"
-status = "pending"
+status = "in-progress"
 description = "sqlite step 4: can SQLite run in the browser (rusqlite on wasm32-unknown-unkn..."
 role = "production"
 context_files = []
