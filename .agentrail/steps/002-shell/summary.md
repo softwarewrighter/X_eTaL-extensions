@@ -1,0 +1,1 @@
+web/shell Yew crate (run/install via bridge, Playground, chrome, source, shell.css red), native test, check-web.sh in gate (fmt/clippy/test/wasm32), separate target/web.
