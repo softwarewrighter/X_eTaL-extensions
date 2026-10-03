@@ -1,0 +1,1 @@
+media step: the scene extension (statically linked into xetal-x via the UI host): retained polylines/points by stable id with colours, patches, orbit camera, keys and frame ticks pulled; adapted from demo-extensions mlpl-native3d-scene/-window (copy, cite); facade Scene.xtl; headless tests of the scene model; demos/cube.xtl.

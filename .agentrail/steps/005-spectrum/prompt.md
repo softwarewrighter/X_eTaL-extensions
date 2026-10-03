@@ -1,0 +1,1 @@
+media step: demos/spectrum.xtl: pick a file, play, per frame read the current window, spectrum at k frequencies per channel via inner product with a cos/sin table (X_eTaL), map bass/mid/high to radial spokes, patch the scene, keys (space, j/k, q); headless golden of the analysis on a fixture; interactive smoke; docs.

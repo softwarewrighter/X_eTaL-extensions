@@ -1,0 +1,1 @@
+media step: extensions/audio (dynamic like others): Symphonia MP3/Ogg/WAV decode by path to an Int id; info (rate, channels, frames); chunk (2 by n Floats, bounded); CPAL playback from a decode-ahead queue independent of the program; pause, seek, position, close; fixtures generated with sox/ffmpeg (tones, ours); tests headless; local-media/ ignored.

@@ -1,0 +1,1 @@
+media step: crates/xetal-ext-ui: a main-thread UI service with request/event queues; xetal-x runs the vendored CLI on a spawned thread when a UI extension is linked and serves the UI on main; a minimal statically linked window extension (an Int/Float array shown as pixels scaled, key and close events pulled) and a demo; headless tests of the queues; interactive smoke on macOS.

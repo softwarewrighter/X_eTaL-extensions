@@ -70,7 +70,7 @@ programs.
 | A7 | **An extension is a self-contained directory**, `extensions/<name>/` (the user's rule, 2026-10-02): `extension.toml` (the manifest); `justfile` (its own recipes: build, test, reg, demos); `rust/` (its Rust library crate, a `cdylib` + `rlib`, with its Rust tests); `lib/` (its X_eTaL sources: the facade `<Name>.xtl`, and `<Name>.xtlm` macros when X_eTaL has them -- one directory, as X_eTaL looks for both together, MC11); `tests/` (reg-rs tests: `*.rgt` commands with committed `.out`/`.err` baselines, `REG_RS_DATA_DIR` pointing there, and the `*.xtl` programs they run); `docs/` (its pages, `docs/README.md` first); `demos/` (programs that show it off, each with a README section and a reg-rs test). The repo's `just` recipes delegate to each extension's. | Each extension can be read, built, tested and moved on its own; the layout is the same for every one. |
 | A8 | **Facade conventions** follow X_eTaL's style guide (lang-choices section 16) and `../X_eTaL-libraries` A6: `UpperCamel.xtl`, exports under `l:`, private helpers unprefixed, predicates `?`, effects `!`, a header with the import line and recommended alias, no export shadowing a built-in, no name shadowing a standard library. Exports are typed as if native (ordinary X_eTaL types), so the facade's types are pinned (`xetal type`) and survive the switch from the bridge to E1. | The facade is the extension's interface; its types are the contract. |
 | A9 | **Pure fallbacks where cheap.** When an extension's function has a reasonable pure X_eTaL definition (CRC-32, a small determinant), the facade's tests compare native and pure results; the pure version is not exported. Where there is none (the clock, regular expressions), there is no fallback. | Golden behavior is cross-checked, not only self-consistent. |
-| A10 | **Macro helpers wait for X_eTaL** (ask E2, X_eTaL MC10-MC13): a `.xtlm` that turns a signature into a facade function (`"f64 f64" ffi:b_ind< "linalg/det"`). Designed on paper only (saga 8), never emulated. | As in `../X_eTaL-libraries` A9. |
+| A10 | **Macro helpers wait for X_eTaL** (ask E2, X_eTaL MC10-MC13): a `.xtlm` that turns a signature into a facade function (`"f64 f64" ffi:b_ind< "linalg/det"`). Designed on paper only (saga 9), never emulated. | As in `../X_eTaL-libraries` A9. |
 | A11 | A missing X_eTaL feature or bug an extension uncovers is **not** fixed here nor hidden: it goes in `docs/xetal-asks.md` (status, kind, extensions, why, minimal repro, workaround) and on the extension's page. | X_eTaL owns its language decisions; this repo is a consumer. |
 | A12 | **Names, not homes**: an extension is identified by its name (`digest`), never a GitHub coordinate (the repos may move to `sw-array-languages`, research.txt). `just` is the entry point (recipes call `scripts/*.sh`); `CHANGES.md` gets a line for every commit; docs are ASCII-only markdown (`sw-markdown-checker`). | Same process as the sibling repos. |
 | A13 | Dependencies are few, well known and permissively licensed (`libloading`, and per extension e.g. `rusqlite` with bundled SQLite, `axum`/`tokio`, `ureq`, `image`, `nalgebra`); each extension's page lists its crates. Nothing is downloaded at run time except by the http extension, on request. | Small, auditable extensions. |
@@ -231,7 +231,45 @@ way: asks E5 (errors name the calling line) and E6 (`--draw` before
 the subcommand); SQLite in the browser needs LLVM's clang. Upstream,
 E1 is X_eTaL Saga 23 and E2 Saga 19; none of our asks has landed yet.
 
-## Saga 5 -- web (roadmap, after release 1)
+## Saga 5 -- media: the MP3 visualizer
+
+The user's request (2026-10-03): demos like demo-extensions' MP3 player
+visualizer (docs/parity.md). Rust decodes and plays the audio and
+renders 3D; X_eTaL analyses each chunk and builds the scene as arrays.
+
+Decisions:
+
+- M1. The window belongs to the host. On macOS a window must live on
+  the main thread, and X_eTaL runs a program on a worker thread. So
+  `xetal-x` runs the CLI on a thread of its own and gives the main
+  thread to a UI service (`crates/xetal-ext-ui`); a UI extension is
+  linked statically into `xetal-x` and talks to the service through
+  queues. A program pulls the next event (a frame tick, a key, close)
+  and pushes changes: callback-free, as the web extension will be.
+- M2. Retained scenes with stable ids, adapted (copied) from
+  demo-extensions' `mlpl-native3d-scene` and `-window` (winit, wgpu):
+  a program sends a polyline or points under an id once and patches
+  it later; the camera orbits under the mouse.
+- M3. Audio state lives in the extension under an Int id (a handle by
+  convention, no ABI change): open a file, read bounded chunks for
+  analysis, play on the device from a decode-ahead queue independent
+  of the program's frame rate (Symphonia, CPAL).
+- M4. A program loops with `p_ower` over a bounded number of frames;
+  frames after quitting do nothing. (Tail calls or a while loop would
+  be cleaner: asked upstream if needed.)
+- M5. Test media is generated (tones by sox or ffmpeg, committed small,
+  ours); personal media goes in an ignored `local-media/`.
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | parity | docs/parity.md; this saga |
+| 2 | ui-host | `crates/xetal-ext-ui` and `xetal-x` running the program off the main thread; a minimal window extension (an array shown as pixels, events back) proving the loop; headless tests of the queues |
+| 3 | scene3d | the scene extension: retained lines and points by id, colours, camera, events; a wireframe cube demo |
+| 4 | audio | the audio extension: open, info, chunks (2 by n Floats), play, pause, seek, position, close; tests on generated MP3 and Ogg fixtures |
+| 5 | spectrum | demos/spectrum: the visualizer in X_eTaL (spectrum by inner product, radial spokes, keys); headless tests of the analysis on fixtures; an interactive smoke |
+| 6 | media-release | docs, parity updated, status, retrospective |
+
+## Saga 6 -- web (roadmap, after release 1)
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -239,7 +277,7 @@ E1 is X_eTaL Saga 23 and E2 Saga 19; none of our asks has landed yet.
 | 2 | live-page | demos/live: a page recomputing Life or Mandelbrot as SVG per request; reg-rs test drives it over loopback |
 | 3 | todomvc | demos/todomvc: TodoMVC in X_eTaL with sqlite; loopback test of add, toggle, delete |
 
-## Saga 6 -- photo lab (roadmap)
+## Saga 7 -- photo lab (roadmap)
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -247,7 +285,7 @@ E1 is X_eTaL Saga 23 and E2 Saga 19; none of our asks has landed yet.
 | 2 | linalg | the linalg extension; small cases cross-checked in pure X_eTaL |
 | 3 | photo-lab | demos/photo-lab: filters and edges by rotation, SVD compression at several ranks, PNGs out |
 
-## Saga 7 -- fetch and analyze (roadmap)
+## Saga 8 -- fetch and analyze (roadmap)
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -256,7 +294,7 @@ E1 is X_eTaL Saga 23 and E2 Saga 19; none of our asks has landed yet.
 | 3 | fetch | demos/quakes: the USGS feed (opt-in `just live-quakes`), a saved copy for the golden |
 | 4 | release-1 | catalog and pages reviewed, demos re-run, asks reviewed, retrospective here |
 
-## Saga 8 -- native hook and macro helpers (blocked)
+## Saga 9 -- native hook and macro helpers (blocked)
 
 Blocked on asks E1 (a native hook in X_eTaL) and E2 (`.xtlm`). Until
 then only the designs below are kept current.

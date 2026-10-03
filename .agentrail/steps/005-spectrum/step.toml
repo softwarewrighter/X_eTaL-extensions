@@ -1,0 +1,9 @@
+number = 5
+slug = "spectrum"
+status = "pending"
+description = "media step: demos/spectrum.xtl: pick a file, play, per frame read the current..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T12:06:04"
+task_type = "demo"
+commits = []

@@ -1,0 +1,1 @@
+media step: docs (extension pages, README, status regenerated, parity updated), pages if any live part, retrospective, asks (loops/tail calls, binary files).
