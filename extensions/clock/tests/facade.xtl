@@ -1,0 +1,18 @@
+# The Clock facade. Real times differ every run, so the golden shows
+# what is fixed: formats, kinds and order.
+"ck:" u_se< "Clock"
+
+ck:i_soOf 0
+ck:i_soOf 951782400
+ck:i_soOf 1759420800.25
+
+# now is after 2026-01-01 and its ISO text has the same shape
+1767225600 < ck:n_ow @
+t_ally ck:i_so @
+"T" m_ember? ck:i_so @
+
+# the monotonic clock never goes back, and t_ime is not negative
+a := ck:m_illis @
+b := ck:m_illis @
+a <= b
+0 <= 'r_ange ck:t_ime 1000

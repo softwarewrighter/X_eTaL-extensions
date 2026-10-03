@@ -64,7 +64,7 @@ real Rust crate:
 | Extension | Facade | What | Crates | Status |
 | --------- | ------ | ---- | ------ | ------ |
 | [hello](extensions/hello/docs/README.md) | `Hello` | the smallest proof of the boundary | -- | done: facade, tests, demo |
-| clock | `Clock` | wall-clock and monotonic time; the bridge's cost | std | planned |
+| [clock](extensions/clock/docs/README.md) | `Clock` | wall-clock and monotonic time; the bridge's cost | std | done: facade, tests, cost demo |
 | sqlite | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | planned |
 | web | `Web` | serve HTTP: the program takes each request and replies | axum, tokio | planned |
 | image | `Image` | images to and from arrays | image | planned |

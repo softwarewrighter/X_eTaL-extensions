@@ -1,0 +1,33 @@
+# Clock.xtl -- the facade of the clock extension: wall-clock and
+# monotonic time, which X_eTaL does not have, for timestamps and timing.
+# Import: "ck:" u_se< "Clock"
+# Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH)
+# until X_eTaL can call native code itself; the private helpers below
+# speak the ext: channel (docs/bridge.md) so programs never do.
+
+# private: the ext: channel
+c_all := { p -> []N_GET "ext:clock/" c_at p }
+f_loats := { x p -> (f_ormat r_avel f_loat x) []N_PUT "ext:clock/" c_at p c_at "?float=" c_at f_ormat s_hape x }
+n_umber := { p -> f_irst n_umbers c_all p }
+
+# Seconds since 1970-01-01 UTC, with the fraction.
+l:n_ow := { @ -> n_umber "now" }
+
+# The current time as ISO 8601 UTC text, to the millisecond.
+l:i_so := { @ -> c_all "iso" }
+
+# Unix seconds as ISO 8601 UTC text: ck:i_soOf 0 is 1970-01-01T00:00:00.000Z.
+l:i_soOf := { t ->
+  n := t f_loats "iso_of"
+  c_all "iso_of"
+}
+
+# Milliseconds on a monotonic clock (it never goes back).
+l:m_illis := { @ -> n_umber "millis" }
+
+# How many milliseconds f_ x takes: 'r_ange ck:t_ime 1000000.
+l:t_ime := { f_ x ->
+  a := l:m_illis @
+  r := f_ x
+  (l:m_illis @) - a
+}

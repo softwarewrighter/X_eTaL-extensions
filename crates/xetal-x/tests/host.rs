@@ -41,7 +41,10 @@ fn errors_as_xetal_does() {
 fn lists_extensions() {
     let (out, _, ok) = run(xx().arg("--ext").arg(extensions()).arg("--ext-list"));
     assert!(ok);
-    assert!(out.starts_with("hello 0.1.0\n"), "{out}");
+    assert!(
+        out.contains("\nhello 0.1.0\n") || out.starts_with("hello 0.1.0\n"),
+        "{out}"
+    );
     assert!(out.contains("  hello/add : Num a => a -> a -> a    # Left plus right"));
     let (out, _, _) = run(xx()
         .env("XETAL_EXT_PATH", extensions().join("hello"))

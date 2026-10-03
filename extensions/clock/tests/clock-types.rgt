@@ -1,0 +1,3 @@
+command = "xetal-x type lib/Clock.xtl"
+exit_code = 0
+desc = "pins the type of every Clock facade export"

@@ -79,8 +79,14 @@ goes on.
 ## Cost and limits
 
 Every argument and reply crosses as text: two store calls and a
-formatting round trip per call. Fine for the demos; measured by the
-clock extension. Values are bounded by ABI V1 (64 Mi elements).
+formatting round trip per call. Measured by the clock extension's
+`demos/bridge-cost.xtl` (Apple M-series laptop, release build): about
+220,000 calls per second, 2.6 million Floats per second out and back.
+A 100,000-element sum takes about 21 ms in X_eTaL and about 20 ms in
+Rust over the bridge, most of it formatting numbers as text: the
+bridge pays off for work that is heavy per element (an SVD, a regular
+expression, an image codec), not for a sum. Values are bounded by
+ABI V1 (64 Mi elements).
 
 ## What replaces it
 

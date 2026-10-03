@@ -1,0 +1,3 @@
+command = "xetal-x --ext .. run demos/bridge-cost.xtl | sed -E 's/[0-9][0-9.e-]*/N/g'"
+exit_code = 0
+desc = "demos/bridge-cost.xtl runs (with hello); its timings are masked to N"

@@ -1,0 +1,9 @@
+# The clock package: what the loader reads to find and check the
+# native library, and the facade programs import.
+[extension]
+name = "clock"
+version = "0.1.0"
+abi = 1
+facade = "lib/Clock.xtl"
+# The library's file stem: libxetal_ext_clock.dylib on macOS, .so on Linux.
+library = "xetal_ext_clock"

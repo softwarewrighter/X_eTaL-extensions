@@ -1,0 +1,18 @@
+[package]
+name = "xetal-ext-clock"
+version = "0.1.0"
+description = "wall-clock and monotonic time, for timestamps and timing"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[lib]
+name = "xetal_ext_clock"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+xetal-ext-sdk = { path = "../../../crates/xetal-ext-sdk" }
+
+[lints]
+workspace = true

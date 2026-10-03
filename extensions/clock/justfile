@@ -1,0 +1,41 @@
+# clock -- wall-clock and monotonic time, for timestamps and timing. `just` lists recipes.
+# Run from this directory (or `just ext clock RECIPE` from the repo root).
+
+set positional-arguments
+
+root := "../.."
+
+# List the recipes
+default:
+    @just --list
+
+# Build the native library (target/debug/libxetal_ext_clock.dylib or .so) and xetal-x
+build:
+    cd {{root}} && cargo build -q --workspace
+
+# Rust tests  and the reg-rs tests
+test: test-rust reg
+
+# Rust tests of the crate in rust/
+test-rust:
+    cargo test -q -p xetal-ext-clock
+
+# reg-rs tests in tests/ (baselines committed there)
+reg:
+    {{root}}/scripts/reg-ext.sh clock run
+
+# Show the reg-rs failures in full
+reg-diff:
+    {{root}}/scripts/reg-ext.sh clock run -vv
+
+# Accept the latest output of one reg-rs test as its baseline (review the diff)
+rebase test:
+    {{root}}/scripts/reg-ext.sh clock rebase -p "$1"
+
+# The functions this extension exports, as xetal-x sees them
+list: build
+    {{root}}/target/debug/xetal-x --ext . --ext-list
+
+# Run a demo: just demo NAME (demos/NAME.xtl)
+demo name: build
+    {{root}}/target/debug/xetal-x --ext . run "demos/$1.xtl"

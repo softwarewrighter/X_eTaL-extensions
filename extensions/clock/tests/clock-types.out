@@ -1,0 +1,5 @@
+l:n_ow : Unit -> Float
+l:i_so : Unit -> Char
+l:i_soOf : Num a => a -> Char
+l:m_illis : Unit -> Float
+l:t_ime : (a -> b) -> a -> Float

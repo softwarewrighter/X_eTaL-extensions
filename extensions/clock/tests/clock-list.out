@@ -1,0 +1,5 @@
+clock 0.1.0
+  clock/now : Unit -> Float    # Seconds since 1970-01-01 UTC, with the fraction.
+  clock/iso : Unit -> Char    # The current time as ISO 8601 UTC text, to the millisecond.
+  clock/iso_of : Num a => a -> Char    # Unix seconds as ISO 8601 UTC text, to the millisecond.
+  clock/millis : Unit -> Float    # Milliseconds on a monotonic clock, from the first measurement.

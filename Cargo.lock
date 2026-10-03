@@ -2086,6 +2086,13 @@ name = "xetal-ext-abi"
 version = "0.1.0"
 
 [[package]]
+name = "xetal-ext-clock"
+version = "0.1.0"
+dependencies = [
+ "xetal-ext-sdk",
+]
+
+[[package]]
 name = "xetal-ext-hello"
 version = "0.1.0"
 dependencies = [

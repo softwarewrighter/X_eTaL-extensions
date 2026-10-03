@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/facade.xtl"
+exit_code = 0
+desc = "the Clock facade: fixed ISO conversions, and the shape, order and kinds of real times"

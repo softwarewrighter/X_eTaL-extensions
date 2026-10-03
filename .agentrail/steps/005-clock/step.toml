@@ -1,6 +1,6 @@
 number = 5
 slug = "clock"
-status = "pending"
+status = "in-progress"
 description = "bridge step 4: extensions/clock (Clock.xtl, alias ck:): wall-clock Unix secon..."
 role = "production"
 context_files = []
