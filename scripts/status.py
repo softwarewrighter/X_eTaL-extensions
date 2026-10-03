@@ -11,6 +11,7 @@ import sys
 
 root = pathlib.Path(__file__).resolve().parent.parent
 RELEASE_1 = ["hello", "clock", "sqlite"]
+MEDIA = ["canvas", "scene3d", "audio"]
 LIVE = "https://softwarewrighter.github.io/X_eTaL-extensions"
 
 # The extensions column of the ecosystem dashboard: hand-kept, one line
@@ -20,7 +21,8 @@ CAPABILITIES = [
     ("typed facades (`.xtl`)", "yes: every extension's `lib/NAME.xtl`, types pinned by reg-rs"),
     ("macro helpers (`.xtlm`)", "blocked on X_eTaL (ask E2, X_eTaL Saga 19)"),
     ("native ABI", "V1: scalars, text, dense arrays of rank 0 to 9; no handles yet"),
-    ("browser", "yes for extensions that build for wasm32 (hello, clock); sqlite needs LLVM's clang"),
+    ("browser", "yes for extensions that build for wasm32 (hello, clock); sqlite stays on the command line (decision)"),
+    ("native windows", "yes: `xetal-x` serves windows on the main thread for extensions linked into it (canvas)"),
     ("command line", "every extension, with `xetal-x`"),
     ("tests", "Rust tests per extension and crate; reg-rs goldens of every facade, demo and error"),
 ]
@@ -46,19 +48,23 @@ def rust_tests(d):
     return sum(f.read_text().count("#[test]") for f in files)
 
 
+def host(d):
+    return "host = true" in (d / "extension.toml").read_text()
+
+
 def row(d):
     name = d.name
     demos = sorted(p.stem for p in (d / "demos").glob("*.xtl"))
     live = (d / "web" / "Cargo.toml").exists()
     return "| {} | {} | {} | {} | {} | {} | {} | {} |".format(
         f"[{name}](../extensions/{name}/docs/README.md)",
-        "release 1" if name in RELEASE_1 else "roadmap",
+        "release 1" if name in RELEASE_1 else "media (saga 5)" if name in MEDIA else "roadmap",
         facade(d),
         native(d),
         rust_tests(d),
         len(list((d / "tests").glob("*.rgt"))),
         ", ".join(demos) if demos else "--",
-        f"[live]({LIVE}/{name}/)" if live else "command line",
+        f"[live]({LIVE}/{name}/)" if live else "native window (xetal-x)" if host(d) else "command line",
     )
 
 

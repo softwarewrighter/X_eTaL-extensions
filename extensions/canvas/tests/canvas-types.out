@@ -1,0 +1,4 @@
+l:o_pen! : Num a => Char -> a -> Int
+l:s_how! : (Num a, Num b) => a -> b -> Int
+l:n_ext! : Num a => a -> Char
+l:c_lose! : Num a => a -> Int

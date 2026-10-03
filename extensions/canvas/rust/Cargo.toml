@@ -1,0 +1,27 @@
+[package]
+name = "xetal-ext-canvas"
+version = "0.1.0"
+description = "a native window showing X_eTaL arrays as pixels, with keys and clicks back"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[lib]
+name = "xetal_ext_canvas"
+# Linked into the host (xetal-x), which serves its windows on the main
+# thread (plan M1): no shared library.
+crate-type = ["rlib"]
+
+[dependencies]
+xetal-ext-sdk = { path = "../../../crates/xetal-ext-sdk" }
+xetal-ext-ui = { path = "../../../crates/xetal-ext-ui" }
+softbuffer = "0.4"
+
+[features]
+# Always linked statically (several host extensions in one binary): the
+# host enables it; there is no shared library to unmangle the entry for.
+static = []
+
+[lints]
+workspace = true

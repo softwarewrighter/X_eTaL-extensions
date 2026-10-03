@@ -98,15 +98,30 @@ fn main() -> ExitCode {
         }
     };
     install_store(draw, &command, registry);
-    match run(&command) {
-        Ok(text) => {
+    // The program runs on a thread of its own; this (the main) thread
+    // serves windows for extensions like canvas (plan M1), and does
+    // nothing at all unless the program opens one.
+    let done = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
+    let finished = done.clone();
+    let program = std::thread::spawn(move || {
+        let result = run(&command);
+        finished.store(true, std::sync::atomic::Ordering::SeqCst);
+        result
+    });
+    xetal_ext_ui::serve(|| done.load(std::sync::atomic::Ordering::SeqCst));
+    match program.join() {
+        Ok(Ok(text)) => {
             if !text.is_empty() {
                 println!("{text}");
             }
             ExitCode::SUCCESS
         }
-        Err(diag) => {
+        Ok(Err(diag)) => {
             eprintln!("{diag}");
+            ExitCode::FAILURE
+        }
+        Err(_) => {
+            eprintln!("error[internal]: the program's thread failed");
             ExitCode::FAILURE
         }
     }

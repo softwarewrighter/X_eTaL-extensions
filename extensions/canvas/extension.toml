@@ -1,0 +1,11 @@
+# The canvas package: what the loader reads to find and check the
+# native library, and the facade programs import.
+[extension]
+name = "canvas"
+version = "0.1.0"
+abi = 1
+facade = "lib/Canvas.xtl"
+# Linked into the host (xetal-x serves its windows on the main thread):
+# there is no shared library to load.
+library = "xetal_ext_canvas"
+host = true

@@ -259,11 +259,19 @@ Decisions:
   be cleaner: asked upstream if needed.)
 - M5. Test media is generated (tones by sox or ffmpeg, committed small,
   ours); personal media goes in an ignored `local-media/`.
+- M6. Ogg Vorbis first (the user's preference, 2026-10-03): fixtures
+  and the demo's default media are Ogg Vorbis (royalty-free by
+  design); MP3 is supported too -- its patents expired around 2017 and
+  Symphonia's decoder (pure Rust, MPL-2.0) needs no licence.
+- M7. Drawing: the 2D canvas (the UI host's first extension) uses
+  softbuffer (a CPU pixel buffer in a winit window); the 3D scene uses
+  wgpu as demo-extensions does. winit 0.30 for windows and events in
+  both.
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
 | 1 | parity | docs/parity.md; this saga |
-| 2 | ui-host | `crates/xetal-ext-ui` and `xetal-x` running the program off the main thread; a minimal window extension (an array shown as pixels, events back) proving the loop; headless tests of the queues |
+| 2 | ui-host | (done) `crates/xetal-ext-ui` and `xetal-x` running the program off the main thread; a minimal window extension (an array shown as pixels, events back) proving the loop; headless tests of the queues |
 | 3 | scene3d | the scene extension: retained lines and points by id, colours, camera, events; a wireframe cube demo |
 | 4 | audio | the audio extension: open, info, chunks (2 by n Floats), play, pause, seek, position, close; tests on generated MP3 and Ogg fixtures |
 | 5 | spectrum | demos/spectrum: the visualizer in X_eTaL (spectrum by inner product, radial spokes, keys); headless tests of the analysis on fixtures; an interactive smoke |

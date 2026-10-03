@@ -29,6 +29,11 @@ pub struct Manifest {
     /// The library's file stem, without the platform's prefix and
     /// suffix: `xetal_ext_hello` is `libxetal_ext_hello.dylib` on macOS.
     pub library: String,
+    /// Linked into the host rather than loaded: an extension whose
+    /// windows the host serves on its main thread (`xetal-x` links
+    /// canvas). The host registers it; there is no library to find.
+    #[serde(default)]
+    pub host: bool,
 }
 
 /// A package directory and its manifest.

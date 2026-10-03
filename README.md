@@ -107,6 +107,7 @@ come.
 | --------- | ------ | ---- | ------ | ------ |
 | [hello](extensions/hello/docs/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-extensions/hello/)) | `Hello` | the smallest proof of the boundary | -- | done: facade, tests, demo, live |
 | [clock](extensions/clock/docs/README.md) ([live](https://softwarewrighter.github.io/X_eTaL-extensions/clock/)) | `Clock` | wall-clock and monotonic time; the bridge's cost | std | done: facade, tests, cost demo, live |
+| [canvas](extensions/canvas/docs/README.md) | `Canvas` | a native window showing arrays as pixels; keys and clicks back | winit, softbuffer | media saga: done, Life demo |
 | [sqlite](extensions/sqlite/docs/README.md) | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | done: facade, CSV import, tests, the data notebook |
 | web | `Web` | serve HTTP: the program takes each request and replies | axum, tokio | roadmap |
 | image | `Image` | images to and from arrays | image | roadmap |

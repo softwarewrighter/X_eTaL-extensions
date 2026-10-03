@@ -1,0 +1,11 @@
+# Opens a window, draws a few frames, reads events, closes it. Needs a
+# desktop session: run by `just smoke`, not by the gate.
+"cv:" u_se< "Canvas"
+w := "canvas smoke" cv:o_pen! 320 200
+g := 50 80 r_eshape (f_loat r_ange 4000) / 4000.0
+s := w cv:s_how! g
+e := cv:n_ext! w
+s := w cv:s_how! 50 80 3 r_eshape 0.2 0.6 1.0
+e := cv:n_ext! w
+c := cv:c_lose! w
+"smoke: opened, drew, read events, closed"

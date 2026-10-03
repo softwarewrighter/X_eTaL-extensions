@@ -1,0 +1,33 @@
+# Conway's Life in a native window: the board is an X_eTaL array, each
+# generation one array expression, drawn by Rust with every frame.
+# Run: just demo life     (Space: a new board; q or close: quit)
+"cv:" u_se< "Canvas"
+
+# Life (as in X_eTaL's demos/life.xtl): every cell plus its neighbours
+# by rotating along both axes and summing; alive next at 3, or 4 if alive
+u:l_ife := { ('+ r_/_12 -1 0 1 o_-_12 _r) { (_l = 3) + _r * _l = 4 } _r }
+
+# a random board, about one cell in four alive
+u:s_eed := { n -> (n c_at n) r_eshape 1 = r_oll! (n * n) r_eshape 4 }
+
+w := "Life -- X_eTaL" cv:o_pen! 512 512
+
+# after quitting: close the window; an empty board ends the loop's work
+u:q_uit := { b ->
+  c := cv:c_lose! w
+  0 0 r_eshape 0
+}
+
+# one frame: draw the board, read an event, step
+u:f_rame := { b ->
+  0 = t_ally b ? b
+  e := cv:n_ext! w
+  ((e m_atch "close") + e m_atch "key q") > 0 ? u:q_uit b
+  e m_atch "key Space" ? u:s_eed 96
+  s := w cv:s_how! b
+  u:l_ife b
+}
+
+# up to 100,000 frames (about half an hour at 60 a second)
+last := 100000 'u:f_rame p_ower u:s_eed 96
+"bye"

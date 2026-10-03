@@ -1,0 +1,43 @@
+# Canvas.xtl -- the facade of the canvas extension: a native window
+# showing X_eTaL arrays as pixels, with keys, clicks and frame ticks back.
+# Import: "cv:" u_se< "Canvas"
+# Run with xetal-x, which links canvas and serves its windows on the main
+# thread (xetal-x --ext DIR puts this directory on XETAL_PATH); the
+# private helpers below speak the ext: channel (docs/bridge.md).
+
+# private: the ext: channel
+c_all := { p -> []N_GET "ext:canvas/" c_at p }
+t_ext := { t p -> t []N_PUT "ext:canvas/" c_at p c_at "?text" }
+i_nts := { x p -> (f_ormat r_avel f_loor x) []N_PUT "ext:canvas/" c_at p c_at "?int=" c_at f_ormat s_hape x }
+f_loats := { x p -> (f_ormat r_avel f_loat x) []N_PUT "ext:canvas/" c_at p c_at "?float=" c_at f_ormat s_hape x }
+n_umber := { p -> f_loor f_irst n_umbers c_all p }
+
+# title cv:o_pen! width height: a window that size (in points); its id.
+l:o_pen! := { title size ->
+  a := title t_ext "open"
+  b := size i_nts "open"
+  n_umber "open"
+}
+
+# id cv:s_how! pixels: draw an n by m matrix (grey) or an n by m by 3
+# array (red, green, blue), each from 0 (dark) to 1 (bright); a Bool
+# matrix draws its 1s white. Scaled to the window; the id.
+l:s_how! := { id p ->
+  a := id i_nts "show"
+  b := p f_loats "show"
+  n_umber "show"
+}
+
+# cv:n_ext! id: the next event, waiting at most a frame (1/60 s):
+# "frame", "key Space", "key q", "key ArrowLeft", "click ROW COL"
+# (where in the array shown, from 1), or "close".
+l:n_ext! := { id ->
+  a := id i_nts "next"
+  c_all "next"
+}
+
+# cv:c_lose! id: close the window; 1.
+l:c_lose! := { id ->
+  a := id i_nts "close"
+  n_umber "close"
+}

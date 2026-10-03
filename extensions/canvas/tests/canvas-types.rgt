@@ -1,0 +1,3 @@
+command = "xetal-x type lib/Canvas.xtl"
+exit_code = 0
+desc = "pins the type of every Canvas facade export"

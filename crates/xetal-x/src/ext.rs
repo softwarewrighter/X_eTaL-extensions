@@ -38,6 +38,13 @@ pub fn split_args(
     Ok((rest, dirs, list))
 }
 
+/// Extensions linked into `xetal-x` (plan M1: their windows need the
+/// main thread), registered when their package (`host = true`) loads.
+type Descriptor = fn() -> *const xetal_ext_loader::abi::ExtensionDescriptorV1;
+
+const HOST_LINKED: &[(&str, Descriptor)] =
+    &[("canvas", xetal_ext_canvas::__xetal_extension::descriptor)];
+
 /// The packages in `dirs` (each a package or a directory of packages),
 /// loaded into a registry, and the directories of their facades.
 pub fn load(dirs: &[PathBuf]) -> Result<(Registry, Vec<PathBuf>), Diagnostic> {
@@ -46,9 +53,26 @@ pub fn load(dirs: &[PathBuf]) -> Result<(Registry, Vec<PathBuf>), Diagnostic> {
     let build = build_dirs();
     for dir in dirs {
         for package in packages(dir)? {
-            registry
-                .load_package(&package, &build)
-                .map_err(|e| Diagnostic::new("ext", e.to_string()))?;
+            let m = package.manifest();
+            let loaded = if m.host {
+                let descriptor = HOST_LINKED
+                    .iter()
+                    .find(|(name, _)| *name == m.name)
+                    .map(|(_, d)| *d)
+                    .ok_or_else(|| {
+                        Diagnostic::new(
+                            "ext",
+                            format!(
+                                "{} must be linked into the host, and xetal-x does not link it",
+                                m.name
+                            ),
+                        )
+                    })?;
+                registry.load_static(descriptor)
+            } else {
+                registry.load_package(&package, &build)
+            };
+            loaded.map_err(|e| Diagnostic::new("ext", e.to_string()))?;
             if let Some(d) = package.facade().parent() {
                 if !facades.contains(&d.to_path_buf()) {
                     facades.push(d.to_path_buf());
