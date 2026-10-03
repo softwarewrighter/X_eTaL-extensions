@@ -1,0 +1,1 @@
+Probed SQLite on wasm32: feasible via rusqlite 0.40 + sqlite-wasm-rs but needs LLVM clang (Apple clang lacks wasm32); recorded; awaiting user's choice to install llvm; sqlite command-line only for now.
