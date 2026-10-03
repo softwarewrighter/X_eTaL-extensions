@@ -1,0 +1,1 @@
+xetal-ext-bridge crate (ExtStore+protocol+facade serving), xetal-x on it; static feature in SDK/extensions/template; loader dynamic feature; xetal-play native test of hello tour == golden; wasm32 check.

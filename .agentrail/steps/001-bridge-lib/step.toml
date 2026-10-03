@@ -1,9 +1,10 @@
 number = 1
 slug = "bridge-lib"
-status = "in-progress"
+status = "completed"
 description = "live step 1: move ExtStore and the protocol from crates/xetal-x into crates/x..."
 role = "production"
 context_files = []
 created_at = "2026-10-02T19:34:51"
+completed_at = "2026-10-02T19:56:23"
 task_type = "bridge"
-commits = []
+commits = ["c532eae5707545850368ffb538c7b48a3a00ea5f"]
