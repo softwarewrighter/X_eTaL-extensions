@@ -56,6 +56,12 @@ impl Queue {
         self.samples.clear();
     }
 
+    /// Lets the queue hold at least `frames` (a voice queues a whole
+    /// note at once).
+    pub fn grow(&mut self, frames: usize) {
+        self.capacity = self.capacity.max(frames * 2);
+    }
+
     #[must_use]
     pub fn frames(&self) -> usize {
         self.samples.len() / 2

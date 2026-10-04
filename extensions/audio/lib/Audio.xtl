@@ -82,3 +82,30 @@ l:c_lose! := { id ->
   a := id f_loats "close"
   f_loor n_umber "close"
 }
+
+# -- sound out of arrays
+
+# au:o_utput rate: a voice playing what the program queues, at rate
+# frames a second (22050 is plenty for a synthesizer); its id.
+l:o_utput := { r ->
+  a := r f_loats "output"
+  f_loor n_umber "output"
+}
+
+# id au:q_ueue! samples: play these after what is queued -- a vector
+# (mono) or 2 by n (left over right), from -1 to 1; the seconds now
+# queued ahead. With no device (XETAL_AUDIO=off) nothing sounds, and
+# XETAL_AUDIO_WAV=FILE collects everything queued in a WAV file.
+l:q_ueue! := { id s ->
+  a := id f_loats "queue"
+  b := s f_loats "queue"
+  n_umber "queue"
+}
+
+# id au:w_ait! seconds: wait until at most that much is queued, so a
+# program can stream without hurrying; the seconds played so far.
+l:w_ait! := { id s ->
+  a := id f_loats "wait"
+  b := s f_loats "wait"
+  n_umber "wait"
+}

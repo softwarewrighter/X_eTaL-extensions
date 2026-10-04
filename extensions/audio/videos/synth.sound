@@ -1,0 +1,5 @@
+# extensions/audio/videos/synth.webm (its spectrogram, with its sound)
+# and .webp (the spectrogram): the synthesizer run with no sound device,
+# everything it played collected in a WAV (just videos audio).
+demo=synth
+seed=1

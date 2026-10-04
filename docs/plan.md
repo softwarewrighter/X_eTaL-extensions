@@ -330,7 +330,8 @@ end; the sound by the user's ear). Found on the way: the scripted
 events queue capped recordings at 256 frames; debug builds are too
 slow for 60 frames a second (`just demo` runs release); macOS bash 3.2
 and empty arrays. Parity with demo-extensions' visualizer reached
-(docs/parity.md). Next: the array synthesizer (sound out of arrays).
+(docs/parity.md). Step 5, the array synthesizer (sound out of arrays,
+`just demo audio synth`), followed at the user's request.
 
 ## Saga 6 -- launch
 

@@ -3,6 +3,9 @@
 # the site) and NAME.webp (animated, inline in markdown), as X_eTaL's
 # scripts/videos.sh does. Nothing appears on the screen:
 #   - NAME.tape: a terminal session, rendered headlessly by vhs;
+#   - NAME.sound: a demo that makes sound, run with no device, its
+#     output collected in a WAV (XETAL_AUDIO_WAV): the webm is its
+#     spectrogram (sox) with that sound, the webp the spectrogram;
 #   - NAME.frames: a window demo run headless (XETAL_HEADLESS), every
 #     frame saved (XETAL_FRAMES) and joined by ffmpeg; with `audio=FILE`
 #     the file's sound goes into the webm (the visualizer: at 60 frames
@@ -11,7 +14,7 @@
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$root"
-for tool in vhs ffmpeg gif2webp; do command -v "$tool" >/dev/null || { echo "$tool not found" >&2; exit 127; }; done
+for tool in vhs ffmpeg gif2webp sox; do command -v "$tool" >/dev/null || { echo "$tool not found" >&2; exit 127; }; done
 cargo build -q --workspace
 mkdir -p target/screens
 encode() { # SRC DEST-BASE SCALE WEBP-SCALE [FPS [AUDIO]]
@@ -53,5 +56,22 @@ for dir in extensions/${1:-*}/videos; do
       -vf "scale=$scale:-1:flags=neighbor" -pix_fmt yuv420p "target/screens/$ext-$name.mp4"
     # the site's copy keeps the frame rate (and the sound); the webp is silent
     encode "target/screens/$ext-$name.mp4" "$dir/$name" "$scale" "$scale" "$([ -n "$audio" ] && echo "$fps" || echo 8)" "$audio"
+  done
+  for spec in "$dir"/*.sound; do
+    [ -e "$spec" ] || continue
+    name="$(basename "$spec" .sound)"
+    demo=""; seed=1
+    # shellcheck disable=SC1090
+    . "$spec"
+    echo "==> sound $ext $name (no device)"
+    wav="$root/target/screens/$ext-$name.wav"
+    (cd "extensions/$ext" && XETAL_AUDIO=off XETAL_AUDIO_WAV="$wav" \
+      "$root/target/debug/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > /dev/null)
+    png="$root/target/screens/$ext-$name-spectrogram.png"
+    sox "$wav" -n remix 1,2 spectrogram -x 880 -y 360 -z 80 -t "$ext/$demo.xtl: every sample computed in X_eTaL" -o "$png"
+    ffmpeg -loglevel error -y -loop 1 -framerate 2 -i "$png" -i "$wav" -c:v libvpx-vp9 -crf 40 -b:v 0 \
+      -c:a libopus -b:a 64k -shortest -pix_fmt yuv420p "$dir/$name.webm"
+    magick "$png" -resize 760x "$dir/$name.webp"
+    ls -l "$dir/$name.webm" "$dir/$name.webp" | awk '{ print $9, $5 }'
   done
 done

@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-04
 
+- 14:42 `ext` The array synthesizer: audio gains voices (`au:o_utput`, `au:q_ueue!`, `au:w_ait!`; a thread owns the device; with no device `XETAL_AUDIO_WAV` collects the sound in a WAV); `demos/synth.xtl` computes eight bars in X_eTaL (equal temperament, harmonics as a table of sines, envelopes, arpeggio, bass, stereo) and streams them; a Rust test reads a voice's WAV back; reg-rs pins the synth's WAV; recordings gain `NAME.sound` (spectrogram with the sound). A right-to-left slip (`t / 0.01 m_in 1.0`) that clipped the first render was caught by its RMS.
+
 - 13:23 `docs` The visualizer checked live (with the user's go: the window, the spokes moving, the clean end); docs/parity.md updated (host, canvas, scene, audio and the visualizer done); Saga 7 retrospective.
 
 - 13:01 `ext` The music visualizer (`extensions/audio/demos/spectrum.xtl`, `just demo audio spectrum`): the arpeggio plays while X_eTaL takes the window under the playhead, tapers it, finds the loudness at 8 octaves per channel by one inner product with cosine and sine tables, eases it, and lays out 16 mirrored spokes in the scene (bass blue, mid green, high orange); keys pause and seek. Recorded headlessly with its music (`videos.sh` muxes a frames spec's `audio=`); a headless reg-rs test pins three frames. The scene draws 2 px lines (cube golden and video rebased); scripted headless events are no longer capped at 256; `just demo` runs the release build; `videos.sh` safe for empty arrays on bash 3.

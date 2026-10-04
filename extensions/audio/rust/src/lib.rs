@@ -6,6 +6,7 @@
 pub mod decode;
 pub mod output;
 pub mod player;
+pub mod voice;
 
 use std::collections::HashMap;
 use std::path::PathBuf;
@@ -14,6 +15,7 @@ use std::sync::{Mutex, OnceLock};
 
 use decode::Stream;
 use player::Player;
+use voice::Voice;
 use xetal_ext_sdk::{Array, ArrayData, OwnedError, Value, float_vector, text};
 
 struct Open {
@@ -61,12 +63,80 @@ fn stereo(left: Vec<f64>, right: Vec<f64>) -> Result<Value, OwnedError> {
         .map_err(|e| OwnedError::failure(e.to_string()))
 }
 
+fn voices() -> std::sync::MutexGuard<'static, HashMap<i64, Voice>> {
+    static V: OnceLock<Mutex<HashMap<i64, Voice>>> = OnceLock::new();
+    V.get_or_init(Default::default)
+        .lock()
+        .unwrap_or_else(std::sync::PoisonError::into_inner)
+}
+
+static NEXT: AtomicI64 = AtomicI64::new(1);
+
+/// output rate: a voice playing what the program queues; its id.
+#[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
+fn output(args: &[Value]) -> Result<Value, OwnedError> {
+    let rate = num(&args[0], "rate")?.round().max(0.0) as u32;
+    let v = Voice::open(rate).map_err(OwnedError::failure)?;
+    let id = NEXT.fetch_add(1, Ordering::Relaxed);
+    voices().insert(id, v);
+    Ok(Value::Int(id))
+}
+
+/// id queue samples: a vector (mono) or 2 by n (left, right), -1 to 1;
+/// the seconds now queued ahead.
+#[allow(clippy::cast_possible_truncation)]
+fn queue(args: &[Value]) -> Result<Value, OwnedError> {
+    let id = id_of(&args[0])?;
+    let (shape, x) = float_vector(&args[1])?;
+    let (l, r): (Vec<f32>, Vec<f32>) = match shape[..] {
+        [_] | [] => (
+            x.iter().map(|&v| v as f32).collect(),
+            x.iter().map(|&v| v as f32).collect(),
+        ),
+        [2, n] => (
+            x[..n].iter().map(|&v| v as f32).collect(),
+            x[n..].iter().map(|&v| v as f32).collect(),
+        ),
+        _ => {
+            return Err(OwnedError::invalid_argument(format!(
+                "samples are a vector or 2 by n, not {shape:?}"
+            )));
+        }
+    };
+    let mut v = voices();
+    let voice = v
+        .get_mut(&id)
+        .ok_or_else(|| OwnedError::invalid_argument(format!("no voice {id} is open")))?;
+    Ok(Value::Float(voice.queue(&l, &r)))
+}
+
+/// id wait seconds: block until at most that much is queued; the
+/// seconds played so far.
+#[allow(clippy::cast_precision_loss)]
+fn wait(args: &[Value]) -> Result<Value, OwnedError> {
+    let id = id_of(&args[0])?;
+    let s = num(&args[1], "seconds")?;
+    // wait without holding the voices' lock
+    loop {
+        let (ahead, played, rate) = {
+            let v = voices();
+            let voice = v
+                .get(&id)
+                .ok_or_else(|| OwnedError::invalid_argument(format!("no voice {id} is open")))?;
+            (voice.ahead(), voice.played(), voice.rate())
+        };
+        if ahead <= s.max(0.0) {
+            return Ok(Value::Float(played as f64 / f64::from(rate)));
+        }
+        std::thread::sleep(std::time::Duration::from_millis(5));
+    }
+}
+
 /// open path: an audio file (Ogg Vorbis, MP3 or WAV); its id.
 fn open(args: &[Value]) -> Result<Value, OwnedError> {
     let path = PathBuf::from(text(&args[0])?);
     let reader = Stream::open(&path).map_err(OwnedError::failure)?;
     let (rate, channels, frames) = (reader.rate(), reader.channels(), reader.frames());
-    static NEXT: AtomicI64 = AtomicI64::new(1);
     let id = NEXT.fetch_add(1, Ordering::Relaxed);
     opened().insert(
         id,
@@ -167,12 +237,17 @@ fn state(args: &[Value]) -> Result<Value, OwnedError> {
     })
 }
 
-/// close id: stop and forget the file; 1.
+/// close id: stop and forget a file; a voice plays out what is queued
+/// (or writes its WAV) first; 1.
 fn close(args: &[Value]) -> Result<Value, OwnedError> {
     let id = id_of(&args[0])?;
-    opened()
+    if opened().remove(&id).is_some() {
+        return Ok(Value::Int(1));
+    }
+    let voice = voices()
         .remove(&id)
         .ok_or_else(|| OwnedError::invalid_argument(format!("no audio {id} is open")))?;
+    voice.finish().map_err(OwnedError::failure)?;
     Ok(Value::Int(1))
 }
 
@@ -189,6 +264,9 @@ xetal_ext_sdk::xetal_extension! {
         position: 1, "Num a => a -> Float", "The second playing now.";
         window: 2, "(Num a, Num b) => a -> b -> Float", "id window n: the n frames ending at what plays now, 2 by n.";
         state: 1, "Num a => a -> Int", "0 stopped, 1 playing, 2 paused.";
-        close: 1, "Num a => a -> Int", "Stop and forget the file.";
+        close: 1, "Num a => a -> Int", "Stop and forget a file, or finish a voice.";
+        output: 1, "Num a => a -> Int", "A voice at rate frames a second; its id.";
+        queue: 2, "(Num a, Num b) => a -> b -> Float", "id queue samples (n, or 2 by n; -1 to 1): seconds queued ahead.";
+        wait: 2, "(Num a, Num b) => a -> b -> Float", "id wait seconds: until at most that much is queued; seconds played.";
     }
 }

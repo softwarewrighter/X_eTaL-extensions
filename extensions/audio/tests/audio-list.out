@@ -8,4 +8,7 @@ audio 0.1.0
   audio/position : Num a => a -> Float    # The second playing now.
   audio/window : (Num a, Num b) => a -> b -> Float    # id window n: the n frames ending at what plays now, 2 by n.
   audio/state : Num a => a -> Int    # 0 stopped, 1 playing, 2 paused.
-  audio/close : Num a => a -> Int    # Stop and forget the file.
+  audio/close : Num a => a -> Int    # Stop and forget a file, or finish a voice.
+  audio/output : Num a => a -> Int    # A voice at rate frames a second; its id.
+  audio/queue : (Num a, Num b) => a -> b -> Float    # id queue samples (n, or 2 by n; -1 to 1): seconds queued ahead.
+  audio/wait : (Num a, Num b) => a -> b -> Float    # id wait seconds: until at most that much is queued; seconds played.

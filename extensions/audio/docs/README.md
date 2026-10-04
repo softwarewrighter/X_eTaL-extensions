@@ -34,7 +34,10 @@ w := a au:w_indow 1024           # 2 by 1024: what plays now, left over right
 | `au:p_osition id` | `Num a => a -> Float` | the second playing now |
 | `id au:w_indow n` | `(Num a, Num b) => a -> b -> Float` | the `n` frames ending at what plays now, 2 by n (zeros before the start) |
 | `au:s_tate id` | `Num a => a -> Int` | 0 stopped (not started, or at the end), 1 playing, 2 paused |
-| `au:c_lose! id` | `Num a => a -> Int` | stop and forget the file |
+| `au:c_lose! id` | `Num a => a -> Int` | stop and forget a file; a voice first plays out what is queued (or writes its WAV) |
+| `au:o_utput rate` | `Num a => a -> Int` | a voice playing what the program queues, at `rate` frames a second; its id |
+| `id au:q_ueue! s` | `(Num a, Num b) => a -> b -> Float` | play these samples after what is queued: a vector (mono) or 2 by n (left over right), -1 to 1; the seconds queued ahead |
+| `id au:w_ait! t` | `(Num a, Num b) => a -> b -> Float` | wait until at most `t` seconds are queued (streaming without hurrying); the seconds played |
 
 ## The visualizer
 
@@ -65,6 +68,31 @@ in the demo (Ogg Vorbis, MP3 or WAV; `local-media/` is ignored by git).
 
 A release build draws a frame in about 14 ms (the analysis is about
 33,000 multiply-adds in X_eTaL plus the bridge); `just demo` uses one.
+
+## The synthesizer
+
+<p align="center">
+  <img src="../videos/synth.webp" alt="The synthesizer's eight bars, as a spectrogram" width="560">
+</p>
+
+`demos/synth.xtl` (`just demo audio synth`): the visualizer reversed --
+X_eTaL computes every sample of eight bars of music and the extension
+plays them as they are made:
+
+| Step | X_eTaL |
+| ---- | ------ |
+| pitch | equal temperament: `440.0 * 2.0 ^ (f_loat k) / 12.0` for k semitones from A4 |
+| a tone | three harmonics (1, 1/2, 1/4) for a whole chord at once: a table of sines, one row per note (`f '* t_able t`) |
+| an envelope | attack, decay toward 60% (`e_xp`), release -- one vector, multiplied into every row |
+| an arpeggio | the chord's rows laid end to end (`r_avel`) |
+| the bass | the chord's root two octaves down, the length of the bar |
+| stereo | 2 by n: the arpeggio more to the right, the bass more to the left |
+| streaming | `v au:q_ueue! bar`, then `v au:w_ait! 0.5`: the next bar is made while this one sounds |
+
+The recording `videos/synth.webm` is the piece's spectrogram with its
+sound, made with no sound device: `XETAL_AUDIO=off
+XETAL_AUDIO_WAV=FILE` collects everything queued in a WAV
+(`videos/synth.sound`); the reg-rs test `audio-demo-synth` pins that WAV.
 
 ## How playback runs
 
@@ -101,4 +129,5 @@ The reg-rs tests run the facade with no device -- including a
 four-frequency spectrum by one inner product that finds 440 Hz on the
 left and 880 Hz on the right -- and check the formats and a missing
 file. Playing through the speakers is checked by ear (`just demo audio
-spectrum` plays the arpeggio).
+spectrum` plays the arpeggio, `just demo audio synth` the synthesizer).
+A Rust test writes a voice to a WAV and reads it back.
