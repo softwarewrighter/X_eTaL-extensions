@@ -1,0 +1,1 @@
+Array synthesizer: voices (output/queue/wait; WAV with no device), synth demo computing every sample in X_eTaL, tests (WAV pinned), recording (spectrogram + sound).
