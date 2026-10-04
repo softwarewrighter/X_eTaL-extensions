@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
+- 19:13 `ext` The scene extension (`extensions/scene`, alias `sc:`, linked into `xetal-x`): objects by id (polyline, segments, dots) with colours, an orbit camera with spin and mouse drag, perspective and anti-aliased lines drawn on the CPU (decision M7 revised from wgpu, so frames are the same headless), headless frames; `demos/cube.xtl`; 5 Rust tests, 4 reg-rs tests (the cube headless, frames pinned); `videos/cube`.
+
 - 17:14 `plan` Launch step 5 (the six-repo snapshot tag) waits on X_eTaL's web-release, which picks the compatible versions; then this repo vendors that release and tags to match.
 
 - 16:18 `docs` Ready for `.xtlm`: docs/ffi-macro.md designs the binding macro (`"s_hout : text -> text" ffi:b_ind< "hello/shout"`: channel kinds, exact expansions, the plan for the day it lands); docs/ffi/Hello.xtl is hello's facade expanded by those rules, by hand, and two reg-rs tests prove it (types equal to the facade's; the tour's golden through it).

@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/no-scene.xtl"
+exit_code = 1
+desc = "an id that is not open is an X_eTaL error; no window opens"

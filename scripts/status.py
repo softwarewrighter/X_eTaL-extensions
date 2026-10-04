@@ -11,7 +11,7 @@ import sys
 
 root = pathlib.Path(__file__).resolve().parent.parent
 RELEASE_1 = ["hello", "clock", "sqlite"]
-MEDIA = ["canvas", "scene3d", "audio"]
+MEDIA = ["canvas", "scene", "audio"]
 LIVE = "https://softwarewrighter.github.io/X_eTaL-extensions"
 
 # The extensions column of the ecosystem dashboard: hand-kept, one line

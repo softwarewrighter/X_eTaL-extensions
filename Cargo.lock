@@ -3680,6 +3680,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-ext-scene"
+version = "0.1.0"
+dependencies = [
+ "softbuffer",
+ "xetal-ext-sdk",
+ "xetal-ext-ui",
+]
+
+[[package]]
 name = "xetal-ext-sdk"
 version = "0.1.0"
 dependencies = [
@@ -4006,6 +4015,7 @@ dependencies = [
  "xetal-ext-canvas",
  "xetal-ext-hello",
  "xetal-ext-loader",
+ "xetal-ext-scene",
  "xetal-ext-ui",
  "xetal-grid",
  "xetal-lex",

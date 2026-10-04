@@ -1,0 +1,28 @@
+# A wireframe cube turning in a native 3D window: its corners and edges
+# are X_eTaL arrays; Rust draws them.
+# Run: just demo scene cube   (drag to turn it; q or close: quit)
+"sc:" u_se< "Scene"
+
+# the 8 corners: every sign combination of -1 1 in x, y and z
+c := 8 3 r_eshape -1 -1 -1  1 -1 -1  -1 1 -1  1 1 -1  -1 -1 1  1 -1 1  -1 1 1  1 1 1
+
+# the 12 edges join corners that differ in one coordinate: pairs (from 1)
+e := 12 2 r_eshape 1 2  3 4  5 6  7 8  1 3  2 4  5 7  6 8  1 5  2 6  3 7  4 8
+
+w := "Cube -- X_eTaL" sc:o_pen! 480 480
+k := w sc:c_amera! 0.6 0.45 5.0 0.8
+x := ((f_loat w c_at 1) c_at 0.4 0.8 1.0) sc:s_egments! (r_avel e) s_elect c
+y := ((f_loat w c_at 2) c_at 1.0 0.6 0.2) sc:d_ots! c
+
+u:q_uit := { n ->
+  z := sc:c_lose! w
+  0
+}
+u:f_rame := { n ->
+  n = 0 ? 0
+  v := sc:n_ext! w
+  ((v m_atch "close") + v m_atch "key q") > 0 ? u:q_uit n
+  n
+}
+last := 100000 'u:f_rame p_ower 1
+"bye"

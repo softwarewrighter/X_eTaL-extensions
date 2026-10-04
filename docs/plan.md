@@ -297,10 +297,12 @@ Decisions:
   and the demo's default media are Ogg Vorbis (royalty-free by
   design); MP3 is supported too -- its patents expired around 2017 and
   Symphonia's decoder (pure Rust, MPL-2.0) needs no licence.
-- M7. Drawing: the 2D canvas (the UI host's first extension) uses
-  softbuffer (a CPU pixel buffer in a winit window); the 3D scene uses
-  wgpu as demo-extensions does. winit 0.30 for windows and events in
-  both.
+- M7. Drawing: softbuffer (a CPU pixel buffer in a winit window) for
+  both the canvas and the 3D scene. The scene was to use wgpu as
+  demo-extensions does; drawing its lines and points on the CPU instead
+  makes a frame identical with a window and without one, so the gate
+  pins the pictures (revised 2026-10-03). wgpu waits until a scene
+  outgrows the CPU. winit 0.30 for windows and events.
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |

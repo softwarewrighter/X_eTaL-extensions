@@ -36,6 +36,7 @@ xetal-ext-bridge = { path = "../xetal-ext-bridge" }
 xetal-ext-ui = { path = "../xetal-ext-ui" }
 # Extensions linked into this host (their windows need its main thread).
 xetal-ext-canvas = { path = "../../extensions/canvas/rust", features = ["static"] }
+xetal-ext-scene = { path = "../../extensions/scene/rust", features = ["static"] }
 
 [dev-dependencies]
 xetal-ext-hello = { path = "../../extensions/hello/rust" }

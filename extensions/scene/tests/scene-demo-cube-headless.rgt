@@ -1,0 +1,3 @@
+command = 'rm -rf work && XETAL_HEADLESS=1 XETAL_EVENTS="frame,frame,frame" XETAL_FRAMES=work/frames xetal-x --ext . run demos/cube.xtl && cksum work/frames/*.png'
+exit_code = 0
+desc = "demos/cube.xtl with no window: three frames and the close, each frame saved and pinned"

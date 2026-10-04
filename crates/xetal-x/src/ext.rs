@@ -42,8 +42,10 @@ pub fn split_args(
 /// main thread), registered when their package (`host = true`) loads.
 type Descriptor = fn() -> *const xetal_ext_loader::abi::ExtensionDescriptorV1;
 
-const HOST_LINKED: &[(&str, Descriptor)] =
-    &[("canvas", xetal_ext_canvas::__xetal_extension::descriptor)];
+const HOST_LINKED: &[(&str, Descriptor)] = &[
+    ("canvas", xetal_ext_canvas::__xetal_extension::descriptor),
+    ("scene", xetal_ext_scene::__xetal_extension::descriptor),
+];
 
 /// The packages in `dirs` (each a package or a directory of packages),
 /// loaded into a registry, and the directories of their facades.

@@ -1,0 +1,7 @@
+# extensions/scene/videos/cube.webm and .webp: the cube turning, as its
+# window shows it -- headless, every frame saved, joined (just videos).
+demo=cube
+seed=1
+frames=180
+fps=30
+scale=480

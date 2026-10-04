@@ -1,0 +1,27 @@
+[package]
+name = "xetal-ext-scene"
+version = "0.1.0"
+description = "retained 3D line and point scenes in a native window, patched by id"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[lib]
+name = "xetal_ext_scene"
+# Linked into the host (xetal-x), which serves its windows on the main
+# thread (plan M1): no shared library.
+crate-type = ["rlib"]
+
+[dependencies]
+xetal-ext-sdk = { path = "../../../crates/xetal-ext-sdk" }
+xetal-ext-ui = { path = "../../../crates/xetal-ext-ui" }
+softbuffer = "0.4"
+
+[features]
+# Link statically beside other extensions (a browser page): no unmangled
+# entry point. Never enabled inside the root workspace.
+static = []
+
+[lints]
+workspace = true
