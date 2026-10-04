@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-04
 
+- 15:42 `fix` The oscilloscope checked live with the user's go: the window drew both channels as the music played, but did not end with it -- the device's played count, converted back from the device's rate, stops just short of the last frame; it now ends within a tenth of a second of the end (stopped by hand within the agreed time).
+
 - 15:18 `ext` The live oscilloscope (`just demo audio scope`): the synthesizer's music plays while a canvas window draws the waveform under the playhead (left above, right below), the bars streamed as the playhead nears them; `au:p_layed` (with no device a virtual clock); the instruments moved into an ordinary library beside the demos, `Instruments.xtl` (the synth's WAV unchanged; a first name `Synth.xtl` collided with `synth.xtl` on the case-insensitive file system); a headless reg-rs test pins frames and sound; recordings can take a demo's own sound (`wav=1`); demo lists skip capitalized (library) files.
 
 - 14:58 `build` This repository's port is 8470 (the user's scheme: one port per X_eTaL repo, so their demos run side by side): `port` in the justfile, `just serve-pages` (bound to 127.0.0.1), trunk in the pages' docs, the web extension's planned default; CLAUDE.md rule 14.

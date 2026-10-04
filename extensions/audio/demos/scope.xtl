@@ -47,7 +47,9 @@ u:f_rame := { k ->
   e := cv:n_ext! w
   ((e m_atch "close") + e m_atch "key q") > 0 ? u:q_uit k
   p := au:p_layed v
-  p >= total ? u:q_uit k
+  # the end (within a tenth of a second: the device's count, converted
+  # back from its own rate, can stop just short of the last frame)
+  p >= total - 0.1 ? u:q_uit k
   ahead := ((f_loat k * blen) / in:rate) - p
   k2 := ((k < 8) * ahead < 0.6) u:f_eed k
   i := 1 m_ax (t_ally left) m_in (f_loor p * in:rate) + 2 * r_ange 256
