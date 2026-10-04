@@ -1,0 +1,1 @@
+Visualizer checked live (window, motion, clean end), parity updated, retrospective. Next: array synth.

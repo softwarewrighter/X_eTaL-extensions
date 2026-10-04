@@ -1,0 +1,11 @@
+{
+  "task_type": "release",
+  "state": {
+    "number": 4,
+    "step": "visualizer-release"
+  },
+  "action": "screen slot with user's go; window-only stills; docs",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-04T13:26:20"
+}
