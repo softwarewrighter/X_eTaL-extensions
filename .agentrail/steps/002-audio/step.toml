@@ -1,0 +1,9 @@
+number = 2
+slug = "audio"
+status = "pending"
+description = "extensions/audio (dynamic cdylib): Symphonia (ogg/vorbis, mp3, wav) decode by..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T17:30:46"
+task_type = "extension"
+commits = []

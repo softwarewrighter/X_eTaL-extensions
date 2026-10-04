@@ -1,0 +1,9 @@
+number = 1
+slug = "scene"
+status = "in-progress"
+description = "extensions/scene from wip/media-scene: wire into xetal-x (host-linked), funct..."
+role = "production"
+context_files = []
+created_at = "2026-10-03T17:30:46"
+task_type = "extension"
+commits = []

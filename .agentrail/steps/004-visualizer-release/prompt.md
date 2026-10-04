@@ -1,0 +1,1 @@
+docs (extension pages, README, status, parity), videos and pages rebuilt, retrospective; ask the user for a screen slot to check sound and window interactively.

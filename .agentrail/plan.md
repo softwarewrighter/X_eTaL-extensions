@@ -1,27 +1,18 @@
-# launch
+# visualizer
 
-Saga 6 of X_eTaL-extensions (docs/plan.md): this repo's part of the
-ecosystem's wider launch, as ../X_eTaL/docs/research4.txt reprioritizes
-it -- stabilize, synchronize, explain; no new feature sagas. Extensions
-are not the critical path: the point (ordinary X_eTaL -> typed facade
--> stable ABI -> native capability) is made by sqlite. Audio and 3D
-(the media saga, paused) are post-launch.
-
-Rules as before (CLAUDE.md). Every step gated, documented, committed
-with .agentrail/, completed, pushed.
+The media saga resumed (the user, 2026-10-03: while .xtlm is not ready
+upstream). Demos like sw-MLPL demo-extensions' MP3 player visualizer:
+Rust decodes and plays audio (Symphonia, CPAL; Ogg Vorbis first) and
+draws a retained 3D scene (CPU, softbuffer, in xetal-x's UI host);
+X_eTaL analyses each chunk and builds the scene as arrays. Plan
+decisions M1-M7 (docs/plan.md, Saga 5). Verified headlessly (saved
+frames); the screen only with the user's go (screen protocol).
 
 ## Steps
 
-1. reprioritize -- plan and README per research4; media paused
-   (scene WIP on wip/media-scene); the extension ABI and the bridge
-   labelled experimental; promotion-blocker list for this repo.
-2. blockers -- fix this repo's blockers (xetal-x version provenance,
-   anything a first user trips on); upstream blockers (E5, E6)
-   tracked.
-3. audit -- cross-repo ask and status audit: our asks against upstream
-   (E3-E6 now filed), vendor refreshed if anything landed, status and
-   docs reconciled, walkthrough re-run.
-4. xtlm-ready -- Ffi.xtlm designed against MC10-MC13 so the binding
-   macro ships the day .xtlm lands (blocked until then).
-5. snapshot -- a version for the six-repo compatible snapshot
-   (tag with the user's yes).
+1. scene -- the scene extension (from branch wip/media-scene): objects
+   by id, orbit camera, CPU rendering, headless frames; a cube demo.
+2. audio -- open, info, chunks, play, pause, seek, position, close;
+   generated Ogg/MP3/WAV fixtures.
+3. spectrum -- the visualizer demo in X_eTaL; headless golden; video.
+4. visualizer-release -- docs, parity, status, videos, retrospective.

@@ -1,0 +1,1 @@
+extensions/audio/demos/spectrum.xtl: open a file (default a bundled Ogg), play, each frame take the current window, spectrum at k frequencies per channel by inner product with cos/sin tables, bass/mid/high radial spokes in the scene, keys space/j/k/q; headless golden of analysis and frames; video from frames; docs.

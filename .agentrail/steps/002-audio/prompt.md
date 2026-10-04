@@ -1,0 +1,1 @@
+extensions/audio (dynamic cdylib): Symphonia (ogg/vorbis, mp3, wav) decode by confined path to an Int id; info; chunk n frames as 2 by n Floats; CPAL playback from a decode-ahead thread, pause/resume/seek/position; headless mode without a device (XETAL_HEADLESS: no playback, position advances by chunks); fixtures generated (sox/ffmpeg tones, ours); Rust and reg-rs tests.

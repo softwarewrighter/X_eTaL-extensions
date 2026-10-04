@@ -1,0 +1,1 @@
+extensions/scene from wip/media-scene: wire into xetal-x (host-linked), functions open/polyline/segments/points/remove/camera/next/close, headless + XETAL_FRAMES, facade Scene.xtl, Rust tests of projection/rendering, reg-rs incl. a headless cube demo with frames pinned; video via frames.
