@@ -13,7 +13,7 @@ copied from it (plan A14), never depended on.
 | values: nil, bool, i64, f64, UTF-8, bytes, dense arrays (u8, i64, f32, f64), native handles, nested records | Bool, Int, Float, Text, dense Bool/Int/Float/Char arrays | handles as Int ids issued by an extension (no ABI change) when the audio extension needs them; bytes when X_eTaL can read binary files (ask E7); records not needed (X_eTaL has no records) |
 | SDK, loader, manifests, dynamic and static providers | the same | done |
 | the language calls natively: sw-MLPL gained a host registry and a C-descriptor adapter upstream | the `ext:` bridge (`xetal-x`) and its browser counterpart | ask E1, X_eTaL Saga 23 |
-| a host that owns a window: the viewer embeds the interpreter and calls it per frame | `xetal-x` runs the program on X_eTaL's worker thread, its main thread waits | media saga: the main thread runs the window; the program pulls events and pushes scene patches |
+| a host that owns a window: the viewer embeds the interpreter and calls it per frame | `xetal-x` gives its main thread to windows (the UI host); the program, on its own thread, pulls events and pushes scene patches | done |
 
 ## Extensions and demos
 
@@ -23,10 +23,10 @@ copied from it (plan A14), never depended on.
 | digest | -- | roadmap (cheap) |
 | sqlite | sqlite + the data notebook | done |
 | http-client, http-server, TodoMVC, experiment dashboard | -- | roadmap: web saga (axum), fetch saga |
-| canvas: a blocking native window presenting an array | -- | media saga, as the first use of the window host |
-| native3d: retained line/point scenes with stable ids, camera, picking; wireframe cube, Life plane and torus, tic-tac-toe, point cloud, weight distribution, model atlas, disk usage, system layouts | -- | media saga: the scene extension (adapted from `mlpl-native3d-scene` and `-window`); the visualizer first, then a cube and Life in 3D as smaller demos |
-| audio: Symphonia decode of MP3 and Ogg/Vorbis in bounded chunks, CPAL playback with decode-ahead, pause, seek | -- | media saga: the audio extension |
-| audio-spectrum: the MP3 player visualizer | -- | media saga: X_eTaL analyses each chunk (a spectrum by one inner product with a cosine/sine table, bass/mid/high), Rust renders |
+| canvas: a blocking native window presenting an array | canvas: arrays as pixels, keys and clicks back; Life | done |
+| native3d: retained line/point scenes with stable ids, camera, picking; wireframe cube, Life plane and torus, tic-tac-toe, point cloud, weight distribution, model atlas, disk usage, system layouts | scene: retained lines, segments and dots by id, orbit camera, drawn on the CPU (frames pinned headless); the cube | done for lines and points; picking, boxes and the larger demos not planned now |
+| audio: Symphonia decode of MP3 and Ogg/Vorbis in bounded chunks, CPAL playback with decode-ahead, pause, seek | audio: the same (plus WAV), the window under the playhead, a virtual clock for exact tests | done |
+| audio-spectrum: the MP3 player visualizer | `just demo audio spectrum`: X_eTaL analyses (a spectrum by one inner product), Rust plays and draws; recorded with its music | done; checked live 2026-10-04 |
 | hftok (Hugging Face tokenizer), verified downloads | -- | not planned (closer to the ML line) |
 | Yew/WebAssembly ML microscope | hello and clock live, the shell | done for this repo's needs |
 

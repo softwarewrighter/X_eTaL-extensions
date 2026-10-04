@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-04
 
+- 13:23 `docs` The visualizer checked live (with the user's go: the window, the spokes moving, the clean end); docs/parity.md updated (host, canvas, scene, audio and the visualizer done); Saga 7 retrospective.
+
 - 13:01 `ext` The music visualizer (`extensions/audio/demos/spectrum.xtl`, `just demo audio spectrum`): the arpeggio plays while X_eTaL takes the window under the playhead, tapers it, finds the loudness at 8 octaves per channel by one inner product with cosine and sine tables, eases it, and lays out 16 mirrored spokes in the scene (bass blue, mid green, high orange); keys pause and seek. Recorded headlessly with its music (`videos.sh` muxes a frames spec's `audio=`); a headless reg-rs test pins three frames. The scene draws 2 px lines (cube golden and video rebased); scripted headless events are no longer capped at 256; `just demo` runs the release build; `videos.sh` safe for empty arrays on bash 3.
 
 - 09:41 `ext` The audio extension (`extensions/audio`, alias `au:`; symphonia 0.5, cpal 0.15): open, info, chunk, play, pause, seek, position, window (the frames under the playhead), state, close; a device thread decodes ahead into the sound device and counts what it played; a virtual clock with no device (`XETAL_AUDIO=off`) for exact tests; generated Ogg/MP3/WAV tones and a 16 s Ogg arpeggio; 4 Rust and 5 reg-rs tests (a spectrum by inner product finds 440 Hz left, 880 Hz right).

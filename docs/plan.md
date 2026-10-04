@@ -319,6 +319,19 @@ parity page, the UI host, canvas with headless frames, the recordings
 site. The scene extension's model is on branch `wip/media-scene`;
 audio and the visualizer wait.
 
+## Saga 7 -- visualizer (done)
+
+The media saga resumed while `.xtlm` waits upstream: scene (retained
+3D lines and points, CPU-drawn so frames are pinned headless), audio
+(Symphonia, CPAL, a virtual clock for tests) and the music visualizer
+(`just demo audio spectrum`), recorded headlessly with its music and
+checked live once with the user's go (the window and the program's
+end; the sound by the user's ear). Found on the way: the scripted
+events queue capped recordings at 256 frames; debug builds are too
+slow for 60 frames a second (`just demo` runs release); macOS bash 3.2
+and empty arrays. Parity with demo-extensions' visualizer reached
+(docs/parity.md). Next: the array synthesizer (sound out of arrays).
+
 ## Saga 6 -- launch
 
 Research4's work for this repository (see Priorities).
