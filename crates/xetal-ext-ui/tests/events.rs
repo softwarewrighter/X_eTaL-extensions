@@ -36,3 +36,24 @@ fn without_a_host_a_job_is_an_error() {
     let err = on_main(|_| 1).unwrap_err();
     assert!(err.starts_with("no UI host"), "{err}");
 }
+
+#[test]
+fn scripted_events_are_all_kept() {
+    // SAFETY: no other test in this binary reads these variables.
+    #[allow(unsafe_code)]
+    unsafe {
+        std::env::set_var(
+            "XETAL_EVENTS",
+            (0..1000)
+                .map(|i| format!("e{i}"))
+                .collect::<Vec<_>>()
+                .join(","),
+        );
+    }
+    let e = xetal_ext_ui::scripted();
+    assert_eq!(e.next(Duration::ZERO), "e0");
+    for _ in 1..1000 {
+        e.next(Duration::ZERO);
+    }
+    assert_eq!(e.next(Duration::ZERO), "close");
+}

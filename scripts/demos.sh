@@ -21,6 +21,8 @@ fi
 ext="$1"; name="${2:?usage: just demo EXT NAME}"; shift 2
 file="$root/extensions/$ext/demos/$name.xtl"
 [ -f "$file" ] || { echo "no demo $ext $name (just demos lists them)" >&2; exit 1; }
-(cd "$root" && cargo build -q --workspace)
+# release: demos like the visualizer need its speed (a debug build
+# draws about 9 frames a second)
+(cd "$root" && cargo build -q --release --workspace)
 cd "$root/extensions/$ext"
-exec "$root/target/debug/xetal-x" --ext "$root/extensions" run --draw work/draw "$@" "demos/$name.xtl"
+exec "$root/target/release/xetal-x" --ext "$root/extensions" run --draw work/draw "$@" "demos/$name.xtl"

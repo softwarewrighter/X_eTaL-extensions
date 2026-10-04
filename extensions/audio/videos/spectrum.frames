@@ -1,0 +1,10 @@
+# extensions/audio/videos/spectrum.webm (with sound) and .webp: the
+# visualizer, as its window shows it -- headless (no window, no sound
+# device): each frame a 60th of a second of the music, saved, joined,
+# and the music added back (just videos audio).
+demo=spectrum
+seed=1
+frames=840
+fps=60
+scale=640
+audio=demos/data/arpeggio.ogg

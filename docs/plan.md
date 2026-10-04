@@ -310,7 +310,7 @@ Decisions:
 | 2 | ui-host | (done) `crates/xetal-ext-ui` and `xetal-x` running the program off the main thread; a minimal window extension (an array shown as pixels, events back) proving the loop; headless tests of the queues |
 | 3 | scene3d | the scene extension: retained lines and points by id, colours, camera, events; a wireframe cube demo |
 | 4 | audio | the audio extension: open, info, chunks (2 by n Floats), play, pause, seek, position, close; tests on generated MP3 and Ogg fixtures |
-| 5 | spectrum | demos/spectrum: the visualizer in X_eTaL (spectrum by inner product, radial spokes, keys); headless tests of the analysis on fixtures; an interactive smoke |
+| 5 | spectrum | (done in Saga 7) demos/spectrum: the visualizer in X_eTaL (spectrum by inner product, radial spokes, keys); headless tests of the analysis on fixtures; an interactive smoke |
 | 6 | media-release | docs, parity updated, status, retrospective |
 
 Paused 2026-10-03 after step 2 (research4: post-launch), resumed the

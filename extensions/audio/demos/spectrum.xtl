@@ -1,0 +1,95 @@
+# The music visualizer: an Ogg Vorbis (or MP3, WAV) file plays while
+# X_eTaL turns what is playing into a spectrum and the spectrum into 16
+# spokes in a 3D window -- Rust decodes, plays and draws; the analysis
+# and the picture's geometry are X_eTaL arrays.
+# Run: just demo audio spectrum   (Space: pause, j/k: back/on 5 s, q: quit)
+# Another file: change the path below (Ogg Vorbis, MP3 or WAV).
+"au:" u_se< "Audio"
+"sc:" u_se< "Scene"
+"s:" u_se< "Stats"
+
+a := au:o_pen "demos/data/arpeggio.ogg"
+rate := 1 s_elect au:i_nfo a
+
+# -- the analysis: 1024 samples under the playhead, a Hann taper, and the
+# loudness at 8 frequencies an octave apart, 60 Hz to 7680 Hz, for each
+# channel: one inner product with cosine and sine tables (1024 by 8)
+n := 1024
+f := 60.0 120.0 240.0 480.0 960.0 1920.0 3840.0 7680.0
+t := (f_loat r_ange n) / rate
+x := 6.283185307179586 * t '* t_able f
+hann := 0.5 - 0.5 * c_os 6.283185307179586 * (f_loat r_ange n) / f_loat n
+taper := (2 c_at n) r_eshape hann
+u:l_oudness := { w ->
+  v := w * taper
+  re := v '+ '* i_nner c_os x
+  im := v '+ '* i_nner s_in x
+  m := ((re * re) + im * im) ^ 0.5
+  1.3 * m / m + 12.0
+}
+
+# -- the picture: 16 spokes, the left channel's 8 on one half of the
+# circle, the right's mirrored on the other; bass nearest the centre;
+# loudness lengthens a spoke outward and lifts its tip
+k := f_loat r_ange 8
+th := 3.141592653589793 * (k - 0.5) / 8.0
+ang := th c_at 0.0 - th
+r0 := 16 r_eshape 0.35 + 0.16 * k - 1.0
+u:s_pokes := { l ->
+  len := r_avel l
+  r1 := r0 + len
+  cs := c_os ang
+  sn := s_in ang
+  flat := (r0 * cs) c_at (16 r_eshape 0.0) c_at (r0 * sn) c_at (r1 * cs) c_at (0.9 * len) c_at r1 * sn
+  i := r_avel (r_ange 16) '+ t_able 16 * (r_ange 6) - 1
+  16 6 r_eshape i s_elect flat
+}
+w := "Spectrum -- X_eTaL" sc:o_pen! 720 540
+c := w sc:c_amera! 0.0 0.9 3.6 0.12
+
+# n by 3 points from their x, y and z columns, laid end to end
+u:r_ows := { flat ->
+  n := f_loor (t_ally flat) / 3
+  i := r_avel (r_ange n) '+ t_able n * (r_ange 3) - 1
+  (n c_at 3) r_eshape i s_elect flat
+}
+
+# a faint ring where the spokes stand
+g := 6.283185307179586 * (f_loat r_ange 65) / 64.0
+ring := ((f_loat w c_at 4) c_at 0.25 0.27 0.33) sc:p_olyline! u:r_ows (0.3 * c_os g) c_at (65 r_eshape 0.0) c_at 0.3 * s_in g
+
+# one coloured object per band: bass blue, mid green, high orange
+u:d_raw := { l ->
+  m := u:s_pokes l
+  b := ((f_loat w c_at 1) c_at 0.25 0.55 1.0) sc:s_egments! 12 3 r_eshape r_avel (1 2 3 9 10 11) s_elect_1 m
+  d := ((f_loat w c_at 2) c_at 0.3 0.9 0.4) sc:s_egments! 12 3 r_eshape r_avel (4 5 6 12 13 14) s_elect_1 m
+  h := ((f_loat w c_at 3) c_at 1.0 0.6 0.2) sc:s_egments! 8 3 r_eshape r_avel (7 8 15 16) s_elect_1 m
+  l
+}
+
+# -- the loop: each frame read an event, then the window, then draw; the
+# spokes ease toward the new loudness so they move smoothly
+p := au:p_lay! a
+u:q_uit := { l ->
+  x := sc:c_lose! w
+  y := au:c_lose! a
+  2 8 r_eshape -1.0
+}
+u:k_ey := { e ->
+  s := au:s_tate a
+  (e m_atch "key Space") * s = 1 ? au:p_ause! a
+  e m_atch "key Space" ? au:p_lay! a
+  e m_atch "key j" ? f_loor a au:s_eek! 0.0 m_ax (au:p_osition a) - 5.0
+  e m_atch "key k" ? f_loor a au:s_eek! (au:p_osition a) + 5.0
+  0
+}
+u:f_rame := { l ->
+  0.0 > f_irst r_avel l ? l
+  e := sc:n_ext! w
+  ((e m_atch "close") + (e m_atch "key q") + 0 = au:s_tate a) > 0 ? u:q_uit l
+  z := u:k_ey e
+  now := u:l_oudness a au:w_indow n
+  u:d_raw (0.6 * l) + 0.4 * now
+}
+last := 100000 'u:f_rame p_ower 2 8 r_eshape 0.0
+"bye"

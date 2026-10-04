@@ -36,6 +36,36 @@ w := a au:w_indow 1024           # 2 by 1024: what plays now, left over right
 | `au:s_tate id` | `Num a => a -> Int` | 0 stopped (not started, or at the end), 1 playing, 2 paused |
 | `au:c_lose! id` | `Num a => a -> Int` | stop and forget the file |
 
+## The visualizer
+
+<p align="center">
+  <img src="../videos/spectrum.webp" alt="The visualizer: spokes following the music" width="560">
+</p>
+
+`demos/spectrum.xtl` (`just demo audio spectrum`): the arpeggio plays
+while 16 spokes in a 3D window follow it -- the music player visualizer
+of sw-MLPL's demo-extensions, for X_eTaL. Space pauses, j and k go back
+or on 5 seconds, q quits; drag to turn the scene. Rust decodes, plays
+and draws; X_eTaL does the rest:
+
+| Step | X_eTaL |
+| ---- | ------ |
+| what is playing | `a au:w_indow 1024`: 2 by 1024 samples under the playhead |
+| a taper | times a Hann window (`0.5 - 0.5 * c_os ...`), one row per channel |
+| a spectrum | one inner product each with cosine and sine tables (1024 by 8: 60 Hz to 7680 Hz, an octave apart), the magnitude, squashed to 0..1.3 |
+| motion | each frame eases 40% toward the new loudness |
+| the geometry | 16 spokes on a circle, left channel's half mirrored by the right's; bass nearest the centre; loudness lengthens a spoke outward and lifts its tip; laid out as rows by an index trick (no transpose yet) |
+| the picture | three `sc:s_egments!` objects, one per band: bass blue, mid green, high orange |
+
+The recording `videos/spectrum.webm` has the music in it (unmute it);
+it was made with no window and no sound device: each headless frame is
+a 60th of a second of the music, saved, joined, and the music added
+back (`videos/spectrum.frames`). To use your own file, change the path
+in the demo (Ogg Vorbis, MP3 or WAV; `local-media/` is ignored by git).
+
+A release build draws a frame in about 14 ms (the analysis is about
+33,000 multiply-adds in X_eTaL plus the bridge); `just demo` uses one.
+
 ## How playback runs
 
 Playing does not depend on the program's pace. A thread of the

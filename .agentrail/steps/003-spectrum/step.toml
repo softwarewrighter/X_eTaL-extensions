@@ -1,6 +1,6 @@
 number = 3
 slug = "spectrum"
-status = "pending"
+status = "in-progress"
 description = "extensions/audio/demos/spectrum.xtl: open a file (default a bundled Ogg), pla..."
 role = "production"
 context_files = []

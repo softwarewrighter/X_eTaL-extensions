@@ -47,10 +47,22 @@ impl Default for Camera {
     }
 }
 
-#[derive(Clone, Debug, Default, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct Scene {
     pub objects: BTreeMap<i64, Object>,
     pub camera: Camera,
+    /// Lines are this many pixels wide (parallel anti-aliased passes).
+    pub line_width: f64,
+}
+
+impl Default for Scene {
+    fn default() -> Self {
+        Self {
+            objects: BTreeMap::new(),
+            camera: Camera::default(),
+            line_width: 2.0,
+        }
+    }
 }
 
 const BACKGROUND: u32 = 0x000c_0e14;
@@ -105,9 +117,10 @@ impl Scene {
         for o in self.objects.values() {
             let pts: Vec<Option<(f64, f64)>> =
                 o.points.iter().map(|&p| self.project(p, w, h)).collect();
+            let width = self.line_width;
             let mut line = |a: Option<(f64, f64)>, b: Option<(f64, f64)>| {
                 if let (Some(a), Some(b)) = (a, b) {
-                    wu_line(&mut px, w, h, a, b, o.colour);
+                    thick_line(&mut px, w, h, a, b, o.colour, width);
                 }
             };
             match o.kind {
@@ -145,6 +158,39 @@ fn blend(px: &mut [u32], w: usize, h: usize, x: i64, y: i64, colour: [f64; 3], a
         (n.round().clamp(0.0, 255.0) as u32) << shift
     };
     px[i] = mix(16, colour[0]) | mix(8, colour[1]) | mix(0, colour[2]);
+}
+
+/// A line `width` pixels wide: anti-aliased passes a pixel apart,
+/// across the line.
+fn thick_line(
+    px: &mut [u32],
+    w: usize,
+    h: usize,
+    a: (f64, f64),
+    b: (f64, f64),
+    colour: [f64; 3],
+    width: f64,
+) {
+    let (dx, dy) = (b.0 - a.0, b.1 - a.1);
+    let len = dx.hypot(dy);
+    let (nx, ny) = if len < 1e-9 {
+        (0.0, 0.0)
+    } else {
+        (-dy / len, dx / len)
+    };
+    let passes = width.round().max(1.0);
+    let mut o = -(passes - 1.0) / 2.0;
+    while o <= (passes - 1.0) / 2.0 + 1e-9 {
+        wu_line(
+            px,
+            w,
+            h,
+            (a.0 + nx * o, a.1 + ny * o),
+            (b.0 + nx * o, b.1 + ny * o),
+            colour,
+        );
+        o += 1.0;
+    }
 }
 
 /// An anti-aliased line (Xiaolin Wu's algorithm).

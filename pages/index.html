@@ -24,6 +24,16 @@ cargo build --workspace     # Rust is all it needs: X_eTaL is vendored
 just demos                  # the demos; then: just demo EXT NAME</pre>
 </header>
 <main>
+  <h2 id="audio"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/audio/docs/README.md">audio</a></h2>
+  <p class="lede">Audio files for X_eTaL: decode Ogg Vorbis, MP3 and WAV, play them on the sound device, and read what is playing as arrays -- the window of samples under the playhead, for analysis and pictures (the visualizer).</p>
+  <div class="demos">
+    <section class="panel demo">
+      <h3>audio / spectrum</h3>
+      <p class="note">The music visualizer: an Ogg Vorbis (or MP3, WAV) file plays while X_eTaL turns what is playing into a spectrum and the spectrum into 16 spokes in a 3D window -- Rust decodes, plays and draws; the analysis and the picture&#x27;s geometry are X_eTaL arrays.</p>
+      <video src="audio/spectrum.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo audio spectrum</pre>
+    </section>
+  </div>
   <h2 id="canvas"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/canvas/docs/README.md">canvas</a></h2>
   <p class="lede">A native window showing X_eTaL arrays as pixels, with keys, clicks and frame ticks back -- the first extension served by the UI host (crates/xetal-ext-ui), and the base of the media saga&#x27;s visualizer.</p>
   <div class="demos">
@@ -82,7 +92,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 7b70575</span><span class="sep">&middot;</span>
-  <span>built at 449f733</span>
+  <span>built at 8c1a432</span>
 </footer>
 </body>
 </html>

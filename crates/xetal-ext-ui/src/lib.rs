@@ -225,22 +225,40 @@ pub fn serve(done: impl Fn() -> bool) {
 
 /// A surface's events as its program reads them: the main thread
 /// pushes, the program's thread waits for the next one.
-#[derive(Clone, Default)]
+#[derive(Clone)]
 pub struct Events {
     inner: Arc<(Mutex<VecDeque<String>>, Condvar)>,
+    cap: usize,
+}
+
+impl Default for Events {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl Events {
+    /// A window's queue: it keeps the newest 256 events, so a program
+    /// that stops reading cannot make it grow without bound.
     #[must_use]
     pub fn new() -> Self {
-        Self::default()
+        Self::with_capacity(256)
     }
 
-    /// Records an event (main thread). The queue keeps the newest 256.
+    /// A queue keeping at most `cap` events.
+    #[must_use]
+    pub fn with_capacity(cap: usize) -> Self {
+        Self {
+            inner: Arc::default(),
+            cap: cap.max(1),
+        }
+    }
+
+    /// Records an event (main thread), dropping the oldest when full.
     pub fn push(&self, event: impl Into<String>) {
         let (q, ready) = &*self.inner;
         let mut q = q.lock().unwrap_or_else(std::sync::PoisonError::into_inner);
-        if q.len() == 256 {
+        if q.len() >= self.cap {
             q.pop_front();
         }
         q.push_back(event.into());
@@ -280,7 +298,8 @@ pub fn headless() -> bool {
 /// by commas: `frame,key q`), then `close`.
 #[must_use]
 pub fn scripted() -> Events {
-    let e = Events::new();
+    // every scripted event is kept: a recording may script thousands
+    let e = Events::with_capacity(usize::MAX);
     let script = std::env::var("XETAL_EVENTS").unwrap_or_default();
     for ev in script.split(',').map(str::trim).filter(|s| !s.is_empty()) {
         e.push(ev);

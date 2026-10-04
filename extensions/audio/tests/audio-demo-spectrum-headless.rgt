@@ -1,0 +1,3 @@
+command = "rm -rf work && XETAL_HEADLESS=1 XETAL_EVENTS=frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame,frame XETAL_FRAMES=work/frames xetal-x --ext .. run demos/spectrum.xtl && cksum work/frames/scene-1-10.png work/frames/scene-1-20.png work/frames/scene-1-30.png"
+exit_code = 0
+desc = "the visualizer with no window and no sound device: 30 frames of the arpeggio analysed and drawn, three of them pinned"
