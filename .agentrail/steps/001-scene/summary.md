@@ -1,0 +1,1 @@
+scene extension (ids, camera, CPU AA rendering, headless frames), cube demo, tests, video; M7 revised.

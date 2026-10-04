@@ -1,9 +1,10 @@
 number = 1
 slug = "scene"
-status = "in-progress"
+status = "completed"
 description = "extensions/scene from wip/media-scene: wire into xetal-x (host-linked), funct..."
 role = "production"
 context_files = []
 created_at = "2026-10-03T17:30:46"
+completed_at = "2026-10-03T19:16:56"
 task_type = "extension"
-commits = []
+commits = ["0f9ed1eff922ba566c4f5d8977a77d6a5d625d11"]
