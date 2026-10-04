@@ -1,0 +1,11 @@
+{
+  "task_type": "extension",
+  "state": {
+    "number": 2,
+    "step": "audio"
+  },
+  "action": "adapted demo-extensions audio; sox/lame fixtures; headless tests; no sound played",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-04T09:45:09"
+}

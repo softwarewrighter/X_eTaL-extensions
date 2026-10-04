@@ -1,0 +1,1 @@
+audio extension: symphonia decode (ogg/mp3/wav), cpal device player with decode-ahead + played counter, virtual clock for tests, window under playhead; generated media; 4 Rust + 5 reg-rs tests (spectrum by inner product).
