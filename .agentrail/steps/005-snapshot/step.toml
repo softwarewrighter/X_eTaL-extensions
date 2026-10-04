@@ -1,6 +1,6 @@
 number = 5
 slug = "snapshot"
-status = "pending"
+status = "blocked"
 description = "launch step 5: version and notes for the six-repo compatible snapshot; tag on..."
 role = "production"
 context_files = []

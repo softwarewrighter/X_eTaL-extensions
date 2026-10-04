@@ -1,0 +1,1 @@
+BLOCKED: Waits on X_eTaL web-release (queue item 10) to pick the compatible snapshot; then vendor it and tag to match (with the user's yes).
