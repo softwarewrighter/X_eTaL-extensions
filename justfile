@@ -3,6 +3,10 @@
 
 set positional-arguments
 
+# This repository's port (each X_eTaL repo has its own, so one demo per
+# repo can run at once): the site preview, trunk, the web extension.
+port := "8470"
+
 # List the recipes
 default:
     @just --list
@@ -74,11 +78,11 @@ check-web:
 pages:
     scripts/build-pages.sh
 
-# Preview pages/ as GitHub Pages serves it, at http://127.0.0.1:8732/X_eTaL-extensions/
+# Preview pages/ as GitHub Pages serves it, at http://127.0.0.1:8470/X_eTaL-extensions/
 serve-pages:
     @rm -rf target/serve && mkdir -p target/serve && ln -s "$PWD/pages" target/serve/X_eTaL-extensions
-    @echo "http://127.0.0.1:8732/X_eTaL-extensions/"
-    @python3 -m http.server 8732 --directory target/serve
+    @echo "http://127.0.0.1:{{port}}/X_eTaL-extensions/"
+    @python3 -m http.server {{port}} --bind 127.0.0.1 --directory target/serve
 
 # A fresh user's first run: clone, build, run release 1's programs (just walkthrough [URL])
 walkthrough *url:

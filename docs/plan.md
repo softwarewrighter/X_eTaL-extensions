@@ -169,7 +169,7 @@ Extensions:
 | hello | `Hello`, `hx:` | the smallest proof of the boundary: an answer, add, echo, shout, sum, kinds, a typed error, a contained panic | none | 1-2 |
 | clock | `Clock`, `ck:` | wall-clock time (Unix seconds, ISO 8601 text), a monotonic millisecond counter; measures the bridge's cost | std | 2 |
 | sqlite | `Sqlite`, `sq:` | `db sq:e_xec sql` (statements, changed-row count), `db sq:q_uery sql` (a result as a Char matrix of cells, or numeric columns), parameters bound from a vector, CSV import; files confined to the directories given | `rusqlite` (bundled) | 3 |
-| web | `Web`, `wb:` | `wb:s_erve! port` (axum on a background thread, loopback by default), `wb:n_ext! @` (the next request: method, path, query, body), `wb:r_eply! response` (status, content type, body); static files from a directory | `axum`, `tokio` | 4 |
+| web | `Web`, `wb:` | `wb:s_erve! port` (axum on a background thread, loopback by default; this repo's port 8470 unless given), `wb:n_ext! @` (the next request: method, path, query, body), `wb:r_eply! response` (status, content type, body); static files from a directory | `axum`, `tokio` | 4 |
 | image | `Image`, `im:` | read PNG/JPEG as an n by m by 3 (or n by m) Int array, write one as PNG, resize | `image` | 5 |
 | linalg | `Linalg`, `la:` | determinant, inverse, solve, least squares, symmetric eigenvalues, SVD on Float matrices | `nalgebra` | 5 |
 | http | `Http`, `ht:` | bounded GET (size, time, redirects limited) of text | `ureq` | 6 |

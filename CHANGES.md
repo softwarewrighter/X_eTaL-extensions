@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-04
 
+- 14:58 `build` This repository's port is 8470 (the user's scheme: one port per X_eTaL repo, so their demos run side by side): `port` in the justfile, `just serve-pages` (bound to 127.0.0.1), trunk in the pages' docs, the web extension's planned default; CLAUDE.md rule 14.
+
 - 14:56 `docs` Upstream swept: E2 (`.xtlm` macro libraries) and E6 (`--draw` before the subcommand) have landed in X_eTaL (not yet vendored); E1, E3, E4, E5 and the web-release are still open. docs/ideas.md: camera input and ONNX models, as notes only (the user's decision: no plan yet).
 
 - 14:42 `ext` The array synthesizer: audio gains voices (`au:o_utput`, `au:q_ueue!`, `au:w_ait!`; a thread owns the device; with no device `XETAL_AUDIO_WAV` collects the sound in a WAV); `demos/synth.xtl` computes eight bars in X_eTaL (equal temperament, harmonics as a table of sines, envelopes, arpeggio, bass, stereo) and streams them; a Rust test reads a voice's WAV back; reg-rs pins the synth's WAV; recordings gain `NAME.sound` (spectrogram with the sound). A right-to-left slip (`t / 0.01 m_in 1.0`) that clipped the first render was caught by its RMS.
