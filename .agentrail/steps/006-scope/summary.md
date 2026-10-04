@@ -1,0 +1,1 @@
+Live oscilloscope (scope.xtl) with Instruments.xtl library, au:p_layed virtual clock, headless test, recording with own sound.

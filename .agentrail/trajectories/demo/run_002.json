@@ -1,0 +1,11 @@
+{
+  "task_type": "demo",
+  "state": {
+    "number": 6,
+    "step": "scope"
+  },
+  "action": "headless frames inspected; synth WAV unchanged; rebased list/types",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-04T15:35:58"
+}
