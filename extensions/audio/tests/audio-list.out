@@ -12,3 +12,4 @@ audio 0.1.0
   audio/output : Num a => a -> Int    # A voice at rate frames a second; its id.
   audio/queue : (Num a, Num b) => a -> b -> Float    # id queue samples (n, or 2 by n; -1 to 1): seconds queued ahead.
   audio/wait : (Num a, Num b) => a -> b -> Float    # id wait seconds: until at most that much is queued; seconds played.
+  audio/played : Num a => a -> Float    # The second a voice is playing now.

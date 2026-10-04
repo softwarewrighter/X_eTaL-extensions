@@ -109,3 +109,10 @@ l:w_ait! := { id s ->
   b := s f_loats "wait"
   n_umber "wait"
 }
+
+# au:p_layed id: the second a voice is playing now -- to draw what is
+# heard (with no device, a 60th of a second more each time it is asked).
+l:p_layed := { id ->
+  a := id f_loats "played"
+  n_umber "played"
+}

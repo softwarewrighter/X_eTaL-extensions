@@ -28,6 +28,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <p class="lede">Audio files for X_eTaL: decode Ogg Vorbis, MP3 and WAV, play them on the sound device, and read what is playing as arrays -- the window of samples under the playhead, for analysis and pictures (the visualizer).</p>
   <div class="demos">
     <section class="panel demo">
+      <h3>audio / scope</h3>
+      <p class="note">A live oscilloscope: the synthesizer&#x27;s music (Instruments.xtl) plays while a window draws the samples under the playhead -- the left channel above, the right below -- each frame.</p>
+      <video src="audio/scope.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo audio scope</pre>
+    </section>
+    <section class="panel demo">
       <h3>audio / spectrum</h3>
       <p class="note">The music visualizer: an Ogg Vorbis (or MP3, WAV) file plays while X_eTaL turns what is playing into a spectrum and the spectrum into 16 spokes in a 3D window -- Rust decodes, plays and draws; the analysis and the picture&#x27;s geometry are X_eTaL arrays.</p>
       <video src="audio/spectrum.webm" autoplay loop muted playsinline controls preload="metadata"></video>
@@ -35,7 +41,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
     </section>
     <section class="panel demo">
       <h3>audio / synth</h3>
-      <p class="note">A synthesizer made of arrays: X_eTaL computes every sample of a little piece -- notes from equal temperament, harmonics, envelopes, chords, stereo -- and the audio extension plays them as they are made.</p>
+      <p class="note">A synthesizer made of arrays: X_eTaL computes every sample of a little piece -- notes from equal temperament, harmonics, envelopes, chords, stereo (the instruments are in Instruments.xtl, beside this file) -- and the audio extension plays them as they are made.</p>
       <video src="audio/synth.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo audio synth</pre>
     </section>
@@ -98,7 +104,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 7b70575</span><span class="sep">&middot;</span>
-  <span>built at 15353f1</span>
+  <span>built at ef288b7</span>
 </footer>
 </body>
 </html>

@@ -9,6 +9,8 @@ set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 if [ "$#" -eq 0 ]; then
   for f in "$root"/extensions/*/demos/*.xtl; do
+    # a capitalized file there is a library the demos share, not a demo
+    case "$(basename "$f")" in [ABCDEFGHIJKLMNOPQRSTUVWXYZ]*) continue ;; esac
     ext="$(basename "$(dirname "$(dirname "$f")")")"
     name="$(basename "$f" .xtl)"
     what="$(sed -n '1s/^# *//p' "$f")"

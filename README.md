@@ -31,6 +31,7 @@ just demo sqlite notebook       # CO2 at Mauna Loa: SQLite + X_eTaL, pictures in
 just demo canvas life           # Life in a native window (Space: new board, q: quit)
 just demo audio spectrum        # the music visualizer: X_eTaL analyses, Rust plays and draws
 just demo audio synth           # a synthesizer: every sample computed in X_eTaL, played as made
+just demo audio scope           # a live oscilloscope: the synthesizer drawn as it plays
 just walkthrough                # a fresh clone, built and run, checked against the goldens
 ```
 
@@ -118,7 +119,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | --------- | ------ | ---- | ------ | ------ |
 | [hello](extensions/hello/docs/README.md) | `Hello` | the smallest proof of the boundary | -- | done: facade, tests, demo |
 | [clock](extensions/clock/docs/README.md) | `Clock` | wall-clock and monotonic time; the bridge's cost | std | done: facade, tests, cost demo |
-| [audio](extensions/audio/docs/README.md) | `Audio` | decode Ogg Vorbis, MP3, WAV; play; read what plays as arrays; play arrays | symphonia, cpal | done: the music visualizer, the synthesizer |
+| [audio](extensions/audio/docs/README.md) | `Audio` | decode Ogg Vorbis, MP3, WAV; play; read what plays as arrays; play arrays | symphonia, cpal | done: the music visualizer, the synthesizer, the oscilloscope |
 | [canvas](extensions/canvas/docs/README.md) | `Canvas` | a native window showing arrays as pixels; keys and clicks back | winit, softbuffer | done: Life demo (media work continues after the launch) |
 | [scene](extensions/scene/docs/README.md) | `Scene` | retained 3D lines and points in a native window, patched by id; orbit camera | winit, softbuffer | done: cube demo (the visualizer's base) |
 | [sqlite](extensions/sqlite/docs/README.md) | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | done: facade, CSV import, tests, the data notebook |

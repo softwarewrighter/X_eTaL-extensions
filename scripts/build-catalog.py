@@ -46,7 +46,7 @@ sections = []
 for ext_dir in sorted(p.parent for p in root.glob("extensions/*/extension.toml")):
     ext = ext_dir.name
     demos = []
-    for demo in sorted((ext_dir / "demos").glob("*.xtl")):
+    for demo in sorted(d for d in (ext_dir / "demos").glob("*.xtl") if d.stem[0].islower()):
         name = demo.stem
         video = ext_dir / "videos" / f"{name}.webm"
         if video.exists():

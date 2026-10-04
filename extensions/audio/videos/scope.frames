@@ -1,0 +1,10 @@
+# extensions/audio/videos/scope.webm (with sound) and .webp: the
+# oscilloscope, as its window shows it -- headless (no window, no sound
+# device): each frame a 60th of a second, saved and joined, with the
+# sound the demo made itself (wav=1: its voice collected in a WAV).
+demo=scope
+seed=1
+frames=500
+fps=60
+scale=768
+wav=1

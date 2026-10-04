@@ -38,6 +38,7 @@ w := a au:w_indow 1024           # 2 by 1024: what plays now, left over right
 | `au:o_utput rate` | `Num a => a -> Int` | a voice playing what the program queues, at `rate` frames a second; its id |
 | `id au:q_ueue! s` | `(Num a, Num b) => a -> b -> Float` | play these samples after what is queued: a vector (mono) or 2 by n (left over right), -1 to 1; the seconds queued ahead |
 | `id au:w_ait! t` | `(Num a, Num b) => a -> b -> Float` | wait until at most `t` seconds are queued (streaming without hurrying); the seconds played |
+| `au:p_layed id` | `Num a => a -> Float` | the second a voice is playing now, to draw what is heard (with no device a virtual clock: a 60th of a second more each time it is asked) |
 
 ## The visualizer
 
@@ -93,6 +94,32 @@ The recording `videos/synth.webm` is the piece's spectrogram with its
 sound, made with no sound device: `XETAL_AUDIO=off
 XETAL_AUDIO_WAV=FILE` collects everything queued in a WAV
 (`videos/synth.sound`); the reg-rs test `audio-demo-synth` pins that WAV.
+
+## The oscilloscope
+
+<p align="center">
+  <img src="../videos/scope.webp" alt="The oscilloscope: the left and right waveforms under the playhead" width="560">
+</p>
+
+`demos/scope.xtl` (`just demo audio scope`): the synthesizer's music
+plays while a window draws the waveform under the playhead, left
+channel above and right below. The instruments are an ordinary X_eTaL
+library beside the demos, `demos/Instruments.xtl` (`"in:" u_se<
+"Instruments"`), shared with `synth.xtl` -- one program using an
+ordinary library and two native extensions (audio, canvas).
+
+| Step | X_eTaL |
+| ---- | ------ |
+| the piece | eight bars made first and joined side by side (`c_at_2`): 2 by 176,384 |
+| streaming | a bar is queued (`au:q_ueue!`) whenever less than 0.6 s is ahead of the playhead (`au:p_layed`) |
+| what is heard | the 512 samples from the playhead, every other one (an index vector into the piece) |
+| the trace | each sample's row on a 64-row picture, each column lit from its row to the next sample's (`'>= t_able` times `'<= t_able`), so steep edges stay joined; left and right stacked |
+| the window | `cv:s_how!` each frame; q or closing quits; the end of the music ends it |
+
+Its recording `videos/scope.webm` has the sound the demo made itself
+(`wav=1` in `videos/scope.frames`: its voice collected in a WAV with no
+device); the reg-rs test `audio-demo-scope-headless` pins two frames
+and that sound.
 
 ## How playback runs
 

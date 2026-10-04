@@ -132,6 +132,19 @@ fn wait(args: &[Value]) -> Result<Value, OwnedError> {
     }
 }
 
+/// played id: the second a voice is playing now (with no device, a
+/// virtual clock: a 60th of a second more each time it is asked).
+#[allow(clippy::cast_precision_loss)]
+fn played(args: &[Value]) -> Result<Value, OwnedError> {
+    let id = id_of(&args[0])?;
+    let mut v = voices();
+    let voice = v
+        .get_mut(&id)
+        .ok_or_else(|| OwnedError::invalid_argument(format!("no voice {id} is open")))?;
+    let frames = voice.tick();
+    Ok(Value::Float(frames as f64 / f64::from(voice.rate())))
+}
+
 /// open path: an audio file (Ogg Vorbis, MP3 or WAV); its id.
 fn open(args: &[Value]) -> Result<Value, OwnedError> {
     let path = PathBuf::from(text(&args[0])?);
@@ -268,5 +281,6 @@ xetal_ext_sdk::xetal_extension! {
         output: 1, "Num a => a -> Int", "A voice at rate frames a second; its id.";
         queue: 2, "(Num a, Num b) => a -> b -> Float", "id queue samples (n, or 2 by n; -1 to 1): seconds queued ahead.";
         wait: 2, "(Num a, Num b) => a -> b -> Float", "id wait seconds: until at most that much is queued; seconds played.";
+        played: 1, "Num a => a -> Float", "The second a voice is playing now.";
     }
 }

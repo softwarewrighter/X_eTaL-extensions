@@ -11,3 +11,4 @@ l:c_lose! : Num a => a -> Int
 l:o_utput : Num a => a -> Int
 l:q_ueue! : (Num a, Num b) => a -> b -> Float
 l:w_ait! : (Num a, Num b) => a -> b -> Float
+l:p_layed : Num a => a -> Float

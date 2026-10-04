@@ -8,7 +8,7 @@ of date. Release 1 is hello, clock and sqlite (docs/plan.md).
 
 | Extension | Release | Facade (alias) | Native functions | Rust tests | reg-rs tests | Demos | Recordings | Runs |
 | --------- | ------- | -------------- | ---------------- | ---------- | ------------ | ----- | ---------- | ---- |
-| [audio](../extensions/audio/docs/README.md) | media (saga 5) | `Audio` (`au:`) | 13 | 5 | 7 | spectrum, synth | [spectrum](../extensions/audio/videos/spectrum.webm), [synth](../extensions/audio/videos/synth.webm) | command line |
+| [audio](../extensions/audio/docs/README.md) | media (saga 5) | `Audio` (`au:`) | 14 | 5 | 8 | scope, spectrum, synth | [scope](../extensions/audio/videos/scope.webm), [spectrum](../extensions/audio/videos/spectrum.webm), [synth](../extensions/audio/videos/synth.webm) | command line |
 | [canvas](../extensions/canvas/docs/README.md) | media (saga 5) | `Canvas` (`cv:`) | 4 | 2 | 4 | life | [life](../extensions/canvas/videos/life.webm) | native window (xetal-x) |
 | [clock](../extensions/clock/docs/README.md) | release 1 | `Clock` (`ck:`) | 4 | 2 | 5 | bridge-cost | [bridge-cost](../extensions/clock/videos/bridge-cost.webm) | command line |
 | [hello](../extensions/hello/docs/README.md) | release 1 | `Hello` (`hx:`) | 8 | 5 | 13 | tour | [tour](../extensions/hello/videos/tour.webm) | command line |

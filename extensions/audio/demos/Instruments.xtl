@@ -1,0 +1,38 @@
+# Instruments.xtl -- the instruments of the synthesizer demos (synth.xtl,
+# scope.xtl): music as arrays. An ordinary X_eTaL library beside them.
+# Import: "in:" u_se< "Instruments"
+
+# frames a second
+l:rate := 22050.0
+
+# a note's pitch: k semitones above A4 (440 Hz)
+l:h_z := { k -> 440.0 * 2.0 ^ (f_loat k) / 12.0 }
+
+# the times of the samples of a 0.25 s step, and its envelope: a quick
+# attack, a decay toward 60%, and a release at the end
+n := f_loor 0.25 * l:rate
+t := (f_loat (r_ange n) - 1) / l:rate
+env := (1.0 m_in t / 0.01) * (((0.25 - t) / 0.06) m_in 1.0) * 0.6 + 0.4 * e_xp 0.0 - t / 0.12
+
+# a tone: three harmonics (1, 1/2, 1/4) at each frequency of f, one row
+# per frequency, along the times tt
+l:t_one := { f tt ->
+  x := 6.283185307179586 * f '* t_able tt
+  (s_in x) + (0.5 * s_in 2.0 * x) + 0.25 * s_in 3.0 * x
+}
+
+# the chords, as semitones from A4: C, Am, F, G (four notes each)
+chords := 4 4 r_eshape -9 -5 -2 3  -12 -9 -5 0  -16 -12 -9 -4  -14 -10 -7 -2
+
+# bar b (from 1): the chord's notes in turn (one row each, enveloped,
+# then laid end to end), over its root two octaves down for the whole
+# bar, mixed to stereo (2 by 22048): the arpeggio more to the right, the
+# bass more to the left
+l:b_ar := { b ->
+  k := (1 + (b - 1) m_od 4) s_elect_1 chords
+  mel := r_avel 0.2 * ((l:h_z k) l:t_one t) * (4 c_at n) r_eshape env
+  tb := (f_loat (r_ange 4 * n) - 1) / l:rate
+  low := r_avel (l:h_z (f_irst k) - 24) l:t_one tb
+  bass := 0.25 * low * (1.0 m_in tb / 0.02) * ((1.0 - tb) / 0.1) m_in 1.0
+  1.5 * (2 c_at 4 * n) r_eshape ((0.7 * bass) + 0.3 * mel) c_at (0.3 * bass) + 0.7 * mel
+}

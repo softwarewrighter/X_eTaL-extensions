@@ -1,0 +1,9 @@
+number = 6
+slug = "scope"
+status = "in-progress"
+description = "visualizer step 6 (the user's request): a live oscilloscope -- the synthesize..."
+role = "production"
+context_files = []
+created_at = "2026-10-04T14:56:57"
+task_type = "demo"
+commits = []

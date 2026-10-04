@@ -55,7 +55,7 @@ def host(d):
 
 def row(d):
     name = d.name
-    demos = sorted(p.stem for p in (d / "demos").glob("*.xtl"))
+    demos = sorted(p.stem for p in (d / "demos").glob("*.xtl") if p.stem[0].islower())
     videos = sorted(p.stem for p in (d / "videos").glob("*.webm"))
     return "| {} | {} | {} | {} | {} | {} | {} | {} | {} |".format(
         f"[{name}](../extensions/{name}/docs/README.md)",

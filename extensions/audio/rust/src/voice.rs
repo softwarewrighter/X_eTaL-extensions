@@ -21,6 +21,8 @@ enum Sink {
     Wav {
         path: Option<std::path::PathBuf>,
         samples: Vec<f32>,
+        /// The virtual playhead: a 60th of a second per `tick`.
+        clock: u64,
     },
 }
 
@@ -50,6 +52,7 @@ impl Voice {
                     .filter(|v| !v.is_empty())
                     .map(Into::into),
                 samples: Vec::new(),
+                clock: 0,
             }
         } else {
             let (ready, opened) = mpsc::channel();
@@ -122,7 +125,8 @@ impl Voice {
         self.rate
     }
 
-    /// Frames played so far (all queued, with no device).
+    /// Frames played so far: counted by the device, or, with no device,
+    /// everything queued.
     #[must_use]
     pub fn played(&self) -> u64 {
         match &self.sink {
@@ -130,6 +134,22 @@ impl Voice {
                 played.load(Ordering::Relaxed) * u64::from(self.rate) / u64::from((*rate).max(1))
             }
             Sink::Wav { .. } => self.queued,
+        }
+    }
+
+    /// The playhead, for a program drawing what plays: the device's
+    /// count, or, with no device, a virtual clock that advances a 60th
+    /// of a second each time it is read (not past what is queued), so
+    /// a headless program's frames see exactly the same sound each run.
+    pub fn tick(&mut self) -> u64 {
+        let rate = u64::from(self.rate);
+        let queued = self.queued;
+        match &mut self.sink {
+            Sink::Wav { clock, .. } => {
+                *clock = (*clock + rate / 60).min(queued);
+                *clock
+            }
+            Sink::Device { .. } => self.played(),
         }
     }
 
@@ -151,6 +171,7 @@ impl Voice {
             Sink::Wav {
                 path: Some(p),
                 samples,
+                ..
             } => write_wav(&p, self.rate, &samples),
             Sink::Wav { path: None, .. } => Ok(()),
         }

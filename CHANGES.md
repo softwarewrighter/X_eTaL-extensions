@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-04
 
+- 15:18 `ext` The live oscilloscope (`just demo audio scope`): the synthesizer's music plays while a canvas window draws the waveform under the playhead (left above, right below), the bars streamed as the playhead nears them; `au:p_layed` (with no device a virtual clock); the instruments moved into an ordinary library beside the demos, `Instruments.xtl` (the synth's WAV unchanged; a first name `Synth.xtl` collided with `synth.xtl` on the case-insensitive file system); a headless reg-rs test pins frames and sound; recordings can take a demo's own sound (`wav=1`); demo lists skip capitalized (library) files.
+
 - 14:58 `build` This repository's port is 8470 (the user's scheme: one port per X_eTaL repo, so their demos run side by side): `port` in the justfile, `just serve-pages` (bound to 127.0.0.1), trunk in the pages' docs, the web extension's planned default; CLAUDE.md rule 14.
 
 - 14:56 `docs` Upstream swept: E2 (`.xtlm` macro libraries) and E6 (`--draw` before the subcommand) have landed in X_eTaL (not yet vendored); E1, E3, E4, E5 and the web-release are still open. docs/ideas.md: camera input and ONNX models, as notes only (the user's decision: no plan yet).

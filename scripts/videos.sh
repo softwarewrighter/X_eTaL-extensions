@@ -40,18 +40,21 @@ for dir in extensions/${1:-*}/videos; do
   for spec in "$dir"/*.frames; do
     [ -e "$spec" ] || continue
     name="$(basename "$spec" .frames)"
-    demo=""; seed=1; frames=120; fps=15; scale=480; audio=""
+    demo=""; seed=1; frames=120; fps=15; scale=480; audio=""; wav=""
     # shellcheck disable=SC1090
     . "$spec"
     echo "==> frames $ext $name ($frames, headless)"
     out="$root/target/screens/$ext-$name-frames"
     rm -rf "$out" && mkdir -p "$out"
     events="$(printf 'frame,%.0s' $(seq "$frames"))"
-    (cd "extensions/$ext" && XETAL_HEADLESS=1 XETAL_EVENTS="$events" XETAL_FRAMES="$out" \
+    # wav=1: the demo makes its own sound (a voice); collect it as the soundtrack
+    if [ -n "$wav" ]; then audio="$root/target/screens/$ext-$name.wav"; fi
+    (cd "extensions/$ext" && XETAL_HEADLESS=1 XETAL_EVENTS="$events" XETAL_FRAMES="$out" XETAL_AUDIO_WAV="$root/target/screens/$ext-$name.wav" \
       "$root/target/debug/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > /dev/null)
     first="$(ls "$out" | head -1)"; prefix="${first%-1.png}"
     sound=()
-    [ -n "$audio" ] && sound=(-i "extensions/$ext/$audio" -map 0:v -map 1:a -c:a aac -shortest)
+    case "$audio" in /*) track="$audio" ;; *) track="extensions/$ext/$audio" ;; esac
+    [ -n "$audio" ] && sound=(-i "$track" -map 0:v -map 1:a -c:a aac -shortest)
     ffmpeg -loglevel error -y -framerate "$fps" -i "$out/$prefix-%d.png" ${sound[@]+"${sound[@]}"} \
       -vf "scale=$scale:-1:flags=neighbor" -pix_fmt yuv420p "target/screens/$ext-$name.mp4"
     # the site's copy keeps the frame rate (and the sound); the webp is silent
