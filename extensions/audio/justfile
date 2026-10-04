@@ -1,0 +1,41 @@
+# audio -- audio files: decode Ogg Vorbis, MP3 and WAV, play them, and read what is playing as arrays. `just` lists recipes.
+# Run from this directory (or `just ext audio RECIPE` from the repo root).
+
+set positional-arguments
+
+root := "../.."
+
+# List the recipes
+default:
+    @just --list
+
+# Build the native library (target/debug/libxetal_ext_audio.dylib or .so) and xetal-x
+build:
+    cd {{root}} && cargo build -q --workspace
+
+# Rust tests  and the reg-rs tests
+test: test-rust reg
+
+# Rust tests of the crate in rust/
+test-rust:
+    cargo test -q -p xetal-ext-audio
+
+# reg-rs tests in tests/ (baselines committed there)
+reg:
+    {{root}}/scripts/reg-ext.sh audio run
+
+# Show the reg-rs failures in full
+reg-diff:
+    {{root}}/scripts/reg-ext.sh audio run -vv
+
+# Accept the latest output of one reg-rs test as its baseline (review the diff)
+rebase test:
+    {{root}}/scripts/reg-ext.sh audio rebase -p "$1"
+
+# The functions this extension exports, as xetal-x sees them
+list: build
+    {{root}}/target/debug/xetal-x --ext . --ext-list
+
+# Run a demo: just demo NAME (demos/NAME.xtl; pictures go to work/draw/)
+demo name: build
+    {{root}}/target/debug/xetal-x --ext {{root}}/extensions run --draw work/draw "demos/$1.xtl"

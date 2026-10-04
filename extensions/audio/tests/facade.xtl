@@ -1,0 +1,36 @@
+# The Audio facade on the generated tone (440 Hz left, 880 Hz right),
+# with no sound device (run with XETAL_AUDIO=off): playback advances a
+# 60th of a second per window.
+"au:" u_se< "Audio"
+
+a := au:o_pen "tests/data/tone.ogg"
+au:i_nfo a
+c := a au:c_hunk 1024
+s_hape c
+
+p := au:p_lay! a
+w := a au:w_indow 1024
+s_hape w
+au:s_tate a
+
+# about a second later (60 windows of a 60th each)
+u:s_tep := { k -> v := a au:w_indow 1024
+  k + 1 }
+n := 59 'u:s_tep p_ower 0
+(f_loat f_loor 0.5 + 1000.0 * au:p_osition a) / 1000.0
+
+# a spectrum by one inner product: the window (2 by 1024) against
+# cosine and sine at 220, 440, 880 and 1760 Hz (1024 by 4 tables)
+w := a au:w_indow 1024
+t := (f_loat r_ange 1024) / 22050.0
+f := 220.0 440.0 880.0 1760.0
+x := 6.283185307179586 * t '* t_able f
+re := w '+ '* i_nner c_os x
+im := w '+ '* i_nner s_in x
+m := ((re * re) + im * im) ^ 0.5
+s_hape m
+"loudest (Hz), left then right:"
+l := 1 s_elect_1 m
+r := 2 s_elect_1 m
+((l i_ndexOf 'm_ax r_/ l) c_at r i_ndexOf 'm_ax r_/ r) s_elect f
+c := au:c_lose! a

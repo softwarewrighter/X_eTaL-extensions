@@ -1,0 +1,3 @@
+command = "XETAL_AUDIO=off xetal-x --ext . run tests/formats.xtl"
+exit_code = 0
+desc = "Ogg Vorbis, MP3 and WAV open alike"

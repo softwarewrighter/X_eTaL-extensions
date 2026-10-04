@@ -1,0 +1,84 @@
+# Audio.xtl -- the facade of the audio extension: decode Ogg Vorbis, MP3
+# and WAV, play them on the sound device, and read what is playing as
+# arrays (for analysis and pictures).
+# Import: "au:" u_se< "Audio"
+# Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH)
+# until X_eTaL can call native code itself; the private helpers below
+# speak the ext: channel (docs/bridge.md). With XETAL_HEADLESS=1 (or
+# XETAL_AUDIO=off) nothing sounds and playback advances a 60th of a
+# second per au:w_indow -- for tests.
+
+# private: the ext: channel
+c_all := { p -> []N_GET "ext:audio/" c_at p }
+t_ext := { t p -> t []N_PUT "ext:audio/" c_at p c_at "?text" }
+f_loats := { x p -> (f_ormat r_avel f_loat x) []N_PUT "ext:audio/" c_at p c_at "?float=" c_at f_ormat s_hape x }
+n_umber := { p -> f_irst n_umbers c_all p }
+s_haped := { p ->
+  v := n_umbers c_all p
+  (f_loor n_umbers c_all p c_at "?shape") r_eshape v
+}
+
+# au:o_pen path: an audio file (Ogg Vorbis, MP3 or WAV); its id.
+l:o_pen := { path ->
+  a := path t_ext "open"
+  f_loor n_umber "open"
+}
+
+# au:i_nfo id: sample rate, channels, frames, seconds (-1 when unknown).
+l:i_nfo := { id ->
+  a := id f_loats "info"
+  s_haped "info"
+}
+
+# id au:c_hunk n: the next n frames read in order (apart from playback):
+# a 2 by m matrix, left over right; fewer at the end, none after it.
+l:c_hunk := { id n ->
+  a := id f_loats "chunk"
+  b := n f_loats "chunk"
+  s_haped "chunk"
+}
+
+# au:p_lay! id: start or resume playing; the id.
+l:p_lay! := { id ->
+  a := id f_loats "play"
+  f_loor n_umber "play"
+}
+
+# au:p_ause! id: pause; the id.
+l:p_ause! := { id ->
+  a := id f_loats "pause"
+  f_loor n_umber "pause"
+}
+
+# id au:s_eek! seconds: move playback there; the second it landed on.
+l:s_eek! := { id t ->
+  a := id f_loats "seek"
+  b := t f_loats "seek"
+  n_umber "seek"
+}
+
+# au:p_osition id: the second playing now.
+l:p_osition := { id ->
+  a := id f_loats "position"
+  n_umber "position"
+}
+
+# id au:w_indow n: the n frames ending at what plays now, 2 by n (left
+# over right; zeros before the start). Call it once a frame.
+l:w_indow := { id n ->
+  a := id f_loats "window"
+  b := n f_loats "window"
+  s_haped "window"
+}
+
+# au:s_tate id: 0 stopped (not started, or at the end), 1 playing, 2 paused.
+l:s_tate := { id ->
+  a := id f_loats "state"
+  f_loor n_umber "state"
+}
+
+# au:c_lose! id: stop and forget the file; 1.
+l:c_lose! := { id ->
+  a := id f_loats "close"
+  f_loor n_umber "close"
+}

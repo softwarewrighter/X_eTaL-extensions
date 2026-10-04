@@ -1,0 +1,5 @@
+# Ogg Vorbis, MP3 and WAV open alike: rate, channels, frames, seconds.
+"au:" u_se< "Audio"
+au:i_nfo au:o_pen "tests/data/tone.ogg"
+au:i_nfo au:o_pen "tests/data/tone.mp3"
+au:i_nfo au:o_pen "tests/data/tone.wav"

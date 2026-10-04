@@ -1,0 +1,3 @@
+command = "XETAL_AUDIO=off xetal-x --ext . run tests/facade.xtl"
+exit_code = 0
+desc = "the Audio facade on the tone with no device: info, chunks, playback a 60th per window, and a 4-frequency spectrum by inner product finding 440 Hz left and 880 Hz right"

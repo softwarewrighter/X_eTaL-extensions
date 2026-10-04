@@ -11,6 +11,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-04
+
+- 09:41 `ext` The audio extension (`extensions/audio`, alias `au:`; symphonia 0.5, cpal 0.15): open, info, chunk, play, pause, seek, position, window (the frames under the playhead), state, close; a device thread decodes ahead into the sound device and counts what it played; a virtual clock with no device (`XETAL_AUDIO=off`) for exact tests; generated Ogg/MP3/WAV tones and a 16 s Ogg arpeggio; 4 Rust and 5 reg-rs tests (a spectrum by inner product finds 440 Hz left, 880 Hz right).
+
 ## 2026-10-03
 
 - 19:13 `ext` The scene extension (`extensions/scene`, alias `sc:`, linked into `xetal-x`): objects by id (polyline, segments, dots) with colours, an orbit camera with spin and mouse drag, perspective and anti-aliased lines drawn on the CPU (decision M7 revised from wgpu, so frames are the same headless), headless frames; `demos/cube.xtl`; 5 Rust tests, 4 reg-rs tests (the cube headless, frames pinned); `videos/cube`.

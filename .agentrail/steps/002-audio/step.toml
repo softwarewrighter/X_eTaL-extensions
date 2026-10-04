@@ -1,6 +1,6 @@
 number = 2
 slug = "audio"
-status = "pending"
+status = "in-progress"
 description = "extensions/audio (dynamic cdylib): Symphonia (ogg/vorbis, mp3, wav) decode by..."
 role = "production"
 context_files = []

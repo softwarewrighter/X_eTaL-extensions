@@ -1,0 +1,10 @@
+l:o_pen : Char -> Int
+l:i_nfo : Num a => a -> Float
+l:c_hunk : (Num a, Num b) => a -> b -> Float
+l:p_lay! : Num a => a -> Int
+l:p_ause! : Num a => a -> Int
+l:s_eek! : (Num a, Num b) => a -> b -> Float
+l:p_osition : Num a => a -> Float
+l:w_indow : (Num a, Num b) => a -> b -> Float
+l:s_tate : Num a => a -> Int
+l:c_lose! : Num a => a -> Int

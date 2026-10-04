@@ -313,7 +313,8 @@ Decisions:
 | 5 | spectrum | demos/spectrum: the visualizer in X_eTaL (spectrum by inner product, radial spokes, keys); headless tests of the analysis on fixtures; an interactive smoke |
 | 6 | media-release | docs, parity updated, status, retrospective |
 
-Paused 2026-10-03 after step 2 (research4: post-launch). Done: the
+Paused 2026-10-03 after step 2 (research4: post-launch), resumed the
+same day as Saga 7 (visualizer) while `.xtlm` is not ready upstream. Done: the
 parity page, the UI host, canvas with headless frames, the recordings
 site. The scene extension's model is on branch `wip/media-scene`;
 audio and the visualizer wait.

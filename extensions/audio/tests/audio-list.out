@@ -1,0 +1,11 @@
+audio 0.1.0
+  audio/open : Char -> Int    # An audio file (Ogg Vorbis, MP3, WAV); its id.
+  audio/info : Num a => a -> Float    # Sample rate, channels, frames, seconds (-1 when unknown).
+  audio/chunk : (Num a, Num b) => a -> b -> Float    # id chunk n: the next n frames in order, 2 by m.
+  audio/play : Num a => a -> Int    # Start or resume playing.
+  audio/pause : Num a => a -> Int    # Pause.
+  audio/seek : (Num a, Num b) => a -> b -> Float    # id seek seconds: move playback; the second it landed on.
+  audio/position : Num a => a -> Float    # The second playing now.
+  audio/window : (Num a, Num b) => a -> b -> Float    # id window n: the n frames ending at what plays now, 2 by n.
+  audio/state : Num a => a -> Int    # 0 stopped, 1 playing, 2 paused.
+  audio/close : Num a => a -> Int    # Stop and forget the file.
