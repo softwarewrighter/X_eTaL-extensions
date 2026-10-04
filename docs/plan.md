@@ -332,7 +332,8 @@ slow for 60 frames a second (`just demo` runs release); macOS bash 3.2
 and empty arrays. Parity with demo-extensions' visualizer reached
 (docs/parity.md). Step 5, the array synthesizer (sound out of arrays,
 `just demo audio synth`), and step 6, a live oscilloscope (`just demo
-audio scope`), followed at the user's request. Camera input and ONNX
+audio scope`), followed at the user's request; both checked live, the sound
+confirmed by the user. Camera input and ONNX
 models are notes only (docs/ideas.md).
 
 ## Saga 6 -- launch

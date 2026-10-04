@@ -155,6 +155,7 @@ zero crossings, read to the end and seek, and step the virtual player.
 The reg-rs tests run the facade with no device -- including a
 four-frequency spectrum by one inner product that finds 440 Hz on the
 left and 880 Hz on the right -- and check the formats and a missing
-file. Playing through the speakers is checked by ear (`just demo audio
-spectrum` plays the arpeggio, `just demo audio synth` the synthesizer).
+file. Playing through the speakers is checked by ear: the visualizer and the
+oscilloscope ran live on the user's machine on 2026-10-04 ("sounds
+great"); the oscilloscope ends by itself with the music.
 A Rust test writes a voice to a WAV and reads it back.
