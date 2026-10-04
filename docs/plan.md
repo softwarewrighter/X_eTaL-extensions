@@ -326,7 +326,7 @@ Research4's work for this repository (see Priorities).
 | 2 | blockers | (done) this repo's blockers fixed (`xetal-x --version`); upstream ones tracked |
 | 3 | audit | (done: every ask is in X_eTaL's queue, none landed, vendor kept) asks and status against upstream; vendor refreshed if anything landed; walkthrough from GitHub |
 | 4 | xtlm-ready | (done: docs/ffi-macro.md; docs/ffi/Hello.xtl, the expected expansion, tested by reg-rs) `Ffi.xtlm` designed against MC10-MC13, expansions written down, ready for the day `.xtlm` lands |
-| 5 | snapshot | a version for the six-repo compatible snapshot (tag with the user's yes) |
+| 5 | snapshot | a version for the six-repo compatible snapshot (tag with the user's yes). Waits on X_eTaL's web-release (its queue item 10: "a version and a tag, a known-compatible snapshot"); no sibling repo is tagged yet. Then: vendor that release (own commit, goldens re-run), tag this repo to match, notes from CHANGES.md since v0.1.0 |
 
 ## Saga 7 -- web (post-launch)
 
