@@ -1,9 +1,10 @@
 number = 3
 slug = "spectrum"
-status = "in-progress"
+status = "completed"
 description = "extensions/audio/demos/spectrum.xtl: open a file (default a bundled Ogg), pla..."
 role = "production"
 context_files = []
 created_at = "2026-10-03T17:30:46"
+completed_at = "2026-10-04T13:04:30"
 task_type = "demo"
-commits = []
+commits = ["c636f920ea07a8893ed5830b20996521dae16921"]

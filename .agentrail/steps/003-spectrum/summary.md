@@ -1,0 +1,1 @@
+Music visualizer demo (X_eTaL DFT-by-inner-product, mirrored spokes, keys), headless reg test, video with sound; scene 2px lines; unbounded scripted events; release demos.
