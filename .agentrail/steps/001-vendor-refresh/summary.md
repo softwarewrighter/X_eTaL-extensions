@@ -1,0 +1,1 @@
+Vendored X_eTaL f823212; xetal-x mirrors new CLI main/crates; gate unchanged (21 demos identical, all goldens); E2/E6 landed; plan renumbered.
