@@ -1,0 +1,3 @@
+command = "tests/serve.sh"
+exit_code = 0
+desc = "an X_eTaL program answers four requests asked by curl on loopback: query, form, SVG, 404"

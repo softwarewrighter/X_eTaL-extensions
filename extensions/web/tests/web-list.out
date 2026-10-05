@@ -1,0 +1,12 @@
+web 0.1.0
+  web/serve : Num a => a -> Int    # Serve HTTP on 127.0.0.1 at the port (0: any free one); the port.
+  web/next : Num a => a -> Char    # Wait up to that many seconds for a request: "METHOD /path", or "none".
+  web/method : Unit -> Char    # The request's method.
+  web/path : Unit -> Char    # The request's path.
+  web/query : Unit -> Char    # The request's query, as sent.
+  web/body : Unit -> Char    # The request's body.
+  web/param : Char -> Char    # A query or form field, decoded ("" when absent).
+  web/content : Char -> Int    # Set the reply's content type.
+  web/reply : Num a => a -> Char -> Int    # status reply body: answer the request; the body's bytes.
+  web/files : Char -> Int    # Serve the files under a directory directly ("": stop); how many.
+  web/stop : Unit -> Int    # Stop serving; the port (0 if none).

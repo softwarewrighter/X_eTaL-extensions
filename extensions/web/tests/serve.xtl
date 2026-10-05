@@ -1,0 +1,18 @@
+# Four requests answered by an X_eTaL program (tests/serve.sh asks them
+# with curl): a greeting from a query, a sum from a form, an SVG, a 404.
+"wb:" u_se< "Web"
+
+port := wb:s_erve! 0
+port
+
+# one request, answered by its method and path
+u:a_nswer := { n ->
+  r := wb:n_ext! 20
+  r m_atch "GET /hello" ? 200 wb:r_eply! "hello, " c_at wb:p_aram "name"
+  r m_atch "POST /sum" ? 200 wb:r_eply! f_ormat '+ r_/ n_umbers wb:p_aram "x"
+  r m_atch "GET /square" ? 200 wb:r_eply! "<svg width='10' height='10'><rect width='" c_at (f_ormat 2 * n_umbers wb:p_aram "half") c_at "' height='10'/></svg>"
+  404 wb:r_eply! "no such page: " c_at wb:p_ath @
+}
+
+answered := 4 'u:a_nswer p_ower 0
+wb:s_top! @

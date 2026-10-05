@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/bad-status.xtl"
+exit_code = 1
+desc = "a status outside 100 to 599 is refused"

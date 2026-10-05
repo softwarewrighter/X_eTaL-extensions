@@ -14,8 +14,9 @@ of date. Release 1 is hello, clock and sqlite (docs/plan.md).
 | [hello](../extensions/hello/docs/README.md) | release 1 | `Hello` (`hx:`) | 8 | 5 | 16 | tour | [tour](../extensions/hello/videos/tour.webm) | command line |
 | [scene](../extensions/scene/docs/README.md) | media (saga 5) | `Scene` (`sc:`) | 8 | 5 | 4 | cube | [cube](../extensions/scene/videos/cube.webm) | native window (xetal-x) |
 | [sqlite](../extensions/sqlite/docs/README.md) | release 1 | `Sqlite` (`sq:`) | 6 | 7 | 8 | notebook | [notebook](../extensions/sqlite/videos/notebook.webm) | command line |
+| [web](../extensions/web/docs/README.md) | roadmap | `Web` (`wb:`) | 11 | 6 | 6 | -- | -- | command line |
 
-Roadmap, not started: web, image, linalg, http, digest, regex.
+Roadmap, not started: image, linalg, http, digest, regex.
 
 ## Capabilities
 

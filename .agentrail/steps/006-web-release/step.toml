@@ -1,4 +1,4 @@
-number = 5
+number = 6
 slug = "web-release"
 status = "pending"
 description = "web step 5: recordings (vhs with curl), docs, README catalog, status, parity,..."

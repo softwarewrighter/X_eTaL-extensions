@@ -1,0 +1,12 @@
+l:s_erve! : Num a => a -> Int
+l:n_ext! : Num a => a -> Char
+l:m_ethod : Unit -> Char
+l:p_ath : Unit -> Char
+l:q_uery : Unit -> Char
+l:b_ody : Unit -> Char
+l:p_aram : Char -> Char
+l:c_ontent! : Char -> Int
+l:r_eply! : Num a => a -> Char -> Int
+l:f_iles! : Char -> Int
+l:s_top! : Unit -> Int
+l:package : Char

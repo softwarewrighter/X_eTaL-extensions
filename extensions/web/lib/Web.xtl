@@ -1,0 +1,36 @@
+# Web.xtl -- the facade of the web extension: HTTP serving, where the
+# program is the request loop. axum serves on 127.0.0.1 in the
+# background and queues each request; the program takes the next one,
+# reads its parts, and replies.
+# Import: "wb:" u_se< "Web"
+# Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+# Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+"ffi:" u_se< "Ffi"
+
+# wb:s_erve! port: serve on 127.0.0.1 at the port (8470 is this
+# repository's; 0 takes any free one); the port it serves on.
+"s_erve! : int -> int"          ffi:b_ind< "web/serve"
+# wb:n_ext! seconds: wait up to that long for a request; "GET /path"
+# (the method and path), or "none". A request taken before and not
+# replied to is answered 500.
+"n_ext! : float -> text"        ffi:b_ind< "web/next"
+# The request being answered: its method, path, query (as sent), body.
+"m_ethod : unit -> text"        ffi:b_ind< "web/method"
+"p_ath : unit -> text"          ffi:b_ind< "web/path"
+"q_uery : unit -> text"         ffi:b_ind< "web/query"
+"b_ody : unit -> text"          ffi:b_ind< "web/body"
+# wb:p_aram "name": a query or form field, decoded ("" when absent).
+"p_aram : text -> text"         ffi:b_ind< "web/param"
+# wb:c_ontent! "text/csv": the reply's content type (else it is guessed
+# from the body: SVG, HTML, JSON or plain text).
+"c_ontent! : text -> int"       ffi:b_ind< "web/content"
+# status wb:r_eply! body: answer the request; the body's length in bytes.
+"r_eply! : int text -> int"     ffi:b_ind< "web/reply"
+# wb:f_iles! "dir": serve the files under dir (relative, no ..) directly,
+# without the program; "" stops. How many files it holds.
+"f_iles! : text -> int"         ffi:b_ind< "web/files"
+# wb:s_top! @: stop serving; the port (0 if none was serving).
+"s_top! : unit -> int"          ffi:b_ind< "web/stop"
+
+# The native package behind these functions.
+l:package := "web"

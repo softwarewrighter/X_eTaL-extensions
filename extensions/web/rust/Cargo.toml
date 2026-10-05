@@ -1,0 +1,30 @@
+[package]
+name = "xetal-ext-web"
+version = "0.1.0"
+description = "HTTP serving: the program takes each request and replies"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[lib]
+name = "xetal_ext_web"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+xetal-ext-sdk = { path = "../../../crates/xetal-ext-sdk" }
+# The server: axum on a tokio runtime of its own, on a background thread.
+axum = { version = "0.8", default-features = false, features = ["http1", "tokio"] }
+tokio = { version = "1", features = ["rt-multi-thread", "net", "sync", "time"] }
+form_urlencoded = "1"
+
+[features]
+# Link statically beside other extensions (a browser page): no unmangled
+# entry point. Never enabled inside the root workspace.
+static = []
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+xetal-ext-loader = { path = "../../../crates/xetal-ext-loader" }

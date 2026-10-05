@@ -1,7 +1,7 @@
-number = 3
-slug = "live-page"
+number = 5
+slug = "todomvc"
 status = "pending"
-description = "web step 3: extensions/web/demos/live.xtl: a page recomputing Life or Mandelb..."
+description = "web step 4: extensions/web/demos/todomvc.xtl: TodoMVC in X_eTaL persisted wit..."
 role = "production"
 context_files = []
 created_at = "2026-10-05T06:59:38"

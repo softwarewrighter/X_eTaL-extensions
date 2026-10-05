@@ -1,0 +1,4 @@
+# Replying with no request taken is an error.
+"wb:" u_se< "Web"
+port := wb:s_erve! 0
+200 wb:r_eply! "to nobody"

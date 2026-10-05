@@ -1,6 +1,6 @@
 number = 2
 slug = "web"
-status = "pending"
+status = "in-progress"
 description = "web step 2: extensions/web (just new-ext web wb 'serve HTTP'): axum + tokio o..."
 role = "production"
 context_files = []

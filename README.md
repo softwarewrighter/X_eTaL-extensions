@@ -127,7 +127,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | [canvas](extensions/canvas/docs/README.md) | `Canvas` | a native window showing arrays as pixels; keys and clicks back | winit, softbuffer | done: Life demo (media work continues after the launch) |
 | [scene](extensions/scene/docs/README.md) | `Scene` | retained 3D lines and points in a native window, patched by id; orbit camera | winit, softbuffer | done: cube demo (the visualizer's base) |
 | [sqlite](extensions/sqlite/docs/README.md) | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | done: facade, CSV import, tests, the data notebook |
-| web | `Web` | serve HTTP: the program takes each request and replies | axum, tokio | roadmap |
+| [web](extensions/web/docs/README.md) | `Web` | serve HTTP on loopback: the program takes each request and replies | axum, tokio | done: facade, loopback tests (demos next) |
 | image | `Image` | images to and from arrays | image | roadmap |
 | linalg | `Linalg` | solve, inverse, least squares, eigenvalues, SVD | nalgebra | roadmap |
 | http | `Http` | bounded GET | ureq | roadmap |

@@ -1,0 +1,1 @@
+web step 3 (inserted; the user relayed X_eTaL's release): pin XETAL_COMMIT to 512b3ee4480d4e0fd604d4ba1538b362e2552045 (X_eTaL v0.1.0), its own commit; rebuild, re-run every golden, fix or rebase on purpose; asks swept; docs. Tag this repo (v0.2.0, notes: built against X_eTaL v0.1.0) only with the user's yes; no GitHub Release object.

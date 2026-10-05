@@ -1,0 +1,4 @@
+# A status outside 100 to 599 is refused (checked before any request).
+"wb:" u_se< "Web"
+port := wb:s_erve! 0
+42 wb:r_eply! "?"

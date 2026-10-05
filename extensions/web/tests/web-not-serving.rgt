@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/not-serving.xtl"
+exit_code = 1
+desc = "taking a request before serving is an error naming the fix"
