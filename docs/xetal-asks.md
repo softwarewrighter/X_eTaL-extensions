@@ -13,15 +13,15 @@ and the workaround in use.
 | # | Status | Kind | Ask | Extensions | Workaround |
 | - | ------ | ---- | --- | ---------- | ---------- |
 | E1 | filed (X_eTaL plan Saga 23, host bindings and native packages, which may start from this repo's ABI V1) | feature | a native hook: a way for X_eTaL code to call a function in a native library (`[]S_VO`, reserved in lang-choices QD4 / section 15), with the function's X_eTaL type from the library's descriptor | all | the bridge host `xetal-x` (plan A6): a store routing `ext:` paths of `[]N_PUT` / `[]N_GET` to native functions, text only |
-| E2 | landed upstream (macros lane, 2026-10-03; MC10-MC13, MC23); not yet vendored | feature | `.xtlm` macro libraries (MC10-MC13, X_eTaL Saga 19); same as `../X_eTaL-libraries` ask X1 | macro helpers (`ffi:b_ind<`, saga 9) | none: the helpers wait |
+| E2 | landed (vendored X_eTaL f823212) | feature | `.xtlm` macro libraries (MC10-MC13, X_eTaL Saga 19); same as `../X_eTaL-libraries` ask X1 | the binding macro (`ffi:b_ind<`, Saga 8) | none needed now |
 | E3 | filed (X_eTaL queue item 6, after Saga 21) | feature | the CLI as a library: a host entry point (`xetal_cli::run_with(args, store)` or similar) so a host can be `xetal` with its own store | the bridge host `xetal-x` | `xetal-x` compiles the vendored CLI's source files as `#[path]` modules and repeats its 60-line `main` with a different store; breaks if the CLI's modules are reorganized |
 | E4 | filed (X_eTaL queue item 5, Saga 13 steps: `[]TS`, `[]D_L`) | feature | the time: a quad giving the current time (APL's quad TS) and a monotonic or CPU clock (quad AI) | clock (and anything timing itself) | the clock extension, through the bridge |
 | E5 | filed (X_eTaL queue item 9, Saga 27, readable type errors) | feature | an error raised inside a library function also names the program line that called it (a call trace) | every facade (errors point into the facade's helper, not the caller) | the extension's message names the function (`ext:sqlite/nums: ...`) |
-| E6 | landed upstream (X_eTaL 5f00608: options before or after the subcommand); not yet vendored | bug | `xetal --draw DIR run FILE` fails (clap takes `run` as the SCRIPT argument and FILE as a subcommand); `xetal run --draw DIR FILE` works | the sqlite notebook's test and every demo recipe | `--draw` written after `run` |
+| E6 | landed (vendored X_eTaL f823212) | bug | `xetal --draw DIR run FILE` fails (clap takes `run` as the SCRIPT argument and FILE as a subcommand); `xetal run --draw DIR FILE` works | the sqlite notebook's test and every demo recipe | `--draw` written after `run` |
 
-Swept 2026-10-04: E2 (`.xtlm`) and E6 (`--draw`) have landed upstream;
-the next vendor refresh brings them in (then the binding macro, and
-the recipes drop their `--draw` workaround). Earlier, swept 2026-10-03 (twice) against upstream X_eTaL (84 commits past the
+2026-10-05: X_eTaL f823212 vendored, with E2 (`.xtlm`) and E6
+(`--draw` before the subcommand) landed; every golden passed unchanged.
+Earlier, swept 2026-10-03 (twice) against upstream X_eTaL (84 commits past the
 vendored 7b70575): none of these has landed, so the vendor is not
 refreshed. Every one is now in X_eTaL's queue (docs/plan.md there,
 "The sibling repositories' asks come first"): E6 in Saga 30 (item 2),
@@ -159,5 +159,6 @@ error: the subcommand 'prog.xtl' cannot be used with:
 `xetal --help` lists `--draw <DIR>` as an option of `xetal` itself, so
 it reads as if it may come first; clap then takes `run` as the
 optional SCRIPT positional. `xetal run --draw out prog.xtl` works, as
-does `XETAL_DRAW=out xetal run prog.xtl`. Workaround: `--draw` after
-`run` (the demo recipes and the notebook's reg-rs test).
+does `XETAL_DRAW=out xetal run prog.xtl`. Workaround (until f823212): `--draw` after `run`. Landed: options may
+now come before or after the subcommand; the recipes keep `run --draw`,
+which is still valid.

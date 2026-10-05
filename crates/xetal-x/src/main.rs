@@ -81,30 +81,13 @@ fn main() -> ExitCode {
         );
     }
     // From here on, the vendored CLI's main.
+    xetal_tty::install(std::sync::Arc::new(xetal_line::Terminal));
     let cli = Cli::parse_from(argv);
     let draw = cli.draw.clone();
     xetal_grid::set_ascii(cli.ascii);
     xetal_grid::set_boxed(cli.boxed);
-    let command = match (cli.command, cli.script) {
-        (Some(command), _) => command,
-        (None, Some(file)) => Command::Run {
-            file,
-            untyped: false,
-            seed: None,
-            echo: false,
-            delay: None,
-            context: None,
-        },
-        (None, None) => {
-            use clap::CommandFactory;
-            Cli::command()
-                .error(
-                    clap::error::ErrorKind::MissingSubcommand,
-                    "give a subcommand or a script FILE",
-                )
-                .exit()
-        }
-    };
+    xetal_system::set_flags(cli.cfg.clone());
+    let command = command(cli.command, cli.script);
     install_store(draw, &command, registry);
     // The program runs on a thread of its own; this (the main) thread
     // serves windows for extensions like canvas (plan M1), and does
@@ -131,6 +114,40 @@ fn main() -> ExitCode {
         Err(_) => {
             eprintln!("error[internal]: the program's thread failed");
             ExitCode::FAILURE
+        }
+    }
+}
+
+/// The command to run: a subcommand, or `run` for a bare script (the
+/// vendored CLI's `command`, repeated as its `main` is).
+fn command(command: Option<Command>, script: Option<String>) -> Command {
+    match (command, script) {
+        (Some(_), Some(script)) => {
+            use clap::CommandFactory;
+            Cli::command()
+                .error(
+                    clap::error::ErrorKind::ArgumentConflict,
+                    format!("give a subcommand or a script, not both ({script})"),
+                )
+                .exit()
+        }
+        (Some(command), None) => command,
+        (None, Some(file)) => Command::Run {
+            file,
+            untyped: false,
+            seed: None,
+            echo: false,
+            delay: None,
+            context: None,
+        },
+        (None, None) => {
+            use clap::CommandFactory;
+            Cli::command()
+                .error(
+                    clap::error::ErrorKind::MissingSubcommand,
+                    "give a subcommand or a script FILE",
+                )
+                .exit()
         }
     }
 }

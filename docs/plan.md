@@ -36,13 +36,13 @@ this repository:
 - `.xtlm` is the middle of "libraries extend the vocabulary; macros
   extend the language; native extensions extend the machine", and
   this repo is one of its three waiting consumers (the binding macro,
-  saga 10): be ready to ship it the day it lands.
+  Saga 8): be ready to ship it the day it lands.
 - Fix what a first user would trip on (the promotion-blocker list
   below), keep the asks and status synchronized with upstream, and be
   part of a tagged, known-compatible six-repo snapshot.
 
-Order now: Saga 6 (launch) first; Saga 10's binding macro as soon as
-`.xtlm` lands; everything else after the launch.
+Order now: Saga 6 (launch) first; Saga 8's binding macro as soon as
+`.xtlm` lands (it has); everything else after the launch.
 
 ### Promotion blockers (this repository)
 
@@ -50,7 +50,7 @@ Order now: Saga 6 (launch) first; Saga 10's binding macro as soon as
 | ------- | ----- | ----- |
 | `xetal-x --version` does not say it is `xetal-x`, nor this repository's commit (it prints the vendored CLI's block) | here | fixed: a first line `xetal-x 0.1.0 (X_eTaL-extensions SHA): the vendored X_eTaL CLI below, with native extensions (experimental)`; checked in the gate |
 | an extension's error points into its facade, not the calling line | upstream (E5) | filed |
-| `xetal --draw DIR run FILE` misparses (`run --draw` works) | upstream (E6) | filed; worked around in recipes |
+| `xetal --draw DIR run FILE` misparses (`run --draw` works) | upstream (E6) | landed (vendored f823212) |
 | programs need `xetal-x`, not `xetal` (the text bridge) | upstream (E1, Saga 23) | filed; labelled experimental |
 | the first-user path: `just demos`, `just demo EXT NAME`, `just walkthrough` from a fresh clone | here | done (release 1); re-run in launch step 3 |
 
@@ -104,7 +104,7 @@ programs.
 | A7 | **An extension is a self-contained directory**, `extensions/<name>/` (the user's rule, 2026-10-02): `extension.toml` (the manifest); `justfile` (its own recipes: build, test, reg, demos); `rust/` (its Rust library crate, a `cdylib` + `rlib`, with its Rust tests); `lib/` (its X_eTaL sources: the facade `<Name>.xtl`, and `<Name>.xtlm` macros when X_eTaL has them -- one directory, as X_eTaL looks for both together, MC11); `tests/` (reg-rs tests: `*.rgt` commands with committed `.out`/`.err` baselines, `REG_RS_DATA_DIR` pointing there, and the `*.xtl` programs they run); `docs/` (its pages, `docs/README.md` first); `demos/` (programs that show it off, each with a README section and a reg-rs test). The repo's `just` recipes delegate to each extension's. | Each extension can be read, built, tested and moved on its own; the layout is the same for every one. |
 | A8 | **Facade conventions** follow X_eTaL's style guide (lang-choices section 16) and `../X_eTaL-libraries` A6: `UpperCamel.xtl`, exports under `l:`, private helpers unprefixed, predicates `?`, effects `!`, a header with the import line and recommended alias, no export shadowing a built-in, no name shadowing a standard library. Exports are typed as if native (ordinary X_eTaL types), so the facade's types are pinned (`xetal type`) and survive the switch from the bridge to E1. | The facade is the extension's interface; its types are the contract. |
 | A9 | **Pure fallbacks where cheap.** When an extension's function has a reasonable pure X_eTaL definition (CRC-32, a small determinant), the facade's tests compare native and pure results; the pure version is not exported. Where there is none (the clock, regular expressions), there is no fallback. | Golden behavior is cross-checked, not only self-consistent. |
-| A10 | **Macro helpers wait for X_eTaL** (ask E2, X_eTaL MC10-MC13): a `.xtlm` that turns a signature into a facade function (`"f64 f64" ffi:b_ind< "linalg/det"`). Designed on paper only (saga 10), never emulated. | As in `../X_eTaL-libraries` A9. |
+| A10 | **Macro helpers wait for X_eTaL** (ask E2, X_eTaL MC10-MC13): a `.xtlm` that turns a signature into a facade function (`"f64 f64" ffi:b_ind< "linalg/det"`). Designed in docs/ffi-macro.md; built in Saga 8 once `.xtlm` landed. | As in `../X_eTaL-libraries` A9. |
 | A11 | A missing X_eTaL feature or bug an extension uncovers is **not** fixed here nor hidden: it goes in `docs/xetal-asks.md` (status, kind, extensions, why, minimal repro, workaround) and on the extension's page. | X_eTaL owns its language decisions; this repo is a consumer. |
 | A12 | **Names, not homes**: an extension is identified by its name (`digest`), never a GitHub coordinate (the repos may move to `sw-array-languages`, research.txt). `just` is the entry point (recipes call `scripts/*.sh`); `CHANGES.md` gets a line for every commit; docs are ASCII-only markdown (`sw-markdown-checker`). | Same process as the sibling repos. |
 | A13 | Dependencies are few, well known and permissively licensed (`libloading`, and per extension e.g. `rusqlite` with bundled SQLite, `axum`/`tokio`, `ureq`, `image`, `nalgebra`); each extension's page lists its crates. Nothing is downloaded at run time except by the http extension, on request. | Small, auditable extensions. |
@@ -319,6 +319,18 @@ parity page, the UI host, canvas with headless frames, the recordings
 site. The scene extension's model is on branch `wip/media-scene`;
 audio and the visualizer wait.
 
+## Saga 6 -- launch
+
+Research4's work for this repository (see Priorities).
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | reprioritize | this section and Priorities; media paused (scene WIP on branch `wip/media-scene`); ABI and bridge labelled experimental |
+| 2 | blockers | (done) this repo's blockers fixed (`xetal-x --version`); upstream ones tracked |
+| 3 | audit | (done: every ask is in X_eTaL's queue, none landed, vendor kept) asks and status against upstream; vendor refreshed if anything landed; walkthrough from GitHub |
+| 4 | xtlm-ready | (done: docs/ffi-macro.md; docs/ffi/Hello.xtl, the expected expansion, tested by reg-rs) `Ffi.xtlm` designed against MC10-MC13, expansions written down, ready for the day `.xtlm` lands |
+| 5 | snapshot | a version for the six-repo compatible snapshot (tag with the user's yes). Waits on X_eTaL's web-release (its queue item 10: "a version and a tag, a known-compatible snapshot"); no sibling repo is tagged yet. Then: vendor that release (own commit, goldens re-run), tag this repo to match, notes from CHANGES.md since v0.1.0 |
+
 ## Saga 7 -- visualizer (done)
 
 The media saga resumed while `.xtlm` waits upstream: scene (retained
@@ -336,19 +348,20 @@ audio scope`), followed at the user's request; both checked live, the sound
 confirmed by the user. Camera input and ONNX
 models are notes only (docs/ideas.md).
 
-## Saga 6 -- launch
+## Saga 8 -- macros
 
-Research4's work for this repository (see Priorities).
+`.xtlm` landed upstream (ask E2) with the `--draw` fix (E6): "macros
+extend the language" made real here. The binding macro writes every
+facade function from a one-line signature (docs/ffi-macro.md).
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | reprioritize | this section and Priorities; media paused (scene WIP on branch `wip/media-scene`); ABI and bridge labelled experimental |
-| 2 | blockers | (done) this repo's blockers fixed (`xetal-x --version`); upstream ones tracked |
-| 3 | audit | (done: every ask is in X_eTaL's queue, none landed, vendor kept) asks and status against upstream; vendor refreshed if anything landed; walkthrough from GitHub |
-| 4 | xtlm-ready | (done: docs/ffi-macro.md; docs/ffi/Hello.xtl, the expected expansion, tested by reg-rs) `Ffi.xtlm` designed against MC10-MC13, expansions written down, ready for the day `.xtlm` lands |
-| 5 | snapshot | a version for the six-repo compatible snapshot (tag with the user's yes). Waits on X_eTaL's web-release (its queue item 10: "a version and a tag, a known-compatible snapshot"); no sibling repo is tagged yet. Then: vendor that release (own commit, goldens re-run), tag this repo to match, notes from CHANGES.md since v0.1.0 |
+| 1 | vendor-refresh | (done) X_eTaL f823212 vendored; xetal-x follows the CLI's new `main`; every golden unchanged, 21 demos identical |
+| 2 | ffi-macro | `Ffi.xtlm`, on `XETAL_PATH` via `xetal-x`; its expansions tested against `docs/ffi/Hello.xtl` |
+| 3 | facades | each facade as signature lines where the kinds fit; every types and demo golden unchanged |
+| 4 | macros-release | docs, status, asks, retrospective |
 
-## Saga 7 -- web (post-launch)
+## Saga 9 -- web (post-launch)
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -356,7 +369,7 @@ Research4's work for this repository (see Priorities).
 | 2 | live-page | demos/live: a page recomputing Life or Mandelbrot as SVG per request; reg-rs test drives it over loopback |
 | 3 | todomvc | demos/todomvc: TodoMVC in X_eTaL with sqlite; loopback test of add, toggle, delete |
 
-## Saga 8 -- photo lab (post-launch)
+## Saga 10 -- photo lab (post-launch)
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -364,7 +377,7 @@ Research4's work for this repository (see Priorities).
 | 2 | linalg | the linalg extension; small cases cross-checked in pure X_eTaL |
 | 3 | photo-lab | demos/photo-lab: filters and edges by rotation, SVD compression at several ranks, PNGs out |
 
-## Saga 9 -- fetch and analyze (post-launch)
+## Saga 11 -- fetch and analyze (post-launch)
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -373,7 +386,7 @@ Research4's work for this repository (see Priorities).
 | 3 | fetch | demos/quakes: the USGS feed (opt-in `just live-quakes`), a saved copy for the golden |
 | 4 | release-1 | catalog and pages reviewed, demos re-run, asks reviewed, retrospective here |
 
-## Saga 10 -- native hook and macro helpers (blocked)
+## Saga 12 -- native hook (blocked)
 
 Blocked on asks E1 (a native hook in X_eTaL) and E2 (`.xtlm`). Until
 then only the designs below are kept current.

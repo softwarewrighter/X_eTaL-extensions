@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 20:56 `build` xetal-x follows the vendored CLI's new `main` (the terminal installed, `--cfg` flags, options before or after the subcommand: `command()` repeated verbatim) and its new crates (xetal-line, -tty, -system, -doc, -docsite, -doctest). Every reg-rs golden and Rust test passed unchanged; all 21 vendored demos identical under xetal-x. Asks E2 and E6 landed (vendored).
+
 - 20:07 `vendor` X_eTaL f823212 vendored (from 7b70575: `.xtlm` macro libraries and the system macros, ask E2; options before the subcommand, ask E6; the terminal; the speed work).
 
 ## 2026-10-04
