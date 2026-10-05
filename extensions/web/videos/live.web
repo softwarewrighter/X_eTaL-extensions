@@ -1,0 +1,11 @@
+# extensions/web/videos/live.webm and .webp: the live Life page, as a
+# browser shows it; each shot is a page load, so the board steps on
+# (just videos web; headless Chrome, no window opens).
+demo=live
+seed=1
+size=700,760
+fps=3
+scale=560
+steps() {
+  for _ in $(seq 36); do shot /; done
+}

@@ -1,0 +1,25 @@
+# extensions/web/videos/todomvc.webm and .webp: TodoMVC served by X_eTaL
+# and kept in SQLite: todos added, one done, the filters, cleared
+# (just videos web; headless Chrome, no window opens).
+demo=todomvc
+size=760,460
+fps=1
+scale=640
+steps() {
+  shot /
+  post /add --data-urlencode "title=buy milk & <eggs>"
+  shot /
+  post /add -d "title=write the TodoMVC demo"
+  shot /
+  post /add -d "title=record it"
+  shot /
+  post /toggle -d id=2
+  shot /
+  shot "/?show=active"
+  shot "/?show=completed"
+  post /toggle -d id=3
+  shot /
+  post /clear -X POST
+  shot /
+  shot /
+}

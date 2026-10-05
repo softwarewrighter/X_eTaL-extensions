@@ -98,18 +98,18 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
     </section>
   </div>
   <h2 id="web"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/web/docs/README.md">web</a></h2>
-  <p class="lede">HTTP serving for X_eTaL, where the program is the request loop: axum serves on 127.0.0.1 in the background and queues each request; the program takes the next one, reads its method, path, query, form fields and body, and replies with a status and a body. Rust never calls into X_eTaL; the program drives.</p>
+  <p class="lede">&lt;p align=&quot;center&quot;&gt; &lt;img src=&quot;../videos/todomvc.webp&quot; alt=&quot;TodoMVC served by an X_eTaL program&quot; width=&quot;420&quot;&gt; &lt;img src=&quot;../videos/live.webp&quot; alt=&quot;Life computed in X_eTaL, one generation per request&quot; width=&quot;320&quot;&gt; &lt;/p&gt;</p>
   <div class="demos">
     <section class="panel demo">
       <h3>web / live</h3>
       <p class="note">A live page: Conway&#x27;s Life kept by an X_eTaL program and drawn as SVG, one generation per request. The program is the server&#x27;s request loop.</p>
-      <p class="note">(no recording yet)</p>
+      <video src="web/live.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo web live</pre>
     </section>
     <section class="panel demo">
       <h3>web / todomvc</h3>
       <p class="note">TodoMVC on the web: the todos live in SQLite, the X_eTaL program is the server -- it routes each request, keeps the filter, counts what is left, and writes the page; forms post and are redirected back.</p>
-      <p class="note">(no recording yet)</p>
+      <video src="web/todomvc.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo web todomvc</pre>
     </section>
   </div>
@@ -121,7 +121,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 512b3ee</span><span class="sep">&middot;</span>
-  <span>built at d56faeb</span>
+  <span>built at 5b2251a</span>
 </footer>
 </body>
 </html>

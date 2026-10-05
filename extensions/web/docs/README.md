@@ -1,5 +1,10 @@
 # web
 
+<p align="center">
+  <img src="../videos/todomvc.webp" alt="TodoMVC served by an X_eTaL program" width="420">
+  <img src="../videos/live.webp" alt="Life computed in X_eTaL, one generation per request" width="320">
+</p>
+
 HTTP serving for X_eTaL, where the program is the request loop: axum
 serves on 127.0.0.1 in the background and queues each request; the
 program takes the next one, reads its method, path, query, form fields
@@ -101,3 +106,11 @@ X_eTaL program answering four requests that `curl` asks
   redirected back (`303`, `wb:h_eader! "Location: /"`). The test
   `web-demo-todomvc` drives it with `curl`, runs it again to show the
   list was kept, and checks that a title like `<eggs>` is escaped.
+
+## Recording
+
+`videos/live.webm` and `videos/todomvc.webm` (and `.webp`) show the
+two pages as a browser draws them (`just videos web`): each demo is
+served on a free port, driven by the steps in `videos/NAME.web`, and
+every shot is the page rendered by headless Chrome (its own temporary
+profile; no window opens).

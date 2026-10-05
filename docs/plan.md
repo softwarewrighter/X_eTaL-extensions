@@ -391,7 +391,23 @@ pulls each request and posts its reply.
 | 3 | xetal-v010 | (done; inserted: X_eTaL tagged v0.1.0 at 512b3ee) `XETAL_COMMIT` pinned there, every golden re-run; tagged v0.2.0 at 9dec588 (the user's yes; annotated, notes: built against X_eTaL v0.1.0; no GitHub Release) |
 | 4 | live-page | (done) demos/live: Life as SVG, one generation per request (New board, Glider, Quit); `web-demo-live` drives it over loopback; `XETAL_WEB_PORT` for tests |
 | 5 | todomvc | (done) demos/todomvc: TodoMVC with HTML forms, kept in SQLite; `wb:h_eader!` for the redirects; `web-demo-todomvc` drives add, toggle, filters, delete, a restart, clear |
-| 6 | web-release | recordings (vhs with curl), docs, status, catalog, retrospective; the site checked online after the deploy |
+| 6 | web-release | (done) recordings of both pages by headless Chrome (`videos/NAME.web`, a new kind in `scripts/videos.sh`), docs, parity, status, retrospective; the site checked online after the deploy |
+
+Saga 9 retrospective: X_eTaL serves the web. The web extension keeps
+axum and tokio inside a background thread and gives the program a
+queue it pulls from, so no callback ever enters X_eTaL (plan A15 held
+up); the queue bound, timeouts and loopback-only binding are tested
+with a real client. Two demos: Life stepped per request and drawn as
+SVG built in X_eTaL (`m_ap` over the live cells, joined), and TodoMVC
+with forms, SQLite and redirects. Added on the way: `XETAL_WEB_PORT`
+(tests run demos on a free port), `wb:h_eader!` (redirects), the gate's
+stale-site check (the published site still said X_eTaL was vendored),
+recordings by headless Chrome. X_eTaL v0.1.0 was pinned mid-saga (an
+inserted step; hygienic macros changed one golden's text) and this
+repository tagged v0.2.0 with the user's yes. Learned: guards return
+from the function, so a reply-then-continue is `(reply) r_ight next`;
+reducing an empty list of boxes needs a seed; headless Chrome lingers
+after `--screenshot`, so the recorder stops it once the file exists.
 
 ## Saga 10 -- photo lab (post-launch)
 

@@ -9,14 +9,25 @@
 #   - NAME.frames: a window demo run headless (XETAL_HEADLESS), every
 #     frame saved (XETAL_FRAMES) and joined by ffmpeg; with `audio=FILE`
 #     the file's sound goes into the webm (the visualizer: at 60 frames
-#     a second a headless frame is a 60th of a second of the audio).
+#     a second a headless frame is a 60th of a second of the audio);
+#   - NAME.web: a web demo served on a free port (XETAL_WEB_PORT=0, its
+#     SQLite files in a fresh directory), driven by the spec's steps()
+#     with `shot PATH` (the page as headless Chrome renders it, with
+#     its own temporary profile: no window) and `post PATH CURL-ARGS`;
+#     the shots are the frames.
 #   scripts/videos.sh [EXT]
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # X_eTaL's clone (work/xetal) must exist: this repo's crates build on it
 "$root/scripts/xetal.sh" >/dev/null
 cd "$root"
-for tool in vhs ffmpeg gif2webp sox; do command -v "$tool" >/dev/null || { echo "$tool not found" >&2; exit 127; }; done
+for tool in vhs ffmpeg gif2webp sox curl; do command -v "$tool" >/dev/null || { echo "$tool not found" >&2; exit 127; }; done
+# headless Chrome renders the web demos (.web): CHROME, else the usual places
+chrome="${CHROME:-}"
+for c in "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" google-chrome chromium; do
+  [ -n "$chrome" ] && break
+  if [ -x "$c" ] || command -v "$c" >/dev/null; then chrome="$c"; fi
+done
 cargo build -q --workspace
 mkdir -p target/screens
 encode() { # SRC DEST-BASE SCALE WEBP-SCALE [FPS [AUDIO]]
@@ -61,6 +72,51 @@ for dir in extensions/${1:-*}/videos; do
       -vf "scale=$scale:-1:flags=neighbor" -pix_fmt yuv420p "target/screens/$ext-$name.mp4"
     # the site's copy keeps the frame rate (and the sound); the webp is silent
     encode "target/screens/$ext-$name.mp4" "$dir/$name" "$scale" "$scale" "$([ -n "$audio" ] && echo "$fps" || echo 8)" "$audio"
+  done
+  for spec in "$dir"/*.web; do
+    [ -e "$spec" ] || continue
+    name="$(basename "$spec" .web)"
+    demo=""; seed=1; size=760,560; fps=2; scale=640
+    # shellcheck disable=SC1090
+    . "$spec"
+    echo "==> web $ext $name (headless Chrome)"
+    work="$(mktemp -d)"
+    out="$root/target/screens/$ext-$name-shots"
+    rm -rf "$out" && mkdir -p "$out"
+    (cd "extensions/$ext" && XETAL_WEB_PORT=0 XETAL_SQLITE_ROOT="$work" \
+      exec "$root/target/debug/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > "$work/out" 2>&1) &
+    server=$!
+    port=""
+    for _ in $(seq 100); do
+      port="$(head -1 "$work/out" | sed -n 's/.*127\.0\.0\.1:\([0-9]*\).*/\1/p')"
+      [ -n "$port" ] && break
+      sleep 0.1
+    done
+    [ -n "$port" ] || { cat "$work/out" >&2; exit 1; }
+    shots=0
+    # the page as headless Chrome draws it; Chrome lingers after
+    # writing the file, so it is stopped once the file is there
+    shot() {
+      shots=$((shots + 1))
+      local png="$out/shot-$shots.png"
+      "$chrome" --headless=new --disable-gpu --no-first-run --no-default-browser-check \
+        --user-data-dir="$work/chrome" --hide-scrollbars --window-size="$size" \
+        --virtual-time-budget=600 --screenshot="$png" "http://127.0.0.1:$port$1" > /dev/null 2>&1 &
+      local c=$!
+      for _ in $(seq 200); do [ -s "$png" ] && break; sleep 0.1; done
+      sleep 0.3
+      kill "$c" 2>/dev/null || true
+      pkill -f "$work/chrome" 2>/dev/null || true
+      wait "$c" 2>/dev/null || true
+    }
+    post() { curl -s -o /dev/null "${@:2}" "http://127.0.0.1:$port$1"; }
+    steps
+    curl -s -o /dev/null "http://127.0.0.1:$port/quit"
+    wait "$server" || true
+    rm -rf "$work"
+    ffmpeg -loglevel error -y -framerate "$fps" -i "$out/shot-%d.png" \
+      -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -pix_fmt yuv420p "target/screens/$ext-$name.mp4"
+    encode "target/screens/$ext-$name.mp4" "$dir/$name" "$scale" "$scale" "$fps"
   done
   for spec in "$dir"/*.sound; do
     [ -e "$spec" ] || continue
