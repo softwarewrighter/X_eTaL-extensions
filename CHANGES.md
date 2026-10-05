@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-04
 
+- 20:06 `docs` The triggered oscilloscope checked live: it ended by itself (9 s) and the user found it now looks like a scope.
+
 - 19:39 `fix` The oscilloscope triggers (the user: "like a scope without triggering ... just moving wavy lines"): each frame draws from the left channel's first rising zero crossing after the playhead, both channels from it, so a steady chord stands still; frame-to-frame change measured at about 1,400 pixels before and 40 to 250 after; headless golden rebased and the recording re-made on purpose.
 
 - 16:22 `docs` The oscilloscope replayed live: it ended by itself with the music (10 s), and the user confirmed the sound by ear.

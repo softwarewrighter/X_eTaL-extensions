@@ -107,7 +107,7 @@ channel above and right below, triggered like a real scope. Untriggered
 (the first version, which the user saw sliding), about 1,400 pixels of
 the trace changed from one frame to the next; triggered, 40 to 250 --
 what is left is the notes' envelopes decaying, and a jump when a note
-changes. The instruments are an ordinary X_eTaL
+changes. Checked live: the user found it now looks like a scope. The instruments are an ordinary X_eTaL
 library beside the demos, `demos/Instruments.xtl` (`"in:" u_se<
 "Instruments"`), shared with `synth.xtl` -- one program using an
 ordinary library and two native extensions (audio, canvas).
