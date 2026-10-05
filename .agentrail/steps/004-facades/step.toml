@@ -1,6 +1,6 @@
 number = 4
 slug = "facades"
-status = "pending"
+status = "in-progress"
 description = "macros step 3: rewrite facades (hello, clock, sqlite, canvas, scene, audio) a..."
 role = "production"
 context_files = []

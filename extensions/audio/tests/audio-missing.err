@@ -1,1 +1,1 @@
-error[io]: []N_GET: ext:audio/open: tests/data/none.ogg: No such file or directory (os error 2) at ./lib/Audio.xtl:12:17
+error[io]: []N_GET: ext:audio/open: tests/data/none.ogg: No such file or directory (os error 2) at ./lib/Audio.xtl:12:1

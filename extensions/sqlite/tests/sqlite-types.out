@@ -4,3 +4,4 @@ l:t_exts : Char -> Char -> Char
 l:c_ols : Char -> Char -> Char
 l:q_uote : Char -> Char
 l:i_mport : Char -> Char -> Int
+l:package : Char

@@ -1,1 +1,1 @@
-error[io]: []N_GET: ext:sqlite/exec: "../escape.db": a path may not leave its root (..) at ./lib/Sqlite.xtl:12:17
+error[io]: []N_GET: ext:sqlite/exec: "../escape.db": a path may not leave its root (..) at ./lib/Sqlite.xtl:12:1

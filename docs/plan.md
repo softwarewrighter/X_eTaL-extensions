@@ -361,7 +361,7 @@ facade function from a one-line signature (docs/ffi-macro.md).
 | 1 | vendor-refresh | (done) X_eTaL f823212 vendored; xetal-x follows the CLI's new `main`; every golden unchanged, 21 demos identical |
 | 2 | devendor | (done) X_eTaL at `XETAL_COMMIT`, cloned into `work/xetal`, not copied (`../X_eTaL/docs/vendoring.md`) |
 | 3 | ffi-macro | (done) `lib/Ffi.xtlm`, on `XETAL_PATH` via `xetal-x`; its expansion of hello equals `docs/ffi/Hello.xtl` exactly; ask E7 |
-| 4 | facades | each facade as signature lines where the kinds fit; every types and demo golden unchanged |
+| 4 | facades | (done) all six facades as `ffi:b_ind<` signature lines (clock's `t_ime` kept by hand); types unchanged but `l:package`; every demo golden unchanged; errors now name the signature line |
 | 5 | macros-release | docs, status, asks, retrospective |
 
 ## Saga 9 -- web (post-launch)

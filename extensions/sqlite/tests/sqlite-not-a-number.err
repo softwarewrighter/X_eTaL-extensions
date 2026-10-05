@@ -1,1 +1,1 @@
-error[io]: []N_GET: ext:sqlite/nums: "abc" is not a number (use sq:t_exts) at ./lib/Sqlite.xtl:12:17
+error[io]: []N_GET: ext:sqlite/nums: "abc" is not a number (use sq:t_exts) at ./lib/Sqlite.xtl:14:1

@@ -35,7 +35,9 @@ pub fn install(linked: &[Linked]) -> Vec<FunctionInfo> {
         .iter()
         .flat_map(|e| registry.functions(e))
         .collect();
-    let mut store = ExtStore::new(Memory::default(), registry);
+    // the binding macro every facade is written with (lib/Ffi.xtlm)
+    let mut store = ExtStore::new(Memory::default(), registry)
+        .with_facade("Ffi.xtlm", include_str!("../../../lib/Ffi.xtlm"));
     for (name, source) in facades {
         store = store.with_facade(name, source);
     }

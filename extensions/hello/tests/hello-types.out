@@ -5,3 +5,4 @@ l:s_um : Num a => a -> Float
 l:e_cho : Num a => a -> Float
 l:f_ail : Unit -> Int
 l:p_anic : Unit -> Int
+l:package : Char

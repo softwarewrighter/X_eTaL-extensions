@@ -1,1 +1,1 @@
-error[io]: []N_GET: ext:hello/fail: hello was asked to fail at ./lib/Hello.xtl:9:17
+error[io]: []N_GET: ext:hello/fail: hello was asked to fail at ./lib/Hello.xtl:20:1

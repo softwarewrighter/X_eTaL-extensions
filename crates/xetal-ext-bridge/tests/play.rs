@@ -9,6 +9,8 @@ use xetal_ext_loader::Registry;
 use xetal_store::Memory;
 
 const FACADE: &str = include_str!("../../../extensions/hello/lib/Hello.xtl");
+// the binding macro the facade is written with
+const FFI: &str = include_str!("../../../lib/Ffi.xtlm");
 const TOUR: &str = include_str!("../../../extensions/hello/demos/tour.xtl");
 const TOUR_OUT: &str = include_str!("../../../extensions/hello/tests/hello-demo-tour.out");
 
@@ -17,7 +19,9 @@ fn install() {
     registry
         .load_static(xetal_ext_hello::__xetal_extension::descriptor)
         .unwrap();
-    let store = ExtStore::new(Memory::default(), registry).with_facade("Hello.xtl", FACADE);
+    let store = ExtStore::new(Memory::default(), registry)
+        .with_facade("Hello.xtl", FACADE)
+        .with_facade("Ffi.xtlm", FFI);
     xetal_store::install(Arc::new(store));
 }
 

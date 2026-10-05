@@ -2,69 +2,30 @@
 # point scenes in a native window, patched by id, the mouse orbiting.
 # Import: "sc:" u_se< "Scene"
 # Run with xetal-x, which links scene and serves its windows on the main
-# thread (xetal-x --ext DIR puts this directory on XETAL_PATH); the
-# private helpers below speak the ext: channel (docs/bridge.md).
-
-# private: the ext: channel
-c_all := { p -> []N_GET "ext:scene/" c_at p }
-t_ext := { t p -> t []N_PUT "ext:scene/" c_at p c_at "?text" }
-f_loats := { x p -> (f_ormat r_avel f_loat x) []N_PUT "ext:scene/" c_at p c_at "?float=" c_at f_ormat s_hape x }
-n_umber := { p -> f_loor f_irst n_umbers c_all p }
+# thread (xetal-x --ext DIR puts this directory on XETAL_PATH).
+# Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+"ffi:" u_se< "Ffi"
 
 # title sc:o_pen! width height: a scene window that size (points); its id.
-l:o_pen! := { title size ->
-  a := title t_ext "open"
-  b := size f_loats "open"
-  n_umber "open"
-}
-
+"o_pen! : text float -> int"         ffi:b_ind< "scene/open"
 # (scene c_at object c_at red green blue) sc:p_olyline! points: put
 # object (an id of your choice) as points joined in order; points are an
 # n by 3 matrix (x y z), colors 0 to 1. Putting an id again replaces it.
-l:p_olyline! := { head pts ->
-  a := head f_loats "polyline"
-  b := pts f_loats "polyline"
-  n_umber "polyline"
-}
-
+"p_olyline! : float float -> int"    ffi:b_ind< "scene/polyline"
 # header sc:s_egments! points: the points taken in pairs, each a segment.
-l:s_egments! := { head pts ->
-  a := head f_loats "segments"
-  b := pts f_loats "segments"
-  n_umber "segments"
-}
-
+"s_egments! : float float -> int"    ffi:b_ind< "scene/segments"
 # header sc:d_ots! points: each point a dot.
-l:d_ots! := { head pts ->
-  a := head f_loats "dots"
-  b := pts f_loats "dots"
-  n_umber "dots"
-}
-
+"d_ots! : float float -> int"        ffi:b_ind< "scene/dots"
 # scene sc:r_emove! object: 1 if it was there, else 0.
-l:r_emove! := { s o ->
-  a := s f_loats "remove"
-  b := o f_loats "remove"
-  n_umber "remove"
-}
-
+"r_emove! : float float -> int"      ffi:b_ind< "scene/remove"
 # scene sc:c_amera! yaw pitch distance spin: where the camera orbits from
 # (radians, scene units) and how fast it turns by itself (radians a second).
-l:c_amera! := { s c ->
-  a := s f_loats "camera"
-  b := c f_loats "camera"
-  n_umber "camera"
-}
-
+"c_amera! : float float -> int"      ffi:b_ind< "scene/camera"
 # sc:n_ext! scene: the next event, waiting at most a frame (1/60 s):
 # "frame", "key Space", "key q", "close". Dragging orbits by itself.
-l:n_ext! := { s ->
-  a := s f_loats "next"
-  c_all "next"
-}
-
+"n_ext! : float -> text"             ffi:b_ind< "scene/next"
 # sc:c_lose! scene: close the window; 1.
-l:c_lose! := { s ->
-  a := s f_loats "close"
-  n_umber "close"
-}
+"c_lose! : float -> int"             ffi:b_ind< "scene/close"
+
+# The native package behind these functions.
+l:package := "scene"

@@ -17,7 +17,11 @@ fn run(cmd: &str, args: &[&str]) -> String {
 fn vendored() -> String {
     let text = std::fs::read_to_string("../../XETAL_COMMIT").unwrap_or_default();
     let sha: String = text.trim().chars().take(7).collect();
-    if sha.is_empty() { "unknown".into() } else { sha }
+    if sha.is_empty() {
+        "unknown".into()
+    } else {
+        sha
+    }
 }
 
 fn main() {

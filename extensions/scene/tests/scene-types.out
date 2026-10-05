@@ -6,3 +6,4 @@ l:r_emove! : (Num a, Num b) => a -> b -> Int
 l:c_amera! : (Num a, Num b) => a -> b -> Int
 l:n_ext! : Num a => a -> Char
 l:c_lose! : Num a => a -> Int
+l:package : Char

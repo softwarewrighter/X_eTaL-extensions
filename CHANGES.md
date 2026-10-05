@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 01:00 `ext` Every facade written with the binding macro: hello, clock, sqlite, canvas, scene and audio are now one `ffi:b_ind<` signature line per function (clock's `t_ime` still by hand) and `l:package`. Every function's type is unchanged (the types goldens gain only `l:package : Char`), every demo golden is unchanged; the eight error goldens now locate the error at the function's signature line. The `xetal-play` bridge test and the shell's store serve `Ffi.xtlm`.
+
 - 00:28 `feat` The binding macro, `lib/Ffi.xtlm` (`"s_hout : text -> text" ffi:b_ind< "hello/shout"`): about 60 lines of X_eTaL string work; `xetal-x` puts the repo's `lib/` on `XETAL_PATH`. Its expansion of hello's seven signatures equals `docs/ffi/Hello.xtl` exactly, its types the facade's, and the tour through it its golden (three reg-rs tests). Ask E7: `xetal type` decides library-or-program before expanding macros (workaround: `l:package`). docs/ffi-macro.md describes it as built.
 
 - 00:08 `build` X_eTaL is no longer copied into this repository (the user, after X_eTaL's docs/vendoring.md): `XETAL_COMMIT` names the known-good commit (f823212); `just xetal` (`scripts/xetal.sh`) clones X_eTaL into `work/xetal/`, checks it out, builds and links `bin/xetal`; Cargo path dependencies, `xetal-x`'s `#[path]` modules, the build scripts, checks and recipes point at the clone; `check-vendor` checks the clone is at the commit and unedited; every script that builds runs `scripts/xetal.sh` first; `vendor/xetal/` (657 tracked files) removed. The gate passes unchanged (21 demos identical, every golden).
