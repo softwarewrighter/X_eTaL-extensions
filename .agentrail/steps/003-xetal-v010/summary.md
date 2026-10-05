@@ -1,0 +1,1 @@
+XETAL_COMMIT pinned to X_eTaL v0.1.0 (512b3ee); docsearch rename followed; hygiene handled in hello-ffi-macro; asks swept (E4 partly landed); walkthrough from GitHub ok. Tag v0.2.0 awaits the user's yes.
