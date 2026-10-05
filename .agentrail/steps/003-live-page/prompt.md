@@ -1,0 +1,1 @@
+web step 3: extensions/web/demos/live.xtl: a page recomputing Life or Mandelbrot as SVG per request; a reg-rs test drives it over loopback; just demo web live.

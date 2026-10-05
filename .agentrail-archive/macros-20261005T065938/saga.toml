@@ -1,0 +1,6 @@
+name = "macros"
+status = "completed"
+current_step = 5
+created_at = "2026-10-04T20:06:06"
+plan_file = ".agentrail/plan.md"
+retroactive = false

@@ -1,0 +1,1 @@
+web step 5: recordings (vhs with curl), docs, README catalog, status, parity, retrospective; verify the live site online after the deploy.

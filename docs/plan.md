@@ -42,7 +42,9 @@ this repository:
   part of a tagged, known-compatible six-repo snapshot.
 
 Order now: Saga 6 (launch) first; Saga 8's binding macro as soon as
-`.xtlm` lands (it has); everything else after the launch.
+`.xtlm` lands (it has); everything else after the launch. The launch
+was postponed (2026-10-05); the user said to proceed, so Saga 9 (web)
+starts now.
 
 ### Promotion blockers (this repository)
 
@@ -376,13 +378,19 @@ workaround); the browser store and the bridge test needed `Ffi.xtlm`
 served too; error locations moved to the signature lines, which is
 better. Not done: clock's `t_ime` (a function argument) has no kind.
 
-## Saga 9 -- web (post-launch)
+## Saga 9 -- web
+
+Started 2026-10-05: the launch was postponed, and the user said to
+proceed. Plan A15 holds: axum stays inside the extension, the program
+pulls each request and posts its reply.
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | web | the web extension: axum on a background thread, a bounded request queue, next / reply, timeouts, loopback by default; Rust tests with a real client on loopback |
-| 2 | live-page | demos/live: a page recomputing Life or Mandelbrot as SVG per request; reg-rs test drives it over loopback |
-| 3 | todomvc | demos/todomvc: TodoMVC in X_eTaL with sqlite; loopback test of add, toggle, delete |
+| 1 | pages-fresh | the gate fails when `pages/` is older than its sources (found when the published site still said X_eTaL is vendored) |
+| 2 | web | the web extension: axum on a background thread, a bounded request queue, next / reply, timeouts, loopback by default; Rust tests with a real client on loopback |
+| 3 | live-page | demos/live: a page recomputing Life or Mandelbrot as SVG per request; reg-rs test drives it over loopback |
+| 4 | todomvc | demos/todomvc: TodoMVC in X_eTaL with sqlite; loopback test of add, toggle, delete |
+| 5 | web-release | recordings (vhs with curl), docs, status, catalog, retrospective; the site checked online after the deploy |
 
 ## Saga 10 -- photo lab (post-launch)
 

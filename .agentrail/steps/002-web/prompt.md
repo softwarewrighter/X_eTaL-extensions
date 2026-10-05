@@ -1,0 +1,1 @@
+web step 2: extensions/web (just new-ext web wb 'serve HTTP'): axum + tokio on a background thread, loopback by default, port 8470 unless given, a bounded request queue; s_erve!, n_ext! (method, path, query, body), r_eply! (status, content type, body), timeouts; facade with ffi:b_ind<; Rust tests with a real client on loopback; reg-rs types/errors; docs page.

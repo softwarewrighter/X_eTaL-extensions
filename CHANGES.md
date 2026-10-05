@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 01:40 `plan` Saga 9, web, started (the launch was postponed; the user: proceed): pages-fresh, web, live-page, todomvc, web-release. The macros saga archived.
+
 - 01:30 `docs` Site rebuilt: its build instructions said X_eTaL is vendored; now `just xetal` first (stale since the devendor step).
 
 - 01:15 `release` Macros saga done: docs/ffi-macro.md describes the facades as built (all six written with `ffi:b_ind<`; clock's `t_ime` by hand; errors at the signature line); README says where libraries, macros and native extensions meet (every facade written with a macro); status says `.xtlm` is in use; asks E5 and the 2026-10-05 note updated; the sqlite and hello pages follow; Saga 8 retrospective in docs/plan.md.

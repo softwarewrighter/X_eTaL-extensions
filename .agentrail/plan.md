@@ -1,17 +1,14 @@
-# macros
+# web
 
-X_eTaL's .xtlm macro libraries landed upstream (ask E2; MC10-MC13,
-MC23), with the --draw fix (E6). This saga brings them in and makes
-"macros extend the language" real in this repository: the binding
-macro Ffi.xtlm (docs/ffi-macro.md) writes every facade function from a
-one-line signature.
+X_eTaL on the web (docs/plan.md, Saga 9; plan A15): a web extension
+keeps axum on a background thread with a bounded request queue; the
+X_eTaL program pulls the next request and posts its reply, so the
+program is the request loop. Loopback only in tests; port 8470.
 
 ## Steps
 
-1. vendor-refresh -- vendor X_eTaL HEAD (own commit), re-run every
-   golden, fix or rebase on purpose, drop the --draw workaround.
-2. ffi-macro -- Ffi.xtlm (shared, on XETAL_PATH via xetal-x), its
-   expansions tested against docs/ffi/Hello.xtl (xetal expand).
-3. facades -- each facade rewritten as signature lines where the kinds
-   fit; every types golden and demo golden unchanged.
-4. macros-release -- docs, status, asks, retrospective.
+1. pages-fresh -- the gate fails when pages/ is out of date.
+2. web -- the extension, Rust tests with a real client on loopback.
+3. live-page -- a page recomputing Life or Mandelbrot as SVG per request.
+4. todomvc -- TodoMVC in X_eTaL with sqlite.
+5. web-release -- recordings, docs, status, retrospective, site checked online.

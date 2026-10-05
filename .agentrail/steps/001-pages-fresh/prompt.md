@@ -1,0 +1,1 @@
+web step 1: the gate fails when pages/ is out of date with its sources (compare a fresh build to pages/ ignoring the 'built at' commit); found when the published site still said X_eTaL is vendored.

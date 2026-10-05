@@ -1,0 +1,9 @@
+number = 1
+slug = "pages-fresh"
+status = "pending"
+description = "web step 1: the gate fails when pages/ is out of date with its sources (compa..."
+role = "production"
+context_files = []
+created_at = "2026-10-05T06:59:38"
+task_type = "build"
+commits = []
