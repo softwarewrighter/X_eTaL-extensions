@@ -113,6 +113,11 @@ r_ev_2 m                 # reverse each row
 '+ r_/_12 m              # two axes in turn: the total
 -1 0 1 o_- 1 2 3         # a list of amounts gives every rotation
 s_hape -1 0 1 o_-_12 m   # every combination along both axes: 3 3 2 3
+o_\ m                    # transpose: rows become columns
+a := 2 3 4 r_eshape r_ange 24
+s_hape o_\ a            # every axis reversed: 4 3 2
+s_hape o_\_23 a         # axes 2 and 3 swapped: 2 4 3
+s_hape 3 1 2 t_ranspose a   # axis 1 to 3, 2 to 1, 3 to 2: 3 4 2
 
 # -- Search and order -----------------------------------------------------
 v := 3 1 4 1 5 9 2 6

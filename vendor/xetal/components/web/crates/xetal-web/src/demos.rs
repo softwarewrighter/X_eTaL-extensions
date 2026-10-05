@@ -63,6 +63,7 @@ pub const DEMOS: &[Demo] = demos![
     "keys.xtl",
     "leetcode/numbers-in-string.xtl",
     "life.xtl",
+    "macros.xtl",
     "magmas.xtl",
     "monads.xtl",
     "stats.xtl",
@@ -71,23 +72,27 @@ pub const DEMOS: &[Demo] = demos![
     "tttml.xtl",
 ];
 
-/// The choices, as (group, value, label); a value is `demo:N`, `lib:Name`
-/// or `file:path`, and [`open`] reads it.
+/// The choices, as (group, value, label), group by group: Demos (the
+/// tour, the empty editor, then the top folder's demos), Classics (shown
+/// without their folder), Libraries, Misc (any other folder), Your files;
+/// each group alphabetical. A value is `demo:N`, `lib:Name` or
+/// `file:path`, and [`open`] reads it.
 pub fn choices(saved: &[String]) -> Vec<(&'static str, String, String)> {
     let by_label = |mut group: Vec<(&'static str, String, String)>| {
         group.sort_by_key(|(_, _, label)| label.to_lowercase());
         group
     };
-    let mut demos: Vec<_> = DEMOS
-        .iter()
-        .enumerate()
-        .map(|(i, d)| ("Demos", format!("demo:{i}"), d.name.to_string()))
-        .collect();
-    let rest = by_label(demos.split_off(2.min(demos.len())));
+    let demo = |(i, d): (usize, &Demo)| match d.name.split_once('/') {
+        None => ("Demos", format!("demo:{i}"), d.name.to_string()),
+        Some(("classics", name)) => ("Classics", format!("demo:{i}"), name.to_string()),
+        Some(_) => ("Misc", format!("demo:{i}"), d.name.to_string()),
+    };
+    let mut demos: Vec<_> = DEMOS.iter().enumerate().map(demo).collect();
+    let rest = demos.split_off(2.min(demos.len()));
+    let pick = |g: &str| by_label(rest.iter().filter(|c| c.0 == g).cloned().collect());
+    let libs = xetal_libs::LIBRARIES.iter();
     let libs = by_label(
-        xetal_libs::LIBRARIES
-            .iter()
-            .map(|(n, _)| ("Libraries", format!("lib:{n}"), format!("{n}.xtl")))
+        libs.map(|(n, _)| ("Libraries", format!("lib:{n}"), format!("{n}.xtl")))
             .collect(),
     );
     let files = by_label(
@@ -96,7 +101,15 @@ pub fn choices(saved: &[String]) -> Vec<(&'static str, String, String)> {
             .map(|p| ("Your files", format!("file:{p}"), p.clone()))
             .collect(),
     );
-    [demos, rest, libs, files].concat()
+    [
+        demos,
+        pick("Demos"),
+        pick("Classics"),
+        libs,
+        pick("Misc"),
+        files,
+    ]
+    .concat()
 }
 
 /// The name and text of a choice.

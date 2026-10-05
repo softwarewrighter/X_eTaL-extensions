@@ -5,6 +5,15 @@ STAGES:
     render  decorated Unicode form; --raw converts decorated text
             back to source, --latex prints LaTeX math, --color
             highlights it for a terminal (tolerating errors)
+    expand  the program after macro expansion (i_f<, u_nless<,
+            e_ach<), imports and names as written
+    doc     --json: every item of a program or library, of what it
+            imports and of the system macros (name, kind, type, doc
+            comment, section, examples, source, uses), as JSON;
+            --out DIR: the same as a static site (an index, a page
+            per file, its source drawn decorated, every name linked)
+            --test runs the file's ## >> examples and compares
+            what each prints with the output shown
     parse   surface tree as S-expressions (at most one reading;
             ambiguous shapes are errors)
     fmt     canonical, fully parenthesized form
@@ -35,6 +44,7 @@ EXAMPLES:
   xetal lex -e 'u:s_quare := { _r * _r }; u:s_quare 7'
   xetal type -e 'u:s_quare := { _r * _r }'
   xetal render -e 'o_-_12 x^2'
+  xetal expand -e '"x > 0" i_f< "1; -1"'
   xetal render --latex -e 'o_-_12 x^2'
   xetal run demos/factorial.xtl
   xetal run --untyped demos/fixed-point.xtl

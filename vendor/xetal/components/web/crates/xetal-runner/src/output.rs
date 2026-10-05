@@ -15,6 +15,10 @@ use crate::Event;
 pub struct Output {
     pub run: Option<Run>,
     pub running: bool,
+    /// The program waits for a typed line (the terminal takes keys).
+    pub waiting: bool,
+    /// What it waits for is one key, sent at once, not echoed.
+    pub wants_key: bool,
     /// In a notebook, each statement and where its output and pictures
     /// begin in the run's; none for a plain run.
     pub cells: Vec<Cell>,
@@ -54,8 +58,12 @@ pub enum Action {
     Start,
     /// Something the run did, as it happened.
     Event(Event),
-    /// A run on the page (one that reads the keyboard) ended with this.
+    /// A run that could not start (no worker) ended with this.
     Finished(Run),
+    /// A line typed for the waiting program, echoed as a terminal does.
+    Typed(String),
+    /// A key pressed for the waiting program (not echoed).
+    Pressed,
     /// Stopped by hand: what was shown stays, and says so.
     Stop,
     /// Back to showing the types.
@@ -73,6 +81,8 @@ impl Reducible for Output {
                 return Rc::new(Output {
                     run: Some(Run::default()),
                     running: true,
+                    waiting: false,
+                    wants_key: false,
                     cells: Vec::new(),
                 });
             }
@@ -88,11 +98,18 @@ impl Reducible for Output {
             Action::Event(Event::Err(line)) => run.err += &format!("{line}\n"),
             Action::Event(Event::Picture(svg)) => run.pictures.push(svg),
             Action::Event(Event::Wrote(..) | Event::Ready) => {}
-            Action::Event(Event::Done) => next.running = false,
+            Action::Event(Event::Done) => (next.running, next.waiting) = (false, false),
+            Action::Event(Event::Waiting) => (next.waiting, next.wants_key) = (true, false),
+            Action::Event(Event::WaitingKey) => (next.waiting, next.wants_key) = (true, true),
+            Action::Pressed => (next.waiting, next.wants_key) = (false, false),
+            Action::Typed(line) => {
+                run.out += &format!("{line}\n");
+                next.waiting = false;
+            }
             Action::Finished(done) => (next.run, next.running) = (Some(done), false),
             Action::Stop => {
                 run.err += "stopped\n";
-                next.running = false;
+                (next.running, next.waiting) = (false, false);
             }
             Action::Clear => return Rc::new(Output::default()),
         }

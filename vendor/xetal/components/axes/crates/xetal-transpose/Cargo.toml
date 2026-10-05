@@ -1,0 +1,16 @@
+[package]
+name = "xetal-transpose"
+description = "Transpose: reverse or permute the axes of an array (B17)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+xetal-base.workspace = true
+xetal-array.workspace = true
+xetal-value.workspace = true
+
+[dev-dependencies]
+proptest.workspace = true

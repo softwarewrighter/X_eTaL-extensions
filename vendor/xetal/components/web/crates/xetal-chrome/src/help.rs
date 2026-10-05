@@ -22,6 +22,9 @@ pub(crate) fn help_text() -> Html {
             <ul>
                 <li>{ "Type in the ASCII pane; the Rendered pane follows, and the \
                        pane below shows each statement's type (or the first error)." }</li>
+                <li>{ "A program reading a line ([]R_EAD) waits for it in the output pane, a terminal: type \
+                       the line (arrows, Home, End and history with Up and Down work) and press \
+                       Enter; Ctrl-C stops the program." }</li>
                 <li><b>{ "Run" }</b>{ " (Ctrl-Enter) runs the program and shows its output as it is \
                        printed, with any pictures it draws ([]S_HOW) under it; the classics demos \
                        draw. While it runs, a spinner turns and Run becomes " }<b>{ "Stop" }</b>
@@ -37,8 +40,10 @@ pub(crate) fn help_text() -> Html {
                        an app that works offline." }</li>
                 <li>{ "Drag the bars between the panes to resize them (this browser \
                        remembers); double-click a bar to put it back." }</li>
-                <li>{ "The drop-down opens a demo, a standard library (shown with its \
-                       exports' types) or one of your files; " }<b>{ "Clear" }</b>
+                <li><b>{ "Open" }</b>{ " lists the demos, the classics, the standard libraries (shown with \
+                       their exports' types), the other demos (Misc) and your files, each group \
+                       closed until you click it; the arrows move through it, Enter opens, Escape \
+                       closes. " }<b>{ "Clear" }</b>
                     { " (or \"(empty)\") gives an empty editor to type into." }</li>
                 <li><b>{ "Save" }</b>{ " and " }<b>{ "Save as" }</b>{ " keep files in this \
                        browser's local storage. A saved library (lib/Name.xtl) is \
@@ -137,6 +142,7 @@ fn links() -> Html {
                 { for docs.iter().map(|(label, path)| html! {
                     <li><a href={doc(path)} target="_blank">{ *label }</a></li>
                 }) }
+                <li><a href="literate/beginner.html" target="_blank">{ "Start here: XeTaL in fifteen minutes" }</a></li>
                 <li><a href="poster/index.html" target="_blank">{ "Syntax poster: reading XeTaL on one page" }</a></li>
                 <li><a href="literate/index.html" target="_blank">{ "Literate documents" }</a></li>
                 <li><a href="latex/index.html" target="_blank">{ "Every line in LaTeX" }</a></li>

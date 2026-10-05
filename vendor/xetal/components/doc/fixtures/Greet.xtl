@@ -1,0 +1,27 @@
+## Greetings: a small library that the xetal doc tests document.
+
+### Saying hello
+
+## The greeting for a name.
+## >> "g:" u_se< "Greet"
+## >> g:h_ello "Ann"
+## Hello, Ann
+l:h_ello := { n -> "Hello, " c_at n }
+
+## A greeting shouted.
+##
+## It reuses the plain greeting.
+## >> "g:" u_se< "Greet"
+## >> g:s_hout "Bo"
+## Hello, Bo!
+## >> g:count
+## 2
+l:s_hout := { n -> (l:h_ello n) c_at mark }
+
+### Values
+
+# A private helper: not exported, and its comment is plain.
+mark := "!"
+
+## How many greetings there are.
+l:count := 2

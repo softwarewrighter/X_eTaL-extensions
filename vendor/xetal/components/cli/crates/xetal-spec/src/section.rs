@@ -4,6 +4,7 @@
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Section {
     Source,
+    Expand,
     Tokens,
     Render,
     Surface,
@@ -16,8 +17,9 @@ pub enum Section {
 }
 
 impl Section {
-    pub const ALL: [Section; 10] = [
+    pub const ALL: [Section; 11] = [
         Section::Source,
+        Section::Expand,
         Section::Tokens,
         Section::Render,
         Section::Surface,
@@ -32,6 +34,7 @@ impl Section {
     pub fn name(self) -> &'static str {
         match self {
             Section::Source => "SOURCE",
+            Section::Expand => "EXPAND",
             Section::Tokens => "TOKENS",
             Section::Render => "RENDER",
             Section::Surface => "SURFACE",
@@ -56,6 +59,7 @@ impl Section {
     /// The `xetal` subcommand whose output this section pins, if any.
     pub fn stage(self) -> Option<&'static str> {
         match self {
+            Section::Expand => Some("expand"),
             Section::Tokens => Some("lex"),
             Section::Render => Some("render"),
             Section::Surface => Some("parse"),

@@ -13,10 +13,14 @@ use xetal_lex::{Token, TokenKind, lex};
 use crate::defs::top_level;
 use crate::rename::{name, rename};
 
-/// What a file sees: its own hidden and private namespaces (a library)
-/// and, per alias letters, the hidden namespace and exports named.
+/// What a file sees: its own hidden and private namespaces (a library
+/// or macro library) and, per alias letters, the hidden namespace and
+/// exports named.
 pub struct Context<'a> {
     pub library: Option<(&'a str, &'a str)>,
+    /// The letter a library writes its own exports with: `l` (a
+    /// library), `m` (a macro library, MC10).
+    pub own: &'a str,
     pub aliases: &'a HashMap<String, (String, Vec<String>)>,
     /// Import statements, which are removed rather than rewritten.
     pub imports: &'a [Span],

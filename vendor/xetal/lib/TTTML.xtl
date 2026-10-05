@@ -27,7 +27,7 @@ l:o_utcome := { s ->
 # board read as a base-3 number names it; the least of its 8 names is
 # the position's code, the same for a board turned or reflected.
 l:symmetries := 8 9 r_eshape 1 2 3 4 5 6 7 8 9 7 4 1 8 5 2 9 6 3 9 8 7 6 5 4 3 2 1 3 6 9 2 5 8 1 4 7 3 2 1 6 5 4 9 8 7 7 8 9 4 5 6 1 2 3 1 4 7 2 5 8 3 6 9 9 6 3 8 5 2 7 4 1
-l:c_ode := { s -> 'm_in r_/ ((l:symmetries s_elect s) + 1) '+ '* i_nner 6561 2187 729 243 81 27 9 3 1 }
+l:c_ode := { s -> 'm_in r_/ 3 d_ecode o_\ 1 + l:symmetries s_elect s }
 
 # The model knows nothing yet: no positions.
 l:empty := 2 0 r_eshape 0.5

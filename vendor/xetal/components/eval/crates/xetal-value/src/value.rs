@@ -12,6 +12,9 @@ pub enum Value<'a> {
     Float(f64),
     Bool(bool),
     Char(char),
+    /// A value of a built-in enumerated type (QD6): the type's name and
+    /// the value's index (`tags`).
+    Tag(&'static str, u32),
     Unit,
     /// An array of rank 1 or more (a scalar is never an `Array`).
     Array(Rc<Array<Value<'a>>>),

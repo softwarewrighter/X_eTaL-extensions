@@ -12,6 +12,7 @@ xetal-play.workspace = true
 xetal-chrome.workspace = true
 xetal-layout.workspace = true
 xetal-runner.workspace = true
+xetal-typing.workspace = true
 xetal-libs.workspace = true
 xetal-store.workspace = true
 yew.workspace = true

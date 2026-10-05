@@ -471,7 +471,9 @@ dependencies = [
  "proptest",
  "xetal-array",
  "xetal-base",
+ "xetal-kernel",
  "xetal-rotate",
+ "xetal-transpose",
  "xetal-value",
 ]
 
@@ -524,6 +526,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-kernel"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-value",
+]
+
+[[package]]
 name = "xetal-lex"
 version = "0.1.0"
 dependencies = [
@@ -555,6 +565,16 @@ name = "xetal-token"
 version = "0.1.0"
 dependencies = [
  "xetal-base",
+]
+
+[[package]]
+name = "xetal-transpose"
+version = "0.1.0"
+dependencies = [
+ "proptest",
+ "xetal-array",
+ "xetal-base",
+ "xetal-value",
 ]
 
 [[package]]

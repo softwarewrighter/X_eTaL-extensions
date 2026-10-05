@@ -11,3 +11,11 @@ pub fn standard(name: &str) -> Option<&'static str> {
         .find(|(n, _)| *n == name)
         .map(|(_, text)| *text)
 }
+
+/// The standard macro library `name` (`lib/Name.xtlm`), if there is one.
+pub fn standard_macros(name: &str) -> Option<&'static str> {
+    MACROS
+        .iter()
+        .find(|(n, _)| *n == name)
+        .map(|(_, text)| *text)
+}

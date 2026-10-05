@@ -559,7 +559,9 @@ version = "0.1.0"
 dependencies = [
  "xetal-array",
  "xetal-base",
+ "xetal-kernel",
  "xetal-rotate",
+ "xetal-transpose",
  "xetal-value",
 ]
 
@@ -621,10 +623,21 @@ dependencies = [
  "xetal-radix",
  "xetal-rotate",
  "xetal-search",
+ "xetal-step",
  "xetal-struct",
  "xetal-system",
+ "xetal-transpose",
  "xetal-types",
  "xetal-value",
+]
+
+[[package]]
+name = "xetal-expand"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-lex",
+ "xetal-mapped",
 ]
 
 [[package]]
@@ -650,6 +663,7 @@ dependencies = [
  "xetal-array",
  "xetal-axes",
  "xetal-base",
+ "xetal-kernel",
  "xetal-map",
  "xetal-value",
 ]
@@ -660,6 +674,14 @@ version = "0.1.0"
 dependencies = [
  "xetal-base",
  "xetal-lex",
+]
+
+[[package]]
+name = "xetal-kernel"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-value",
 ]
 
 [[package]]
@@ -684,17 +706,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-lookup"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-libs",
+ "xetal-sources",
+ "xetal-store",
+]
+
+[[package]]
 name = "xetal-macro"
 version = "0.1.0"
 dependencies = [
  "xetal-base",
  "xetal-core",
  "xetal-eval",
+ "xetal-expand",
  "xetal-lex",
  "xetal-libs",
+ "xetal-lookup",
+ "xetal-mapped",
  "xetal-names",
  "xetal-sources",
- "xetal-store",
  "xetal-types",
 ]
 
@@ -705,7 +739,15 @@ dependencies = [
  "xetal-array",
  "xetal-base",
  "xetal-core",
+ "xetal-kernel",
  "xetal-value",
+]
+
+[[package]]
+name = "xetal-mapped"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
 ]
 
 [[package]]
@@ -714,6 +756,25 @@ version = "0.1.0"
 dependencies = [
  "xetal-base",
  "xetal-lex",
+]
+
+[[package]]
+name = "xetal-prim"
+version = "0.1.0"
+dependencies = [
+ "xetal-arith",
+ "xetal-array",
+ "xetal-base",
+ "xetal-catalog",
+ "xetal-hof",
+ "xetal-kernel",
+ "xetal-radix",
+ "xetal-rotate",
+ "xetal-search",
+ "xetal-struct",
+ "xetal-system",
+ "xetal-transpose",
+ "xetal-value",
 ]
 
 [[package]]
@@ -731,9 +792,11 @@ version = "0.1.0"
 dependencies = [
  "xetal-base",
  "xetal-core",
+ "xetal-eval",
  "xetal-lex",
  "xetal-macro",
  "xetal-sources",
+ "xetal-system",
  "xetal-types",
 ]
 
@@ -771,6 +834,22 @@ version = "0.1.0"
 dependencies = [
  "proptest",
  "xetal-base",
+ "xetal-mapped",
+]
+
+[[package]]
+name = "xetal-step"
+version = "0.1.0"
+dependencies = [
+ "xetal-arith",
+ "xetal-array",
+ "xetal-base",
+ "xetal-core",
+ "xetal-hof",
+ "xetal-kernel",
+ "xetal-lex",
+ "xetal-prim",
+ "xetal-value",
 ]
 
 [[package]]
@@ -807,6 +886,7 @@ dependencies = [
  "xetal-base",
  "xetal-draw",
  "xetal-store",
+ "xetal-tty",
  "xetal-value",
 ]
 
@@ -816,6 +896,19 @@ version = "0.1.0"
 dependencies = [
  "xetal-base",
 ]
+
+[[package]]
+name = "xetal-transpose"
+version = "0.1.0"
+dependencies = [
+ "xetal-array",
+ "xetal-base",
+ "xetal-value",
+]
+
+[[package]]
+name = "xetal-tty"
+version = "0.1.0"
 
 [[package]]
 name = "xetal-ty"

@@ -1,0 +1,8 @@
+[package]
+name = "xetal-tty"
+description = "The terminal a program runs on (QD6): standard error, one key, the terminal's facts; installed by the host (CLI, live demo)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true

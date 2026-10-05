@@ -4,6 +4,7 @@
 mod dialog;
 mod footer;
 mod help;
+mod menu;
 mod running;
 mod toolbar;
 

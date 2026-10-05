@@ -20,12 +20,43 @@ fn main() -> ExitCode {
     // turns every later write into a panic or an error[io]; the default
     // disposition ends the process with the signal instead.
     sigpipe::reset();
+    xetal_tty::install(std::sync::Arc::new(xetal_line::Terminal));
     let cli = Cli::parse();
     let draw = cli.draw.clone();
     xetal_grid::set_ascii(cli.ascii);
     xetal_grid::set_boxed(cli.boxed);
-    let command = match (cli.command, cli.script) {
-        (Some(command), _) => command,
+    xetal_system::set_flags(cli.cfg.clone());
+    let command = command(cli.command, cli.script);
+    install_drawing(draw, &command);
+    match run(&command) {
+        Ok(text) => {
+            if !text.is_empty() {
+                println!("{text}");
+            }
+            ExitCode::SUCCESS
+        }
+        Err(diag) => {
+            eprintln!("{diag}");
+            ExitCode::FAILURE
+        }
+    }
+}
+
+/// The command to run: a subcommand, or `run` for a bare script.
+fn command(command: Option<Command>, script: Option<String>) -> Command {
+    match (command, script) {
+        // Options such as --draw may come before or after the subcommand
+        // (they are global); a bare script cannot go with one.
+        (Some(_), Some(script)) => {
+            use clap::CommandFactory;
+            Cli::command()
+                .error(
+                    clap::error::ErrorKind::ArgumentConflict,
+                    format!("give a subcommand or a script, not both ({script})"),
+                )
+                .exit()
+        }
+        (Some(command), None) => command,
         (None, Some(file)) => Command::Run {
             file,
             untyped: false,
@@ -42,19 +73,6 @@ fn main() -> ExitCode {
                     "give a subcommand or a script FILE",
                 )
                 .exit()
-        }
-    };
-    install_drawing(draw, &command);
-    match run(&command) {
-        Ok(text) => {
-            if !text.is_empty() {
-                println!("{text}");
-            }
-            ExitCode::SUCCESS
-        }
-        Err(diag) => {
-            eprintln!("{diag}");
-            ExitCode::FAILURE
         }
     }
 }

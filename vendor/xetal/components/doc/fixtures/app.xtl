@@ -1,0 +1,13 @@
+#!/usr/bin/env xetal
+## A program that greets: the xetal doc tests' main file.
+
+"g:" u_se< "Greet"
+
+## Greet everyone in a list, shouting.
+## >> u:g_reetAll "Cy"
+## Hello, Cy!
+u:g_reetAll := { n -> g:s_hout n }
+
+names := "Ann"
+u:g_reetAll names
+"1 = 1" g:w_hen< "p_rint! g:count"

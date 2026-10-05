@@ -49,23 +49,16 @@ impl Write for Shared {
     }
 }
 
-/// The values a machine kept, each with the printed length before it.
-#[derive(Default)]
-pub(crate) struct Shown {
-    pub text: Shared,
-    pub values: Vec<(usize, Grid)>,
-}
-
 /// Run `program`, returning its warnings, what it showed and how it ended.
 pub fn eval_events(
     program: &Program,
     seed: Option<u64>,
 ) -> (Vec<Diagnostic>, Vec<Event>, Result<(), Diagnostic>) {
     let warnings = xetal_lint::warnings(program);
-    let shown = Shown::default();
-    let (text, mut out) = (shown.text.clone(), shown.text.clone());
+    let text = Shared::default();
+    let mut out = text.clone();
     let (result, values) =
-        match on_worker(|| crate::run::run_showing(program, &mut out, seed, shown)) {
+        match on_worker(|| crate::run::run_showing(program, &mut out, seed, &text)) {
             Ok((result, values)) => (result, values),
             Err(e) => (Err(e), Vec::new()),
         };

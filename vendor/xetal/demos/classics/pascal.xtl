@@ -24,7 +24,7 @@ u:r_ows := { n r ->
 # Row n, item k is n choose k. The table of every k against every n
 # (APL's k outer-product-binomial n) gives the triangle standing on its
 # side: row k of the table, column n.
-u:f_act := { '* r_/ r_ange _r }  # the empty product is 1, so 0 gives 1
+u:f_act := ['* r_/ r_ange]  # the empty product is 1, so 0 gives 1
 u:c_hoose := { k n -> k > n ? 0; (u:f_act n) d_iv (u:f_act k) * u:f_act n - k }
 2 u:c_hoose 5
 (o_ffsets 7) 'u:c_hoose t_able o_ffsets 7
@@ -63,4 +63,4 @@ binomials := []S_HOW []G_RID (o_ffsets 12) 'u:c_hoose t_able o_ffsets 12
 # set in a column are the triangle as it is usually written.
 rows := '{ k -> (o_ffsets k) 'u:c_hoose e_ach k - 1 } m_ap r_ange 7
 7 1 r_eshape rows
-'{ '+ r_/ d_isclose _r } e_ach rows      # each row sums to a power of 2
+'['+ r_/ d_isclose] e_ach rows      # each row sums to a power of 2

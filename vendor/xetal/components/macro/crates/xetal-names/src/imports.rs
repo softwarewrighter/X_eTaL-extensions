@@ -1,6 +1,7 @@
 //! Finding the imports of one file: a top-level statement of exactly
-//! `"alias:" u_se< "Library"` (MC3); any other use of a macro is an
-//! error from the table (MC8 rows 3, 4, 5, 13, 14, 15).
+//! `"alias:" u_se< "Library"` (MC3); any other use of `u_se<` is an
+//! error from the table (MC8 rows 3, 4, 5, 13, 15). Other macros are
+//! expanded before (xetal-expand).
 
 use xetal_base::{Diagnostic, Span};
 use xetal_lex::{Token, TokenKind, lex};
@@ -27,8 +28,10 @@ pub fn imports(text: &str) -> Result<Vec<Import>, Diagnostic> {
         for (i, t) in statement.iter().enumerate() {
             if let TokenKind::Func(f) = &t.kind
                 && f.is_macro()
+                && f.ns.is_none()
+                && f.spelled() == "u_se<"
             {
-                found.push(import(statement, i, t, &f.spelled())?);
+                found.push(import(statement, i, t)?);
             }
         }
     }
@@ -56,11 +59,7 @@ pub(crate) fn statements(tokens: &[Token]) -> Vec<&[Token]> {
 }
 
 /// The import in `statement`, whose token `at` is the macro `name`.
-fn import(statement: &[Token], at: usize, token: &Token, name: &str) -> Result<Import, Diagnostic> {
-    if name != "u_se<" {
-        let message = format!("there is no macro {name}; the only one is u_se<");
-        return Err(fail("unknown-macro", token.span, message));
-    }
+fn import(statement: &[Token], at: usize, token: &Token) -> Result<Import, Diagnostic> {
     let (first, last) = (&statement[0], &statement[statement.len() - 1]);
     shape(
         statement,

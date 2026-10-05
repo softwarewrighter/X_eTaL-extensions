@@ -2,9 +2,9 @@
 //! as, Clear, the run buttons (Run or Stop, Notebook, Step, Reset), Zoom
 //! and Help.
 
-use web_sys::HtmlSelectElement;
 use yew::prelude::*;
 
+use crate::menu::OpenMenu;
 use crate::running::{RunButtons, run_buttons};
 
 /// What the toolbar's controls do.
@@ -26,19 +26,15 @@ pub struct Bar {
 /// Save, Save as, Clear, Run, Zoom and Help.
 pub fn toolbar(bar: Bar) -> Html {
     let (load, open) = (bar.load.clone(), bar.open);
-    let pick = Callback::from(move |e: Event| {
-        let select: HtmlSelectElement = e.target_unchecked_into();
-        if let Some(opened) = open(&select.value()) {
+    let pick = Callback::from(move |value: String| {
+        if let Some(opened) = open(&value) {
             load.emit(opened);
         }
-    });
-    let options = bar.options.iter().map(|(group, value, label)| {
-        html! { <option value={value.clone()} data-group={*group} selected={value == "demo:0"}>{ format!("{group}: {label}") }</option> }
     });
     html! {
         <nav class="toolbar">
             <img class="logo" src="modern-xetal-logo.jpg" alt="X_eTaL"/>
-            <select onchange={pick} title="Open a demo, a library or one of your files">{ for options }</select>
+            <OpenMenu options={bar.options.clone()} {pick}/>
             <span class="name" title="The file being edited">{ &bar.name }</span>
             <button onclick={bar.save.reform(|_| false)} title="Save in this browser">{ "Save" }</button>
             <button onclick={bar.save.reform(|_| true)} title="Save under another name">{ "Save as" }</button>

@@ -82,10 +82,14 @@ pub(crate) fn output(
     current: Pane,
     focus: Callback<Pane>,
     printed: NodeRef,
+    typing: &xetal_typing::Typing,
 ) -> Html {
     let o = &runs.output;
+    let input = (o.waiting && !o.wants_key).then(|| xetal_typing::typed_line(typing));
     let title = match (&o.run, o.running, o.cells.is_empty()) {
         (None, ..) => "Types".to_string(),
+        (_, true, _) if o.waiting && o.wants_key => "Output (waiting for a key)".to_string(),
+        (_, true, _) if o.waiting => "Output (waiting for a line: type it, Enter)".to_string(),
         (_, true, _) => "Output (running...)".to_string(),
         (_, false, true) => "Output".to_string(),
         (_, false, false) if runs.stepped > 0 => format!("Notebook (step {})", runs.stepped),
@@ -94,7 +98,7 @@ pub(crate) fn output(
     let body = match &o.run {
         None => html! { <pre tabindex="0">{ check(text).join("\n") }</pre> },
         Some(r) if o.cells.is_empty() => html! {
-            <pre tabindex="0" ref={printed.clone()}>{ &r.out }<span class="c-error">{ &r.err }</span>
+            <pre tabindex="0" ref={printed.clone()}>{ xetal_typing::screen(&r.out).unwrap_or_else(|| html! { { &r.out } }) }{ input }<span class="c-error">{ &r.err }</span>
                 { for r.pictures.iter().map(|svg| picture(svg)) }</pre>
         },
         Some(r) => html! {

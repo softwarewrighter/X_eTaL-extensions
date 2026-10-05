@@ -1,0 +1,13 @@
+## A library with wrong examples, for the doc test failure report.
+
+## Twice a number.
+## >> 2 * 4
+## 9
+## >> 2 * 5
+## 10
+l:d_ouble := { 2 * _r }
+
+## An error expected but none raised.
+## >> 1 + 1
+## error[type-mismatch]
+l:o_ne := { _r }

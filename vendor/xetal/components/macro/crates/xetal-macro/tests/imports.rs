@@ -54,12 +54,35 @@ fn a_library_shared_by_two_importers_is_loaded_once() {
 }
 
 #[test]
+fn a_prefix_may_be_long_and_hold_digits() {
+    let l = libs(&[("A", "l:x := 1\n")]);
+    let s = expand(
+        "main.xtl",
+        "\"combinators:\" u_se< \"A\"\ncombinators:x\n",
+        &l,
+    )
+    .unwrap();
+    assert!(s.combined().ends_with("LA:x\n"), "{:?}", s.combined());
+    let s = expand("main.xtl", "\"b2:\" u_se< \"A\"\nb2:x\n", &l).unwrap();
+    assert!(s.combined().ends_with("LA:x\n"), "{:?}", s.combined());
+}
+
+#[test]
+fn a_hidden_namespace_cannot_be_written() {
+    let l = libs(&[("A", "l:x := 1\n")]);
+    assert_eq!(code("\"a:\" u_se< \"A\"\nLA:x\n", &l), "hidden-namespace");
+}
+
+#[test]
 fn macro_phase_errors_follow_the_table() {
     let l = libs(&[("A", "l:x := 1\n"), ("B", "l:y := 2\n")]);
     assert_eq!(code("\"c:\" u_se< \"Nope\"\n", &l), "library-not-found");
     assert_eq!(code("u_se< \"A\"\n", &l), "missing-alias");
     assert_eq!(code("\"c\" u_se< \"A\"\n", &l), "bad-alias");
     assert_eq!(code("\"3:\" u_se< \"A\"\n", &l), "bad-alias");
+    assert_eq!(code("\"Abc:\" u_se< \"A\"\n", &l), "bad-alias");
+    assert_eq!(code("\"2b:\" u_se< \"A\"\n", &l), "bad-alias");
+    assert_eq!(code("\"LA:\" u_se< \"A\"\n", &l), "bad-alias");
     assert_eq!(code("\"u:\" u_se< \"A\"\n", &l), "reserved-alias");
     assert_eq!(code("\"l:\" u_se< \"A\"\n", &l), "reserved-alias");
     assert_eq!(

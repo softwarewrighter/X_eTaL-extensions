@@ -35,7 +35,7 @@ const VERSION: &str = concat!(
                   (`o_-_2` rotates along axis 2), and a quoted function is \
                   an operand (`'+ r_/ v` reduces v by plus).",
     after_long_help = include_str!("cli_help.txt"),
-    args_conflicts_with_subcommands = true
+    override_usage = "xetal [OPTIONS] [SCRIPT]\n       xetal [OPTIONS] <COMMAND>"
 )]
 pub(crate) struct Cli {
     #[command(subcommand)]
@@ -54,6 +54,10 @@ pub(crate) struct Cli {
     /// draws it (what d_isplay gives).
     #[arg(long = "box", global = true)]
     pub(crate) boxed: bool,
+    /// Set a configuration fact NAME, which a macro tests with
+    /// `@ c_fg< "NAME"` (repeatable; `cli` holds at the command line).
+    #[arg(long = "cfg", global = true, value_name = "NAME")]
+    pub(crate) cfg: Vec<String>,
 }
 
 /// Source given inline with `-e` or as a file path.
@@ -91,6 +95,28 @@ pub(crate) struct EvalArgs {
     pub(crate) delay: Option<u64>,
 }
 
+/// `doc` options: the cross-reference as JSON, as a site, or its doc
+/// tests.
+#[derive(Args)]
+#[command(group(clap::ArgGroup::new("output").required(true).args(["json", "out", "test"])))]
+pub(crate) struct DocArgs {
+    #[command(flatten)]
+    pub(crate) input: Input,
+    /// Print the model as JSON: every item of the file, its imports and
+    /// the system macros, with type, doc comment, source and uses.
+    #[arg(long)]
+    pub(crate) json: bool,
+    /// Write the documentation as a static site into DIR: an index, a
+    /// page per file with its items, its source drawn decorated, every
+    /// name linked to its definition and its uses.
+    #[arg(long, value_name = "DIR")]
+    pub(crate) out: Option<String>,
+    /// Run the file's `## >>` examples and compare what each prints
+    /// with the output shown under it (each doc block one session).
+    #[arg(long)]
+    pub(crate) test: bool,
+}
+
 /// `render` options: decorated Unicode by default.
 #[derive(Args)]
 pub(crate) struct RenderArgs {
@@ -122,6 +148,13 @@ pub(crate) enum Command {
     /// Draw an annotated diagram (SVG) of a line of source from a notes
     /// file: the decorated line with callouts anchored to its tokens.
     Diagram(Input),
+    /// Print the program after macro expansion (imports and names as
+    /// written).
+    Expand(Input),
+    /// Document a program or library: every item of it, of what it
+    /// imports and of the system macros (--json, or a site with --out),
+    /// or run its examples (--test).
+    Doc(DocArgs),
     /// Print the surface AST or an ambiguity report.
     Parse(Input),
     /// Print the canonical form.
@@ -168,6 +201,8 @@ impl Command {
             Command::Lex(_) => "lex",
             Command::Render(_) => "render",
             Command::Diagram(_) => "diagram",
+            Command::Expand(_) => "expand",
+            Command::Doc(_) => "doc",
             Command::Parse(_) => "parse",
             Command::Fmt(_) => "fmt",
             Command::Core(_) => "core",
@@ -183,6 +218,7 @@ impl Command {
     pub(crate) fn source(&self) -> Option<Result<String, Diagnostic>> {
         match self {
             Command::Lex(i)
+            | Command::Expand(i)
             | Command::Parse(i)
             | Command::Fmt(i)
             | Command::Core(i)
@@ -191,8 +227,9 @@ impl Command {
             | Command::Eval(EvalArgs { input: i, .. }) => {
                 Some(read_input(i.expr.as_deref(), i.file.as_deref()))
             }
-            Command::Render(r) => {
-                Some(read_input(r.input.expr.as_deref(), r.input.file.as_deref()))
+            Command::Render(RenderArgs { input: i, .. })
+            | Command::Doc(DocArgs { input: i, .. }) => {
+                Some(read_input(i.expr.as_deref(), i.file.as_deref()))
             }
             Command::Run { file, .. } => Some(read_input(None, Some(file))),
             Command::Repl | Command::Edit { .. } => None,

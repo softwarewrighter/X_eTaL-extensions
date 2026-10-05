@@ -1808,6 +1808,7 @@ dependencies = [
  "ratatui",
  "xetal-buffer",
  "xetal-keys",
+ "xetal-tty",
  "xetal-view",
 ]
 
@@ -1836,6 +1837,10 @@ version = "0.1.0"
 dependencies = [
  "xetal-base",
 ]
+
+[[package]]
+name = "xetal-tty"
+version = "0.1.0"
 
 [[package]]
 name = "xetal-view"

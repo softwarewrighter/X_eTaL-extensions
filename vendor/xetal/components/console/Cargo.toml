@@ -1,0 +1,19 @@
+# X_eTaL component `console`: one Cargo workspace (see docs/architecture.md).
+# The terminal the live demo runs interactive programs in (Saga 25), on
+# the model of ../../sw-embed/web-sw-tos: plain Rust, tested natively.
+
+[workspace]
+resolver = "3"
+members = ["crates/xetal-screen", "crates/xetal-lineedit", "crates/xetal-tty"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+authors = ["Michael A Wright"]
+repository = "https://github.com/softwarewrighter/X_eTaL"
+
+[workspace.dependencies]
+xetal-screen = { path = "crates/xetal-screen" }
+xetal-lineedit = { path = "crates/xetal-lineedit" }
+xetal-tty = { path = "crates/xetal-tty" }

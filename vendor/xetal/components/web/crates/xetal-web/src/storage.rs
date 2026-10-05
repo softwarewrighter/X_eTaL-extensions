@@ -1,7 +1,9 @@
-//! The browser's local storage as the program's files, a prompt as its
-//! keyboard, and the output pane as where its pictures are shown: installed as the store (`xetal-store`) the language
-//! reads and writes through, so saved files, your libraries and
-//! `[]N_PUT` / `[]N_GET` / `[]R_EAD` all work in the page.
+//! The browser's local storage as the program's files, and the output
+//! pane as where its pictures are shown: installed as the store
+//! (`xetal-store`) the language reads and writes through, so saved
+//! files, your libraries, `[]N_PUT` and `[]N_GET` work in the page.
+//! Lines typed for `[]R_EAD` go to the program in its worker, through
+//! the terminal in the output pane.
 
 use std::sync::Mutex;
 
@@ -38,15 +40,7 @@ impl Store for Local {
     }
 
     fn line(&self) -> Result<String, String> {
-        let window = web_sys::window().ok_or("no window")?;
-        let typed = window
-            .prompt_with_message(&format!(
-                "{}\n\n[]R_EAD: type a line",
-                xetal_runner::recent()
-            ))
-            .ok()
-            .flatten();
-        typed.ok_or_else(|| "no more input (the prompt was cancelled)".to_string())
+        Err("the page reads no lines itself: a program runs in the worker and its terminal".into())
     }
 
     fn show(&self, svg: &str) -> Result<(), String> {

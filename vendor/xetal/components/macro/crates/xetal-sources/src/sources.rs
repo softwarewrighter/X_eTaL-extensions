@@ -2,6 +2,8 @@
 
 use std::ops::Range;
 
+use xetal_mapped::Mapped;
+
 /// A source file: the name it is reported by, and its text.
 #[derive(Debug, Clone)]
 pub(crate) struct File {
@@ -9,6 +11,9 @@ pub(crate) struct File {
     pub text: String,
     /// Hidden namespaces and how this file writes them (`LA` as `c`).
     pub written: Vec<(String, String)>,
+    /// For a file whose macros were expanded: the text as written, and
+    /// where each byte of `text` (the expansion) came from in it.
+    pub origin: Option<(String, Mapped)>,
 }
 
 /// A piece of the combined text: where it starts there, and the file
@@ -36,8 +41,19 @@ impl Sources {
             name: name.into(),
             text: text.into(),
             written: Vec::new(),
+            origin: None,
         });
         self.files.len() - 1
+    }
+
+    /// File `file` (added as written) had its macros expanded: `copy`
+    /// and `replace` now take bytes from `expanded`, mapped back.
+    pub fn expanded(&mut self, file: usize, expanded: &Mapped) {
+        let f = &mut self.files[file];
+        if expanded.text() != f.text {
+            let written = std::mem::replace(&mut f.text, expanded.text().into());
+            f.origin = Some((written, expanded.clone()));
+        }
     }
 
     /// Append bytes `range` of `file` to the combined text.

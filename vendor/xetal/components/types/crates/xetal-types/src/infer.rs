@@ -4,7 +4,7 @@
 use std::collections::HashMap;
 
 use xetal_base::{Diagnostic, NodeId, Span};
-use xetal_core::{Expr, Item, Kind, Program};
+use xetal_core::{Expr, Item, Program};
 
 use xetal_elab::Dicts;
 use xetal_ty::Unifier;
@@ -82,10 +82,15 @@ impl Infer {
             Item::Def { name, value } => return self.def(name, value),
             Item::Let { name, rec, value } => {
                 let t = self.binding(name, *rec, value)?;
-                let scheme = self.close(&t, value, true)?;
-                self.env
-                    .push((name.clone(), scheme.clone(), Some(value.id)));
-                (Some(name.clone()), scheme)
+                let (scheme, shown) = match self.condition(&t) {
+                    Some(scheme) => (scheme, mono(Type::Bool)),
+                    None => {
+                        let scheme = self.close(&t, value, true)?;
+                        (scheme.clone(), scheme)
+                    }
+                };
+                self.env.push((name.clone(), scheme, Some(value.id)));
+                (Some(name.clone()), shown)
             }
             Item::Set { name, value } => {
                 let t = self.set(name, value)?;
@@ -184,32 +189,5 @@ impl Infer {
         let t = self.expr(value)?;
         self.u.unify(&current, &t, value.span)?;
         Ok(t)
-    }
-
-    /// A lambda value is generalized; anything else stays monomorphic,
-    /// and at the top level its numbers default now (Int, Bool; T5).
-    pub(crate) fn close(
-        &mut self,
-        t: &Type,
-        value: &Expr,
-        top: bool,
-    ) -> Result<Scheme, Diagnostic> {
-        if matches!(value.kind, Kind::Lam { .. }) {
-            let mut fixed: Vec<Type> = self.env.iter().map(|(_, s, _)| s.ty.clone()).collect();
-            fixed.extend(self.globals.values().filter_map(|g| match g {
-                Global::Pending(t, _) | Global::Open { ty: t, .. } => Some(t.clone()),
-                Global::Defined(_) => None,
-            }));
-            let scheme = self.u.generalize(t, &fixed);
-            self.rec.generalized(value.id, &scheme);
-            return Ok(scheme);
-        }
-        if top {
-            self.u
-                .default_since(self.mark, value.span, &self.rec.quantified)?;
-            let defaulted = self.u.defaulted(t);
-            self.u.unify(&defaulted, t, value.span)?;
-        }
-        Ok(mono(self.u.resolve(t)))
     }
 }

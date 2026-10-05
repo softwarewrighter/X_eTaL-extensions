@@ -1,4 +1,4 @@
-//! Literals: numbers `[-]digits[.digits]` and strings `"..."` (ST1,
+//! Literals: numbers `[-]digits[.digits][e[-]digits]` (S8) and strings `"..."` (ST1,
 //! ST2); exponents are in `exponent`.
 
 use xetal_base::Span;
@@ -23,6 +23,7 @@ pub(crate) fn lex_number(cur: &mut Cursor, start: usize) -> Result<TokenKind, Le
         cur.eat_while(|b| b.is_ascii_digit());
         float = true;
     }
+    float |= exponent(cur)?;
     if let Some(b) = cur.peek()
         && (b.is_ascii_alphanumeric() || b"_.@".contains(&b))
     {
@@ -34,19 +35,36 @@ pub(crate) fn lex_number(cur: &mut Cursor, start: usize) -> Result<TokenKind, Le
     value(cur.text(start), Span::new(start, cur.pos), float)
 }
 
+/// An exponent (S8): `e` or `E`, an optional `-`, then digits, all
+/// touching the number; whether there was one.
+fn exponent(cur: &mut Cursor) -> Result<bool, LexError> {
+    if !matches!(cur.peek(), Some(b'e' | b'E')) {
+        return Ok(false);
+    }
+    let (at, sign) = (cur.pos, usize::from(cur.peek_at(1) == Some(b'-')));
+    if !cur.peek_at(1 + sign).is_some_and(|b| b.is_ascii_digit()) {
+        let span = Span::new(at, at + 1 + sign);
+        return Err(bad(span, "an exponent needs digits after the e"));
+    }
+    cur.pos += 1 + sign;
+    cur.eat_while(|b| b.is_ascii_digit());
+    Ok(true)
+}
+
 fn value(text: &str, span: Span, float: bool) -> Result<TokenKind, LexError> {
-    let number = if float {
-        text.parse::<f64>().ok().map(Number::Float)
+    let (number, message) = if float {
+        let x = text.parse::<f64>().ok().filter(|x| x.is_finite());
+        (x.map(Number::Float), "float literal is too large")
     } else {
-        text.parse::<i64>().ok().map(Number::Int)
-    };
-    number.map(TokenKind::Num).ok_or_else(|| {
-        LexError::new(
-            ErrorKind::NumberOutOfRange,
-            span,
+        let n = text.parse::<i64>().ok();
+        (
+            n.map(Number::Int),
             "integer literal does not fit in 64 bits",
         )
-    })
+    };
+    number
+        .map(TokenKind::Num)
+        .ok_or_else(|| LexError::new(ErrorKind::NumberOutOfRange, span, message))
 }
 
 fn bad(span: Span, message: &str) -> LexError {

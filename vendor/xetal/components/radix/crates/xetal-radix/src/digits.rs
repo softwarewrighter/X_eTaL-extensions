@@ -2,12 +2,7 @@
 
 use xetal_base::Diagnostic;
 
-fn overflow() -> Diagnostic {
-    Diagnostic::new(
-        "integer-overflow",
-        "integer overflow (use a Float, e.g. 2.0)",
-    )
-}
+use crate::number::{Number, overflow};
 
 /// APL's residue: `x` less the nearest multiple of `r` at or below it
 /// (for a negative `r`, at or above), so the digit takes `r`'s sign.
@@ -41,11 +36,11 @@ pub fn encode(radix: &[i64], x: i64) -> Result<Vec<i64>, Diagnostic> {
 }
 
 /// The number whose digits in the mixed radix `radix` are `digits`
-/// (APL's decode); the two have one length.
-pub fn decode(radix: &[i64], digits: &[i64]) -> Result<i64, Diagnostic> {
-    radix.iter().zip(digits).try_fold(0i64, |n, (r, d)| {
-        n.checked_mul(*r)
-            .and_then(|n| n.checked_add(*d))
-            .ok_or_else(overflow)
-    })
+/// (APL's decode, Horner's rule); the two have one length. On Floats
+/// it evaluates a polynomial (B18).
+pub fn decode<N: Number>(radix: &[N], digits: &[N]) -> Result<N, Diagnostic> {
+    radix
+        .iter()
+        .zip(digits)
+        .try_fold(N::ZERO, |n, (r, d)| N::horner(n, *r, *d))
 }

@@ -15,11 +15,18 @@ pub fn program_types(lines: Vec<String>) -> Vec<String> {
 }
 
 /// The type lines of a library checked on its own (file 0 of
-/// `sources`): its exports only, written `l:` as in the file.
+/// `sources`): its exports only, written `l:` (`m:` in a macro library,
+/// `s:` in the system macro library) as in the file.
 pub fn library_types(sources: &Sources, lines: Vec<String>) -> Vec<String> {
+    let name = sources.name(0);
+    let own = match (name.ends_with(".xtlm"), name.ends_with("System.xtlm")) {
+        (_, true) => "s:",
+        (true, false) => "m:",
+        _ => "l:",
+    };
     lines
         .iter()
         .map(|line| sources.as_written(0, line))
-        .filter(|line| line.starts_with("l:"))
+        .filter(|line| line.starts_with(own))
         .collect()
 }

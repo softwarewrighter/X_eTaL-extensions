@@ -69,6 +69,11 @@ fn namespaces() {
     assert_reject("u:_r", "bad-namespace", 0, 2);
     assert_reject("m.f_", "unexpected-char", 1, 2); // the old dotted prefix
     assert_reject("x : y", "unexpected-char", 2, 3);
+    // MC13: lowercase letters and digits after a lowercase letter; an
+    // all-uppercase prefix is the macro phase's hidden namespace.
+    assert_reject("Abc:f_", "bad-namespace", 0, 4);
+    assert_reject("aBc:x", "bad-namespace", 0, 4);
+    assert_reject("LA2:x", "bad-namespace", 0, 4);
 }
 
 #[test]

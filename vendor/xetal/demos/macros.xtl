@@ -1,0 +1,38 @@
+#!/usr/bin/env xetal
+# Macros write source for you. A macro is a name with the macro mark <
+# at its end (u_se< is one); a call "left" n_ame< "right" is replaced,
+# before the program is checked, by the source the macro writes from
+# the two texts. `xetal expand demos/macros.xtl` shows the program
+# after the macros have been replaced.
+
+# The system macros are built in. i_f< chooses between two expressions
+# when the program runs; only the one chosen is evaluated.
+x := -3
+"x > 0" i_f< "1; -1"
+10 * "x > 0" i_f< "1; -1"
+"x < 0" i_f< "0; 1 / 0"
+
+# u_nless< runs statements unless a condition holds; its value is @.
+"x = 0" u_nless< "p_rint! 100 / x"
+
+# e_ach< writes one statement per word, $w replaced by the word: here a
+# family of definitions, a reduction for each of two functions.
+"m_ax m_in" e_ach< "u:$w/ := { '$w r_/ _r }"
+u:m_ax/ 3 1 4 1 5
+u:m_in/ 3 1 4 1 5
+
+# f_ormat< puts values into text, a_ssert< reports a condition that does
+# not hold (on standard error) and goes on, and c_fg< says where the
+# program runs: 1 for cli at the command line, 0 in the live demo.
+@ f_ormat< "x is {x}, and its square is {x * x}"
+"x > 0" a_ssert< "x is positive"
+@ c_fg< "cli"
+
+# Macros of your own live in macro libraries (.xtlm files): each is a
+# function from the two texts to the source that replaces the call.
+# Macros (lib/Macros.xtlm) is a small example, imported like a library.
+"m:" u_se< "Macros"
+"s_quare" m:d_ef< "_r * _r"
+u:s_quare 7
+"4 = 2 + 2" m:c_heck< "addition"
+"5 = 2 * 2" m:c_heck< "doubling"

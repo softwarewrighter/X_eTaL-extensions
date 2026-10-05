@@ -9,6 +9,7 @@ repository.workspace = true
 
 [dependencies]
 xetal-base.workspace = true
+xetal-mapped.workspace = true
 
 [dev-dependencies]
 proptest.workspace = true

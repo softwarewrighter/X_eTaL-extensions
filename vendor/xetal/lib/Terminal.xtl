@@ -1,0 +1,29 @@
+# Terminal: the names of the colours and keys a program draws and reads
+# with (QD6), a standard library built into xetal. Import it with an
+# alias of your choice: "t:" u_se< "Terminal".
+#
+# Colours are values of type Color (for []F_G and []B_G); keys are values
+# of type Key, what []K_EY @ gives (a printing key carries its
+# character: []K_CHAR). A misspelled name is an undefined name, and a
+# Key where a Color is wanted a type error, when the program is checked.
+
+l:BLACK := []C_OLOR 1
+l:RED := []C_OLOR 2
+l:GREEN := []C_OLOR 3
+l:YELLOW := []C_OLOR 4
+l:BLUE := []C_OLOR 5
+l:MAGENTA := []C_OLOR 6
+l:CYAN := []C_OLOR 7
+l:WHITE := []C_OLOR 8
+
+l:UP := []K_NAMED 1
+l:DOWN := []K_NAMED 2
+l:LEFT := []K_NAMED 3
+l:RIGHT := []K_NAMED 4
+l:ENTER := []K_NAMED 5
+l:ESCAPE := []K_NAMED 6
+l:BACKSPACE := []K_NAMED 7
+l:TAB := []K_NAMED 8
+l:DELETE := []K_NAMED 9
+l:HOME := []K_NAMED 10
+l:END := []K_NAMED 11

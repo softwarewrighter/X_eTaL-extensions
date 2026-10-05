@@ -10,3 +10,4 @@ repository.workspace = true
 [dependencies]
 yew.workspace = true
 web-sys.workspace = true
+wasm-bindgen.workspace = true

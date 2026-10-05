@@ -16,4 +16,7 @@ xetal-core.workspace = true
 xetal-macro.workspace = true
 xetal-types.workspace = true
 xetal-eval.workspace = true
+xetal-step.workspace = true
+xetal-arith.workspace = true
+xetal-lint.workspace = true
 xetal-store.workspace = true

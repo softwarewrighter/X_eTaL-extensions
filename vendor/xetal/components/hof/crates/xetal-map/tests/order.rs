@@ -3,19 +3,20 @@
 use std::rc::Rc;
 
 use xetal_array::Array;
-use xetal_base::{Diagnostic, Span};
+use xetal_base::Diagnostic;
+use xetal_kernel::{Never, drive};
 use xetal_map::{each, table};
-use xetal_value::{Caller, Prim, Value};
+use xetal_value::{Prim, Value};
 
 /// Records every argument and answers with a partial application (for
 /// the first of two arguments) or the argument itself.
 #[derive(Default)]
 struct Log(Vec<String>);
 
-impl<'a> Caller<'a> for Log {
-    fn call(&mut self, f: &Value<'a>, x: Value<'a>, _: Span) -> Result<Value<'a>, Diagnostic> {
+impl Log {
+    fn call<'a>(&mut self, f: Value<'a>, x: Value<'a>) -> Result<Value<'a>, Diagnostic> {
         self.0.push(x.to_string());
-        Ok(match f {
+        Ok(match &f {
             Value::Prim(p) if p.args.is_empty() && p.arity == 2 => partial(vec![x]),
             _ => x,
         })
@@ -43,7 +44,8 @@ fn each_visits_items_in_order() {
         arity: 1,
         args: Vec::new(),
     }));
-    let out = each(&id, &vector(&[3, 1, 2]), Span::default(), &mut log).unwrap();
+    let kernel = each(&id, &vector(&[3, 1, 2]), &mut Never).unwrap();
+    let out = drive(kernel, |f, x| log.call(f, x)).unwrap();
     assert_eq!(out.to_string(), "3 1 2");
     assert_eq!(log.0, ["3", "1", "2"]);
 }
@@ -52,14 +54,25 @@ fn each_visits_items_in_order() {
 fn table_fixes_each_left_item_once() {
     let mut log = Log::default();
     let f = partial(Vec::new());
-    let out = table(
-        &f,
-        &vector(&[1, 2]),
-        &vector(&[7, 8]),
-        Span::default(),
-        &mut log,
-    )
-    .unwrap();
+    let kernel = table(&f, &vector(&[1, 2]), &vector(&[7, 8]), &mut Never).unwrap();
+    let out = drive(kernel, |f, x| log.call(f, x)).unwrap();
     assert_eq!(out.to_string(), "7 8\n7 8");
     assert_eq!(log.0, ["1", "7", "8", "2", "7", "8"]);
+}
+
+#[test]
+fn inner_pairs_then_reduces_each_cell() {
+    let mut log = Log::default();
+    let g = partial(Vec::new());
+    let kernel = xetal_map::inner(&g, &g, &vector(&[1, 2]), &vector(&[3, 4]), &mut Never).unwrap();
+    let out = drive(kernel, |f, x| match &f {
+        Value::Prim(p) if p.name == "r_/" => {
+            log.0.push(x.to_string());
+            Ok(Value::Int(9))
+        }
+        _ => log.call(f, x),
+    })
+    .unwrap();
+    assert_eq!(out.to_string(), "9");
+    assert_eq!(log.0, ["1", "3", "2", "4", "3 4"]);
 }

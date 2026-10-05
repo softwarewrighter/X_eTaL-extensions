@@ -43,10 +43,13 @@ pub fn app() -> Html {
     let (z, h) = (zoom.clone(), help.clone());
     let toggle = Callback::from(move |_: ()| z.set(!*z));
     let show_help = Callback::from(move |open: bool| h.set(open));
-    let on_key = keys(buttons.run.clone(), toggle.clone(), show_help.clone());
-    let (edit, load) = editing(&text, &name, &runs.clear, running);
+    let page_keys = keys(buttons.run.clone(), toggle.clone(), show_help.clone());
     let c = current.clone();
     let focus = Callback::from(move |p: Pane| c.set(p));
+    let in_source = *current == Pane::Source;
+    let terminal = (&runs, in_source, focus.reform(|_| Pane::Output));
+    let (typing, on_key) = xetal_typing::use_terminal(terminal, page_keys, printed.clone());
+    let (edit, load) = editing(&text, &name, &runs.clear, running);
     let save = saving(text.clone(), name.clone(), files.clone());
     let bar = chrome::Bar {
         load,
@@ -67,7 +70,7 @@ pub fn app() -> Html {
                 { divider(Axis::Columns, &split) }
                 { panes::rendered(&text, *current, focus.clone(), drawn) }
                 { divider(Axis::Rows, &split) }
-                { panes::output(&text, &runs, *current, focus, printed) }
+                { panes::output(&text, &runs, *current, focus, printed, &typing) }
             </main>
             { chrome::footer() }
             { if *help { chrome::help(show_help.reform(|_| false)) } else { html! {} } }

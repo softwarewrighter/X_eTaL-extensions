@@ -29,7 +29,8 @@ pub(crate) fn get<'a>(path: &Value<'a>) -> Result<Value<'a>, Diagnostic> {
 }
 
 /// `[]R_EAD @`: a line typed at the keyboard, without its newline
-/// (standard input on the command line; the browser asks for it).
+/// (standard input on the command line; in the live demo the program
+/// waits for it in the terminal).
 pub(crate) fn read<'a>() -> Result<Value<'a>, Diagnostic> {
     xetal_store::read_line()
         .map(|line| text(&line))

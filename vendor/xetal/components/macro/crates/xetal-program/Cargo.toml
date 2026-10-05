@@ -13,6 +13,8 @@ xetal-lex.workspace = true
 xetal-sources.workspace = true
 xetal-macro.workspace = true
 xetal-core.workspace = true
+xetal-types.workspace = true
+xetal-eval.workspace = true
+xetal-system.workspace = true
 
 [dev-dependencies]
-xetal-types.workspace = true

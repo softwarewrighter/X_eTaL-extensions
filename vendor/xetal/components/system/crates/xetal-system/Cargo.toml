@@ -12,7 +12,9 @@ xetal-base.workspace = true
 xetal-array.workspace = true
 xetal-value.workspace = true
 xetal-store.workspace = true
+xetal-tty.workspace = true
 xetal-draw.workspace = true
 
 [dev-dependencies]
 xetal-store.workspace = true
+xetal-tty.workspace = true

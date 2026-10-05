@@ -3,6 +3,7 @@
 //! representation and unifier live in `xetal-ty`.
 
 mod check;
+mod closing;
 mod expr;
 mod infer;
 mod record;

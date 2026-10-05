@@ -1,13 +1,14 @@
 //! Running a program on a worker thread with a large stack.
 
-use std::collections::HashMap;
 use std::io::Write;
 
 use xetal_arith::Rng;
 use xetal_base::{Diagnostic, Span};
 use xetal_core::Program;
 
-use crate::events::Shown;
+use crate::events::Shared;
+use xetal_step::{Machine, Status};
+use xetal_value::Value;
 
 /// Stack reserved for evaluation (virtual memory; pages are used only as
 /// recursion deepens).
@@ -52,37 +53,52 @@ pub fn eval_items(
 ) -> (Vec<Diagnostic>, Result<(), Diagnostic>) {
     let warnings = xetal_lint::warnings(program);
     let result = on_worker(|| {
-        let mut machine = crate::machine::Machine {
-            globals: HashMap::new(),
-            out,
-            depth: 0,
-            rng: Rng::seeded(seed.unwrap_or_else(Rng::fresh_seed)),
-            shown: None,
-            before: Some(before),
-        };
-        machine.run(program).map_err(|d| program.annotate(d))
+        let rng = Rng::seeded(seed.unwrap_or_else(Rng::fresh_seed));
+        let mut machine = Machine::new(program, out, rng).hooks(None, Some(before));
+        machine.finish().map_err(|d| program.annotate(d))
     })
     .and_then(|r| r);
     (warnings, result)
 }
 
-/// Run `program`, keeping its top-level values in `shown`.
+/// [`eval_source`], taken `budget` transitions at a time (D50): the
+/// output is the same whatever the budget.
+pub fn eval_in_slices(
+    src: &str,
+    budget: usize,
+    out: &mut (dyn Write + Send),
+) -> (Vec<Diagnostic>, Result<(), Diagnostic>) {
+    let program = match xetal_core::lower(src) {
+        Ok(program) => program,
+        Err(e) => return (Vec::new(), Err(e)),
+    };
+    let warnings = xetal_lint::warnings(&program);
+    let result = on_worker(|| {
+        let rng = Rng::seeded(Rng::fresh_seed());
+        let mut machine = Machine::new(&program, out, rng);
+        while machine.run(budget)? == Status::Running {}
+        Ok(())
+    })
+    .and_then(|r: Result<(), Diagnostic>| r.map_err(|d| program.annotate(d)));
+    (warnings, result)
+}
+
+/// Run `program`, keeping its top-level values, each with the length of
+/// the text printed before it.
 pub(crate) fn run_showing(
     program: &Program,
     out: &mut (dyn Write + Send),
     seed: Option<u64>,
-    shown: Shown,
+    text: &Shared,
 ) -> (Result<(), Diagnostic>, Vec<(usize, xetal_grid::Grid)>) {
-    let mut machine = crate::machine::Machine {
-        globals: HashMap::new(),
-        out,
-        depth: 0,
-        rng: Rng::seeded(seed.unwrap_or_else(Rng::fresh_seed)),
-        shown: Some(shown),
-        before: None,
-    };
-    let result = machine.run(program).map_err(|d| program.annotate(d));
-    (result, machine.shown.map(|s| s.values).unwrap_or_default())
+    let mut values = Vec::new();
+    let mut keep = |v: &Value<'_>| values.push((text.len(), xetal_value::grid(v)));
+    let rng = Rng::seeded(seed.unwrap_or_else(Rng::fresh_seed));
+    let result = Machine::new(program, out, rng)
+        .hooks(Some(&mut keep), None)
+        .finish()
+        .map_err(|d| program.annotate(d));
+    (result, values)
 }
 
 /// Run `work` on a thread with a large stack (deep recursion is an
@@ -107,8 +123,4 @@ pub(crate) fn on_worker<T: Send>(work: impl FnOnce() -> T + Send) -> Result<T, D
             )),
         }
     })
-}
-
-pub(crate) fn err(code: &str, span: Span, message: impl Into<String>) -> Diagnostic {
-    Diagnostic::new(code, message).with_span(span)
 }

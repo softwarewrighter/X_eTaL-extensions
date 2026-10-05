@@ -12,6 +12,7 @@ authors = ["Michael A Wright"]
 repository = "https://github.com/softwarewrighter/X_eTaL"
 
 [workspace.dependencies]
+xetal-tty = { path = "../console/crates/xetal-tty" }
 xetal-base = { path = "../base/crates/xetal-base" }
 xetal-lex = { path = "../syntax/crates/xetal-lex" }
 xetal-render = { path = "../render/crates/xetal-render" }

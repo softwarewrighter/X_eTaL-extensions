@@ -27,7 +27,7 @@ fn negative_numbers_and_radixes_follow_apl_residue() {
 fn decode_is_horner() {
     assert_eq!(decode(&[2, 2, 2], &[1, 0, 1]).unwrap(), 5);
     assert_eq!(decode(&[24, 60, 60], &[1, 2, 5]).unwrap(), 3725);
-    assert_eq!(decode(&[], &[]).unwrap(), 0);
+    assert_eq!(decode::<i64>(&[], &[]).unwrap(), 0);
     let nines = [9; 20];
     assert!(decode(&[10; 20], &nines).is_err());
 }
@@ -54,4 +54,12 @@ proptest! {
         let x = decode(&radix, &digits).unwrap();
         prop_assert_eq!(encode(&radix, x).unwrap(), digits);
     }
+}
+
+#[test]
+fn decode_on_floats_evaluates_a_polynomial() {
+    assert_eq!(decode(&[2.0; 3], &[3.0, -2.0, 1.0]).unwrap(), 9.0);
+    assert_eq!(decode(&[0.5; 3], &[3.0, -2.0, 1.0]).unwrap(), 0.75);
+    assert_eq!(decode::<f64>(&[], &[]).unwrap(), 0.0);
+    assert_eq!(decode(&[1.5, 2.0], &[1.0, 1.0]).unwrap(), 3.0);
 }

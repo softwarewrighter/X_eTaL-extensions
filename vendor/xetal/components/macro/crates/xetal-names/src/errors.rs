@@ -6,12 +6,19 @@ pub(crate) fn fail(code: &str, span: Span, message: impl Into<String>) -> Diagno
     Diagnostic::new(code, message).with_span(span)
 }
 
-/// An alias is lowercase letters and a colon, and not `u:` or `l:`.
+/// An alias is a lowercase letter, then lowercase letters or digits,
+/// and a colon (MC13, as the lexer reads a prefix), and not `u:` or `l:`.
 pub(crate) fn valid_alias(alias: &str, span: Span) -> Result<(), Diagnostic> {
     let letters = alias.strip_suffix(':').unwrap_or("");
-    if letters.is_empty() || !letters.bytes().all(|b| b.is_ascii_lowercase()) {
-        let message =
-            format!("{alias:?} is not an alias: write lowercase letters and a colon, like \"c:\"");
+    let lower = |b: &u8| b.is_ascii_lowercase() || b.is_ascii_digit();
+    let first = letters
+        .bytes()
+        .next()
+        .is_some_and(|b| b.is_ascii_lowercase());
+    if !first || !letters.bytes().all(|b| lower(&b)) {
+        let message = format!(
+            "{alias:?} is not an alias: write a lowercase letter, then lowercase letters or digits, and a colon, like \"c:\" or \"b2:\""
+        );
         return Err(fail("bad-alias", span, message));
     }
     if letters == "u" || letters == "l" {
@@ -30,3 +37,12 @@ pub(crate) const L_IN_PROGRAM: &str =
     "l: names exist only inside a library; import it with an alias";
 pub(crate) const U_IN_LIBRARY: &str =
     "a library defines l: (exported) or unprefixed (private) names, not u:";
+pub(crate) const L_IN_MACROS: &str =
+    "a macro library (.xtlm) defines m: macros (m:n_ame< := ...), not l: names";
+pub(crate) const NO_MARK: &str =
+    "an m: export is a macro: its name ends in < (m:n_ame< := { left right -> ... })";
+pub(crate) const MARK_UNEXPORTED: &str =
+    "a macro is exported: write it m:n_ame< in a macro library (.xtlm)";
+pub(crate) const MARK_OUTSIDE: &str =
+    "macros are defined in macro libraries (.xtlm files), as m:n_ame<";
+pub(crate) const HIDDEN: &str = "uppercase prefixes are the macro phase's own (hidden namespaces); import a library with a lowercase alias";

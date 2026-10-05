@@ -1,0 +1,15 @@
+[package]
+name = "xetal-typing"
+description = "The live demo's terminal input: keys from the page typed into a line for a waiting program (Saga 25)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+yew.workspace = true
+web-sys.workspace = true
+xetal-lineedit.workspace = true
+xetal-screen.workspace = true
+xetal-runner.workspace = true

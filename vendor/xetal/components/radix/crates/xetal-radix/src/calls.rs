@@ -5,6 +5,7 @@ use xetal_base::{Diagnostic, Span};
 use xetal_value::{Value, as_array, to_value};
 
 use crate::digits::{decode, encode};
+use crate::number::{Number, is_float};
 
 type Out<'a> = Result<Value<'a>, Diagnostic>;
 
@@ -12,7 +13,8 @@ type Out<'a> = Result<Value<'a>, Diagnostic>;
 pub fn call<'a>(name: &str, args: &[Value<'a>], span: Span) -> Option<Out<'a>> {
     let result = match (name, args) {
         ("e_ncode", [r, x]) => encode_all(r, x),
-        ("d_ecode", [r, x]) => decode_all(r, x),
+        ("d_ecode", [r, x]) if is_float(r) || is_float(x) => decode_all::<f64>(r, x),
+        ("d_ecode", [r, x]) => decode_all::<i64>(r, x),
         _ => return None,
     };
     Some(result.map_err(|d| match d.span {
@@ -21,15 +23,13 @@ pub fn call<'a>(name: &str, args: &[Value<'a>], span: Span) -> Option<Out<'a>> {
     }))
 }
 
-/// Ints of rank 0 or 1, for `name`'s argument.
-fn ints(v: &Value<'_>, name: &str, most: usize) -> Result<Array<i64>, Diagnostic> {
-    let a = as_array(v).map(|x| match x {
-        Value::Int(i) => Ok(*i),
-        Value::Bool(b) => Ok(i64::from(*b)),
-        other => Err(Diagnostic::new(
-            "not-an-integer",
-            format!("expected integers, got {other}"),
-        )),
+/// Numbers of rank at most `most`, for `name`'s argument.
+fn numbers<N: Number>(v: &Value<'_>, name: &str, most: usize) -> Result<Array<N>, Diagnostic> {
+    let a = as_array(v).map(|x| {
+        N::read(x).ok_or_else(|| {
+            let message = format!("expected {}, got {x}", N::WHAT);
+            Diagnostic::new("not-an-integer", message)
+        })
     })?;
     if a.rank() > most {
         let dims: Vec<String> = a.shape().iter().map(ToString::to_string).collect();
@@ -47,7 +47,10 @@ fn ints(v: &Value<'_>, name: &str, most: usize) -> Result<Array<i64>, Diagnostic
 /// Shape: the radix's, then the right argument's; the digits of item
 /// `j` run down column `j`.
 fn encode_all<'a>(r: &Value<'a>, x: &Value<'a>) -> Out<'a> {
-    let (r, x) = (ints(r, "e_ncode", 1)?, ints(x, "e_ncode", 1)?);
+    let (r, x) = (
+        numbers::<i64>(r, "e_ncode", 1)?,
+        numbers::<i64>(x, "e_ncode", 1)?,
+    );
     let columns = x
         .data()
         .iter()
@@ -61,8 +64,11 @@ fn encode_all<'a>(r: &Value<'a>, x: &Value<'a>) -> Out<'a> {
 
 /// One number per column of the digits (a vector is one column); a
 /// scalar radix extends to every digit.
-fn decode_all<'a>(r: &Value<'a>, x: &Value<'a>) -> Out<'a> {
-    let (r, x) = (ints(r, "d_ecode", 1)?, ints(x, "d_ecode", 2)?);
+fn decode_all<'a, N: Number>(r: &Value<'a>, x: &Value<'a>) -> Out<'a> {
+    let (r, x) = (
+        numbers::<N>(r, "d_ecode", 1)?,
+        numbers::<N>(x, "d_ecode", 2)?,
+    );
     let k = x.shape().first().copied().unwrap_or(1);
     let radix = match (r.rank(), r.data()) {
         (0, [b]) => vec![*b; k],
@@ -75,8 +81,8 @@ fn decode_all<'a>(r: &Value<'a>, x: &Value<'a>) -> Out<'a> {
     let cols = x.shape().get(1).copied().unwrap_or(1);
     let numbers = (0..cols)
         .map(|j| {
-            let digits: Vec<i64> = (0..k).map(|i| x.data()[i * cols + j]).collect();
-            decode(&radix, &digits).map(Value::Int)
+            let digits: Vec<N> = (0..k).map(|i| x.data()[i * cols + j]).collect();
+            decode(&radix, &digits).map(N::value)
         })
         .collect::<Result<Vec<_>, _>>()?;
     Ok(match x.rank() {

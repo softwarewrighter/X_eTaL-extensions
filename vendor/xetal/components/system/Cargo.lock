@@ -350,6 +350,7 @@ dependencies = [
  "xetal-base",
  "xetal-draw",
  "xetal-store",
+ "xetal-tty",
  "xetal-value",
 ]
 
@@ -359,6 +360,10 @@ version = "0.1.0"
 dependencies = [
  "xetal-base",
 ]
+
+[[package]]
+name = "xetal-tty"
+version = "0.1.0"
 
 [[package]]
 name = "xetal-value"

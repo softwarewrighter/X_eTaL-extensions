@@ -2,7 +2,7 @@
 
 [workspace]
 resolver = "3"
-members = ["crates/xetal-play", "crates/xetal-chrome", "crates/xetal-layout", "crates/xetal-runner", "crates/xetal-web"]
+members = ["crates/xetal-play", "crates/xetal-chrome", "crates/xetal-layout", "crates/xetal-runner", "crates/xetal-web", "crates/xetal-typing"]
 
 [workspace.package]
 version = "0.1.0"
@@ -12,6 +12,11 @@ authors = ["Michael A Wright"]
 repository = "https://github.com/softwarewrighter/X_eTaL"
 
 [workspace.dependencies]
+xetal-tty = { path = "../console/crates/xetal-tty" }
+xetal-typing = { path = "crates/xetal-typing" }
+xetal-step = { path = "../step/crates/xetal-step" }
+xetal-screen = { path = "../console/crates/xetal-screen" }
+xetal-lineedit = { path = "../console/crates/xetal-lineedit" }
 xetal-catalog = { path = "../base/crates/xetal-catalog" }
 xetal-ast = { path = "../syntax/crates/xetal-ast" }
 xetal-ir = { path = "../core/crates/xetal-ir" }
@@ -46,5 +51,5 @@ xetal-macro = { path = "../macro/crates/xetal-macro" }
 yew = { version = "0.21", features = ["csr"] }
 wasm-bindgen = "0.2"
 js-sys = "0.3"
-web-sys = { version = "0.3", features = ["Element", "HtmlTextAreaElement", "HtmlSelectElement", "KeyboardEvent", "Window", "Storage", "PointerEvent", "DomRect", "DedicatedWorkerGlobalScope", "MessageEvent", "Worker", "ErrorEvent"] }
+web-sys = { version = "0.3", features = ["Element", "HtmlElement", "Document", "NodeList", "HtmlTextAreaElement", "KeyboardEvent", "Window", "Storage", "PointerEvent", "DomRect", "DedicatedWorkerGlobalScope", "MessageEvent", "Worker", "ErrorEvent"] }
 console_error_panic_hook = "0.1"

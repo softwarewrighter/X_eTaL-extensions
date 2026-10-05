@@ -1,6 +1,8 @@
 //! Writing one file into the combined text, and naming the hidden
 //! namespaces.
 
+use std::collections::HashMap;
+
 use xetal_base::Diagnostic;
 use xetal_names::{Edit, Import};
 use xetal_sources::Sources;
@@ -41,7 +43,30 @@ pub(crate) fn emit(
     sources.copy(index, at..text.len());
 }
 
-pub(crate) fn twice(code: &str, import: &Import) -> Diagnostic {
+/// Note that `letters` names the library `key`: one letter for two
+/// libraries, or one library under two letters, is an error (MC8 rows
+/// 6 and 7).
+pub(crate) fn once(
+    keys: &mut HashMap<String, String>,
+    letters: String,
+    key: String,
+    import: &Import,
+) -> Result<(), Diagnostic> {
+    if let Some(other) = keys.insert(letters, key.clone()) {
+        let code = if other == key {
+            "library-reimported"
+        } else {
+            "alias-reused"
+        };
+        return Err(twice(code, import));
+    }
+    if keys.values().filter(|k| **k == key).count() > 1 {
+        return Err(twice("library-reimported", import));
+    }
+    Ok(())
+}
+
+fn twice(code: &str, import: &Import) -> Diagnostic {
     let message = match code {
         "alias-reused" => format!(
             "{} already names another library in this file",

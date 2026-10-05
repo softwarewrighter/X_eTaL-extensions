@@ -6,7 +6,9 @@ use std::collections::HashSet;
 use xetal_base::{Diagnostic, Span};
 use xetal_lex::{Token, TokenKind};
 
-use crate::errors::{L_IN_PROGRAM, PRINTS, fail};
+use crate::errors::{
+    L_IN_MACROS, L_IN_PROGRAM, MARK_OUTSIDE, MARK_UNEXPORTED, NO_MARK, PRINTS, fail,
+};
 use crate::imports::statements;
 use crate::names::Context;
 use crate::rename::name;
@@ -69,14 +71,33 @@ impl Defs {
             let message = format!("{written} is already defined in this file");
             return Err(fail("duplicate-definition", first.span, message));
         }
+        marks(first, ns.as_deref(), cx)?;
         match (ns.as_deref(), cx.library.is_some()) {
             (Some("l"), false) => {
                 return Err(fail("library-name-in-program", first.span, L_IN_PROGRAM));
             }
-            (Some("l"), true) => self.exports.push(key),
+            (Some(n), true) if n == cx.own => self.exports.push(key),
+            (Some("l"), true) => {
+                return Err(fail("library-name-in-macros", first.span, L_IN_MACROS));
+            }
             (None, true) => drop(self.privates.insert(key)),
             _ => {}
         }
         Ok(())
     }
+}
+
+/// A macro (a name ending in `<`) is defined only as an `m:` export of
+/// a macro library, and every `m:` export there is one (MC10).
+fn marks(first: &Token, ns: Option<&str>, cx: &Context) -> Result<(), Diagnostic> {
+    let is_macro = matches!(&first.kind, TokenKind::Func(f) if f.is_macro());
+    let in_macros = cx.library.is_some() && matches!(cx.own, "m" | "s");
+    let export = in_macros && ns == Some(cx.own);
+    let message = match (is_macro, export, in_macros) {
+        (false, true, _) => NO_MARK,
+        (true, false, true) => MARK_UNEXPORTED,
+        (true, false, false) => MARK_OUTSIDE,
+        _ => return Ok(()),
+    };
+    Err(fail("misdefined-macro", first.span, message))
 }

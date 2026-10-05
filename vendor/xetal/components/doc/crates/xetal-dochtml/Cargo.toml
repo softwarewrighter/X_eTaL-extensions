@@ -1,0 +1,13 @@
+[package]
+name = "xetal-dochtml"
+description = "xetal doc's HTML pieces: source drawn decorated with its names linked, doc prose and examples, anchors, the stylesheet"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+xetal-base.workspace = true
+xetal-view.workspace = true
+xetal-doclink.workspace = true

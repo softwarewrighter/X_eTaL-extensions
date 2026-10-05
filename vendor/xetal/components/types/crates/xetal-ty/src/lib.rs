@@ -10,5 +10,5 @@ mod unify;
 
 pub use class::Classes;
 pub use scheme::mono;
-pub use ty::{Scheme, Type, TypeVar};
+pub use ty::{ENUMS, Scheme, Type, TypeVar};
 pub use unify::Unifier;

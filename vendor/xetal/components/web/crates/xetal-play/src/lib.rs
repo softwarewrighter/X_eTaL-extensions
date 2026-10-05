@@ -5,10 +5,12 @@
 //! here also runs natively, so it is tested without a browser.
 
 mod engine;
+mod interactive;
 mod lines;
 mod notebook;
 
 pub use engine::{Run, check, run, run_to};
+pub use interactive::{Interactive, Step};
 pub use lines::Lines;
 pub use notebook::{notebook_to, statements};
 pub use xetal_grid::set_boxed;

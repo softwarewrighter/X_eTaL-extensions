@@ -39,11 +39,8 @@ pub(crate) fn run(command: &Command) -> Result<String, Diagnostic> {
         return Err(Diagnostic::unsupported(command.stage()));
     };
     let source = source?;
-    if let Command::Render(args) = command {
-        return render(args, &source);
-    }
-    if let Command::Diagram(_) = command {
-        return xetal_diagram::diagram(&source);
+    if let Some(result) = whole(command, &source) {
+        return result;
     }
     if let Some(result) = crate::echo::evaluation(command, &source) {
         return result;
@@ -59,6 +56,33 @@ pub(crate) fn run(command: &Command) -> Result<String, Diagnostic> {
         Command::Fmt(_) => xetal_render::canonical(&source),
         Command::Core(_) => Ok(xetal_core::lower(&source)?.to_string()),
         _ => Err(Diagnostic::unsupported(command.stage())),
+    }
+}
+
+/// The commands that take the whole source rather than its tokens:
+/// render, diagram, expand and doc (its model or its tests).
+fn whole(command: &Command, source: &str) -> Option<Result<String, Diagnostic>> {
+    let named = |input: &crate::args::Input| input.file.clone().unwrap_or("-e".into());
+    Some(match command {
+        Command::Render(args) => render(args, source),
+        Command::Diagram(_) => xetal_diagram::diagram(source),
+        Command::Expand(input) => xetal_program::expanded(&named(input), source),
+        Command::Doc(args) if args.test => xetal_doctest::test(&named(&args.input), source),
+        Command::Doc(args) => doc(args, &named(&args.input), source),
+        _ => return None,
+    })
+}
+
+/// `xetal doc`: the model as JSON, or the site written into `--out`
+/// (the paths written, one a line).
+fn doc(args: &crate::args::DocArgs, name: &str, source: &str) -> Result<String, Diagnostic> {
+    match &args.out {
+        Some(dir) => {
+            let files = xetal_doc::model(name, source)?;
+            let written = xetal_docsite::write(std::path::Path::new(dir), &files)?;
+            Ok(written.join("\n"))
+        }
+        None => xetal_doc::json(name, source),
     }
 }
 

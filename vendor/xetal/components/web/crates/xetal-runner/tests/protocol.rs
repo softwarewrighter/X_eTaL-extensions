@@ -40,6 +40,8 @@ fn every_event_round_trips() {
         Event::Done,
         Event::Ready,
         Event::Source("# a comment\nx := 1".into()),
+        Event::Waiting,
+        Event::WaitingKey,
     ] {
         assert_eq!(Event::decode(&e.encode()), Some(e.clone()), "{e:?}");
     }
@@ -51,4 +53,21 @@ fn what_is_not_a_message_is_none() {
         assert_eq!(Event::decode(bad), None, "{bad:?}");
     }
     assert_eq!(Request::decode("1:x"), None);
+}
+
+#[test]
+fn a_typed_line_round_trips_and_is_not_a_request() {
+    for line in ["look", "", "go 3:north", "\u{2190} 12:x"] {
+        let message = xetal_runner::line_message(line);
+        assert_eq!(xetal_runner::typed_line(&message), Some(line.to_string()));
+        assert_eq!(xetal_runner::Request::decode(&message), None);
+    }
+    let request = xetal_runner::Request {
+        src: "1".into(),
+        seed: 1,
+        mode: xetal_runner::Mode::Run,
+        boxed: false,
+        files: Vec::new(),
+    };
+    assert_eq!(xetal_runner::typed_line(&request.encode()), None);
 }

@@ -20,9 +20,9 @@ u:s_core := { s g ->
 secret u:s_core guess
 secret u:s_core secret
 
-# Every code, 6^4 of them: the digits of 0 to 1295 in base 6, by
-# dividing by the place values and keeping the remainders, plus one.
-codes := 1 + (((r_ange 1296) - 1) 'd_iv t_able 216 36 6 1) m_od 6
+# Every code, 6^4 of them: the digits of 0 to 1295 in base 6, plus
+# one. Encode gives one column per number; transpose makes each a row.
+codes := o_\ 1 + 6 6 6 6 e_ncode o_ffsets 1296
 t_ally codes
 3 t_ake codes
 

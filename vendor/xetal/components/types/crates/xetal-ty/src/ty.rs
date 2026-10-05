@@ -20,7 +20,13 @@ pub enum Type {
     Fn(Box<Type>, Box<Type>),
     /// An enclosed item of a nested array (A7, B14).
     Box(Box<Type>),
+    /// A built-in enumerated type, by name (QD6: `Color`, `Key`).
+    Named(&'static str),
 }
+
+/// The built-in enumerated types (QD6); Saga 29 makes them ordinary
+/// declarations.
+pub const ENUMS: [&str; 2] = ["Color", "Key"];
 
 /// A polymorphic type: `forall vars. ty`, with the variables that must
 /// be numbers (`Num`) or usable as conditions (`Truthy`).
@@ -65,6 +71,7 @@ fn write(ty: &Type, names: &HashMap<TypeVar, String>, f: &mut fmt::Formatter<'_>
         Type::Int => f.write_str("Int"),
         Type::Float => f.write_str("Float"),
         Type::Char => f.write_str("Char"),
+        Type::Named(name) => f.write_str(name),
         Type::Var(v) => match names.get(v) {
             Some(name) => f.write_str(name),
             None => write!(f, "t{}", v.0),

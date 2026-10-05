@@ -1,0 +1,18 @@
+# X_eTaL component `expand`: one Cargo workspace (see docs/architecture.md).
+
+[workspace]
+resolver = "3"
+members = ["crates/xetal-mapped", "crates/xetal-expand"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+authors = ["Michael A Wright"]
+repository = "https://github.com/softwarewrighter/X_eTaL"
+
+[workspace.dependencies]
+xetal-base = { path = "../base/crates/xetal-base" }
+xetal-lex = { path = "../syntax/crates/xetal-lex" }
+xetal-mapped = { path = "crates/xetal-mapped" }
+xetal-expand = { path = "crates/xetal-expand" }

@@ -1,7 +1,9 @@
-//! Dispatch: the higher-order built-ins on runtime values.
+//! Dispatch: the higher-order built-ins on runtime values, each a
+//! kernel (D50) the evaluator runs call by call.
 
 use xetal_base::{Diagnostic, Span};
-use xetal_value::{Caller, Value};
+use xetal_kernel::{Direct, Kernel, apply, then};
+use xetal_value::Value;
 
 use crate::fold::{reduce, scan};
 use crate::power::power;
@@ -9,30 +11,45 @@ use xetal_axes::on_axes;
 use xetal_map::{each, inner, map, table, zip};
 use xetal_value::as_array;
 
-type Out<'a> = Result<Value<'a>, Diagnostic>;
+type Out<'a> = Result<Kernel<'a, Value<'a>>, Diagnostic>;
 
-/// Call the higher-order built-in `name` with its arguments, applying
-/// operands through `c`, if it is one.
+/// The higher-order built-ins' names.
+const NAMES: [&str; 11] = [
+    "r_/", "s_\\", "e_ach", "#each", "m_ap", "t_able", "i_nner", "c_ompose", "#axes", "s_wap",
+    "p_ower",
+];
+
+/// Whether `name` is a higher-order built-in (one that calls functions).
+pub fn higher(name: &str) -> bool {
+    NAMES.contains(&name)
+}
+
+/// The kernel of the higher-order built-in `name` on its arguments, if
+/// it is one; an error without a place is given `span`. Built-in
+/// operands the runner calls at once (`direct`) need no kernel calls.
 pub fn call<'a>(
     name: &str,
     args: &[Value<'a>],
     span: Span,
-    c: &mut dyn Caller<'a>,
+    direct: &mut dyn Direct<'a>,
 ) -> Option<Out<'a>> {
     let result = match (name, args) {
-        ("r_/", [f, x]) => reduce(f, x, span, c),
-        ("s_\\", [f, x]) => scan(f, x, span, c),
-        ("e_ach", [f, x]) => each(f, x, span, c),
-        ("#each", [fs, y]) => zip(fs, y, span, c),
-        ("m_ap", [f, x]) => map(f, x, span, c),
-        ("t_able", [f, x, y]) => table(f, x, y, span, c),
-        ("i_nner", [g, f, x, y]) => inner(g, f, x, y, span, c),
-        ("c_ompose", [g, f, x]) => c
-            .call(g, x.clone(), span)
-            .and_then(|gx| c.call(f, gx, span)),
-        ("#axes", [spec, f, rest @ ..]) => on_axes(&digits(spec), f, rest, span, c),
-        ("s_wap", [f, x, y]) => c.call2(f, y.clone(), x.clone(), span),
-        ("p_ower", [f, n, x]) => power(f, n, x, span, c),
+        ("r_/", [f, x]) => reduce(f, x, direct),
+        ("s_\\", [f, x]) => scan(f, x),
+        ("e_ach", [f, x]) => each(f, x, direct),
+        ("#each", [fs, y]) => zip(fs, y),
+        ("m_ap", [f, x]) => map(f, x),
+        ("t_able", [f, x, y]) => table(f, x, y, direct),
+        ("i_nner", [g, f, x, y]) => inner(g, f, x, y, direct),
+        ("c_ompose", [g, f, x]) => {
+            let f = f.clone();
+            Ok(then(apply(g.clone(), vec![x.clone()]), move |gx| {
+                Ok(apply(f, vec![gx]))
+            }))
+        }
+        ("#axes", [spec, f, rest @ ..]) => on_axes(&digits(spec), f, rest),
+        ("s_wap", [f, x, y]) => Ok(apply(f.clone(), vec![y.clone(), x.clone()])),
+        ("p_ower", [f, n, x]) => power(f, n, x),
         _ => return None,
     };
     Some(result.map_err(|d| match d.span {

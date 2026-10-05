@@ -17,6 +17,7 @@ xetal-types.workspace = true
 xetal-array.workspace = true
 xetal-grid.workspace = true
 xetal-value.workspace = true
+xetal-step.workspace = true
 xetal-arith.workspace = true
 xetal-struct.workspace = true
 xetal-hof.workspace = true
@@ -24,6 +25,7 @@ xetal-search.workspace = true
 xetal-radix.workspace = true
 xetal-system.workspace = true
 xetal-rotate.workspace = true
+xetal-transpose.workspace = true
 
 [dev-dependencies]
 proptest.workspace = true

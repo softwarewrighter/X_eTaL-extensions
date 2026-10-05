@@ -25,7 +25,7 @@ const TABLE: [Class; 4] = [
         admits: |t| {
             matches!(
                 t,
-                Type::Int | Type::Float | Type::Bool | Type::Char | Type::Box(_)
+                Type::Int | Type::Float | Type::Bool | Type::Char | Type::Box(_) | Type::Named(_)
             )
         },
         phrase: "Int, Float, Bool or Char",

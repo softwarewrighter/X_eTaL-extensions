@@ -1205,7 +1205,9 @@ version = "0.1.0"
 dependencies = [
  "xetal-array",
  "xetal-base",
+ "xetal-kernel",
  "xetal-rotate",
+ "xetal-transpose",
  "xetal-value",
 ]
 
@@ -1225,6 +1227,7 @@ dependencies = [
 name = "xetal-chrome"
 version = "0.1.0"
 dependencies = [
+ "wasm-bindgen",
  "web-sys",
  "yew",
 ]
@@ -1275,10 +1278,21 @@ dependencies = [
  "xetal-radix",
  "xetal-rotate",
  "xetal-search",
+ "xetal-step",
  "xetal-struct",
  "xetal-system",
+ "xetal-transpose",
  "xetal-types",
  "xetal-value",
+]
+
+[[package]]
+name = "xetal-expand"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-lex",
+ "xetal-mapped",
 ]
 
 [[package]]
@@ -1304,6 +1318,7 @@ dependencies = [
  "xetal-array",
  "xetal-axes",
  "xetal-base",
+ "xetal-kernel",
  "xetal-map",
  "xetal-value",
 ]
@@ -1314,6 +1329,14 @@ version = "0.1.0"
 dependencies = [
  "xetal-base",
  "xetal-lex",
+]
+
+[[package]]
+name = "xetal-kernel"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-value",
 ]
 
 [[package]]
@@ -1337,6 +1360,10 @@ name = "xetal-libs"
 version = "0.1.0"
 
 [[package]]
+name = "xetal-lineedit"
+version = "0.1.0"
+
+[[package]]
 name = "xetal-lint"
 version = "0.1.0"
 dependencies = [
@@ -1346,15 +1373,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-lookup"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
+ "xetal-libs",
+ "xetal-sources",
+ "xetal-store",
+]
+
+[[package]]
 name = "xetal-macro"
 version = "0.1.0"
 dependencies = [
  "xetal-base",
+ "xetal-expand",
  "xetal-lex",
  "xetal-libs",
+ "xetal-lookup",
+ "xetal-mapped",
  "xetal-names",
  "xetal-sources",
- "xetal-store",
 ]
 
 [[package]]
@@ -1364,7 +1403,15 @@ dependencies = [
  "xetal-array",
  "xetal-base",
  "xetal-core",
+ "xetal-kernel",
  "xetal-value",
+]
+
+[[package]]
+name = "xetal-mapped"
+version = "0.1.0"
+dependencies = [
+ "xetal-base",
 ]
 
 [[package]]
@@ -1379,15 +1426,37 @@ dependencies = [
 name = "xetal-play"
 version = "0.1.0"
 dependencies = [
+ "xetal-arith",
  "xetal-base",
  "xetal-core",
  "xetal-eval",
  "xetal-grid",
+ "xetal-lint",
  "xetal-macro",
  "xetal-program",
+ "xetal-step",
  "xetal-store",
  "xetal-types",
  "xetal-view",
+]
+
+[[package]]
+name = "xetal-prim"
+version = "0.1.0"
+dependencies = [
+ "xetal-arith",
+ "xetal-array",
+ "xetal-base",
+ "xetal-catalog",
+ "xetal-hof",
+ "xetal-kernel",
+ "xetal-radix",
+ "xetal-rotate",
+ "xetal-search",
+ "xetal-struct",
+ "xetal-system",
+ "xetal-transpose",
+ "xetal-value",
 ]
 
 [[package]]
@@ -1405,9 +1474,12 @@ version = "0.1.0"
 dependencies = [
  "xetal-base",
  "xetal-core",
+ "xetal-eval",
  "xetal-lex",
  "xetal-macro",
  "xetal-sources",
+ "xetal-system",
+ "xetal-types",
 ]
 
 [[package]]
@@ -1447,8 +1519,13 @@ dependencies = [
  "web-sys",
  "xetal-play",
  "xetal-store",
+ "xetal-tty",
  "yew",
 ]
+
+[[package]]
+name = "xetal-screen"
+version = "0.1.0"
 
 [[package]]
 name = "xetal-search"
@@ -1465,6 +1542,22 @@ name = "xetal-sources"
 version = "0.1.0"
 dependencies = [
  "xetal-base",
+ "xetal-mapped",
+]
+
+[[package]]
+name = "xetal-step"
+version = "0.1.0"
+dependencies = [
+ "xetal-arith",
+ "xetal-array",
+ "xetal-base",
+ "xetal-core",
+ "xetal-hof",
+ "xetal-kernel",
+ "xetal-lex",
+ "xetal-prim",
+ "xetal-value",
 ]
 
 [[package]]
@@ -1501,6 +1594,7 @@ dependencies = [
  "xetal-base",
  "xetal-draw",
  "xetal-store",
+ "xetal-tty",
  "xetal-value",
 ]
 
@@ -1510,6 +1604,19 @@ version = "0.1.0"
 dependencies = [
  "xetal-base",
 ]
+
+[[package]]
+name = "xetal-transpose"
+version = "0.1.0"
+dependencies = [
+ "xetal-array",
+ "xetal-base",
+ "xetal-value",
+]
+
+[[package]]
+name = "xetal-tty"
+version = "0.1.0"
 
 [[package]]
 name = "xetal-ty"
@@ -1528,6 +1635,17 @@ dependencies = [
  "xetal-lex",
  "xetal-prim-types",
  "xetal-ty",
+]
+
+[[package]]
+name = "xetal-typing"
+version = "0.1.0"
+dependencies = [
+ "web-sys",
+ "xetal-lineedit",
+ "xetal-runner",
+ "xetal-screen",
+ "yew",
 ]
 
 [[package]]
@@ -1564,6 +1682,7 @@ dependencies = [
  "xetal-play",
  "xetal-runner",
  "xetal-store",
+ "xetal-typing",
  "yew",
 ]
 

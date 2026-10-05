@@ -39,7 +39,7 @@ u:m_agic := { m ->
   r & d & e & (s_ort (n * n) r_eshape m) m_atch r_ange n * n
 }
 u:s_iamese 3
-'{ u:m_agic u:s_iamese _r } e_ach 3 5 7 9 11
+'[u:m_agic u:s_iamese] e_ach 3 5 7 9 11
 u:m_agic u:s_iamese 7
 u:m_agic 3 3 r_eshape r_ange 9    # counting is not magic
 shown := []S_HOW []G_RID u:s_iamese 7

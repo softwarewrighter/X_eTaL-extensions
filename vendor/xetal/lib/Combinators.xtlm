@@ -1,0 +1,75 @@
+## Combinators as macros: the birds of the Combinators library written
+## in at compile time instead of applied when the program runs. Import
+## both under one alias: "c:" u_se< "Combinators" finds Combinators.xtl
+## (c:Y_, c:B_, ...) and this file (c:Y_<, c:B_<).
+
+### Recursion
+
+## Define the function named on the left by the lambda on the right,
+## whose first parameter is the function itself: the knot c:Y_ ties
+## when the program runs is tied here, by writing the name in place of
+## the self parameter. The result is plain named recursion, with no
+## lazy parameter and no combinator left to run.
+## >> "c:" u_se< "Combinators"
+## >> "u:f_act" c:Y_< "{ ~s_elf n -> n <= 1 ? 1; n * s_elf n - 1 }"
+## >> u:f_act 5
+## 120
+m:Y_< := { name lambda ->
+  n_ot []S_TATEMENT @ ? "misplaced-macro call" []R_EJECT "c:Y_< defines a function: it stands as a statement of its own"
+  t := t_rim lambda
+  a := w_here "->" s_tarts t
+  (n_ot "{" m_atch 1 t_ake t) | (0 = t_ally a) ? "bad-macro-argument right" []R_EJECT yShape
+  ps := w_ords ((f_irst a) - 2) t_ake 1 d_rop t
+  2 > t_ally ps ? "bad-macro-argument right" []R_EJECT yShape
+  self := s_trip d_isclose f_irst ps
+  rest := j_oin '{ p -> " " c_at d_isclose p } m_ap 1 d_rop ps
+  body := ((f_irst a) + 1) d_rop t
+  (t_rim name) c_at " := {" c_at rest c_at " ->" c_at (self w_ord t_rim name)_ body
+}
+
+### Composition
+
+## The function on the left applied to the result of the one on the
+## right, as one lambda written in place (the Bluebird, B f g x =
+## f (g x)); either may be a name, a derived function or a lambda.
+## >> "c:" u_se< "Combinators"
+## >> u:s_umTo := "'+ r_/" c:B_< "r_ange"
+## >> u:s_umTo 4
+## 10
+m:B_< := { f g -> "{ " c_at (t_rim f) c_at " " c_at (t_rim g) c_at " _r }" }
+
+yShape := "c:Y_< takes a lambda whose first parameter is the function itself: { s_elf n -> ... }"
+
+# The text t without white space at its ends.
+t_rim := { t ->
+  m := n_ot t m_ember? " \n\t"
+  0 = '+ r_/ 0 + m ? ""
+  i := w_here m
+  (1 + (f_irst r_ev i) - f_irst i) t_ake ((f_irst i) - 1) d_rop t
+}
+
+# The words of t: runs of characters other than white space, boxed.
+w_ords := { t -> (n_ot t m_ember? " \n\t") p_artition t }
+
+# The boxed texts b joined into one text.
+j_oin := { b -> d_isclose '{ x y -> e_nclose (d_isclose x) c_at d_isclose y } r_/ b }
+
+# A parameter's name without the lazy mark ~.
+s_trip := { p -> (f_irst p) = f_irst "~" ? 1 d_rop p; p }
+
+# Where the text w starts in t (1 at each such position).
+s_tarts := { w t -> '{ i -> w m_atch (t_ally w) t_ake (i - 1) d_rop t } e_ach r_ange t_ally t }
+
+# Characters that continue a name.
+nameChars := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_:"
+
+# t with each whole word w (not part of a longer name) replaced by r.
+w_ord := { w r t ->
+  n := t_ally w
+  e := " " c_at t c_at " "
+  ok_ := { i -> (i + n - 1) > t_ally t ? 0; n_ot ((i s_elect e) m_ember? nameChars) | (i + n + 1) s_elect e m_ember? nameChars }
+  h := (w s_tarts t) & 'ok_ e_ach r_ange t_ally t
+  c := 0 < ('+ s_\ 0 + h) - '+ s_\ 0 + (n r_eshape 0) c_at (0 - n) d_rop 0 + h
+  p_ := { i -> (i s_elect h) ? r; (i s_elect c) ? ""; i s_elect t }
+  j_oin 'p_ m_ap r_ange t_ally t
+}

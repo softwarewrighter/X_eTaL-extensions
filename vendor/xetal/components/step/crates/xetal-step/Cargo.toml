@@ -1,0 +1,21 @@
+[package]
+name = "xetal-step"
+description = "The steppable evaluator: Core run as an explicit machine in slices (D50)"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+xetal-base.workspace = true
+xetal-core.workspace = true
+xetal-lex.workspace = true
+xetal-array.workspace = true
+xetal-value.workspace = true
+xetal-arith.workspace = true
+xetal-hof.workspace = true
+xetal-prim.workspace = true
+xetal-kernel.workspace = true
+
+[dev-dependencies]

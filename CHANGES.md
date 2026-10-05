@@ -11,6 +11,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-05
+
+- 20:07 `vendor` X_eTaL f823212 vendored (from 7b70575: `.xtlm` macro libraries and the system macros, ask E2; options before the subcommand, ask E6; the terminal; the speed work).
+
 ## 2026-10-04
 
 - 20:06 `docs` The triggered oscilloscope checked live: it ended by itself (9 s) and the user found it now looks like a scope.

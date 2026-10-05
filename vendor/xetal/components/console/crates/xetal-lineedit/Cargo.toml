@@ -1,0 +1,8 @@
+[package]
+name = "xetal-lineedit"
+description = "The terminal (Saga 25): typing a line: browser keys translated, and a line editor with a cursor and history"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true

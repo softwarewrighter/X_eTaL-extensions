@@ -1,0 +1,219 @@
+## The system macros (lang-choices MC18, MC19, MC24), loaded before
+## every file with no import and no alias: each is called unprefixed,
+## as "c" i_f< "a; b". A macro is a function of the source text on each
+## side of its call; the text it gives replaces the call. @ on a side
+## means the macro takes nothing there (MC22). What only the compiler
+## knows comes from hooks (MC20), usable only in a macro body.
+
+# u_se< ("c:" u_se< "Combinators") is a system macro too, but built into
+# xetal, not defined here (MC21). Were it a macro of this file, it would
+# read
+#
+#   s:u_se< := { alias name -> ... }
+#
+# taking the two texts, the alias ("c:") on the left and the library's
+# name or path ("Name") on the right, like any macro. But what u_se<
+# does is not text: it finds Name.xtl and Name.xtlm, loads them, and
+# makes their exported names exist in this file under c:. A macro
+# cannot do that: a macro of yours gives source text, and that text can
+# only use names that exist, never create bindings the way an import
+# does. So the compiler does u_se< itself, and this comment stands in
+# for its definition, as Rust's std declares include_str! with a body
+# its compiler builds.
+
+### Choosing and repeating
+
+## The value of the first expression on the right when the condition
+## on the left holds, else of the second. The condition is tested when
+## the program runs, and only the expression chosen is evaluated
+## (MC14).
+## >> "2 > 0" i_f< "1; -1"
+## 1
+s:i_f< := { cond both ->
+  p := w_here s_eps both
+  1 != t_ally p ? "bad-macro-argument right" []R_EJECT ifArgs
+  a := t_rim ((f_irst p) - 1) t_ake both
+  b := t_rim (f_irst p) d_rop both
+  (0 = t_ally a) | 0 = t_ally b ? "bad-macro-argument right" []R_EJECT ifArgs
+  "{ @ -> (" c_at (t_rim cond) c_at ") ? " c_at a c_at "; " c_at b c_at " } @"
+}
+
+## Run the statements on the right unless the condition on the left
+## holds; the value is @ either way (MC15).
+## >> "1 = 0" u_nless< "p_rint! 7"
+## 7
+## @
+s:u_nless< := { cond body ->
+  "{ @ -> (" c_at (t_rim cond) c_at ") ? @; " c_at (t_rim body) c_at "; @ } @"
+}
+
+## One statement per word on the left, each a copy of the template on
+## the right with $w replaced by the word; it stands as a statement of
+## its own (MC16).
+## >> "m_ax m_in" e_ach< "u:$w/ := { '$w r_/ _r }"
+## >> u:m_ax/ 3 1 4
+## 4
+s:e_ach< := { words template ->
+  n_ot []S_TATEMENT @ ? "misplaced-macro call" []R_EJECT eachAlone
+  ws := w_ords words
+  0 = t_ally ws ? "bad-macro-argument left" []R_EJECT "e_ach< needs words on its left"
+  0 = '+ r_/ 0 + h_oles template ? "bad-macro-argument right" []R_EJECT eachHole
+  d_isclose '{ a b -> e_nclose (d_isclose a) c_at "\n" c_at d_isclose b } r_/ '{ w -> template c_opy d_isclose w } m_ap ws
+}
+
+### What the compiler knows
+
+## The line the call is written on, as a number (inside another
+## macro's expansion, the line of that macro's call).
+## >> @ l_ine< @
+## 1
+s:l_ine< := { u v -> u n_othing v n_othing f_ormat []L_INE @ }
+
+## The file the call is written in, as a string (-e for text given on
+## the command line).
+## >> @ f_ile< @
+## -e
+s:f_ile< := { u v -> u n_othing v n_othing q_uote []F_ILE @ }
+
+## The text of a file, as a string, by a path relative to the file the
+## call is written in; from the disk at the command line, from the
+## store in the browser (Rust's include_str!). For example,
+## t := @ i_nclude< "data.txt" binds the text of data.txt.
+s:i_nclude< := { u path -> u n_othing q_uote []I_NCLUDE t_rim path }
+
+## 1 when a configuration fact holds, else 0: the platform (cli, or web
+## in the browser) or a flag set with xetal --cfg NAME.
+## >> @ c_fg< "cli"
+## 1
+s:c_fg< := { u name -> u n_othing f_ormat 0 + []C_FG t_rim name }
+
+## Stop with a compile error at the call, with the code on the left and
+## the message on the right (Rust's compile_error!); a macro writes it
+## into its text to refuse a call.
+## >> "too-big" e_rror< "the grid must be at most 9 wide"
+## error[too-big]
+s:e_rror< := { code message -> ((t_rim code) c_at " call") []R_EJECT message }
+
+### Debugging and checking
+
+## The value of the expression on the right, after writing
+## [file:line] expr = value to standard error (Rust's dbg!).
+## >> 1 + @ d_bg< "2 * 3"
+## 7
+s:d_bg< := { u expr ->
+  e := t_rim expr
+  shown := "[" c_at ([]F_ILE @) c_at ":" c_at (f_ormat []L_INE @) c_at "] " c_at e c_at " = "
+  u n_othing "{ @ -> dbgValue := (" c_at e c_at "); []E_RR " c_at (q_uote shown) c_at " c_at f_ormat dbgValue; dbgValue } @"
+}
+
+## When the condition on the left does not hold, write
+## assertion failed: cond (message) [file:line] to standard error, the
+## condition as written, and go on; the message on the right may be @
+## for none. The value is @ either way. Unlike Rust's assert!, it never
+## stops the program (p_anic< does).
+## >> "1 > 2" a_ssert< "one is not more than two"
+## @
+s:a_ssert< := { cond note ->
+  c := t_rim cond
+  line := "assertion failed: " c_at c c_at (w_hy f_ormat note) c_at " [" c_at ([]F_ILE @) c_at ":" c_at (f_ormat []L_INE @) c_at "]"
+  "{ @ -> (" c_at c c_at ") ? @; []E_RR " c_at (q_uote line) c_at "; @ } @"
+}
+
+### Text
+
+## The text on the right with each {expr} replaced by the value of
+## expr, as the function f_ormat writes it; {{ and }} are braces. An
+## unclosed {, an empty {} or a lone } fails before the program runs
+## (Rust's format!).
+## >> @ f_ormat< "two and two: {2 + 2} {{four}}"
+## two and two: 4 {four}
+s:f_ormat< := { u t -> u n_othing o_rEmpty p_ieces t }
+
+## Stop the program with error[panic] and the message on the right,
+## formatted as f_ormat< does, at the call; it stands where any value
+## may (Rust's panic!).
+## >> 1 + @ p_anic< "no {1 + 1}"
+## error[panic]
+s:p_anic< := { u t -> u n_othing "[]P_ANIC (" c_at (o_rEmpty p_ieces t) c_at ")" }
+
+### Private helpers
+
+ifArgs := "i_f< takes two expressions on its right, separated by ;: \"c\" i_f< \"a; b\""
+eachAlone := "e_ach< writes statements: it stands as a statement of its own"
+eachHole := "an e_ach< template names the word as $w: \"a b\" e_ach< \"u:$w := 1\""
+
+# The text t without white space at its ends.
+t_rim := { t ->
+  m := n_ot t m_ember? " \n\t"
+  0 = '+ r_/ 0 + m ? ""
+  i := w_here m
+  (1 + (f_irst r_ev i) - f_irst i) t_ake ((f_irst i) - 1) d_rop t
+}
+
+# The words of t: runs of characters other than white space, boxed.
+w_ords := { t -> (n_ot t m_ember? " \n\t") p_artition t }
+
+# Where t separates statements: a ; or a newline outside brackets and
+# strings.
+s_eps := { t ->
+  q := ('+ s_\ 0 + t = f_irst "\"") m_od 2
+  d := '+ s_\ (0 + t m_ember? "([{") - 0 + t m_ember? ")]}"
+  (t m_ember? ";\n") & (0 = d) & 0 = q
+}
+
+# Where $w starts in t.
+h_oles := { t -> (t = f_irst "$") & (1 d_rop t = f_irst "w") c_at 0 }
+
+# x, once u (the side of a call that takes no argument, @) is Unit.
+n_othing := { u x -> ({ @ -> x })_ u }
+
+# The boxed texts b joined into one text.
+j_oin := { b -> d_isclose '{ x y -> e_nclose (d_isclose x) c_at d_isclose y } r_/ b }
+
+# t as a string literal: in quotes, with the characters a literal
+# escapes (quote, backslash, newline, tab) escaped.
+q_uote := { t ->
+  0 = t_ally t ? "\"\""
+  e_ := { c -> c = f_irst "\"" ? "\\\""; c = f_irst "\\" ? "\\\\"; c = f_irst "\n" ? "\\n"; c = f_irst "\t" ? "\\t"; c }
+  "\"" c_at (j_oin 'e_ m_ap t) c_at "\""
+}
+
+# The template t with each $w replaced by the word w.
+c_opy := { t w ->
+  h := h_oles t
+  g := 0 c_at -1 d_rop h
+  p_ := { i -> (i s_elect h) ? w; (i s_elect g) ? ""; i s_elect t }
+  j_oin 'p_ m_ap r_ange t_ally t
+}
+
+# An assertion's message in parentheses; none for @ (as f_ormat writes
+# it).
+w_hy := { m -> "@" m_atch m ? ""; " (" c_at m c_at ")" }
+
+# Source p, or an empty string literal when there is none.
+o_rEmpty := { p -> 0 = t_ally p ? "\"\""; p }
+
+# t as a string literal, or nothing when it is empty.
+l_it := { t -> 0 = t_ally t ? ""; q_uote t }
+
+# Two pieces of source joined by c_at (either may be missing).
+c_j := { a b -> 0 = t_ally a ? b; 0 = t_ally b ? a; a c_at " c_at " c_at b }
+
+# The format text t as source: its literal text quoted, each {expr} as
+# (f_ormat (expr)), joined by c_at; {{ and }} are braces.
+p_ieces := { t ->
+  b := t m_ember? "{}"
+  0 = '+ r_/ 0 + b ? l_it t
+  k := f_irst w_here b
+  pre := (k - 1) t_ake t
+  c := k s_elect t
+  rest := k d_rop t
+  n := (k + 1) s_elect t c_at " "
+  c = n ? (l_it pre c_at c) c_j p_ieces 1 d_rop rest
+  c = f_irst "}" ? "bad-format right" []R_EJECT "a } in a format text is written }}"
+  e := w_here rest = f_irst "}"
+  0 = t_ally e ? "bad-format right" []R_EJECT "an unclosed { in a format text"
+  x := t_rim ((f_irst e) - 1) t_ake rest
+  0 = t_ally x ? "bad-format right" []R_EJECT "an empty {} in a format text: write {expr}, or {{ for a brace"
+  (l_it pre) c_j ("(f_ormat (" c_at x c_at "))") c_j p_ieces (f_irst e) d_rop rest
+}

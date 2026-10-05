@@ -1,0 +1,19 @@
+# Macros.xtlm: a small macro library, an example of macros of your own
+# (lang-choices MC10). A macro is an ordinary function of the source
+# text written on each side of its call; the text it gives replaces
+# the call, then is read as code. Import it with an alias of your own:
+#   "x:" u_se< "Macros"
+# and see what a program becomes with `xetal expand FILE`.
+
+# "c" x:w_hen< "b": run the statements b when c holds (the value is
+# @), the other way round from the system macro u_nless<.
+m:w_hen< := { cond body -> "{ @ -> (n_ot " c_at cond c_at ") ? @; " c_at body c_at "; @ } @" }
+
+# "s_quare" x:d_ef< "_r * _r": define the function u:s_quare as
+# { _r * _r }, its name written as text.
+m:d_ef< := { name body -> "u:" c_at name c_at " := { " c_at body c_at " }" }
+
+# "4 = 2 + 2" x:c_heck< "addition": the line "ok: addition" or
+# "FAIL: addition (4 = 2 + 2)", the condition shown as it was written,
+# which a function, given only the condition's value, cannot do.
+m:c_heck< := { cond label -> "{ @ -> (" c_at cond c_at ") ? \"ok: " c_at label c_at "\"; \"FAIL: " c_at label c_at " (" c_at cond c_at ")\" } @" }

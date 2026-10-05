@@ -8,6 +8,7 @@ authors.workspace = true
 repository.workspace = true
 
 [dependencies]
+xetal-tty.workspace = true
 ratatui.workspace = true
 xetal-view.workspace = true
 xetal-buffer.workspace = true

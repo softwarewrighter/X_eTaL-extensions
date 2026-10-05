@@ -2,8 +2,9 @@
 //! the left, drawn decorated on the right as you type, the types (or,
 //! after Run, the output) below, as in `xetal edit`; Open (the demos,
 //! the standard libraries and your files), Save, Run and Zoom. Files
-//! and a program's keyboard are the browser's local storage and a
-//! prompt. The language itself is `xetal-play`.
+//! are the browser's local storage; a program reading a line
+//! (`[]R_EAD`) waits for it in the output pane, a terminal. The
+//! language itself is `xetal-play`.
 
 mod app;
 mod demos;

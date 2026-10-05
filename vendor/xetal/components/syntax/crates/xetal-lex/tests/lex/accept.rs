@@ -11,6 +11,22 @@ fn variables() {
 }
 
 #[test]
+fn long_namespace_prefixes() {
+    // MC13: a lowercase letter, then lowercase letters or digits; the
+    // macro phase's hidden namespaces are uppercase letters.
+    assert_eq!(
+        kinds("combinators:K_ 1 b2:m_ean quux:y LA:x"),
+        [
+            "Func(combinators:K_)",
+            "Num(1)",
+            "Func(b2:m_ean)",
+            "Var(quux:y)",
+            "Var(LA:x)"
+        ]
+    );
+}
+
+#[test]
 fn function_names() {
     assert_eq!(
         kinds("r_ev s_quare self_ r_2 u:s_quare c:K_ l:B_"),

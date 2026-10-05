@@ -12,6 +12,7 @@ fn kind(v: &Value<'_>) -> &'static str {
         Value::Float(_) => "Float",
         Value::Bool(_) => "Bool",
         Value::Char(_) => "Char",
+        Value::Tag(ty, _) => ty,
         Value::Unit => "Unit",
         Value::Array(_) => "Array",
         Value::Boxed(_) => "Box",

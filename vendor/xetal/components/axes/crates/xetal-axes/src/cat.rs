@@ -4,23 +4,18 @@
 use std::rc::Rc;
 
 use xetal_array::{Array, ArrayError};
-use xetal_base::{Diagnostic, Span};
-use xetal_value::{Caller, Value, as_array, to_value};
+use xetal_base::Diagnostic;
+use xetal_kernel::{Kernel, apply, done, then};
+use xetal_value::{Value, as_array, to_value};
 
 use crate::apply::{axis_error, checked};
 use crate::move_axis;
 
-type Out<'a> = Result<Value<'a>, Diagnostic>;
+type Out<'a> = Result<Kernel<'a, Value<'a>>, Diagnostic>;
 
 /// `a c_at_k b`: move axis k of each full-rank argument to the front,
 /// join along the leading axis, and move it back.
-pub(crate) fn cat_on<'a>(
-    axes: &[u8],
-    f: &Value<'a>,
-    (a, b): (&Value<'a>, &Value<'a>),
-    span: Span,
-    c: &mut dyn Caller<'a>,
-) -> Out<'a> {
+pub(crate) fn cat_on<'a>(axes: &[u8], f: &Value<'a>, (a, b): (&Value<'a>, &Value<'a>)) -> Out<'a> {
     let [k] = axes else {
         return Err(axis_error("c_at joins along one axis, not several"));
     };
@@ -34,12 +29,13 @@ pub(crate) fn cat_on<'a>(
         r if r == rank && k > 1 => to_value(move_axis(arr, k - 1, 0)),
         _ => v.clone(),
     };
-    let g = c.call(f, front(a, &x), span)?;
-    let joined = c.call(&g, front(b, &y), span)?;
-    Ok(match k {
-        1 => joined,
-        _ => Value::Array(Rc::new(move_axis(&as_array(&joined), 0, k - 1))),
-    })
+    let joined = apply(f.clone(), vec![front(a, &x), front(b, &y)]);
+    Ok(then(joined, move |joined| {
+        Ok(done(match k {
+            1 => joined,
+            _ => Value::Array(Rc::new(move_axis(&as_array(&joined), 0, k - 1))),
+        }))
+    }))
 }
 
 /// The shapes across axis k must agree: a full-rank argument without

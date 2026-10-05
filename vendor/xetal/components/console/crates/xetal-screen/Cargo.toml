@@ -1,0 +1,8 @@
+[package]
+name = "xetal-screen"
+description = "The terminal (Saga 25): the terminal's screen: a grid of styled character cells with scrollback"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true

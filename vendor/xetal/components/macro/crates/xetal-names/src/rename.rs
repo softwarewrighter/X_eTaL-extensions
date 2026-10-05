@@ -6,7 +6,7 @@ use std::collections::HashSet;
 use xetal_base::Diagnostic;
 use xetal_lex::{Token, TokenKind};
 
-use crate::errors::{L_IN_PROGRAM, U_IN_LIBRARY, fail};
+use crate::errors::{HIDDEN, L_IN_MACROS, L_IN_PROGRAM, U_IN_LIBRARY, fail};
 use crate::names::{Context, Edit};
 
 /// A name token's namespace and its key (a function's spelling, a
@@ -35,8 +35,12 @@ pub(crate) fn rename(
         (None, Some((_, private))) if privates.contains(&key) && !bound => private.to_string(),
         (None, _) | (Some("u"), None) | (Some(xetal_lex::SYSTEM), _) => return Ok(None),
         (Some("u"), Some(_)) => return Err(fail("user-name-in-library", t.span, U_IN_LIBRARY)),
-        (Some("l"), Some((own, _))) => own.to_string(),
+        (Some(ns), Some((own, _))) if ns == cx.own => own.to_string(),
+        (Some("l"), Some(_)) => return Err(fail("library-name-in-macros", t.span, L_IN_MACROS)),
         (Some("l"), None) => return Err(fail("library-name-in-program", t.span, L_IN_PROGRAM)),
+        (Some(ns), _) if ns.starts_with(|c: char| c.is_ascii_uppercase()) => {
+            return Err(fail("hidden-namespace", t.span, HIDDEN));
+        }
         (Some(alias), _) => aliased(alias, &key, t, cx)?,
     };
     let raw = &text[t.span.start..t.span.end];

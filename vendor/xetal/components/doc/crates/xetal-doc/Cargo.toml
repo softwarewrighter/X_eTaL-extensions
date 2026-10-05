@@ -1,0 +1,19 @@
+[package]
+name = "xetal-doc"
+description = "xetal doc: the items of a program and its libraries, with types, doc comments and uses"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+xetal-base.workspace = true
+xetal-core.workspace = true
+xetal-types.workspace = true
+xetal-program.workspace = true
+xetal-sources.workspace = true
+xetal-names.workspace = true
+xetal-libs.workspace = true
+xetal-macro.workspace = true
+xetal-doccom.workspace = true

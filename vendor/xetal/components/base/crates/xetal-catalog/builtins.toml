@@ -66,8 +66,31 @@ entries = [
   ["[]N_PUT", 2, "Char -> Char -> Int"],
   ["[]N_GET", 1, "Char -> Char"],
   ["[]R_EAD", 1, "Unit -> Char"],
+  ["[]E_RR", 1, "Char -> Char"],
+  ["[]P_ANIC", 1, "Char -> a"],
+  ["[]T_E", 1, "Unit -> Int"],
+  ["[]K_EY", 1, "Unit -> Key"],
+  ["[]K_CHAR", 1, "Key -> Char"],
+  ["[]K_NAMED", 1, "Int -> Key"],
+  ["[]C_OLOR", 1, "Int -> Color"],
+  ["[]F_G", 2, "Color -> Char -> Char"],
+  ["[]B_G", 2, "Color -> Char -> Char"],
+  ["[]B_OLD", 1, "Char -> Char"],
+  ["[]A_T", 2, "Int -> Char -> Char"],
+  ["[]C_LS", 1, "Unit -> Char"],
   ["f_ormat", 1, "a -> Char"],
   ["n_umbers", 1, "Char -> Float"],
+]
+
+[[group]]
+rule = "MC20: macro hooks (only in a macro body, while a call is expanded)"
+entries = [
+  ["[]R_EJECT", 2, "Char -> Char -> Char"],
+  ["[]S_TATEMENT", 1, "Truthy a => Unit -> a"],
+  ["[]F_ILE", 1, "Unit -> Char"],
+  ["[]L_INE", 1, "Unit -> Int"],
+  ["[]I_NCLUDE", 1, "Char -> Char"],
+  ["[]C_FG", 1, "Truthy a => Char -> a"],
 ]
 
 [[group]]
@@ -141,10 +164,10 @@ entries = [
 ]
 
 [[group]]
-rule = "B12: encode and decode (radix on the left)"
+rule = "B12, B18: encode and decode (radix on the left; decode on any numbers)"
 entries = [
   ["e_ncode", 2, "Int -> Int -> Int"],
-  ["d_ecode", 2, "Int -> Int -> Int"],
+  ["d_ecode", 2, "Num a => a -> a -> a"],
 ]
 
 [[group]]
@@ -152,4 +175,11 @@ rule = "A2-A4: rotate and reverse (leading axis)"
 entries = [
   ["r_ev", 1, "a -> a"],
   ["o_-", 2, "Int -> a -> a"],
+]
+
+[[group]]
+rule = "B17: transpose"
+entries = [
+  ["o_\\", 1, "a -> a"],
+  ["t_ranspose", 2, "Int -> a -> a"],
 ]

@@ -1,0 +1,4 @@
+## Greeting macros, beside Greet.xtl under the same alias.
+
+## "c" g:w_hen< "b": run b when c holds.
+m:w_hen< := { cond body -> "{ @ -> (n_ot " c_at cond c_at ") ? @; " c_at body c_at "; @ } @" }

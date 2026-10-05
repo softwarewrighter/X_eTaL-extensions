@@ -1,7 +1,7 @@
 #!/usr/bin/env xetal
 # Factorial is a reduction: the product of 1 to n (the empty product
 # is 1, so 0 gives 1). Combinations follow, and e as a sum of 1/k!.
-u:f_act := { '* r_/ r_ange _r }
+u:f_act := ['* r_/ r_ange]
 'u:f_act e_ach o_ffsets 11
 
 # n choose k, for every k of one n: a row of Pascal's triangle.

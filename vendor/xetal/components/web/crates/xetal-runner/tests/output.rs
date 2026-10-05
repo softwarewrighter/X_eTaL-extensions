@@ -109,3 +109,23 @@ fn a_notebook_groups_output_under_its_statement() {
     );
     assert_eq!(run.out, "2\n3\n");
 }
+
+#[test]
+fn a_run_waiting_for_a_line_shows_it_typed() {
+    let o = after(vec![
+        Action::Start,
+        Action::Event(Event::Out("name?".into())),
+        Action::Event(Event::Waiting),
+    ]);
+    assert!(o.waiting && o.running);
+    let o = after(vec![
+        Action::Start,
+        Action::Event(Event::Out("name?".into())),
+        Action::Event(Event::Waiting),
+        Action::Typed("Ada".into()),
+        Action::Event(Event::Out("hello Ada".into())),
+    ]);
+    assert!(!o.waiting && o.running);
+    let run = o.run.expect("a run");
+    assert_eq!(run.out, "name?\nAda\nhello Ada\n");
+}

@@ -165,3 +165,35 @@ fn the_live_demo_is_an_installable_app() {
         assert!(worker.contains(part), "sw.js lacks {part}");
     }
 }
+
+/// Open's groups, in order: Demos (the top folder), Classics, Libraries,
+/// Misc (any other folder), Your files; a classic is listed without its
+/// folder.
+#[test]
+fn open_groups_the_demos_by_folder() {
+    let list = choices(&["Mine.xtl".to_string()]);
+    let mut groups: Vec<&str> = list.iter().map(|(g, ..)| *g).collect();
+    groups.dedup();
+    assert_eq!(
+        groups,
+        ["Demos", "Classics", "Libraries", "Misc", "Your files"]
+    );
+    let label = |v: &str| {
+        list.iter()
+            .find(|(_, value, _)| value == v)
+            .map(|(g, _, l)| (*g, l.as_str()))
+    };
+    let duck = DEMOS
+        .iter()
+        .position(|d| d.name == "classics/duck.xtl")
+        .unwrap();
+    assert_eq!(
+        label(&format!("demo:{duck}")),
+        Some(("Classics", "duck.xtl"))
+    );
+    let leet = DEMOS
+        .iter()
+        .position(|d| d.name.starts_with("leetcode/"))
+        .unwrap();
+    assert_eq!(label(&format!("demo:{leet}")).map(|(g, _)| g), Some("Misc"));
+}

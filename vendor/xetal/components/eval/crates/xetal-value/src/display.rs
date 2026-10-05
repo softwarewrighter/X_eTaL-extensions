@@ -15,6 +15,7 @@ impl fmt::Display for Value<'_> {
             Value::Float(x) => write!(f, "{x}"),
             Value::Bool(b) => f.write_str(if *b { "1" } else { "0" }),
             Value::Char(c) => write!(f, "{c}"),
+            Value::Tag(ty, i) => f.write_str(&crate::tags::name(ty, *i)),
             Value::Unit => f.write_str("@"),
             Value::Boxed(_) | Value::Array(_) if nested(self) => {
                 f.write_str(&xetal_grid::display(&shown(self)).join("\n"))

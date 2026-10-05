@@ -21,27 +21,38 @@ pub(crate) fn lex_name(cur: &mut Cursor) -> Result<TokenKind, LexError> {
     Ok(kind)
 }
 
-/// `letters:` directly followed by a letter is a namespace prefix.
+/// `prefix:` directly followed by a letter is a namespace prefix (MC13):
+/// a lowercase letter, then lowercase letters or digits; or uppercase
+/// letters, the macro phase's hidden namespaces. Others are errors.
 fn namespace(cur: &mut Cursor) -> Result<Option<String>, LexError> {
     let mut i = 0;
-    while cur.peek_at(i).is_some_and(|b| b.is_ascii_alphabetic()) {
+    while cur.peek_at(i).is_some_and(|b| b.is_ascii_alphanumeric()) {
         i += 1;
     }
     if cur.peek_at(i) != Some(b':') || cur.peek_at(i + 1) == Some(b'=') {
         return Ok(None);
     }
-    let start = cur.pos;
+    let span = Span::new(cur.pos, cur.pos + i + 1);
+    let bad = |message| Err(LexError::new(ErrorKind::BadNamespace, span, message));
     if !cur.peek_at(i + 1).is_some_and(|b| b.is_ascii_alphabetic()) {
-        return Err(LexError::new(
-            ErrorKind::BadNamespace,
-            Span::new(start, start + i + 1),
+        return bad(
             "a namespace prefix must be followed by a name (aliases are written as strings)",
-        ));
+        );
     }
-    let ns = cur.eat_while(|b| b.is_ascii_alphabetic()).to_string();
+    let ns = cur.eat_while(|b| b.is_ascii_alphanumeric()).to_string();
+    // As written (`c`, `b2`, `combinators`), or hidden (`LA`).
+    let b = ns.as_bytes();
+    let written = b[0].is_ascii_lowercase()
+        && b.iter()
+            .all(|c| c.is_ascii_lowercase() || c.is_ascii_digit());
+    if !written && !b.iter().all(u8::is_ascii_uppercase) {
+        return bad(PREFIX);
+    }
     cur.pos += 1;
     Ok(Some(ns))
 }
+
+const PREFIX: &str = "a namespace prefix is a lowercase letter, then lowercase letters or digits (like b2: or combinators:)";
 
 /// Letters and digits with at most one `_`, which must follow a letter.
 fn stem(cur: &mut Cursor) -> Result<(String, Option<usize>), LexError> {

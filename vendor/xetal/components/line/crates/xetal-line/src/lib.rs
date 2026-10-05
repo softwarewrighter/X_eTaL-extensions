@@ -5,6 +5,8 @@
 
 mod line;
 mod term;
+mod tty;
 
 pub use line::{Line, Outcome};
 pub use term::read_line;
+pub use tty::Terminal;
