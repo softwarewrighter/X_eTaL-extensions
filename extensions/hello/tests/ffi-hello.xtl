@@ -1,0 +1,14 @@
+# Hello written with the binding macro (docs/ffi-macro.md): its expansion
+# must equal docs/ffi/Hello.xtl, its types the facade's (plus l:package).
+"ffi:" u_se< "Ffi"
+"a_nswer : unit -> int"        ffi:b_ind< "hello/answer"
+"a_dd : float float -> float"  ffi:b_ind< "hello/add"
+"s_hout : text -> text"        ffi:b_ind< "hello/shout"
+"s_um : float -> float"        ffi:b_ind< "hello/sum"
+"e_cho : float -> floats"      ffi:b_ind< "hello/echo"
+"f_ail : unit -> int"          ffi:b_ind< "hello/fail"
+"p_anic : unit -> int"         ffi:b_ind< "hello/panic"
+
+# the native package behind these functions (a literal l: name makes
+# this a library to `xetal type`, ask E7)
+l:package := "hello"

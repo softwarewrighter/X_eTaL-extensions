@@ -18,6 +18,7 @@ and the workaround in use.
 | E4 | filed (X_eTaL queue item 5, Saga 13 steps: `[]TS`, `[]D_L`) | feature | the time: a quad giving the current time (APL's quad TS) and a monotonic or CPU clock (quad AI) | clock (and anything timing itself) | the clock extension, through the bridge |
 | E5 | filed (X_eTaL queue item 9, Saga 27, readable type errors) | feature | an error raised inside a library function also names the program line that called it (a call trace) | every facade (errors point into the facade's helper, not the caller) | the extension's message names the function (`ext:sqlite/nums: ...`) |
 | E6 | landed (vendored X_eTaL f823212) | bug | `xetal --draw DIR run FILE` fails (clap takes `run` as the SCRIPT argument and FILE as a subcommand); `xetal run --draw DIR FILE` works | the sqlite notebook's test and every demo recipe | `--draw` written after `run` |
+| E7 | open | bug | `xetal type FILE` calls a library whose `l:` names all come from macro calls a program (`library-name-in-program`): it decides before expanding | every facade written with the binding macro | one literal export per facade, `l:package := "NAME"` |
 
 2026-10-05: X_eTaL f823212 vendored, with E2 (`.xtlm`) and E6
 (`--draw` before the subcommand) landed; every golden passed unchanged.
@@ -162,3 +163,27 @@ optional SCRIPT positional. `xetal run --draw out prog.xtl` works, as
 does `XETAL_DRAW=out xetal run prog.xtl`. Workaround (until f823212): `--draw` after `run`. Landed: options may
 now come before or after the subcommand; the recipes keep `run --draw`,
 which is still valid.
+
+### E7: `xetal type` and macro-written libraries
+
+A library whose exports are all written by macros runs fine when a
+program imports it, but `xetal type` refuses it:
+
+```
+# Lib.xtl
+"g:" u_se< "Gen"
+"t_wice" g:d_ef< "y * 2"        # expands to l:t_wice := { ... }
+```
+
+```
+xetal type Lib.xtl
+error[library-name-in-program]: l: names exist only inside a library; import it with an alias
+```
+
+`is_library` (xetal-program, library.rs) looks for an `l:` token in the
+source before macros expand, finds none, and treats the file as a
+program; then the expansion's `l:` names are an error. Wanted: decide
+after expansion (or treat a file whose expansion defines `l:` names as
+a library). Workaround: each facade written with the binding macro
+keeps one literal export, `l:package := "NAME"` (the native package
+behind it), which is also useful.

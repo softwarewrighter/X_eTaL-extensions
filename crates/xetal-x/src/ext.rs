@@ -89,13 +89,15 @@ pub fn load(dirs: &[PathBuf]) -> Result<(Registry, Vec<PathBuf>), Diagnostic> {
 /// so `"hx:" u_se< "Hello"` finds `Hello.xtl` (a library of the user's
 /// with the same name still wins).
 pub fn library_path(facades: &[PathBuf]) -> Option<OsString> {
-    if facades.is_empty() {
-        return None;
-    }
     let mut dirs: Vec<PathBuf> = std::env::var_os("XETAL_PATH")
         .map(|p| std::env::split_paths(&p).collect())
         .unwrap_or_default();
     dirs.extend(facades.iter().cloned());
+    // this repository's own libraries (the binding macro, Ffi.xtlm)
+    let shared = PathBuf::from(concat!(env!("CARGO_MANIFEST_DIR"), "/../../lib"));
+    if shared.is_dir() {
+        dirs.push(shared);
+    }
     std::env::join_paths(dirs).ok()
 }
 

@@ -11,7 +11,7 @@ of date. Release 1 is hello, clock and sqlite (docs/plan.md).
 | [audio](../extensions/audio/docs/README.md) | media (saga 5) | `Audio` (`au:`) | 14 | 5 | 8 | scope, spectrum, synth | [scope](../extensions/audio/videos/scope.webm), [spectrum](../extensions/audio/videos/spectrum.webm), [synth](../extensions/audio/videos/synth.webm) | command line |
 | [canvas](../extensions/canvas/docs/README.md) | media (saga 5) | `Canvas` (`cv:`) | 4 | 2 | 4 | life | [life](../extensions/canvas/videos/life.webm) | native window (xetal-x) |
 | [clock](../extensions/clock/docs/README.md) | release 1 | `Clock` (`ck:`) | 4 | 2 | 5 | bridge-cost | [bridge-cost](../extensions/clock/videos/bridge-cost.webm) | command line |
-| [hello](../extensions/hello/docs/README.md) | release 1 | `Hello` (`hx:`) | 8 | 5 | 13 | tour | [tour](../extensions/hello/videos/tour.webm) | command line |
+| [hello](../extensions/hello/docs/README.md) | release 1 | `Hello` (`hx:`) | 8 | 5 | 16 | tour | [tour](../extensions/hello/videos/tour.webm) | command line |
 | [scene](../extensions/scene/docs/README.md) | media (saga 5) | `Scene` (`sc:`) | 8 | 5 | 4 | cube | [cube](../extensions/scene/videos/cube.webm) | native window (xetal-x) |
 | [sqlite](../extensions/sqlite/docs/README.md) | release 1 | `Sqlite` (`sq:`) | 6 | 7 | 8 | notebook | [notebook](../extensions/sqlite/videos/notebook.webm) | command line |
 

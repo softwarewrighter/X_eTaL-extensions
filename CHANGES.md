@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 00:28 `feat` The binding macro, `lib/Ffi.xtlm` (`"s_hout : text -> text" ffi:b_ind< "hello/shout"`): about 60 lines of X_eTaL string work; `xetal-x` puts the repo's `lib/` on `XETAL_PATH`. Its expansion of hello's seven signatures equals `docs/ffi/Hello.xtl` exactly, its types the facade's, and the tour through it its golden (three reg-rs tests). Ask E7: `xetal type` decides library-or-program before expanding macros (workaround: `l:package`). docs/ffi-macro.md describes it as built.
+
 - 00:08 `build` X_eTaL is no longer copied into this repository (the user, after X_eTaL's docs/vendoring.md): `XETAL_COMMIT` names the known-good commit (f823212); `just xetal` (`scripts/xetal.sh`) clones X_eTaL into `work/xetal/`, checks it out, builds and links `bin/xetal`; Cargo path dependencies, `xetal-x`'s `#[path]` modules, the build scripts, checks and recipes point at the clone; `check-vendor` checks the clone is at the commit and unedited; every script that builds runs `scripts/xetal.sh` first; `vendor/xetal/` (657 tracked files) removed. The gate passes unchanged (21 demos identical, every golden).
 
 - 22:04 `fix` American spellings only (the user, after fixing X_eTaL-demos): `scripts/check-spelling.py` (copied from X_eTaL-demos; audio, video and fixture files skipped) and its self-test in the gate (`just check-spelling`); an audit found 55 British forms in 20 files (-our for -or, -re for -er, -yse for -yze, doubled l, and the like) and all were fixed, Rust identifiers included (scene's `Object::color`), the canvas listing golden with its doc string; CLAUDE.md rule 14.

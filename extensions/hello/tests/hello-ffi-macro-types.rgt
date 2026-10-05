@@ -1,0 +1,3 @@
+command = "xetal-x type tests/ffi-hello.xtl"
+exit_code = 0
+desc = "the macro-written facade types like the hand-written one (hello-types), plus l:package"

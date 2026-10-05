@@ -4,11 +4,10 @@ Every extension's facade (`extensions/NAME/lib/NAME.xtl`) is hand-written
 code that speaks the `ext:` channel: put each argument, get the reply,
 read it back as the type the native function returns. It is the same
 few lines for every function, decided by the function's signature.
-Once X_eTaL has `.xtlm` macro libraries (ask E2, X_eTaL Saga 19,
-decisions MC10-MC13), a macro writes those lines: a facade becomes one
-line per native function. This page is the design, ready for that day;
-X_eTaL-extensions is one of the three repositories waiting on `.xtlm`
-(research4).
+With X_eTaL's `.xtlm` macro libraries (ask E2, landed; MC10-MC13), a
+macro writes those lines: a facade becomes one line per native
+function. `lib/Ffi.xtlm` is that macro; `xetal-x` puts `lib/` on
+`XETAL_PATH`, so a facade imports it as `"ffi:" u_se< "Ffi"`.
 
 ## How a facade will read
 
@@ -41,6 +40,7 @@ never uses a macro it defines (MC10).
 | `floats` | as `float` | `v := n_umbers []N_GET "ext:E/F"` then `(f_loor n_umbers []N_GET "ext:E/F?shape") r_eshape v` | `Float`, any rank |
 | `int` | `(f_ormat r_avel f_loor a) []N_PUT "ext:E/F?int=" c_at f_ormat s_hape a` | `f_loor f_irst n_umbers []N_GET "ext:E/F"` | `Int` |
 | `chars` | `(r_avel a) []N_PUT "ext:E/F?chars=" c_at f_ormat s_hape a` | `v := []N_GET "ext:E/F"` then `(f_loor n_umbers []N_GET "ext:E/F?shape") r_eshape v` | `Char`, any rank |
+| `ints` | -- | as `floats`, with `f_loor` | `Int`, any rank |
 
 One argument kind before `->` makes a monadic export (`{ a -> ... }`),
 two a dyadic one (`{ a b -> ... }`, left then right), `unit` none.
@@ -77,38 +77,34 @@ to be right before the macro exists:
 - `hello-ffi-expansion` (reg-rs): hello's tour, with this file in place
   of `lib/Hello.xtl` (first on `XETAL_PATH`), prints the tour's golden.
 
-## The macro (sketch)
+## The macro
 
-`Ffi.xtlm` defines one macro, a function of the two texts (MC10):
+`lib/Ffi.xtlm`, about 60 lines of ordinary X_eTaL string work: split
+the signature into words (`p_artition` on spaces), take the name, the
+argument kinds and the result kind, and join the lines of the table
+above with `c_at`. Its private helpers (`v_alue`, `q_uery`, `p_ut`,
+`g_et`) each turn one kind into its text.
 
-```
-# Ffi.xtlm -- generate a facade function from a native function's signature.
-# Import: "ffi:" u_se< "Ffi"
-m:b_ind< := { sig target ->
-  # sig: "NAME : KIND [KIND] -> KIND"; target: "EXT/FUNCTION"
-  # 1. split sig at " : " and " -> " (the name, the argument kinds, the result kind)
-  # 2. one put line per argument kind (the table above), names pa, pb
-  # 3. the result lines for the result kind
-  # 4. "l:" NAME " := { " args " ->" newline, the lines, "}"
-  ...
-}
-```
+Tested by reg-rs in the hello extension, against the goldens:
 
-Its body is ordinary X_eTaL string work (splitting on spaces,
-concatenating with `c_at`), written and tested when `.xtlm` lands --
-against the goldens above: `xetal --expand` of the macro-based
-`Hello.xtl` (ask X2 in X_eTaL-libraries) must give `docs/ffi/Hello.xtl`'s
-definitions, and its types must stay `hello-types`.
+- `hello-ffi-macro`: `xetal-x expand tests/ffi-hello.xtl` (hello's seven
+  exports as signature lines) gives exactly the definitions of
+  `docs/ffi/Hello.xtl`;
+- `hello-ffi-macro-types`: their types equal the hand-written facade's
+  (`hello-types`), plus `l:package`;
+- `hello-ffi-macro-tour`: the tour, with the macro-written facade in
+  place of `lib/Hello.xtl`, prints the tour's golden.
 
-## The day `.xtlm` lands
+A facade written this way keeps one literal export,
+`l:package := "NAME"`: `xetal type` decides whether a file is a library
+before macros expand (ask E7).
 
-1. Refresh the vendored X_eTaL (its own commit).
-2. Write `lib/Ffi.xtlm` (in a shared directory every facade can import,
-   for example `lib/` at the repository root, put on `XETAL_PATH` by
-   `xetal-x`), test its expansions against `docs/ffi/Hello.xtl`.
-3. Rewrite each facade (hello, clock, sqlite, canvas) as signature
+## What follows
+
+1. (Done) X_eTaL with `.xtlm` (f823212), `lib/Ffi.xtlm`, its tests.
+2. Rewrite each facade (hello, clock, sqlite, canvas) as signature
    lines; every facade's `NAME-types` golden must not change, and every
    demo's golden neither (the proof that programs did not notice).
-4. Later, when X_eTaL calls native code itself (E1, Saga 23), only
+3. Later, when X_eTaL calls native code itself (E1, Saga 23), only
    `Ffi.xtlm` changes: the facades keep their lines, the expansion
    calls the native hook instead of the `ext:` channel.
