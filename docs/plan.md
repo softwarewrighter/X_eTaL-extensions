@@ -388,7 +388,7 @@ pulls each request and posts its reply.
 | - | --------- | -------- |
 | 1 | pages-fresh | (done) the gate fails when `pages/` is older than its sources (found when the published site still said X_eTaL is vendored) |
 | 2 | web | (done) the web extension: axum on a background thread, a bounded request queue, next / reply, timeouts, loopback by default; Rust tests with a real client on loopback |
-| 3 | xetal-v010 | (done; inserted: X_eTaL tagged v0.1.0 at 512b3ee) `XETAL_COMMIT` pinned there, every golden re-run; a tag here (v0.2.0, built against X_eTaL v0.1.0) only with the user's yes |
+| 3 | xetal-v010 | (done; inserted: X_eTaL tagged v0.1.0 at 512b3ee) `XETAL_COMMIT` pinned there, every golden re-run; tagged v0.2.0 at 9dec588 (the user's yes; annotated, notes: built against X_eTaL v0.1.0; no GitHub Release) |
 | 4 | live-page | demos/live: a page recomputing Life or Mandelbrot as SVG per request; reg-rs test drives it over loopback |
 | 5 | todomvc | demos/todomvc: TodoMVC in X_eTaL with sqlite; loopback test of add, toggle, delete |
 | 6 | web-release | recordings (vhs with curl), docs, status, catalog, retrospective; the site checked online after the deploy |
