@@ -103,7 +103,11 @@ XETAL_AUDIO_WAV=FILE` collects everything queued in a WAV
 
 `demos/scope.xtl` (`just demo audio scope`): the synthesizer's music
 plays while a window draws the waveform under the playhead, left
-channel above and right below. The instruments are an ordinary X_eTaL
+channel above and right below, triggered like a real scope. Untriggered
+(the first version, which the user saw sliding), about 1,400 pixels of
+the trace changed from one frame to the next; triggered, 40 to 250 --
+what is left is the notes' envelopes decaying, and a jump when a note
+changes. The instruments are an ordinary X_eTaL
 library beside the demos, `demos/Instruments.xtl` (`"in:" u_se<
 "Instruments"`), shared with `synth.xtl` -- one program using an
 ordinary library and two native extensions (audio, canvas).
@@ -112,7 +116,8 @@ ordinary library and two native extensions (audio, canvas).
 | ---- | ------ |
 | the piece | eight bars made first and joined side by side (`c_at_2`): 2 by 176,384 |
 | streaming | a bar is queued (`au:q_ueue!`) whenever less than 0.6 s is ahead of the playhead (`au:p_layed`) |
-| what is heard | the 512 samples from the playhead, every other one (an index vector into the piece) |
+| the trigger | as a real scope's: from the playhead, the first rising zero crossing of the left channel (the bass) within 2048 samples -- `((-1 d_rop s) < 0.0) * (1 d_rop s) >= 0.0`, then `i_ndexOf 1` -- so a steady chord stands still instead of sliding; both channels drawn from it |
+| what is heard | the 512 samples from the trigger, every other one (an index vector into the piece) |
 | the trace | each sample's row on a 64-row picture, each column lit from its row to the next sample's (`'>= t_able` times `'<= t_able`), so steep edges stay joined; left and right stacked |
 | the window | `cv:s_how!` each frame; q or closing quits; the end of the music ends it |
 

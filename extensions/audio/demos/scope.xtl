@@ -1,6 +1,7 @@
 # A live oscilloscope: the synthesizer's music (Instruments.xtl) plays
 # while a window draws the samples under the playhead -- the left
-# channel above, the right below -- each frame.
+# channel above, the right below -- each frame, triggered on the left
+# channel's rising zero crossing so a steady chord stands still.
 # Run: just demo audio scope   (q or close: quit)
 "au:" u_se< "Audio"
 "in:" u_se< "Instruments"
@@ -34,6 +35,18 @@ u:t_race := { x ->
   (r '>= t_able y m_in z) * r '<= t_able y m_ax z
 }
 
+# the trigger, as a real scope's: from sample i, the first rising zero
+# crossing of x (one sample below zero, the next at or above it) within
+# the next 2048 samples; i itself when there is none. Drawing from it
+# makes a steady note stand still instead of sliding.
+u:t_rigger := { x i ->
+  c := (t_ally x) m_in i + r_ange 2048
+  s := c s_elect x
+  j := (((-1 d_rop s) < 0.0) * (1 d_rop s) >= 0.0) i_ndexOf 1
+  j >= t_ally c ? i
+  (j + 1) s_elect c
+}
+
 u:q_uit := { k ->
   x := cv:c_lose! w
   y := au:c_lose! v
@@ -41,7 +54,9 @@ u:q_uit := { k ->
 }
 
 # a frame: an event, the playhead, more music when less than 0.6 s is
-# queued, and the 512 samples from the playhead (every other one) drawn
+# queued, and the 512 samples from the trigger (every other one) drawn:
+# both channels triggered by the left (the bass), as a scope triggers
+# from one channel
 u:f_rame := { k ->
   k < 0 ? k
   e := cv:n_ext! w
@@ -52,8 +67,9 @@ u:f_rame := { k ->
   p >= total - 0.1 ? u:q_uit k
   ahead := ((f_loat k * blen) / in:rate) - p
   k2 := ((k < 8) * ahead < 0.6) u:f_eed k
-  i := 1 m_ax (t_ally left) m_in (f_loor p * in:rate) + 2 * r_ange 256
-  s := w cv:s_how! (u:t_race i s_elect left) c_at u:t_race i s_elect right
+  i := f_loor p * in:rate
+  j := 1 m_ax (t_ally left) m_in (left u:t_rigger i) + 2 * (r_ange 256) - 1
+  s := w cv:s_how! (u:t_race j s_elect left) c_at u:t_race j s_elect right
   k2
 }
 last := 100000 'u:f_rame p_ower 1 u:f_eed 0
