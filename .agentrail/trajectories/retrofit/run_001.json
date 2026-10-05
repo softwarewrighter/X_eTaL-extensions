@@ -1,0 +1,11 @@
+{
+  "task_type": "retrofit",
+  "state": {
+    "number": 4,
+    "step": "facades"
+  },
+  "action": "All six facades rewritten as ffi:b_ind< signature lines; types and demo goldens unchanged; errors point at signature lines",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-05T01:02:59"
+}

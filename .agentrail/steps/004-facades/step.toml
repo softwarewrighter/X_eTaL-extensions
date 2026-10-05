@@ -1,9 +1,10 @@
 number = 4
 slug = "facades"
-status = "in-progress"
+status = "completed"
 description = "macros step 3: rewrite facades (hello, clock, sqlite, canvas, scene, audio) a..."
 role = "production"
 context_files = []
 created_at = "2026-10-04T20:06:06"
+completed_at = "2026-10-05T01:02:59"
 task_type = "retrofit"
-commits = []
+commits = ["4af810b9c359995985feb664253640a20a6d6dde"]

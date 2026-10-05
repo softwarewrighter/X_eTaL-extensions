@@ -1,0 +1,1 @@
+All six facades rewritten as ffi:b_ind< signature lines; types and demo goldens unchanged; errors point at signature lines
