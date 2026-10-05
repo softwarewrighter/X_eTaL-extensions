@@ -9,11 +9,11 @@ authors.workspace = true
 
 [dependencies]
 xetal-ext-loader = { path = "../xetal-ext-loader", default-features = false }
-xetal-store = { path = "../../vendor/xetal/components/base/crates/xetal-store" }
+xetal-store = { path = "../../work/xetal/components/base/crates/xetal-store" }
 
 [dev-dependencies]
 xetal-ext-hello = { path = "../../extensions/hello/rust" }
-xetal-play = { path = "../../vendor/xetal/components/web/crates/xetal-play" }
+xetal-play = { path = "../../work/xetal/components/web/crates/xetal-play" }
 
 [lints]
 workspace = true

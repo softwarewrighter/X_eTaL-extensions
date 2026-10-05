@@ -1,4 +1,0 @@
-#!/usr/bin/env xetal
-# M1: a user function with the shorthand right argument.
-u:s_quare := { _r * _r }
-u:s_quare 7

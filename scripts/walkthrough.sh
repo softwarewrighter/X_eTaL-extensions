@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # A fresh user's first run (research3's "release candidate as a
 # stranger"): clone this repository into a temporary directory, build
-# it with nothing but Rust (X_eTaL is vendored), and run release 1's
+# it (Rust, and X_eTaL cloned at its known-good commit), and run release 1's
 # programs -- hello's tour, the clock, the sqlite data notebook --
 # checking each against its committed golden.
 #   scripts/walkthrough.sh                 # clone this checkout's HEAD
@@ -19,7 +19,11 @@ git clone -q "$src" "$dir/X_eTaL-extensions"
 cd "$dir/X_eTaL-extensions"
 git log -1 --format='    at %h %s'
 
-step "build (cargo build --workspace: the vendored X_eTaL, the ABI, the extensions, xetal-x)"
+step "get X_eTaL at its known-good commit (scripts/xetal.sh: work/xetal, bin/xetal)"
+scripts/xetal.sh >/dev/null
+git -C work/xetal log -1 --format='    at %h %s'
+
+step "build (cargo build --workspace: the ABI, the extensions, xetal-x)"
 CARGO_TARGET_DIR="$dir/target" cargo build -q --workspace
 xx="$dir/target/debug/xetal-x"
 

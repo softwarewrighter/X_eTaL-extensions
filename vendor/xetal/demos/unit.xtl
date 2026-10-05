@@ -1,5 +1,0 @@
-#!/usr/bin/env xetal
-# M2: a niladic function takes Unit, written @; `u:a_nswer 42` is a
-# type error.
-u:a_nswer := { @ -> 42 }
-u:a_nswer @

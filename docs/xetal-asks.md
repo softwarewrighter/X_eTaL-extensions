@@ -4,7 +4,7 @@ Features the extensions need that X_eTaL does not have yet, and bugs
 the extensions uncovered. This repo does not change X_eTaL: each ask
 is filed here (and taken to `../X_eTaL`), the extension uses the
 workaround noted below or waits, and the workaround is removed when
-the ask lands in a vendored release (`vendor/xetal/VENDORED`).
+the ask lands in the X_eTaL commit this repository builds on (`XETAL_COMMIT`).
 
 Each entry: status (open, filed, landed, dropped), kind (feature, bug
 or speed), which extensions need it, why, a minimal repro or example,

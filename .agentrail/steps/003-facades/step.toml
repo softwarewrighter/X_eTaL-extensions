@@ -1,9 +1,0 @@
-number = 3
-slug = "facades"
-status = "pending"
-description = "macros step 3: rewrite facades (hello, clock, sqlite, canvas, scene, audio) a..."
-role = "production"
-context_files = []
-created_at = "2026-10-04T20:06:06"
-task_type = "retrofit"
-commits = []

@@ -1,9 +1,0 @@
-number = 4
-slug = "macros-release"
-status = "pending"
-description = "macros step 4: docs (ffi-macro.md from design to reality, README three-ways p..."
-role = "production"
-context_files = []
-created_at = "2026-10-04T20:06:06"
-task_type = "release"
-commits = []

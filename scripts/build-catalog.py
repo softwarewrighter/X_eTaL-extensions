@@ -36,10 +36,7 @@ def what(demo):
 
 
 def vendored():
-    for line in (root / "vendor/xetal/VENDORED").read_text().splitlines():
-        if line.startswith('commit = "'):
-            return line.split('"')[1][:7]
-    return "unknown"
+    return (root / "XETAL_COMMIT").read_text().strip()[:7] or "unknown"
 
 
 sections = []
@@ -92,7 +89,8 @@ page = f"""<!doctype html>
   this page shows them running; the commands under each recording run them yourself.</p>
   <pre class="source">git clone {REPO}
 cd X_eTaL-extensions
-cargo build --workspace     # Rust is all it needs: X_eTaL is vendored
+just xetal                  # X_eTaL at its known-good commit (work/xetal)
+cargo build --workspace
 just demos                  # the demos; then: just demo EXT NAME</pre>
 </header>
 <main>

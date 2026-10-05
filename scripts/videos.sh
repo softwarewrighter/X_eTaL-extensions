@@ -13,6 +13,8 @@
 #   scripts/videos.sh [EXT]
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# X_eTaL's clone (work/xetal) must exist: this repo's crates build on it
+"$root/scripts/xetal.sh" >/dev/null
 cd "$root"
 for tool in vhs ffmpeg gif2webp sox; do command -v "$tool" >/dev/null || { echo "$tool not found" >&2; exit 127; }; done
 cargo build -q --workspace

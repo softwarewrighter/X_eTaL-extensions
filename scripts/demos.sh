@@ -7,6 +7,8 @@
 # go to its work/draw/. Window demos open a window.
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# X_eTaL's clone (work/xetal) must exist: this repo's crates build on it
+"$root/scripts/xetal.sh" >/dev/null
 if [ "$#" -eq 0 ]; then
   for f in "$root"/extensions/*/demos/*.xtl; do
     # a capitalized file there is a library the demos share, not a demo

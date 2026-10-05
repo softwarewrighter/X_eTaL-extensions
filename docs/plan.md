@@ -73,7 +73,7 @@ at all (the clock, regular expressions, binary files) or cannot do
 fast enough (hashing, dense linear algebra), and it is small enough
 to read in one sitting.
 
-## Where X_eTaL is (vendored era)
+## Where X_eTaL is (at XETAL_COMMIT)
 
 - No FFI. `[]S_VO` is reserved for "channels to special facilities
   (graphics, a Rust dynamic library)" (lang-choices QD4, section 15;
@@ -95,12 +95,12 @@ programs.
 
 | # | Decision | Why |
 | - | -------- | --- |
-| A1 | X_eTaL is **vendored** into `vendor/xetal/` as a source snapshot of a committed ref of `../X_eTaL` (`just vendor [REF]`, default `HEAD`), recorded in `vendor/xetal/VENDORED`; the CLI builds into `target/xetal/` (`just xetal`). Same scripts as the sibling repos. Never edited; refreshed at a saga start or when an ask lands, in its own commit. | X_eTaL moves fast; extensions need a recent but stable interpreter. |
-| A2 | **One Cargo workspace** at the root for this repo's crates (`crates/*`, `extensions/*/rust`), separate from the vendored X_eTaL's own workspaces; everything builds into `./target` (`.cargo/config.toml`). | One `cargo test` covers the ABI, SDK, loader and every extension. |
+| A1 | X_eTaL at a **known-good commit**, not a copy (revised 2026-10-05, `../X_eTaL/docs/vendoring.md`): `XETAL_COMMIT` holds the full SHA; `just xetal` (`scripts/xetal.sh`) clones X_eTaL into `work/xetal/` (gitignored), checks the commit out, builds the CLI and links `bin/xetal`; this repo's crates (`xetal-x`, the bridge, the page crates) build on the clone by path. Moving on is a one-line change, at a saga start or when an ask lands, in its own commit with the gate re-run. (Until then, `vendor/xetal/` held a source snapshot: 657 tracked files.) | X_eTaL moves fast; extensions need a recent but stable interpreter, refreshed deliberately, never mid-step -- without tracking its source. |
+| A2 | **One Cargo workspace** at the root for this repo's crates (`crates/*`, `extensions/*/rust`), separate from X_eTaL's own workspaces (in its clone); everything builds into `./target` (`.cargo/config.toml`). | One `cargo test` covers the ABI, SDK, loader and every extension. |
 | A3 | **ABI V1** (`crates/xetal-ext-abi`, `docs/abi-v1.md`): every extension exports one symbol, `xetal_extension_v1`, returning a `#[repr(C)]` descriptor: size and ABI version first, name and version (UTF-8 slices), a bounded table of functions (name, arity 0 to 2, the X_eTaL type signature such as `Char -> Char`, a one-line doc, the trampoline), a reserved field that must be zero. Values carry a fixed-width tag and a payload: X_eTaL's scalars (Bool, Int as i64, Float as f64), text (UTF-8, a Char vector) and dense row-major arrays of Bool, Int, Float or Char of rank 0 to 9; an error is a code and a message. Bounded: 64 Mi elements per value, 16 KiB of descriptor text, 1,024 functions. | demo-extensions' ABI V1, reduced to X_eTaL's types; the size/version prefix and zero reserved fields reject layout drift; the signature lets a future native hook (E1) type the function without a facade. |
 | A4 | **Safety at the boundary.** Validation is the only unsafe pointer-reading code; it copies everything into owned Rust values before registration. Rust panics inside an extension are caught in the extension (SDK trampolines) and returned as an error status, never unwound across `extern "C"`. A result lives in storage the extension keeps until its next call on the same thread; the host copies it at once. | Unwinding across C is undefined; a loader that keeps foreign pointers is a use-after-free waiting to happen. |
 | A5 | **SDK and loader.** `crates/xetal-ext-sdk`: what an author writes (a `xetal_extension!` macro over plain Rust functions of `&[Value] -> Result<Value, String>`), generating the descriptor and the panic-safe trampolines, keeping each result until the next call. `crates/xetal-ext-loader`: resolves a package, `libloading`s it, validates, and registers its functions under the extension's namespace, checking arity before every call, keeping the `Library` alive as long as any function. The same descriptor can also be linked statically (tests, the browser later). | The author never writes `unsafe`; the host never trusts the extension. |
-| A6 | **A bridge host until X_eTaL has a native hook.** `crates/xetal-x`: the vendored X_eTaL interpreter plus the loader, installing a store that routes paths starting `ext:` to native functions and everything else to the disk: `request []N_PUT "ext:digest/sha256"` calls the function on the request text and keeps the reply; `[]N_GET "ext:digest/sha256"` takes it. It is a documented workaround (ask E1), text-only (numbers cross as `f_ormat` / `n_umbers` text), and every facade hides it behind ordinary functions so programs never see it. Programs run with `xetal-x run FILE` instead of `xetal run FILE`. | Lets every extension be used end to end from X_eTaL today with no change to X_eTaL; it is APL's shared-variable channel, the model `[]S_VO` names. Replaced when E1 lands. |
+| A6 | **A bridge host until X_eTaL has a native hook.** `crates/xetal-x`: X_eTaL's interpreter (its CLI, from the clone) plus the loader, installing a store that routes paths starting `ext:` to native functions and everything else to the disk: `request []N_PUT "ext:digest/sha256"` calls the function on the request text and keeps the reply; `[]N_GET "ext:digest/sha256"` takes it. It is a documented workaround (ask E1), text-only (numbers cross as `f_ormat` / `n_umbers` text), and every facade hides it behind ordinary functions so programs never see it. Programs run with `xetal-x run FILE` instead of `xetal run FILE`. | Lets every extension be used end to end from X_eTaL today with no change to X_eTaL; it is APL's shared-variable channel, the model `[]S_VO` names. Replaced when E1 lands. |
 | A7 | **An extension is a self-contained directory**, `extensions/<name>/` (the user's rule, 2026-10-02): `extension.toml` (the manifest); `justfile` (its own recipes: build, test, reg, demos); `rust/` (its Rust library crate, a `cdylib` + `rlib`, with its Rust tests); `lib/` (its X_eTaL sources: the facade `<Name>.xtl`, and `<Name>.xtlm` macros when X_eTaL has them -- one directory, as X_eTaL looks for both together, MC11); `tests/` (reg-rs tests: `*.rgt` commands with committed `.out`/`.err` baselines, `REG_RS_DATA_DIR` pointing there, and the `*.xtl` programs they run); `docs/` (its pages, `docs/README.md` first); `demos/` (programs that show it off, each with a README section and a reg-rs test). The repo's `just` recipes delegate to each extension's. | Each extension can be read, built, tested and moved on its own; the layout is the same for every one. |
 | A8 | **Facade conventions** follow X_eTaL's style guide (lang-choices section 16) and `../X_eTaL-libraries` A6: `UpperCamel.xtl`, exports under `l:`, private helpers unprefixed, predicates `?`, effects `!`, a header with the import line and recommended alias, no export shadowing a built-in, no name shadowing a standard library. Exports are typed as if native (ordinary X_eTaL types), so the facade's types are pinned (`xetal type`) and survive the switch from the bridge to E1. | The facade is the extension's interface; its types are the contract. |
 | A9 | **Pure fallbacks where cheap.** When an extension's function has a reasonable pure X_eTaL definition (CRC-32, a small determinant), the facade's tests compare native and pure results; the pure version is not exported. Where there is none (the clock, regular expressions), there is no fallback. | Golden behavior is cross-checked, not only self-consistent. |
@@ -119,7 +119,7 @@ crates/
   xetal-ext-sdk/         what extension authors use (xetal_extension!)
   xetal-ext-loader/      packages, dynamic loading, registry
   xetal-ext-bridge/      the ext: channel: ExtStore and the protocol, for any host
-  xetal-x/               the bridge host: vendored xetal + loader + ExtStore
+  xetal-x/               the bridge host: X_eTaL's CLI + loader + ExtStore
 web/shell/               the live pages' shared Yew crate and stylesheet
 images/                  the logo and the red favicon
 extensions/<name>/       one self-contained directory per extension
@@ -134,7 +134,9 @@ extensions/<name>/       one self-contained directory per extension
 templates/extension/     what just new-ext copies
 docs/plan.md             this plan
 docs/xetal-asks.md       what the extensions need from X_eTaL
-vendor/xetal/            the vendored X_eTaL (never edited)
+XETAL_COMMIT             the known-good X_eTaL commit
+work/xetal/              X_eTaL cloned at it by just xetal (ignored by git; never edited)
+bin/xetal                its CLI (a link; ignored by git)
 scripts/                 the logic behind the just recipes
 ```
 
@@ -417,10 +419,10 @@ l:s_ha256 := { t -> t []N_PUT "ext:digest/sha256"; []N_GET "ext:digest/sha256" }
 
 ## Cross-cutting
 
-- Refresh the vendored X_eTaL at a saga start or when an ask lands;
+- Move to a newer X_eTaL (`XETAL_COMMIT`) at a saga start or when an ask lands;
   never mid-step; its own commit; goldens and types re-run.
 - When an ask lands, remove its workaround in the step that refreshes
-  the vendor, and mark the ask landed.
+  X_eTaL, and mark the ask landed.
 - A function that belongs in X_eTaL itself (a clock is a fair
   candidate for a quad) is proposed as an ask, not kept here silently.
 - Static linking of several extensions into one binary: each

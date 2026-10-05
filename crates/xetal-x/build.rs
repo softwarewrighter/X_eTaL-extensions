@@ -1,18 +1,20 @@
 //! The `--version` block's BUILD_HOST, GIT_HASH and BUILD_TIMESTAMP, as
-//! the vendored CLI's build script emits them; GIT_HASH is the vendored
-//! X_eTaL commit (vendor/xetal/VENDORED), since the code that runs is
+//! the X_eTaL CLI's build script emits them; GIT_HASH is the known-good
+//! X_eTaL commit (XETAL_COMMIT), since the code that runs is
 //! that commit's CLI.
 
 use std::time::{SystemTime, UNIX_EPOCH};
 
 fn main() {
-    let vendored = "../../vendor/xetal/VENDORED";
-    println!("cargo:rerun-if-changed={vendored}");
-    let text = std::fs::read_to_string(vendored).unwrap_or_default();
-    let sha = text
-        .lines()
-        .find_map(|l| l.strip_prefix("commit = \""))
-        .map_or("unknown", |s| s.get(..7).unwrap_or(s));
+    let pinned = "../../XETAL_COMMIT";
+    println!("cargo:rerun-if-changed={pinned}");
+    let text = std::fs::read_to_string(pinned).unwrap_or_default();
+    let full = text.trim();
+    let sha = if full.is_empty() {
+        "unknown"
+    } else {
+        full.get(..7).unwrap_or(full)
+    };
     println!("cargo:rustc-env=GIT_HASH={sha}");
     // this repository's own commit, for xetal-x's first --version line
     let here = std::process::Command::new("git")

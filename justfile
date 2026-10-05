@@ -11,29 +11,25 @@ port := "8470"
 default:
     @just --list
 
-# Snapshot a committed ref of ../X_eTaL into vendor/xetal/ (default HEAD); commit it on its own
-vendor ref="HEAD":
-    scripts/vendor-xetal.sh "$1"
-
-# Build the vendored xetal CLI into target/xetal/
+# Get and build X_eTaL at its known-good commit (XETAL_COMMIT): clone into work/xetal, bin/xetal
 xetal:
-    @scripts/build-xetal.sh
+    scripts/xetal.sh
 
-# The vendored X_eTaL: what was vendored (VENDORED) and the binary's version
+# The known-good X_eTaL: its commit and the binary's version
 xetal-version:
-    @cat vendor/xetal/VENDORED
+    @cat XETAL_COMMIT
     @"$(scripts/build-xetal.sh)" --version | head -1
 
-# Evaluate an expression with the vendored xetal: just eval "'+ r_/ 1 2 3"
+# Evaluate an expression with the known-good xetal: just eval "'+ r_/ 1 2 3"
 eval expr:
     @"$(scripts/build-xetal.sh)" eval -e "$1"
 
-# Check the vendored X_eTaL: the CLI builds, answers and imports a standard library
+# Check the known-good X_eTaL: the clone is at XETAL_COMMIT and unedited; the CLI builds and answers
 check-vendor:
     scripts/check-vendor.sh
 
 # Build every crate and extension (the extensions' shared libraries land in target/debug/)
-build:
+build: xetal
     cargo build --workspace
 
 # This repo's Rust: fmt, clippy (warnings are errors), tests

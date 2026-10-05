@@ -2,7 +2,7 @@
 //! its store sends paths starting `ext:` to native extensions (see
 //! `ext.rs`) and everything else where `xetal` sends it. Every
 //! subcommand, flag and message is the vendored CLI's: its modules are
-//! compiled here from `vendor/xetal/` as they are.
+//! compiled here from X_eTaL's clone, `work/xetal/`, as they are.
 //!
 //! Extensions are packages (directories with an `extension.toml`) found
 //! through `--ext DIR` (repeatable, before the subcommand) and the
@@ -13,24 +13,24 @@
 //! Cargo builds the workspace's extensions).
 
 // The vendored CLI's modules, verbatim (main.rs below replaces its main).
-// rustfmt must not touch them: they live under vendor/.
+// rustfmt must not touch them: they live in X_eTaL's clone (work/xetal/).
 #[rustfmt::skip]
-#[path = "../../../vendor/xetal/components/cli/crates/xetal-cli/src/args.rs"]
+#[path = "../../../work/xetal/components/cli/crates/xetal-cli/src/args.rs"]
 mod args;
 #[rustfmt::skip]
-#[path = "../../../vendor/xetal/components/cli/crates/xetal-cli/src/context.rs"]
+#[path = "../../../work/xetal/components/cli/crates/xetal-cli/src/context.rs"]
 mod context;
 #[rustfmt::skip]
-#[path = "../../../vendor/xetal/components/cli/crates/xetal-cli/src/echo.rs"]
+#[path = "../../../work/xetal/components/cli/crates/xetal-cli/src/echo.rs"]
 mod echo;
 #[rustfmt::skip]
-#[path = "../../../vendor/xetal/components/cli/crates/xetal-cli/src/live.rs"]
+#[path = "../../../work/xetal/components/cli/crates/xetal-cli/src/live.rs"]
 mod live;
 #[rustfmt::skip]
-#[path = "../../../vendor/xetal/components/cli/crates/xetal-cli/src/once.rs"]
+#[path = "../../../work/xetal/components/cli/crates/xetal-cli/src/once.rs"]
 mod once;
 #[rustfmt::skip]
-#[path = "../../../vendor/xetal/components/cli/crates/xetal-cli/src/stages.rs"]
+#[path = "../../../work/xetal/components/cli/crates/xetal-cli/src/stages.rs"]
 mod stages;
 
 mod ext;

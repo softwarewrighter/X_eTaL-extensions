@@ -30,3 +30,4 @@ local-media/
 # local scratch and test output
 /tmp/
 work/
+/bin/xetal

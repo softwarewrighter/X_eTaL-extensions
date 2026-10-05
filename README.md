@@ -24,7 +24,8 @@ files -- each used from X_eTaL like any other library.
 ```sh
 git clone https://github.com/softwarewrighter/X_eTaL-extensions
 cd X_eTaL-extensions
-cargo build --workspace          # Rust is all it needs: X_eTaL is vendored
+just xetal                      # X_eTaL at its known-good commit (cloned into work/xetal)
+cargo build --workspace
 just demos                      # every demo: EXT NAME and what it shows
 just demo hello tour            # X_eTaL arrays handed to Rust and back
 just demo sqlite notebook       # CO2 at Mauna Loa: SQLite + X_eTaL, pictures in work/draw/
@@ -86,7 +87,7 @@ Behind the facade:
 
 X_eTaL does not yet have a native hook, so for now programs that use
 extensions run with the bridge host `xetal-x` instead of `xetal` (see
-`docs/xetal-asks.md`, E1). `xetal-x` is the vendored `xetal` -- every
+`docs/xetal-asks.md`, E1). `xetal-x` is X_eTaL's `xetal` -- every
 subcommand and message the same -- plus extensions:
 
 ```sh
@@ -184,9 +185,12 @@ holds it.
 
 ## Build
 
-Requires Rust, [`just`](https://github.com/casey/just), and a checkout
-of X_eTaL beside this one (`../X_eTaL`) only when refreshing the
-vendored copy.
+Requires Rust, [`just`](https://github.com/casey/just) and git. X_eTaL
+is not copied into this repository: `XETAL_COMMIT` names the
+known-good commit, and `just xetal` clones X_eTaL into `work/xetal/`
+(ignored by git), checks that commit out, builds it and links
+`bin/xetal` (the first time takes a few minutes and the network;
+`XETAL_SOURCE=../X_eTaL just xetal` clones a local checkout instead).
 
 ```sh
 just            # list the recipes
@@ -197,13 +201,13 @@ just test-exts       # every extension's reg-rs tests (reg-rs on PATH)
 just videos [EXT]    # record the demos (vhs; window demos from headless frames): nothing on screen
 just pages           # build the site into pages/ (the recordings and how to run them); commit it, a push publishes it
 just serve-pages     # preview it at http://127.0.0.1:8470/X_eTaL-extensions/ (this repo's port: 8470)
-just xetal-version   # which X_eTaL commit is vendored
-just eval "'+ r_/ 1 2 3"   # evaluate with the vendored xetal
+just xetal           # X_eTaL at XETAL_COMMIT: work/xetal, bin/xetal
+just xetal-version   # the known-good X_eTaL commit
+just eval "'+ r_/ 1 2 3"   # evaluate with the known-good xetal
 ```
 
-X_eTaL is vendored in `vendor/xetal/` (a snapshot of a committed
-X_eTaL commit, named in `vendor/xetal/VENDORED`); `just xetal` builds
-its CLI into `target/xetal/`. `just vendor [REF]` refreshes it.
+Moving to a newer X_eTaL: put its full commit in `XETAL_COMMIT`, run
+`just xetal` and `just gate`, commit.
 
 ## Development
 

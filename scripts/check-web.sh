@@ -5,6 +5,8 @@
 #   scripts/check-web.sh
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# X_eTaL's clone (work/xetal) must exist: this repo's crates build on it
+"$root/scripts/xetal.sh" >/dev/null
 n=0
 for dir in "$root/web/shell" "$root"/extensions/*/web; do
   [ -f "$dir/Cargo.toml" ] || continue

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# The pre-commit gate: the vendored X_eTaL (scripts/check-vendor.sh),
+# The pre-commit gate: the known-good X_eTaL (scripts/check-vendor.sh:
+# the clone in work/xetal at XETAL_COMMIT, built, unedited),
 # this repo's Rust (scripts/check-rust.sh: fmt, clippy, tests), the
-# bridge host matching the vendored CLI (scripts/check-xetal-x.sh),
+# bridge host matching the X_eTaL CLI (scripts/check-xetal-x.sh),
 # every extension's reg-rs tests (scripts/test-exts.sh), the live
 # pages' crates (scripts/check-web.sh), American spellings
 # (scripts/check-spelling.py, with its self-test), then

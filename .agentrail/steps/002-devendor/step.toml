@@ -1,0 +1,8 @@
+number = 2
+slug = "devendor"
+status = "in-progress"
+description = "macros step 2 (the user: ../X_eTaL/docs/vendoring.md): stop tracking vendor/x..."
+role = "production"
+context_files = []
+created_at = "2026-10-04T23:16:20"
+commits = []

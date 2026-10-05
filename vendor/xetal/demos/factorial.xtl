@@ -1,7 +1,0 @@
-#!/usr/bin/env xetal
-# M1: recursion with guards, one statement per line.
-u:f_act := { n ->
-  n <= 1 ? 1
-  n * u:f_act n - 1
-}
-u:f_act 10

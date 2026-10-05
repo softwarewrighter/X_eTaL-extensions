@@ -7,8 +7,8 @@ license = "MIT"
 publish = false
 
 [dependencies]
-xetal-play = { path = "../../vendor/xetal/components/web/crates/xetal-play" }
-xetal-store = { path = "../../vendor/xetal/components/base/crates/xetal-store" }
+xetal-play = { path = "../../work/xetal/components/web/crates/xetal-play" }
+xetal-store = { path = "../../work/xetal/components/base/crates/xetal-store" }
 xetal-ext-bridge = { path = "../../crates/xetal-ext-bridge" }
 xetal-ext-loader = { path = "../../crates/xetal-ext-loader", default-features = false }
 yew = { version = "0.21", features = ["csr"] }

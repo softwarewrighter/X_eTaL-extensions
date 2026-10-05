@@ -1,5 +1,0 @@
-repository = "https://github.com/softwarewrighter/X_eTaL"
-commit = "f823212f87bb46292f98435225334330e8701ed6"
-subject = "build: pages after merging PRs #55-#58; plan: the ports have homes"
-committed = "2026-10-04T20:03:03-07:00"
-vendored = "2026-10-05T03:06:31Z"

@@ -2,7 +2,7 @@
 
 X_eTaL cannot yet call native code itself (`docs/xetal-asks.md`, E1).
 Until it can, programs that use extensions run with `xetal-x`, the
-vendored `xetal` CLI -- every subcommand, option and message the same
+`xetal` CLI (at the known-good commit) -- every subcommand, option and message the same
 -- whose store sends paths starting `ext:` to native extensions. It is
 APL's shared-variable idea: the program writes to a name, the partner
 reads it and answers through the same name. Facade libraries
@@ -25,7 +25,7 @@ just run-x prog.xtl                        # the same, from the repository root
 ```
 
 `xetal-x --version` names itself and this repository's commit above the
-vendored CLI's block (which names the vendored X_eTaL commit).
+X_eTaL CLI's block (which names the X_eTaL commit, `XETAL_COMMIT`).
 `--ext DIR` (repeatable) and `--ext-list` come before the subcommand; a
 directory is a package (it has an `extension.toml`) or holds packages.
 A package's library is looked for under its `native/<platform>/`, then
@@ -105,5 +105,5 @@ there `u_se<` reads libraries from the store. The protocol itself is
 
 When X_eTaL has a native hook (E1), each facade calls the native
 function directly, the `ext:` channel goes, and programs do not change.
-`xetal-x` itself also compiles the vendored CLI's modules by path
+`xetal-x` itself also compiles the X_eTaL CLI's modules by path
 (E3); a CLI library entry point would remove that.

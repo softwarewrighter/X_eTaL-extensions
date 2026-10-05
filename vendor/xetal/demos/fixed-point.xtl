@@ -1,6 +1,0 @@
-#!/usr/bin/env -S xetal run --untyped
-# The Y combinator works because the self parameter is lazy (~). Its
-# self-applied argument has no finite type, so run it with --untyped.
-u:Y_ := { f_ -> { x_ -> f_ x_ 'x_ } '{ x_ -> f_ x_ 'x_ } }
-u:F_ := { ~s_elf n -> n <= 1 ? 1; n * s_elf n - 1 }
-(u:Y_ 'u:F_)_ 5

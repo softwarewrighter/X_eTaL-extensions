@@ -7,6 +7,8 @@
 # extension libraries) first on PATH, so a baseline says `xetal-x`.
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# X_eTaL's clone (work/xetal) must exist: this repo's crates build on it
+"$root/scripts/xetal.sh" >/dev/null
 name="${1:?usage: reg-ext.sh NAME reg-rs-args...}"
 shift
 dir="$root/extensions/$name"

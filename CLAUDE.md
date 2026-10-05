@@ -303,7 +303,7 @@ Read before working:
 - `docs/research.txt` -- the archival design discussion, NOT normative
 - `../X_eTaL/docs/lang-choices.md` (sections 13a, 14, 15, 16: quads,
   libraries, deferred, style), `../X_eTaL/docs/reference.md` -- the
-  language (read the vendored copy's era, not newer)
+  language (read the era of XETAL_COMMIT, not newer)
 
 ## Rules
 
@@ -319,11 +319,15 @@ Read before working:
 3. Facades follow X_eTaL's style guide and plan A8: `l:` exports,
    private helpers unprefixed, `?` and `!` suffixes, a header with the
    import line and recommended alias, types pinned.
-4. X_eTaL is used only through the vendored snapshot in
-   `vendor/xetal/` (`just vendor [REF]` from a COMMITTED ref of
-   `../X_eTaL`, at a saga start or when an ask has landed, never
-   mid-step, always in its own commit with goldens re-run). Never edit
-   files under `vendor/`.
+4. X_eTaL is used only at its known-good commit, `XETAL_COMMIT` (one
+   tracked line; `../X_eTaL/docs/vendoring.md`): `just xetal`
+   (`scripts/xetal.sh`) clones X_eTaL into `work/xetal/` (gitignored),
+   checks that commit out, builds it and links `bin/xetal`; this
+   repo's crates build on the clone by path. Move to a newer commit at
+   a saga start or when an ask has landed, never mid-step: change
+   `XETAL_COMMIT`, run the gate, commit it on its own with whatever the
+   new version changed. Never edit the clone (the gate checks it is
+   clean).
 5. Missing X_eTaL features and X_eTaL bugs go in `docs/xetal-asks.md`
    (status, kind, extensions, why, minimal repro, workaround). Do not
    fix X_eTaL from this repo and do not hide a workaround: name it in
@@ -362,7 +366,7 @@ Read before working:
 
 ## Every step ends with
 
-1. `just gate` passes (vendored X_eTaL, cargo fmt/clippy/test,
+1. `just gate` passes (X_eTaL at XETAL_COMMIT, cargo fmt/clippy/test,
    facade goldens, markdown).
 2. Docs updated: README (catalog, status), the extension's page,
    `CHANGES.md`, `docs/plan.md`, `docs/xetal-asks.md` as needed.
@@ -381,9 +385,9 @@ just gate                 # pre-commit gate
 just ext NAME RECIPE      # an extension's own recipe (build, test, reg, list, demo)
 just new-ext NAME AL "W"  # start an extension from templates/extension
 just run-x FILE           # run a program with xetal-x and every extension
-just xetal-version        # which X_eTaL commit is vendored
-just eval "EXPR"          # evaluate with the vendored xetal
-just vendor [REF]         # refresh vendor/xetal/ (own commit)
+just xetal                # clone and build X_eTaL at XETAL_COMMIT (work/xetal, bin/xetal)
+just xetal-version        # the known-good X_eTaL commit
+just eval "EXPR"          # evaluate with the known-good xetal
 agentrail status          # current saga state
 agentrail next            # current step + context
 agentrail plan            # the saga plan
