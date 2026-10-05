@@ -51,7 +51,8 @@ language should not reinvent: a database engine, a clock, image
 codecs, fast numerical code. Each is a Rust library behind an
 ordinary, statically typed X_eTaL facade, so a program imports it like
 any other library and the type checker sees its functions' types; the
-language core stays small.
+language core stays small. Here the three meet: every facade is
+written with a macro, the binding macro `lib/Ffi.xtlm`.
 
 For example, the data notebook loads a CSV into SQLite, lets SQL do
 what it is good at (selecting, grouping) and X_eTaL what it is good at
@@ -83,7 +84,9 @@ Behind the facade:
 - a loader validates the descriptor, copies it, and calls the
   functions, containing errors and panics;
 - a facade library (`Sqlite.xtl`) gives each function an X_eTaL name
-  and type.
+  and type, one line each: `"e_xec : text text -> int" ffi:b_ind<
+  "sqlite/exec"`, a macro call that writes the function
+  ([docs/ffi-macro.md](docs/ffi-macro.md)).
 
 X_eTaL does not yet have a native hook, so for now programs that use
 extensions run with the bridge host `xetal-x` instead of `xetal` (see

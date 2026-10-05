@@ -1,15 +1,14 @@
 # The binding macro (`Ffi.xtlm`)
 
-Every extension's facade (`extensions/NAME/lib/NAME.xtl`) is hand-written
-code that speaks the `ext:` channel: put each argument, get the reply,
-read it back as the type the native function returns. It is the same
-few lines for every function, decided by the function's signature.
-With X_eTaL's `.xtlm` macro libraries (ask E2, landed; MC10-MC13), a
-macro writes those lines: a facade becomes one line per native
-function. `lib/Ffi.xtlm` is that macro; `xetal-x` puts `lib/` on
+A facade function (in `extensions/NAME/lib/NAME.xtl`) speaks the
+`ext:` channel: put each argument, get the reply, read it back as the
+type the native function returns. It is the same few lines for every
+function, decided by the function's signature, so with X_eTaL's
+`.xtlm` macro libraries (ask E2, landed; MC10-MC13) a macro writes
+them: every facade here is one line per native function. `lib/Ffi.xtlm` is that macro; `xetal-x` puts `lib/` on
 `XETAL_PATH`, so a facade imports it as `"ffi:" u_se< "Ffi"`.
 
-## How a facade will read
+## How a facade reads
 
 ```
 # Hello.xtl
@@ -69,11 +68,11 @@ l:e_cho := { a ->
 ```
 
 `docs/ffi/Hello.xtl` is the whole of hello's facade expanded by these
-rules, written by hand. It is tested today, so the expansions are known
-to be right before the macro exists:
+rules, written by hand before the macro existed, so the expansions
+were known to be right first. Its tests stay as the macro's reference:
 
-- `hello-ffi-types` (reg-rs): its types equal the hand-written
-  facade's (`hello-types`);
+- `hello-ffi-types` (reg-rs): its types equal the facade's
+  (`hello-types`);
 - `hello-ffi-expansion` (reg-rs): hello's tour, with this file in place
   of `lib/Hello.xtl` (first on `XETAL_PATH`), prints the tour's golden.
 
@@ -99,12 +98,18 @@ A facade written this way keeps one literal export,
 `l:package := "NAME"`: `xetal type` decides whether a file is a library
 before macros expand (ask E7).
 
-## What follows
+## The facades
 
-1. (Done) X_eTaL with `.xtlm` (f823212), `lib/Ffi.xtlm`, its tests.
-2. Rewrite each facade (hello, clock, sqlite, canvas) as signature
-   lines; every facade's `NAME-types` golden must not change, and every
-   demo's golden neither (the proof that programs did not notice).
-3. Later, when X_eTaL calls native code itself (E1, Saga 23), only
-   `Ffi.xtlm` changes: the facades keep their lines, the expansion
-   calls the native hook instead of the `ext:` channel.
+All six facades -- hello, clock, sqlite, canvas, scene and audio --
+are written this way. Every function's type is the one the
+hand-written facade had (each `NAME-types` golden gained only
+`l:package : Char`), and every demo prints what it printed before:
+programs did not notice. One function is still written by hand,
+clock's `t_ime`, which times a function argument and so has no kind
+here. An error raised by a native function now points at that
+function's signature line in the facade (`./lib/Sqlite.xtl:14:1`),
+not at a shared helper.
+
+When X_eTaL calls native code itself (E1, Saga 23), only `Ffi.xtlm`
+changes: the facades keep their lines, and the expansion calls the
+native hook instead of the `ext:` channel.

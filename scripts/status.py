@@ -19,7 +19,7 @@ LIVE = "https://softwarewrighter.github.io/X_eTaL-extensions"
 CAPABILITIES = [
     ("native calls from X_eTaL", "through the bridge: `xetal-x` and the `ext:` channel (ask E1 for core support, X_eTaL Saga 23)"),
     ("typed facades (`.xtl`)", "yes: every extension's `lib/NAME.xtl`, types pinned by reg-rs"),
-    ("macro helpers (`.xtlm`)", "blocked on X_eTaL (ask E2, X_eTaL Saga 19)"),
+    ("macro helpers (`.xtlm`)", "yes: the binding macro `lib/Ffi.xtlm` writes every facade function from a signature line (ask E2 landed; E7 worked around)"),
     ("native ABI", "V1: scalars, text, dense arrays of rank 0 to 9; no handles yet"),
     ("browser", "no: extensions are native; the site shows recordings of the demos (the WebAssembly pages were retired, 2026-10-03)"),
     ("demo recordings", "`just videos`: vhs for terminal demos, headless frames for window demos; nothing on screen"),

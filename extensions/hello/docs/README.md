@@ -71,7 +71,7 @@ Run programs with `xetal-x --ext extensions/hello run PROG.xtl` (or
 `kinds` has no facade export (its job is showing how element kinds
 arrive); `tests/bridge.xtl` calls every native function through the
 raw `ext:` channel ([the bridge](../../../docs/bridge.md)), the way
-the facade's private helpers do:
+the facade's functions do (the binding macro writes them, `docs/ffi-macro.md`):
 
 ```
 n := "x_etal" []N_PUT "ext:hello/shout?text"

@@ -16,9 +16,12 @@ and the workaround in use.
 | E2 | landed (vendored X_eTaL f823212) | feature | `.xtlm` macro libraries (MC10-MC13, X_eTaL Saga 19); same as `../X_eTaL-libraries` ask X1 | the binding macro (`ffi:b_ind<`, Saga 8) | none needed now |
 | E3 | filed (X_eTaL queue item 6, after Saga 21) | feature | the CLI as a library: a host entry point (`xetal_cli::run_with(args, store)` or similar) so a host can be `xetal` with its own store | the bridge host `xetal-x` | `xetal-x` compiles the vendored CLI's source files as `#[path]` modules and repeats its 60-line `main` with a different store; breaks if the CLI's modules are reorganized |
 | E4 | filed (X_eTaL queue item 5, Saga 13 steps: `[]TS`, `[]D_L`) | feature | the time: a quad giving the current time (APL's quad TS) and a monotonic or CPU clock (quad AI) | clock (and anything timing itself) | the clock extension, through the bridge |
-| E5 | filed (X_eTaL queue item 9, Saga 27, readable type errors) | feature | an error raised inside a library function also names the program line that called it (a call trace) | every facade (errors point into the facade's helper, not the caller) | the extension's message names the function (`ext:sqlite/nums: ...`) |
+| E5 | filed (X_eTaL queue item 9, Saga 27, readable type errors) | feature | an error raised inside a library function also names the program line that called it (a call trace) | every facade (errors point at the function's signature line in the facade, not the caller) | the extension's message names the function (`ext:sqlite/nums: ...`) |
 | E6 | landed (vendored X_eTaL f823212) | bug | `xetal --draw DIR run FILE` fails (clap takes `run` as the SCRIPT argument and FILE as a subcommand); `xetal run --draw DIR FILE` works | the sqlite notebook's test and every demo recipe | `--draw` written after `run` |
 | E7 | open | bug | `xetal type FILE` calls a library whose `l:` names all come from macro calls a program (`library-name-in-program`): it decides before expanding | every facade written with the binding macro | one literal export per facade, `l:package := "NAME"` |
+
+2026-10-05, later: every facade is now written with the binding macro
+(E2 in use); E7 stays open, worked around in each facade.
 
 2026-10-05: X_eTaL f823212 vendored, with E2 (`.xtlm`) and E6
 (`--draw` before the subcommand) landed; every golden passed unchanged.

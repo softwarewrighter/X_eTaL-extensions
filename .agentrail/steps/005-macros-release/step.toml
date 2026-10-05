@@ -1,6 +1,6 @@
 number = 5
 slug = "macros-release"
-status = "pending"
+status = "in-progress"
 description = "macros step 4: docs (ffi-macro.md from design to reality, README three-ways p..."
 role = "production"
 context_files = []

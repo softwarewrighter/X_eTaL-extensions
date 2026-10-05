@@ -362,7 +362,19 @@ facade function from a one-line signature (docs/ffi-macro.md).
 | 2 | devendor | (done) X_eTaL at `XETAL_COMMIT`, cloned into `work/xetal`, not copied (`../X_eTaL/docs/vendoring.md`) |
 | 3 | ffi-macro | (done) `lib/Ffi.xtlm`, on `XETAL_PATH` via `xetal-x`; its expansion of hello equals `docs/ffi/Hello.xtl` exactly; ask E7 |
 | 4 | facades | (done) all six facades as `ffi:b_ind<` signature lines (clock's `t_ime` kept by hand); types unchanged but `l:package`; every demo golden unchanged; errors now name the signature line |
-| 5 | macros-release | docs, status, asks, retrospective |
+| 5 | macros-release | (done) docs (ffi-macro.md as built, README, extension pages), status, asks, retrospective |
+
+Saga 8 retrospective: macros extend the language here. X_eTaL f823212
+brought `.xtlm`; X_eTaL stopped being copied into this repository (657
+tracked files gone; `XETAL_COMMIT` and a clone); the binding macro is
+about 60 lines of X_eTaL string work, and its expansion of hello
+matched the hand-written golden exactly the first time it ran. All
+six facades became one signature line per function with no type and
+no demo output changing. Found on the way: `xetal type` decides
+library-or-program before macros expand (E7, `l:package` as the
+workaround); the browser store and the bridge test needed `Ffi.xtlm`
+served too; error locations moved to the signature lines, which is
+better. Not done: clock's `t_ime` (a function argument) has no kind.
 
 ## Saga 9 -- web (post-launch)
 

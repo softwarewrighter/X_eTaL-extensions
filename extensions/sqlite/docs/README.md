@@ -90,10 +90,10 @@ An SQL error, a path outside the root, or a non-number asked for as a
 number is an X_eTaL error with SQLite's message:
 
 ```
-error[io]: []N_GET: ext:sqlite/nums: near "selec": syntax error in selec 1 at offset 0 at ./lib/Sqlite.xtl:12:17
+error[io]: []N_GET: ext:sqlite/nums: near "selec": syntax error in selec 1 at offset 0 at ./lib/Sqlite.xtl:14:1
 ```
 
-(The location is the facade's; X_eTaL does not yet also name the
+(The location is the function's signature line in the facade; X_eTaL does not yet also name the
 program line that called it -- ask E5.)
 
 ## Recording
