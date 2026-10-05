@@ -1,0 +1,1 @@
+Devendored: XETAL_COMMIT + scripts/xetal.sh (clone work/xetal, bin/xetal), all paths repointed, vendor/xetal (657 files) removed; gate unchanged; walkthrough from GitHub passes.
