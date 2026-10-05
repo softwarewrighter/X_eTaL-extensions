@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 04:30 `ext` The live page, `just demo web live` (http://127.0.0.1:8470/): Conway's Life kept by the X_eTaL program, one generation per request, drawn as an SVG path built in X_eTaL (`m_ap` over the live cells, joined); New board, Glider and Quit are requests too. `XETAL_WEB_PORT` replaces the port a program asks for, so tests run a demo on any free port; `web-demo-live` drives it with `curl` (a glider stepped three times, exact SVG).
+
 - 03:45 `release` Tagged v0.2.0 at 9dec588 (the user's yes): an annotated tag only, its notes saying it is built against X_eTaL v0.1.0 (512b3ee) and listing what came since v0.1.0; no GitHub Release object (left for the launch, as in X_eTaL).
 
 - 03:25 `build` X_eTaL v0.1.0 (512b3ee, from f823212) is the known-good commit (the user relayed X_eTaL's release; pin for every sibling). `xetal-x` follows the CLI's renamed crate (`xetal-docsite` to `xetal-docsearch`). Every golden and all 22 demos under `xetal-x` pass unchanged but one: macros are now hygienic (MC30), so `xetal expand` shows `g1:a` for a name the binding macro binds; `hello-ffi-macro` compares with those prefixes read away. Asks swept: E4 partly landed (`[]TS`, `[]D_L`, no monotonic clock); E1, E3, E5, E7 still open.

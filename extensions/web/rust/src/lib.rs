@@ -52,8 +52,13 @@ fn serve(args: &[Value]) -> Result<Value, OwnedError> {
             "{p} is not a port (0 to 65535)"
         )));
     }
+    // XETAL_WEB_PORT, when set, replaces the program's port (tests run
+    // a demo on 0, any free port, and read the port it prints)
     #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
-    let port = p as u16;
+    let port = std::env::var("XETAL_WEB_PORT")
+        .ok()
+        .and_then(|v| v.parse::<u16>().ok())
+        .unwrap_or(p as u16);
     let mut s = lock(&SERVER)?;
     if let Some(running) = s.as_ref() {
         if port == 0 || port == running.port() {

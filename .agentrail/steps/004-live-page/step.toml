@@ -1,6 +1,6 @@
 number = 4
 slug = "live-page"
-status = "pending"
+status = "in-progress"
 description = "web step 3: extensions/web/demos/live.xtl: a page recomputing Life or Mandelb..."
 role = "production"
 context_files = []

@@ -1,0 +1,53 @@
+# A live page: Conway's Life kept by an X_eTaL program and drawn as SVG,
+# one generation per request. The program is the server's request loop.
+# Run: just demo web live, then open http://127.0.0.1:8470/
+#   (New board, Glider; Quit ends the program)
+"wb:" u_se< "Web"
+
+# Life (as in X_eTaL's demos/life.xtl): every cell plus its neighbors
+# by rotating along both axes and summing; alive next at 3, or 4 if alive
+u:l_ife := { ('+ r_/_12 -1 0 1 o_-_12 _r) { (_l = 3) + _r * _l = 4 } _r }
+
+# an n by n board, about one cell in four alive; or one glider
+u:s_eed := { n -> (n c_at n) r_eshape 1 = r_oll! (n * n) r_eshape 4 }
+# (n * n - 3 is n times n - 3: the rows below the glider)
+u:g_lider := { n -> (n c_at n) r_eshape (n t_ake 0 1 0) c_at (n t_ake 0 0 1) c_at (n t_ake 1 1 1) c_at (n * n - 3) r_eshape 0 }
+
+# the size a request asks for (?n=), 8 to 200, else 48
+u:s_ize := { s ->
+  0 = t_ally s ? 48
+  8 m_ax 200 m_in f_loor f_irst n_umbers s
+}
+
+# the board as SVG: one unit square per live cell ("M col row h1v1h-1z")
+# boxed strings joined into one (from "", so no live cells is "")
+u:j_oin := { s -> d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ (e_nclose "") c_at s }
+u:s_vg := { b ->
+  n := t_ally b
+  w := f_ormat n
+  d := u:j_oin '{ "M" c_at (f_ormat _r m_od n) c_at " " c_at (f_ormat _r d_iv n) c_at "h1v1h-1z" } m_ap (w_here r_avel b) - 1
+  "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " c_at w c_at " " c_at w c_at "' shape-rendering='crispEdges'><rect width='" c_at w c_at "' height='" c_at w c_at "' fill='#14161a'/><path fill='#e8483b' d='" c_at d c_at "'/></svg>"
+}
+
+# the page: the board, refreshed several times a second
+page := "<!doctype html><html><head><meta charset='utf-8'><title>Life -- X_eTaL on the web</title><style>body{background:#0d0e10;color:#ddd;font-family:system-ui,sans-serif;text-align:center}img{width:min(90vw,600px);image-rendering:pixelated;border:1px solid #333}button{margin:.5em;padding:.4em 1em}</style></head><body><h1>Life, computed in X_eTaL</h1><p>Each frame is one request: the X_eTaL program steps the board and replies with SVG.</p><img id='b' src='/life.svg' alt='the board'><div><button onclick=nw()>New board</button><button onclick=gl()>Glider</button><button onclick=qt()>Quit</button></div><script>let on=true;function nw(){fetch('/new')}function gl(){fetch('/glider')}function qt(){on=false;fetch('/quit')}setInterval(()=>{if(on){document.getElementById('b').src='/life.svg?'+Date.now()}},150)</script></body></html>"
+
+# one request: the board after answering it (an empty board: quit);
+# x r_ight y is y, so a reply is sent and the board passed on
+u:a_nswer := { b ->
+  0 = t_ally b ? b
+  r := wb:n_ext! 60
+  r m_atch "none" ? b
+  r m_atch "GET /" ? (200 wb:r_eply! page) r_ight b
+  r m_atch "GET /life.svg" ? (200 wb:r_eply! u:s_vg b) r_ight u:l_ife b
+  r m_atch "GET /new" ? (200 wb:r_eply! "a new board") r_ight u:s_eed u:s_ize wb:p_aram "n"
+  r m_atch "GET /glider" ? (200 wb:r_eply! "a glider") r_ight u:g_lider u:s_ize wb:p_aram "n"
+  r m_atch "GET /quit" ? (200 wb:r_eply! "bye") r_ight 0 0 r_eshape 0
+  (404 wb:r_eply! "no such page: " c_at wb:p_ath @) r_ight b
+}
+
+port := wb:s_erve! 8470
+"serving http://127.0.0.1:" c_at f_ormat port
+last := 100000 'u:a_nswer p_ower u:s_eed 48
+port := wb:s_top! @
+"bye"

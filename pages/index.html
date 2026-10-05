@@ -100,7 +100,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <h2 id="web"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/web/docs/README.md">web</a></h2>
   <p class="lede">HTTP serving for X_eTaL, where the program is the request loop: axum serves on 127.0.0.1 in the background and queues each request; the program takes the next one, reads its method, path, query, form fields and body, and replies with a status and a body. Rust never calls into X_eTaL; the program drives.</p>
   <div class="demos">
-    <p class="note">No demo yet.</p>
+    <section class="panel demo">
+      <h3>web / live</h3>
+      <p class="note">A live page: Conway&#x27;s Life kept by an X_eTaL program and drawn as SVG, one generation per request. The program is the server&#x27;s request loop.</p>
+      <p class="note">(no recording yet)</p>
+      <pre class="source">just demo web live</pre>
+    </section>
   </div>
 </main>
 <footer>
@@ -110,7 +115,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 512b3ee</span><span class="sep">&middot;</span>
-  <span>built at b3bdd5b</span>
+  <span>built at dc1cbe5</span>
 </footer>
 </body>
 </html>

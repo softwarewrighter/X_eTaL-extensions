@@ -51,6 +51,9 @@ Native functions: `serve`, `next`, `method`, `path`, `query`, `body`,
   (`XETAL_WEB_TIMEOUT`, in seconds), then is answered `504`. A request
   the program took and did not answer before taking the next is
   answered `500`; so are those waiting when the server stops.
+- **The port.** `XETAL_WEB_PORT`, when set, replaces the port the
+  program asks for (`0` takes any free one): the tests run the demos
+  that way and read the port they print.
 - **Text bodies.** Bodies are text (UTF-8; other bytes are replaced).
   Files served by `wb:f_iles!` are sent as they are, typed by their
   extension.
@@ -78,5 +81,14 @@ X_eTaL program answering four requests that `curl` asks
 
 ## Demos
 
-Coming next: a page recomputed on every request, and a TodoMVC kept in
-SQLite.
+- `demos/live.xtl` (`just demo web live`, then open
+  http://127.0.0.1:8470/): Conway's Life kept by the X_eTaL program
+  and drawn as SVG, one generation per request. The page reloads the
+  board several times a second; each reload is a request the program
+  answers by stepping the board (`u:l_ife`, one array expression) and
+  writing it as an SVG path, one unit square per live cell. New board
+  (`/new?n=64`), Glider (`/glider`) and Quit (`/quit`, which ends the
+  program) are requests too. The test `web-demo-live` drives it with
+  `curl`: a glider on an 8 by 8 board, stepped three times.
+
+Coming next: a TodoMVC kept in SQLite.

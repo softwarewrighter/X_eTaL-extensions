@@ -1,0 +1,3 @@
+command = "tests/live.sh"
+exit_code = 0
+desc = "the live Life page driven over loopback: the page, a glider stepped three times as SVG, a new board, a 404, quit"

@@ -1,0 +1,15 @@
+/ [200 text/html; charset=utf-8]
+<h1>Life, computed in X_eTaL</h1>
+/life.svg
+/life.svg
+a glider [200 text/plain; charset=utf-8]
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'><rect width='8' height='8' fill='#14161a'/><path fill='#e8483b' d='M1 0h1v1h-1zM2 1h1v1h-1zM0 2h1v1h-1zM1 2h1v1h-1zM2 2h1v1h-1z'/></svg> [200 image/svg+xml]
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'><rect width='8' height='8' fill='#14161a'/><path fill='#e8483b' d='M0 1h1v1h-1zM2 1h1v1h-1zM1 2h1v1h-1zM2 2h1v1h-1zM1 3h1v1h-1z'/></svg> [200 image/svg+xml]
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'><rect width='8' height='8' fill='#14161a'/><path fill='#e8483b' d='M2 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1z'/></svg> [200 image/svg+xml]
+a new board [200 text/plain; charset=utf-8]
+a random 8 by 8 board [200 image/svg+xml]
+no such page: /nowhere [404 text/plain; charset=utf-8]
+bye [200 text/plain; charset=utf-8]
+-- the program printed:
+serving http://127.0.0.1:PORT
+bye
