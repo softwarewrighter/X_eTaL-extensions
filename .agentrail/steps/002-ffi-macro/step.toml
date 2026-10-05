@@ -1,0 +1,9 @@
+number = 2
+slug = "ffi-macro"
+status = "pending"
+description = "macros step 2: Ffi.xtlm per docs/ffi-macro.md (kinds unit text float floats i..."
+role = "production"
+context_files = []
+created_at = "2026-10-04T20:06:06"
+task_type = "macro"
+commits = []

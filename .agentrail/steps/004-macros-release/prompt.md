@@ -1,0 +1,1 @@
+macros step 4: docs (ffi-macro.md from design to reality, README three-ways phrase now true here), status, asks, retrospective.

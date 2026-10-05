@@ -1,0 +1,1 @@
+macros step 3: rewrite facades (hello, clock, sqlite, canvas, scene, audio) as ffi:b_ind< lines where the kinds fit (keep hand-written functions where they do more, e.g. ck:t_ime); every NAME-types golden and every demo golden unchanged.

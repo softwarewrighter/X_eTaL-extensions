@@ -1,0 +1,1 @@
+macros step 2: Ffi.xtlm per docs/ffi-macro.md (kinds unit text float floats int chars; NAME : KINDS -> KIND), in a shared directory xetal-x puts on XETAL_PATH; tests: xetal expand of a signature-line Hello gives docs/ffi/Hello.xtl's definitions; its types equal hello-types.

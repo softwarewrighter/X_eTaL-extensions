@@ -1,0 +1,1 @@
+macros step 1: just vendor (X_eTaL HEAD, committed), its own commit; rebuild; check-vendor, check-xetal-x (the CLI's modules may have changed: xetal-x compiles them by #[path]), all reg-rs goldens and Rust tests; differences fixed or rebased on purpose; the --draw-after-run workaround dropped where it was only a workaround; asks E2/E6 landed.
