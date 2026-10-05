@@ -1,0 +1,1 @@
+Ffi.xtlm binding macro; expansion of hello identical to docs/ffi/Hello.xtl; types and tour equal; ask E7 (type before expansion) with l:package workaround.

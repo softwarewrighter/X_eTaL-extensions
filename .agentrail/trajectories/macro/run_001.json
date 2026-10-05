@@ -1,0 +1,11 @@
+{
+  "task_type": "macro",
+  "state": {
+    "number": 3,
+    "step": "ffi-macro"
+  },
+  "action": "xetal expand; diff against hand-written golden; reg-rs",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-05T00:41:00"
+}
