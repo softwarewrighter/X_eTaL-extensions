@@ -1,0 +1,1 @@
+Oscilloscope triggering on the left channel's rising zero crossing; ~1400 -> 40-250 changed pixels per frame; golden rebased; video re-made.
