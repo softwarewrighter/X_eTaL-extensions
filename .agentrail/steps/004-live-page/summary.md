@@ -1,0 +1,1 @@
+Live Life page in X_eTaL over the web extension; XETAL_WEB_PORT; web-demo-live golden via curl
