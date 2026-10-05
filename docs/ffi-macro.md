@@ -88,7 +88,9 @@ Tested by reg-rs in the hello extension, against the goldens:
 
 - `hello-ffi-macro`: `xetal-x expand tests/ffi-hello.xtl` (hello's seven
   exports as signature lines) gives exactly the definitions of
-  `docs/ffi/Hello.xtl`;
+  `docs/ffi/Hello.xtl`, once hygiene's fresh names are read as the
+  names they stand for (X_eTaL v0.1.0 renames what a macro binds,
+  `a` to `g1:a`, so it cannot capture a name of the caller's);
 - `hello-ffi-macro-types`: their types equal the hand-written facade's
   (`hello-types`), plus `l:package`;
 - `hello-ffi-macro-tour`: the tour, with the macro-written facade in

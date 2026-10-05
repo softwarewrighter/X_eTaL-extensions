@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 03:25 `build` X_eTaL v0.1.0 (512b3ee, from f823212) is the known-good commit (the user relayed X_eTaL's release; pin for every sibling). `xetal-x` follows the CLI's renamed crate (`xetal-docsite` to `xetal-docsearch`). Every golden and all 22 demos under `xetal-x` pass unchanged but one: macros are now hygienic (MC30), so `xetal expand` shows `g1:a` for a name the binding macro binds; `hello-ffi-macro` compares with those prefixes read away. Asks swept: E4 partly landed (`[]TS`, `[]D_L`, no monotonic clock); E1, E3, E5, E7 still open.
+
 - 03:10 `ext` The web extension (`extensions/web`, `"wb:" u_se< "Web"`): axum 0.8 on a tokio runtime of its own on a background thread, 127.0.0.1 only, a queue of 64 requests (503 beyond), replies within 10 s (`XETAL_WEB_TIMEOUT`; 504 after); the program drives: `wb:s_erve!`, `wb:n_ext!` ("GET /path" or "none"), the request's parts and decoded query/form fields, `wb:c_ontent!`, `wb:r_eply!`, `wb:f_iles!` (a directory served directly), `wb:s_top!`. Its facade is eleven `ffi:b_ind<` lines. Rust tests with a real HTTP client on loopback (the whole flow, 503, 504, files, fields); reg-rs: list, types, three errors, and `web-serve`, an X_eTaL program answering four `curl` requests. The extension template now writes its facade with the binding macro. Step inserted to pin X_eTaL v0.1.0 (512b3ee), relayed by the user.
 
 - 01:55 `build` The gate fails when the site is out of date: `scripts/check-pages.sh` (`just check-pages`) builds it into `work/pages-check` (`PAGES_DIR`) and compares it with `pages/`, ignoring only the commit it was built at; a stale page was shown to fail. Found when the published site still said X_eTaL is vendored.

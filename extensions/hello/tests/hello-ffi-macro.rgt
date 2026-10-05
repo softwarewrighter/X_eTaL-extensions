@@ -1,3 +1,3 @@
-command = 'mkdir -p work && xetal-x expand tests/ffi-hello.xtl | grep -v "^\"ffi:\"" | grep -v "^#" | grep -v "^l:package" | sed "/^$/d" > work/expanded.xtl && grep -v "^#" ../../docs/ffi/Hello.xtl | sed "/^$/d" > work/golden.xtl && diff work/golden.xtl work/expanded.xtl && echo "the binding macro writes exactly docs/ffi/Hello.xtl"'
+command = 'mkdir -p work && xetal-x expand tests/ffi-hello.xtl | grep -v "^\"ffi:\"" | grep -v "^#" | grep -v "^l:package" | sed "/^$/d" | sed -E "s/g[0-9]+://g" > work/expanded.xtl && grep -v "^#" ../../docs/ffi/Hello.xtl | sed "/^$/d" > work/golden.xtl && diff work/golden.xtl work/expanded.xtl && echo "the binding macro writes exactly docs/ffi/Hello.xtl"'
 exit_code = 0
-desc = "Ffi.xtlm expands seven signature lines to exactly the hand-written expansion in docs/ffi/Hello.xtl"
+desc = "Ffi.xtlm expands seven signature lines to exactly the hand-written expansion in docs/ffi/Hello.xtl (up to hygiene's fresh g1: names)"

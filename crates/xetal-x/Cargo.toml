@@ -33,7 +33,7 @@ xetal-line = { path = "../../work/xetal/components/line/crates/xetal-line" }
 xetal-tty = { path = "../../work/xetal/components/console/crates/xetal-tty" }
 xetal-system = { path = "../../work/xetal/components/system/crates/xetal-system" }
 xetal-doc = { path = "../../work/xetal/components/doc/crates/xetal-doc" }
-xetal-docsite = { path = "../../work/xetal/components/doc/crates/xetal-docsite" }
+xetal-docsearch = { path = "../../work/xetal/components/docsearch/crates/xetal-docsearch" }
 xetal-doctest = { path = "../../work/xetal/components/doc/crates/xetal-doctest" }
 clap = { version = "4", features = ["derive"] }
 sigpipe = "0.1.3"

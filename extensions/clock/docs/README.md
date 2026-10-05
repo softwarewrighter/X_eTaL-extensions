@@ -1,8 +1,10 @@
 # clock
 
-Wall-clock and monotonic time, which X_eTaL does not have (`docs/xetal-asks.md`
-in the repository, E4): timestamps for programs, and timing for
-benchmarks -- including the cost of the bridge itself.
+Wall-clock and monotonic time: timestamps for programs (as Unix
+seconds or ISO 8601 text), and timing for benchmarks -- including the
+cost of the bridge itself. X_eTaL itself now has the time of day
+(`[]TS`) and a delay (`[]D_L`), but no monotonic clock yet
+(`docs/xetal-asks.md` in the repository, E4).
 
 - Package: `extensions/clock/` (`extension.toml`; library
   `xetal_ext_clock`: `libxetal_ext_clock.dylib` on macOS, `.so` on Linux)

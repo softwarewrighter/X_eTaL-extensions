@@ -1,6 +1,6 @@
 number = 3
 slug = "xetal-v010"
-status = "pending"
+status = "in-progress"
 description = "web step 3 (inserted; the user relayed X_eTaL's release): pin XETAL_COMMIT to..."
 role = "production"
 context_files = []
