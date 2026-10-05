@@ -1,0 +1,31 @@
+[package]
+name = "xetal-ext-http"
+version = "0.1.0"
+description = "Bounded HTTP GET: text from the web, within size and time limits"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[lib]
+name = "xetal_ext_http"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+xetal-ext-sdk = { path = "../../../crates/xetal-ext-sdk" }
+# HTTP/1.1 with rustls (no system TLS library)
+ureq = "3"
+
+[features]
+# Link statically beside other extensions (a browser page): no unmangled
+# entry point. Never enabled inside the root workspace.
+static = []
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+xetal-ext-loader = { path = "../../../crates/xetal-ext-loader" }
+# a real server on loopback to fetch from
+xetal-ext-web = { path = "../../web/rust" }
+tempfile = "3"

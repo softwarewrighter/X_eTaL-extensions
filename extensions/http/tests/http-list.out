@@ -1,0 +1,5 @@
+http 0.1.0
+  http/get : Char -> Char    # GET a URL: its body as text (limited in size, time and redirects).
+  http/status : Unit -> Int    # The last response's status (0 if none).
+  http/header : Char -> Char    # A header of the last response ("" when absent).
+  http/save : Char -> Char -> Int    # url save path: the body into a file; its bytes.

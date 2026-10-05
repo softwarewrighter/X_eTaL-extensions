@@ -132,7 +132,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | [web](extensions/web/docs/README.md) | `Web` | serve HTTP on loopback: the program takes each request and replies | axum, tokio | done: facade, loopback tests, the live page, TodoMVC |
 | image | `Image` | images to and from arrays | image | roadmap |
 | linalg | `Linalg` | solve, inverse, least squares, eigenvalues, SVD | nalgebra | roadmap |
-| http | `Http` | bounded GET | ureq | roadmap |
+| [http](extensions/http/docs/README.md) | `Http` | bounded GET (size, time, redirects); downloads | ureq | done: facade, loopback tests (the quakes demo next) |
 | digest | `Digest` | SHA-256, CRC-32 | sha2, crc32fast | roadmap |
 
 Each extension is a self-contained directory, `extensions/NAME/`: its

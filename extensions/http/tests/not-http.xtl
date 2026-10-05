@@ -1,0 +1,3 @@
+# Only http:// and https:// URLs are fetched.
+"ht:" u_se< "Http"
+ht:g_et "file:///etc/passwd"

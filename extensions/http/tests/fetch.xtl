@@ -1,0 +1,11 @@
+# Fetched from a server on loopback (tests/fetch.sh puts its URL in
+# place of BASE): a CSV as text, the response's status and type, a
+# download, and a 404.
+"ht:" u_se< "Http"
+base := "BASE"
+csv := ht:g_et base c_at "/quakes.csv"
+csv
+ht:s_tatus @
+ht:h_eader "Content-Type"
+(base c_at "/quakes.csv") ht:s_ave! "work/quakes.csv"
+ht:g_et base c_at "/missing.csv"

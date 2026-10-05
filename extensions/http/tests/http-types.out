@@ -1,0 +1,5 @@
+l:g_et : Char -> Char
+l:s_tatus : Unit -> Int
+l:h_eader : Char -> Char
+l:s_ave! : Char -> Char -> Int
+l:package : Char

@@ -1,0 +1,22 @@
+# Http.xtl -- the facade of the http extension: bounded HTTP GET, text
+# from the web within size, time and redirect limits.
+# Import: "ht:" u_se< "Http"
+# Limits: XETAL_HTTP_MAX bytes (16 MiB), XETAL_HTTP_TIMEOUT seconds (30),
+# 5 redirects; only http:// and https:// URLs. Downloads go under the
+# working directory (or XETAL_HTTP_ROOT).
+# Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+# Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+"ffi:" u_se< "Ffi"
+
+# ht:g_et url: the body as text; a status other than 2xx is an error.
+"g_et : text -> text"           ffi:b_ind< "http/get"
+# ht:s_tatus @: the last response's status (0 if none came).
+"s_tatus : unit -> int"         ffi:b_ind< "http/status"
+# ht:h_eader "content-type": a header of the last response ("" if absent).
+"h_eader : text -> text"        ffi:b_ind< "http/header"
+# url ht:s_ave! "data/x.csv": the body into a file (whole, or not at all);
+# how many bytes.
+"s_ave! : text text -> int"     ffi:b_ind< "http/save"
+
+# The native package behind these functions.
+l:package := "http"

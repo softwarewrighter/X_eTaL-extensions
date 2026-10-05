@@ -1,6 +1,6 @@
 number = 1
 slug = "http"
-status = "pending"
+status = "in-progress"
 description = "fetch step 1: extensions/http (just new-ext http ht 'bounded HTTP GET'): ureq..."
 role = "production"
 context_files = []

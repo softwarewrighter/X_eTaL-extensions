@@ -1,0 +1,3 @@
+# A download may not leave the working directory.
+"ht:" u_se< "Http"
+"http://127.0.0.1:9/x" ht:s_ave! "../x.csv"

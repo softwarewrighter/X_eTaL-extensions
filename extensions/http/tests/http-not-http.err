@@ -1,0 +1,1 @@
+error[io]: []N_GET: ext:http/get: "file:///etc/passwd": only http:// and https:// URLs are fetched at ./lib/Http.xtl:12:1

@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/save-outside.xtl"
+exit_code = 1
+desc = "a download may not leave the working directory"
