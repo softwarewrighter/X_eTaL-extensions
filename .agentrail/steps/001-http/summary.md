@@ -1,0 +1,1 @@
+http extension: ureq bounded GET, status/header, confined save; loopback Rust tests via web Server; reg-rs incl. python http.server e2e
