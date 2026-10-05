@@ -34,12 +34,13 @@ wb:s_top! @
 | `wb:m_ethod @`, `wb:p_ath @`, `wb:q_uery @`, `wb:b_ody @` | `Unit -> Char` | the request being answered: its method, path, query as sent, body |
 | `wb:p_aram name` | `Char -> Char` | a query field, or a form field of a form POST, decoded; `""` when absent |
 | `wb:c_ontent! type` | `Char -> Int` | the reply's content type; without it, the body decides: SVG, HTML, JSON, or plain text |
+| `wb:h_eader! "Name: value"` | `Char -> Int` | a header on the reply: a redirect's `Location`, `Cache-Control`, ... (content type and length are not set this way); how many the reply has |
 | `status wb:r_eply! body` | `Num a => a -> Char -> Int` | answer the request; the body's length in bytes |
 | `wb:f_iles! dir` | `Char -> Int` | serve the files under `dir` (relative, no `..`) directly, without the program; `""` stops; how many files |
 | `wb:s_top! @` | `Unit -> Int` | stop serving; the port, or 0 |
 
 Native functions: `serve`, `next`, `method`, `path`, `query`, `body`,
-`param`, `content`, `reply`, `files`, `stop` (`just list`).
+`param`, `content`, `header`, `reply`, `files`, `stop` (`just list`).
 
 ## How it behaves
 
@@ -90,5 +91,13 @@ X_eTaL program answering four requests that `curl` asks
   (`/new?n=64`), Glider (`/glider`) and Quit (`/quit`, which ends the
   program) are requests too. The test `web-demo-live` drives it with
   `curl`: a glider on an 8 by 8 board, stepped three times.
-
-Coming next: a TodoMVC kept in SQLite.
+- `demos/todomvc.xtl` (`just demo web todomvc`, then open
+  http://127.0.0.1:8470/): TodoMVC with plain HTML forms, the todos
+  kept in SQLite (`work/todos.db`, with the sqlite extension). The
+  X_eTaL program routes each request, turns the chosen filter (all,
+  active, completed) into SQL, counts the items left from the `done`
+  column, and writes the page; SQL writes each item (escaping the
+  title). Adding, toggling, deleting and clearing post a form and are
+  redirected back (`303`, `wb:h_eader! "Location: /"`). The test
+  `web-demo-todomvc` drives it with `curl`, runs it again to show the
+  list was kept, and checks that a title like `<eggs>` is escaped.

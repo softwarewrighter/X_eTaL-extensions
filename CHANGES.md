@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 05:20 `ext` TodoMVC on the web, `just demo web todomvc` (http://127.0.0.1:8470/): HTML forms, the todos kept in SQLite (`work/todos.db`); the X_eTaL program routes each request, turns the filter into SQL, counts what is left from the `done` column and writes the page, SQL writes (and escapes) each item; changes redirect back with 303. New `wb:h_eader! "Name: value"` (checked; content type and length refused), with Rust tests of a redirect. `web-demo-todomvc` drives it with `curl`: add (an HTML-looking title escaped, an empty one ignored), toggle, filters, delete, the list kept across a restart, clear completed. Goldens rebased on purpose: the new function in the listing and types, two error lines three lines lower in the facade.
+
 - 04:30 `ext` The live page, `just demo web live` (http://127.0.0.1:8470/): Conway's Life kept by the X_eTaL program, one generation per request, drawn as an SVG path built in X_eTaL (`m_ap` over the live cells, joined); New board, Glider and Quit are requests too. `XETAL_WEB_PORT` replaces the port a program asks for, so tests run a demo on any free port; `web-demo-live` drives it with `curl` (a glider stepped three times, exact SVG).
 
 - 03:45 `release` Tagged v0.2.0 at 9dec588 (the user's yes): an annotated tag only, its notes saying it is built against X_eTaL v0.1.0 (512b3ee) and listing what came since v0.1.0; no GitHub Release object (left for the launch, as in X_eTaL).

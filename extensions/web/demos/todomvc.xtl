@@ -1,0 +1,77 @@
+# TodoMVC on the web: the todos live in SQLite, the X_eTaL program is
+# the server -- it routes each request, keeps the filter, counts what is
+# left, and writes the page; forms post and are redirected back.
+# Run: just demo web todomvc, then open http://127.0.0.1:8470/
+#   (the list is kept in work/todos.db; Quit ends the program)
+"wb:" u_se< "Web"
+"sq:" u_se< "Sqlite"
+
+db := "work/todos.db"
+made := db sq:e_xec "create table if not exists todos (id integer primary key, title text not null, done integer not null default 0)"
+
+# each todo as a list item, written by SQL (the title escaped there)
+items := "select coalesce(group_concat('<li class=' || case when done then 'done' else 'open' end || '><form method=post action=/toggle><input type=hidden name=id value=' || id || '><button class=tick title=toggle>' || case when done then '&#x2611;' else '&#x2610;' end || '</button></form><span>' || replace(replace(replace(title, '&', '&amp;'), '<', '&lt;'), '>', '&gt;') || '</span><form method=post action=/delete><input type=hidden name=id value=' || id || '><button class=del title=delete>&#xd7;</button></form></li>', ''), '') from (select * from todos"
+
+# the filter a request asks for (?show=active or completed), as SQL
+u:f_ilter := { s ->
+  s m_atch "active" ? " where done = 0"
+  s m_atch "completed" ? " where done = 1"
+  ""
+}
+
+# "1 item left", "3 items left": counted in X_eTaL from the done column
+u:l_eft := { d ->
+  n := '+ r_/ 0 = r_avel d
+  n = 1 ? "1 item left"
+  (f_ormat n) c_at " items left"
+}
+
+# a filter link, marked when chosen
+u:o_n := { s name ->
+  s m_atch name ? " class=on"
+  ((0 = t_ally s) & name m_atch "all") ? " class=on"
+  ""
+}
+u:l_ink := { s name -> "<a href='/?show=" c_at name c_at "'" c_at (s u:o_n name) c_at ">" c_at name c_at "</a>" }
+u:l_inks := { s -> (s u:l_ink "all") c_at " " c_at (s u:l_ink "active") c_at " " c_at s u:l_ink "completed" }
+
+style := "<style>body{background:#f5f5f5;font:15px system-ui,sans-serif;color:#333}main{max-width:520px;margin:2em auto}h1{color:#c0392b;font-weight:200;font-size:56px;text-align:center;margin:.2em}.box{background:#fff;box-shadow:0 2px 6px #0003}form.add input{width:100%;box-sizing:border-box;font-size:20px;padding:.6em;border:0;border-bottom:1px solid #eee}ul{list-style:none;margin:0;padding:0}li{display:flex;align-items:center;border-bottom:1px solid #eee;padding:.3em .5em}li span{flex:1;font-size:18px;padding:.3em}li.done span{text-decoration:line-through;color:#aaa}li form{margin:0}button{border:0;background:none;font-size:20px;cursor:pointer}.del{color:#c0392b}footer{display:flex;justify-content:space-between;padding:.6em;font-size:13px;color:#777}footer a{margin:0 .3em;color:#777}a.on{color:#c0392b;font-weight:bold}p.note{text-align:center;color:#999;font-size:12px}</style>"
+
+# the whole page
+u:p_age := { s ->
+  done := db sq:n_ums "select done from todos"
+  list := r_avel db sq:t_exts items c_at (u:f_ilter s) c_at " order by id)"
+  "<!doctype html><html><head><meta charset='utf-8'><title>todos -- X_eTaL on the web</title>" c_at style c_at "</head><body><main><h1>todos</h1><div class=box><form class=add method=post action=/add><input name=title placeholder='What needs to be done?' autofocus autocomplete=off></form><ul>" c_at list c_at "</ul><footer><span>" c_at (u:l_eft done) c_at "</span><span>" c_at (u:l_inks s) c_at "</span><form method=post action=/clear><button style='font-size:13px;color:#777'>Clear completed</button></form></footer></div><p class=note>Served by an X_eTaL program; kept in SQLite. <a href='/quit'>Quit</a></p></main></body></html>"
+}
+
+# a change to the list, then back to the page (303 See Other)
+u:b_ack := { n ->
+  h := wb:h_eader! "Location: /"
+  303 wb:r_eply! ""
+}
+
+# a new todo, unless its title is empty
+u:a_dd := { t ->
+  0 = t_ally t ? 0
+  db sq:e_xec "insert into todos (title) values (" c_at (sq:q_uote t) c_at ")"
+}
+
+# one request; 0 once quit
+u:a_nswer := { k ->
+  0 = k ? 0
+  r := wb:n_ext! 60
+  r m_atch "none" ? k
+  r m_atch "GET /" ? (200 wb:r_eply! u:p_age wb:p_aram "show") r_ight k
+  r m_atch "POST /add" ? (u:b_ack u:a_dd wb:p_aram "title") r_ight k
+  r m_atch "POST /toggle" ? (u:b_ack db sq:e_xec "update todos set done = 1 - done where id = " c_at sq:q_uote wb:p_aram "id") r_ight k
+  r m_atch "POST /delete" ? (u:b_ack db sq:e_xec "delete from todos where id = " c_at sq:q_uote wb:p_aram "id") r_ight k
+  r m_atch "POST /clear" ? (u:b_ack db sq:e_xec "delete from todos where done = 1") r_ight k
+  r m_atch "GET /quit" ? (200 wb:r_eply! "bye") r_ight 0
+  (404 wb:r_eply! "no such page: " c_at wb:p_ath @) r_ight k
+}
+
+port := wb:s_erve! 8470
+"serving http://127.0.0.1:" c_at f_ormat port
+last := 100000 'u:a_nswer p_ower 1
+port := wb:s_top! @
+"bye"

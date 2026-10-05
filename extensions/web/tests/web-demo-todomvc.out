@@ -1,0 +1,43 @@
+add [303 -> URL/]
+add [303 -> URL/]
+add [303 -> URL/]
+add (empty) [303 -> URL/]
+page:
+  open: milk &amp; &lt;eggs&gt;
+  open: write the demo
+  open: record it
+  3 items left
+  filter: all
+toggle [303 -> URL/]
+page?show=active:
+  open: milk &amp; &lt;eggs&gt;
+  open: record it
+  2 items left
+  filter: active
+page?show=completed:
+  done: write the demo
+  2 items left
+  filter: completed
+delete [303 -> URL/]
+page:
+  open: milk &amp; &lt;eggs&gt;
+  done: write the demo
+  1 item left
+  filter: all
+bye [200]
+-- run again: the list is kept in SQLite
+page:
+  open: milk &amp; &lt;eggs&gt;
+  done: write the demo
+  1 item left
+  filter: all
+clear [303 -> URL/]
+page:
+  open: milk &amp; &lt;eggs&gt;
+  1 item left
+  filter: all
+no such page: /nowhere [404]
+bye [200]
+-- the program printed:
+serving http://127.0.0.1:PORT
+bye

@@ -6,6 +6,7 @@ l:q_uery : Unit -> Char
 l:b_ody : Unit -> Char
 l:p_aram : Char -> Char
 l:c_ontent! : Char -> Int
+l:h_eader! : Char -> Int
 l:r_eply! : Num a => a -> Char -> Int
 l:f_iles! : Char -> Int
 l:s_top! : Unit -> Int

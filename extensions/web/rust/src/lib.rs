@@ -10,6 +10,7 @@ use std::path::{Component, Path, PathBuf};
 use std::sync::{Mutex, MutexGuard};
 use std::time::Duration;
 
+use axum::http::{HeaderName, HeaderValue};
 use server::{Pending, Reply, Server};
 use xetal_ext_sdk::{OwnedError, Value, number, text};
 
@@ -19,6 +20,7 @@ pub const PORT: u16 = 8470;
 struct Current {
     pending: Pending,
     content_type: Option<String>,
+    headers: Vec<(HeaderName, HeaderValue)>,
 }
 
 static SERVER: Mutex<Option<Server>> = Mutex::new(None);
@@ -99,6 +101,7 @@ fn next(args: &[Value]) -> Result<Value, OwnedError> {
     *lock(&CURRENT)? = Some(Current {
         pending,
         content_type: None,
+        headers: Vec::new(),
     });
     Ok(Value::Text(line))
 }
@@ -151,6 +154,20 @@ fn content(args: &[Value]) -> Result<Value, OwnedError> {
     Ok(Value::Int(1))
 }
 
+/// header "Name: value": a header on the reply (Location for a redirect,
+/// Cache-Control, ...); how many the reply has.
+fn header(args: &[Value]) -> Result<Value, OwnedError> {
+    let h = server::parse_header(&text(&args[0])?).map_err(OwnedError::invalid_argument)?;
+    let mut cur = lock(&CURRENT)?;
+    let c = cur
+        .as_mut()
+        .ok_or_else(|| failure("no request: call wb:n_ext! first"))?;
+    c.headers.push(h);
+    Ok(Value::Int(
+        i64::try_from(c.headers.len()).unwrap_or(i64::MAX),
+    ))
+}
+
 /// status reply body: answer the request; the body's length in bytes.
 fn reply(args: &[Value]) -> Result<Value, OwnedError> {
     let status = number(&args[0])?;
@@ -170,6 +187,7 @@ fn reply(args: &[Value]) -> Result<Value, OwnedError> {
         content_type: c
             .content_type
             .unwrap_or_else(|| server::sniff(&body).to_string()),
+        headers: c.headers,
         body,
     };
     // the client may have gone (a timeout): the reply is dropped
@@ -234,6 +252,7 @@ xetal_ext_sdk::xetal_extension! {
         body: 0, "Unit -> Char", "The request's body.";
         param: 1, "Char -> Char", "A query or form field, decoded (\"\" when absent).";
         content: 1, "Char -> Int", "Set the reply's content type.";
+        header: 1, "Char -> Int", "Add a header to the reply, \"Name: value\"; how many it has.";
         reply: 2, "Num a => a -> Char -> Int", "status reply body: answer the request; the body's bytes.";
         files: 1, "Char -> Int", "Serve the files under a directory directly (\"\": stop); how many.";
         stop: 0, "Unit -> Int", "Stop serving; the port (0 if none).";

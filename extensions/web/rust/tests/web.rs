@@ -13,6 +13,24 @@ use xetal_ext_web::server::{Request, Server, sniff};
 
 /// One HTTP request on loopback: (status, content type, body).
 fn ask(port: u16, method: &str, target: &str, form: Option<&str>) -> (u16, String, String) {
+    let out = ask_raw(port, method, target, form);
+    let (head, body) = out.split_once("\r\n\r\n").unwrap();
+    let status = head.split(' ').nth(1).unwrap().parse().unwrap();
+    (status, header_of(head, "content-type"), body.to_string())
+}
+
+/// A header of a response's head, "" when absent.
+fn header_of(head: &str, name: &str) -> String {
+    head.lines()
+        .find_map(|l| {
+            let (k, v) = l.split_once(':')?;
+            k.eq_ignore_ascii_case(name).then(|| v.trim().to_string())
+        })
+        .unwrap_or_default()
+}
+
+/// One HTTP request on loopback: the whole response.
+fn ask_raw(port: u16, method: &str, target: &str, form: Option<&str>) -> String {
     let mut s = TcpStream::connect(("127.0.0.1", port)).unwrap();
     s.set_read_timeout(Some(Duration::from_secs(20))).unwrap();
     let body = form.unwrap_or("");
@@ -31,17 +49,7 @@ fn ask(port: u16, method: &str, target: &str, form: Option<&str>) -> (u16, Strin
     .unwrap();
     let mut out = String::new();
     s.read_to_string(&mut out).unwrap();
-    let (head, body) = out.split_once("\r\n\r\n").unwrap();
-    let status = head.split(' ').nth(1).unwrap().parse().unwrap();
-    let ctype = head
-        .lines()
-        .find_map(|l| {
-            let (k, v) = l.split_once(':')?;
-            k.eq_ignore_ascii_case("content-type")
-                .then(|| v.trim().to_string())
-        })
-        .unwrap_or_default();
-    (status, ctype, body.to_string())
+    out
 }
 
 fn t(s: &str) -> Value {
@@ -132,6 +140,32 @@ fn a_program_takes_requests_and_replies() {
         client.join().unwrap(),
         (201, "text/csv".into(), "a,b\n".into())
     );
+
+    // a redirect: headers the program sets, and those it may not
+    let client = thread::spawn(move || ask_raw(port, "POST", "/add", Some("title=x")));
+    assert_eq!(
+        text(&call("next", &[Value::Float(10.0)]).unwrap()),
+        "POST /add"
+    );
+    assert_eq!(int(&call("header", &[t("Location: /")]).unwrap()), 1);
+    assert_eq!(
+        int(&call("header", &[t("Cache-Control: no-store")]).unwrap()),
+        2
+    );
+    for bad in ["no colon", "Content-Type: text/x", "Bad Name: x", "X: a\nb"] {
+        assert!(
+            message(call("header", &[t(bad)]).unwrap_err()).contains("header")
+                || bad.starts_with("Content"),
+            "{bad}"
+        );
+    }
+    assert!(message(call("header", &[t("Content-Length: 3")]).unwrap_err()).contains("set by"));
+    call("reply", &[Value::Int(303), t("")]).unwrap();
+    let out = client.join().unwrap();
+    let head = out.split_once("\r\n\r\n").unwrap().0;
+    assert!(head.starts_with("HTTP/1.1 303"), "{head}");
+    assert_eq!(header_of(head, "location"), "/");
+    assert_eq!(header_of(head, "cache-control"), "no-store");
 
     // taken and never answered: the next take answers it 500
     let client = thread::spawn(move || ask(port, "GET", "/lost", None));

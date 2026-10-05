@@ -24,6 +24,9 @@
 # wb:c_ontent! "text/csv": the reply's content type (else it is guessed
 # from the body: SVG, HTML, JSON or plain text).
 "c_ontent! : text -> int"       ffi:b_ind< "web/content"
+# wb:h_eader! "Location: /": a header on the reply (a redirect's
+# Location, Cache-Control, ...); how many the reply has.
+"h_eader! : text -> int"        ffi:b_ind< "web/header"
 # status wb:r_eply! body: answer the request; the body's length in bytes.
 "r_eply! : int text -> int"     ffi:b_ind< "web/reply"
 # wb:f_iles! "dir": serve the files under dir (relative, no ..) directly,

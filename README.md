@@ -34,6 +34,7 @@ just demo audio spectrum        # the music visualizer: X_eTaL analyzes, Rust pl
 just demo audio synth           # a synthesizer: every sample computed in X_eTaL, played as made
 just demo audio scope           # a live oscilloscope: the synthesizer drawn as it plays
 just demo web live              # a web page whose Life board X_eTaL steps per request (http://127.0.0.1:8470/)
+just demo web todomvc           # TodoMVC: X_eTaL serves it, SQLite keeps it (http://127.0.0.1:8470/)
 just walkthrough                # a fresh clone, built and run, checked against the goldens
 ```
 
@@ -116,7 +117,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | Demo | Extensions | What it shows | Status |
 | ---- | ---------- | ------------- | ------ |
 | [data notebook](extensions/sqlite/docs/README.md#the-data-notebook) | sqlite | CO2 at Mauna Loa: a CSV in SQLite; SQL groups, X_eTaL computes the yearly rise, a least-squares line and its residuals, a histogram; SVG pictures | release 1, done |
-| [X_eTaL on the web](extensions/web/docs/README.md#demos) | web, sqlite | a live page: Life computed in X_eTaL, one generation per request, drawn as SVG (`just demo web live`); a TodoMVC stored in SQLite (next) | live page done |
+| [X_eTaL on the web](extensions/web/docs/README.md#demos) | web, sqlite | a live page: Life computed in X_eTaL, one generation per request, drawn as SVG (`just demo web live`); a TodoMVC kept in SQLite (`just demo web todomvc`) | done |
 | photo lab | image, linalg | a photo as an array: filters, edges, SVD compression; PNGs out | roadmap |
 | fetch and analyze | http | live earthquake data summarized and plotted | roadmap |
 
@@ -128,7 +129,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | [canvas](extensions/canvas/docs/README.md) | `Canvas` | a native window showing arrays as pixels; keys and clicks back | winit, softbuffer | done: Life demo (media work continues after the launch) |
 | [scene](extensions/scene/docs/README.md) | `Scene` | retained 3D lines and points in a native window, patched by id; orbit camera | winit, softbuffer | done: cube demo (the visualizer's base) |
 | [sqlite](extensions/sqlite/docs/README.md) | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | done: facade, CSV import, tests, the data notebook |
-| [web](extensions/web/docs/README.md) | `Web` | serve HTTP on loopback: the program takes each request and replies | axum, tokio | done: facade, loopback tests, the live page (TodoMVC next) |
+| [web](extensions/web/docs/README.md) | `Web` | serve HTTP on loopback: the program takes each request and replies | axum, tokio | done: facade, loopback tests, the live page, TodoMVC |
 | image | `Image` | images to and from arrays | image | roadmap |
 | linalg | `Linalg` | solve, inverse, least squares, eigenvalues, SVD | nalgebra | roadmap |
 | http | `Http` | bounded GET | ureq | roadmap |

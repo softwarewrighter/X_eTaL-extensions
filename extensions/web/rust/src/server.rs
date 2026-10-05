@@ -13,7 +13,7 @@ use std::time::Duration;
 use axum::Router;
 use axum::body::{Body, Bytes};
 use axum::extract::State;
-use axum::http::{HeaderValue, Method, StatusCode, Uri, header};
+use axum::http::{HeaderName, HeaderValue, Method, StatusCode, Uri, header};
 use axum::response::Response;
 use tokio::sync::oneshot;
 
@@ -49,7 +49,25 @@ impl Request {
 pub struct Reply {
     pub status: u16,
     pub content_type: String,
+    /// More headers, each checked when the program set it.
+    pub headers: Vec<(HeaderName, HeaderValue)>,
     pub body: String,
+}
+
+/// A header the program sets: `"Name: value"`, checked; content type and
+/// length are the server's to set.
+pub fn parse_header(line: &str) -> Result<(HeaderName, HeaderValue), String> {
+    let (name, value) = line
+        .split_once(':')
+        .ok_or_else(|| format!("{line:?} is not a header (\"Name: value\")"))?;
+    let name = HeaderName::from_bytes(name.trim().as_bytes())
+        .map_err(|_| format!("{:?} is not a header name", name.trim()))?;
+    if name == header::CONTENT_TYPE || name == header::CONTENT_LENGTH {
+        return Err(format!("{name} is set by wb:c_ontent! and the server"));
+    }
+    let value = HeaderValue::from_str(value.trim())
+        .map_err(|_| format!("{:?} is not a header value", value.trim()))?;
+    Ok((name, value))
 }
 
 /// A request and where its reply goes.
@@ -211,6 +229,9 @@ async fn handle(
             *resp.status_mut() = StatusCode::from_u16(r.status).unwrap_or(StatusCode::OK);
             if let Ok(v) = HeaderValue::from_str(&r.content_type) {
                 resp.headers_mut().insert(header::CONTENT_TYPE, v);
+            }
+            for (k, v) in r.headers {
+                resp.headers_mut().append(k, v);
             }
             resp
         }

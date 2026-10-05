@@ -1,0 +1,3 @@
+command = "tests/todomvc.sh"
+exit_code = 0
+desc = "TodoMVC driven over loopback: add (escaped; empty ignored), toggle, filters, delete, kept across a restart in SQLite, clear completed"

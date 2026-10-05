@@ -7,6 +7,7 @@ web 0.1.0
   web/body : Unit -> Char    # The request's body.
   web/param : Char -> Char    # A query or form field, decoded ("" when absent).
   web/content : Char -> Int    # Set the reply's content type.
+  web/header : Char -> Int    # Add a header to the reply, "Name: value"; how many it has.
   web/reply : Num a => a -> Char -> Int    # status reply body: answer the request; the body's bytes.
   web/files : Char -> Int    # Serve the files under a directory directly ("": stop); how many.
   web/stop : Unit -> Int    # Stop serving; the port (0 if none).
