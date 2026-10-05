@@ -348,6 +348,8 @@ Read before working:
     2026-10-03: extensions are native): `just videos` records each demo
     headlessly (vhs; window demos from saved frames), `just pages`
     builds `pages/` (commit it); the Pages workflow only uploads it.
+    The gate fails when `pages/` is older than its sources
+    (`scripts/check-pages.sh`); after a push, check the site online.
 13. Never capture the user's screen or open a window on their desktop
     without asking first, with an exact duration (the screen protocol
     agreed 2026-10-03); verify headlessly.

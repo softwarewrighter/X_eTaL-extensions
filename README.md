@@ -203,6 +203,7 @@ just test [CRATE]    # the Rust tests
 just test-exts       # every extension's reg-rs tests (reg-rs on PATH)
 just videos [EXT]    # record the demos (vhs; window demos from headless frames): nothing on screen
 just pages           # build the site into pages/ (the recordings and how to run them); commit it, a push publishes it
+just check-pages     # pages/ is up to date (the gate fails if not)
 just serve-pages     # preview it at http://127.0.0.1:8470/X_eTaL-extensions/ (this repo's port: 8470)
 just xetal           # X_eTaL at XETAL_COMMIT: work/xetal, bin/xetal
 just xetal-version   # the known-good X_eTaL commit

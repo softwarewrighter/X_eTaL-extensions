@@ -386,7 +386,7 @@ pulls each request and posts its reply.
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | pages-fresh | the gate fails when `pages/` is older than its sources (found when the published site still said X_eTaL is vendored) |
+| 1 | pages-fresh | (done) the gate fails when `pages/` is older than its sources (found when the published site still said X_eTaL is vendored) |
 | 2 | web | the web extension: axum on a background thread, a bounded request queue, next / reply, timeouts, loopback by default; Rust tests with a real client on loopback |
 | 3 | live-page | demos/live: a page recomputing Life or Mandelbrot as SVG per request; reg-rs test drives it over loopback |
 | 4 | todomvc | demos/todomvc: TodoMVC in X_eTaL with sqlite; loopback test of add, toggle, delete |

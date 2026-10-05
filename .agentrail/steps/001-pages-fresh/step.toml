@@ -1,6 +1,6 @@
 number = 1
 slug = "pages-fresh"
-status = "pending"
+status = "in-progress"
 description = "web step 1: the gate fails when pages/ is out of date with its sources (compa..."
 role = "production"
 context_files = []

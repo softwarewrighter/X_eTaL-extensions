@@ -4,16 +4,17 @@ its recording (extensions/EXT/videos/NAME.webm: a terminal session by
 vhs, or a window demo's frames) with the commands to run it yourself.
 Extensions are native: they run with xetal-x on your machine, so the
 site shows them running rather than running them.
-    scripts/build-catalog.py
+    scripts/build-catalog.py   # PAGES_DIR=DIR builds elsewhere (the gate)
 """
 import html
+import os
 import pathlib
 import shutil
 import subprocess
 
 root = pathlib.Path(__file__).resolve().parent.parent
 REPO = "https://github.com/softwarewrighter/X_eTaL-extensions"
-pages = root / "pages"
+pages = pathlib.Path(os.environ.get("PAGES_DIR", root / "pages"))
 
 
 def first_para(name):

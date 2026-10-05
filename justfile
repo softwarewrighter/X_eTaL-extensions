@@ -74,6 +74,10 @@ check-web:
 pages:
     scripts/build-pages.sh
 
+# pages/ is what a fresh build makes (in the gate)
+check-pages:
+    scripts/check-pages.sh
+
 # Preview pages/ as GitHub Pages serves it, at http://127.0.0.1:8470/X_eTaL-extensions/
 serve-pages:
     @rm -rf target/serve && mkdir -p target/serve && ln -s "$PWD/pages" target/serve/X_eTaL-extensions

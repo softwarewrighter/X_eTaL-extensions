@@ -4,7 +4,8 @@
 # this repo's Rust (scripts/check-rust.sh: fmt, clippy, tests), the
 # bridge host matching the X_eTaL CLI (scripts/check-xetal-x.sh),
 # every extension's reg-rs tests (scripts/test-exts.sh), the live
-# pages' crates (scripts/check-web.sh), American spellings
+# pages' crates (scripts/check-web.sh), the site up to date
+# (scripts/check-pages.sh), American spellings
 # (scripts/check-spelling.py, with its self-test), then
 # ASCII-only markdown for the docs we own.
 #   scripts/gate.sh
@@ -17,6 +18,7 @@ cd "$root"
 "$root/scripts/test-exts.sh"
 "$root/scripts/check-web.sh"
 "$root/scripts/status.py" --check
+"$root/scripts/check-pages.sh"
 "$root/scripts/check-spelling.py" --self-test
 "$root/scripts/check-spelling.py"
 md=(README.md CHANGES.md docs/plan.md docs/xetal-asks.md)

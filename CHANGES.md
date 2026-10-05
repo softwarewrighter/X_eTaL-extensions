@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 01:55 `build` The gate fails when the site is out of date: `scripts/check-pages.sh` (`just check-pages`) builds it into `work/pages-check` (`PAGES_DIR`) and compares it with `pages/`, ignoring only the commit it was built at; a stale page was shown to fail. Found when the published site still said X_eTaL is vendored.
+
 - 01:40 `plan` Saga 9, web, started (the launch was postponed; the user: proceed): pages-fresh, web, live-page, todomvc, web-release. The macros saga archived.
 
 - 01:30 `docs` Site rebuilt: its build instructions said X_eTaL is vendored; now `just xetal` first (stale since the devendor step).
