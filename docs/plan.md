@@ -409,7 +409,7 @@ from the function, so a reply-then-continue is `(reply) r_ight next`;
 reducing an empty list of boxes needs a seed; headless Chrome lingers
 after `--screenshot`, so the recorder stops it once the file exists.
 
-## Saga 10 -- photo lab (post-launch)
+## Saga 10 -- photo lab (after Saga 11, the user's order)
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
@@ -417,14 +417,19 @@ after `--screenshot`, so the recorder stops it once the file exists.
 | 2 | linalg | the linalg extension; small cases cross-checked in pure X_eTaL |
 | 3 | photo-lab | demos/photo-lab: filters and edges by rotation, SVD compression at several ranks, PNGs out |
 
-## Saga 11 -- fetch and analyze (post-launch)
+## Saga 11 -- fetch and analyze
+
+Started 2026-10-05, before photo lab (the user: "earthquake feed first,
+then photo lab"). The network is used only on request: tests fetch from
+the web extension on loopback, the demo's golden reads a saved copy,
+and only `just live-quakes` fetches the live feed.
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | http | the http extension: bounded GET; tests against the web extension on loopback |
-| 2 | digest | the digest extension (verifying fetched content) |
-| 3 | fetch | demos/quakes: the USGS feed (opt-in `just live-quakes`), a saved copy for the golden |
-| 4 | release-1 | catalog and pages reviewed, demos re-run, asks reviewed, retrospective here |
+| 1 | http | the http extension: bounded GET (size, time, redirects), status and headers of the last response, a download to a confined file; tests against the web extension on loopback |
+| 2 | digest | the digest extension: SHA-256 and CRC-32 of text and of files (verifying fetched content) |
+| 3 | quakes | demos/quakes: the USGS M2.5+ week feed, a saved copy (with its SHA-256) for the golden, into SQLite; X_eTaL computes the magnitude histogram, quakes per day, the largest, a map; SVG pictures; `just live-quakes` fetches the live feed |
+| 4 | fetch-release | recordings, docs, catalog, parity, status, retrospective; the site checked online |
 
 ## Saga 12 -- native hook (blocked)
 

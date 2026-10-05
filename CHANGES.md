@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 06:40 `plan` Saga 11, fetch and analyze, started before photo lab (the user: "earthquake feed first, then photo lab"): http, digest, quakes, fetch-release. The web saga archived. The user saw both web demos live (54 s with their go): "looked good".
+
 - 06:10 `release` Web saga done. Recordings of the live page and TodoMVC as a browser shows them: a new recording kind, `videos/NAME.web` (`scripts/videos.sh`): the demo served on a free port, driven by the spec's steps (`shot PATH`, `post PATH ...`), each shot rendered by headless Chrome with a temporary profile (stopped once the file is written; no window). The web page shows them; parity (http-server and TodoMVC done), README, CLAUDE.md rule 12, status; Saga 9 retrospective in docs/plan.md.
 
 - 05:20 `ext` TodoMVC on the web, `just demo web todomvc` (http://127.0.0.1:8470/): HTML forms, the todos kept in SQLite (`work/todos.db`); the X_eTaL program routes each request, turns the filter into SQL, counts what is left from the `done` column and writes the page, SQL writes (and escapes) each item; changes redirect back with 303. New `wb:h_eader! "Name: value"` (checked; content type and length refused), with Rust tests of a redirect. `web-demo-todomvc` drives it with `curl`: add (an HTML-looking title escaped, an empty one ignored), toggle, filters, delete, the list kept across a restart, clear completed. Goldens rebased on purpose: the new function in the listing and types, two error lines three lines lower in the facade.

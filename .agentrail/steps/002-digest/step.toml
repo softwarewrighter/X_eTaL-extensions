@@ -1,0 +1,9 @@
+number = 2
+slug = "digest"
+status = "pending"
+description = "fetch step 2: extensions/digest: SHA-256 and CRC-32 of text and of (confined)..."
+role = "production"
+context_files = []
+created_at = "2026-10-05T15:59:08"
+task_type = "feature"
+commits = []

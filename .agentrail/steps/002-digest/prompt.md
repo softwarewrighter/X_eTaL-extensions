@@ -1,0 +1,1 @@
+fetch step 2: extensions/digest: SHA-256 and CRC-32 of text and of (confined) files, hex text; facade; Rust tests with known vectors; reg-rs; docs.

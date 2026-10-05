@@ -1,0 +1,1 @@
+fetch step 4: recordings, README catalog, extension pages, parity, status, asks, retrospective; verify the live site online after the deploy. Then photo lab (Saga 10) is next, the user's order.

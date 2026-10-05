@@ -1,0 +1,1 @@
+fetch step 3: extensions/http/demos/quakes.xtl: the USGS M2.5+ week feed (saved copy in demos/data with its SHA-256, verified with digest), imported into SQLite; X_eTaL computes the magnitude histogram, quakes per day, the largest, a lon/lat map; SVG pictures (--draw); reg-rs golden; quakes-live.xtl + just live-quakes fetch the live feed (opt-in).

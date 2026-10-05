@@ -1,14 +1,14 @@
-# web
+# fetch
 
-X_eTaL on the web (docs/plan.md, Saga 9; plan A15): a web extension
-keeps axum on a background thread with a bounded request queue; the
-X_eTaL program pulls the next request and posts its reply, so the
-program is the request loop. Loopback only in tests; port 8470.
+Fetch and analyze (docs/plan.md, Saga 11): an http extension (bounded
+GET with ureq), a digest extension (SHA-256, CRC-32), and the quakes
+demo: the USGS earthquake feed into SQLite, analyzed and drawn by
+X_eTaL. Network only on request: loopback tests, a saved copy for the
+golden, `just live-quakes` for the live feed. Photo lab follows.
 
 ## Steps
 
-1. pages-fresh -- the gate fails when pages/ is out of date.
-2. web -- the extension, Rust tests with a real client on loopback.
-3. live-page -- a page recomputing Life or Mandelbrot as SVG per request.
-4. todomvc -- TodoMVC in X_eTaL with sqlite.
-5. web-release -- recordings, docs, status, retrospective, site checked online.
+1. http -- bounded GET; tests against web on loopback.
+2. digest -- SHA-256 and CRC-32 of text and files.
+3. quakes -- the demo, a saved copy for the golden, just live-quakes.
+4. fetch-release -- recordings, docs, status, retrospective, site checked.

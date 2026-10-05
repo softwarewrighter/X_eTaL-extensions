@@ -1,0 +1,9 @@
+number = 1
+slug = "http"
+status = "pending"
+description = "fetch step 1: extensions/http (just new-ext http ht 'bounded HTTP GET'): ureq..."
+role = "production"
+context_files = []
+created_at = "2026-10-05T15:59:08"
+task_type = "feature"
+commits = []
