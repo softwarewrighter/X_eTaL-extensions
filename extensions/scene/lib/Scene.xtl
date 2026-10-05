@@ -20,7 +20,7 @@ l:o_pen! := { title size ->
 
 # (scene c_at object c_at red green blue) sc:p_olyline! points: put
 # object (an id of your choice) as points joined in order; points are an
-# n by 3 matrix (x y z), colours 0 to 1. Putting an id again replaces it.
+# n by 3 matrix (x y z), colors 0 to 1. Putting an id again replaces it.
 l:p_olyline! := { head pts ->
   a := head f_loats "polyline"
   b := pts f_loats "polyline"

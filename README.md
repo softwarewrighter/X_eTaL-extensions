@@ -29,7 +29,7 @@ just demos                      # every demo: EXT NAME and what it shows
 just demo hello tour            # X_eTaL arrays handed to Rust and back
 just demo sqlite notebook       # CO2 at Mauna Loa: SQLite + X_eTaL, pictures in work/draw/
 just demo canvas life           # Life in a native window (Space: new board, q: quit)
-just demo audio spectrum        # the music visualizer: X_eTaL analyses, Rust plays and draws
+just demo audio spectrum        # the music visualizer: X_eTaL analyzes, Rust plays and draws
 just demo audio synth           # a synthesizer: every sample computed in X_eTaL, played as made
 just demo audio scope           # a live oscilloscope: the synthesizer drawn as it plays
 just walkthrough                # a fresh clone, built and run, checked against the goldens

@@ -11,7 +11,7 @@ Webcam frames as n by m by 3 arrays, read a frame at a time, so an
 X_eTaL program can filter them and show the result in a canvas window:
 a live edge detector (a few rotations and a sum, as X_eTaL-demos'
 image pipeline does to still images), motion as the difference of two
-frames, a colour mask.
+frames, a color mask.
 
 - Crate: `nokhwa` (cross-platform capture); a frame scaled down in Rust
   (an n by m by 3 Int array crossing the text bridge costs about

@@ -29,7 +29,7 @@ u:l_oudness := { w ->
 }
 
 # -- the picture: 16 spokes, the left channel's 8 on one half of the
-# circle, the right's mirrored on the other; bass nearest the centre;
+# circle, the right's mirrored on the other; bass nearest the center;
 # loudness lengthens a spoke outward and lifts its tip
 k := f_loat r_ange 8
 th := 3.141592653589793 * (k - 0.5) / 8.0
@@ -58,7 +58,7 @@ u:r_ows := { flat ->
 g := 6.283185307179586 * (f_loat r_ange 65) / 64.0
 ring := ((f_loat w c_at 4) c_at 0.25 0.27 0.33) sc:p_olyline! u:r_ows (0.3 * c_os g) c_at (65 r_eshape 0.0) c_at 0.3 * s_in g
 
-# one coloured object per band: bass blue, mid green, high orange
+# one colored object per band: bass blue, mid green, high orange
 u:d_raw := { l ->
   m := u:s_pokes l
   b := ((f_loat w c_at 1) c_at 0.25 0.55 1.0) sc:s_egments! 12 3 r_eshape r_avel (1 2 3 9 10 11) s_elect_1 m

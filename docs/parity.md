@@ -26,11 +26,11 @@ copied from it (plan A14), never depended on.
 | canvas: a blocking native window presenting an array | canvas: arrays as pixels, keys and clicks back; Life | done |
 | native3d: retained line/point scenes with stable ids, camera, picking; wireframe cube, Life plane and torus, tic-tac-toe, point cloud, weight distribution, model atlas, disk usage, system layouts | scene: retained lines, segments and dots by id, orbit camera, drawn on the CPU (frames pinned headless); the cube | done for lines and points; picking, boxes and the larger demos not planned now |
 | audio: Symphonia decode of MP3 and Ogg/Vorbis in bounded chunks, CPAL playback with decode-ahead, pause, seek | audio: the same (plus WAV), the window under the playhead, a virtual clock for exact tests | done |
-| audio-spectrum: the MP3 player visualizer | `just demo audio spectrum`: X_eTaL analyses (a spectrum by one inner product), Rust plays and draws; recorded with its music | done; checked live 2026-10-04 |
+| audio-spectrum: the MP3 player visualizer | `just demo audio spectrum`: X_eTaL analyzes (a spectrum by one inner product), Rust plays and draws; recorded with its music | done; checked live 2026-10-04 |
 | hftok (Hugging Face tokenizer), verified downloads | -- | not planned (closer to the ML line) |
 | Yew/WebAssembly ML microscope | hello and clock live, the shell | done for this repo's needs |
 
-## Division of labour in the visualizer
+## Division of labor in the visualizer
 
 Rust does what an array interpreter is bad at or cannot do: decoding
 MP3 (a sequential bitstream with Huffman codes), feeding the sound

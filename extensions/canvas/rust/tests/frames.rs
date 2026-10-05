@@ -28,7 +28,7 @@ fn scaling_keeps_the_shape() {
         height: 1,
         pixels: vec![1, 2],
     };
-    // 4 by 4 window: 2 by 1 scales by 2 to 4 by 2, centred vertically
+    // 4 by 4 window: 2 by 1 scales by 2 to 4 by 2, centered vertically
     let out = scaled(&f, 4, 4);
     let bg = 0x0010_1214;
     assert_eq!(

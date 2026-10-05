@@ -228,7 +228,7 @@ fn points(v: &Value) -> Result<Vec<[f64; 3]>, OwnedError> {
 }
 
 fn put(kind: Kind, args: &[Value]) -> Result<Value, OwnedError> {
-    let (s, o, colour) = header(&args[0])?;
+    let (s, o, color) = header(&args[0])?;
     let pts = points(&args[1])?;
     let window = with(s, |h| {
         locked(&h.scene).set(
@@ -236,7 +236,7 @@ fn put(kind: Kind, args: &[Value]) -> Result<Value, OwnedError> {
             Object {
                 kind,
                 points: pts,
-                colour,
+                color,
             },
         );
         h.window

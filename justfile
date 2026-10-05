@@ -104,6 +104,11 @@ demo ext name *args:
 videos *ext:
     scripts/videos.sh "$@"
 
+# American spellings only: the check (and its self-test)
+check-spelling:
+    scripts/check-spelling.py --self-test
+    scripts/check-spelling.py
+
 # The full pre-commit gate
 gate:
     scripts/gate.sh

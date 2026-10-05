@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 22:04 `fix` American spellings only (the user, after fixing X_eTaL-demos): `scripts/check-spelling.py` (copied from X_eTaL-demos; audio, video and fixture files skipped) and its self-test in the gate (`just check-spelling`); an audit found 55 British forms in 20 files (-our for -or, -re for -er, -yse for -yze, doubled l, and the like) and all were fixed, Rust identifiers included (scene's `Object::color`), the canvas listing golden with its doc string; CLAUDE.md rule 14.
+
 - 20:56 `build` xetal-x follows the vendored CLI's new `main` (the terminal installed, `--cfg` flags, options before or after the subcommand: `command()` repeated verbatim) and its new crates (xetal-line, -tty, -system, -doc, -docsite, -doctest). Every reg-rs golden and Rust test passed unchanged; all 21 vendored demos identical under xetal-x. Asks E2 and E6 landed (vendored).
 
 - 20:07 `vendor` X_eTaL f823212 vendored (from 7b70575: `.xtlm` macro libraries and the system macros, ask E2; options before the subcommand, ask E6; the terminal; the speed work).
@@ -43,7 +45,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-03
 
-- 19:13 `ext` The scene extension (`extensions/scene`, alias `sc:`, linked into `xetal-x`): objects by id (polyline, segments, dots) with colours, an orbit camera with spin and mouse drag, perspective and anti-aliased lines drawn on the CPU (decision M7 revised from wgpu, so frames are the same headless), headless frames; `demos/cube.xtl`; 5 Rust tests, 4 reg-rs tests (the cube headless, frames pinned); `videos/cube`.
+- 19:13 `ext` The scene extension (`extensions/scene`, alias `sc:`, linked into `xetal-x`): objects by id (polyline, segments, dots) with colors, an orbit camera with spin and mouse drag, perspective and anti-aliased lines drawn on the CPU (decision M7 revised from wgpu, so frames are the same headless), headless frames; `demos/cube.xtl`; 5 Rust tests, 4 reg-rs tests (the cube headless, frames pinned); `videos/cube`.
 
 - 17:14 `plan` Launch step 5 (the six-repo snapshot tag) waits on X_eTaL's web-release, which picks the compatible versions; then this repo vendors that release and tags to match.
 

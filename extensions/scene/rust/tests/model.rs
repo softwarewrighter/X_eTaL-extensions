@@ -8,7 +8,7 @@ fn line(points: Vec<[f64; 3]>) -> Object {
     Object {
         kind: Kind::Polyline,
         points,
-        colour: [1.0, 1.0, 1.0],
+        color: [1.0, 1.0, 1.0],
     }
 }
 
@@ -26,7 +26,7 @@ fn a_line_through_the_origin_crosses_the_centre() {
     let (w, h) = (64, 48);
     let px = s.render(w, h);
     let lit = |x: usize, y: usize| px[y * w + x] != BG;
-    // horizontal through the middle row, symmetric about the centre
+    // horizontal through the middle row, symmetric about the center
     assert!(lit(w / 2, h / 2) || lit(w / 2, h / 2 - 1));
     assert!(!lit(w / 2, 2) && !lit(w / 2, h - 3));
 }

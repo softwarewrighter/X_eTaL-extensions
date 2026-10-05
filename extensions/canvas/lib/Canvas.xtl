@@ -19,7 +19,7 @@ l:o_pen! := { title size ->
   n_umber "open"
 }
 
-# id cv:s_how! pixels: draw an n by m matrix (grey) or an n by m by 3
+# id cv:s_how! pixels: draw an n by m matrix (gray) or an n by m by 3
 # array (red, green, blue), each from 0 (dark) to 1 (bright); a Bool
 # matrix draws its 1s white. Scaled to the window; the id.
 l:s_how! := { id p ->

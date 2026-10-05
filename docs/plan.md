@@ -31,7 +31,7 @@ this repository:
   facade -> stable ABI -> native capability): sqlite and its notebook
   make the point. Audio and 3D (the media saga) are post-launch
   follow-ups; web, image, linalg, http and digest too.
-- The ABI and the `ext:` bridge are labelled experimental; the native
+- The ABI and the `ext:` bridge are labeled experimental; the native
   typed hook (E1, X_eTaL Saga 23) can follow the launch.
 - `.xtlm` is the middle of "libraries extend the vocabulary; macros
   extend the language; native extensions extend the machine", and
@@ -51,7 +51,7 @@ Order now: Saga 6 (launch) first; Saga 8's binding macro as soon as
 | `xetal-x --version` does not say it is `xetal-x`, nor this repository's commit (it prints the vendored CLI's block) | here | fixed: a first line `xetal-x 0.1.0 (X_eTaL-extensions SHA): the vendored X_eTaL CLI below, with native extensions (experimental)`; checked in the gate |
 | an extension's error points into its facade, not the calling line | upstream (E5) | filed |
 | `xetal --draw DIR run FILE` misparses (`run --draw` works) | upstream (E6) | landed (vendored f823212) |
-| programs need `xetal-x`, not `xetal` (the text bridge) | upstream (E1, Saga 23) | filed; labelled experimental |
+| programs need `xetal-x`, not `xetal` (the text bridge) | upstream (E1, Saga 23) | filed; labeled experimental |
 | the first-user path: `just demos`, `just demo EXT NAME`, `just walkthrough` from a fresh clone | here | done (release 1); re-run in launch step 3 |
 
 ## Guiding principle
@@ -144,7 +144,7 @@ Release 1 (research3.txt in ../X_eTaL, "Do SQLite", accepted
 2026-10-03): **hello + clock + sqlite**, with the data notebook as the
 flagship demo -- one serious extension that proves the boundary on
 something X_eTaL should not reinvent, rather than many half-done ones.
-Everything else below is roadmap, labelled so in the README, and waits
+Everything else below is roadmap, labeled so in the README, and waits
 until after release 1.
 
 Chosen with the user (2026-10-02): four flagship demos built on
@@ -251,7 +251,7 @@ native hook (E1) would remove.
 | 2 | csv-import | (done) CSV into a table (native, `rusqlite` + a small CSV reader), and query results back as X_eTaL arrays |
 | 3 | notebook | (done; NOAA/Scripps Mauna Loa CO2) demos/notebook: a bundled CSV (a public-domain dataset), SQL plus array analytics, an SVG chart; reg-rs golden |
 | 4 | sqlite-live | (probed: feasible with rusqlite 0.40 + `sqlite-wasm-rs`, but it needs LLVM's clang to compile SQLite for wasm32 -- Apple's clang cannot. The user's decision, 2026-10-03: no SQLite in the browser; sqlite stays command-line only. Browser persistence (the browser's own storage) or a client/server split -- X_eTaL with extensions on a server, a WebAssembly X_eTaL without extensions as the browser UI, talking CRUD REST or WebSockets -- are possible later demos, but not extensions as such; the web saga is the natural home for the server side) whether SQLite runs in the browser (rusqlite on wasm32 via sqlite-wasm-rs or similar); if so with modest work, the notebook live; if not, why, and the catalog lists sqlite as command-line only |
-| 5 | release-1 | (done) research3's checklist for this repo: README value proposition and the three-ways phrase ("libraries extend the vocabulary; macros extend the language; native extensions extend the machine"); roadmap extensions labelled; `docs/status.md`, what works today (this repo's column of the ecosystem dashboard, generated from manifests and tests where possible); stale-ask sweep against upstream (vendor refreshed if asks landed); the site's catalog lists every extension; a fresh-user walkthrough (clone, build, hello, clock, the sqlite notebook) as a recipe, run and fixed; retrospective; a release tag proposed to the user |
+| 5 | release-1 | (done) research3's checklist for this repo: README value proposition and the three-ways phrase ("libraries extend the vocabulary; macros extend the language; native extensions extend the machine"); roadmap extensions labeled; `docs/status.md`, what works today (this repo's column of the ecosystem dashboard, generated from manifests and tests where possible); stale-ask sweep against upstream (vendor refreshed if asks landed); the site's catalog lists every extension; a fresh-user walkthrough (clone, build, hello, clock, the sqlite notebook) as a recipe, run and fixed; retrospective; a release tag proposed to the user |
 
 Saga 4 retrospective (release 1): sqlite is the serious extension
 research3 asked for -- statements, numeric and text results, quoting,
@@ -269,7 +269,7 @@ E1 is X_eTaL Saga 23 and E2 Saga 19; none of our asks has landed yet.
 
 The user's request (2026-10-03): demos like demo-extensions' MP3 player
 visualizer (docs/parity.md). Rust decodes and plays the audio and
-renders 3D; X_eTaL analyses each chunk and builds the scene as arrays.
+renders 3D; X_eTaL analyzes each chunk and builds the scene as arrays.
 
 Decisions:
 
@@ -296,7 +296,7 @@ Decisions:
 - M6. Ogg Vorbis first (the user's preference, 2026-10-03): fixtures
   and the demo's default media are Ogg Vorbis (royalty-free by
   design); MP3 is supported too -- its patents expired around 2017 and
-  Symphonia's decoder (pure Rust, MPL-2.0) needs no licence.
+  Symphonia's decoder (pure Rust, MPL-2.0) needs no license.
 - M7. Drawing: softbuffer (a CPU pixel buffer in a winit window) for
   both the canvas and the 3D scene. The scene was to use wgpu as
   demo-extensions does; drawing its lines and points on the CPU instead
@@ -308,7 +308,7 @@ Decisions:
 | - | --------- | -------- |
 | 1 | parity | docs/parity.md; this saga |
 | 2 | ui-host | (done) `crates/xetal-ext-ui` and `xetal-x` running the program off the main thread; a minimal window extension (an array shown as pixels, events back) proving the loop; headless tests of the queues |
-| 3 | scene3d | the scene extension: retained lines and points by id, colours, camera, events; a wireframe cube demo |
+| 3 | scene3d | the scene extension: retained lines and points by id, colors, camera, events; a wireframe cube demo |
 | 4 | audio | the audio extension: open, info, chunks (2 by n Floats), play, pause, seek, position, close; tests on generated MP3 and Ogg fixtures |
 | 5 | spectrum | (done in Saga 7) demos/spectrum: the visualizer in X_eTaL (spectrum by inner product, radial spokes, keys); headless tests of the analysis on fixtures; an interactive smoke |
 | 6 | media-release | docs, parity updated, status, retrospective |
@@ -325,7 +325,7 @@ Research4's work for this repository (see Priorities).
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | reprioritize | this section and Priorities; media paused (scene WIP on branch `wip/media-scene`); ABI and bridge labelled experimental |
+| 1 | reprioritize | this section and Priorities; media paused (scene WIP on branch `wip/media-scene`); ABI and bridge labeled experimental |
 | 2 | blockers | (done) this repo's blockers fixed (`xetal-x --version`); upstream ones tracked |
 | 3 | audit | (done: every ask is in X_eTaL's queue, none landed, vendor kept) asks and status against upstream; vendor refreshed if anything landed; walkthrough from GitHub |
 | 4 | xtlm-ready | (done: docs/ffi-macro.md; docs/ffi/Hello.xtl, the expected expansion, tested by reg-rs) `Ffi.xtlm` designed against MC10-MC13, expansions written down, ready for the day `.xtlm` lands |

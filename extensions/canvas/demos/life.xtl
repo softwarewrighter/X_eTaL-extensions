@@ -3,7 +3,7 @@
 # Run: just demo canvas life   (Space: a new board; q or close: quit)
 "cv:" u_se< "Canvas"
 
-# Life (as in X_eTaL's demos/life.xtl): every cell plus its neighbours
+# Life (as in X_eTaL's demos/life.xtl): every cell plus its neighbors
 # by rotating along both axes and summing; alive next at 3, or 4 if alive
 u:l_ife := { ('+ r_/_12 -1 0 1 o_-_12 _r) { (_l = 3) + _r * _l = 4 } _r }
 

@@ -23,7 +23,7 @@ c := cv:c_lose! w
 | Export | Type | What |
 | ------ | ---- | ---- |
 | `title cv:o_pen! w h` | `Num a => Char -> a -> Int` | a window `w` by `h` points; its id |
-| `id cv:s_how! p` | `(Num a, Num b) => a -> b -> Int` | draw an n by m matrix (grey) or an n by m by 3 array (red, green, blue), each 0 (dark) to 1 (bright); a Bool matrix draws its 1s white; scaled to the window, keeping its shape |
+| `id cv:s_how! p` | `(Num a, Num b) => a -> b -> Int` | draw an n by m matrix (gray) or an n by m by 3 array (red, green, blue), each 0 (dark) to 1 (bright); a Bool matrix draws its 1s white; scaled to the window, keeping its shape |
 | `cv:n_ext! id` | `Num a => a -> Char` | the next event, waiting at most a frame (1/60 s): `frame`, `key NAME` (`key Space`, `key q`, `key ArrowLeft`), `click ROW COL` (in the array shown, from 1), `close` |
 | `cv:c_lose! id` | `Num a => a -> Int` | close the window |
 

@@ -1,4 +1,4 @@
-//! X_eTaL source drawn decorated (as X_eTaL renders it, coloured).
+//! X_eTaL source drawn decorated (as X_eTaL renders it, colored).
 //! Copied from X_eTaL-demos' shared/microscope.
 
 use xetal_play::{Class, decorate};

@@ -58,7 +58,7 @@ and draws; X_eTaL does the rest:
 | a taper | times a Hann window (`0.5 - 0.5 * c_os ...`), one row per channel |
 | a spectrum | one inner product each with cosine and sine tables (1024 by 8: 60 Hz to 7680 Hz, an octave apart), the magnitude, squashed to 0..1.3 |
 | motion | each frame eases 40% toward the new loudness |
-| the geometry | 16 spokes on a circle, left channel's half mirrored by the right's; bass nearest the centre; loudness lengthens a spoke outward and lifts its tip; laid out as rows by an index trick (no transpose yet) |
+| the geometry | 16 spokes on a circle, left channel's half mirrored by the right's; bass nearest the center; loudness lengthens a spoke outward and lifts its tip; laid out as rows by an index trick (no transpose yet) |
 | the picture | three `sc:s_egments!` objects, one per band: bass blue, mid green, high orange |
 
 The recording `videos/spectrum.webm` has the music in it (unmute it);

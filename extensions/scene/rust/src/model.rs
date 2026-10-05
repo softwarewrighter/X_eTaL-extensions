@@ -23,7 +23,7 @@ pub struct Object {
     pub kind: Kind,
     pub points: Vec<[f64; 3]>,
     /// Red, green, blue, 0 to 1.
-    pub colour: [f64; 3],
+    pub color: [f64; 3],
 }
 
 /// The camera orbits the origin: yaw and pitch in radians, distance in
@@ -120,7 +120,7 @@ impl Scene {
             let width = self.line_width;
             let mut line = |a: Option<(f64, f64)>, b: Option<(f64, f64)>| {
                 if let (Some(a), Some(b)) = (a, b) {
-                    thick_line(&mut px, w, h, a, b, o.colour, width);
+                    thick_line(&mut px, w, h, a, b, o.color, width);
                 }
             };
             match o.kind {
@@ -136,7 +136,7 @@ impl Scene {
                 }
                 Kind::Points => {
                     for p in pts.into_iter().flatten() {
-                        dot(&mut px, w, h, p, o.colour);
+                        dot(&mut px, w, h, p, o.color);
                     }
                 }
             }
@@ -146,7 +146,7 @@ impl Scene {
 }
 
 #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
-fn blend(px: &mut [u32], w: usize, h: usize, x: i64, y: i64, colour: [f64; 3], alpha: f64) {
+fn blend(px: &mut [u32], w: usize, h: usize, x: i64, y: i64, color: [f64; 3], alpha: f64) {
     if x < 0 || y < 0 || x as usize >= w || y as usize >= h || alpha <= 0.0 {
         return;
     }
@@ -157,7 +157,7 @@ fn blend(px: &mut [u32], w: usize, h: usize, x: i64, y: i64, colour: [f64; 3], a
         let n = (c.clamp(0.0, 1.0) * 255.0).mul_add(alpha.min(1.0), o * (1.0 - alpha.min(1.0)));
         (n.round().clamp(0.0, 255.0) as u32) << shift
     };
-    px[i] = mix(16, colour[0]) | mix(8, colour[1]) | mix(0, colour[2]);
+    px[i] = mix(16, color[0]) | mix(8, color[1]) | mix(0, color[2]);
 }
 
 /// A line `width` pixels wide: anti-aliased passes a pixel apart,
@@ -168,7 +168,7 @@ fn thick_line(
     h: usize,
     a: (f64, f64),
     b: (f64, f64),
-    colour: [f64; 3],
+    color: [f64; 3],
     width: f64,
 ) {
     let (dx, dy) = (b.0 - a.0, b.1 - a.1);
@@ -187,7 +187,7 @@ fn thick_line(
             h,
             (a.0 + nx * o, a.1 + ny * o),
             (b.0 + nx * o, b.1 + ny * o),
-            colour,
+            color,
         );
         o += 1.0;
     }
@@ -195,7 +195,7 @@ fn thick_line(
 
 /// An anti-aliased line (Xiaolin Wu's algorithm).
 #[allow(clippy::cast_possible_truncation, clippy::many_single_char_names)]
-fn wu_line(px: &mut [u32], w: usize, h: usize, a: (f64, f64), b: (f64, f64), colour: [f64; 3]) {
+fn wu_line(px: &mut [u32], w: usize, h: usize, a: (f64, f64), b: (f64, f64), color: [f64; 3]) {
     let (mut x0, mut y0, mut x1, mut y1) = (a.0, a.1, b.0, b.1);
     // keep far-off lines cheap: skip ones wholly off a generous margin
     let lim = 4.0 * (w.max(h) as f64);
@@ -218,9 +218,9 @@ fn wu_line(px: &mut [u32], w: usize, h: usize, a: (f64, f64), b: (f64, f64), col
     let grad = if dx.abs() < 1e-9 { 1.0 } else { (y1 - y0) / dx };
     let mut plot = |x: i64, y: i64, c: f64| {
         if steep {
-            blend(px, w, h, y, x, colour, c);
+            blend(px, w, h, y, x, color, c);
         } else {
-            blend(px, w, h, x, y, colour, c);
+            blend(px, w, h, x, y, color, c);
         }
     };
     let (xs, xe) = (x0.round() as i64, x1.round() as i64);
@@ -235,12 +235,12 @@ fn wu_line(px: &mut [u32], w: usize, h: usize, a: (f64, f64), b: (f64, f64), col
 }
 
 #[allow(clippy::cast_possible_truncation)]
-fn dot(px: &mut [u32], w: usize, h: usize, p: (f64, f64), colour: [f64; 3]) {
+fn dot(px: &mut [u32], w: usize, h: usize, p: (f64, f64), color: [f64; 3]) {
     let (cx, cy) = (p.0.round() as i64, p.1.round() as i64);
     for dy in -1..=1 {
         for dx in -1..=1 {
             let a = if dx == 0 && dy == 0 { 1.0 } else { 0.5 };
-            blend(px, w, h, cx + dx, cy + dy, colour, a);
+            blend(px, w, h, cx + dx, cy + dy, color, a);
         }
     }
 }

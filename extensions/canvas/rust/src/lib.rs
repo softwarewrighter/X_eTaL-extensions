@@ -44,8 +44,8 @@ fn byte_i(x: i64) -> u32 {
     x.clamp(0, 255) as u32
 }
 
-/// An array as a frame: an n by m matrix is grey (Bool: 1 white;
-/// Int 0..255; Float 0..1), an n by m by 3 array is colour (red, green,
+/// An array as a frame: an n by m matrix is gray (Bool: 1 white;
+/// Int 0..255; Float 0..1), an n by m by 3 array is color (red, green,
 /// blue in the last axis, Int 0..255 or Float 0..1).
 ///
 /// # Errors
@@ -54,11 +54,11 @@ fn byte_i(x: i64) -> u32 {
 pub fn frame(v: &Value) -> Result<Frame, OwnedError> {
     let Value::Array(a) = v else {
         return Err(OwnedError::invalid_argument(
-            "show a matrix (grey) or an n by m by 3 array (colour)",
+            "show a matrix (gray) or an n by m by 3 array (color)",
         ));
     };
     let s = a.shape();
-    let (h, w, colour) = match s {
+    let (h, w, color) = match s {
         [h, w] => (*h, *w, false),
         [h, w, 3] => (*h, *w, true),
         _ => {
@@ -67,18 +67,18 @@ pub fn frame(v: &Value) -> Result<Frame, OwnedError> {
             )));
         }
     };
-    let grey: Vec<u32> = match a.data() {
+    let gray: Vec<u32> = match a.data() {
         ArrayData::Bool(b) => b.iter().map(|&b| if b { 255 } else { 0 }).collect(),
         ArrayData::Int(i) => i.iter().map(|&x| byte_i(x)).collect(),
         ArrayData::Float(f) => f.iter().map(|&x| byte_f(x)).collect(),
         ArrayData::Char(_) => return Err(OwnedError::invalid_argument("show numbers, not text")),
     };
-    let pixels = if colour {
-        grey.chunks_exact(3)
+    let pixels = if color {
+        gray.chunks_exact(3)
             .map(|c| rgb(c[0], c[1], c[2]))
             .collect()
     } else {
-        grey.iter().map(|&g| rgb(g, g, g)).collect()
+        gray.iter().map(|&g| rgb(g, g, g)).collect()
     };
     Ok(Frame {
         width: w,
@@ -367,7 +367,7 @@ xetal_ext_sdk::xetal_extension! {
     version: env!("CARGO_PKG_VERSION"),
     functions: {
         open: 2, "Char -> Int -> Int", "title open width height: a window; its id.";
-        show: 2, "Num a => Int -> a -> Int", "id show array: draw a grey matrix or an n by m by 3 colour array.";
+        show: 2, "Num a => Int -> a -> Int", "id show array: draw a gray matrix or an n by m by 3 color array.";
         next: 1, "Int -> Char", "The next event (frame, key NAME, click ROW COL, close), waiting up to a frame.";
         close: 1, "Int -> Int", "Close the window.";
     }

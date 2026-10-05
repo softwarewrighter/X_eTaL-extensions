@@ -57,7 +57,7 @@ one transaction. The file's path is confined as a database's is.
 
 `demos/notebook.xtl` (`just demo notebook`; pictures in `work/draw/`):
 atmospheric CO2 at Mauna Loa, 1959-2025 (NOAA GML and Scripps;
-`demos/data/PROVENANCE.txt`), loaded from CSV into SQLite and analysed
+`demos/data/PROVENANCE.txt`), loaded from CSV into SQLite and analyzed
 by SQL and X_eTaL together -- each doing what it is good at:
 
 | Step | Who | What it finds |

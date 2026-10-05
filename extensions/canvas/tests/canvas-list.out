@@ -1,5 +1,5 @@
 canvas 0.1.0
   canvas/open : Char -> Int -> Int    # title open width height: a window; its id.
-  canvas/show : Num a => Int -> a -> Int    # id show array: draw a grey matrix or an n by m by 3 colour array.
+  canvas/show : Num a => Int -> a -> Int    # id show array: draw a gray matrix or an n by m by 3 color array.
   canvas/next : Int -> Char    # The next event (frame, key NAME, click ROW COL, close), waiting up to a frame.
   canvas/close : Int -> Int    # Close the window.

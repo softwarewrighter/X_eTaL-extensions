@@ -347,11 +347,16 @@ Read before working:
 13. Never capture the user's screen or open a window on their desktop
     without asking first, with an exact duration (the screen protocol
     agreed 2026-10-03); verify headlessly.
-14. This repository's port is 8470 (`port` in the justfile): every
+14. American spellings only, everywhere (docs, comments, code
+    identifiers, test names and goldens, commit messages): color,
+    center, neighbor, gray, analyze, labeled, license, -ize. The user
+    is American; `scripts/check-spelling.py` (copied from X_eTaL-demos;
+    in the gate, with its self-test) fails on British forms.
+15. This repository's port is 8470 (`port` in the justfile): every
     server it starts (the site preview, trunk, the web extension's
     default) uses it, so a demo here can run beside any other X_eTaL
     repo's.
-15. Work is committed directly to `main` and pushed (the user's
+16. Work is committed directly to `main` and pushed (the user's
     choice); the feat/ -> pr/ branch handoff in the briefing applies
     only to a parallel lane on its own branch.
 
