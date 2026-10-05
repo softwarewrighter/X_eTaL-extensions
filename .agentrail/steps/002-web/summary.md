@@ -1,0 +1,1 @@
+web extension: axum on loopback, bounded queue, timeouts, program-driven next/reply; ffi facade; Rust loopback tests and reg-rs incl. curl e2e
