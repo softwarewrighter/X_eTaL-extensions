@@ -1,0 +1,1 @@
+check-pages.sh in the gate: a fresh site build compared with pages/ ignoring the commit; stale page shown to fail

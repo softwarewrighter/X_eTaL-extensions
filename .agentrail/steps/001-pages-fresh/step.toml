@@ -1,9 +1,10 @@
 number = 1
 slug = "pages-fresh"
-status = "in-progress"
+status = "completed"
 description = "web step 1: the gate fails when pages/ is out of date with its sources (compa..."
 role = "production"
 context_files = []
 created_at = "2026-10-05T06:59:38"
+completed_at = "2026-10-05T08:06:05"
 task_type = "build"
-commits = []
+commits = ["95eb8e60ad240f8d13b92594463e02021d8c6f29"]
