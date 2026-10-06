@@ -1,0 +1,17 @@
+# Earthquakes of the past week, live: the USGS feed of magnitude 2.5 and
+# up, fetched now (the network: run it only when you mean to), its
+# SHA-256 shown, then the same report as quakes.xtl.
+# Run: just live-quakes   (from the repository root; pictures go to work/draw/)
+"ht:" u_se< "Http"
+"dg:" u_se< "Digest"
+"se:" u_se< "Seismic"
+
+url := "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.csv"
+csv := "work/quakes-live.csv"
+"fetched (bytes), status, last modified:"
+url ht:s_ave! csv
+ht:s_tatus @
+ht:h_eader "last-modified"
+"its SHA-256:"
+dg:s_ha256File csv
+se:r_eport csv

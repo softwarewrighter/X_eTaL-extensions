@@ -100,6 +100,10 @@ demos:
 demo ext name *args:
     @scripts/demos.sh "$@"
 
+# The earthquake report on the live USGS feed (fetches it: the network)
+live-quakes:
+    @scripts/demos.sh http quakes-live
+
 # Record the demo videos (vhs, ffmpeg, gif2webp; headless, nothing on screen): just videos [EXT]
 videos *ext:
     scripts/videos.sh "$@"

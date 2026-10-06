@@ -1,6 +1,6 @@
 number = 3
 slug = "quakes"
-status = "pending"
+status = "in-progress"
 description = "fetch step 3: extensions/http/demos/quakes.xtl: the USGS M2.5+ week feed (sav..."
 role = "production"
 context_files = []

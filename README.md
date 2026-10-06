@@ -35,6 +35,8 @@ just demo audio synth           # a synthesizer: every sample computed in X_eTaL
 just demo audio scope           # a live oscilloscope: the synthesizer drawn as it plays
 just demo web live              # a web page whose Life board X_eTaL steps per request (http://127.0.0.1:8470/)
 just demo web todomvc           # TodoMVC: X_eTaL serves it, SQLite keeps it (http://127.0.0.1:8470/)
+just demo http quakes           # a week of earthquakes: SQL groups, X_eTaL computes, pictures in work/draw/
+just live-quakes                # the same on the live USGS feed (uses the network)
 just walkthrough                # a fresh clone, built and run, checked against the goldens
 ```
 
@@ -119,7 +121,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | [data notebook](extensions/sqlite/docs/README.md#the-data-notebook) | sqlite | CO2 at Mauna Loa: a CSV in SQLite; SQL groups, X_eTaL computes the yearly rise, a least-squares line and its residuals, a histogram; SVG pictures | release 1, done |
 | [X_eTaL on the web](extensions/web/docs/README.md#demos) | web, sqlite | a live page: Life computed in X_eTaL, one generation per request, drawn as SVG (`just demo web live`); a TodoMVC kept in SQLite (`just demo web todomvc`) | done |
 | photo lab | image, linalg | a photo as an array: filters, edges, SVD compression; PNGs out | roadmap |
-| fetch and analyze | http | live earthquake data summarized and plotted | roadmap |
+| [fetch and analyze](extensions/http/docs/README.md#demos) | http, digest, sqlite | a week of earthquakes: the USGS feed checked by SHA-256, into SQLite, the Gutenberg-Richter b-value computed in X_eTaL, a world map (`just demo http quakes`; the live feed: `just live-quakes`) | done |
 
 | Extension | Facade | What | Crates | Status |
 | --------- | ------ | ---- | ------ | ------ |
@@ -132,7 +134,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | [web](extensions/web/docs/README.md) | `Web` | serve HTTP on loopback: the program takes each request and replies | axum, tokio | done: facade, loopback tests, the live page, TodoMVC |
 | image | `Image` | images to and from arrays | image | roadmap |
 | linalg | `Linalg` | solve, inverse, least squares, eigenvalues, SVD | nalgebra | roadmap |
-| [http](extensions/http/docs/README.md) | `Http` | bounded GET (size, time, redirects); downloads | ureq | done: facade, loopback tests (the quakes demo next) |
+| [http](extensions/http/docs/README.md) | `Http` | bounded GET (size, time, redirects); downloads | ureq | done: facade, loopback tests, the earthquake report |
 | [digest](extensions/digest/docs/README.md) | `Digest` | SHA-256 and CRC-32 of text and files | sha2, crc32fast | done: facade, vectors, tests |
 
 Each extension is a self-contained directory, `extensions/NAME/`: its

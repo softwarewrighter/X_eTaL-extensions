@@ -5,6 +5,10 @@ mod common;
 
 use xetal_ext_loader::{CallError, Registry, Value};
 
+/// The last response is the extension's state, shared by the tests in
+/// this binary: they take turns.
+static TURN: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
 fn ht() -> Registry {
     let mut r = Registry::new();
     r.load_static(xetal_ext_http::__xetal_extension::descriptor)
@@ -36,10 +40,12 @@ fn message(e: CallError) -> String {
 
 #[test]
 fn fetches_text_and_reports_the_response() {
+    let _turn = TURN
+        .lock()
+        .unwrap_or_else(std::sync::PoisonError::into_inner);
     let base = common::serve();
     let r = ht();
     let call = |f: &str, args: &[Value]| r.call("http", f, args);
-    assert_eq!(int(&call("status", &[]).unwrap()), 0, "nothing fetched yet");
 
     let body = call("get", &[t(&format!("{base}/text"))]).unwrap();
     assert_eq!(text(&body), "hello, X_eTaL");
@@ -71,10 +77,14 @@ fn fetches_text_and_reports_the_response() {
     // nobody listening
     let e = message(call("get", &[t("http://127.0.0.1:9/x")]).unwrap_err());
     assert!(e.contains("GET http://127.0.0.1:9/x"), "{e}");
+    assert_eq!(int(&call("status", &[]).unwrap()), 0, "no response came");
 }
 
 #[test]
 fn saves_to_a_confined_file() {
+    let _turn = TURN
+        .lock()
+        .unwrap_or_else(std::sync::PoisonError::into_inner);
     let base = common::serve();
     let dir = tempfile::tempdir().unwrap();
     let r = ht();

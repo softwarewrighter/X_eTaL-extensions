@@ -1,0 +1,20 @@
+the saved copy is unchanged (its SHA-256 matches):
+1
+quakes, the smallest and largest magnitude, the mean depth (km):
+286.0 2.45 5.9 51.91
+from, to (UTC):
+2026-09-29T14:14
+2026-10-06T09:37
+the largest three: magnitude, place
+5.9  39 km WSW of Tambolaka, Indonesia
+5.8  165 km SSE of Vilyuchinsk, Russia
+5.6  94 km SW of Tamarindo, Costa Rica
+quakes per day:
+11.0 40.0 47.0 44.0 42.0 45.0 44.0 13.0
+quakes in [2.5, 3), [3, 3.5), ... [7, 7.5):
+63 40 11 58 78 32 4 0 0 0
+log10 of the count at or above 2.5, 3, 3.5, ...:
+2.44 2.35 2.26 2.24 2.06 1.56 0.6
+quakes of 4.5 and up, and their b-value (Aki):
+114.0 1.16
+drawn: the map, the histogram, the Gutenberg-Richter line

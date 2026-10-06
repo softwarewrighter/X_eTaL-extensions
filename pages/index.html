@@ -85,7 +85,18 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <h2 id="http"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/http/docs/README.md">http</a></h2>
   <p class="lede">Bounded HTTP GET for X_eTaL: text from the web -- a CSV feed, a JSON document -- within limits on size, time and redirects, through ureq (HTTP/1.1, rustls). The network is used only when a program asks; this repository&#x27;s tests fetch from servers on loopback.</p>
   <div class="demos">
-    <p class="note">No demo yet.</p>
+    <section class="panel demo">
+      <h3>http / quakes-live</h3>
+      <p class="note">Earthquakes of the past week, live: the USGS feed of magnitude 2.5 and up, fetched now (the network: run it only when you mean to), its SHA-256 shown, then the same report as quakes.xtl.</p>
+      <p class="note">(no recording yet)</p>
+      <pre class="source">just demo http quakes-live</pre>
+    </section>
+    <section class="panel demo">
+      <h3>http / quakes</h3>
+      <p class="note">Earthquakes of a week: the USGS feed of magnitude 2.5 and up, saved 2026-10-06 (demos/data/PROVENANCE.txt), checked against its SHA-256, into SQLite; SQL selects and groups, X_eTaL computes (the magnitude-frequency law), pictures show it.</p>
+      <p class="note">(no recording yet)</p>
+      <pre class="source">just demo http quakes</pre>
+    </section>
   </div>
   <h2 id="scene"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/scene/docs/README.md">scene</a></h2>
   <p class="lede">Retained 3D line and point scenes in a native window: an X_eTaL program puts objects under ids it chooses (a polyline, segments, dots) and patches them later; Rust draws them in perspective from an orbit camera, which the mouse turns. The base of the visualizer.</p>
@@ -131,7 +142,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 512b3ee</span><span class="sep">&middot;</span>
-  <span>built at a292c84</span>
+  <span>built at 4ef51bb</span>
 </footer>
 </body>
 </html>

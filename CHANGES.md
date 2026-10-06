@@ -11,6 +11,12 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-06
+
+- 08:55 `test` http's Rust tests take turns (the last response is the extension's state, and two tests in one binary raced on it) and no longer assume which runs first: the gate caught it, ten runs in a row pass.
+
+- 08:40 `ext` The earthquake report, `just demo http quakes`: the USGS M2.5+ week feed saved 2026-10-06 with the http extension (286 quakes; public domain; `demos/data/PROVENANCE.txt`), checked against its SHA-256 (digest), into SQLite; SQL gives the largest three and quakes per day, X_eTaL the half-unit histogram, the log counts and the Gutenberg-Richter b-value by Aki's maximum likelihood above the feed's completeness of 4.5 (1.16 from 114 quakes; the same in Python); a world map (quakes counted in 10-degree cells), the histogram and the log-count line as SVG. The report is the library `demos/Seismic.xtl` (not `Quakes.xtl`: case-insensitive file systems), shared with `quakes-live.xtl` (`just live-quakes`, the live feed; run once here: 285 quakes). Golden `http-demo-quakes`.
+
 ## 2026-10-05
 
 - 07:55 `ext` The digest extension (`extensions/digest`, `"dg:" u_se< "Digest"`): SHA-256 (64 hex digits) and CRC-32 (IEEE) of text and of confined files read in 64 KiB pieces (`sha2`, `crc32fast`). Rust tests: the standard vectors (empty, `abc`, `123456789`, a non-ASCII letter, checked against Python's hashlib and zlib), a file bigger than one piece, confinement; reg-rs: list, types, the vectors from X_eTaL and a file against its recorded SHA-256, the error for a path outside.

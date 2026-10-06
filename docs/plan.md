@@ -428,7 +428,7 @@ and only `just live-quakes` fetches the live feed.
 | - | --------- | -------- |
 | 1 | http | (done) the http extension: bounded GET (size, time, redirects), status and headers of the last response, a download to a confined file; tests against the web extension on loopback |
 | 2 | digest | (done) the digest extension: SHA-256 and CRC-32 of text and of files (verifying fetched content) |
-| 3 | quakes | demos/quakes: the USGS M2.5+ week feed, a saved copy (with its SHA-256) for the golden, into SQLite; X_eTaL computes the magnitude histogram, quakes per day, the largest, a map; SVG pictures; `just live-quakes` fetches the live feed |
+| 3 | quakes | (done) demos/quakes: the USGS M2.5+ week feed, a saved copy (with its SHA-256) for the golden, into SQLite; X_eTaL computes the magnitude histogram, the Gutenberg-Richter b-value (Aki, above the feed's 4.5 completeness), a map; SQL the largest and quakes per day; SVG pictures; `just live-quakes` fetches the live feed |
 | 4 | fetch-release | recordings, docs, catalog, parity, status, retrospective; the site checked online |
 
 ## Saga 12 -- native hook (blocked)

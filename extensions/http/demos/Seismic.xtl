@@ -1,0 +1,66 @@
+# Seismic.xtl -- the earthquake report (quakes.xtl, quakes-live.xtl): a
+# USGS feed CSV into SQLite, SQL to select and group, X_eTaL arrays to
+# compute, pictures to see it. An ordinary X_eTaL library beside them
+# (not Quakes.xtl: on a case-insensitive file system that is quakes.xtl).
+# Import: "se:" u_se< "Seismic"
+"sq:" u_se< "Sqlite"
+
+db := "work/quakes.db"
+
+r_ound := { v -> (f_loat f_loor 0.5 + 100.0 * v) / 100.0 }
+m_ean := { v -> ('+ r_/ v) / f_loat t_ally v }
+
+# se:r_eport "path.csv": prints the report and draws its pictures
+l:r_eport := { csv ->
+  x := db sq:e_xec "drop table if exists quakes"
+  n := db sq:i_mport "quakes=" c_at csv
+
+  # -- 1. SQL: what is there
+  a := p_rint! "quakes, the smallest and largest magnitude, the mean depth (km):"
+  a := p_rint! r_ound r_avel db sq:n_ums "select count(*), min(mag), max(mag), avg(depth) from quakes"
+  a := p_rint! "from, to (UTC):"
+  a := p_rint! db sq:t_exts "select substr(min(time), 1, 16), substr(max(time), 1, 16) from quakes"
+
+  # -- 2. SQL groups: the largest three, and quakes per day
+  a := p_rint! "the largest three: magnitude, place"
+  a := p_rint! db sq:t_exts "select printf('%.1f', mag) || '  ' || place from quakes order by mag desc limit 3"
+  a := p_rint! "quakes per day:"
+  a := p_rint! r_avel db sq:n_ums "select count(*) from quakes group by substr(time, 1, 10) order by substr(time, 1, 10)"
+
+  # -- 3. arrays: magnitudes in half-unit bins (2.45 rounds into the
+  # first), and the Gutenberg-Richter law: the count at or above each
+  # magnitude falls about tenfold per unit -- its b-value is about 1.
+  # Outside the US this feed lists quakes from about 4.5 up, so b is
+  # estimated above 4.5 (Aki's maximum likelihood: log10 e over the
+  # mean magnitude's excess, magnitudes given to 0.1)
+  m := r_avel db sq:n_ums "select mag from quakes"
+  b := 1 + 0 m_ax f_loor (m - 2.5) / 0.5
+  h := '+ r_/_2 (r_ange 10) '= t_able b
+  a := p_rint! "quakes in [2.5, 3), [3, 3.5), ... [7, 7.5):"
+  a := p_rint! h
+  t := 2.5 + 0.5 * f_loat (r_ange 8) - 1
+  c := '+ r_/_2 t '<= t_able m
+  k := '+ r_/ c > 0
+  t := k t_ake t
+  g := (l_og f_loat k t_ake c) / l_og 10.0
+  a := p_rint! "log10 of the count at or above 2.5, 3, 3.5, ...:"
+  a := p_rint! r_ound g
+  big := (m >= 4.5) r_eplicate m
+  a := p_rint! "quakes of 4.5 and up, and their b-value (Aki):"
+  a := p_rint! (f_loat t_ally big) c_at r_ound 0.4342944819 / (m_ean big) - 4.45
+
+  # -- 4. pictures
+  # a world map: quakes counted in 10-degree cells, 18 rows (north at
+  # the top) by 36 columns (from 180 W), one array index per quake
+  ll := db sq:n_ums "select latitude, longitude from quakes"
+  row := 17 m_in f_loor (90.0 - 1 s_elect_2 ll) / 10.0
+  col := 35 m_in f_loor (180.0 + 2 s_elect_2 ll) / 10.0
+  w := '+ r_/_2 (r_ange 648) '= t_able 1 + col + 36 * row
+  p := []S_HOW []G_RID 18 36 r_eshape (w > 0) + (w > 2) + w > 8
+  # the magnitude histogram as bars, a cell per 5 quakes, and the law
+  # as a line
+  h5 := c_eiling (f_loat h) / 5.0
+  p := []S_HOW []G_RID (r_ev r_ange 'm_ax r_/ h5) '<= t_able h5
+  p := []S_HOW []P_ATH (2 c_at t_ally t) r_eshape t c_at g
+  "drawn: the map, the histogram, the Gutenberg-Richter line"
+}

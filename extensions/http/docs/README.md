@@ -66,4 +66,21 @@ loopback (`tests/fetch.sh`).
 
 ## Demos
 
-Coming next: the USGS earthquake feed, analyzed in X_eTaL.
+- `demos/quakes.xtl` (`just demo http quakes`): earthquakes of a week,
+  from the USGS feed of magnitude 2.5 and up, saved 2026-10-06
+  (`demos/data/PROVENANCE.txt`; public domain). The report checks the
+  saved copy against its SHA-256 (the digest extension), imports it
+  into SQLite (the sqlite extension), lets SQL select and group (the
+  largest three, quakes per day), and computes in X_eTaL: magnitudes
+  in half-unit bins, the count at or above each magnitude on a log
+  scale, and the Gutenberg-Richter b-value by Aki's maximum likelihood
+  -- 1.16 from the 114 quakes of 4.5 and up (outside the United States
+  the feed lists quakes from about 4.5, so smaller ones would bend the
+  estimate). Three pictures go to `work/draw/`: a world map of quakes
+  counted in 10-degree cells (one array index per quake), the
+  histogram, and the log-count line. The report is the library
+  `demos/Seismic.xtl`, shared by both demos.
+- `demos/quakes-live.xtl` (`just live-quakes`): the same report on the
+  feed as it is now -- fetched with `ht:s_ave!`, its status, date and
+  SHA-256 shown. It uses the network, so it runs only when asked; no
+  test fetches it.

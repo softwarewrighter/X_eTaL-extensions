@@ -1,0 +1,17 @@
+quakes-2.5-week.csv: earthquakes of magnitude 2.5 and greater worldwide
+in the seven days to 2026-10-06 09:37 UTC, 286 events, as the USGS
+Earthquake Hazards Program's real-time summary feed listed them.
+
+Source: U.S. Geological Survey, Earthquake Hazards Program,
+https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.csv
+(fetched 2026-10-06 13:16 UTC with this repository's http extension,
+ht:s_ave!; the server's Last-Modified was Tue, 06 Oct 2026 13:16:11
+GMT). Saved unchanged; its SHA-256 is
+80454e4268b6ed6f2a5e448038303e4a2a994012d445f3e2efc3da2c825173c5
+(demos/quakes.xtl checks it with the digest extension).
+
+USGS-authored or produced data and information are in the public
+domain (https://www.usgs.gov/information-policy-and-instructions/copyrights-and-credits);
+credit: U.S. Geological Survey. The feed is real-time: recent events
+are often revised (magnitudes, locations), and outside the United
+States it lists events from about magnitude 4.5 up.
