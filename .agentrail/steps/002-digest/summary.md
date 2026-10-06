@@ -1,0 +1,1 @@
+digest extension: sha256/crc32 of text and files; vectors cross-checked with Python; reg-rs
