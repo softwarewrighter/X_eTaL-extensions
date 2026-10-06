@@ -1,9 +1,10 @@
 number = 3
 slug = "quakes"
-status = "in-progress"
+status = "completed"
 description = "fetch step 3: extensions/http/demos/quakes.xtl: the USGS M2.5+ week feed (sav..."
 role = "production"
 context_files = []
 created_at = "2026-10-05T15:59:08"
+completed_at = "2026-10-06T11:36:43"
 task_type = "feature"
-commits = []
+commits = ["e958361486a81107738f6a68df573f21f588dedf"]

@@ -1,6 +1,6 @@
 name = "fetch"
 status = "active"
-current_step = 3
+current_step = 4
 created_at = "2026-10-05T15:59:08"
 plan_file = ".agentrail/plan.md"
 retroactive = false

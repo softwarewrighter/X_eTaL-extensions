@@ -1,0 +1,1 @@
+quakes demo: saved USGS feed checked by SHA-256, SQLite, X_eTaL b-value (Aki, 1.16), map/histogram/line SVGs; quakes-live + just live-quakes; http test race fixed
