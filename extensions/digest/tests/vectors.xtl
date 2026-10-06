@@ -1,0 +1,8 @@
+# Known vectors, and a file checked against its recorded SHA-256.
+"dg:" u_se< "Digest"
+dg:s_ha256 "abc"
+dg:c_rc32 "123456789"
+dg:s_ha256 ""
+dg:c_rc32File "tests/data/quakes.csv"
+want := "7bdaaa1a53ee632e2b0f9e76e3c30127bd9bc6a477b9c7da6ca19e7c90a17e0c"
+(dg:s_ha256File "tests/data/quakes.csv") m_atch want

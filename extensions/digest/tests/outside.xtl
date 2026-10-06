@@ -1,0 +1,3 @@
+# A file outside the working directory is refused.
+"dg:" u_se< "Digest"
+dg:s_ha256File "../../README.md"

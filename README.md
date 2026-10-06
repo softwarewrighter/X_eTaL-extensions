@@ -133,7 +133,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | image | `Image` | images to and from arrays | image | roadmap |
 | linalg | `Linalg` | solve, inverse, least squares, eigenvalues, SVD | nalgebra | roadmap |
 | [http](extensions/http/docs/README.md) | `Http` | bounded GET (size, time, redirects); downloads | ureq | done: facade, loopback tests (the quakes demo next) |
-| digest | `Digest` | SHA-256, CRC-32 | sha2, crc32fast | roadmap |
+| [digest](extensions/digest/docs/README.md) | `Digest` | SHA-256 and CRC-32 of text and files | sha2, crc32fast | done: facade, vectors, tests |
 
 Each extension is a self-contained directory, `extensions/NAME/`: its
 manifest (`extension.toml`), its own `justfile`, its Rust crate

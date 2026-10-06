@@ -4642,6 +4642,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-ext-digest"
+version = "0.1.0"
+dependencies = [
+ "crc32fast",
+ "sha2",
+ "tempfile",
+ "xetal-ext-loader",
+ "xetal-ext-sdk",
+]
+
+[[package]]
 name = "xetal-ext-hello"
 version = "0.1.0"
 dependencies = [

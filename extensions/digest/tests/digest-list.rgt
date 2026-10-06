@@ -1,0 +1,3 @@
+command = "xetal-x --ext . --ext-list"
+exit_code = 0
+desc = "xetal-x loads digest and lists its functions with their X_eTaL types"

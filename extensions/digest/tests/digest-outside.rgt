@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/outside.xtl"
+exit_code = 1
+desc = "a file outside the working directory is refused"

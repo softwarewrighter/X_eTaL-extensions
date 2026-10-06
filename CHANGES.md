@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-05
 
+- 07:55 `ext` The digest extension (`extensions/digest`, `"dg:" u_se< "Digest"`): SHA-256 (64 hex digits) and CRC-32 (IEEE) of text and of confined files read in 64 KiB pieces (`sha2`, `crc32fast`). Rust tests: the standard vectors (empty, `abc`, `123456789`, a non-ASCII letter, checked against Python's hashlib and zlib), a file bigger than one piece, confinement; reg-rs: list, types, the vectors from X_eTaL and a file against its recorded SHA-256, the error for a path outside.
+
 - 07:30 `ext` The http extension (`extensions/http`, `"ht:" u_se< "Http"`): bounded GET through ureq 3 (rustls), only http and https; limits on size (`XETAL_HTTP_MAX`, 16 MiB), time (`XETAL_HTTP_TIMEOUT`, 30 s) and redirects (5); a status other than 2xx is an error naming it; `ht:s_tatus` and `ht:h_eader` of the last response; `ht:s_ave!` writes a confined file whole or not at all. Rust tests fetch from the web extension's server on loopback (text, headers, a redirect and a loop, 404, a download, the size and time limits); reg-rs: list, types, two errors, and `http-fetch`, an X_eTaL program against `python3 -m http.server` on loopback.
 
 - 06:40 `plan` Saga 11, fetch and analyze, started before photo lab (the user: "earthquake feed first, then photo lab"): http, digest, quakes, fetch-release. The web saga archived. The user saw both web demos live (54 s with their go): "looked good".

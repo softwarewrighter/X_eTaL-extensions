@@ -1,0 +1,5 @@
+l:s_ha256 : Char -> Char
+l:s_ha256File : Char -> Char
+l:c_rc32 : Char -> Int
+l:c_rc32File : Char -> Int
+l:package : Char

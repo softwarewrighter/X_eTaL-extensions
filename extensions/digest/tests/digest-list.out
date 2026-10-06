@@ -1,0 +1,5 @@
+digest 0.1.0
+  digest/sha256 : Char -> Char    # The SHA-256 of a text (its UTF-8 bytes), as 64 hex digits.
+  digest/sha256_file : Char -> Char    # The SHA-256 of a file, as 64 hex digits.
+  digest/crc32 : Char -> Int    # The CRC-32 (IEEE) of a text.
+  digest/crc32_file : Char -> Int    # The CRC-32 (IEEE) of a file.

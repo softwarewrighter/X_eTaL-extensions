@@ -1,0 +1,9 @@
+# The digest package: what the loader reads to find and check the
+# native library, and the facade programs import.
+[extension]
+name = "digest"
+version = "0.1.0"
+abi = 1
+facade = "lib/Digest.xtl"
+# The library's file stem: libxetal_ext_digest.dylib on macOS, .so on Linux.
+library = "xetal_ext_digest"

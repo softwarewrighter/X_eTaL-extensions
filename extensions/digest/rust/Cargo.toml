@@ -1,0 +1,29 @@
+[package]
+name = "xetal-ext-digest"
+version = "0.1.0"
+description = "SHA-256 and CRC-32 of text and files"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[lib]
+name = "xetal_ext_digest"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+xetal-ext-sdk = { path = "../../../crates/xetal-ext-sdk" }
+sha2 = "0.10"
+crc32fast = "1"
+
+[features]
+# Link statically beside other extensions (a browser page): no unmangled
+# entry point. Never enabled inside the root workspace.
+static = []
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+xetal-ext-loader = { path = "../../../crates/xetal-ext-loader" }
+tempfile = "3"

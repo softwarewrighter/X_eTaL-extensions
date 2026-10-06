@@ -20,7 +20,7 @@ copied from it (plan A14), never depended on.
 | demo-extensions | Here | Plan |
 | --------------- | ---- | ---- |
 | hello | hello (live) | done |
-| digest | -- | roadmap (cheap) |
+| digest | digest: SHA-256 and CRC-32 of text and files | done (2026-10-05) |
 | sqlite | sqlite + the data notebook | done |
 | http-server, TodoMVC | web (axum on loopback; the program takes each request and replies) + the live Life page and TodoMVC kept in SQLite | done (2026-10-05) |
 | http-client, experiment dashboard | -- | roadmap: fetch saga (http) |

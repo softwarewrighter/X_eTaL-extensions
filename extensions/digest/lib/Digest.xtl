@@ -1,0 +1,20 @@
+# Digest.xtl -- the facade of the digest extension: SHA-256 and CRC-32
+# of text and of files, to check that content is what it should be.
+# Import: "dg:" u_se< "Digest"
+# Files are named by paths under the working directory (or
+# XETAL_DIGEST_ROOT), relative, with no ..
+# Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+# Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+"ffi:" u_se< "Ffi"
+
+# dg:s_ha256 t: the SHA-256 of a text (its UTF-8 bytes), 64 hex digits.
+"s_ha256 : text -> text"        ffi:b_ind< "digest/sha256"
+# dg:s_ha256File path: the SHA-256 of a file, 64 hex digits.
+"s_ha256File : text -> text"    ffi:b_ind< "digest/sha256_file"
+# dg:c_rc32 t: the CRC-32 (IEEE, as zip and PNG use) of a text.
+"c_rc32 : text -> int"          ffi:b_ind< "digest/crc32"
+# dg:c_rc32File path: the CRC-32 of a file.
+"c_rc32File : text -> int"      ffi:b_ind< "digest/crc32_file"
+
+# The native package behind these functions.
+l:package := "digest"
