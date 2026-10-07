@@ -55,4 +55,20 @@ trip from X_eTaL, and the error for a path outside.
 
 ## Demos
 
-Coming next: the photo lab.
+- `demos/photo-lab.xtl` (`just demo image photo-lab`; pictures in
+  `work/photo-lab/`): a photo is an array. Buzz Aldrin on the Moon
+  (Apollo 11, NASA, public domain; `demos/data/PROVENANCE.txt`), read
+  in gray and resized to 240 by 246, then, all in X_eTaL:
+  - a box blur, a sharpen and Sobel edges, each by rotating the array
+    and summing (the idiom of Life: every pixel and its eight
+    neighbors at once; the borders wrap, so the edge picture has a
+    frame);
+  - a sepia toning: every pixel's red, green and blue times one 3 by
+    3 matrix, an inner product over the last axis;
+  - the SVD (the linalg extension): the photo as a sum of rank-1
+    pictures, rebuilt from the largest 5, 20 and 50 -- 94%, 98% and
+    99% of the energy, storing 4%, 17% and 41% of the numbers, off by
+    0.107, 0.066 and 0.039 (root mean square, on 0 to 1).
+
+  It runs in under 3 seconds (release build); `image-demo-photo-lab`
+  pins its numbers.

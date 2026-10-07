@@ -1,0 +1,63 @@
+# The photo lab: a photo is an array. Buzz Aldrin on the Moon (Apollo
+# 11, NASA, public domain: demos/data/PROVENANCE.txt) read as numbers;
+# filters and edges by rotating the array (the Life idiom), a color
+# toning by an inner product, and the SVD compressing it at several
+# ranks -- the native code reads, writes and decomposes, X_eTaL does
+# the rest. Pictures go to work/photo-lab/.
+# Run: just demo image photo-lab
+"im:" u_se< "Image"
+"la:" u_se< "Linalg"
+
+src := "demos/data/aldrin.jpg"
+out := "work/photo-lab/"
+u:r_ound := { v -> (f_loat f_loor 0.5 + 1000.0 * v) / 1000.0 }
+u:m_ean := { v -> ('+ r_/ f_loat r_avel v) / f_loat t_ally r_avel v }
+
+# -- 1. the photo as numbers: 240 by 246, gray from 0 (black) to 1
+"the photo (height, width), and the working size:"
+im:s_ize src
+p := 240 246 im:r_esize im:g_ray src
+s_hape p
+"mean brightness, darkest, brightest:"
+u:r_ound (u:m_ean p) c_at ('m_in r_/ r_avel p) c_at 'm_ax r_/ r_avel p
+
+# -- 2. filters by rotation: each pixel and its 8 neighbors, as Life
+# counts neighbors (the edges wrap around, as rotations do)
+box := ('+ r_/_12 -1 0 1 o_-_12 p) / 9.0
+sharp := 0.0 m_ax 1.0 m_in p + 1.5 * p - box
+# edges: Sobel, horizontal and vertical differences of the blurred rows
+# and columns, and their length
+sx := ((-1 o_-_2 p) - 1 o_-_2 p)
+sy := ((-1 o_-_1 p) - 1 o_-_1 p)
+gx := sx + (1 o_-_1 sx) + -1 o_-_1 sx
+gy := sy + (1 o_-_2 sy) + -1 o_-_2 sy
+edge := 1.0 m_in 0.5 * ((gx ^ 2.0) + gy ^ 2.0) ^ 0.5
+"edge strength: mean, share of pixels on a strong edge (over 0.5):"
+u:r_ound (u:m_ean edge) c_at u:m_ean edge > 0.5
+n := (out c_at "filters.png") im:w_rite! p c_at_2 box c_at_2 sharp c_at_2 edge
+
+# -- 3. color: a sepia toning, every pixel's red, green and blue times
+# one 3 by 3 matrix (an inner product over the last axis)
+c := 240 246 im:r_esize im:r_ead src
+sepia := 3 3 r_eshape 0.393 0.349 0.272 0.769 0.686 0.534 0.189 0.168 0.131
+toned := 1.0 m_in c '+ '* i_nner sepia
+n := (out c_at "sepia.png") im:w_rite! c c_at_2 toned
+
+# -- 4. the SVD: the photo as a sum of rank-1 pictures, largest first;
+# keeping k of 240 stores k times (240 + 246 + 1) numbers
+u := la:s_vdU p
+s := la:s_vdS p
+v := la:s_vdV p
+"the five largest singular values, and the share of the energy in the first 5, 20, 50:"
+u:r_ound 5 t_ake s
+e := '+ s_\ s ^ 2.0
+u:r_ound (5 20 50 s_elect e) / f_irst -1 t_ake e
+u:r_ank := { k -> ((k t_ake_2 u) * (s_hape k t_ake_2 u) r_eshape k t_ake s) '+ '* i_nner 2 1 t_ranspose k t_ake_2 v }
+r5 := u:r_ank 5
+r20 := u:r_ank 20
+r50 := u:r_ank 50
+"rank, storage (share of the photo's numbers), error (root mean square):"
+u:e_rr := { r -> (u:m_ean (r - p) ^ 2.0) ^ 0.5 }
+u:r_ound 3 3 r_eshape (f_loat 5 20 50) c_at ((f_loat 5 20 50 * 487) / 59040.0) c_at (u:e_rr r5) c_at (u:e_rr r20) c_at u:e_rr r50
+n := (out c_at "svd.png") im:w_rite! p c_at_2 r50 c_at_2 r20 c_at_2 r5
+"written: work/photo-lab/filters.png, sepia.png, svd.png"

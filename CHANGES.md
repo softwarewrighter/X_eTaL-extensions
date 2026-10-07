@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 11:20 `ext` The photo lab, `just demo image photo-lab`: Buzz Aldrin on the Moon (NASA AS11-40-5903, public domain, fetched once with the http extension; `demos/data/PROVENANCE.txt`) as a 240 by 246 gray array; blur, sharpen and Sobel edges by rotation (the Life idiom), sepia by an inner product with a 3 by 3 matrix, the SVD rebuilding it from 5, 20 and 50 singular values (94%, 98%, 99% of the energy; 4%, 17%, 41% of the numbers; RMS error 0.107, 0.066, 0.039); three PNG sheets in `work/photo-lab/`; under 3 s. Golden `image-demo-photo-lab`.
+
 - 10:30 `ext` The linalg extension (`extensions/linalg`, `"la:" u_se< "Linalg"`, nalgebra 0.33): `la:s_olve` (a vector or columns on the right; singular refused), `la:i_nverse`, `la:d_et`, `la:l_stsq` (by the SVD), `la:e_ig` and `la:e_igVecs` (symmetric, ascending), `la:s_vdS`, `la:s_vdU`, `la:s_vdV` (thin, descending). Rust tests with known answers; reg-rs: list, types, the error for a singular matrix, and `linalg-cross-check`: seven small cases recomputed in pure X_eTaL (Cramer's rule, the 2 by 2 eigenvalue formula, inverse times the matrix, U diag(s) V').
 
 - 09:30 `ext` The image extension (`extensions/image`, `"im:" u_se< "Image"`): PNG and JPEG as Float arrays from 0 to 1 (gray h by w, color h by w by 3; each 8-bit level k as k / 255, so pictures round-trip exactly), `im:g_ray` (luminance), `im:s_ize`, `im:w_rite!` (PNG or JPEG by the name, clamped), `im:r_esize` (Lanczos); confined paths (`XETAL_IMAGE_ROOT`); the `image` crate with PNG and JPEG only. Rust tests on generated pictures; reg-rs: list, types, a round trip from X_eTaL, the error for a path outside.

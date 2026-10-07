@@ -1,0 +1,15 @@
+the photo (height, width), and the working size:
+624 640
+240 246
+mean brightness, darkest, brightest:
+0.367 0.0 1.0
+edge strength: mean, share of pixels on a strong edge (over 0.5):
+0.149 0.035
+the five largest singular values, and the share of the energy in the first 5, 20, 50:
+97.51 16.8 12.661 9.946 9.115
+0.938 0.976 0.992
+rank, storage (share of the photo's numbers), error (root mean square):
+  5.0  20.0  50.0
+0.041 0.165 0.412
+0.107 0.066 0.039
+written: work/photo-lab/filters.png, sepia.png, svd.png

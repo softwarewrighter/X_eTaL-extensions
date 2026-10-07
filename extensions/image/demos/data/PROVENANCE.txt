@@ -1,0 +1,14 @@
+aldrin.jpg: Buzz Aldrin on the Moon, Apollo 11, 20 July 1969,
+photographed by Neil Armstrong (NASA photo AS11-40-5903), 640 by 624,
+JPEG, 83,166 bytes.
+
+Source: NASA Image and Video Library,
+https://images-assets.nasa.gov/image/as11-40-5903/as11-40-5903~small.jpg
+(fetched 2026-10-07 with this repository's http extension, ht:s_ave!).
+Saved unchanged; SHA-256
+0e7ce68458401fba004093d4733b45822be8142733844648e2ce5a764da1bfb4
+
+NASA material is generally not subject to copyright in the United
+States (https://www.nasa.gov/nasa-brand-center/images-and-media/);
+credit: NASA. It is used here as an example picture only, not to
+imply any endorsement.

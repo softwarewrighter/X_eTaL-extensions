@@ -1,0 +1,3 @@
+command = "xetal-x --ext .. run demos/photo-lab.xtl"
+exit_code = 0
+desc = "the photo lab: the photo as numbers, filters and edges by rotation, sepia by an inner product, SVD compression at ranks 5, 20, 50"
