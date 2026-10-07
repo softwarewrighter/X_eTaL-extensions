@@ -1,0 +1,4 @@
+# Quads come in fours: six points are refused.
+"sc:" u_se< "Scene"
+w := "quads" sc:o_pen! 120 90
+((f_loat w c_at 1) c_at 1.0 1.0 1.0) sc:q_uads! 6 3 r_eshape 0.0

@@ -1,15 +1,17 @@
 # scene
 
-Retained 3D line and point scenes in a native window: an X_eTaL program
-puts objects under ids it chooses (a polyline, segments, dots) and
+Retained 3D scenes in a native window: an X_eTaL program puts objects
+under ids it chooses (a polyline, segments, dots, filled quads) and
 patches them later; Rust draws them in perspective from an orbit
-camera, which the mouse turns. The base of the visualizer.
+camera, which the mouse turns -- quads shaded and depth-tested, lines
+over them. The base of the visualizer and of the voxel demos.
 
 - Package: `extensions/scene/` (`host = true`: linked into `xetal-x`,
   which serves its windows on the main thread)
 - Facade: `lib/Scene.xtl`, recommended alias `sc:`
 - Native crates: `winit` 0.30 (via the UI host) and `softbuffer` 0.4;
-  drawn on the CPU (anti-aliased lines), so a frame is the same with a
+  drawn on the CPU (anti-aliased lines, quads behind a depth buffer),
+  so a frame is the same with a
   window or without one. The idea -- a retained scene patched by stable
   ids, an orbit camera -- follows sw-ml-study/demo-extensions'
   native3d crates (which draw with wgpu).
@@ -30,6 +32,8 @@ e := sc:n_ext! w                                  # "frame", "key q", "close"
 | `head sc:p_olyline! pts` | `(Num a, Num b) => a -> b -> Int` | put object: `head` is scene, object id, and optionally red green blue (0 to 1); `pts` an n by 3 matrix, joined in order; an id put again is replaced |
 | `head sc:s_egments! pts` | as above | the points taken in pairs |
 | `head sc:d_ots! pts` | as above | each point a dot |
+| `head sc:q_uads! pts` | as above | the points in fours (4n by 3), each four the corners of a filled quad in order round it; shaded by how it faces a fixed light (tops brightest), nearer quads hiding farther ones; lines and dots draw over quads |
+| `scene sc:f_og! near far` | as above | quads fade into the background between those depths (scene units from the camera); far at or below near turns fog off |
 | `s sc:r_emove! o` | `(Num a, Num b) => a -> b -> Int` | remove object `o`: 1 if it was there |
 | `s sc:c_amera! v` | `(Num a, Num b) => a -> b -> Int` | yaw, pitch (radians), distance, spin (radians a second) |
 | `sc:n_ext! s` | `Num a => a -> Char` | the next event, waiting at most a frame: `frame`, `key NAME`, `close`; dragging orbits by itself |
@@ -83,5 +87,5 @@ before the next builds on it. Their shared X_eTaL is the library
 
 ```sh
 just build      # xetal-x with scene linked in
-just test       # Rust tests (projection, ids, camera) and reg-rs tests (headless)
+just test       # Rust tests (projection, ids, camera, quads, depth, fog) and reg-rs tests (headless)
 ```

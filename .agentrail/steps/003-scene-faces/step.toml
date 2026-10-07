@@ -1,6 +1,6 @@
 number = 3
 slug = "scene-faces"
-status = "pending"
+status = "in-progress"
 description = "voxels step 3: scene gains f_aces! id list (filled quads by id from the n by ..."
 role = "production"
 context_files = []

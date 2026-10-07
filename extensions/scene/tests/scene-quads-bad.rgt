@@ -1,0 +1,3 @@
+command = "XETAL_HEADLESS=1 xetal-x --ext . run tests/quads-bad.xtl"
+exit_code = 1
+desc = "quads come in fours"

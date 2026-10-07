@@ -16,6 +16,13 @@
 "s_egments! : float float -> int"    ffi:b_ind< "scene/segments"
 # header sc:d_ots! points: each point a dot.
 "d_ots! : float float -> int"        ffi:b_ind< "scene/dots"
+# header sc:q_uads! points: the points taken in fours, each the corners
+# of a filled quad in order round it (4n by 3); shaded by how it faces
+# the light, nearer quads hiding farther ones; lines and dots draw over.
+"q_uads! : float float -> int"       ffi:b_ind< "scene/quads"
+# scene sc:f_og! near far: quads fade into the background between those
+# depths (scene units from the camera); far <= near: no fog.
+"f_og! : float float -> int"         ffi:b_ind< "scene/fog"
 # scene sc:r_emove! object: 1 if it was there, else 0.
 "r_emove! : float float -> int"      ffi:b_ind< "scene/remove"
 # scene sc:c_amera! yaw pitch distance spin: where the camera orbits from

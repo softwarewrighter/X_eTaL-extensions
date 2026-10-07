@@ -257,6 +257,33 @@ fn dots(args: &[Value]) -> Result<Value, OwnedError> {
     put(Kind::Points, args)
 }
 
+/// header quads points: taken in fours, each a filled quad.
+fn quads(args: &[Value]) -> Result<Value, OwnedError> {
+    let (shape, _) = float_vector(&args[1])?;
+    if shape.first().is_some_and(|n| n % 4 != 0) || shape.len() != 2 {
+        return Err(OwnedError::invalid_argument(format!(
+            "quads are 4n by 3 points (four corners each), not {shape:?}"
+        )));
+    }
+    put(Kind::Quads, args)
+}
+
+/// scene fog near far: quads fade into the background from depth near
+/// to far (scene units); far <= near turns fog off. The scene id.
+fn fog(args: &[Value]) -> Result<Value, OwnedError> {
+    let s = id_of(&args[0])?;
+    let (_, f) = float_vector(&args[1])?;
+    let [near, far] = f[..] else {
+        return Err(OwnedError::invalid_argument("fog is near far"));
+    };
+    let window = with(s, |h| {
+        locked(&h.scene).fog = (far > near).then_some((near, far));
+        h.window
+    })?;
+    redraw(window)?;
+    Ok(Value::Int(s))
+}
+
 /// scene remove object: 1 if it was there, else 0.
 fn remove(args: &[Value]) -> Result<Value, OwnedError> {
     let s = id_of(&args[0])?;
@@ -341,6 +368,8 @@ xetal_ext_sdk::xetal_extension! {
         polyline: 2, "(Num a, Num b) => a -> b -> Int", "scene object red green blue polyline points (n by 3): joined in order.";
         segments: 2, "(Num a, Num b) => a -> b -> Int", "header segments points: taken in pairs.";
         dots: 2, "(Num a, Num b) => a -> b -> Int", "header dots points: each a dot.";
+        quads: 2, "(Num a, Num b) => a -> b -> Int", "header quads points (4n by 3): filled, shaded, depth-tested.";
+        fog: 2, "(Num a, Num b) => a -> b -> Int", "scene fog near far: quads fade into the background.";
         remove: 2, "(Num a, Num b) => a -> b -> Int", "scene remove object: 1 if it was there.";
         camera: 2, "(Num a, Num b) => a -> b -> Int", "scene camera yaw pitch distance spin.";
         next: 1, "Num a => a -> Char", "The next event (frame, key NAME, close), waiting up to a frame.";

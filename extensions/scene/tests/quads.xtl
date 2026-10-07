@@ -1,0 +1,12 @@
+# Filled quads, headless: a red square in front of a larger blue one, a
+# white line across both, fog; the frame is saved and pinned.
+"sc:" u_se< "Scene"
+w := "quads" sc:o_pen! 120 90
+k := w sc:c_amera! 0.3 0.2 4.0 0.0
+red := 4 3 r_eshape -0.5 -0.5 0.5  0.5 -0.5 0.5  0.5 0.5 0.5  -0.5 0.5 0.5
+blue := 4 3 r_eshape -1.0 -0.8 -0.5  1.0 -0.8 -0.5  1.0 0.8 -0.5  -1.0 0.8 -0.5
+a := ((f_loat w c_at 2) c_at 0.2 0.4 1.0) sc:q_uads! blue
+b := ((f_loat w c_at 1) c_at 1.0 0.2 0.2) sc:q_uads! red
+c := ((f_loat w c_at 3) c_at 1.0 1.0 1.0) sc:s_egments! 2 3 r_eshape -1.2 0.0 1.0  1.2 0.0 1.0
+f := w sc:f_og! 3.0 8.0
+sc:n_ext! w

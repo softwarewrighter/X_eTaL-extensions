@@ -3,6 +3,8 @@ scene 0.1.0
   scene/polyline : (Num a, Num b) => a -> b -> Int    # scene object red green blue polyline points (n by 3): joined in order.
   scene/segments : (Num a, Num b) => a -> b -> Int    # header segments points: taken in pairs.
   scene/dots : (Num a, Num b) => a -> b -> Int    # header dots points: each a dot.
+  scene/quads : (Num a, Num b) => a -> b -> Int    # header quads points (4n by 3): filled, shaded, depth-tested.
+  scene/fog : (Num a, Num b) => a -> b -> Int    # scene fog near far: quads fade into the background.
   scene/remove : (Num a, Num b) => a -> b -> Int    # scene remove object: 1 if it was there.
   scene/camera : (Num a, Num b) => a -> b -> Int    # scene camera yaw pitch distance spin.
   scene/next : Num a => a -> Char    # The next event (frame, key NAME, close), waiting up to a frame.

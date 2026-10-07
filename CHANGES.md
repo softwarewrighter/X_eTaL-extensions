@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 15:00 `ext` scene draws filled quads: `sc:q_uads!` (points in fours, each a quad; shaded by its normal against a fixed light, so tops are brightest and shading stays put as the camera turns) behind a depth buffer (reciprocal depth interpolated across each triangle), lines and dots over them; `sc:f_og!` fades quads into the background by depth. Generic rather than voxel-specific: X_eTaL turns voxel faces into quads. Rust tests (fill and shade, the nearer wins in either order, fog, behind the camera); reg-rs: a headless frame of overlapping quads pinned, the error for points not in fours; the listing, types and an error line rebased. The cube's and voxels' frames are unchanged.
+
 - 14:10 `ext` Voxels 2, `just demo scene voxels-faces`: the exposed-face mask by six rotations of the solid mask (the wrapped plane made air) and the face list `vx:f_aces` (x y z direction block; water's surface added), checked on known shapes (1, 256, 452 and 2,048 faces a direction for one block, a solid chunk, a hollow box, a checkerboard); the chunk's 1,389 faces (of 10,446) drawn as colored outlines in scene, turning. Golden with three headless frames pinned; recorded from headless frames.
 
 - 13:00 `ext` Voxels 1, `just demo scene voxels-chunk`: a 16 by 16 by 16 chunk as an array, built from a height field in X_eTaL (grass, three of dirt, stone, water below 7, sand at the shore, a tree on the hill), counted, printed as character slices, and seen from above (each column's top by a max-reduction, the block there by comparing heights); two pictures. The library `demos/Voxels.xtl` (`vx:`) begins. Golden and terminal recording.

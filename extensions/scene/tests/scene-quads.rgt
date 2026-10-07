@@ -1,0 +1,3 @@
+command = 'rm -rf work/qf && XETAL_HEADLESS=1 XETAL_EVENTS="frame" XETAL_FRAMES=work/qf xetal-x --ext . run tests/quads.xtl && cksum work/qf/*.png'
+exit_code = 0
+desc = "filled quads headless: the nearer red over the farther blue, a line over both, fog; the frame pinned"
