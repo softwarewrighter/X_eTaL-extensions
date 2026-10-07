@@ -19,6 +19,7 @@ and the workaround in use.
 | E5 | filed (X_eTaL queue item 9, Saga 27, readable type errors) | feature | an error raised inside a library function also names the program line that called it (a call trace) | every facade (errors point at the function's signature line in the facade, not the caller) | the extension's message names the function (`ext:sqlite/nums: ...`) |
 | E6 | landed (vendored X_eTaL f823212) | bug | `xetal --draw DIR run FILE` fails (clap takes `run` as the SCRIPT argument and FILE as a subcommand); `xetal run --draw DIR FILE` works | the sqlite notebook's test and every demo recipe | `--draw` written after `run` |
 | E7 | open | bug | `xetal type FILE` calls a library whose `l:` names all come from macro calls a program (`library-name-in-program`): it decides before expanding | every facade written with the binding macro | one literal export per facade, `l:package := "NAME"` |
+| E8 | open | bug | a program `quakes.xtl` importing a library `Quakes` (`"q:" u_se< "Quakes"`) on a case-insensitive file system (macOS) finds the program itself and reports `import-cycle: quakes.xtl -> quakes.xtl`; wanted: library lookup matches the name's case exactly, or the error says the library resolved to the importing file | demos with a library beside them (audio, http) | name the library differently (`Instruments.xtl`, `Seismic.xtl`) |
 
 2026-10-05, X_eTaL v0.1.0 (512b3ee) pinned: E4 partly landed (`[]TS`, `[]D_L`; the monotonic clock still needs the clock extension); E1, E3, E5 and E7 still open (E7 re-checked: a facade without `l:package` is still called a program). Macros became hygienic (MC30): an expansion shows `g1:` names.
 
@@ -192,3 +193,19 @@ after expansion (or treat a file whose expansion defines `l:` names as
 a library). Workaround: each facade written with the binding macro
 keeps one literal export, `l:package := "NAME"` (the native package
 behind it), which is also useful.
+
+### E8: a library named like the program, on a case-insensitive file system
+
+On macOS, `demos/quakes.xtl` with `"q:" u_se< "Quakes"` beside
+`demos/Quakes.xtl`: the two names are one file, so writing one
+replaced the other, and the import resolved to the program itself:
+
+```
+error[import-cycle]: import cycle: demos/Quakes.xtl -> demos/Quakes.xtl at demos/Quakes.xtl:8:1
+```
+
+Hit twice here (the synthesizer's `Synth.xtl`, the earthquake
+report's `Quakes.xtl`). Wanted: `u_se<` matches the file name's case
+exactly (or warns when the case differs), or the error says the
+library resolved to the importing file. Workaround: libraries named
+unlike any program beside them (`Instruments.xtl`, `Seismic.xtl`).

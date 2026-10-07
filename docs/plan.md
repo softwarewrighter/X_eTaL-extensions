@@ -429,7 +429,23 @@ and only `just live-quakes` fetches the live feed.
 | 1 | http | (done) the http extension: bounded GET (size, time, redirects), status and headers of the last response, a download to a confined file; tests against the web extension on loopback |
 | 2 | digest | (done) the digest extension: SHA-256 and CRC-32 of text and of files (verifying fetched content) |
 | 3 | quakes | (done) demos/quakes: the USGS M2.5+ week feed, a saved copy (with its SHA-256) for the golden, into SQLite; X_eTaL computes the magnitude histogram, the Gutenberg-Richter b-value (Aki, above the feed's 4.5 completeness), a map; SQL the largest and quakes per day; SVG pictures; `just live-quakes` fetches the live feed |
-| 4 | fetch-release | recordings, docs, catalog, parity, status, retrospective; the site checked online |
+| 4 | fetch-release | (done) the report recorded (vhs), docs, catalog, parity, status, ask E8, retrospective; the site checked online |
+
+Saga 11 retrospective: X_eTaL fetches and checks data. http (ureq,
+bounded in size, time and redirects) and digest (SHA-256, CRC-32) are
+small and tested without the network: http fetches from the web
+extension's server on loopback, and the X_eTaL-level test from
+`python3 -m http.server`. The earthquake report composes four
+extensions (http to save the feed, digest to check it, sqlite to hold
+and group it, X_eTaL to compute) and found a real effect to explain:
+outside the US the feed lists quakes from about 4.5 up, so the
+b-value is estimated above that (Aki: 1.16 from 114 quakes,
+cross-checked in Python). Found on the way: the extension's
+last-response state raced between two tests in one binary (the gate
+caught it); a library named like its program collides on macOS (ask
+E8); `c_eiling` wants a Float; ImageMagick's renderer drops
+`[]P_ATH`'s polylines (the SVG is right). Next: photo lab (Saga 10),
+the user's order.
 
 ## Saga 12 -- native hook (blocked)
 

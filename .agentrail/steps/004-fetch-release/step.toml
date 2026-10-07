@@ -1,6 +1,6 @@
 number = 4
 slug = "fetch-release"
-status = "pending"
+status = "in-progress"
 description = "fetch step 4: recordings, README catalog, extension pages, parity, status, as..."
 role = "production"
 context_files = []

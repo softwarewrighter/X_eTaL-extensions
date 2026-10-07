@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-06
 
+- 09:20 `release` Fetch saga done: the earthquake report recorded at the command line (`videos/quakes.tape`; the live feed never recorded); the http page shows it; parity (http-client done); ask E8 (a library named like its program, on a case-insensitive file system, reports an import cycle); status; Saga 11 retrospective.
+
 - 08:55 `test` http's Rust tests take turns (the last response is the extension's state, and two tests in one binary raced on it) and no longer assume which runs first: the gate caught it, ten runs in a row pass.
 
 - 08:40 `ext` The earthquake report, `just demo http quakes`: the USGS M2.5+ week feed saved 2026-10-06 with the http extension (286 quakes; public domain; `demos/data/PROVENANCE.txt`), checked against its SHA-256 (digest), into SQLite; SQL gives the largest three and quakes per day, X_eTaL the half-unit histogram, the log counts and the Gutenberg-Richter b-value by Aki's maximum likelihood above the feed's completeness of 4.5 (1.16 from 114 quakes; the same in Python); a world map (quakes counted in 10-degree cells), the histogram and the log-count line as SVG. The report is the library `demos/Seismic.xtl` (not `Quakes.xtl`: case-insensitive file systems), shared with `quakes-live.xtl` (`just live-quakes`, the live feed; run once here: 285 quakes). Golden `http-demo-quakes`.

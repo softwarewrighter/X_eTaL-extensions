@@ -23,7 +23,8 @@ copied from it (plan A14), never depended on.
 | digest | digest: SHA-256 and CRC-32 of text and files | done (2026-10-05) |
 | sqlite | sqlite + the data notebook | done |
 | http-server, TodoMVC | web (axum on loopback; the program takes each request and replies) + the live Life page and TodoMVC kept in SQLite | done (2026-10-05) |
-| http-client, experiment dashboard | -- | roadmap: fetch saga (http) |
+| http-client | http: bounded GET, status, headers, downloads; the earthquake report | done (2026-10-06) |
+| experiment dashboard | -- | not planned (the ML line) |
 | canvas: a blocking native window presenting an array | canvas: arrays as pixels, keys and clicks back; Life | done |
 | native3d: retained line/point scenes with stable ids, camera, picking; wireframe cube, Life plane and torus, tic-tac-toe, point cloud, weight distribution, model atlas, disk usage, system layouts | scene: retained lines, segments and dots by id, orbit camera, drawn on the CPU (frames pinned headless); the cube | done for lines and points; picking, boxes and the larger demos not planned now |
 | audio: Symphonia decode of MP3 and Ogg/Vorbis in bounded chunks, CPAL playback with decode-ahead, pause, seek | audio: the same (plus WAV), the window under the playhead, a virtual clock for exact tests | done |

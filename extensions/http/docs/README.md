@@ -1,5 +1,9 @@
 # http
 
+<p align="center">
+  <img src="../videos/quakes.webp" alt="The earthquake report at the command line" width="640">
+</p>
+
 Bounded HTTP GET for X_eTaL: text from the web -- a CSV feed, a JSON
 document -- within limits on size, time and redirects, through ureq
 (HTTP/1.1, rustls). The network is used only when a program asks; this
@@ -84,3 +88,9 @@ loopback (`tests/fetch.sh`).
   feed as it is now -- fetched with `ht:s_ave!`, its status, date and
   SHA-256 shown. It uses the network, so it runs only when asked; no
   test fetches it.
+
+## Recording
+
+`videos/quakes.webm` (and `.webp`) record the earthquake report on the
+saved feed at the command line (`just videos http`). The live feed is
+never recorded: recordings, like tests, do not use the network.
