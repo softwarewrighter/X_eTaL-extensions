@@ -1,0 +1,1 @@
+image extension: read/gray/size/write/resize, exact round trips; Rust and reg-rs tests
