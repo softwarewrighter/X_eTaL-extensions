@@ -1,0 +1,1 @@
+photo lab demo: NASA photo, rotation filters, sepia inner product, SVD ranks 5/20/50; golden

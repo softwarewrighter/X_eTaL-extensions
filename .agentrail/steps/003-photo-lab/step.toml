@@ -1,9 +1,10 @@
 number = 3
 slug = "photo-lab"
-status = "in-progress"
+status = "completed"
 description = "photo step 3: extensions/image/demos/photo-lab.xtl: a public-domain photo (pr..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T07:32:23"
+completed_at = "2026-10-07T12:33:15"
 task_type = "feature"
-commits = []
+commits = ["5d0e73ab9724675f5c0ff036a8270ca66b74c90d"]
