@@ -52,6 +52,23 @@ As canvas: `XETAL_HEADLESS=1` (events from `XETAL_EVENTS`, then
 - `demos/cube.xtl` (`just demo scene cube`): a wireframe cube, its
   corners and edges X_eTaL arrays, turning; drag to turn it, q to quit.
 
+### Voxels, piece by piece
+
+The `voxels-*` demos build up to a small voxel game (the plan and its
+measurements: `docs/voxels.md` in the repository), each one shown
+before the next builds on it. Their shared X_eTaL is the library
+`demos/Voxels.xtl` (`"vx:" u_se< "Voxels"`).
+
+1. `demos/voxels-chunk.xtl` (`just demo scene voxels-chunk`, at the
+   command line): a chunk is an array -- 16 by 16 by 16 block numbers
+   built from a height field in a few array expressions: grass on
+   top, dirt, stone, water below a level, sand at its shore, one tree
+   on the hill. It counts the blocks, prints two slices as characters
+   (`#` stone, `%` dirt, `"` grass, `:` sand, `~` water, `|` wood,
+   `*` leaves), and finds what is seen from above -- the top of each
+   column by a max-reduction down it -- drawing that and a slice as
+   pictures. Recorded as `videos/voxels-chunk.webm`.
+
 ## Build and test
 
 ```sh

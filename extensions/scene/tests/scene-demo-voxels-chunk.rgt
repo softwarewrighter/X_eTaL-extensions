@@ -1,0 +1,3 @@
+command = "xetal-x --ext .. run demos/voxels-chunk.xtl"
+exit_code = 0
+desc = "voxels 1: a 16-cube chunk from a height field: counts, two slices, the view from above, two pictures"

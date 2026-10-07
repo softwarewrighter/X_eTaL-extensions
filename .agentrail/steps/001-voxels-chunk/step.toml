@@ -1,6 +1,6 @@
 number = 1
 slug = "voxels-chunk"
-status = "pending"
+status = "in-progress"
 description = "voxels step 1: extensions/scene/demos/voxels-chunk.xtl + Voxels.xtl library: ..."
 role = "production"
 context_files = []

@@ -1,0 +1,79 @@
+# Voxels.xtl -- voxel chunks as arrays, shared by the voxels-* demos
+# (docs/voxels.md). A chunk is a 16 by 16 by 16 array of block numbers,
+# indexed x (east), y (up), z (south); 0 is air.
+# Import: "vx:" u_se< "Voxels"
+# (Not voxels.xtl: on a case-insensitive file system a demo of that name
+# would be this file -- ask E8.)
+
+# the side of a chunk, and its cells
+l:n := 16
+l:cells := 4096
+
+# block numbers, and a character for each when printed
+l:air := 0
+l:stone := 1
+l:dirt := 2
+l:grass := 3
+l:sand := 4
+l:water := 5
+l:wood := 6
+l:leaves := 7
+l:names := "air stone dirt grass sand water wood leaves"
+l:glyphs := " #%\":~|*"
+
+# every cell's x, y and z, as vectors in the chunk's order (x slowest)
+i := (r_ange 4096) - 1
+l:xs := i d_iv 256
+l:ys := (i d_iv 16) m_od 16
+l:zs := i m_od 16
+
+# vx:h_ills phase: a 16 by 16 height field (x by z), rolling hills of
+# heights 3 to 12; the phase shifts them
+l:h_ills := { p ->
+  x := f_loat (r_ange 16) - 1
+  a := 2.5 * s_in p + x / 2.5
+  b := 2.0 * c_os p + x / 3.0
+  f_loor 7.5 + a '+ t_able b
+}
+
+# vx:c_hunk h: the chunk on a height field h (x by z): grass on top,
+# three of dirt, stone below; water fills air below 7, and sand
+# replaces grass at or below it; one tree on the hill at (4, 4) when it
+# stands above the water
+l:c_hunk := { h ->
+  top := (1 + l:zs + 16 * l:xs) s_elect r_avel h
+  d := top - l:ys
+  b := (d = 1) * 3
+  b := b + (d > 1) * (d < 5) * 2
+  b := b + (d >= 5) * 1
+  b := b + (b = 3) * (l:ys <= 7) * 1
+  b := b + (b = 0) * (l:ys < 7) * 5
+  # the tree: a trunk of 3 at (4, 4), leaves around its top
+  t := (1 + 4 + 16 * 4) s_elect r_avel h
+  up := t > 7
+  ax := a_bs l:xs - 4
+  az := a_bs l:zs - 4
+  trunk := up * (ax = 0) * (az = 0) * (l:ys >= t) * l:ys < t + 3
+  crown := up * (ax <= 1) * (az <= 1) * (l:ys >= t + 2) * (l:ys <= t + 3) * 1 - trunk
+  b := b + trunk * 6 - b
+  b := b + crown * (b = 0) * 7
+  16 16 16 r_eshape b
+}
+
+# vx:c_ounts b: how many of each block, air first
+l:c_ounts := { b -> '+ r_/_2 ((r_ange 8) - 1) '= t_able r_avel b }
+
+# x vx:s_ide b: the slice at x, as characters, up at the top
+l:s_ide := { x b -> r_ev (1 + (x + 1) s_elect b) s_elect l:glyphs }
+
+# a column value (x by z) at every cell of its column
+l:c_olumn := { m -> 16 16 16 r_eshape (1 + l:zs + 16 * l:xs) s_elect r_avel m }
+
+# vx:t_op b: what is seen from above: the highest non-air block of each
+# column (x by z) -- the top's height by a max-reduction down each
+# column, then the block there picked by comparing heights
+l:t_op := { b ->
+  y1 := 16 16 16 r_eshape l:ys + 1
+  hi := 'm_ax r_/_2 y1 * b > 0
+  '+ r_/_2 b * y1 = l:c_olumn hi
+}

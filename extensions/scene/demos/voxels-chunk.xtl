@@ -1,0 +1,27 @@
+# Voxels, 1: a chunk is an array. 16 by 16 by 16 block numbers built
+# from a height field in a few array expressions -- grass, dirt, stone,
+# water below a level, sand at its shore, one tree -- then counted,
+# cut and seen from above. (docs/voxels.md; the next demos draw it.)
+# Run: just demo scene voxels-chunk   (pictures go to work/draw/)
+"vx:" u_se< "Voxels"
+
+h := vx:h_ills 0.0
+"the height field (x across, z down), 3 to 12:"
+h
+b := vx:c_hunk h
+s_hape b
+"blocks of each kind:"
+vx:names
+vx:c_ounts b
+
+"the slice at x = 8, looking east (up is up):"
+8 vx:s_ide b
+"the slice at x = 4, through the tree:"
+4 vx:s_ide b
+
+"seen from above (the top block of each column):"
+t := vx:t_op b
+t
+p := []S_HOW []G_RID t
+p := []S_HOW []G_RID r_ev (1 + 8 s_elect b)
+"drawn: the view from above, the slice at x = 8"

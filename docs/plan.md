@@ -476,7 +476,7 @@ each `voxels-*` demo shown before the next (the user's rule).
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | voxels-chunk | `extensions/scene/demos/voxels-chunk.xtl` and the library `Voxels.xtl`: a 16-cube from a height field, layers, water; counts; slices as pictures; golden |
+| 1 | voxels-chunk | (done) `extensions/scene/demos/voxels-chunk.xtl` and the library `Voxels.xtl`: a 16-cube from a height field, layers, water; counts; slices as pictures; golden |
 | 2 | voxels-faces | the exposed-face mask (padded with neighbors), the face list (n by 5), counts for known shapes; the faces as wireframe in scene; golden, headless frames, recording |
 | 3 | scene-faces | scene: `f_aces!` (filled quads by id, flat colors by type and direction), a depth buffer, fog; Rust tests and headless frames |
 | 4 | voxels-solid | the chunk drawn solid, orbiting; golden frames, recording |
