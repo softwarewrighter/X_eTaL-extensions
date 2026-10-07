@@ -1,0 +1,11 @@
+{
+  "task_type": "release",
+  "state": {
+    "number": 4,
+    "step": "photo-release"
+  },
+  "action": "videos.sh .pics; docs; deploy check",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-07T13:08:04"
+}
