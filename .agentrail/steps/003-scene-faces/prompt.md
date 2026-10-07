@@ -1,0 +1,1 @@
+voxels step 3: scene gains f_aces! id list (filled quads by id from the n by 5 face list, flat colors by type and direction), a depth buffer, fog; Rust tests and headless frames.

@@ -466,6 +466,31 @@ E8); `c_eiling` wants a Float; ImageMagick's renderer drops
 `[]P_ATH`'s polylines (the SVG is right). Next: photo lab (Saga 10),
 the user's order.
 
+## Saga 13 -- voxels
+
+Started 2026-10-07 (the user: finish photo lab, then the voxel sagas).
+The analysis is docs/voxels.md: chunks of 16 by 16 by 16 as X_eTaL
+arrays, the exposed-face mask by six rotations, faces sent per chunk
+change and kept and drawn by scene on the CPU. Built piece by piece,
+each `voxels-*` demo shown before the next (the user's rule).
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | voxels-chunk | `extensions/scene/demos/voxels-chunk.xtl` and the library `Voxels.xtl`: a 16-cube from a height field, layers, water; counts; slices as pictures; golden |
+| 2 | voxels-faces | the exposed-face mask (padded with neighbors), the face list (n by 5), counts for known shapes; the faces as wireframe in scene; golden, headless frames, recording |
+| 3 | scene-faces | scene: `f_aces!` (filled quads by id, flat colors by type and direction), a depth buffer, fog; Rust tests and headless frames |
+| 4 | voxels-solid | the chunk drawn solid, orbiting; golden frames, recording |
+| 5 | voxels-world | 4 by 2 by 4 chunks from value noise, water, trees; each chunk by id; X_eTaL culls against the frustum |
+| 6 | voxels-release | recordings, docs, status, retrospective; the site checked online |
+
+## Saga 14 -- voxel game
+
+After Saga 13: `voxels-walk` (first-person camera, key up and down,
+mouse motion in scene; gravity and collision in X_eTaL),
+`voxels-dig` (ray-march picking, break and place, remesh a chunk),
+`voxels-light` (sky light by a column scan, torch light in rounds),
+`voxels-game` (Gem Hunt), a release.
+
 ## Saga 12 -- native hook (blocked)
 
 Blocked on asks E1 (a native hook in X_eTaL) and E2 (`.xtlm`). Until

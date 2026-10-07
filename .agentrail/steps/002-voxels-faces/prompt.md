@@ -1,0 +1,1 @@
+voxels step 2: exposed-face mask by six rotations padded with neighbors; the n by 5 face list (x y z dir type); counts for solid, hollow, checkerboard chunks; faces as wireframe squares in scene (segments), orbiting; golden, headless frames, recording.

@@ -1,13 +1,14 @@
-# photo
+# voxels
 
-Photo lab (docs/plan.md, Saga 10): an image extension (files to arrays
-and back), a linalg extension (nalgebra: solve, least squares,
-eigenvalues, SVD), and a demo where a photo is an array: filters and
-edges by rotation in X_eTaL, SVD compression at several ranks.
+Voxel graphics from X_eTaL (docs/voxels.md): 16-cube chunks as arrays,
+exposed faces by six rotations, faces kept and drawn by scene on the
+CPU. Piece by piece: each voxels-* demo shown before the next.
 
 ## Steps
 
-1. image -- read, write, resize; generated test images.
-2. linalg -- nalgebra; small cases checked in pure X_eTaL.
-3. photo-lab -- the demo, PNGs out.
-4. photo-release -- recordings, docs, status, retrospective, site checked.
+1. voxels-chunk -- a chunk as an array; the Voxels library.
+2. voxels-faces -- the exposed-face mask and list; wireframe.
+3. scene-faces -- filled, depth-tested faces in scene.
+4. voxels-solid -- the chunk drawn solid.
+5. voxels-world -- several chunks, noise terrain, culling.
+6. voxels-release -- recordings, docs, retrospective, site checked.

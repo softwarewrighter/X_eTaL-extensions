@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 12:10 `plan` Saga 13, voxels (voxels-chunk, voxels-faces, scene-faces, voxels-solid, voxels-world, voxels-release), and Saga 14, the voxel game, outlined (the user: finish photo lab, then the voxel sagas; each demo shown before the next). The photo saga archived.
+
 - 11:50 `release` Photo lab saga done: the photo lab recorded as its pictures in turn (a new recording kind, `videos/NAME.pics`: the demo runs, its PNGs are the frames); the image page shows it; README, CLAUDE.md rule 12, status; Saga 10 retrospective.
 
 - 11:20 `ext` The photo lab, `just demo image photo-lab`: Buzz Aldrin on the Moon (NASA AS11-40-5903, public domain, fetched once with the http extension; `demos/data/PROVENANCE.txt`) as a 240 by 246 gray array; blur, sharpen and Sobel edges by rotation (the Life idiom), sepia by an inner product with a 3 by 3 matrix, the SVD rebuilding it from 5, 20 and 50 singular values (94%, 98%, 99% of the energy; 4%, 17%, 41% of the numbers; RMS error 0.107, 0.066, 0.039); three PNG sheets in `work/photo-lab/`; under 3 s. Golden `image-demo-photo-lab`.

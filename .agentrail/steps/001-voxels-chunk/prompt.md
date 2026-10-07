@@ -1,0 +1,1 @@
+voxels step 1: extensions/scene/demos/voxels-chunk.xtl + Voxels.xtl library: a 16x16x16 chunk from a height field (stone, dirt, grass), water below a level; counts per block type; slices drawn with []G_RID; golden. Show the user before the next.
