@@ -1,0 +1,29 @@
+# Linalg.xtl -- the facade of the linalg extension: numerical linear
+# algebra through nalgebra. Matrices are Float arrays (row by column);
+# a right-hand side may be a vector or a matrix of columns.
+# Import: "la:" u_se< "Linalg"
+# Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+# Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+"ffi:" u_se< "Ffi"
+
+# a la:s_olve b: x with a x = b (a square and not singular).
+"s_olve : float float -> floats"    ffi:b_ind< "linalg/solve"
+# la:i_nverse a: the inverse of a square matrix.
+"i_nverse : float -> floats"        ffi:b_ind< "linalg/inverse"
+# la:d_et a: the determinant.
+"d_et : float -> float"             ffi:b_ind< "linalg/det"
+# a la:l_stsq b: the x minimizing |a x - b| (least squares, by the SVD).
+"l_stsq : float float -> floats"    ffi:b_ind< "linalg/lstsq"
+# la:e_ig a: a symmetric matrix's eigenvalues, ascending; la:e_igVecs
+# their eigenvectors, one column each, in the same order.
+"e_ig : float -> floats"            ffi:b_ind< "linalg/eigsym"
+"e_igVecs : float -> floats"        ffi:b_ind< "linalg/eigvecs"
+# The singular value decomposition, a = U diag(s) V' (thin, s
+# descending): la:s_vdS the singular values, la:s_vdU and la:s_vdV the
+# singular vectors, one column each.
+"s_vdS : float -> floats"           ffi:b_ind< "linalg/svd_s"
+"s_vdU : float -> floats"           ffi:b_ind< "linalg/svd_u"
+"s_vdV : float -> floats"           ffi:b_ind< "linalg/svd_v"
+
+# The native package behind these functions.
+l:package := "linalg"

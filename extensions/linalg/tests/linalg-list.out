@@ -1,0 +1,10 @@
+linalg 0.1.0
+  linalg/solve : (Num a, Num b) => a -> b -> Float    # a solve b: x with a x = b (a square; b a vector or columns).
+  linalg/inverse : Num a => a -> Float    # The inverse of a square matrix.
+  linalg/det : Num a => a -> Float    # The determinant of a square matrix.
+  linalg/lstsq : (Num a, Num b) => a -> b -> Float    # a lstsq b: the x minimizing |a x - b| (least squares).
+  linalg/eigsym : Num a => a -> Float    # A symmetric matrix's eigenvalues, ascending.
+  linalg/eigvecs : Num a => a -> Float    # A symmetric matrix's eigenvectors, one column each, in that order.
+  linalg/svd_s : Num a => a -> Float    # The singular values, descending.
+  linalg/svd_u : Num a => a -> Float    # The left singular vectors, one column each (m by r).
+  linalg/svd_v : Num a => a -> Float    # The right singular vectors, one column each (n by r).

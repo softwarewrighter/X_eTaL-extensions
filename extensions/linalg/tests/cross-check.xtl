@@ -1,0 +1,38 @@
+# Small cases checked in pure X_eTaL: each line is 1 when the native
+# answer agrees with X_eTaL's own to 1e-9.
+"la:" u_se< "Linalg"
+u:n_ear := { a b -> '& r_/ r_avel 1e-9 > a_bs a - b }
+a := 2 2 r_eshape 2.0 1.0 1.0 3.0
+b := 3.0 5.0
+# its elements p q / r t, and b's: e f
+p := 1 s_elect r_avel a
+q := 2 s_elect r_avel a
+r := 3 s_elect r_avel a
+t := 4 s_elect r_avel a
+e := 1 s_elect b
+f := 2 s_elect b
+# solve, by Cramer's rule
+d := (p * t) - q * r
+x1 := ((e * t) - q * f) / d
+x2 := ((p * f) - r * e) / d
+(a la:s_olve b) u:n_ear x1 c_at x2
+# the determinant, and the inverse times a is the identity
+d u:n_ear la:d_et a
+(a '+ '* i_nner la:i_nverse a) u:n_ear 2 2 r_eshape 1.0 0.0 0.0 1.0
+# least squares: a line through points on y = 1 + 2 x
+xs := 0.0 1.0 2.0 3.0
+m := 2 1 t_ranspose 2 4 r_eshape (4 r_eshape 1.0) c_at xs
+(m la:l_stsq 1.0 + 2.0 * xs) u:n_ear 1.0 2.0
+# eigenvalues of a symmetric 2 by 2: the mean plus or minus the radius
+mid := 0.5 * p + t
+rad := (((0.5 * p - t) ^ 2.0) + q ^ 2.0) ^ 0.5
+(la:e_ig a) u:n_ear (mid - rad) c_at mid + rad
+# an eigenvector: a v = lambda v
+v := 2 s_elect_2 la:e_igVecs a
+(a '+ '* i_nner v) u:n_ear v * 2 s_elect la:e_ig a
+# the SVD rebuilds the matrix: U diag(s) V'
+w := 2 3 r_eshape 3.0 2.0 2.0 2.0 3.0 -2.0
+us := (la:s_vdU w) * 2 2 r_eshape la:s_vdS w
+(us '+ '* i_nner 2 1 t_ranspose la:s_vdV w) u:n_ear w
+# the singular values (5 and 3), rounded to 6 places
+(f_loat f_loor 0.5 + 1000000.0 * la:s_vdS w) / 1000000.0

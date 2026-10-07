@@ -419,7 +419,7 @@ and the demo does the rest in X_eTaL.
 | # | Step slug | Delivers |
 | - | --------- | -------- |
 | 1 | image | (done) the image extension: read PNG/JPEG into a height by width (by 3) Float array, write PNG, resize; confined paths; test images generated, not downloaded |
-| 2 | linalg | the linalg extension (nalgebra): solve, inverse, determinant, least squares, symmetric eigenvalues, SVD; small cases cross-checked in pure X_eTaL |
+| 2 | linalg | (done) the linalg extension (nalgebra): solve, inverse, determinant, least squares, symmetric eigenvalues, SVD; small cases cross-checked in pure X_eTaL |
 | 3 | photo-lab | demos/photo-lab: a public-domain photo; filters and edges by rotation in X_eTaL, SVD compression at several ranks, PNGs out |
 | 4 | photo-release | recordings, docs, catalog, parity, status, retrospective; the site checked online |
 

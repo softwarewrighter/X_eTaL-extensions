@@ -1,6 +1,6 @@
 number = 2
 slug = "linalg"
-status = "pending"
+status = "in-progress"
 description = "photo step 2: extensions/linalg (nalgebra): s_olve, i_nverse, d_et, l_stsq, e..."
 role = "production"
 context_files = []

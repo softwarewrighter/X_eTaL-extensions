@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/cross-check.xtl"
+exit_code = 0
+desc = "solve, det, inverse, least squares, eigen and SVD agree with pure X_eTaL on small cases"

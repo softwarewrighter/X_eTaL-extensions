@@ -1,0 +1,10 @@
+l:s_olve : (Num a, Num b) => a -> b -> Float
+l:i_nverse : Num a => a -> Float
+l:d_et : Num a => a -> Float
+l:l_stsq : (Num a, Num b) => a -> b -> Float
+l:e_ig : Num a => a -> Float
+l:e_igVecs : Num a => a -> Float
+l:s_vdS : Num a => a -> Float
+l:s_vdU : Num a => a -> Float
+l:s_vdV : Num a => a -> Float
+l:package : Char
