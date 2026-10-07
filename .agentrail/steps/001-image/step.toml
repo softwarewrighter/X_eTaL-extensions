@@ -1,6 +1,6 @@
 number = 1
 slug = "image"
-status = "pending"
+status = "in-progress"
 description = "photo step 1: extensions/image (just new-ext image im 'images to and from arr..."
 role = "production"
 context_files = []

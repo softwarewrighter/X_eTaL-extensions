@@ -1,0 +1,16 @@
+# Pictures made in X_eTaL, written as PNG, read back the same, resized.
+"im:" u_se< "Image"
+# a 4 by 6 gray ramp in steps of 1/255, and a 2 by 2 color picture
+ramp := (f_loat 4 6 r_eshape 10 * (r_ange 24) - 1) / 255.0
+"work/ramp.png" im:w_rite! ramp
+back := im:r_ead "work/ramp.png"
+s_hape back
+'&  r_/ r_avel back = ramp
+im:s_ize "work/ramp.png"
+rgb := (f_loat 2 2 3 r_eshape 255 0 0  0 255 0  0 0 255  255 255 255) / 255.0
+"work/rgb.png" im:w_rite! rgb
+'& r_/ r_avel rgb = im:r_ead "work/rgb.png"
+# gray: the luminance of red, green, blue, white (rounded)
+(f_loat f_loor 0.5 + 100.0 * r_avel im:g_ray "work/rgb.png") / 100.0
+# twice the size, still color
+s_hape 4 4 im:r_esize rgb

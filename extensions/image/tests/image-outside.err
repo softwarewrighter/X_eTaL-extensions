@@ -1,0 +1,1 @@
+error[io]: []N_GET: ext:image/read: "../../images/modern-xetal-logo.jpg": give a path under the working directory (or XETAL_IMAGE_ROOT), no .. at ./lib/Image.xtl:12:1

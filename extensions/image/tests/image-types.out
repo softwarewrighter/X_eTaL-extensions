@@ -1,0 +1,6 @@
+l:r_ead : Char -> Float
+l:g_ray : Char -> Float
+l:s_ize : Char -> Int
+l:w_rite! : Num a => Char -> a -> Int
+l:r_esize : (Num a, Num b) => a -> b -> Float
+l:package : Char

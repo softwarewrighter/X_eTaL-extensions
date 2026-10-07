@@ -132,7 +132,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | [scene](extensions/scene/docs/README.md) | `Scene` | retained 3D lines and points in a native window, patched by id; orbit camera | winit, softbuffer | done: cube demo (the visualizer's base) |
 | [sqlite](extensions/sqlite/docs/README.md) | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | done: facade, CSV import, tests, the data notebook |
 | [web](extensions/web/docs/README.md) | `Web` | serve HTTP on loopback: the program takes each request and replies | axum, tokio | done: facade, loopback tests, the live page, TodoMVC |
-| image | `Image` | images to and from arrays | image | roadmap |
+| [image](extensions/image/docs/README.md) | `Image` | PNG and JPEG to and from Float arrays; resize | image | done: facade, round-trip tests (the photo lab next) |
 | linalg | `Linalg` | solve, inverse, least squares, eigenvalues, SVD | nalgebra | roadmap |
 | [http](extensions/http/docs/README.md) | `Http` | bounded GET (size, time, redirects); downloads | ureq | done: facade, loopback tests, the earthquake report |
 | [digest](extensions/digest/docs/README.md) | `Digest` | SHA-256 and CRC-32 of text and files | sha2, crc32fast | done: facade, vectors, tests |

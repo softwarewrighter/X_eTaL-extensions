@@ -1,0 +1,6 @@
+image 0.1.0
+  image/read : Char -> Float    # A PNG or JPEG as an array from 0 to 1: h by w (gray) or h by w by 3 (color).
+  image/gray : Char -> Float    # A PNG or JPEG in gray: its luminance, h by w.
+  image/size : Char -> Int    # Height and width, without reading the pixels.
+  image/write : Num a => Char -> a -> Int    # path write array: a PNG (or JPEG by the name); its pixels.
+  image/resize : (Num a, Num b) => a -> b -> Float    # height_width resize array: resampled (Lanczos).

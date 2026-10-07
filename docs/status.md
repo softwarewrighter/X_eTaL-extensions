@@ -14,11 +14,12 @@ of date. Release 1 is hello, clock and sqlite (docs/plan.md).
 | [digest](../extensions/digest/docs/README.md) | roadmap | `Digest` (`dg:`) | 4 | 3 | 4 | -- | -- | command line |
 | [hello](../extensions/hello/docs/README.md) | release 1 | `Hello` (`hx:`) | 8 | 5 | 16 | tour | [tour](../extensions/hello/videos/tour.webm) | command line |
 | [http](../extensions/http/docs/README.md) | roadmap | `Http` (`ht:`) | 4 | 4 | 6 | quakes, quakes-live | [quakes](../extensions/http/videos/quakes.webm) | command line |
+| [image](../extensions/image/docs/README.md) | roadmap | `Image` (`im:`) | 5 | 4 | 4 | -- | -- | command line |
 | [scene](../extensions/scene/docs/README.md) | media (saga 5) | `Scene` (`sc:`) | 8 | 5 | 4 | cube | [cube](../extensions/scene/videos/cube.webm) | native window (xetal-x) |
 | [sqlite](../extensions/sqlite/docs/README.md) | release 1 | `Sqlite` (`sq:`) | 6 | 7 | 8 | notebook | [notebook](../extensions/sqlite/videos/notebook.webm) | command line |
 | [web](../extensions/web/docs/README.md) | roadmap | `Web` (`wb:`) | 12 | 6 | 8 | live, todomvc | [live](../extensions/web/videos/live.webm), [todomvc](../extensions/web/videos/todomvc.webm) | command line |
 
-Roadmap, not started: image, linalg, regex.
+Roadmap, not started: linalg, regex.
 
 ## Capabilities
 

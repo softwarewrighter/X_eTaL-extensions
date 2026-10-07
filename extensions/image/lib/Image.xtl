@@ -1,0 +1,24 @@
+# Image.xtl -- the facade of the image extension: PNG and JPEG files as
+# Float arrays from 0 to 1, and back. Gray is h by w, color h by w by 3
+# (red, green, blue); alpha is dropped.
+# Import: "im:" u_se< "Image"
+# Files are named by paths under the working directory (or
+# XETAL_IMAGE_ROOT), relative, with no ..
+# Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+# Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+"ffi:" u_se< "Ffi"
+
+# im:r_ead "photo.png": the picture as it is (gray or color).
+"r_ead : text -> floats"         ffi:b_ind< "image/read"
+# im:g_ray "photo.jpg": the picture in gray (its luminance), h by w.
+"g_ray : text -> floats"         ffi:b_ind< "image/gray"
+# im:s_ize "photo.jpg": height and width, without reading the pixels.
+"s_ize : text -> ints"           ffi:b_ind< "image/size"
+# "out.png" im:w_rite! a: the array as a PNG (or a JPEG, by the name),
+# values clamped to 0..1; how many pixels.
+"w_rite! : text float -> int"    ffi:b_ind< "image/write"
+# (h c_at w) im:r_esize a: resampled to h by w (Lanczos), gray or color.
+"r_esize : float float -> floats" ffi:b_ind< "image/resize"
+
+# The native package behind these functions.
+l:package := "image"

@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 09:30 `ext` The image extension (`extensions/image`, `"im:" u_se< "Image"`): PNG and JPEG as Float arrays from 0 to 1 (gray h by w, color h by w by 3; each 8-bit level k as k / 255, so pictures round-trip exactly), `im:g_ray` (luminance), `im:s_ize`, `im:w_rite!` (PNG or JPEG by the name, clamped), `im:r_esize` (Lanczos); confined paths (`XETAL_IMAGE_ROOT`); the `image` crate with PNG and JPEG only. Rust tests on generated pictures; reg-rs: list, types, a round trip from X_eTaL, the error for a path outside.
+
 - 08:30 `docs` docs/voxels.md (the user: analyze ../avoxelgame-fork for a voxel mini game, built up by `voxels-*` demos): what the Dyalog APL game does and what carries over; this repo has no SDL (winit and softbuffer on the CPU) and needs filled depth-tested faces, a first-person camera and key-up/mouse-motion events in scene; measured: the exposed-face mask costs 1.75 ms at 16 by 16 by 16 and 13 ms at 16 by 128 by 16 in X_eTaL, the bridge 0.35 microseconds a number (a 256 by 256 color frame 71 ms), so faces cross per chunk change and stay in Rust; 16-cubes recommended (sky light by a column scan, block light and water reachable); eight demos, two needing nothing new; the mini game Gem Hunt. Analysis only, not scheduled.
 
 - 00:10 `plan` Saga 10, photo lab, started after the fetch saga (the user's order): image, linalg, photo-lab, photo-release. The fetch saga archived.

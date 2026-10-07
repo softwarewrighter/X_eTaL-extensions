@@ -1,0 +1,28 @@
+[package]
+name = "xetal-ext-image"
+version = "0.1.0"
+description = "Images to and from arrays: PNG and JPEG files as Float arrays"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[lib]
+name = "xetal_ext_image"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+xetal-ext-sdk = { path = "../../../crates/xetal-ext-sdk" }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg"] }
+
+[features]
+# Link statically beside other extensions (a browser page): no unmangled
+# entry point. Never enabled inside the root workspace.
+static = []
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+xetal-ext-loader = { path = "../../../crates/xetal-ext-loader" }
+tempfile = "3"

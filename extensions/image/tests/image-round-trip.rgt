@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/round-trip.xtl"
+exit_code = 0
+desc = "pictures made in X_eTaL written as PNG and read back exactly; gray; size; resize"
