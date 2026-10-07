@@ -1,0 +1,1 @@
+photo step 2: extensions/linalg (nalgebra): s_olve, i_nverse, d_et, l_stsq, e_igSym, s_vd (U, S, V as floats), maybe rank-k reconstruction; facade; Rust tests; reg-rs cross-checks against pure X_eTaL on small cases; docs.

@@ -11,6 +11,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-07
+
+- 00:10 `plan` Saga 10, photo lab, started after the fetch saga (the user's order): image, linalg, photo-lab, photo-release. The fetch saga archived.
+
 ## 2026-10-06
 
 - 09:20 `release` Fetch saga done: the earthquake report recorded at the command line (`videos/quakes.tape`; the live feed never recorded); the http page shows it; parity (http-client done); ask E8 (a library named like its program, on a case-insensitive file system, reports an import cycle); status; Saga 11 retrospective.

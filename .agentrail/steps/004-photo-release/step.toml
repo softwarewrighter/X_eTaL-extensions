@@ -1,0 +1,9 @@
+number = 4
+slug = "photo-release"
+status = "pending"
+description = "photo step 4: recordings (the PNGs as frames), README catalog, pages, parity,..."
+role = "production"
+context_files = []
+created_at = "2026-10-07T07:32:23"
+task_type = "release"
+commits = []

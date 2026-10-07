@@ -1,0 +1,1 @@
+photo step 1: extensions/image (just new-ext image im 'images to and from arrays'): image crate (png, jpeg); r_ead path -> Float array h by w (gray) or h by w by 3 (0..1), g_ray, w_rite! array path (PNG), r_esize; confined paths (XETAL_IMAGE_ROOT); facade with ffi:b_ind<; Rust tests on generated images; reg-rs; docs.

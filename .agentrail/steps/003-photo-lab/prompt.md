@@ -1,0 +1,1 @@
+photo step 3: extensions/image/demos/photo-lab.xtl: a public-domain photo (provenance), gray and color; blur/sharpen/edges by rotation (o_-) in X_eTaL; SVD compression at ranks 5, 20, 50 with the error and storage ratio; PNGs to work/; reg-rs golden.

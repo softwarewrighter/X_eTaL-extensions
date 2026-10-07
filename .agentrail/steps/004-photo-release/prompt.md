@@ -1,0 +1,1 @@
+photo step 4: recordings (the PNGs as frames), README catalog, pages, parity, status, retrospective; verify the live site online.

@@ -409,13 +409,19 @@ from the function, so a reply-then-continue is `(reply) r_ight next`;
 reducing an empty list of boxes needs a seed; headless Chrome lingers
 after `--screenshot`, so the recorder stops it once the file exists.
 
-## Saga 10 -- photo lab (after Saga 11, the user's order)
+## Saga 10 -- photo lab
+
+Started 2026-10-07, after Saga 11 (the user's order). A photo is an
+array: the image extension turns files into arrays and back, linalg
+does the numerical work X_eTaL should not reinvent (SVD above all),
+and the demo does the rest in X_eTaL.
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | image | the image extension: read, write, resize; test images generated, not downloaded |
-| 2 | linalg | the linalg extension; small cases cross-checked in pure X_eTaL |
-| 3 | photo-lab | demos/photo-lab: filters and edges by rotation, SVD compression at several ranks, PNGs out |
+| 1 | image | the image extension: read PNG/JPEG into a height by width (by 3) Float array, write PNG, resize; confined paths; test images generated, not downloaded |
+| 2 | linalg | the linalg extension (nalgebra): solve, inverse, determinant, least squares, symmetric eigenvalues, SVD; small cases cross-checked in pure X_eTaL |
+| 3 | photo-lab | demos/photo-lab: a public-domain photo; filters and edges by rotation in X_eTaL, SVD compression at several ranks, PNGs out |
+| 4 | photo-release | recordings, docs, catalog, parity, status, retrospective; the site checked online |
 
 ## Saga 11 -- fetch and analyze
 

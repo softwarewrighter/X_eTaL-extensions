@@ -1,0 +1,9 @@
+number = 3
+slug = "photo-lab"
+status = "pending"
+description = "photo step 3: extensions/image/demos/photo-lab.xtl: a public-domain photo (pr..."
+role = "production"
+context_files = []
+created_at = "2026-10-07T07:32:23"
+task_type = "feature"
+commits = []

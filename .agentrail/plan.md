@@ -1,14 +1,13 @@
-# fetch
+# photo
 
-Fetch and analyze (docs/plan.md, Saga 11): an http extension (bounded
-GET with ureq), a digest extension (SHA-256, CRC-32), and the quakes
-demo: the USGS earthquake feed into SQLite, analyzed and drawn by
-X_eTaL. Network only on request: loopback tests, a saved copy for the
-golden, `just live-quakes` for the live feed. Photo lab follows.
+Photo lab (docs/plan.md, Saga 10): an image extension (files to arrays
+and back), a linalg extension (nalgebra: solve, least squares,
+eigenvalues, SVD), and a demo where a photo is an array: filters and
+edges by rotation in X_eTaL, SVD compression at several ranks.
 
 ## Steps
 
-1. http -- bounded GET; tests against web on loopback.
-2. digest -- SHA-256 and CRC-32 of text and files.
-3. quakes -- the demo, a saved copy for the golden, just live-quakes.
-4. fetch-release -- recordings, docs, status, retrospective, site checked.
+1. image -- read, write, resize; generated test images.
+2. linalg -- nalgebra; small cases checked in pure X_eTaL.
+3. photo-lab -- the demo, PNGs out.
+4. photo-release -- recordings, docs, status, retrospective, site checked.
