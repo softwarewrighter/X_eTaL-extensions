@@ -1,9 +1,10 @@
 number = 1
 slug = "voxels-chunk"
-status = "in-progress"
+status = "completed"
 description = "voxels step 1: extensions/scene/demos/voxels-chunk.xtl + Voxels.xtl library: ..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T13:12:09"
+completed_at = "2026-10-07T14:13:33"
 task_type = "feature"
-commits = []
+commits = ["687c7c61f56d75c9d02aa3de3b9a53cf36985781"]
