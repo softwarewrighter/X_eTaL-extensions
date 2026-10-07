@@ -1,0 +1,11 @@
+{
+  "task_type": "release",
+  "state": {
+    "number": 4,
+    "step": "fetch-release"
+  },
+  "action": "vhs tape; docs; gate; deploy check",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-07T07:30:58"
+}

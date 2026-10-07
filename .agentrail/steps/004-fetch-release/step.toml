@@ -1,9 +1,10 @@
 number = 4
 slug = "fetch-release"
-status = "in-progress"
+status = "completed"
 description = "fetch step 4: recordings, README catalog, extension pages, parity, status, as..."
 role = "production"
 context_files = []
 created_at = "2026-10-05T15:59:08"
+completed_at = "2026-10-07T07:30:58"
 task_type = "release"
-commits = []
+commits = ["c44654873096b8cc1e858431e2bb615d8a036bf3"]

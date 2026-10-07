@@ -1,0 +1,1 @@
+Fetch saga released: quakes recording, docs, parity, ask E8, retrospective; site verified online
