@@ -1,0 +1,1 @@
+linalg extension: nalgebra solve/inverse/det/lstsq/eig/svd; cross-checked in pure X_eTaL
