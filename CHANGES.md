@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 14:10 `ext` Voxels 2, `just demo scene voxels-faces`: the exposed-face mask by six rotations of the solid mask (the wrapped plane made air) and the face list `vx:f_aces` (x y z direction block; water's surface added), checked on known shapes (1, 256, 452 and 2,048 faces a direction for one block, a solid chunk, a hollow box, a checkerboard); the chunk's 1,389 faces (of 10,446) drawn as colored outlines in scene, turning. Golden with three headless frames pinned; recorded from headless frames.
+
 - 13:00 `ext` Voxels 1, `just demo scene voxels-chunk`: a 16 by 16 by 16 chunk as an array, built from a height field in X_eTaL (grass, three of dirt, stone, water below 7, sand at the shore, a tree on the hill), counted, printed as character slices, and seen from above (each column's top by a max-reduction, the block there by comparing heights); two pictures. The library `demos/Voxels.xtl` (`vx:`) begins. Golden and terminal recording.
 
 - 12:10 `plan` Saga 13, voxels (voxels-chunk, voxels-faces, scene-faces, voxels-solid, voxels-world, voxels-release), and Saga 14, the voxel game, outlined (the user: finish photo lab, then the voxel sagas; each demo shown before the next). The photo saga archived.

@@ -1,6 +1,6 @@
 number = 2
 slug = "voxels-faces"
-status = "pending"
+status = "in-progress"
 description = "voxels step 2: exposed-face mask by six rotations padded with neighbors; the ..."
 role = "production"
 context_files = []

@@ -68,6 +68,16 @@ before the next builds on it. Their shared X_eTaL is the library
    `*` leaves), and finds what is seen from above -- the top of each
    column by a max-reduction down it -- drawing that and a slice as
    pictures. Recorded as `videos/voxels-chunk.webm`.
+2. `demos/voxels-faces.xtl` (`just demo scene voxels-faces`): which
+   faces to draw. A face shows where a solid block's neighbor is not
+   solid: six rotations of the solid mask, each compared with the mask
+   (the plane that wraps around made air), give every exposed face at
+   once, and `vx:f_aces` lists them, one row each: x y z direction
+   block (water adds its surface). Checked on shapes with known
+   answers -- one block 1 a direction, a solid chunk 256, a hollow box
+   452, a 3D checkerboard 2,048 -- then the chunk: 1,389 faces drawn
+   instead of 10,446, as outlines colored by block, turning in the
+   window. Recorded as `videos/voxels-faces.webm`.
 
 ## Build and test
 

@@ -1,0 +1,54 @@
+# Voxels, 2: which faces to draw. A face shows where a solid block's
+# neighbor is not solid: six rotations of the solid mask, each compared
+# with the mask itself (the idiom of Life), give every exposed face of
+# the chunk at once; the faces become a list, one row each: x y z
+# direction block. Checked on shapes with known answers, then the
+# chunk's faces drawn as outlines in a 3D window, turning.
+# Run: just demo scene voxels-faces   (drag to turn it; q or close: quit)
+"vx:" u_se< "Voxels"
+"sc:" u_se< "Scene"
+
+ones := 16 16 16 r_eshape 4096 r_eshape 1
+inside := 16 16 16 r_eshape (vx:xs > 0) * (vx:xs < 15) * (vx:ys > 0) * (vx:ys < 15) * (vx:zs > 0) * vx:zs < 15
+one := 16 16 16 r_eshape (vx:xs = 8) * (vx:ys = 8) * vx:zs = 8
+checker := 16 16 16 r_eshape 0 = (vx:xs + vx:ys + vx:zs) m_od 2
+"faces west east down up north south: one block, all solid, a hollow box, a 3D checkerboard:"
+vx:c_ount vx:f_aces one
+vx:c_ount vx:f_aces ones
+vx:c_ount vx:f_aces ones - inside
+vx:c_ount vx:f_aces checker
+
+b := vx:c_hunk vx:h_ills 0.0
+f := vx:f_aces b
+"the chunk: faces by direction, then all of them, then 6 per solid block if none were hidden:"
+vx:c_ount f
+t_ally f
+6 * '+ r_/ r_avel vx:s_olid b
+"the first faces (x y z direction block):"
+4 t_ake f
+
+w := "Voxels 2: the faces -- X_eTaL" sc:o_pen! 560 560
+k := w sc:c_amera! 0.7 0.5 3.4 0.35
+
+# each kind of block as one object, in its color
+u:p_ut := { t ->
+  sel := (5 s_elect_2 f) = t
+  0 = '+ r_/ sel ? t + 1
+  head := (f_loat w c_at t) c_at (t + 1) s_elect vx:colors
+  x := head sc:s_egments! vx:e_dges sel r_eplicate f
+  t + 1
+}
+put := 7 'u:p_ut p_ower 1
+
+u:q_uit := { n ->
+  z := sc:c_lose! w
+  0
+}
+u:f_rame := { n ->
+  n = 0 ? 0
+  v := sc:n_ext! w
+  ((v m_atch "close") + v m_atch "key q") > 0 ? u:q_uit n
+  n
+}
+last := 100000 'u:f_rame p_ower 1
+"bye"

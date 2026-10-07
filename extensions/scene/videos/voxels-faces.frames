@@ -1,0 +1,8 @@
+# extensions/scene/videos/voxels-faces.webm and .webp: voxels 2, the
+# chunk's exposed faces as outlines, turning -- headless, every frame
+# saved, joined (just videos).
+demo=voxels-faces
+seed=1
+frames=180
+fps=30
+scale=420

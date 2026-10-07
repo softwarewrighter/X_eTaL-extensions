@@ -128,6 +128,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <video src="scene/voxels-chunk.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene voxels-chunk</pre>
     </section>
+    <section class="panel demo">
+      <h3>scene / voxels-faces</h3>
+      <p class="note">Voxels, 2: which faces to draw. A face shows where a solid block&#x27;s neighbor is not solid: six rotations of the solid mask, each compared with the mask itself (the idiom of Life), give every exposed face of the chunk at once; the faces become a list, one row each: x y z direction block. Checked on shapes with known answers, then the chunk&#x27;s faces drawn as outlines in a 3D window, turning.</p>
+      <video src="scene/voxels-faces.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo scene voxels-faces</pre>
+    </section>
   </div>
   <h2 id="sqlite"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/sqlite/docs/README.md">sqlite</a></h2>
   <p class="lede">SQLite databases for X_eTaL: run statements, and bring query results back as X_eTaL arrays -- numbers as a matrix to compute on, text as a Char matrix -- through rusqlite with SQLite compiled in.</p>
@@ -163,7 +169,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 512b3ee</span><span class="sep">&middot;</span>
-  <span>built at ef2793d</span>
+  <span>built at 7bdd827</span>
 </footer>
 </body>
 </html>

@@ -77,3 +77,76 @@ l:t_op := { b ->
   hi := 'm_ax r_/_2 y1 * b > 0
   '+ r_/_2 b * y1 = l:c_olumn hi
 }
+
+# -- faces --------------------------------------------------------------
+# the cells' coordinates as 16 by 16 by 16 arrays
+X := 16 16 16 r_eshape l:xs
+Y := 16 16 16 r_eshape l:ys
+Z := 16 16 16 r_eshape l:zs
+
+# a solid block is any but air and water
+l:s_olid := { b -> (b > 0) * b != 5 }
+
+# the exposed faces in the six directions -- west, east, down, up,
+# north, south: numbered 0 to 5 -- as a 6 by 4096 Boolean array: a
+# solid cell whose neighbor that way is not solid. The neighbor is a
+# rotation along the axis (the six rotations of the Life idiom) with
+# the plane that wrapped around made air: beyond the border is air.
+l:e_xposed := { b ->
+  s := l:s_olid b
+  w := s > (-1 o_-_1 s) * X > 0
+  e := s > (1 o_-_1 s) * X < 15
+  d := s > (-1 o_-_2 s) * Y > 0
+  u := s > (1 o_-_2 s) * Y < 15
+  n := s > (-1 o_-_3 s) * Z > 0
+  so := s > (1 o_-_3 s) * Z < 15
+  6 4096 r_eshape (r_avel w) c_at (r_avel e) c_at (r_avel d) c_at (r_avel u) c_at (r_avel n) c_at r_avel so
+}
+
+# water's surface: water with air above it, facing up
+l:s_urface := { b -> (b = 5) > (1 o_-_2 b > 0) * Y < 15 }
+
+# d r_ows mb: the faces of one direction as 5 rows -- x, y, z of the
+# cell, the direction, the block -- from mb, the mask times 1 + the
+# block (so one array carries both)
+r_ows := { d mb ->
+  k := w_here mb > 0
+  (5 c_at t_ally k) r_eshape (k s_elect l:xs) c_at (k s_elect l:ys) c_at (k s_elect l:zs) c_at ((t_ally k) r_eshape d) c_at (k s_elect mb) - 1
+}
+
+# vx:f_aces b: every face to draw, one row each -- x y z direction
+# block -- the six directions' exposed faces, then water's surface
+l:f_aces := { b ->
+  m := l:e_xposed b
+  bb := 1 + r_avel b
+  r := (0 r_ows bb * 1 s_elect m) c_at_2 (1 r_ows bb * 2 s_elect m) c_at_2 (2 r_ows bb * 3 s_elect m)
+  r := r c_at_2 (3 r_ows bb * 4 s_elect m) c_at_2 (4 r_ows bb * 5 s_elect m) c_at_2 (5 r_ows bb * 6 s_elect m)
+  2 1 t_ranspose r c_at_2 3 r_ows bb * r_avel l:s_urface b
+}
+
+# vx:c_ount f: how many faces in each direction (west east down up
+# north south)
+l:c_ount := { f -> '+ r_/_2 (r_ange 6) '= t_able 1 + 4 s_elect_2 f }
+
+# -- drawing ------------------------------------------------------------
+# the corners of each direction's face, from its cell's corner, taken
+# in pairs round the square (1 2, 2 3, 3 4, 4 1): x, y, z, 6 by 8 each
+ox := 6 8 r_eshape (8 r_eshape 0) c_at (8 r_eshape 1) c_at (0 1 1 1 1 0 0 0) c_at (0 1 1 1 1 0 0 0) c_at (0 1 1 1 1 0 0 0) c_at 0 1 1 1 1 0 0 0
+oy := 6 8 r_eshape (0 1 1 1 1 0 0 0) c_at (0 1 1 1 1 0 0 0) c_at (8 r_eshape 0) c_at (8 r_eshape 1) c_at (0 0 0 1 1 1 1 0) c_at 0 0 0 1 1 1 1 0
+oz := 6 8 r_eshape (0 0 0 1 1 1 1 0) c_at (0 0 0 1 1 1 1 0) c_at (0 0 0 1 1 1 1 0) c_at (0 0 0 1 1 1 1 0) c_at (8 r_eshape 0) c_at 8 r_eshape 1
+
+# vx:e_dges f: the faces' outlines as segments for scene: 8 points a
+# face (4 edges, 2 points each), n*8 by 3, the chunk centered on the
+# origin and scaled to -1..1
+l:e_dges := { f ->
+  d := 1 + 4 s_elect_2 f
+  z8 := 8 r_eshape 0
+  px := (d s_elect ox) + (1 s_elect_2 f) '+ t_able z8
+  py := (d s_elect oy) + (2 s_elect_2 f) '+ t_able z8
+  pz := (d s_elect oz) + (3 s_elect_2 f) '+ t_able z8
+  p := 2 1 t_ranspose (3 c_at 8 * t_ally f) r_eshape (r_avel px) c_at (r_avel py) c_at r_avel pz
+  ((f_loat p) - 8.0) / 8.0
+}
+
+# each block's color, red green blue (air first)
+l:colors := 8 3 r_eshape 0 0 0  0.55 0.55 0.58  0.55 0.38 0.22  0.35 0.7 0.25  0.9 0.82 0.55  0.25 0.45 0.9  0.45 0.3 0.15  0.2 0.5 0.2

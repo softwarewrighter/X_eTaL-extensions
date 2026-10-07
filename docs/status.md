@@ -16,7 +16,7 @@ of date. Release 1 is hello, clock and sqlite (docs/plan.md).
 | [http](../extensions/http/docs/README.md) | roadmap | `Http` (`ht:`) | 4 | 4 | 6 | quakes, quakes-live | [quakes](../extensions/http/videos/quakes.webm) | command line |
 | [image](../extensions/image/docs/README.md) | roadmap | `Image` (`im:`) | 5 | 4 | 5 | photo-lab | [photo-lab](../extensions/image/videos/photo-lab.webm) | command line |
 | [linalg](../extensions/linalg/docs/README.md) | roadmap | `Linalg` (`la:`) | 9 | 5 | 4 | -- | -- | command line |
-| [scene](../extensions/scene/docs/README.md) | media (saga 5) | `Scene` (`sc:`) | 8 | 5 | 5 | cube, voxels-chunk | [cube](../extensions/scene/videos/cube.webm), [voxels-chunk](../extensions/scene/videos/voxels-chunk.webm) | native window (xetal-x) |
+| [scene](../extensions/scene/docs/README.md) | media (saga 5) | `Scene` (`sc:`) | 8 | 5 | 6 | cube, voxels-chunk, voxels-faces | [cube](../extensions/scene/videos/cube.webm), [voxels-chunk](../extensions/scene/videos/voxels-chunk.webm), [voxels-faces](../extensions/scene/videos/voxels-faces.webm) | native window (xetal-x) |
 | [sqlite](../extensions/sqlite/docs/README.md) | release 1 | `Sqlite` (`sq:`) | 6 | 7 | 8 | notebook | [notebook](../extensions/sqlite/videos/notebook.webm) | command line |
 | [web](../extensions/web/docs/README.md) | roadmap | `Web` (`wb:`) | 12 | 6 | 8 | live, todomvc | [live](../extensions/web/videos/live.webm), [todomvc](../extensions/web/videos/todomvc.webm) | command line |
 
