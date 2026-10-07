@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "state": {
+    "number": 2,
+    "step": "voxels-faces"
+  },
+  "action": "rotation masks; scene segments; headless frames",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-07T15:40:04"
+}

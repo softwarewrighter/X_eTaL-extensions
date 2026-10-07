@@ -1,0 +1,1 @@
+voxels-faces: exposed-face mask and list, known-shape checks, wireframe in scene; golden frames, recording
