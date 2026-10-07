@@ -1,0 +1,1 @@
+scene: q_uads! (filled, shaded, depth-tested) and f_og!; Rust and reg-rs tests; existing frames unchanged

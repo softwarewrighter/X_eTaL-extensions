@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "state": {
+    "number": 3,
+    "step": "scene-faces"
+  },
+  "action": "CPU triangle raster with z-buffer; Lambert shading; fog",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-07T16:17:35"
+}
