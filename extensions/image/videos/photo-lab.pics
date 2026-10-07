@@ -1,0 +1,7 @@
+# extensions/image/videos/photo-lab.webm and .webp: the photo lab's three
+# pictures in turn -- filters and edges, the SVD at ranks 50, 20, 5,
+# the sepia toning (just videos image; nothing on screen).
+demo=photo-lab
+pics=(work/photo-lab/filters.png work/photo-lab/svd.png work/photo-lab/sepia.png)
+hold=3
+scale=900

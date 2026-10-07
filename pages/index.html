@@ -99,12 +99,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
     </section>
   </div>
   <h2 id="image"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/image/docs/README.md">image</a></h2>
-  <p class="lede">Pictures as X_eTaL arrays: a PNG or JPEG read into a Float array of values from 0 to 1 -- height by width for gray, height by width by 3 for color -- and an array written back as a picture, through the image crate. Once a photo is an array, X_eTaL does the rest: filters, edges, statistics, compression.</p>
+  <p class="lede">&lt;p align=&quot;center&quot;&gt; &lt;img src=&quot;../videos/photo-lab.webp&quot; alt=&quot;The photo lab: filters, the SVD at three ranks, sepia&quot; width=&quot;640&quot;&gt; &lt;/p&gt;</p>
   <div class="demos">
     <section class="panel demo">
       <h3>image / photo-lab</h3>
       <p class="note">The photo lab: a photo is an array. Buzz Aldrin on the Moon (Apollo 11, NASA, public domain: demos/data/PROVENANCE.txt) read as numbers; filters and edges by rotating the array (the Life idiom), a color toning by an inner product, and the SVD compressing it at several ranks -- the native code reads, writes and decomposes, X_eTaL does the rest. Pictures go to work/photo-lab/.</p>
-      <p class="note">(no recording yet)</p>
+      <video src="image/photo-lab.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo image photo-lab</pre>
     </section>
   </div>
@@ -157,7 +157,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 512b3ee</span><span class="sep">&middot;</span>
-  <span>built at 63baf49</span>
+  <span>built at 3cc44bd</span>
 </footer>
 </body>
 </html>

@@ -1,6 +1,6 @@
 number = 4
 slug = "photo-release"
-status = "pending"
+status = "in-progress"
 description = "photo step 4: recordings (the PNGs as frames), README catalog, pages, parity,..."
 role = "production"
 context_files = []

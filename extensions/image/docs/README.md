@@ -1,5 +1,9 @@
 # image
 
+<p align="center">
+  <img src="../videos/photo-lab.webp" alt="The photo lab: filters, the SVD at three ranks, sepia" width="640">
+</p>
+
 Pictures as X_eTaL arrays: a PNG or JPEG read into a Float array of
 values from 0 to 1 -- height by width for gray, height by width by 3
 for color -- and an array written back as a picture, through the
@@ -72,3 +76,9 @@ trip from X_eTaL, and the error for a path outside.
 
   It runs in under 3 seconds (release build); `image-demo-photo-lab`
   pins its numbers.
+
+## Recording
+
+`videos/photo-lab.webm` (and `.webp`) show the photo lab's three
+pictures in turn (`just videos image`): the demo runs, then its PNGs
+become the frames (`videos/photo-lab.pics`).

@@ -14,7 +14,10 @@
 #     SQLite files in a fresh directory), driven by the spec's steps()
 #     with `shot PATH` (the page as headless Chrome renders it, with
 #     its own temporary profile: no window) and `post PATH CURL-ARGS`;
-#     the shots are the frames.
+#     the shots are the frames;
+#   - NAME.pics: a demo that writes pictures, run as it is, then those
+#     pictures (the spec's `pics`, paths in the extension's directory)
+#     shown in turn, `hold` seconds each.
 #   scripts/videos.sh [EXT]
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -117,6 +120,27 @@ for dir in extensions/${1:-*}/videos; do
     ffmpeg -loglevel error -y -framerate "$fps" -i "$out/shot-%d.png" \
       -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -pix_fmt yuv420p "target/screens/$ext-$name.mp4"
     encode "target/screens/$ext-$name.mp4" "$dir/$name" "$scale" "$scale" "$fps"
+  done
+  for spec in "$dir"/*.pics; do
+    [ -e "$spec" ] || continue
+    name="$(basename "$spec" .pics)"
+    demo=""; seed=1; pics=(); hold=3; scale=760
+    # shellcheck disable=SC1090
+    . "$spec"
+    echo "==> pics $ext $name"
+    (cd "extensions/$ext" && "$root/target/debug/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > /dev/null)
+    out="$root/target/screens/$ext-$name-pics"
+    rm -rf "$out" && mkdir -p "$out"
+    i=0
+    for pic in "${pics[@]}"; do
+      i=$((i + 1))
+      # each on a dark frame of one size, so the slideshow does not jump
+      magick "extensions/$ext/$pic" -resize "${scale}x${scale}>" -background '#14161a' \
+        -gravity center -extent "${scale}x$((scale * 2 / 3))" "$out/pic-$i.png"
+    done
+    ffmpeg -loglevel error -y -framerate "1/$hold" -i "$out/pic-%d.png" -r 8 \
+      -pix_fmt yuv420p "target/screens/$ext-$name.mp4"
+    encode "target/screens/$ext-$name.mp4" "$dir/$name" "$scale" 640 2
   done
   for spec in "$dir"/*.sound; do
     [ -e "$spec" ] || continue

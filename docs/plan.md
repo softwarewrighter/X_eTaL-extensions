@@ -421,7 +421,20 @@ and the demo does the rest in X_eTaL.
 | 1 | image | (done) the image extension: read PNG/JPEG into a height by width (by 3) Float array, write PNG, resize; confined paths; test images generated, not downloaded |
 | 2 | linalg | (done) the linalg extension (nalgebra): solve, inverse, determinant, least squares, symmetric eigenvalues, SVD; small cases cross-checked in pure X_eTaL |
 | 3 | photo-lab | (done) demos/photo-lab: a public-domain photo; filters and edges by rotation in X_eTaL, SVD compression at several ranks, PNGs out |
-| 4 | photo-release | recordings, docs, catalog, parity, status, retrospective; the site checked online |
+| 4 | photo-release | (done) the photo lab recorded (`videos/NAME.pics`, a new kind: a demo's pictures as frames), docs, catalog, status, retrospective; the site checked online |
+
+Saga 10 retrospective: a photo is an array. image (the `image` crate,
+PNG and JPEG) and linalg (nalgebra) are thin; the photo lab does its
+work in X_eTaL: filters by the Life idiom of rotations, a color toning
+by one inner product, and the SVD's rank-k pictures rebuilt by an
+inner product -- under 3 seconds for a 240 by 246 photo. Found on the
+way: reading through `f32` lost exactness, so levels are k / 255 in
+double precision and pictures round-trip exactly; `r_ange` starts at
+1 (a test ramp went past 255); `1 1 s_elect m` picks rows, not an
+element; X_eTaL's mean must widen Booleans first. The photo is a
+public-domain NASA picture fetched once with the http extension, the
+same way the earthquake feed was. Next: the voxels saga
+(docs/voxels.md), the user's order.
 
 ## Saga 11 -- fetch and analyze
 
