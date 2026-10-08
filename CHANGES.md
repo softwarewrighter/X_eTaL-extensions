@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 15:40 `ext` Voxels 3, `just demo scene voxels-solid`: the chunk drawn solid -- each face a quad in X_eTaL (`vx:q_uads`, corners from a 6 by 4 table by direction), one quads object per kind of block, shaded, depth-tested and fogged by scene; 1,389 faces sent once as 16,668 numbers. Golden with three headless frames pinned; recording.
+
 - 15:00 `ext` scene draws filled quads: `sc:q_uads!` (points in fours, each a quad; shaded by its normal against a fixed light, so tops are brightest and shading stays put as the camera turns) behind a depth buffer (reciprocal depth interpolated across each triangle), lines and dots over them; `sc:f_og!` fades quads into the background by depth. Generic rather than voxel-specific: X_eTaL turns voxel faces into quads. Rust tests (fill and shade, the nearer wins in either order, fog, behind the camera); reg-rs: a headless frame of overlapping quads pinned, the error for points not in fours; the listing, types and an error line rebased. The cube's and voxels' frames are unchanged.
 
 - 14:10 `ext` Voxels 2, `just demo scene voxels-faces`: the exposed-face mask by six rotations of the solid mask (the wrapped plane made air) and the face list `vx:f_aces` (x y z direction block; water's surface added), checked on known shapes (1, 256, 452 and 2,048 faces a direction for one block, a solid chunk, a hollow box, a checkerboard); the chunk's 1,389 faces (of 10,446) drawn as colored outlines in scene, turning. Golden with three headless frames pinned; recorded from headless frames.
