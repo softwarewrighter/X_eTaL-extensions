@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "state": {
+    "number": 5,
+    "step": "voxels-world"
+  },
+  "action": "linear-algebra noise; reduce over boxes; per-chunk ids",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-07T17:50:17"
+}

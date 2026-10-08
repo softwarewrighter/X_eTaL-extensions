@@ -1,0 +1,1 @@
+voxels-world: 64x32x64 island of 32 chunks, value noise by M G M', world faces by chunk ids; golden; recording
