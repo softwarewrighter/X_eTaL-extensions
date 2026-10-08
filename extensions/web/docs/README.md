@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="../videos/todomvc.webp" alt="TodoMVC served by an X_eTaL program" width="420">
-  <img src="../videos/live.webp" alt="Life computed in X_eTaL, one generation per request" width="320">
+  <img src="../videos/life.webp" alt="Life computed in X_eTaL, one generation per request" width="320">
 </p>
 
 HTTP serving for X_eTaL, where the program is the request loop: axum
@@ -87,14 +87,14 @@ X_eTaL program answering four requests that `curl` asks
 
 ## Demos
 
-- `demos/live.xtl` (`just demo web live`, then open
+- `demos/life.xtl` (`just demo web life`, then open
   http://127.0.0.1:8470/): Conway's Life kept by the X_eTaL program
   and drawn as SVG, one generation per request. The page reloads the
   board several times a second; each reload is a request the program
   answers by stepping the board (`u:l_ife`, one array expression) and
   writing it as an SVG path, one unit square per live cell. New board
   (`/new?n=64`), Glider (`/glider`) and Quit (`/quit`, which ends the
-  program) are requests too. The test `web-demo-live` drives it with
+  program) are requests too. The test `web-demo-life` drives it with
   `curl`: a glider on an 8 by 8 board, stepped three times.
 - `demos/todomvc.xtl` (`just demo web todomvc`, then open
   http://127.0.0.1:8470/): TodoMVC with plain HTML forms, the todos
@@ -109,7 +109,7 @@ X_eTaL program answering four requests that `curl` asks
 
 ## Recording
 
-`videos/live.webm` and `videos/todomvc.webm` (and `.webp`) show the
+`videos/life.webm` and `videos/todomvc.webm` (and `.webp`) show the
 two pages as a browser draws them (`just videos web`): each demo is
 served on a free port, driven by the steps in `videos/NAME.web`, and
 every shot is the page rendered by headless Chrome (its own temporary

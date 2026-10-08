@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Drives demos/live.xtl over loopback with curl: the page, a glider on
+# Drives demos/life.xtl over loopback with curl: the page, a glider on
 # an 8 by 8 board stepped three times as SVG, a random board, a 404, and
 # quit; prints each answer and what the program printed (its port as
 # PORT).
-#   tests/live.sh      (from extensions/web, xetal-x on PATH)
+#   tests/life.sh      (from extensions/web, xetal-x on PATH)
 set -euo pipefail
 out="$(mktemp)"
 trap 'rm -f "$out"' EXIT
-XETAL_WEB_PORT=0 xetal-x --ext . run demos/live.xtl >"$out" 2>&1 &
+XETAL_WEB_PORT=0 xetal-x --ext . run demos/life.xtl >"$out" 2>&1 &
 pid=$!
 port=""
 for _ in $(seq 100); do

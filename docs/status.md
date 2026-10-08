@@ -6,19 +6,19 @@ of date. Release 1 is hello, clock and sqlite (docs/plan.md).
 
 ## Extensions
 
-| Extension | Release | Facade (alias) | Native functions | Rust tests | reg-rs tests | Demos | Recordings | Runs |
+| Extension | Built in | Facade (alias) | Native functions | Rust tests | reg-rs tests | Demos | Recordings | Runs |
 | --------- | ------- | -------------- | ---------------- | ---------- | ------------ | ----- | ---------- | ---- |
 | [audio](../extensions/audio/docs/README.md) | media (saga 5) | `Audio` (`au:`) | 14 | 5 | 8 | scope, spectrum, synth | [scope](../extensions/audio/videos/scope.webm), [spectrum](../extensions/audio/videos/spectrum.webm), [synth](../extensions/audio/videos/synth.webm) | command line |
 | [canvas](../extensions/canvas/docs/README.md) | media (saga 5) | `Canvas` (`cv:`) | 4 | 2 | 4 | life | [life](../extensions/canvas/videos/life.webm) | native window (xetal-x) |
 | [clock](../extensions/clock/docs/README.md) | release 1 | `Clock` (`ck:`) | 4 | 2 | 5 | bridge-cost | [bridge-cost](../extensions/clock/videos/bridge-cost.webm) | command line |
-| [digest](../extensions/digest/docs/README.md) | roadmap | `Digest` (`dg:`) | 4 | 3 | 4 | -- | -- | command line |
+| [digest](../extensions/digest/docs/README.md) | fetch (saga 11) | `Digest` (`dg:`) | 4 | 3 | 4 | -- | -- | command line |
 | [hello](../extensions/hello/docs/README.md) | release 1 | `Hello` (`hx:`) | 8 | 5 | 16 | tour | [tour](../extensions/hello/videos/tour.webm) | command line |
-| [http](../extensions/http/docs/README.md) | roadmap | `Http` (`ht:`) | 4 | 4 | 6 | quakes, quakes-live | [quakes](../extensions/http/videos/quakes.webm) | command line |
-| [image](../extensions/image/docs/README.md) | roadmap | `Image` (`im:`) | 5 | 4 | 5 | photo-lab | [photo-lab](../extensions/image/videos/photo-lab.webm) | command line |
-| [linalg](../extensions/linalg/docs/README.md) | roadmap | `Linalg` (`la:`) | 9 | 5 | 4 | -- | -- | command line |
+| [http](../extensions/http/docs/README.md) | fetch (saga 11) | `Http` (`ht:`) | 4 | 4 | 6 | quakes, quakes-live | [quakes](../extensions/http/videos/quakes.webm) | command line |
+| [image](../extensions/image/docs/README.md) | photo lab (saga 10) | `Image` (`im:`) | 5 | 4 | 5 | photo-lab | [photo-lab](../extensions/image/videos/photo-lab.webm) | command line |
+| [linalg](../extensions/linalg/docs/README.md) | photo lab (saga 10) | `Linalg` (`la:`) | 9 | 5 | 4 | -- | -- | command line |
 | [scene](../extensions/scene/docs/README.md) | media (saga 5) | `Scene` (`sc:`) | 12 | 12 | 11 | cube, voxels-chunk, voxels-faces, voxels-solid, voxels-walk, voxels-world | [cube](../extensions/scene/videos/cube.webm), [voxels-chunk](../extensions/scene/videos/voxels-chunk.webm), [voxels-faces](../extensions/scene/videos/voxels-faces.webm), [voxels-solid](../extensions/scene/videos/voxels-solid.webm), [voxels-walk](../extensions/scene/videos/voxels-walk.webm), [voxels-world](../extensions/scene/videos/voxels-world.webm) | native window (xetal-x) |
 | [sqlite](../extensions/sqlite/docs/README.md) | release 1 | `Sqlite` (`sq:`) | 6 | 7 | 8 | notebook | [notebook](../extensions/sqlite/videos/notebook.webm) | command line |
-| [web](../extensions/web/docs/README.md) | roadmap | `Web` (`wb:`) | 12 | 6 | 8 | live, todomvc | [live](../extensions/web/videos/live.webm), [todomvc](../extensions/web/videos/todomvc.webm) | command line |
+| [web](../extensions/web/docs/README.md) | web (saga 9) | `Web` (`wb:`) | 12 | 6 | 8 | life, todomvc | [life](../extensions/web/videos/life.webm), [todomvc](../extensions/web/videos/todomvc.webm) | command line |
 
 Roadmap, not started: regex.
 

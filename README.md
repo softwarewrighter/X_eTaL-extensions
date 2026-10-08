@@ -33,7 +33,7 @@ just demo canvas life           # Life in a native window (Space: new board, q: 
 just demo audio spectrum        # the music visualizer: X_eTaL analyzes, Rust plays and draws
 just demo audio synth           # a synthesizer: every sample computed in X_eTaL, played as made
 just demo audio scope           # a live oscilloscope: the synthesizer drawn as it plays
-just demo web live              # a web page whose Life board X_eTaL steps per request (http://127.0.0.1:8470/)
+just demo web life              # a web page whose Life board X_eTaL steps per request (http://127.0.0.1:8470/)
 just demo web todomvc           # TodoMVC: X_eTaL serves it, SQLite keeps it (http://127.0.0.1:8470/)
 just demo http quakes           # a week of earthquakes: SQL groups, X_eTaL computes, pictures in work/draw/
 just live-quakes                # the same on the live USGS feed (uses the network)
@@ -122,7 +122,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | Demo | Extensions | What it shows | Status |
 | ---- | ---------- | ------------- | ------ |
 | [data notebook](extensions/sqlite/docs/README.md#the-data-notebook) | sqlite | CO2 at Mauna Loa: a CSV in SQLite; SQL groups, X_eTaL computes the yearly rise, a least-squares line and its residuals, a histogram; SVG pictures | release 1, done |
-| [X_eTaL on the web](extensions/web/docs/README.md#demos) | web, sqlite | a live page: Life computed in X_eTaL, one generation per request, drawn as SVG (`just demo web live`); a TodoMVC kept in SQLite (`just demo web todomvc`) | done |
+| [X_eTaL on the web](extensions/web/docs/README.md#demos) | web, sqlite | a live page: Life computed in X_eTaL, one generation per request, drawn as SVG (`just demo web life`); a TodoMVC kept in SQLite (`just demo web todomvc`) | done |
 | [photo lab](extensions/image/docs/README.md#demos) | image, linalg | a photo as an array: blur, sharpen and edges by rotation, sepia by an inner product, SVD compression at ranks 5, 20, 50; PNGs out (`just demo image photo-lab`) | done |
 | [fetch and analyze](extensions/http/docs/README.md#demos) | http, digest, sqlite | a week of earthquakes: the USGS feed checked by SHA-256, into SQLite, the Gutenberg-Richter b-value computed in X_eTaL, a world map (`just demo http quakes`; the live feed: `just live-quakes`) | done |
 

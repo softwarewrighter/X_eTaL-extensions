@@ -1,6 +1,6 @@
 # A live page: Conway's Life kept by an X_eTaL program and drawn as SVG,
 # one generation per request. The program is the server's request loop.
-# Run: just demo web live, then open http://127.0.0.1:8470/
+# Run: just demo web life, then open http://127.0.0.1:8470/
 #   (New board, Glider; Quit ends the program)
 "wb:" u_se< "Web"
 

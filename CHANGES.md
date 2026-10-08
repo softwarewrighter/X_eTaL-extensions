@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 20:20 `docs` The web extension's Life page is `life`, not `live` (the user: it read like a typo beside canvas's life): `demos/life.xtl`, `just demo web life`, `tests/life.sh`, golden `web-demo-life`, `videos/life.*`, docs and the site. docs/status.md names the group each later extension was built in (web, photo lab, fetch) instead of "roadmap".
+
 - 19:50 `docs` The site has a table of contents at the top left (the user): every extension and its demos, linked to their sections (each demo now has an id, `EXT-NAME`); fixed beside the page on wide screens, at the top on narrow ones. Demo columns never exceed a phone's width. Checked in headless Chrome at 1400 and 500 px.
 
 - 19:30 `ext` Voxels 5, `just demo scene voxels-walk`: walking on the island in the first person. scene gains `sc:e_ye!` (a first-person camera; quads clipped at the near plane, which needed triangles allowed far off screen) and `sc:c_ontrols` (mouse drag and held keys as numbers; scripted `keydown`, `keyup`, `drag` events headless; the pointer never grabbed). In X_eTaL the player is nine numbers: turning, gravity, jumping, a swept box per axis against the solid cells it would overlap, stopping at the block's face; the 32 chunks tested against the view's planes (turned into the world by an inner product). Rust tests of the first-person camera (yaw, pitch, a floor clipped under the eye); golden with a scripted walk and three frames pinned; recording from a scripted walk (`.frames` specs may now give `script=`). The orbit frames are unchanged; the listing, types and an error line rebased.

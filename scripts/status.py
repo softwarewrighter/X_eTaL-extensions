@@ -12,6 +12,9 @@ import sys
 root = pathlib.Path(__file__).resolve().parent.parent
 RELEASE_1 = ["hello", "clock", "sqlite"]
 MEDIA = ["canvas", "scene", "audio"]
+# the extensions built after release 1, by the group they came in
+LATER = {"web": "web (saga 9)", "image": "photo lab (saga 10)", "linalg": "photo lab (saga 10)",
+         "http": "fetch (saga 11)", "digest": "fetch (saga 11)"}
 LIVE = "https://softwarewrighter.github.io/X_eTaL-extensions"
 
 # The extensions column of the ecosystem dashboard: hand-kept, one line
@@ -59,7 +62,7 @@ def row(d):
     videos = sorted(p.stem for p in (d / "videos").glob("*.webm"))
     return "| {} | {} | {} | {} | {} | {} | {} | {} | {} |".format(
         f"[{name}](../extensions/{name}/docs/README.md)",
-        "release 1" if name in RELEASE_1 else "media (saga 5)" if name in MEDIA else "roadmap",
+        "release 1" if name in RELEASE_1 else "media (saga 5)" if name in MEDIA else LATER.get(name, "roadmap"),
         facade(d),
         native(d),
         rust_tests(d),
@@ -82,11 +85,11 @@ def page():
         "",
         "## Extensions",
         "",
-        "| Extension | Release | Facade (alias) | Native functions | Rust tests | reg-rs tests | Demos | Recordings | Runs |",
+        "| Extension | Built in | Facade (alias) | Native functions | Rust tests | reg-rs tests | Demos | Recordings | Runs |",
         "| --------- | ------- | -------------- | ---------------- | ---------- | ------------ | ----- | ---------- | ---- |",
         *[row(d) for d in exts],
         "",
-        "Roadmap, not started: " + ", ".join(p for p in planned if not (root / "extensions" / p).exists()) + ".",
+        "Roadmap, not started: " + (", ".join(p for p in planned if not (root / "extensions" / p).exists()) or "none") + ".",
         "",
         "## Capabilities",
         "",

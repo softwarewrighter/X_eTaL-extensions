@@ -1,7 +1,7 @@
-# extensions/web/videos/live.webm and .webp: the live Life page, as a
+# extensions/web/videos/life.webm and .webp: the live Life page, as a
 # browser shows it; each shot is a page load, so the board steps on
 # (just videos web; headless Chrome, no window opens).
-demo=live
+demo=life
 seed=1
 size=700,760
 fps=3
