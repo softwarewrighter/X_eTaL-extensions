@@ -1,0 +1,1 @@
+voxels-solid: chunk as shaded quads; golden frames; recording
