@@ -47,5 +47,5 @@ u:i_f := { yes s ->
 last := 100000 'u:f_rame p_ower s
 z := sc:c_lose! w
 "where the walk ended (x y z, blocks), the columns kept:"
-(f_loat f_loor 0.5 + 3 t_ake en:p_layer last) c_at f_loat t_ally en:k_eys last
+(f_loat f_loor 0.5 + en:p_osition last) c_at f_loat t_ally en:k_eys last
 "bye"

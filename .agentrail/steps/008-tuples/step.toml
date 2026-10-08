@@ -1,6 +1,6 @@
 number = 8
 slug = "tuples"
-status = "pending"
+status = "in-progress"
 description = "game step 8 (inserted, the user asked about tuples): X_eTaL's tuples (Saga 39..."
 role = "production"
 context_files = []

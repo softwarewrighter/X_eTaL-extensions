@@ -10,93 +10,80 @@
 
 ### The state
 
-## The state is a list of boxes of Floats (the boxes of one array share
-## a type): 1 the player (ten numbers: x y z, vx vy vz, yaw, pitch, on
-## the ground, flying), 2 the columns' keys, 3 their numbers (a column's
-## scene objects are 10 * number + block), 4 the settings (the window,
-## the next number, the job's part 0 to 2, the job's column cx cz and
-## number, the start x y z), 5 the job's data, and from 6 on each
-## column's solid mask, in the keys' order. Made by en:n_ew.
+## The state is a tuple of tuples, each part its own type:
+## (player, world, job, settings) --
+## the player (position x y z, velocity, yaw, pitch, on the ground 0 or
+## 1, flying 0 or 1); the world (the columns' keys, their numbers -- a
+## column's scene objects are 10 * number + block -- and their solid
+## masks, a box each, in the keys' order); the job, the column being
+## made (its part 0 to 2, its column cx cz, its number, its data:
+## blocks, then faces); the settings (the window, the next number, the
+## start x y z, whether it runs). Made by en:n_ew.
 
 ## the columns are kept this many (16-block steps) from the player's,
 ## each way, and made within it; beyond one more they are dropped
 l:reach := 3
 
-## en:p_layer s: the player's ten numbers
-l:p_layer := { s -> d_isclose 1 s_elect s }
+## en:p_layer s: the player (position, velocity, yaw, pitch, ground, fly)
+l:p_layer := { (p, _, _, _) -> p }
+## en:p_osition s: where the player's feet are, x y z
+l:p_osition := { ((x, _, _, _, _, _), _, _, _) -> x }
 ## en:k_eys s: the columns' keys
-l:k_eys := { s -> d_isclose 2 s_elect s }
-## en:n_umbers s: the columns' numbers
-l:n_umbers := { s -> d_isclose 3 s_elect s }
-## en:s_ettings s: the window, the next number, the job, the start
-l:s_ettings := { s -> d_isclose 4 s_elect s }
+l:k_eys := { (_, (ks, _, _), _, _) -> ks }
 ## en:w_indow s: the scene window the world is drawn in
-l:w_indow := { s -> 1 s_elect l:s_ettings s }
+l:w_indow := { (_, _, _, (w, _, _, _)) -> w }
+## en:s_tart s: where the player started (x y z)
+l:s_tart := { (_, _, _, (_, _, x0, _)) -> x0 }
 
 # a column's key from its coordinates (cx cz), and back
-h:k_ey := { c -> f_loat (10000 * 1000 + 1 s_elect c) + 1000 + 2 s_elect c }
-h:c_x := { k -> ((f_loor k) d_iv 10000) - 1000 }
-h:c_z := { k -> ((f_loor k) m_od 10000) - 1000 }
+h:k_ey := { c -> (10000 * 1000 + 1 s_elect c) + 1000 + 2 s_elect c }
+h:c_x := { k -> (k d_iv 10000) - 1000 }
+h:c_z := { k -> (k m_od 10000) - 1000 }
 
-# the state with its keys (box 2), numbers (3), settings (4) or the
-# job's data (5) replaced
-h:w_ithKeys := { v s -> (1 t_ake s) c_at (e_nclose v) c_at 2 d_rop s }
-h:w_ithNumbers := { v s -> (2 t_ake s) c_at (e_nclose v) c_at 3 d_rop s }
-h:w_ithSettings := { v s -> (3 t_ake s) c_at (e_nclose v) c_at 4 d_rop s }
-h:w_ithJob := { v s -> (4 t_ake s) c_at (e_nclose v) c_at 5 d_rop s }
-
-## en:w_ithPlayer p s: the state with the player p
-l:w_ithPlayer := { p s -> (e_nclose p) c_at 1 d_rop s }
+## p en:w_ithPlayer s: the state with the player p
+l:w_ithPlayer := { p (_, wo, jb, st) -> (p, wo, jb, st) }
 
 ## en:n_ew w: a world for window w, no columns made yet, the player
 ## standing above the highest ground of column (0, 0), facing north
 l:n_ew := { w ->
   hv := r_avel vx:h_eightsAt 0 0 16
   i := f_irst w_here hv = 'm_ax r_/ hv
-  x := (f_loat (i - 1) d_iv 16) + 0.5
-  y := f_loat 2 + i s_elect hv
-  z := (f_loat (i - 1) m_od 16) + 0.5
-  p := x c_at y c_at z c_at 0.0 0.0 0.0 0.0 0.0 0.0 0.0
-  none := 0 r_eshape 0.0
-  set := (f_loat w) c_at 1.0 0.0 0.0 0.0 0.0 c_at x c_at y c_at z
-  (e_nclose p) c_at (e_nclose none) c_at (e_nclose none) c_at (e_nclose set) c_at e_nclose none
+  x0 := ((f_loat (i - 1) d_iv 16) + 0.5) c_at (f_loat 2 + i s_elect hv) c_at (f_loat (i - 1) m_od 16) + 0.5
+  p := (x0, 0.0 0.0 0.0, 0.0, 0.0, 0.0, 0.0)
+  none := 0 r_eshape 0
+  wo := (none, none, 0 r_eshape e_nclose none)
+  (p, wo, (0, 0 0, 0, none), (w, 1, x0, 1))
 }
-
-## en:s_tart s: where the player started (x y z)
-l:s_tart := { s -> 3 t_ake 6 d_rop l:s_ettings s }
 
 ### Making and dropping columns
 
-## the player's column (cx cz)
+# the player's column (cx cz)
 h:h_ome := { s ->
-  p := l:p_layer s
-  (f_loor (1 s_elect p) / 16.0) c_at f_loor (3 s_elect p) / 16.0
+  x := l:p_osition s
+  (f_loor (1 s_elect x) / 16.0) c_at f_loor (3 s_elect x) / 16.0
 }
 
 # the first column too far away, if any, dropped: its objects out of
-# scene, its key, number and mask out of the state
+# scene, its key, number and mask out of the world
 h:t_rim := { s ->
+  (p, (ks, ns, ms), jb, st) := s
   h := h:h_ome s
-  ks := l:k_eys s
   far := ((a_bs (h:c_x ks) - 1 s_elect h) > l:reach + 1) + (a_bs (h:c_z ks) - 2 s_elect h) > l:reach + 1
   0 = '+ r_/ far ? s
   j := f_irst w_here far > 0
-  n := j s_elect l:n_umbers s
+  n := j s_elect ns
   w := l:w_indow s
-  gone := '{ w sc:r_emove! (10.0 * n) + f_loat _r } m_ap r_ange 7
+  gone := '{ w sc:r_emove! (10 * n) + _r } m_ap r_ange 7
   keep := j != r_ange t_ally ks
-  s := (keep r_eplicate ks) h:w_ithKeys s
-  s := (keep r_eplicate l:n_umbers s) h:w_ithNumbers s
-  ((5 + j) t_ake s) c_at (6 + j) d_rop s
+  (p, (keep r_eplicate ks, keep r_eplicate ns, keep r_eplicate ms), jb, st)
 }
 
-# (n t) s_endOne f: block t's faces of column n, one object of quads
-h:s_endOne := { nt f ->
-  w := 1 s_elect nt
-  t := f_loor 3 s_elect nt
+# (w n t) h:s_endOne f: block t's faces of column n, one object of quads
+h:s_endOne := { wnt f ->
+  t := 3 s_elect wnt
   sel := (5 s_elect_2 f) = t
   0 = '+ r_/ sel ? 0
-  head := (f_loat w) c_at ((10.0 * 2 s_elect nt) + f_loat t) c_at (1 + t) s_elect vx:colors
+  head := (f_loat 1 s_elect wnt) c_at (f_loat (10 * 2 s_elect wnt) + t) c_at (1 + t) s_elect vx:colors
   head sc:q_uads! vx:c_orners sel r_eplicate f
 }
 
@@ -106,79 +93,63 @@ h:s_endOne := { nt f ->
 ## them to scene (part 2) -- about 12 ms at most
 l:s_tream := { s ->
   s := h:t_rim s
-  set := l:s_ettings s
-  part := 3 s_elect set
-  part = 1.0 ? h:f_aces s
-  part = 2.0 ? h:s_end s
+  (_, _, (part, _, _, _), _) := s
+  part = 1 ? h:f_aces s
+  part = 2 ? h:s_end s
   h:b_locks s
 }
 
 # part 0: the nearest missing column's blocks and mask; the column is
 # known (collision sees it) from now on, drawn two frames later
 h:b_locks := { s ->
+  (p, (ks, ns, ms), jb, (w, nxt, x0, on)) := s
   h := h:h_ome s
-  ks := l:k_eys s
   r := l:reach
   o := (r_ange 1 + 2 * r) - 1 + r
   dx := r_avel o '+ t_able 0 * o
   dz := r_avel (0 * o) '+ t_able o
-  ws := f_loat (10000 * 1000 + dx + 1 s_elect h) + 1000 + dz + 2 s_elect h
+  ws := (10000 * 1000 + dx + 1 s_elect h) + 1000 + dz + 2 s_elect h
   miss := (0 = ws m_ember? ks) r_eplicate (r_ange t_ally ws)
   0 = t_ally miss ? s
   d := (miss s_elect dx * dx) + miss s_elect dz * dz
   i := f_irst (d = 'm_in r_/ d) r_eplicate miss
   c := ((i s_elect dx) + 1 s_elect h) c_at (i s_elect dz) + 2 s_elect h
   b := vx:c_olumnBlocks c
-  set := l:s_ettings s
-  n := 2 s_elect set
-  set := (1 s_elect set) c_at (n + 1.0) c_at 1.0 c_at (f_loat c) c_at n c_at 6 d_rop set
-  s := (ks c_at i s_elect ws) h:w_ithKeys s
-  s := ((l:n_umbers s) c_at n) h:w_ithNumbers s
-  s := (set) h:w_ithSettings s
-  s := (f_loat r_avel b) h:w_ithJob s
-  s c_at e_nclose f_loat vx:c_olumnMask b
+  wo := (ks c_at i s_elect ws, ns c_at nxt, ms c_at e_nclose vx:c_olumnMask b)
+  (p, wo, (1, c, nxt, r_avel b), (w, nxt + 1, x0, on))
 }
 
 # part 1: the job's faces, from its blocks
-h:f_aces := { s ->
-  set := l:s_ettings s
-  c := f_loor 4 5 s_elect set
-  b := 18 32 18 r_eshape f_loor d_isclose 5 s_elect s
-  f := c vx:c_olumnFaces b
-  s := ((2 t_ake set) c_at 2.0 c_at 3 d_rop set) h:w_ithSettings s
-  (f_loat r_avel f) h:w_ithJob s
+h:f_aces := { (p, wo, (_, c, n, b), st) ->
+  f := c vx:c_olumnFaces 18 32 18 r_eshape b
+  (p, wo, (2, c, n, r_avel f), st)
 }
 
 # part 2: the job's faces to scene, one object for each kind of block
-h:s_end := { s ->
-  set := l:s_ettings s
-  v := d_isclose 5 s_elect s
-  f := (((t_ally v) d_iv 5) c_at 5) r_eshape f_loor v
-  n := 6 s_elect set
-  w := 1 s_elect set
-  sent := '{ (w c_at n c_at f_loat _r) h:s_endOne f } m_ap r_ange 7
-  s := ((2 t_ake set) c_at 0.0 c_at 3 d_rop set) h:w_ithSettings s
-  (0 r_eshape 0.0) h:w_ithJob s
+h:s_end := { (p, wo, (_, c, n, v), st) ->
+  (w, _, _, _) := st
+  f := (((t_ally v) d_iv 5) c_at 5) r_eshape v
+  sent := '{ (w c_at n c_at _r) h:s_endOne f } m_ap r_ange 7
+  (p, wo, (0, c, n, 0 r_eshape 0), st)
 }
 
 ### Collision
 
-# s c_ell v: whether any of the cells at column (x z) and heights ys (v
-# is x z then the ys) is solid; a column not made yet is solid
-h:c_ell := { s v ->
+# wo h:c_ell v: whether any of the cells at column (x z) and heights ys
+# (v is x z then the ys) is solid; a column not made yet is solid
+h:c_ell := { (ks, _, ms) v ->
   x := 1 s_elect v
   z := 2 s_elect v
   ys := 2 d_rop v
-  i := (l:k_eys s) i_ndexOf h:k_ey (x d_iv 16) c_at z d_iv 16
-  i > t_ally l:k_eys s ? 1
-  m := d_isclose (5 + i) s_elect s
-  0 < '+ r_/ (1 + (z m_od 16) + 16 * ys + 32 * x m_od 16) s_elect m
+  i := ks i_ndexOf h:k_ey (x d_iv 16) c_at z d_iv 16
+  i > t_ally ks ? 1
+  0 < '+ r_/ (1 + (z m_od 16) + 16 * ys + 32 * x m_od 16) s_elect d_isclose i s_elect ms
 }
 
-## s en:h_it q: whether the player's box (0.6 wide, 1.75 tall) with its
-## feet at q (x y z) overlaps a solid block; below the world is solid,
-## above it air
-l:h_it := { s q ->
+## wo en:h_it q: whether the player's box (0.6 wide, 1.75 tall) with its
+## feet at q (x y z) overlaps a solid block of the world wo; below the
+## world is solid, above it air
+l:h_it := { wo q ->
   x := 1 s_elect q
   y := 2 s_elect q
   z := 3 s_elect q
@@ -190,7 +161,7 @@ l:h_it := { s q ->
   0 = t_ally cy ? 0.0
   px := r_avel cx '{ _l + 0 * _r } t_able cz
   pz := r_avel cx '{ _r + 0 * _l } t_able cz
-  hits := '{ s h:c_ell (_r s_elect px) c_at (_r s_elect pz) c_at cy } e_ach r_ange t_ally px
+  hits := '{ wo h:c_ell (_r s_elect px) c_at (_r s_elect pz) c_at cy } e_ach r_ange t_ally px
   f_loat 0 < '+ r_/ hits
 }
 
@@ -199,35 +170,35 @@ l:h_it := { s q ->
 ## a frame: 1/60 s
 l:dt := 1.0 / 60.0
 
-# (i v) s_et p: the player with number i replaced by v
-h:s_et := { l p -> p + (f_loat (r_ange 10) = f_loor 1 s_elect l) * (2 s_elect l) - p }
+# (i v) h:s_et3 x: the 3-vector x with item i replaced by v
+h:s_et3 := { l x -> x + (f_loat (r_ange 3) = f_loor 1 s_elect l) * (2 s_elect l) - x }
 
-# v s_nap a: where to stop, moving at v, before the block at a
+# v h:s_nap a: where to stop, moving at v, before the block at a
 h:s_nap := { v a ->
   v > 0.0 ? (f_loat f_loor a + 0.3) - 0.3001
   (f_loat 1 + f_loor a - 0.3) + 0.3001
 }
 
-# the three axes of a move against the world s: x and z stop at a wall;
-# y lands (on the ground) or bumps a ceiling
-h:m_x := { s p ->
-  a := (1 s_elect p) + l:dt * 4 s_elect p
-  q := (1 c_at a) h:s_et p
-  0 = s l:h_it q ? q
-  (4 c_at 0.0) h:s_et (1 c_at (4 s_elect p) h:s_nap a) h:s_et p
+# wo h:m_x p, h:m_z, h:m_y: the three axes of a move against the world
+# wo: x and z stop at a wall; y lands (on the ground) or bumps a ceiling
+h:m_x := { wo (x, v, yaw, pitch, g, fly) ->
+  a := (1 s_elect x) + l:dt * 1 s_elect v
+  q := (1.0 c_at a) h:s_et3 x
+  0 = wo l:h_it q ? (q, v, yaw, pitch, g, fly)
+  ((1.0 c_at (1 s_elect v) h:s_nap a) h:s_et3 x, (1.0 c_at 0.0) h:s_et3 v, yaw, pitch, g, fly)
 }
-h:m_z := { s p ->
-  a := (3 s_elect p) + l:dt * 6 s_elect p
-  q := (3 c_at a) h:s_et p
-  0 = s l:h_it q ? q
-  (6 c_at 0.0) h:s_et (3 c_at (6 s_elect p) h:s_nap a) h:s_et p
+h:m_z := { wo (x, v, yaw, pitch, g, fly) ->
+  a := (3 s_elect x) + l:dt * 3 s_elect v
+  q := (3.0 c_at a) h:s_et3 x
+  0 = wo l:h_it q ? (q, v, yaw, pitch, g, fly)
+  ((3.0 c_at (3 s_elect v) h:s_nap a) h:s_et3 x, (3.0 c_at 0.0) h:s_et3 v, yaw, pitch, g, fly)
 }
-h:m_y := { s p ->
-  a := (2 s_elect p) + l:dt * 5 s_elect p
-  q := (9 c_at 0.0) h:s_et (2 c_at a) h:s_et p
-  0 = s l:h_it q ? q
-  (5 s_elect p) > 0.0 ? (5 c_at 0.0) h:s_et (2 c_at (f_loat f_loor a + 1.75) - 1.7501) h:s_et p
-  (9 c_at 1.0) h:s_et (5 c_at 0.0) h:s_et (2 c_at f_loat 1 + f_loor a) h:s_et p
+h:m_y := { wo (x, v, yaw, pitch, g, fly) ->
+  a := (2 s_elect x) + l:dt * 2 s_elect v
+  q := (2.0 c_at a) h:s_et3 x
+  0 = wo l:h_it q ? (q, v, yaw, pitch, 0.0, fly)
+  (2 s_elect v) > 0.0 ? ((2.0 c_at (f_loat f_loor a + 1.75) - 1.7501) h:s_et3 x, (2.0 c_at 0.0) h:s_et3 v, yaw, pitch, g, fly)
+  ((2.0 c_at f_loat 1 + f_loor a) h:s_et3 x, (2.0 c_at 0.0) h:s_et3 v, yaw, pitch, 1.0, fly)
 }
 
 ## s en:m_ove k: one frame of the player under the controls k (mouse dx
@@ -238,41 +209,40 @@ h:m_y := { s p ->
 ## one block high. Flying: W A S D level by the heading, Space up, Shift
 ## down, 15 blocks a second, no gravity, the blocks still stopping it.
 l:m_ove := { s k ->
-  p := l:p_layer s
-  yaw := (7 s_elect p) + (0.005 * 1 s_elect k) + 2.0 * l:dt * (10 s_elect k) - 9 s_elect k
-  pitch := -1.5 m_ax 1.5 m_in (8 s_elect p) + (-0.005 * 2 s_elect k) + 1.5 * l:dt * (11 s_elect k) - 12 s_elect k
+  ((x, v, yaw, pitch, g, fly), wo, jb, st) := s
+  yaw := yaw + (0.005 * 1 s_elect k) + 2.0 * l:dt * (10 s_elect k) - 9 s_elect k
+  pitch := -1.5 m_ax 1.5 m_in pitch + (-0.005 * 2 s_elect k) + 1.5 * l:dt * (11 s_elect k) - 12 s_elect k
   fwd := (3 s_elect k) - 5 s_elect k
   side := (6 s_elect k) - 4 s_elect k
-  fly := 10 s_elect p
-  wet := (1.0 - fly) * f_loat 14.0 > 0.9 + 2 s_elect p
+  wet := (1.0 - fly) * f_loat 14.0 > 0.9 + 2 s_elect x
   speed := (fly * 15.0) + (1.0 - fly) * (1.0 - 0.4 * wet) * 4.5 * 1.0 + 8 s_elect k
   vx := speed * ((s_in yaw) * fwd) + (c_os yaw) * side
   vz := speed * ((0.0 - c_os yaw) * fwd) + (s_in yaw) * side
-  surface := (1.0 - fly) * (f_loat 14.5 > 2 s_elect p) * f_loat 13.0 < 2 s_elect p
-  jump := (1.0 - fly) * (1.0 m_in (9 s_elect p) + surface * 1.0 - wet) * 7 s_elect k
+  surface := (1.0 - fly) * (f_loat 14.5 > 2 s_elect x) * f_loat 13.0 < 2 s_elect x
+  jump := (1.0 - fly) * (1.0 m_in g + surface * 1.0 - wet) * 7 s_elect k
   swim := wet * 7 s_elect k
-  fall := -30.0 m_ax (5 s_elect p) - 22.0 * l:dt
-  sink := -2.0 m_ax (5 s_elect p) - 6.0 * l:dt
+  fall := -30.0 m_ax (2 s_elect v) - 22.0 * l:dt
+  sink := -2.0 m_ax (2 s_elect v) - 6.0 * l:dt
   walkVy := (7.5 * jump) + (1.0 - jump) * (4.0 * swim) + (1.0 - swim) * (wet * sink) + (1.0 - wet) * fall
-  flyVy := ((80.0 - 2 s_elect p) * 60.0) m_in 15.0 * (7 s_elect k) - 8 s_elect k
+  flyVy := ((80.0 - 2 s_elect x) * 60.0) m_in 15.0 * (7 s_elect k) - 8 s_elect k
   vy := (fly * flyVy) + (1.0 - fly) * walkVy
-  p := (7 c_at yaw) h:s_et (8 c_at pitch) h:s_et (4 c_at vx) h:s_et (5 c_at vy) h:s_et (6 c_at vz) h:s_et p
-  p := s h:m_y s h:m_z s h:m_x p
-  e := (l:w_indow s) sc:e_ye! (1 s_elect p) c_at ((2 s_elect p) + 1.6) c_at (3 s_elect p) c_at yaw c_at pitch
-  p l:w_ithPlayer s
+  p := wo h:m_y wo h:m_z wo h:m_x (x, vx c_at vy c_at vz, yaw, pitch, g, fly)
+  (x2, _, _, _, _, _) := p
+  e := (l:w_indow s) sc:e_ye! (1 s_elect x2) c_at ((2 s_elect x2) + 1.6) c_at (3 s_elect x2) c_at yaw c_at pitch
+  (p, wo, jb, st)
 }
 
 ## en:h_omeAgain s: the player back at the start, standing still,
 ## walking
-l:h_omeAgain := { s -> ((l:s_tart s) c_at 0.0 0.0 0.0 0.0 0.0 0.0 0.0) l:w_ithPlayer s }
+l:h_omeAgain := { s -> (l:s_tart s, 0.0 0.0 0.0, 0.0, 0.0, 0.0, 0.0) l:w_ithPlayer s }
 
 ## en:t_oggleFly s: flying, or walking again (falling from where it is)
 l:t_oggleFly := { s ->
-  p := l:p_layer s
-  ((6 t_ake p) c_at (7 8 s_elect p) c_at 0.0 c_at 1.0 - 10 s_elect p) l:w_ithPlayer s
+  ((x, _, yaw, pitch, _, fly), wo, jb, st) := s
+  ((x, 0.0 0.0 0.0, yaw, pitch, 0.0, 1.0 - fly), wo, jb, st)
 }
 
-## en:s_top s: the state marked as finished (the next number negative)
-l:s_top := { s -> ((1 t_ake l:s_ettings s) c_at (0.0 - 2 s_elect l:s_ettings s) c_at 2 d_rop l:s_ettings s) h:w_ithSettings s }
+## en:s_top s: the state marked as finished
+l:s_top := { (p, wo, jb, (w, nxt, x0, _)) -> (p, wo, jb, (w, nxt, x0, 0)) }
 ## en:s_topped s: whether the state is marked as finished
-l:s_topped := { s -> 0.0 > 2 s_elect l:s_ettings s }
+l:s_topped := { (_, _, _, (_, _, _, on)) -> on = 0 }

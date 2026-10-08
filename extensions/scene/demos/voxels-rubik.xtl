@@ -53,11 +53,12 @@ shown := u:d_raw s
 
 ### Turning it
 
-## The state is one Int vector: the 54 colors, then the turns made so
-## far (1 to 12, in the order of rb:names), the history undo walks back.
-## Keys: u d r l f b turn that face clockwise (seen from outside it),
-## with Shift counterclockwise; z undoes the last turn; Space scrambles
-## (25 random turns, never the same face twice in a row); 0 resets.
+## The state is a tuple: (the 54 colors, the turns made so far -- 1 to
+## 12, in the order of rb:names, the history undo walks back -- and
+## whether it runs, 1 or 0). Keys: u d r l f b turn that face
+## clockwise (seen from outside it), with Shift counterclockwise; z
+## undoes the last turn; Space scrambles (25 random turns, never the
+## same face twice in a row); 0 resets.
 
 letters := "uUdDrRlLfFbB"
 
@@ -69,60 +70,60 @@ u:t_ell := { m st ->
 
 ## the turns made, by name (and whether the cube is solved)
 u:s_ay := { st ->
-  h := 54 d_rop st
+  (c, h, _) := st
   0 = t_ally h ? "solved, no turns" u:t_ell st
   names := (n_ot rb:names = f_irst " ") p_artition rb:names
   said := p_rint! "turns: " c_at d_isclose '{ e_nclose (d_isclose _l) c_at " " c_at d_isclose _r } r_/ h s_elect names
-  ((54 t_ake st) m_atch rb:solved) ? "solved" u:t_ell st
+  (c m_atch rb:solved) ? "solved" u:t_ell st
   st
 }
 
 ## i u:t_urnBy st: turn i made and remembered, the cube redrawn
-u:t_urnBy := { i st ->
-  c := i rb:t_urn 54 t_ake st
+u:t_urnBy := { i (c, h, on) ->
+  c := i rb:t_urn c
   shown := u:d_raw c
-  c c_at (54 d_rop st) c_at i
+  (c, h c_at i, on)
 }
 
 ## the last turn undone and forgotten
-u:u_ndoLast := { st ->
-  54 = t_ally st ? st
-  i := f_irst -1 t_ake st
-  c := (rb:u_ndo i) rb:t_urn 54 t_ake st
+u:u_ndoLast := { (c, h, on) ->
+  0 = t_ally h ? (c, h, on)
+  c := (rb:u_ndo f_irst -1 t_ake h) rb:t_urn c
   shown := u:d_raw c
-  c c_at 54 d_rop -1 d_rop st
+  (c, -1 d_rop h, on)
 }
 
-## 25 random turns, never the same face twice in a row (so none undoes
-## or repeats the one before), remembered (so undo can walk back to
-## solved)
-u:o_ne := { st ->
+## one random turn, never the same face as the one before, remembered
+## (so undo can walk back to solved)
+u:o_ne := { (c, h, on) ->
   i := r_oll! 12
-  prev := (55 <= t_ally st) * f_irst -1 t_ake st
-  ((i + 1) d_iv 2) = (prev + 1) d_iv 2 ? u:o_ne st
-  c := i rb:t_urn 54 t_ake st
-  c c_at (54 d_rop st) c_at i
+  prev := f_irst -1 t_ake 0 c_at h
+  ((i + 1) d_iv 2) = (prev + 1) d_iv 2 ? u:o_ne (c, h, on)
+  (i rb:t_urn c, h c_at i, on)
 }
+
+## 25 random turns, the cube redrawn
 u:s_cramble := { st ->
-  st := 25 'u:o_ne p_ower st
-  shown := u:d_raw 54 t_ake st
-  st
+  (c, h, on) := 25 'u:o_ne p_ower st
+  shown := u:d_raw c
+  (c, h, on)
 }
 
 ## back to solved, no history
-u:r_eset := { st ->
+u:r_eset := { (_, _, on) ->
   shown := u:d_raw rb:solved
-  rb:solved
+  (rb:solved, 0 r_eshape 0, on)
 }
 
-u:q_uit := { st ->
+u:q_uit := { (c, h, _) ->
   z := sc:c_lose! w
-  0 r_eshape 0
+  (c, h, 0)
 }
 
 ## one frame: an event, and what it asks for
 u:f_rame := { st ->
-  0 = t_ally st ? st
+  (_, _, on) := st
+  0 = on ? st
   v := sc:n_ext! w
   ((v m_atch "close") + v m_atch "key q") > 0 ? u:q_uit st
   (v m_atch "key z") ? u:s_ay u:u_ndoLast st
@@ -134,5 +135,5 @@ u:f_rame := { st ->
   st
 }
 "keys: u d r l f b turn a face clockwise, Shift+letter counterclockwise, z undo, Space scramble, 0 reset, q quit"
-last := 100000 'u:f_rame p_ower rb:solved
+last := 100000 'u:f_rame p_ower (rb:solved, 0 r_eshape 0, 1)
 "bye"

@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-08
 
+- 09:30 `refactor` Tuples (the user asked; X_eTaL's Saga 39, in the pinned d284a8c, checked in `xetal-x` too): the endless world's state is now a tuple of tuples -- (player, world, job, settings), the player (position, velocity, yaw, pitch, ground, fly), the world (keys, numbers, masks), the job (part, column, number, data) -- taken apart by patterns, its keys and numbers Ints again (no Floats packed at fixed offsets, no boxes forced to one type); the cube demo's state is (colors, history, running). Every golden unchanged, frames included: the behavior is the same. On the way, an empty history no longer reads past it (the packed vector had hidden it).
+
 - 08:30 `ext` Voxels 8, `just demo scene voxels-rubik` (the user: a Rubik's cube from voxels, a valid scramble, turns, undo to solved): the library `demos/Rubik.xtl` keeps the cube as 54 stickers (position and normal); each of the 12 quarter turns is a permutation computed from the geometry -- the layer's stickers rotated, keyed, matched with `i_ndexOf`, and `g_rade` inverting it -- and checked (each a permutation, order 4, a turn and its undoing, R U R' U' of order 6, R U of order 105, U and R turning the right way). Drawn as 26 dark cubies with inset stickers, one quads object per color. Keys: u d r l f b clockwise, Shift counterclockwise, z undo to solved, Space a scramble of 25 random turns (never the same face twice in a row), 0 reset; the turns printed. Golden with keys and three frames pinned; recording.
 
 - 06:50 `docs` The doc site's sidebar lists each extension's facade with its demos beside it (files passed by extension: the binding macro, then each extension's lib/ and demos/).
