@@ -22,52 +22,20 @@
 <ul>
 <li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
 </ul>
-<h3>extensions/canvas/lib/</h3>
-<ul>
-<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
-</ul>
-<h3>extensions/clock/lib/</h3>
-<ul>
-<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
-</ul>
-<h3>extensions/digest/lib/</h3>
-<ul>
-<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
-</ul>
-<h3>extensions/hello/lib/</h3>
-<ul>
-<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
-</ul>
-<h3>extensions/http/lib/</h3>
-<ul>
-<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
-</ul>
-<h3>extensions/image/lib/</h3>
-<ul>
-<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
-</ul>
-<h3>extensions/linalg/lib/</h3>
-<ul>
-<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
-</ul>
-<h3>extensions/scene/lib/</h3>
-<ul>
-<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
-</ul>
-<h3>extensions/sqlite/lib/</h3>
-<ul>
-<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
-</ul>
-<h3>extensions/web/lib/</h3>
-<ul>
-<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
-</ul>
 <h3>extensions/audio/demos/</h3>
 <ul>
 <li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
 <li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
 <li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
 <li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+</ul>
+<h3>extensions/canvas/lib/</h3>
+<ul>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+</ul>
+<h3>extensions/scene/lib/</h3>
+<ul>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
 </ul>
 <h3>std/</h3>
 <ul>
@@ -77,13 +45,29 @@
 <ul>
 <li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
 </ul>
+<h3>extensions/clock/lib/</h3>
+<ul>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+</ul>
 <h3>extensions/clock/demos/</h3>
 <ul>
 <li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
 </ul>
+<h3>extensions/hello/lib/</h3>
+<ul>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+</ul>
+<h3>extensions/digest/lib/</h3>
+<ul>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
 <h3>extensions/hello/demos/</h3>
 <ul>
 <li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+</ul>
+<h3>extensions/http/lib/</h3>
+<ul>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
 </ul>
 <h3>extensions/http/demos/</h3>
 <ul>
@@ -91,9 +75,21 @@
 <li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
 <li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
 </ul>
+<h3>extensions/sqlite/lib/</h3>
+<ul>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+</ul>
+<h3>extensions/image/lib/</h3>
+<ul>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+</ul>
 <h3>extensions/image/demos/</h3>
 <ul>
 <li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+</ul>
+<h3>extensions/linalg/lib/</h3>
+<ul>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
 </ul>
 <h3>extensions/scene/demos/</h3>
 <ul>
@@ -111,6 +107,10 @@
 <h3>extensions/sqlite/demos/</h3>
 <ul>
 <li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+</ul>
+<h3>extensions/web/lib/</h3>
+<ul>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
 </ul>
 <h3>extensions/web/demos/</h3>
 <ul>
@@ -138,73 +138,6 @@ Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
 With XETAL_HEADLESS=1 (or XETAL_AUDIO=off) nothing sounds and playback
 advances a 60th of a second per au:w_indow (or au:p_layed) -- for tests.
 Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
-<li>library <a href="extensions-canvas-lib-Canvas.xtl.html">extensions/canvas/lib/Canvas.xtl</a>: Canvas.xtl -- the facade of the canvas extension: a native window
-showing X_eTaL arrays as pixels, with keys, clicks and frame ticks back.
-Import: &quot;cv:&quot; u_se&lt; &quot;Canvas&quot;
-Run with xetal-x, which links canvas and serves its windows on the main
-thread (xetal-x --ext DIR puts this directory on XETAL_PATH).
-Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
-<li>library <a href="extensions-clock-lib-Clock.xtl.html">extensions/clock/lib/Clock.xtl</a>: Clock.xtl -- the facade of the clock extension: wall-clock and
-monotonic time, which X_eTaL does not have, for timestamps and timing.
-Import: &quot;ck:&quot; u_se&lt; &quot;Clock&quot;
-Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
-Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
-<li>library <a href="extensions-digest-lib-Digest.xtl.html">extensions/digest/lib/Digest.xtl</a>: Digest.xtl -- the facade of the digest extension: SHA-256 and CRC-32
-of text and of files, to check that content is what it should be.
-Import: &quot;dg:&quot; u_se&lt; &quot;Digest&quot;
-Files are named by paths under the working directory (or
-XETAL_DIGEST_ROOT), relative, with no ..
-Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
-Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
-<li>library <a href="extensions-hello-lib-Hello.xtl.html">extensions/hello/lib/Hello.xtl</a>: Hello.xtl -- the facade of the hello extension, the smallest X_eTaL
-native extension: each function proves one thing about the boundary.
-Import: &quot;hx:&quot; u_se&lt; &quot;Hello&quot;
-Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
-Each line below is a native function's signature; the binding macro
-(lib/Ffi.xtlm, docs/ffi-macro.md) writes the facade function from it.</li>
-<li>library <a href="extensions-http-lib-Http.xtl.html">extensions/http/lib/Http.xtl</a>: Http.xtl -- the facade of the http extension: bounded HTTP GET, text
-from the web within size, time and redirect limits.
-Import: &quot;ht:&quot; u_se&lt; &quot;Http&quot;
-Limits: XETAL_HTTP_MAX bytes (16 MiB), XETAL_HTTP_TIMEOUT seconds (30),
-5 redirects; only http:// and https:// URLs. Downloads go under the
-working directory (or XETAL_HTTP_ROOT).
-Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
-Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
-<li>library <a href="extensions-image-lib-Image.xtl.html">extensions/image/lib/Image.xtl</a>: Image.xtl -- the facade of the image extension: PNG and JPEG files as
-Float arrays from 0 to 1, and back. Gray is h by w, color h by w by 3
-(red, green, blue); alpha is dropped.
-Import: &quot;im:&quot; u_se&lt; &quot;Image&quot;
-Files are named by paths under the working directory (or
-XETAL_IMAGE_ROOT), relative, with no ..
-Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
-Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
-<li>library <a href="extensions-linalg-lib-Linalg.xtl.html">extensions/linalg/lib/Linalg.xtl</a>: Linalg.xtl -- the facade of the linalg extension: numerical linear
-algebra through nalgebra. Matrices are Float arrays (row by column);
-a right-hand side may be a vector or a matrix of columns.
-Import: &quot;la:&quot; u_se&lt; &quot;Linalg&quot;
-Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
-Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
-<li>library <a href="extensions-scene-lib-Scene.xtl.html">extensions/scene/lib/Scene.xtl</a>: Scene.xtl -- the facade of the scene extension: retained 3D line and
-point scenes in a native window, patched by id, the mouse orbiting.
-Import: &quot;sc:&quot; u_se&lt; &quot;Scene&quot;
-Run with xetal-x, which links scene and serves its windows on the main
-thread (xetal-x --ext DIR puts this directory on XETAL_PATH).
-Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
-<li>library <a href="extensions-sqlite-lib-Sqlite.xtl.html">extensions/sqlite/lib/Sqlite.xtl</a>: Sqlite.xtl -- the facade of the sqlite extension: SQLite databases
-for X_eTaL (rusqlite, SQLite compiled in).
-Import: &quot;sq:&quot; u_se&lt; &quot;Sqlite&quot;
-A database is named by its path, relative to the working directory
-(or XETAL_SQLITE_ROOT), or &quot;:memory:&quot; for one call's scratch database;
-each call opens it and closes it.
-Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
-Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
-<li>library <a href="extensions-web-lib-Web.xtl.html">extensions/web/lib/Web.xtl</a>: Web.xtl -- the facade of the web extension: HTTP serving, where the
-program is the request loop. axum serves on 127.0.0.1 in the
-background and queues each request; the program takes the next one,
-reads its parts, and replies.
-Import: &quot;wb:&quot; u_se&lt; &quot;Web&quot;
-Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
-Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
 <li>library <a href="extensions-audio-demos-Instruments.xtl.html">extensions/audio/demos/Instruments.xtl</a>: Instruments.xtl -- the instruments of the synthesizer demos (synth.xtl,
 scope.xtl): music as arrays. An ordinary X_eTaL library beside them.
 Import: &quot;in:&quot; u_se&lt; &quot;Instruments&quot;</li>
@@ -213,12 +146,24 @@ while a window draws the samples under the playhead -- the left
 channel above, the right below -- each frame, triggered on the left
 channel's rising zero crossing so a steady chord stands still.
 Run: just demo audio scope   (q or close: quit)</li>
+<li>library <a href="extensions-canvas-lib-Canvas.xtl.html">extensions/canvas/lib/Canvas.xtl</a>: Canvas.xtl -- the facade of the canvas extension: a native window
+showing X_eTaL arrays as pixels, with keys, clicks and frame ticks back.
+Import: &quot;cv:&quot; u_se&lt; &quot;Canvas&quot;
+Run with xetal-x, which links canvas and serves its windows on the main
+thread (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
 <li>program <a href="extensions-audio-demos-spectrum.xtl.html">extensions/audio/demos/spectrum.xtl</a>: The music visualizer: an Ogg Vorbis (or MP3, WAV) file plays while
 X_eTaL turns what is playing into a spectrum and the spectrum into 16
 spokes in a 3D window -- Rust decodes, plays and draws; the analysis
 and the picture's geometry are X_eTaL arrays.
 Run: just demo audio spectrum   (Space: pause, j/k: back/on 5 s, q: quit)
 Another file: change the path below (Ogg Vorbis, MP3 or WAV).</li>
+<li>library <a href="extensions-scene-lib-Scene.xtl.html">extensions/scene/lib/Scene.xtl</a>: Scene.xtl -- the facade of the scene extension: retained 3D line and
+point scenes in a native window, patched by id, the mouse orbiting.
+Import: &quot;sc:&quot; u_se&lt; &quot;Scene&quot;
+Run with xetal-x, which links scene and serves its windows on the main
+thread (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
 <li>library <a href="std-Stats.xtl.html">std/Stats.xtl</a>: Stats: a small statistics library (a standard library, built into
 xetal). Import it with an alias of your choice: &quot;s:&quot; u_se&lt; &quot;Stats&quot;.
 It is a demo library, loaded only by that import: a small subset of
@@ -233,11 +178,37 @@ Run: just demo audio synth</li>
 <li>program <a href="extensions-canvas-demos-life.xtl.html">extensions/canvas/demos/life.xtl</a>: Conway's Life in a native window: the board is an X_eTaL array, each
 generation one array expression, drawn by Rust with every frame.
 Run: just demo canvas life   (Space: a new board; q or close: quit)</li>
+<li>library <a href="extensions-clock-lib-Clock.xtl.html">extensions/clock/lib/Clock.xtl</a>: Clock.xtl -- the facade of the clock extension: wall-clock and
+monotonic time, which X_eTaL does not have, for timestamps and timing.
+Import: &quot;ck:&quot; u_se&lt; &quot;Clock&quot;
+Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
 <li>program <a href="extensions-clock-demos-bridge-cost.xtl.html">extensions/clock/demos/bridge-cost.xtl</a>: What the text bridge costs (docs/bridge.md): calls per second, and
 Floats per second carried out and back (it uses hello too).
 Run: just demo clock bridge-cost</li>
+<li>library <a href="extensions-hello-lib-Hello.xtl.html">extensions/hello/lib/Hello.xtl</a>: Hello.xtl -- the facade of the hello extension, the smallest X_eTaL
+native extension: each function proves one thing about the boundary.
+Import: &quot;hx:&quot; u_se&lt; &quot;Hello&quot;
+Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each line below is a native function's signature; the binding macro
+(lib/Ffi.xtlm, docs/ffi-macro.md) writes the facade function from it.</li>
+<li>library <a href="extensions-digest-lib-Digest.xtl.html">extensions/digest/lib/Digest.xtl</a>: Digest.xtl -- the facade of the digest extension: SHA-256 and CRC-32
+of text and of files, to check that content is what it should be.
+Import: &quot;dg:&quot; u_se&lt; &quot;Digest&quot;
+Files are named by paths under the working directory (or
+XETAL_DIGEST_ROOT), relative, with no ..
+Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
 <li>program <a href="extensions-hello-demos-tour.xtl.html">extensions/hello/demos/tour.xtl</a>: A tour of the hello extension: X_eTaL arrays handed to Rust and back.
 Run: just demo hello tour   (or: xetal-x --ext extensions/hello run demos/tour.xtl)</li>
+<li>library <a href="extensions-http-lib-Http.xtl.html">extensions/http/lib/Http.xtl</a>: Http.xtl -- the facade of the http extension: bounded HTTP GET, text
+from the web within size, time and redirect limits.
+Import: &quot;ht:&quot; u_se&lt; &quot;Http&quot;
+Limits: XETAL_HTTP_MAX bytes (16 MiB), XETAL_HTTP_TIMEOUT seconds (30),
+5 redirects; only http:// and https:// URLs. Downloads go under the
+working directory (or XETAL_HTTP_ROOT).
+Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
 <li>program <a href="extensions-http-demos-quakes-live.xtl.html">extensions/http/demos/quakes-live.xtl</a>: Earthquakes of the past week, live: the USGS feed of magnitude 2.5 and
 up, fetched now (the network: run it only when you mean to), its
 SHA-256 shown, then the same report as quakes.xtl.
@@ -247,12 +218,28 @@ USGS feed CSV into SQLite, SQL to select and group, X_eTaL arrays to
 compute, pictures to see it. An ordinary X_eTaL library beside them
 (not Quakes.xtl: on a case-insensitive file system that is quakes.xtl).
 Import: &quot;se:&quot; u_se&lt; &quot;Seismic&quot;</li>
+<li>library <a href="extensions-sqlite-lib-Sqlite.xtl.html">extensions/sqlite/lib/Sqlite.xtl</a>: Sqlite.xtl -- the facade of the sqlite extension: SQLite databases
+for X_eTaL (rusqlite, SQLite compiled in).
+Import: &quot;sq:&quot; u_se&lt; &quot;Sqlite&quot;
+A database is named by its path, relative to the working directory
+(or XETAL_SQLITE_ROOT), or &quot;:memory:&quot; for one call's scratch database;
+each call opens it and closes it.
+Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
 <li>program <a href="extensions-http-demos-quakes.xtl.html">extensions/http/demos/quakes.xtl</a>: Earthquakes of a week: the USGS feed of magnitude 2.5 and up, saved
 2026-10-06 (demos/data/PROVENANCE.txt), checked against its SHA-256,
 into SQLite; SQL selects and groups, X_eTaL computes (the
 magnitude-frequency law), pictures show it.
 Run: just demo http quakes   (pictures go to work/draw/; the live
 feed: just live-quakes)</li>
+<li>library <a href="extensions-image-lib-Image.xtl.html">extensions/image/lib/Image.xtl</a>: Image.xtl -- the facade of the image extension: PNG and JPEG files as
+Float arrays from 0 to 1, and back. Gray is h by w, color h by w by 3
+(red, green, blue); alpha is dropped.
+Import: &quot;im:&quot; u_se&lt; &quot;Image&quot;
+Files are named by paths under the working directory (or
+XETAL_IMAGE_ROOT), relative, with no ..
+Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
 <li>program <a href="extensions-image-demos-photo-lab.xtl.html">extensions/image/demos/photo-lab.xtl</a>: The photo lab: a photo is an array. Buzz Aldrin on the Moon (Apollo
 11, NASA, public domain: demos/data/PROVENANCE.txt) read as numbers;
 filters and edges by rotating the array (the Life idiom), a color
@@ -260,6 +247,12 @@ toning by an inner product, and the SVD compressing it at several
 ranks -- the native code reads, writes and decomposes, X_eTaL does
 the rest. Pictures go to work/photo-lab/.
 Run: just demo image photo-lab</li>
+<li>library <a href="extensions-linalg-lib-Linalg.xtl.html">extensions/linalg/lib/Linalg.xtl</a>: Linalg.xtl -- the facade of the linalg extension: numerical linear
+algebra through nalgebra. Matrices are Float arrays (row by column);
+a right-hand side may be a vector or a matrix of columns.
+Import: &quot;la:&quot; u_se&lt; &quot;Linalg&quot;
+Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
 <li>program <a href="extensions-scene-demos-cube.xtl.html">extensions/scene/demos/cube.xtl</a>: A wireframe cube turning in a native 3D window: its corners and edges
 are X_eTaL arrays; Rust draws them.
 Run: just demo scene cube   (drag to turn it; q or close: quit)</li>
@@ -344,6 +337,13 @@ Run: just demo scene voxels-world   (drag to turn it; q or close: quit)</li>
 arrays to compute, pictures to see it. Atmospheric CO2 at Mauna Loa,
 1959-2025 (NOAA GML and Scripps; demos/data/PROVENANCE.txt).
 Run: just demo sqlite notebook   (pictures go to work/draw/)</li>
+<li>library <a href="extensions-web-lib-Web.xtl.html">extensions/web/lib/Web.xtl</a>: Web.xtl -- the facade of the web extension: HTTP serving, where the
+program is the request loop. axum serves on 127.0.0.1 in the
+background and queues each request; the program takes the next one,
+reads its parts, and replies.
+Import: &quot;wb:&quot; u_se&lt; &quot;Web&quot;
+Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
 <li>program <a href="extensions-web-demos-life.xtl.html">extensions/web/demos/life.xtl</a>: A live page: Conway's Life kept by an X_eTaL program and drawn as SVG,
 one generation per request. The program is the server's request loop.
 Run: just demo web life, then open http://127.0.0.1:8470/
@@ -381,86 +381,6 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-audio-lib-Audio.xtl.html#l.w_ait-21"><span class="c-libfunc">ˡw̲ait!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-audio-lib-Audio.xtl.html#l.p_layed"><span class="c-libfunc">ˡp̲layed</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-audio-lib-Audio.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
-<tr><td><a href="extensions-canvas-lib-Canvas.xtl.html#l.o_pen-21"><span class="c-libfunc">ˡo̲pen!</span></a></td><td>function</td><td><code>Num a =&gt; Char -&gt; a -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-canvas-lib-Canvas.xtl.html#l.s_how-21"><span class="c-libfunc">ˡs̲how!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-canvas-lib-Canvas.xtl.html#l.n_ext-21"><span class="c-libfunc">ˡn̲ext!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-canvas-lib-Canvas.xtl.html#l.c_lose-21"><span class="c-libfunc">ˡc̲lose!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-canvas-lib-Canvas.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
-<tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.n_ow"><span class="c-libfunc">ˡn̲ow</span></a></td><td>function</td><td><code>Unit -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.i_so"><span class="c-libfunc">ˡi̲so</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.i_soOf"><span class="c-libfunc">ˡi̲soOf</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.m_illis"><span class="c-libfunc">ˡm̲illis</span></a></td><td>function</td><td><code>Unit -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.t_ime"><span class="c-libfunc">ˡt̲ime</span></a></td><td>function</td><td><code>(Any a, Any b) =&gt; (a -&gt; b) -&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
-<tr><td><a href="extensions-digest-lib-Digest.xtl.html#l.s_ha256"><span class="c-libfunc">ˡs̲ha256</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-digest-lib-Digest.xtl.html#l.s_ha256File"><span class="c-libfunc">ˡs̲ha256File</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-digest-lib-Digest.xtl.html#l.c_rc32"><span class="c-libfunc">ˡc̲rc32</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-digest-lib-Digest.xtl.html#l.c_rc32File"><span class="c-libfunc">ˡc̲rc32File</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-digest-lib-Digest.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
-<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.a_nswer"><span class="c-libfunc">ˡa̲nswer</span></a></td><td>function</td><td><code>Unit -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.a_dd"><span class="c-libfunc">ˡa̲dd</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.s_hout"><span class="c-libfunc">ˡs̲hout</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.s_um"><span class="c-libfunc">ˡs̲um</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.e_cho"><span class="c-libfunc">ˡe̲cho</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.f_ail"><span class="c-libfunc">ˡf̲ail</span></a></td><td>function</td><td><code>Unit -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.p_anic"><span class="c-libfunc">ˡp̲anic</span></a></td><td>function</td><td><code>Unit -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
-<tr><td><a href="extensions-http-lib-Http.xtl.html#l.g_et"><span class="c-libfunc">ˡg̲et</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-http-lib-Http.xtl.html#l.s_tatus"><span class="c-libfunc">ˡs̲tatus</span></a></td><td>function</td><td><code>Unit -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-http-lib-Http.xtl.html#l.h_eader"><span class="c-libfunc">ˡh̲eader</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-http-lib-Http.xtl.html#l.s_ave-21"><span class="c-libfunc">ˡs̲ave!</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-http-lib-Http.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
-<tr><td><a href="extensions-image-lib-Image.xtl.html#l.r_ead"><span class="c-libfunc">ˡr̲ead</span></a></td><td>function</td><td><code>Char -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-image-lib-Image.xtl.html#l.g_ray"><span class="c-libfunc">ˡg̲ray</span></a></td><td>function</td><td><code>Char -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-image-lib-Image.xtl.html#l.s_ize"><span class="c-libfunc">ˡs̲ize</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-image-lib-Image.xtl.html#l.w_rite-21"><span class="c-libfunc">ˡw̲rite!</span></a></td><td>function</td><td><code>Num a =&gt; Char -&gt; a -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-image-lib-Image.xtl.html#l.r_esize"><span class="c-libfunc">ˡr̲esize</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-image-lib-Image.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
-<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.s_olve"><span class="c-libfunc">ˡs̲olve</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.i_nverse"><span class="c-libfunc">ˡi̲nverse</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.d_et"><span class="c-libfunc">ˡd̲et</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.l_stsq"><span class="c-libfunc">ˡl̲stsq</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.e_ig"><span class="c-libfunc">ˡe̲ig</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.e_igVecs"><span class="c-libfunc">ˡe̲igVecs</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.s_vdS"><span class="c-libfunc">ˡs̲vdS</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.s_vdU"><span class="c-libfunc">ˡs̲vdU</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.s_vdV"><span class="c-libfunc">ˡs̲vdV</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.o_pen-21"><span class="c-libfunc">ˡo̲pen!</span></a></td><td>function</td><td><code>Num a =&gt; Char -&gt; a -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.p_olyline-21"><span class="c-libfunc">ˡp̲olyline!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.s_egments-21"><span class="c-libfunc">ˡs̲egments!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.d_ots-21"><span class="c-libfunc">ˡd̲ots!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.q_uads-21"><span class="c-libfunc">ˡq̲uads!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.f_og-21"><span class="c-libfunc">ˡf̲og!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.e_ye-21"><span class="c-libfunc">ˡe̲ye!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.c_urve-21"><span class="c-libfunc">ˡc̲urve!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.s_ky-21"><span class="c-libfunc">ˡs̲ky!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.c_ontrols"><span class="c-libfunc">ˡc̲ontrols</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.r_emove-21"><span class="c-libfunc">ˡr̲emove!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.c_amera-21"><span class="c-libfunc">ˡc̲amera!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.n_ext-21"><span class="c-libfunc">ˡn̲ext!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.c_lose-21"><span class="c-libfunc">ˡc̲lose!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
-<tr><td><a href="extensions-sqlite-lib-Sqlite.xtl.html#l.e_xec"><span class="c-libfunc">ˡe̲xec</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-sqlite-lib-Sqlite.xtl.html#l.n_ums"><span class="c-libfunc">ˡn̲ums</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-sqlite-lib-Sqlite.xtl.html#l.t_exts"><span class="c-libfunc">ˡt̲exts</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-sqlite-lib-Sqlite.xtl.html#l.c_ols"><span class="c-libfunc">ˡc̲ols</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-sqlite-lib-Sqlite.xtl.html#l.q_uote"><span class="c-libfunc">ˡq̲uote</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-sqlite-lib-Sqlite.xtl.html#l.i_mport"><span class="c-libfunc">ˡi̲mport</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-sqlite-lib-Sqlite.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
-<tr><td><a href="extensions-web-lib-Web.xtl.html#l.s_erve-21"><span class="c-libfunc">ˡs̲erve!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-web-lib-Web.xtl.html#l.n_ext-21"><span class="c-libfunc">ˡn̲ext!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-web-lib-Web.xtl.html#l.m_ethod"><span class="c-libfunc">ˡm̲ethod</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-web-lib-Web.xtl.html#l.p_ath"><span class="c-libfunc">ˡp̲ath</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-web-lib-Web.xtl.html#l.q_uery"><span class="c-libfunc">ˡq̲uery</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-web-lib-Web.xtl.html#l.b_ody"><span class="c-libfunc">ˡb̲ody</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-web-lib-Web.xtl.html#l.p_aram"><span class="c-libfunc">ˡp̲aram</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-web-lib-Web.xtl.html#l.c_ontent-21"><span class="c-libfunc">ˡc̲ontent!</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-web-lib-Web.xtl.html#l.h_eader-21"><span class="c-libfunc">ˡh̲eader!</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-web-lib-Web.xtl.html#l.r_eply-21"><span class="c-libfunc">ˡr̲eply!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-web-lib-Web.xtl.html#l.f_iles-21"><span class="c-libfunc">ˡf̲iles!</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-web-lib-Web.xtl.html#l.s_top-21"><span class="c-libfunc">ˡs̲top!</span></a></td><td>function</td><td><code>Unit -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-web-lib-Web.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-audio-demos-Instruments.xtl.html#l.rate">ˡrate</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-audio-demos-Instruments.xtl.html#l.h_z"><span class="c-libfunc">ˡh̲z</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-audio-demos-Instruments.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -484,6 +404,11 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-audio-demos-scope.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>(Any a, Num b) =&gt; a -&gt; b</code></td></tr>
 <tr><td><a href="extensions-audio-demos-scope.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-audio-demos-scope.xtl.html#last">last</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-canvas-lib-Canvas.xtl.html#l.o_pen-21"><span class="c-libfunc">ˡo̲pen!</span></a></td><td>function</td><td><code>Num a =&gt; Char -&gt; a -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-canvas-lib-Canvas.xtl.html#l.s_how-21"><span class="c-libfunc">ˡs̲how!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-canvas-lib-Canvas.xtl.html#l.n_ext-21"><span class="c-libfunc">ˡn̲ext!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-canvas-lib-Canvas.xtl.html#l.c_lose-21"><span class="c-libfunc">ˡc̲lose!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-canvas-lib-Canvas.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-audio-demos-spectrum.xtl.html#a">a</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-audio-demos-spectrum.xtl.html#rate">rate</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-audio-demos-spectrum.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -509,6 +434,21 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-audio-demos-spectrum.xtl.html#u.k_ey"><span class="c-userfunc">ᵘk̲ey</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-audio-demos-spectrum.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-audio-demos-spectrum.xtl.html#last">last</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.o_pen-21"><span class="c-libfunc">ˡo̲pen!</span></a></td><td>function</td><td><code>Num a =&gt; Char -&gt; a -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.p_olyline-21"><span class="c-libfunc">ˡp̲olyline!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.s_egments-21"><span class="c-libfunc">ˡs̲egments!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.d_ots-21"><span class="c-libfunc">ˡd̲ots!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.q_uads-21"><span class="c-libfunc">ˡq̲uads!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.f_og-21"><span class="c-libfunc">ˡf̲og!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.e_ye-21"><span class="c-libfunc">ˡe̲ye!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.c_urve-21"><span class="c-libfunc">ˡc̲urve!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.s_ky-21"><span class="c-libfunc">ˡs̲ky!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.c_ontrols"><span class="c-libfunc">ˡc̲ontrols</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.r_emove-21"><span class="c-libfunc">ˡr̲emove!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.c_amera-21"><span class="c-libfunc">ˡc̲amera!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.n_ext-21"><span class="c-libfunc">ˡn̲ext!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.c_lose-21"><span class="c-libfunc">ˡc̲lose!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="std-Stats.xtl.html#l.m_ean"><span class="c-libfunc">ˡm̲ean</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
 <tr><td><a href="std-Stats.xtl.html#h.s_quare"><span class="c-libfunc">ʰs̲quare</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
 <tr><td><a href="std-Stats.xtl.html#h.d_eviations"><span class="c-libfunc">ʰd̲eviations</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
@@ -525,19 +465,56 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-canvas-demos-life.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>(Any a, Num b) =&gt; a -&gt; b</code></td></tr>
 <tr><td><a href="extensions-canvas-demos-life.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Truthy a) =&gt; a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-canvas-demos-life.xtl.html#last">last</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.n_ow"><span class="c-libfunc">ˡn̲ow</span></a></td><td>function</td><td><code>Unit -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.i_so"><span class="c-libfunc">ˡi̲so</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.i_soOf"><span class="c-libfunc">ˡi̲soOf</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.m_illis"><span class="c-libfunc">ˡm̲illis</span></a></td><td>function</td><td><code>Unit -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.t_ime"><span class="c-libfunc">ˡt̲ime</span></a></td><td>function</td><td><code>(Any a, Any b) =&gt; (a -&gt; b) -&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-clock-demos-bridge-cost.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-clock-demos-bridge-cost.xtl.html#ms">ms</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-clock-demos-bridge-cost.xtl.html#v">v</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-clock-demos-bridge-cost.xtl.html#ms">ms</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.a_nswer"><span class="c-libfunc">ˡa̲nswer</span></a></td><td>function</td><td><code>Unit -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.a_dd"><span class="c-libfunc">ˡa̲dd</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.s_hout"><span class="c-libfunc">ˡs̲hout</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.s_um"><span class="c-libfunc">ˡs̲um</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.e_cho"><span class="c-libfunc">ˡe̲cho</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.f_ail"><span class="c-libfunc">ˡf̲ail</span></a></td><td>function</td><td><code>Unit -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.p_anic"><span class="c-libfunc">ˡp̲anic</span></a></td><td>function</td><td><code>Unit -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-hello-lib-Hello.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-digest-lib-Digest.xtl.html#l.s_ha256"><span class="c-libfunc">ˡs̲ha256</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-digest-lib-Digest.xtl.html#l.s_ha256File"><span class="c-libfunc">ˡs̲ha256File</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-digest-lib-Digest.xtl.html#l.c_rc32"><span class="c-libfunc">ˡc̲rc32</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-digest-lib-Digest.xtl.html#l.c_rc32File"><span class="c-libfunc">ˡc̲rc32File</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-digest-lib-Digest.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-hello-demos-tour.xtl.html#t">t</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-hello-demos-tour.xtl.html#c">c</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-http-lib-Http.xtl.html#l.g_et"><span class="c-libfunc">ˡg̲et</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-http-lib-Http.xtl.html#l.s_tatus"><span class="c-libfunc">ˡs̲tatus</span></a></td><td>function</td><td><code>Unit -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-http-lib-Http.xtl.html#l.h_eader"><span class="c-libfunc">ˡh̲eader</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-http-lib-Http.xtl.html#l.s_ave-21"><span class="c-libfunc">ˡs̲ave!</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-http-lib-Http.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-http-demos-quakes-live.xtl.html#url">url</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-http-demos-quakes-live.xtl.html#csv">csv</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-http-demos-Seismic.xtl.html#db">db</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-http-demos-Seismic.xtl.html#h.r_ound"><span class="c-libfunc">ʰr̲ound</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-http-demos-Seismic.xtl.html#h.m_ean"><span class="c-libfunc">ʰm̲ean</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-http-demos-Seismic.xtl.html#l.r_eport"><span class="c-libfunc">ˡr̲eport</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-sqlite-lib-Sqlite.xtl.html#l.e_xec"><span class="c-libfunc">ˡe̲xec</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-sqlite-lib-Sqlite.xtl.html#l.n_ums"><span class="c-libfunc">ˡn̲ums</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-sqlite-lib-Sqlite.xtl.html#l.t_exts"><span class="c-libfunc">ˡt̲exts</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-sqlite-lib-Sqlite.xtl.html#l.c_ols"><span class="c-libfunc">ˡc̲ols</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-sqlite-lib-Sqlite.xtl.html#l.q_uote"><span class="c-libfunc">ˡq̲uote</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-sqlite-lib-Sqlite.xtl.html#l.i_mport"><span class="c-libfunc">ˡi̲mport</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-sqlite-lib-Sqlite.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-http-demos-quakes.xtl.html#csv">csv</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-image-lib-Image.xtl.html#l.r_ead"><span class="c-libfunc">ˡr̲ead</span></a></td><td>function</td><td><code>Char -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-image-lib-Image.xtl.html#l.g_ray"><span class="c-libfunc">ˡg̲ray</span></a></td><td>function</td><td><code>Char -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-image-lib-Image.xtl.html#l.s_ize"><span class="c-libfunc">ˡs̲ize</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-image-lib-Image.xtl.html#l.w_rite-21"><span class="c-libfunc">ˡw̲rite!</span></a></td><td>function</td><td><code>Num a =&gt; Char -&gt; a -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-image-lib-Image.xtl.html#l.r_esize"><span class="c-libfunc">ˡr̲esize</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-image-lib-Image.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-image-demos-photo-lab.xtl.html#src">src</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-image-demos-photo-lab.xtl.html#out">out</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-image-demos-photo-lab.xtl.html#u.r_ound"><span class="c-userfunc">ᵘr̲ound</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
@@ -565,6 +542,16 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-image-demos-photo-lab.xtl.html#r50">r50</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-image-demos-photo-lab.xtl.html#u.e_rr"><span class="c-userfunc">ᵘe̲rr</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-image-demos-photo-lab.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.s_olve"><span class="c-libfunc">ˡs̲olve</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.i_nverse"><span class="c-libfunc">ˡi̲nverse</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.d_et"><span class="c-libfunc">ˡd̲et</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.l_stsq"><span class="c-libfunc">ˡl̲stsq</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.e_ig"><span class="c-libfunc">ˡe̲ig</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.e_igVecs"><span class="c-libfunc">ˡe̲igVecs</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.s_vdS"><span class="c-libfunc">ˡs̲vdS</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.s_vdU"><span class="c-libfunc">ˡs̲vdU</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.s_vdV"><span class="c-libfunc">ˡs̲vdV</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-linalg-lib-Linalg.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-scene-demos-cube.xtl.html#c">c</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-cube.xtl.html#e">e</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-cube.xtl.html#w">w</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -796,6 +783,19 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-sqlite-demos-notebook.xtl.html#w">w</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-sqlite-demos-notebook.xtl.html#v">v</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-sqlite-demos-notebook.xtl.html#p">p</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-web-lib-Web.xtl.html#l.s_erve-21"><span class="c-libfunc">ˡs̲erve!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-web-lib-Web.xtl.html#l.n_ext-21"><span class="c-libfunc">ˡn̲ext!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-web-lib-Web.xtl.html#l.m_ethod"><span class="c-libfunc">ˡm̲ethod</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-web-lib-Web.xtl.html#l.p_ath"><span class="c-libfunc">ˡp̲ath</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-web-lib-Web.xtl.html#l.q_uery"><span class="c-libfunc">ˡq̲uery</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-web-lib-Web.xtl.html#l.b_ody"><span class="c-libfunc">ˡb̲ody</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-web-lib-Web.xtl.html#l.p_aram"><span class="c-libfunc">ˡp̲aram</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-web-lib-Web.xtl.html#l.c_ontent-21"><span class="c-libfunc">ˡc̲ontent!</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-web-lib-Web.xtl.html#l.h_eader-21"><span class="c-libfunc">ˡh̲eader!</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-web-lib-Web.xtl.html#l.r_eply-21"><span class="c-libfunc">ˡr̲eply!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-web-lib-Web.xtl.html#l.f_iles-21"><span class="c-libfunc">ˡf̲iles!</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-web-lib-Web.xtl.html#l.s_top-21"><span class="c-libfunc">ˡs̲top!</span></a></td><td>function</td><td><code>Unit -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-web-lib-Web.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-web-demos-life.xtl.html#u.l_ife"><span class="c-userfunc">ᵘl̲ife</span></a></td><td>function</td><td><code>(Num a, Truthy a) =&gt; a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-web-demos-life.xtl.html#u.s_eed"><span class="c-userfunc">ᵘs̲eed</span></a></td><td>function</td><td><code>Truthy a =&gt; Int -&gt; a</code></td></tr>
 <tr><td><a href="extensions-web-demos-life.xtl.html#u.g_lider"><span class="c-userfunc">ᵘg̲lider</span></a></td><td>function</td><td><code>Num a =&gt; Int -&gt; a</code></td></tr>
