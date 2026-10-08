@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 19:50 `docs` The site has a table of contents at the top left (the user): every extension and its demos, linked to their sections (each demo now has an id, `EXT-NAME`); fixed beside the page on wide screens, at the top on narrow ones. Demo columns never exceed a phone's width. Checked in headless Chrome at 1400 and 500 px.
+
 - 19:30 `ext` Voxels 5, `just demo scene voxels-walk`: walking on the island in the first person. scene gains `sc:e_ye!` (a first-person camera; quads clipped at the near plane, which needed triangles allowed far off screen) and `sc:c_ontrols` (mouse drag and held keys as numbers; scripted `keydown`, `keyup`, `drag` events headless; the pointer never grabbed). In X_eTaL the player is nine numbers: turning, gravity, jumping, a swept box per axis against the solid cells it would overlap, stopping at the block's face; the 32 chunks tested against the view's planes (turned into the world by an inner product). Rust tests of the first-person camera (yaw, pitch, a floor clipped under the eye); golden with a scripted walk and three frames pinned; recording from a scripted walk (`.frames` specs may now give `script=`). The orbit frames are unchanged; the listing, types and an error line rebased.
 
 - 17:40 `plan` docs/voxels.md, "The game": how walking, fly-through, building, digging, lighting and water flow fit the measured budgets (the world as chunk arrays, one bounded job a frame, light and water as rounds over changed 16-cubes; what scene must add); Saga 14 set to voxels-walk, voxels-fly, voxels-dig, voxels-light, voxels-water, voxels-game, game-release (the user: yes). The voxels saga archived.

@@ -41,6 +41,7 @@ def vendored():
 
 
 sections = []
+toc = []
 for ext_dir in sorted(p.parent for p in root.glob("extensions/*/extension.toml")):
     ext = ext_dir.name
     demos = []
@@ -54,12 +55,16 @@ for ext_dir in sorted(p.parent for p in root.glob("extensions/*/extension.toml")
                       f'controls preload="metadata"></video>')
         else:
             player = '<p class="note">(no recording yet)</p>'
-        demos.append(f"""    <section class="panel demo">
+        demos.append(f"""    <section class="panel demo" id="{ext}-{name}">
       <h3>{html.escape(ext)} / {html.escape(name)}</h3>
       <p class="note">{html.escape(what(demo))}</p>
       {player}
       <pre class="source">just demo {ext} {name}</pre>
     </section>""")
+    links = "".join(f'<li><a href="#{ext}-{d}">{html.escape(d)}</a></li>'
+                    for d in sorted(d.stem for d in (ext_dir / "demos").glob("*.xtl") if d.stem[0].islower()))
+    toc.append(f'    <li><a href="#{ext}">{html.escape(ext)}</a>'
+               + (f"<ul>{links}</ul>" if links else "") + "</li>")
     sections.append(f"""  <h2 id="{ext}"><a href="{REPO}/blob/main/extensions/{ext}/docs/README.md">{html.escape(ext)}</a></h2>
   <p class="lede">{html.escape(first_para(ext))}</p>
   <div class="demos">
@@ -78,7 +83,13 @@ page = f"""<!doctype html>
   <link rel="stylesheet" href="shell.css" />
 </head>
 <body>
-<header>
+<nav class="toc" aria-label="Demos">
+  <p><a href="#top">X_eTaL extensions</a></p>
+  <ul>
+{chr(10).join(toc)}
+  </ul>
+</nav>
+<header id="top">
   <div class="brand">
     <img class="logo" src="modern-xetal-logo.jpg" alt="X_eTaL" />
     <h1>X_eTaL extensions</h1>
