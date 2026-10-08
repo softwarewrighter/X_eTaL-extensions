@@ -1,7 +1,7 @@
 number = 7
-slug = "game-release"
+slug = "voxels-water"
 status = "pending"
-description = "game step 7: recordings, docs, status, retrospective; verify the site online."
+description = "game step 5: water flowing (levels 1 to 7) as a cellular automaton on changed..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T18:26:56"

@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 21:00 `plan` Two steps inserted in the voxel game saga (the user): xref-docs (doc comments per X_eTaL's `##`/`###` convention, the cross-referenced doc site) and voxels-endless ("no edges, walls, or limits when walking": coordinate-hashed terrain, chunks streamed around the player, a curved horizon), before voxels-fly.
+
 - 20:20 `docs` The web extension's Life page is `life`, not `live` (the user: it read like a typo beside canvas's life): `demos/life.xtl`, `just demo web life`, `tests/life.sh`, golden `web-demo-life`, `videos/life.*`, docs and the site. docs/status.md names the group each later extension was built in (web, photo lab, fetch) instead of "roadmap".
 
 - 19:50 `docs` The site has a table of contents at the top left (the user): every extension and its demos, linked to their sections (each demo now has an id, `EXT-NAME`); fixed beside the page on wide screens, at the top on narrow ones. Demo columns never exceed a phone's width. Checked in headless Chrome at 1400 and 500 px.

@@ -505,12 +505,14 @@ demo shown before the next.
 | # | Step slug | Delivers |
 | - | --------- | -------- |
 | 1 | voxels-walk | (done; no pointer grab: drag or arrows to look, kinder to a user with many windows) scene: first-person camera, held keys and mouse motion (scripted for headless tests), pointer grab, near-plane clipping; X_eTaL: gravity, jumping, collision per axis, the chunks' frustum test; golden with scripted input, recording |
-| 2 | voxels-fly | flying; chunks generated as the player goes (one a frame from a queue); scene skips objects outside the view |
-| 3 | voxels-dig | the ray-march pick; break and place; the world as chunk arrays, one remeshed and patched per edit; crosshair and hotbar |
-| 4 | voxels-light | sky light by a column scan; torch light in rounds over frames; brightness per quad in scene |
-| 5 | voxels-water | water flowing (levels 1 to 7, a cellular automaton on changed chunks); translucent water in scene |
-| 6 | voxels-game | Gem Hunt |
-| 7 | game-release | recordings, docs, status, retrospective; the site checked online |
+| 2 | xref-docs | (inserted, the user) doc comments per X_eTaL's convention (`##` documents, `###` sections, `## >>` examples) in every facade, library and demo; every export documented (a gate check); examples run (`xetal doc --test`); the cross-referenced doc site (`xetal doc --out`) in `pages/doc`, linked from the site |
+| 3 | voxels-endless | (inserted, the user: "no edges, walls, or limits", a curved horizon) terrain from coordinate-hashed noise, chunks generated around the player and dropped behind, collision through the chunk table, fog at the loaded radius; scene: culling by bounding box, a curved horizon |
+| 4 | voxels-fly | flying; chunks generated as the player goes (one a frame from a queue); scene skips objects outside the view |
+| 5 | voxels-dig | the ray-march pick; break and place; the world as chunk arrays, one remeshed and patched per edit; crosshair and hotbar |
+| 6 | voxels-light | sky light by a column scan; torch light in rounds over frames; brightness per quad in scene |
+| 7 | voxels-water | water flowing (levels 1 to 7, a cellular automaton on changed chunks); translucent water in scene |
+| 8 | voxels-game | Gem Hunt |
+| 9 | game-release | recordings, docs, status, retrospective; the site checked online |
 
 ## Saga 12 -- native hook (blocked)
 

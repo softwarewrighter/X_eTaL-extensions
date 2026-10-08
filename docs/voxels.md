@@ -287,11 +287,12 @@ changed instead of the chunk; it fits immutable values.
 | # | Demo | Adds |
 | - | ---- | ---- |
 | 1 | `voxels-walk` | first-person camera, held keys, mouse look, near-plane clipping in scene; gravity, jumping, collision in X_eTaL; X_eTaL's frustum test of the chunks |
-| 2 | `voxels-fly` | flying, chunks generated as the player goes, culling by bounding box in scene |
-| 3 | `voxels-dig` | the ray-march pick, breaking and placing, per-chunk remeshing and patching; crosshair and hotbar |
-| 4 | `voxels-light` | sky light by a column scan, torches spreading in rounds; brightness per quad |
-| 5 | `voxels-water` | water flowing by a cellular automaton; translucent water |
-| 6 | `voxels-game` | Gem Hunt, with all of the above |
+| 2 | `voxels-endless` | (added) walking with no edges: terrain from noise hashed from the coordinates, so any chunk can be made alone and fits its neighbors; chunks generated around the player and dropped behind; fog at the loaded radius and a curved horizon (distant land lowered by d^2/2R, so the world looks like a small planet); culling by bounding box in scene |
+| 3 | `voxels-fly` | flying over the endless world, streaming faster |
+| 4 | `voxels-dig` | the ray-march pick, breaking and placing, per-chunk remeshing and patching; crosshair and hotbar |
+| 5 | `voxels-light` | sky light by a column scan, torches spreading in rounds; brightness per quad |
+| 6 | `voxels-water` | water flowing by a cellular automaton; translucent water |
+| 7 | `voxels-game` | Gem Hunt, with all of the above |
 
 ## Credits
 

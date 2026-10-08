@@ -1,7 +1,7 @@
-number = 3
-slug = "voxels-dig"
+number = 8
+slug = "voxels-game"
 status = "pending"
-description = "game step 3: the ray-march pick; break and place; the world as chunk arrays, ..."
+description = "game step 6: Gem Hunt (docs/voxels.md)."
 role = "production"
 context_files = []
 created_at = "2026-10-07T18:26:56"
