@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-08
 
+- 08:30 `ext` Voxels 8, `just demo scene voxels-rubik` (the user: a Rubik's cube from voxels, a valid scramble, turns, undo to solved): the library `demos/Rubik.xtl` keeps the cube as 54 stickers (position and normal); each of the 12 quarter turns is a permutation computed from the geometry -- the layer's stickers rotated, keyed, matched with `i_ndexOf`, and `g_rade` inverting it -- and checked (each a permutation, order 4, a turn and its undoing, R U R' U' of order 6, R U of order 105, U and R turning the right way). Drawn as 26 dark cubies with inset stickers, one quads object per color. Keys: u d r l f b clockwise, Shift counterclockwise, z undo to solved, Space a scramble of 25 random turns (never the same face twice in a row), 0 reset; the turns printed. Golden with keys and three frames pinned; recording.
+
 - 06:50 `docs` The doc site's sidebar lists each extension's facade with its demos beside it (files passed by extension: the binding macro, then each extension's lib/ and demos/).
 
 - 06:30 `build` X_eTaL d284a8c (from 512b3ee, 204 commits; the user: its doc site is better) is the known-good commit. `xetal-x` follows the CLI (`--events`, the new `xetal-names` crate); the libraries' private functions are `h:` now, rewritten by `xetal migrate` (Ffi.xtlm, Voxels.xtl, Endless.xtl, Seismic.xtl), since bare ones are deprecated; one golden rebased (`clock-types`: `t_ime`'s type now shows `(Any a, Any b) =>`). The doc site is rebuilt with the new generator: files grouped by directory in the sidebar (our two `life.xtl` told apart), the helpers documented as `h:`. Asks E7 and E8 landed.

@@ -1,6 +1,6 @@
 number = 7
 slug = "voxels-rubik"
-status = "pending"
+status = "in-progress"
 description = "game step 7 (inserted, the user: a Rubik's cube from voxels, solved then a va..."
 role = "production"
 context_files = []

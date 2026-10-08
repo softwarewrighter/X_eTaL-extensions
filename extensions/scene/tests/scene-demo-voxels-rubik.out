@@ -1,0 +1,22 @@
+each turn a permutation of the 54 stickers:
+1 1 1 1 1 1 1 1 1 1 1 1
+four of each turn: solved
+1 1 1 1 1 1 1 1 1 1 1 1
+each turn then its undoing: solved
+1 1 1 1 1 1 1 1 1 1 1 1
+R U R' U' solved after 6, not after 1 to 5:
+1 0 0 0 0 0
+R U solved after 105, and how many of 1 to 104:
+1 0
+after U, the front's top row has the right face's color (2):
+2 2 2
+keys: u d r l f b turn a face clockwise, Shift+letter counterclockwise, z undo, Space scramble, 0 reset, q quit
+turns: U
+turns: U R'
+turns: U
+solved, no turns
+turns: R' L' B' F' U B F' B F B R B' D' R' D U B U F' D' L' U' B' L' D
+bye
+1581178282 32116 work/rb/scene-1-1.png
+301458261 32452 work/rb/scene-1-3.png
+4188942073 32606 work/rb/scene-1-8.png

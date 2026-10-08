@@ -142,6 +142,20 @@ before the next builds on it. Their shared X_eTaL is the library
    so you can look down at the land as you cross it; F again drops you
    back to walking. Recorded from a scripted flight as
    `videos/voxels-fly.webm`.
+8. `demos/voxels-rubik.xtl` (`just demo scene voxels-rubik`): a
+   Rubik's cube of voxels -- 26 dark cubies with their stickers. The
+   cube is arrays (the library `demos/Rubik.xtl`, `rb:`): its 54
+   stickers, each a cubie's position and the way it faces, and each of
+   the twelve quarter turns a permutation of them computed from the
+   geometry (the layer's stickers rotated, matched back, and `g_rade`
+   turning "where each goes" into "where each comes from"). Checked:
+   each turn a permutation, four of one or a turn and its undoing
+   solved, R U R' U' of order 6, R U of order 105, U and R turning the
+   right way. Keys: u d r l f b turn a face clockwise, with Shift
+   counterclockwise, z undoes (all the way back to solved), Space
+   scrambles (25 random turns, never the same face twice in a row, so
+   always a real position), 0 resets. Recorded as
+   `videos/voxels-rubik.webm`.
 
 ## Build and test
 

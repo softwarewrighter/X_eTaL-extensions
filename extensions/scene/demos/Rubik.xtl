@@ -1,0 +1,158 @@
+## Rubik.xtl -- a Rubik's cube as arrays, for the voxel cube demos
+## (voxels-rubik and after). The cube is its 54 stickers; each sticker is
+## where it is -- its cubie's position x y z, each -1 0 or 1 -- and which
+## way it faces, a unit normal. A turn rotates the stickers of one layer
+## by a quarter turn; matching the rotated stickers against the stickers
+## gives where each one goes, a permutation of 54, and turning the cube
+## is selecting its colors by that permutation. Every position reached
+## by turns is a real cube's.
+## Import: "rb:" u_se< "Rubik"
+
+### Stickers
+
+# the six faces' normals, in the order of the colors: up (+y), down,
+# right (+x), left, front (+z, toward the viewer), back
+normals := 6 3 r_eshape 0 1 0  0 -1 0  1 0 0  -1 0 0  0 0 1  0 0 -1
+
+# the 27 cubies' positions, x slowest
+q := (r_ange 27) - 1
+cubies := 2 1 t_ranspose 3 27 r_eshape ((q d_iv 9) - 1) c_at (((q d_iv 3) m_od 3) - 1) c_at (q m_od 3) - 1
+
+## h:m_akeStickers 0: the stickers, face by face: the cubies whose
+## coordinate along the face's normal is the normal's sign
+h:m_akeStickers := { z ->
+  pick := cubies '+ '* i_nner 2 1 t_ranspose normals
+  on := pick = 1
+  rows := '{ (_r s_elect_2 on) r_eplicate cubies } m_ap r_ange 6
+  ns := '{ 9 3 r_eshape _r s_elect normals } m_ap r_ange 6
+  pos := d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ rows
+  nrm := d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ ns
+  pos c_at_2 nrm
+}
+
+## a sticker for each face and each of its 9 cubies, 54 by 6: x y z of
+## the cubie, then the normal; the faces in the order up down right left
+## front back, 9 stickers each
+## >> "rb:" u_se< "Rubik"
+## >> s_hape rb:stickers
+## 54 6
+l:stickers := h:m_akeStickers 0
+
+## the solved cube's colors: each sticker its face's number, 0 to 5
+## (up down right left front back)
+## >> "rb:" u_se< "Rubik"
+## >> 10 t_ake rb:solved
+## 0 0 0 0 0 0 0 0 0 1
+l:solved := 9 r_eplicate (r_ange 6) - 1
+
+### Turns
+
+## h:k_ey m: one number for each sticker row (x y z nx ny nz), the same
+## for the same place and facing
+h:k_ey := { m -> (3 3 3 3 3 3 d_ecode 2 1 t_ranspose m + 1) }
+
+## k h:r_otate m: the rows (x y z, and the normal) turned a quarter turn
+## counterclockwise about the axis k (1 x, 2 y, 3 z), seen from its
+## positive end -- x y z goes to x -z y about x, z y -x about y, -y x z
+## about z
+h:r_otate := { k m ->
+  x := 1 s_elect_2 m
+  y := 2 s_elect_2 m
+  z := 3 s_elect_2 m
+  a := 4 s_elect_2 m
+  b := 5 s_elect_2 m
+  c := 6 s_elect_2 m
+  k = 1 ? 2 1 t_ranspose 6 54 r_eshape x c_at (0 - z) c_at y c_at a c_at (0 - c) c_at b
+  k = 2 ? 2 1 t_ranspose 6 54 r_eshape z c_at y c_at (0 - x) c_at c c_at b c_at 0 - a
+  2 1 t_ranspose 6 54 r_eshape (0 - y) c_at x c_at z c_at (0 - b) c_at a c_at c
+}
+
+## (axis layer quarters) rb:p_ermutation 0: the permutation of the 54
+## stickers for turning the layer (the cubies whose coordinate on the
+## axis is the layer, -1 or 1) by that many counterclockwise quarter
+## turns about the axis: the colors after the turn are this selection of
+## the colors before
+l:p_ermutation := { t z ->
+  k := 1 s_elect t
+  v := 2 s_elect t
+  n := 3 s_elect t
+  m := l:stickers
+  turned := n '{ k h:r_otate _r } p_ower m
+  inlayer := v = k s_elect_2 m
+  moved := (2 1 t_ranspose 6 54 r_eshape inlayer) + 0
+  after := (moved * turned) + (1 - moved) * m
+  g_rade (h:k_ey m) i_ndexOf h:k_ey after
+}
+
+## the twelve turns' names: a face turned clockwise as you look at it,
+## and with ' counterclockwise
+l:names := "U U' D D' R R' L L' F F' B B'"
+
+# each turn as axis (1 x, 2 y, 3 z), layer, counterclockwise quarters:
+# a face turned clockwise as seen from outside it is a quarter turn
+# clockwise about its outward normal -- three counterclockwise quarters
+# about the axis for up, right and front, one for down, left and back
+specs := 12 3 r_eshape 2 1 3  2 1 1  2 -1 1  2 -1 3  1 1 3  1 1 1  1 -1 1  1 -1 3  3 1 3  3 1 1  3 -1 1  3 -1 3
+## the twelve turns' permutations, 12 by 54, in the order of rb:names
+l:moves := 12 54 r_eshape r_avel d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ '{ (_r s_elect specs) l:p_ermutation 0 } m_ap r_ange 12
+
+## i rb:t_urn c: the colors c after turn i (1 to 12, in the order of
+## rb:names)
+## >> "rb:" u_se< "Rubik"
+## >> (4 '{ 1 rb:t_urn _r } p_ower rb:solved) m_atch rb:solved
+## 1
+l:t_urn := { i c -> (i s_elect l:moves) s_elect c }
+
+## rb:u_ndo i: the turn that undoes turn i (U and U', and so on)
+## >> "rb:" u_se< "Rubik"
+## >> rb:u_ndo 1 2 5
+## 2 1 6
+l:u_ndo := { i -> i + 1 - 2 * 0 = i m_od 2 }
+
+### Drawing
+
+## (offset half) h:s_quaresAt rows: a square for each row (x y z of a
+## cubie, then a normal), its center offset along the normal, its half
+## side half, its 4 corners in order round it; 4n by 3, row by row
+h:s_quaresAt := { oh pn ->
+  p := f_loat 1 2 3 s_elect_2 pn
+  n := f_loat 4 5 6 s_elect_2 pn
+  ax := (a_bs 4 s_elect_2 pn) + (2 * a_bs 5 s_elect_2 pn) + 3 * a_bs 6 s_elect_2 pn
+  u := ax s_elect 3 3 r_eshape 0.0 1.0 0.0  1.0 0.0 0.0  1.0 0.0 0.0
+  w := ax s_elect 3 3 r_eshape 0.0 0.0 1.0  0.0 0.0 1.0  0.0 1.0 0.0
+  c := p + (1 s_elect oh) * n
+  h := 2 s_elect oh
+  k1 := c + h * (0.0 - u) - w
+  k2 := c + h * u - w
+  k3 := c + h * u + w
+  k4 := c + h * w - u
+  m := t_ally pn
+  ((4 * m) c_at 3) r_eshape 2 1 3 t_ranspose (4 c_at m c_at 3) r_eshape k1 c_at k2 c_at k3 c_at k4
+}
+
+## the stickers as squares for scene, 4 corners each in order round
+## them (216 by 3), in the stickers' order, just outside the cubies'
+## dark bodies
+l:squares := 0.485 0.42 h:s_quaresAt l:stickers
+
+# the 26 cubies one can see (all but the middle), with each normal
+shell := (0 < '+ r_/_2 a_bs cubies) r_eplicate cubies
+bodyrows := d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ '{ shell c_at_2 26 3 r_eshape _r s_elect normals } m_ap r_ange 6
+
+## the cubies' dark bodies as squares for scene (624 by 3): six faces
+## each, 0.96 wide
+l:bodies := 0.48 0.48 h:s_quaresAt bodyrows
+
+## k rb:c_olorSquares c: the squares of the stickers that are color k
+## in the colors c (k 0 to 5), for one object of quads
+## >> "rb:" u_se< "Rubik"
+## >> s_hape 0 rb:c_olorSquares rb:solved
+## 36 3
+l:c_olorSquares := { k c ->
+  i := w_here c = k
+  (r_avel (4 * i - 1) '+ t_able 1 2 3 4) s_elect l:squares
+}
+
+## each color, red green blue: white (up), yellow (down), red (right),
+## orange (left), green (front), blue (back)
+l:rgb := 6 3 r_eshape 0.95 0.95 0.95  1.0 0.84 0.1  0.82 0.12 0.12  1.0 0.5 0.08  0.1 0.62 0.25  0.12 0.32 0.85

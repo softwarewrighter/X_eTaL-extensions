@@ -1,0 +1,138 @@
+## Voxels, 8: a Rubik's cube. 26 dark cubies with their colored stickers,
+## drawn as voxels; the cube itself is arrays (Rubik.xtl): its 54
+## stickers, each where it is and which way it faces, and each of the
+## twelve quarter turns a permutation of them, computed from the cube's
+## geometry. This demo checks the turns -- each a permutation, four of
+## one solved, a turn and its undoing solved, R U R' U' of order 6, R U
+## of order 105, and U and R turning the right way -- and shows the
+## solved cube, turning slowly; keys turn its faces.
+## Run: just demo scene voxels-rubik
+##   u d r l f b turn a face clockwise (as you look at it), Shift with the
+##   letter counterclockwise, z undo (back to solved), Space a scramble
+##   (25 random turns), 0 reset, drag to look around, q quit
+
+"rb:" u_se< "Rubik"
+"sc:" u_se< "Scene"
+
+### The turns, checked
+
+s := rb:solved
+"each turn a permutation of the 54 stickers:"
+'{ (s_ort _r s_elect rb:moves) m_atch r_ange 54 } e_ach r_ange 12
+u:f_our := { i -> (i rb:t_urn i rb:t_urn i rb:t_urn i rb:t_urn s) m_atch s }
+"four of each turn: solved"
+'u:f_our e_ach r_ange 12
+u:b_ack := { i -> ((rb:u_ndo i) rb:t_urn i rb:t_urn s) m_atch s }
+"each turn then its undoing: solved"
+'u:b_ack e_ach r_ange 12
+u:s_exy := { c -> 6 rb:t_urn 2 rb:t_urn 5 rb:t_urn 1 rb:t_urn c }
+u:s_exyN := { n -> (n 'u:s_exy p_ower s) m_atch s }
+"R U R' U' solved after 6, not after 1 to 5:"
+(u:s_exyN 6) c_at 'u:s_exyN e_ach r_ange 5
+u:r_u := { c -> 1 rb:t_urn 5 rb:t_urn c }
+u:r_uN := { n -> (n 'u:r_u p_ower s) m_atch s }
+"R U solved after 105, and how many of 1 to 104:"
+(u:r_uN 105) c_at '+ r_/ 'u:r_uN e_ach r_ange 104
+m := rb:stickers
+top := ((6 s_elect_2 m) = 1) * (2 s_elect_2 m) = 1
+"after U, the front's top row has the right face's color (2):"
+(top > 0) r_eplicate 1 rb:t_urn s
+
+### The cube, drawn
+
+w := "Voxels 8: Rubik's cube -- X_eTaL" sc:o_pen! 560 560
+k := w sc:c_amera! 0.6 0.45 7.5 0.3
+b := ((f_loat w) c_at 1.0 0.1 0.1 0.11) sc:q_uads! rb:bodies
+
+## the stickers, one object of quads for each color
+u:d_raw := { c ->
+  sent := '{ ((f_loat w) c_at (10.0 + f_loat _r) c_at (_r + 1) s_elect rb:rgb) sc:q_uads! _r rb:c_olorSquares c } m_ap (r_ange 6) - 1
+  c
+}
+shown := u:d_raw s
+
+### Turning it
+
+## The state is one Int vector: the 54 colors, then the turns made so
+## far (1 to 12, in the order of rb:names), the history undo walks back.
+## Keys: u d r l f b turn that face clockwise (seen from outside it),
+## with Shift counterclockwise; z undoes the last turn; Space scrambles
+## (25 random turns, never the same face twice in a row); 0 resets.
+
+letters := "uUdDrRlLfFbB"
+
+## m u:t_ell st: m printed, the state unchanged
+u:t_ell := { m st ->
+  said := p_rint! m
+  st
+}
+
+## the turns made, by name (and whether the cube is solved)
+u:s_ay := { st ->
+  h := 54 d_rop st
+  0 = t_ally h ? "solved, no turns" u:t_ell st
+  names := (n_ot rb:names = f_irst " ") p_artition rb:names
+  said := p_rint! "turns: " c_at d_isclose '{ e_nclose (d_isclose _l) c_at " " c_at d_isclose _r } r_/ h s_elect names
+  ((54 t_ake st) m_atch rb:solved) ? "solved" u:t_ell st
+  st
+}
+
+## i u:t_urnBy st: turn i made and remembered, the cube redrawn
+u:t_urnBy := { i st ->
+  c := i rb:t_urn 54 t_ake st
+  shown := u:d_raw c
+  c c_at (54 d_rop st) c_at i
+}
+
+## the last turn undone and forgotten
+u:u_ndoLast := { st ->
+  54 = t_ally st ? st
+  i := f_irst -1 t_ake st
+  c := (rb:u_ndo i) rb:t_urn 54 t_ake st
+  shown := u:d_raw c
+  c c_at 54 d_rop -1 d_rop st
+}
+
+## 25 random turns, never the same face twice in a row (so none undoes
+## or repeats the one before), remembered (so undo can walk back to
+## solved)
+u:o_ne := { st ->
+  i := r_oll! 12
+  prev := (55 <= t_ally st) * f_irst -1 t_ake st
+  ((i + 1) d_iv 2) = (prev + 1) d_iv 2 ? u:o_ne st
+  c := i rb:t_urn 54 t_ake st
+  c c_at (54 d_rop st) c_at i
+}
+u:s_cramble := { st ->
+  st := 25 'u:o_ne p_ower st
+  shown := u:d_raw 54 t_ake st
+  st
+}
+
+## back to solved, no history
+u:r_eset := { st ->
+  shown := u:d_raw rb:solved
+  rb:solved
+}
+
+u:q_uit := { st ->
+  z := sc:c_lose! w
+  0 r_eshape 0
+}
+
+## one frame: an event, and what it asks for
+u:f_rame := { st ->
+  0 = t_ally st ? st
+  v := sc:n_ext! w
+  ((v m_atch "close") + v m_atch "key q") > 0 ? u:q_uit st
+  (v m_atch "key z") ? u:s_ay u:u_ndoLast st
+  (v m_atch "key Space") ? u:s_ay u:s_cramble st
+  (v m_atch "key 0") ? u:s_ay u:r_eset st
+  ch := -1 t_ake v
+  i := letters i_ndexOf f_irst ch
+  ((5 = t_ally v) * i <= 12) ? u:s_ay i u:t_urnBy st
+  st
+}
+"keys: u d r l f b turn a face clockwise, Shift+letter counterclockwise, z undo, Space scramble, 0 reset, q quit"
+last := 100000 'u:f_rame p_ower rb:solved
+"bye"

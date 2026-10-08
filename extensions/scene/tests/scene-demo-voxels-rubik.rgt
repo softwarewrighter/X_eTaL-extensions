@@ -1,0 +1,3 @@
+command = 'rm -rf work/rb && XETAL_HEADLESS=1 XETAL_EVENTS="frame,key u,frame,key R,frame,key z,frame,key z,frame,key Space,frame,frame" XETAL_FRAMES=work/rb xetal-x --ext .. run --seed 1 demos/voxels-rubik.xtl && cksum work/rb/scene-1-1.png work/rb/scene-1-3.png work/rb/scene-1-8.png'
+exit_code = 0
+desc = "voxels 8: the cube checked (permutations, order 4, inverses, R U R prime U prime order 6, R U order 105, directions), turned by keys, undone to solved, scrambled; three frames pinned"
