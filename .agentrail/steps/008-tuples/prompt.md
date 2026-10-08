@@ -1,0 +1,1 @@
+game step 8 (inserted, the user asked about tuples): X_eTaL's tuples (Saga 39, in the pinned d284a8c) replace hand-packed state: Endless.xtl's state (player, keys, numbers, settings, job, masks) a tuple, its Int parts Ints; the Rubik demo's state (colors, history); the player's ten numbers named parts; goldens unchanged as the proof.

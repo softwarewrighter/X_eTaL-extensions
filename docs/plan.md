@@ -511,13 +511,14 @@ demo shown before the next.
 | 5 | smooth-streaming | (done; inserted, the user: "laggy at edges ... pauses noticeably") each column made over three frames (blocks, faces, sending), one column dropped a frame, masks as separate boxes, faster faces; the endless world and the player in a shared library (Endless.xtl); no frame of a flight over 20 ms of X_eTaL |
 | 6 | xetal-pin | (done; inserted, the user: the newer doc site) X_eTaL d284a8c; libraries' private functions `h:` (`xetal migrate`); the doc site rebuilt (files grouped by directory); asks E7 and E8 landed |
 | 7 | voxels-rubik | (done, with keys, undo and the scramble of step 8 already; inserted, the user: "a Rubik's cube from voxels ... solved ... a (valid) scrambled version ... rotate planes (correctly) via buttons ... undo back to solved") the cube as 54 stickers, each quarter turn a permutation computed from the geometry (tests: four turns are the identity, a turn and its inverse cancel); the solved cube as voxels in scene |
-| 8 | rubik-turns | turns by keys, a history and undo to solved, reset, a valid scramble (random legal turns), animated turns |
-| 9 | rubik-buttons | scene gains on-screen buttons (labeled rectangles, a small built-in font, click events); the cube's buttons: 12 turns, Scramble, Undo, Reset |
-| 10 | voxels-dig | the ray-march pick; break and place; the world as chunk arrays, one remeshed and patched per edit; crosshair and hotbar |
-| 11 | voxels-light | sky light by a column scan; torch light in rounds over frames; brightness per quad in scene |
-| 12 | voxels-water | water flowing (levels 1 to 7, a cellular automaton on changed chunks); translucent water in scene |
-| 13 | voxels-game | Gem Hunt |
-| 14 | game-release | recordings, docs, status, retrospective; the site checked online |
+| 8 | tuples | (inserted, the user asked about tuples) X_eTaL's tuples (Saga 39, pinned) replace hand-packed state: the endless world's state, the cube's (colors, history), the player's ten numbers; goldens unchanged as the proof |
+| 9 | rubik-turns | (keys, undo, scramble done in step 7) animated turns | turns by keys, a history and undo to solved, reset, a valid scramble (random legal turns), animated turns |
+| 10 | rubik-buttons | scene gains on-screen buttons (labeled rectangles, a small built-in font, click events); the cube's buttons: 12 turns, Scramble, Undo, Reset |
+| 11 | voxels-dig | the ray-march pick; break and place; the world as chunk arrays, one remeshed and patched per edit; crosshair and hotbar |
+| 12 | voxels-light | sky light by a column scan; torch light in rounds over frames; brightness per quad in scene |
+| 13 | voxels-water | water flowing (levels 1 to 7, a cellular automaton on changed chunks); translucent water in scene |
+| 14 | voxels-game | Gem Hunt |
+| 15 | game-release | recordings, docs, status, retrospective; the site checked online |
 
 ## Saga 12 -- native hook (blocked)
 
