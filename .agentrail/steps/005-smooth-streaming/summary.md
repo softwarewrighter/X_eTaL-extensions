@@ -1,0 +1,1 @@
+smooth streaming: column work split over 3 frames, cheap trims, faster faces, Endless.xtl library; flight median 1ms p95 14ms
