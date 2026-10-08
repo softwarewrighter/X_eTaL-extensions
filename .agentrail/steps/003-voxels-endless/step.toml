@@ -1,6 +1,6 @@
 number = 3
 slug = "voxels-endless"
-status = "pending"
+status = "in-progress"
 description = "game step 3 (inserted, the user): endless walking with a curved horizon: terr..."
 role = "production"
 context_files = []

@@ -7,8 +7,10 @@
 ## it sets scene's first-person camera. It also tests the 32 chunks
 ## against the planes of the view, as the APL game culls (key c).
 ## Run: just demo scene voxels-walk   (a new island each run; --seed 1)
-##   W A S D walk, Space jump, Shift run, drag the mouse or the arrows to
-##   look, c: the chunks in view, q or close: quit
+##   W A S D walk, Shift run, Space jump (in water: swim up; at the
+##   surface: climb out onto a bank one block high), drag the mouse or the
+##   arrows to look, c: the chunks in view, H: back to the start, q or
+##   close: quit
 
 "vx:" u_se< "Voxels"
 "sc:" u_se< "Scene"
@@ -97,11 +99,21 @@ u:s_tep := { p ->
   pitch := -1.5 m_ax 1.5 m_in (8 s_elect p) + (-0.005 * 2 s_elect k) + 1.5 * dt * (11 s_elect k) - 12 s_elect k
   fwd := (3 s_elect k) - 5 s_elect k
   side := (6 s_elect k) - 4 s_elect k
-  speed := 4.5 * 1.0 + 8 s_elect k
+  # in water: all the air below the sea (14) is water; the body is in
+  # it when its middle is below the surface
+  wet := f_loat 14.0 > 0.9 + 2 s_elect p
+  speed := (1.0 - 0.4 * wet) * 4.5 * 1.0 + 8 s_elect k
   vx := speed * ((s_in yaw) * fwd) + (c_os yaw) * side
   vz := speed * ((0.0 - c_os yaw) * fwd) + (s_in yaw) * side
-  jump := (9 s_elect p) * 7 s_elect k
-  vy := (7.5 * jump) + (1.0 - jump) * -30.0 m_ax (5 s_elect p) - 22.0 * dt
+  # a jump from the ground, or from the surface of the water (feet
+  # within half a block above it, not deeper): onto a bank one block high
+  surface := (f_loat 14.5 > 2 s_elect p) * f_loat 13.0 < 2 s_elect p
+  jump := (1.0 m_in (9 s_elect p) + surface * 1.0 - wet) * 7 s_elect k
+  # swimming: Space rises; otherwise a slow sink
+  swim := wet * 7 s_elect k
+  fall := -30.0 m_ax (5 s_elect p) - 22.0 * dt
+  sink := -2.0 m_ax (5 s_elect p) - 6.0 * dt
+  vy := (7.5 * jump) + (1.0 - jump) * (4.0 * swim) + (1.0 - swim) * (wet * sink) + (1.0 - wet) * fall
   p := (7 c_at yaw) u:s_et (8 c_at pitch) u:s_et (4 c_at vx) u:s_et (5 c_at vy) u:s_et (6 c_at vz) u:s_et p
   p := u:m_y u:m_z u:m_x p
   e := w sc:e_ye! (1 s_elect p) c_at ((2 s_elect p) + 1.6) c_at (3 s_elect p) c_at yaw c_at pitch
@@ -165,6 +177,7 @@ u:f_rame := { p ->
   v := sc:n_ext! w
   ((v m_atch "close") + (v m_atch "key q") + v m_atch "key Escape") > 0 ? u:q_uit p
   (v m_atch "key c") ? u:s_tep u:c_hunks p
+  (v m_atch "key h") ? u:s_tep start
   u:s_tep p
 }
 last := 100000 'u:f_rame p_ower start

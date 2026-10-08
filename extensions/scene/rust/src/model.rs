@@ -42,6 +42,10 @@ pub struct Camera {
     pub distance: f64,
     pub spin: f64,
     pub eye: Option<[f64; 3]>,
+    /// A curved horizon for the first-person camera: the world is
+    /// lowered by d^2 / 2R at a distance d along the ground from the eye,
+    /// as on a planet of radius R; 0, flat.
+    pub curve: f64,
 }
 
 /// The first-person camera's vertical field of view: 70 degrees.
@@ -58,6 +62,7 @@ impl Default for Camera {
             distance: 4.0,
             spin: 0.0,
             eye: None,
+            curve: 0.0,
         }
     }
 }
@@ -71,6 +76,11 @@ pub struct Scene {
     /// Fog: quads fade into the background from the first depth to the
     /// second (scene units from the camera); None, no fog.
     pub fog: Option<(f64, f64)>,
+    /// Each object's bounding box (least and greatest corner), kept as it
+    /// is set, so a first-person view skips the objects it cannot see.
+    pub bounds: BTreeMap<i64, ([f64; 3], [f64; 3])>,
+    /// The background (and the fog's color): None, the dark default.
+    pub sky: Option<[f64; 3]>,
 }
 
 impl Default for Scene {
@@ -80,6 +90,8 @@ impl Default for Scene {
             camera: Camera::default(),
             line_width: 2.0,
             fog: None,
+            bounds: BTreeMap::new(),
+            sky: None,
         }
     }
 }
@@ -95,12 +107,55 @@ const LIGHT: [f64; 3] = [0.35, 0.85, 0.4];
 impl Scene {
     /// Puts (or replaces) object `id`.
     pub fn set(&mut self, id: i64, object: Object) {
+        let mut lo = [f64::INFINITY; 3];
+        let mut hi = [f64::NEG_INFINITY; 3];
+        for p in &object.points {
+            for k in 0..3 {
+                lo[k] = lo[k].min(p[k]);
+                hi[k] = hi[k].max(p[k]);
+            }
+        }
+        self.bounds.insert(id, (lo, hi));
         self.objects.insert(id, object);
     }
 
     /// Removes object `id`; whether it was there.
     pub fn remove(&mut self, id: i64) -> bool {
+        self.bounds.remove(&id);
         self.objects.remove(&id).is_some()
+    }
+
+    /// Whether a first-person view might see object `id`: false when its
+    /// box is wholly behind the eye, wholly beyond one side of the view,
+    /// or wholly past the fog's end. (Up and down are not tested: the
+    /// curved horizon moves things down.) Orbiting sees everything.
+    #[allow(clippy::cast_precision_loss)]
+    pub fn might_see(&self, id: i64, w: usize, h: usize) -> bool {
+        let (Some(eye), Some(&(lo, hi))) = (self.camera.eye, self.bounds.get(&id)) else {
+            return true;
+        };
+        if let Some((_, far)) = self.fog {
+            let dx = (lo[0] - eye[0]).max(eye[0] - hi[0]).max(0.0);
+            let dz = (lo[2] - eye[2]).max(eye[2] - hi[2]).max(0.0);
+            if dx.hypot(dz) > far {
+                return false;
+            }
+        }
+        let tan_h = (FOV / 2.0).tan() * (w as f64 / h.max(1) as f64) * 1.05;
+        let corners: Vec<(f64, f64, f64)> = (0..8)
+            .map(|k| {
+                let p = [
+                    if k & 1 == 0 { lo[0] } else { hi[0] },
+                    if k & 2 == 0 { lo[1] } else { hi[1] },
+                    if k & 4 == 0 { lo[2] } else { hi[2] },
+                ];
+                self.camera_space(p)
+            })
+            .collect();
+        let behind = corners.iter().all(|c| c.2 < NEAR);
+        let left = corners.iter().all(|c| c.0 < -c.2 * tan_h);
+        let right = corners.iter().all(|c| c.0 > c.2 * tan_h);
+        !(behind || left || right)
     }
 
     /// Turns the camera by a drag of `dx`, `dy` pixels.
@@ -120,7 +175,10 @@ impl Scene {
         let (sy, cy) = c.yaw.sin_cos();
         let (sp, cp) = c.pitch.sin_cos();
         if let Some(e) = c.eye {
-            let r = [p[0] - e[0], p[1] - e[1], p[2] - e[2]];
+            let mut r = [p[0] - e[0], p[1] - e[1], p[2] - e[2]];
+            if c.curve > 0.0 {
+                r[1] -= (r[0] * r[0] + r[2] * r[2]) / (2.0 * c.curve);
+            }
             let right = [cy, 0.0, sy];
             let up = [-sy * sp, cp, cy * sp];
             let ahead = [sy * cp, sp, -cy * cp];
@@ -163,10 +221,14 @@ impl Scene {
 
     /// The scene drawn into `w` by `h` 0RGB pixels.
     pub fn render(&self, w: usize, h: usize) -> Vec<u32> {
-        let mut px = vec![BACKGROUND; w * h];
+        let mut px = vec![self.sky.map_or(BACKGROUND, rgb); w * h];
         // quads first, behind a depth buffer; lines and dots over them
         let mut depth = vec![f64::INFINITY; w * h];
-        for o in self.objects.values().filter(|o| o.kind == Kind::Quads) {
+        for (_, o) in self
+            .objects
+            .iter()
+            .filter(|(id, o)| o.kind == Kind::Quads && self.might_see(**id, w, h))
+        {
             for q in o.points.chunks_exact(4) {
                 self.quad(&mut px, &mut depth, w, h, [q[0], q[1], q[2], q[3]], o.color);
             }
@@ -303,10 +365,11 @@ impl Scene {
                 let c = match self.fog {
                     Some((near, far)) if far > near => {
                         let f = ((d - near) / (far - near)).clamp(0.0, 1.0);
+                        let bg = self.sky.unwrap_or(BACKGROUND_RGB);
                         [
-                            color[0] + (BACKGROUND_RGB[0] - color[0]) * f,
-                            color[1] + (BACKGROUND_RGB[1] - color[1]) * f,
-                            color[2] + (BACKGROUND_RGB[2] - color[2]) * f,
+                            color[0] + (bg[0] - color[0]) * f,
+                            color[1] + (bg[1] - color[1]) * f,
+                            color[2] + (bg[2] - color[2]) * f,
                         ]
                     }
                     _ => color,

@@ -42,10 +42,12 @@
 <li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
 <li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-scene-demos-zz-endless.xtl.html">zz-endless.xtl</a></li>
 <li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
 <li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
 <li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
@@ -60,6 +62,8 @@
 <li class="item"><a href="#l.q_uads-21"><span class="c-libfunc">ˡq̲uads!</span></a></li>
 <li class="item"><a href="#l.f_og-21"><span class="c-libfunc">ˡf̲og!</span></a></li>
 <li class="item"><a href="#l.e_ye-21"><span class="c-libfunc">ˡe̲ye!</span></a></li>
+<li class="item"><a href="#l.c_urve-21"><span class="c-libfunc">ˡc̲urve!</span></a></li>
+<li class="item"><a href="#l.s_ky-21"><span class="c-libfunc">ˡs̲ky!</span></a></li>
 <li class="item"><a href="#l.c_ontrols"><span class="c-libfunc">ˡc̲ontrols</span></a></li>
 <li class="item"><a href="#l.r_emove-21"><span class="c-libfunc">ˡr̲emove!</span></a></li>
 <li class="item"><a href="#l.c_amera-21"><span class="c-libfunc">ˡc̲amera!</span></a></li>
@@ -93,7 +97,7 @@ Each signature line is written out by the binding macro (lib/Ffi.xtlm).</p>
   pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/open?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
   <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/open&quot;</span>
 }</pre></details>
-<div class="uses">Used in: <a href="extensions-audio-demos-spectrum.xtl.html#w">w</a>, <a href="extensions-scene-demos-cube.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-world.xtl.html#w">w</a></div>
+<div class="uses">Used in: <a href="extensions-audio-demos-spectrum.xtl.html#w">w</a>, <a href="extensions-scene-demos-cube.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-world.xtl.html#w">w</a></div>
 </div>
 <div class="item" id="l.p_olyline-21">
 <h3><a href="#l.p_olyline-21"><span class="c-libfunc">ˡp̲olyline!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
@@ -153,7 +157,7 @@ the light, nearer quads hiding farther ones; lines and dots draw over.</p>
   pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/quads?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
   <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/quads&quot;</span>
 }</pre></details>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-solid.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-world.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-endless.xtl.html#u.s_endOne"><span class="c-userfunc">ᵘs̲endOne</span></a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-world.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a></div>
 </div>
 <div class="item" id="l.f_og-21">
 <h3><a href="#l.f_og-21"><span class="c-libfunc">ˡf̲og!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
@@ -168,7 +172,7 @@ depths (scene units from the camera); far &lt;= near: no fog.</p>
   pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/fog?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
   <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/fog&quot;</span>
 }</pre></details>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-solid.xtl.html#g">g</a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#g">g</a>, <a href="extensions-scene-demos-voxels-world.xtl.html#g">g</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-endless.xtl.html#g">g</a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#g">g</a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#g">g</a>, <a href="extensions-scene-demos-voxels-world.xtl.html#g">g</a></div>
 </div>
 <div class="item" id="l.e_ye-21">
 <h3><a href="#l.e_ye-21"><span class="c-libfunc">ˡe̲ye!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
@@ -184,11 +188,42 @@ positive), radians; sc:c_amera! goes back to orbiting.</p>
   pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/eye?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
   <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/eye&quot;</span>
 }</pre></details>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-walk.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#e">e</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-endless.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#e">e</a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#e">e</a></div>
+</div>
+<div class="item" id="l.c_urve-21">
+<h3><a href="#l.c_urve-21"><span class="c-libfunc">ˡc̲urve!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L34">line 34</a></div>
+<div class="doc">
+<p>scene sc:c_urve! radius: a curved horizon for the first-person
+camera -- the world lowered by d^2 / 2R at a distance d along the
+ground from the eye, as on a small planet; 0 turns it off.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;c_urve! : float float -&gt; int&quot;</span>       <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;scene/curve&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡc̲urve!</span> ← { a b →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/curve?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/curve?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/curve&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-endless.xtl.html#k">k</a></div>
+</div>
+<div class="item" id="l.s_ky-21">
+<h3><a href="#l.s_ky-21"><span class="c-libfunc">ˡs̲ky!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L37">line 37</a></div>
+<div class="doc">
+<p>scene sc:s_ky! red green blue: the background, which fog fades to
+(0 to 1); -1 -1 -1 goes back to the dark default.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;s_ky! : float float -&gt; int&quot;</span>         <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;scene/sky&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡs̲ky!</span> ← { a b →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/sky?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/sky?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/sky&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-endless.xtl.html#k">k</a></div>
 </div>
 <div class="item" id="l.c_ontrols">
 <h3><a href="#l.c_ontrols"><span class="c-libfunc">ˡc̲ontrols</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L35">line 35</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L42">line 42</a></div>
 <div class="doc">
 <p>sc:c_ontrols scene: how far the mouse was dragged since last asked (x
 y, pixels), then 1 or 0 for each key held -- w a s d space shift and
@@ -201,11 +236,11 @@ the arrows left right up down. Headless, XETAL_EVENTS may hold
   v ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/controls&quot;</span>
   (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/controls?shape&quot;</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
 }</pre></details>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-walk.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-endless.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></div>
 </div>
 <div class="item" id="l.r_emove-21">
 <h3><a href="#l.r_emove-21"><span class="c-libfunc">ˡr̲emove!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L37">line 37</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L44">line 44</a></div>
 <div class="doc">
 <p>scene sc:r_emove! object: 1 if it was there, else 0.</p>
 </div>
@@ -215,10 +250,11 @@ the arrows left right up down. Headless, XETAL_EVENTS may hold
   pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/remove?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
   <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/remove&quot;</span>
 }</pre></details>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-endless.xtl.html#u.d_ropAll"><span class="c-userfunc">ᵘd̲ropAll</span></a></div>
 </div>
 <div class="item" id="l.c_amera-21">
 <h3><a href="#l.c_amera-21"><span class="c-libfunc">ˡc̲amera!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L40">line 40</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L47">line 47</a></div>
 <div class="doc">
 <p>scene sc:c_amera! yaw pitch distance spin: where the camera orbits from
 (radians, scene units) and how fast it turns by itself (radians a second).</p>
@@ -233,7 +269,7 @@ the arrows left right up down. Headless, XETAL_EVENTS may hold
 </div>
 <div class="item" id="l.n_ext-21">
 <h3><a href="#l.n_ext-21"><span class="c-libfunc">ˡn̲ext!</span></a> <span class="type">: Num a =&gt; a -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L43">line 43</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L50">line 50</a></div>
 <div class="doc">
 <p>sc:n_ext! scene: the next event, waiting at most a frame (1/60 s):
 &quot;frame&quot;, &quot;key Space&quot;, &quot;key q&quot;, &quot;close&quot;. Dragging orbits by itself.</p>
@@ -243,11 +279,11 @@ the arrows left right up down. Headless, XETAL_EVENTS may hold
   pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/next?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/next&quot;</span>
 }</pre></details>
-<div class="uses">Used in: <a href="extensions-audio-demos-spectrum.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-cube.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-world.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+<div class="uses">Used in: <a href="extensions-audio-demos-spectrum.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-cube.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-world.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
 </div>
 <div class="item" id="l.c_lose-21">
 <h3><a href="#l.c_lose-21"><span class="c-libfunc">ˡc̲lose!</span></a> <span class="type">: Num a =&gt; a -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L45">line 45</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L52">line 52</a></div>
 <div class="doc">
 <p>sc:c_lose! scene: close the window; 1.</p>
 </div>
@@ -256,11 +292,11 @@ the arrows left right up down. Headless, XETAL_EVENTS may hold
   pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/close?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
   <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/close&quot;</span>
 }</pre></details>
-<div class="uses">Used in: <a href="extensions-audio-demos-spectrum.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-cube.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-world.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></div>
+<div class="uses">Used in: <a href="extensions-audio-demos-spectrum.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-cube.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-world.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></div>
 </div>
 <div class="item" id="l.package">
 <h3><a href="#l.package">ˡpackage</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L48">line 48</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L55">line 55</a></div>
 <div class="doc">
 <p>The native package behind these functions.</p>
 </div>

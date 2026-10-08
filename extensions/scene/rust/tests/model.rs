@@ -224,3 +224,50 @@ fn looking_up_and_down() {
     s.set(1, ceiling);
     assert!(s.render(40, 40).iter().all(|&p| p == BG), "down: nothing");
 }
+
+#[test]
+fn objects_out_of_view_are_skipped_without_changing_the_picture() {
+    let wall = quad(square(-5.0, 1.0), [1.0, 1.0, 1.0]);
+    let behind = quad(square(5.0, 1.0), [1.0, 0.0, 0.0]);
+    let mut s = first_person([0.0, 0.0, 0.0], 0.0, 0.0);
+    s.set(1, wall);
+    let alone = s.render(40, 40);
+    s.set(2, behind);
+    assert!(s.might_see(1, 40, 40));
+    assert!(!s.might_see(2, 40, 40), "behind the eye");
+    assert_eq!(s.render(40, 40), alone);
+    // past the fog's end
+    s.fog = Some((1.0, 3.0));
+    assert!(
+        !s.might_see(1, 40, 40),
+        "the wall is 4 away, the fog ends at 3"
+    );
+    // orbiting sees everything
+    s.camera.eye = None;
+    assert!(s.might_see(2, 40, 40));
+}
+
+#[test]
+fn a_curved_horizon_lowers_far_things_more() {
+    // two walls of the same height, near and far: with the curve the far
+    // one's top is lower on the screen than without it
+    let top_row = |s: &Scene| {
+        let px = s.render(60, 60);
+        (0..60).find(|&y| px[y * 60 + 30] != BG).unwrap_or(60)
+    };
+    let far = quad(
+        vec![
+            [-20.0, -1.0, -40.0],
+            [20.0, -1.0, -40.0],
+            [20.0, 2.0, -40.0],
+            [-20.0, 2.0, -40.0],
+        ],
+        [1.0, 1.0, 1.0],
+    );
+    let mut s = first_person([0.0, 0.0, 0.0], 0.0, 0.0);
+    s.set(1, far);
+    let flat = top_row(&s);
+    s.camera.curve = 100.0;
+    let curved = top_row(&s);
+    assert!(curved > flat + 2, "flat {flat}, curved {curved}");
+}

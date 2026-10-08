@@ -466,6 +466,42 @@ fn eye(args: &[Value]) -> Result<Value, OwnedError> {
     Ok(Value::Int(s))
 }
 
+/// scene curve radius: a curved horizon for the first-person camera,
+/// the world lowered by d^2 / 2R at distance d along the ground; 0 turns
+/// it off. The scene id.
+fn curve(args: &[Value]) -> Result<Value, OwnedError> {
+    let s = id_of(&args[0])?;
+    let (_, r) = float_vector(&args[1])?;
+    let [r] = r[..] else {
+        return Err(OwnedError::invalid_argument("curve is one radius"));
+    };
+    if !r.is_finite() || r < 0.0 {
+        return Err(OwnedError::invalid_argument(format!("{r} is not a radius")));
+    }
+    let window = with(s, |h| {
+        locked(&h.scene).camera.curve = r;
+        h.window
+    })?;
+    redraw(window)?;
+    Ok(Value::Int(s))
+}
+
+/// scene sky red green blue: the background, which fog fades to (0 to
+/// 1); -1 -1 -1, the dark default. The scene id.
+fn sky(args: &[Value]) -> Result<Value, OwnedError> {
+    let s = id_of(&args[0])?;
+    let (_, c) = float_vector(&args[1])?;
+    let [r, g, b] = c[..] else {
+        return Err(OwnedError::invalid_argument("sky is red green blue"));
+    };
+    let window = with(s, |h| {
+        locked(&h.scene).sky = (r >= 0.0).then_some([r, g, b]);
+        h.window
+    })?;
+    redraw(window)?;
+    Ok(Value::Int(s))
+}
+
 /// controls scene: how far the mouse was dragged since last asked (x,
 /// y pixels), then 1 or 0 for each key held: w a s d space shift and the
 /// four arrows.
@@ -501,6 +537,8 @@ xetal_ext_sdk::xetal_extension! {
         remove: 2, "(Num a, Num b) => a -> b -> Int", "scene remove object: 1 if it was there.";
         camera: 2, "(Num a, Num b) => a -> b -> Int", "scene camera yaw pitch distance spin.";
         eye: 2, "(Num a, Num b) => a -> b -> Int", "scene eye x y z yaw pitch: a first-person camera.";
+        sky: 2, "(Num a, Num b) => a -> b -> Int", "scene sky red green blue: the background and fog color.";
+        curve: 2, "(Num a, Num b) => a -> b -> Int", "scene curve radius: a curved horizon (0: flat).";
         controls: 1, "Num a => a -> Float", "Mouse drag dx dy since last asked, then held: w a s d space shift left right up down.";
         next: 1, "Num a => a -> Char", "The next event (frame, key NAME, close), waiting up to a frame.";
         close: 1, "Num a => a -> Int", "Close the window.";

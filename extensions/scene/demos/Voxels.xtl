@@ -317,3 +317,74 @@ l:f_orest := { ts b ->
   boxes := ('{ _r s_elect ts } m_ap r_ange t_ally ts) c_at e_nclose b
   d_isclose '{ e_nclose (d_isclose _l) l:t_ree d_isclose _r } r_/ boxes
 }
+
+### Endless worlds
+
+## a grid point's random value, 0 to 1, from its coordinates alone (i
+## by j, any integers): the same point always gets the same value, so
+## any part of an endless world can be made by itself and fits its
+## neighbors
+## >> "vx:" u_se< "Voxels"
+## >> (3 vx:h_ash 4) = 3 vx:h_ash 4
+## 1
+l:h_ash := { i j ->
+  v := 43758.5453 * s_in (12.9898 * f_loat i) '+ t_able 78.233 * f_loat j
+  v - f_loat f_loor v
+}
+
+# the smooth weight of grid line k for the coordinates t (in grid
+# units): smoothstep of 1 - |t - k|, 0 beyond a grid step
+w_eight := { t k ->
+  d := 0.0 m_ax 1.0 - a_bs t '- t_able f_loat k
+  d * d * 3.0 - 2.0 * d
+}
+
+# s n_oiseOf c: value noise every s blocks over the n by n blocks from
+# c (x0 z0): grid values hashed from their coordinates, interpolated as
+# M G M'
+n_oiseOf := { s c ->
+  x0 := 1 s_elect c
+  z0 := 2 s_elect c
+  n := 3 s_elect c
+  tx := (f_loat x0 + (r_ange n) - 1) / f_loat s
+  tz := (f_loat z0 + (r_ange n) - 1) / f_loat s
+  gx := (f_loor 'm_in r_/ tx) + (r_ange 2 + (f_loor 'm_ax r_/ tx) - f_loor 'm_in r_/ tx) - 1
+  gz := (f_loor 'm_in r_/ tz) + (r_ange 2 + (f_loor 'm_ax r_/ tz) - f_loor 'm_in r_/ tz) - 1
+  (tx w_eight gx) '+ '* i_nner (gx l:h_ash gz) '+ '* i_nner 2 1 t_ranspose tz w_eight gz
+}
+
+## vx:h_eightsAt x0 z0 n: the heights of the n by n columns from block
+## (x0, z0), x by z, of the endless world: three octaves of value noise
+## (every 32, 16 and 8 blocks), 3 to 29, the sea at 14 -- any square
+## anywhere, always the same
+l:h_eightsAt := { c ->
+  v := (18.0 * 32 n_oiseOf c) + (8.0 * 16 n_oiseOf c) + 3.0 * 8 n_oiseOf c
+  3 m_ax 29 m_in f_loor 2.0 + v
+}
+
+# the cells of a 16 by 32 by 16 column inside its 18 by 32 by 18 block
+# (a border of one from the neighbors), as indexes into the bigger one
+cell := (r_ange 8192) - 1
+inner := 1 + (1 + cell m_od 16) + 18 * ((cell d_iv 16) m_od 32) + 32 * 1 + cell d_iv 512
+
+## vx:p_atch c: column c (cx cz) of the endless world, 16 by 32 by 16
+## blocks: made with a border of one block from its neighbors' heights,
+## so its faces at the border hide where a neighbor is solid; trees (two
+## places hashed from the column, kept inside it). A box of its faces
+## (world coordinates, one row each: x y z direction block) and a box of
+## its solid mask (16 by 32 by 16, flat, x slowest)
+l:p_atch := { c ->
+  x0 := (16 * 1 s_elect c) - 1
+  z0 := (16 * 2 s_elect c) - 1
+  h := l:h_eightsAt x0 c_at z0 c_at 18
+  b := l:t_errain h
+  r := (1 s_elect c) l:h_ash 2 s_elect c
+  q := (2 s_elect c) l:h_ash 1 s_elect c
+  t := 4 + f_loor 10.0 * (r_avel r) c_at (r_avel q) c_at (r_avel r * q) c_at r_avel 1.0 - r * q
+  b := (2 2 r_eshape t) l:f_orest b
+  f := l:w_orldFaces b
+  keep := ((1 s_elect_2 f) >= 1) * ((1 s_elect_2 f) <= 16) * ((3 s_elect_2 f) >= 1) * (3 s_elect_2 f) <= 16
+  f := keep r_eplicate f
+  f := f + ((t_ally f) c_at 5) r_eshape x0 c_at 0 c_at z0 c_at 0 0
+  (e_nclose f) c_at e_nclose inner s_elect r_avel l:s_olid b
+}

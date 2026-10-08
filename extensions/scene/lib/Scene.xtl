@@ -28,6 +28,13 @@
 ## looking along yaw (0 toward -z, turning right toward +x) and pitch (up
 ## positive), radians; sc:c_amera! goes back to orbiting.
 "e_ye! : float float -> int"         ffi:b_ind< "scene/eye"
+## scene sc:c_urve! radius: a curved horizon for the first-person
+## camera -- the world lowered by d^2 / 2R at a distance d along the
+## ground from the eye, as on a small planet; 0 turns it off.
+"c_urve! : float float -> int"       ffi:b_ind< "scene/curve"
+## scene sc:s_ky! red green blue: the background, which fog fades to
+## (0 to 1); -1 -1 -1 goes back to the dark default.
+"s_ky! : float float -> int"         ffi:b_ind< "scene/sky"
 ## sc:c_ontrols scene: how far the mouse was dragged since last asked (x
 ## y, pixels), then 1 or 0 for each key held -- w a s d space shift and
 ## the arrows left right up down. Headless, XETAL_EVENTS may hold

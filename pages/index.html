@@ -20,7 +20,7 @@
     <li><a href="#http">http</a><ul><li><a href="#http-quakes">quakes</a></li><li><a href="#http-quakes-live">quakes-live</a></li></ul></li>
     <li><a href="#image">image</a><ul><li><a href="#image-photo-lab">photo-lab</a></li></ul></li>
     <li><a href="#linalg">linalg</a></li>
-    <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-world">voxels-world</a></li></ul></li>
+    <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-endless">voxels-endless</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-world">voxels-world</a></li><li><a href="#scene-zz-endless">zz-endless</a></li></ul></li>
     <li><a href="#sqlite">sqlite</a><ul><li><a href="#sqlite-notebook">notebook</a></li></ul></li>
     <li><a href="#web">web</a><ul><li><a href="#web-life">life</a></li><li><a href="#web-todomvc">todomvc</a></li></ul></li>
   </ul>
@@ -145,6 +145,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <video src="scene/voxels-chunk.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene voxels-chunk</pre>
     </section>
+    <section class="panel demo" id="scene-voxels-endless">
+      <h3>scene / voxels-endless <a class="docs" href="doc/extensions-scene-demos-voxels-endless.xtl.html">source and docs</a></h3>
+      <p class="note">Voxels, 6: an endless world. Walk in any direction and it never ends: the land comes from value noise hashed from the coordinates (vx:h_eightsAt), so any column of 16 by 16 blocks can be made by itself and fits its neighbors; columns are made around the player as it walks -- the nearest missing one each frame -- and dropped behind it; fog hides the edge of what is made, and a curved horizon (scene lowers the world by d^2 / 2R) makes it look like a small planet. Collision asks the columns themselves.</p>
+      <video src="scene/voxels-endless.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo scene voxels-endless</pre>
+    </section>
     <section class="panel demo" id="scene-voxels-faces">
       <h3>scene / voxels-faces <a class="docs" href="doc/extensions-scene-demos-voxels-faces.xtl.html">source and docs</a></h3>
       <p class="note">Voxels, 2: which faces to draw. A face shows where a solid block&#x27;s neighbor is not solid: six rotations of the solid mask, each compared with the mask itself (the idiom of Life), give every exposed face of the chunk at once; the faces become a list, one row each: x y z direction block. Checked on shapes with known answers, then the chunk&#x27;s faces drawn as outlines in a 3D window, turning.</p>
@@ -168,6 +174,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <p class="note">Voxels, 4: a world of chunks. An island 64 by 32 by 64 -- 32 chunks of 16 cubed -- from value noise made by linear algebra (random heights on grids every 16, 8 and 4 blocks, each interpolated as M G M&#x27;), shaped by the chunk&#x27;s rules over the whole world at once, with trees planted by folding one tree over a list of places. Its faces are found over the whole array (so faces between chunks hide each other), then sent to scene chunk by chunk, each chunk&#x27;s kinds of block under their own ids -- the ids a later demo patches when a block changes.</p>
       <video src="scene/voxels-world.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene voxels-world</pre>
+    </section>
+    <section class="panel demo" id="scene-zz-endless">
+      <h3>scene / zz-endless <a class="docs" href="doc/extensions-scene-demos-zz-endless.xtl.html">source and docs</a></h3>
+      <p class="note"></p>
+      <p class="note">(no recording yet)</p>
+      <pre class="source">just demo scene zz-endless</pre>
     </section>
   </div>
   <h2 id="sqlite"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/sqlite/docs/README.md">sqlite</a> <a class="docs" href="doc/extensions-sqlite-lib-Sqlite.xtl.html">facade docs</a></h2>
@@ -204,7 +216,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 512b3ee</span><span class="sep">&middot;</span>
-  <span>built at f30c0ef</span>
+  <span>built at 688c4cf</span>
 </footer>
 </body>
 </html>
