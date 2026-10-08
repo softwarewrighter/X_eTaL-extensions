@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "state": {
+    "number": 4,
+    "step": "voxels-fly"
+  },
+  "action": "fly physics; Rust upscale; index-based trees",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-08T11:18:57"
+}

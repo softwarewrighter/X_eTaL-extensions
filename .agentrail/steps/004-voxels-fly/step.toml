@@ -1,9 +1,10 @@
 number = 4
 slug = "voxels-fly"
-status = "in-progress"
+status = "completed"
 description = "game step 2: flying (gravity and collision off); chunks generated as the play..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T18:26:56"
+completed_at = "2026-10-08T11:18:57"
 task_type = "feature"
-commits = []
+commits = ["a2bd4282361b8a81c42325cfb898862c1030a81a"]
