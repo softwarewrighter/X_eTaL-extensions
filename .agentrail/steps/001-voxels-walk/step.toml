@@ -1,9 +1,10 @@
 number = 1
 slug = "voxels-walk"
-status = "in-progress"
+status = "completed"
 description = "game step 1: scene gains a first-person camera (eye x y z yaw pitch), held ke..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T18:26:56"
+completed_at = "2026-10-07T19:08:05"
 task_type = "feature"
-commits = []
+commits = ["c62749201064cc8762242476915bfbbd7d119d0d"]
