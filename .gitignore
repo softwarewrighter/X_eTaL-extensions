@@ -31,3 +31,6 @@ local-media/
 /tmp/
 work/
 /bin/xetal
+
+# scratch programs beside the demos (never published)
+extensions/*/demos/zz-*
