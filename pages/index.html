@@ -20,7 +20,7 @@
     <li><a href="#http">http</a><ul><li><a href="#http-quakes">quakes</a></li><li><a href="#http-quakes-live">quakes-live</a></li></ul></li>
     <li><a href="#image">image</a><ul><li><a href="#image-photo-lab">photo-lab</a></li></ul></li>
     <li><a href="#linalg">linalg</a></li>
-    <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-endless">voxels-endless</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-world">voxels-world</a></li></ul></li>
+    <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-endless">voxels-endless</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-fly">voxels-fly</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-world">voxels-world</a></li></ul></li>
     <li><a href="#sqlite">sqlite</a><ul><li><a href="#sqlite-notebook">notebook</a></li></ul></li>
     <li><a href="#web">web</a><ul><li><a href="#web-life">life</a></li><li><a href="#web-todomvc">todomvc</a></li></ul></li>
   </ul>
@@ -157,6 +157,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <video src="scene/voxels-faces.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene voxels-faces</pre>
     </section>
+    <section class="panel demo" id="scene-voxels-fly">
+      <h3>scene / voxels-fly <a class="docs" href="doc/extensions-scene-demos-voxels-fly.xtl.html">source and docs</a></h3>
+      <p class="note">Voxels, 7: flying. The endless world of voxels-endless, now from the air: F switches between walking and flying. Flying moves level whatever you look at -- W forward, S back, A and D sideways -- Space rises and Shift sinks, with no gravity, the blocks still stopping you; so you can look down at the land as you cross it. F again drops you back to walking wherever you are. The columns are made ahead, one a frame, and dropped behind, under fog and a curved horizon.</p>
+      <video src="scene/voxels-fly.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo scene voxels-fly</pre>
+    </section>
     <section class="panel demo" id="scene-voxels-solid">
       <h3>scene / voxels-solid <a class="docs" href="doc/extensions-scene-demos-voxels-solid.xtl.html">source and docs</a></h3>
       <p class="note">Voxels, 3: the chunk drawn solid. The same faces as voxels-faces, each now a filled quad -- its four corners from a 6 by 4 table by direction -- one object per kind of block; scene shades each by how it faces the light and hides the farther ones behind the nearer (a depth buffer), with a little fog. All the array work is X_eTaL&#x27;s; Rust only draws.</p>
@@ -210,7 +216,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 512b3ee</span><span class="sep">&middot;</span>
-  <span>built at 2b1ef1d</span>
+  <span>built at 4cde95a</span>
 </footer>
 </body>
 </html>

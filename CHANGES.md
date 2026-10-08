@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-08
 
+- 03:00 `ext` Voxels 7, `just demo scene voxels-fly`: flying over the endless world (F to fly or walk; level by the heading so looking down does not dive, Space up, Shift down, 15 blocks a second, no gravity, the blocks still stopping you -- a first version that flew along the view and through the ground ended under the world, so flying collides). Faster: in first person on a dense (Retina) screen scene draws at the window's logical size and scales up, a quarter of the work (the user found it slow); trees are placed by working out only their own cells (8 ms for two instead of 24) -- which also fixed their crowns, meant to be rounded but 5 by 5 squares (`(ax + az < 4)` reads `ax + (az < 4)` right to left). The world, walk and endless goldens and recordings follow the rounder trees; a fly golden with three frames pinned; recording from a scripted flight.
+
 - 01:40 `fix` A scratch test program (`extensions/scene/demos/zz-endless.xtl`) had been committed and published in the docs' file list (the user compared the docs with X_eTaL's); removed, its doc pages gone, and `zz-*` scratch files beside the demos are now ignored.
 
 - 01:10 `ext` Swimming and a way home in voxels-walk and voxels-endless (the user ended in the water and could not get out): in water (air below the sea at 14) the player sinks slowly, Space swims up, and from the surface Space jumps onto a bank one block high; H goes back to the start; the keys are printed at the start. Checked headless: four runs that waded into the lake (heights 7 to 10) swam out onto land (15 to 16).

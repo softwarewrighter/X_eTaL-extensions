@@ -507,7 +507,7 @@ demo shown before the next.
 | 1 | voxels-walk | (done; no pointer grab: drag or arrows to look, kinder to a user with many windows) scene: first-person camera, held keys and mouse motion (scripted for headless tests), pointer grab, near-plane clipping; X_eTaL: gravity, jumping, collision per axis, the chunks' frustum test; golden with scripted input, recording |
 | 2 | xref-docs | (done; inserted, the user) doc comments per X_eTaL's convention (`##` documents, `###` sections, `## >>` examples) in every facade, library and demo; every export documented (a gate check); examples run (`xetal doc --test`); the cross-referenced doc site (`xetal doc --out`) in `pages/doc`, linked from the site |
 | 3 | voxels-endless | (done; inserted, the user: "no edges, walls, or limits", a curved horizon) terrain from coordinate-hashed noise, chunks generated around the player and dropped behind, collision through the chunk table, fog at the loaded radius; scene: culling by bounding box, a curved horizon |
-| 4 | voxels-fly | flying; chunks generated as the player goes (one a frame from a queue); scene skips objects outside the view |
+| 4 | voxels-fly | (done: F flies, level by heading, Space up, Shift down, blocks still stop you) flying; chunks generated as the player goes (one a frame from a queue); scene skips objects outside the view |
 | 5 | voxels-dig | the ray-march pick; break and place; the world as chunk arrays, one remeshed and patched per edit; crosshair and hotbar |
 | 6 | voxels-light | sky light by a column scan; torch light in rounds over frames; brightness per quad in scene |
 | 7 | voxels-water | water flowing (levels 1 to 7, a cellular automaton on changed chunks); translucent water in scene |

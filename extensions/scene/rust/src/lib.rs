@@ -115,7 +115,32 @@ impl Pane {
         if self.surface.resize(w, h).is_err() {
             return;
         }
-        let pixels = locked(&self.scene).render(w.get() as usize, h.get() as usize);
+        let (pw, ph) = (w.get() as usize, h.get() as usize);
+        // first person on a dense screen: drawn at the window's logical
+        // size and scaled up (a quarter of the work at 2x), so walking
+        // and flying keep their frame rate
+        let scene = locked(&self.scene);
+        #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
+        let f = if scene.camera.eye.is_some() {
+            self.window.scale_factor().round().max(1.0) as usize
+        } else {
+            1
+        };
+        let pixels = if f > 1 {
+            let (lw, lh) = (pw.div_ceil(f), ph.div_ceil(f));
+            let small = scene.render(lw, lh);
+            let mut big = vec![0u32; pw * ph];
+            for y in 0..ph {
+                let row = &small[(y / f) * lw..(y / f) * lw + lw];
+                for x in 0..pw {
+                    big[y * pw + x] = row[x / f];
+                }
+            }
+            big
+        } else {
+            scene.render(pw, ph)
+        };
+        drop(scene);
         let Ok(mut buffer) = self.surface.buffer_mut() else {
             return;
         };

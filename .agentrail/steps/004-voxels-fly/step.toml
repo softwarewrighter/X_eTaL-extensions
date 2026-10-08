@@ -1,6 +1,6 @@
 number = 4
 slug = "voxels-fly"
-status = "pending"
+status = "in-progress"
 description = "game step 2: flying (gravity and collision off); chunks generated as the play..."
 role = "production"
 context_files = []

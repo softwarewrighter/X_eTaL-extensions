@@ -33,7 +33,7 @@ e := sc:n_ext! w                                  # "frame", "key q", "close"
 | `head sc:s_egments! pts` | as above | the points taken in pairs |
 | `head sc:d_ots! pts` | as above | each point a dot |
 | `head sc:q_uads! pts` | as above | the points in fours (4n by 3), each four the corners of a filled quad in order round it; shaded by how it faces a fixed light (tops brightest), nearer quads hiding farther ones; lines and dots draw over quads |
-| `scene sc:e_ye! x y z yaw pitch` | as above | a first-person camera at the eye, looking along yaw (0 toward -z, turning right toward +x) and pitch (up positive), radians; faces crossing the near plane are clipped, not dropped; dragging then turns nothing by itself -- it is reported by `sc:c_ontrols`; `sc:c_amera!` goes back to orbiting |
+| `scene sc:e_ye! x y z yaw pitch` | as above | a first-person camera (on a dense screen drawn at the window's logical size and scaled up, so a Retina window costs no more than an ordinary one) at the eye, looking along yaw (0 toward -z, turning right toward +x) and pitch (up positive), radians; faces crossing the near plane are clipped, not dropped; dragging then turns nothing by itself -- it is reported by `sc:c_ontrols`; `sc:c_amera!` goes back to orbiting |
 | `sc:c_ontrols scene` | `Num a => a -> Float` | how far the mouse was dragged since last asked (x, y pixels), then 1 or 0 for each key held: w a s d space shift and the arrows left right up down. The pointer is never grabbed. Headless, `XETAL_EVENTS` may hold `keydown w`, `keyup w` and `drag 10 0` |
 | `scene sc:c_urve! radius` | as above | a curved horizon for the first-person camera: the world lowered by d^2 / 2R at a distance d along the ground from the eye, as on a small planet; 0 turns it off |
 | `scene sc:s_ky! r g b` | as above | the background, which fog fades to; -1 -1 -1 is the dark default |
@@ -129,6 +129,13 @@ before the next builds on it. Their shared X_eTaL is the library
    a curved horizon. scene skips objects behind the eye, beside the
    view or past the fog. About 8 ms of X_eTaL a frame. Recorded from a
    scripted run as `videos/voxels-endless.webm`.
+7. `demos/voxels-fly.xtl` (`just demo scene voxels-fly`): flying over the
+   endless world. F switches between walking and flying; flying moves
+   level whatever you look at (W A S D by the heading, Space up, Shift
+   down, 15 blocks a second, no gravity, the blocks still stopping you),
+   so you can look down at the land as you cross it; F again drops you
+   back to walking. Recorded from a scripted flight as
+   `videos/voxels-fly.webm`.
 
 ## Build and test
 

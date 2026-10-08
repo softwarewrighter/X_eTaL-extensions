@@ -256,25 +256,35 @@ l:t_errain := { h ->
 }
 
 ## t vx:t_ree b: a tree at column t (x z) when it stands on grass: a
-## trunk of 4 and a crown of leaves, placed into b
+## trunk of 4 and a crown of leaves, placed into b -- only the tree's
+## own cells are worked out (their indexes into b), then set by a
+## membership mask, so a tree costs little in a big block
 l:t_ree := { t b ->
   sh := s_hape b
-  c := c_oords sh
-  xs := 1 s_elect c
-  ys := 2 s_elect c
-  zs := 3 s_elect c
-  col := ((1 s_elect t) = xs) * (2 s_elect t) = zs
-  g := '+ r_/ col * (r_avel b) = 3
-  0 = g ? b
-  y0 := '+ r_/ col * ((r_avel b) = 3) * ys + 1
-  ax := a_bs xs - 1 s_elect t
-  az := a_bs zs - 2 s_elect t
-  trunk := col * (ys >= y0) * ys < y0 + 4
-  crown := (ax <= 2) * (az <= 2) * (ys >= y0 + 3) * (ys <= y0 + 4) * (ax + az < 4) * 1 - trunk
-  crown := crown + (ax <= 1) * (az <= 1) * (ys = y0 + 5)
+  ny := 2 s_elect sh
+  nz := 3 s_elect sh
+  tx := 1 s_elect t
+  tz := 2 s_elect t
   v := r_avel b
-  v := v + trunk * 6 - v
-  v := v + (crown > 0) * (v = 0) * 7
+  col := (1 + tz + nz * ((r_ange ny) - 1) + ny * tx) s_elect v
+  0 = '+ r_/ col = 3 ? b
+  y0 := 1 + '+ r_/ (col = 3) * (r_ange ny) - 1
+  ty := y0 + (r_ange 4) - 1
+  ty := (ty < ny) r_eplicate ty
+  trunk := 1 + tz + nz * ty + ny * tx
+  d5 := (r_ange 5) - 3
+  dx := r_avel d5 '{ _l + 0 * _r } t_able d5
+  dz := r_avel d5 '{ _r + 0 * _l } t_able d5
+  wide := ((a_bs dx) + a_bs dz) < 4
+  small := ((a_bs dx) <= 1) * (a_bs dz) <= 1
+  u_p := { y m ->
+    y >= ny ? 0 r_eshape 0
+    1 + (tz + m r_eplicate dz) + nz * y + ny * tx + m r_eplicate dx
+  }
+  crown := ((y0 + 3) u_p wide) c_at ((y0 + 4) u_p wide) c_at (y0 + 5) u_p small
+  n := t_ally v
+  v := v + ((r_ange n) m_ember? trunk) * 6 - v
+  v := v + ((r_ange n) m_ember? crown) * (v = 0) * 7
   sh r_eshape v
 }
 
