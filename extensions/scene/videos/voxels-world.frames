@@ -1,0 +1,8 @@
+# extensions/scene/videos/voxels-world.webm and .webp: voxels 4, an
+# island of 32 chunks, turning -- headless, every frame saved, joined
+# (just videos).
+demo=voxels-world
+seed=1
+frames=300
+fps=30
+scale=560

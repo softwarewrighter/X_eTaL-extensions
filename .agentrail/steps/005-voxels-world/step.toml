@@ -1,6 +1,6 @@
 number = 5
 slug = "voxels-world"
-status = "pending"
+status = "in-progress"
 description = "voxels step 5: voxels-world.xtl: 4x2x4 chunks from value noise, water, trees;..."
 role = "production"
 context_files = []

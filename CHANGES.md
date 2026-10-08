@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 16:40 `ext` Voxels 4, `just demo scene voxels-world`: a 64 by 32 by 64 island of 32 chunks from value noise made by linear algebra (three octaves, each M G M'), terrain rules over the whole world at once (`vx:t_errain`), trees planted by folding `vx:t_ree` over places (`vx:f_orest`), faces over the whole array (`vx:w_orldFaces`; 18,568 of 403,092) sent per chunk and block under ids (123 objects); 0.4 s to build and mesh, about 13 ms a frame to draw. The quad corners are now `vx:c_orners` (blocks), `vx:q_uads` scaling them for a chunk. Frustum culling moved to the walking demo. Golden (seed 1) with two frames pinned; recording.
+
 - 15:40 `ext` Voxels 3, `just demo scene voxels-solid`: the chunk drawn solid -- each face a quad in X_eTaL (`vx:q_uads`, corners from a 6 by 4 table by direction), one quads object per kind of block, shaded, depth-tested and fogged by scene; 1,389 faces sent once as 16,668 numbers. Golden with three headless frames pinned; recording.
 
 - 15:00 `ext` scene draws filled quads: `sc:q_uads!` (points in fours, each a quad; shaded by its normal against a fixed light, so tops are brightest and shading stays put as the camera turns) behind a depth buffer (reciprocal depth interpolated across each triangle), lines and dots over them; `sc:f_og!` fades quads into the background by depth. Generic rather than voxel-specific: X_eTaL turns voxel faces into quads. Rust tests (fill and shade, the nearer wins in either order, fog, behind the camera); reg-rs: a headless frame of overlapping quads pinned, the error for points not in fours; the listing, types and an error line rebased. The cube's and voxels' frames are unchanged.

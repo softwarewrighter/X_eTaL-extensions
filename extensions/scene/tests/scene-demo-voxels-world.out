@@ -1,0 +1,25 @@
+heights: lowest, highest, mean
+8 27 16
+the world, and its blocks (air stone dirt grass sand water wood leaves):
+64 32 64
+60652 50366 12288 2274 1822 3238 28 404
+faces by direction, all of them, and 6 per solid block if none were hidden:
+2233 2233 4258 5494 2175 2175
+18568
+403092
+faces per chunk, two layers of 4 by 4 (bottom, then top):
+ 965 727 748 1212
+1035 756 849 1058
+ 512 468 779  778
+ 768 516 854 1143
+
+ 507 446 313   97
+ 106 315 127  246
+ 736 333 296  332
+ 673 440 261  172
+objects sent:
+123
+bye
+3426117178 79282 work/vw/scene-1-1.png
+3910885409 79270 work/vw/scene-1-2.png
+3996474528 79463 work/vw/scene-1-3.png

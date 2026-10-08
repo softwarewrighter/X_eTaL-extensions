@@ -1,0 +1,61 @@
+# Voxels, 4: a world of chunks. An island 64 by 32 by 64 -- 32 chunks of
+# 16 cubed -- from value noise made by linear algebra (random heights on
+# grids every 16, 8 and 4 blocks, each interpolated as M G M'), shaped
+# by the chunk's rules over the whole world at once, with trees planted
+# by folding one tree over a list of places. Its faces are found over
+# the whole array (so faces between chunks hide each other), then sent
+# to scene chunk by chunk, each chunk's kinds of block under their own
+# ids -- the ids a later demo patches when a block changes.
+# Run: just demo scene voxels-world   (drag to turn it; q or close: quit)
+"vx:" u_se< "Voxels"
+"sc:" u_se< "Scene"
+
+h := vx:h_eights 64
+"heights: lowest, highest, mean"
+('m_in r_/ r_avel h) c_at ('m_ax r_/ r_avel h) c_at (f_loor 0.5 + ('+ r_/ f_loat r_avel h) / 4096.0)
+b := vx:t_errain h
+ts := 12 2 r_eshape 3 + r_oll! 24 r_eshape 58
+b := ts vx:f_orest b
+"the world, and its blocks (air stone dirt grass sand water wood leaves):"
+s_hape b
+vx:c_ounts b
+
+f := vx:w_orldFaces b
+"faces by direction, all of them, and 6 per solid block if none were hidden:"
+vx:c_ount f
+t_ally f
+6 * '+ r_/ r_avel vx:s_olid b
+c := vx:c_hunkOf f
+"faces per chunk, two layers of 4 by 4 (bottom, then top):"
+2 4 4 r_eshape '+ r_/_2 (r_ange 32) '= t_able c
+
+w := "Voxels 4: a world -- X_eTaL" sc:o_pen! 640 560
+k := w sc:c_amera! 0.75 0.55 3.0 0.25
+g := w sc:f_og! 2.6 5.0
+
+# one object for each chunk and kind of block: id 10 * chunk + block
+keys := u_nique (10 * c) + 5 s_elect_2 f
+u:p_ut := { i ->
+  key := i s_elect keys
+  sel := key = (10 * c) + 5 s_elect_2 f
+  head := (f_loat w c_at key) c_at (1 + key m_od 10) s_elect vx:colors
+  q := vx:c_orners sel r_eplicate f
+  x := head sc:q_uads! (q - (s_hape q) r_eshape 32.0 12.0 32.0) / 32.0
+  i + 1
+}
+put := (t_ally keys) 'u:p_ut p_ower 1
+"objects sent:"
+put - 1
+
+u:q_uit := { n ->
+  z := sc:c_lose! w
+  0
+}
+u:f_rame := { n ->
+  n = 0 ? 0
+  v := sc:n_ext! w
+  ((v m_atch "close") + v m_atch "key q") > 0 ? u:q_uit n
+  n
+}
+last := 100000 'u:f_rame p_ower 1
+"bye"

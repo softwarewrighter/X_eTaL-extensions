@@ -89,6 +89,18 @@ before the next builds on it. Their shared X_eTaL is the library
    light, hides the farther behind the nearer, and fogs the distance.
    1,389 faces cross once as 16,668 numbers; after that only frames.
    Recorded as `videos/voxels-solid.webm`.
+4. `demos/voxels-world.xtl` (`just demo scene voxels-world`; a new
+   island each run, `just demo scene voxels-world --seed 1` for the
+   recorded one): a world of chunks. An island 64 by 32 by 64 -- 32
+   chunks -- from value noise made by linear algebra (random heights
+   on grids every 16, 8 and 4 blocks, each interpolated as M G M'),
+   the chunk's rules applied to the whole world at once, and trees
+   planted by folding one tree over a list of places. The faces are
+   found over the whole array, so faces between chunks hide each other
+   (18,568 drawn of 403,092), and sent chunk by chunk under ids (10 *
+   chunk + block, 123 objects) -- the ids a later demo patches when a
+   block changes. About 0.4 s to build and mesh; scene draws it in
+   about 13 ms a frame. Recorded as `videos/voxels-world.webm`.
 
 ## Build and test
 
