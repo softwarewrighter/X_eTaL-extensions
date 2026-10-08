@@ -134,6 +134,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <video src="scene/voxels-faces.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene voxels-faces</pre>
     </section>
+    <section class="panel demo">
+      <h3>scene / voxels-solid</h3>
+      <p class="note">Voxels, 3: the chunk drawn solid. The same faces as voxels-faces, each now a filled quad -- its four corners from a 6 by 4 table by direction -- one object per kind of block; scene shades each by how it faces the light and hides the farther ones behind the nearer (a depth buffer), with a little fog. All the array work is X_eTaL&#x27;s; Rust only draws.</p>
+      <video src="scene/voxels-solid.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo scene voxels-solid</pre>
+    </section>
   </div>
   <h2 id="sqlite"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/sqlite/docs/README.md">sqlite</a></h2>
   <p class="lede">SQLite databases for X_eTaL: run statements, and bring query results back as X_eTaL arrays -- numbers as a matrix to compute on, text as a Char matrix -- through rusqlite with SQLite compiled in.</p>
@@ -169,7 +175,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 512b3ee</span><span class="sep">&middot;</span>
-  <span>built at 7ad10d6</span>
+  <span>built at ac89a97</span>
 </footer>
 </body>
 </html>

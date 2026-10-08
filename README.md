@@ -38,6 +38,7 @@ just demo web todomvc           # TodoMVC: X_eTaL serves it, SQLite keeps it (ht
 just demo http quakes           # a week of earthquakes: SQL groups, X_eTaL computes, pictures in work/draw/
 just live-quakes                # the same on the live USGS feed (uses the network)
 just demo image photo-lab       # a photo as an array: filters, edges, SVD compression (work/photo-lab/)
+just demo scene voxels-solid    # a voxel island: X_eTaL builds it and finds its faces, Rust draws them
 just walkthrough                # a fresh clone, built and run, checked against the goldens
 ```
 
@@ -130,7 +131,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | [clock](extensions/clock/docs/README.md) | `Clock` | wall-clock and monotonic time; the bridge's cost | std | done: facade, tests, cost demo |
 | [audio](extensions/audio/docs/README.md) | `Audio` | decode Ogg Vorbis, MP3, WAV; play; read what plays as arrays; play arrays | symphonia, cpal | done: the music visualizer, the synthesizer, the oscilloscope |
 | [canvas](extensions/canvas/docs/README.md) | `Canvas` | a native window showing arrays as pixels; keys and clicks back | winit, softbuffer | done: Life demo (media work continues after the launch) |
-| [scene](extensions/scene/docs/README.md) | `Scene` | retained 3D lines and points in a native window, patched by id; orbit camera | winit, softbuffer | done: cube demo (the visualizer's base) |
+| [scene](extensions/scene/docs/README.md) | `Scene` | retained 3D lines, points and shaded quads in a native window, patched by id; orbit camera, depth buffer, fog | winit, softbuffer | done: the cube; voxels 1 to 3 (a chunk as an array, its faces, drawn solid) |
 | [sqlite](extensions/sqlite/docs/README.md) | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | done: facade, CSV import, tests, the data notebook |
 | [web](extensions/web/docs/README.md) | `Web` | serve HTTP on loopback: the program takes each request and replies | axum, tokio | done: facade, loopback tests, the live page, TodoMVC |
 | [image](extensions/image/docs/README.md) | `Image` | PNG and JPEG to and from Float arrays; resize | image | done: facade, round-trip tests, the photo lab |

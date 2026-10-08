@@ -1,0 +1,3 @@
+command = 'rm -rf work/vs && XETAL_HEADLESS=1 XETAL_EVENTS="frame,frame,frame" XETAL_FRAMES=work/vs xetal-x --ext .. run demos/voxels-solid.xtl && cksum work/vs/*.png'
+exit_code = 0
+desc = "voxels 3: the chunk drawn solid (1389 quads, shaded, depth-tested, fog); three headless frames pinned"

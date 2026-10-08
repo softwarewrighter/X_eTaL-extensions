@@ -1,0 +1,8 @@
+# extensions/scene/videos/voxels-solid.webm and .webp: voxels 3, the
+# chunk drawn solid, turning -- headless, every frame saved, joined
+# (just videos).
+demo=voxels-solid
+seed=1
+frames=240
+fps=30
+scale=480

@@ -1,6 +1,6 @@
 number = 4
 slug = "voxels-solid"
-status = "pending"
+status = "in-progress"
 description = "voxels step 4: voxels-solid.xtl: the chunk drawn solid, orbiting; golden fram..."
 role = "production"
 context_files = []

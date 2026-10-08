@@ -1,0 +1,40 @@
+# Voxels, 3: the chunk drawn solid. The same faces as voxels-faces, each
+# now a filled quad -- its four corners from a 6 by 4 table by direction
+# -- one object per kind of block; scene shades each by how it faces the
+# light and hides the farther ones behind the nearer (a depth buffer),
+# with a little fog. All the array work is X_eTaL's; Rust only draws.
+# Run: just demo scene voxels-solid   (drag to turn it; q or close: quit)
+"vx:" u_se< "Voxels"
+"sc:" u_se< "Scene"
+
+b := vx:c_hunk vx:h_ills 0.0
+f := vx:f_aces b
+"faces drawn, and the points sent for them (4 corners, 3 numbers each):"
+(t_ally f) c_at 12 * t_ally f
+
+w := "Voxels 3: solid -- X_eTaL" sc:o_pen! 560 560
+k := w sc:c_amera! 0.7 0.5 3.4 0.35
+g := w sc:f_og! 3.0 6.0
+
+# each kind of block as one object of quads, in its color
+u:p_ut := { t ->
+  sel := (5 s_elect_2 f) = t
+  0 = '+ r_/ sel ? t + 1
+  head := (f_loat w c_at t) c_at (t + 1) s_elect vx:colors
+  x := head sc:q_uads! vx:q_uads sel r_eplicate f
+  t + 1
+}
+put := 7 'u:p_ut p_ower 1
+
+u:q_uit := { n ->
+  z := sc:c_lose! w
+  0
+}
+u:f_rame := { n ->
+  n = 0 ? 0
+  v := sc:n_ext! w
+  ((v m_atch "close") + v m_atch "key q") > 0 ? u:q_uit n
+  n
+}
+last := 100000 'u:f_rame p_ower 1
+"bye"

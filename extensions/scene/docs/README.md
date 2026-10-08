@@ -82,6 +82,13 @@ before the next builds on it. Their shared X_eTaL is the library
    452, a 3D checkerboard 2,048 -- then the chunk: 1,389 faces drawn
    instead of 10,446, as outlines colored by block, turning in the
    window. Recorded as `videos/voxels-faces.webm`.
+3. `demos/voxels-solid.xtl` (`just demo scene voxels-solid`): the chunk
+   drawn solid. The same faces, each made a quad in X_eTaL (its four
+   corners from a 6 by 4 table by direction, `vx:q_uads`), one object
+   of quads per kind of block; scene shades them by how they face the
+   light, hides the farther behind the nearer, and fogs the distance.
+   1,389 faces cross once as 16,668 numbers; after that only frames.
+   Recorded as `videos/voxels-solid.webm`.
 
 ## Build and test
 
