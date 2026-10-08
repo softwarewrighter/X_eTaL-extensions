@@ -1,0 +1,1 @@
+Rubik's cube: Rubik.xtl permutation model (checked: order 4, inverses, sexy order 6, RU order 105, directions); voxels drawing; keys, undo, scramble, reset
