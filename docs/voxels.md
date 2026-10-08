@@ -5,8 +5,9 @@ Dyalog APL, MIT) and of how this repository could show voxel graphics
 from X_eTaL: what carries over, what our native windows can and
 cannot do today, measured costs, the chunk size to use, and a series
 of `voxels-*` demos that build up to a small game, each one runnable,
-tested and recorded before the next. Written 2026-10-07. Analysis
-only: nothing here is scheduled yet.
+tested and recorded before the next. Written 2026-10-07; the first
+four demos are built (see "Built so far" at the end), the game demos
+follow.
 
 ## In short
 
@@ -163,9 +164,9 @@ started. The shared X_eTaL lives in a library beside them,
 | - | ---- | ----- | --------------- |
 | 1 | `voxels-chunk` | a 16-cube as a 3D array: a height field made into layers (stone, dirt, grass), water below a level; counts per block type; slices drawn with `[]G_RID` | none |
 | 2 | `voxels-faces` | the exposed-face mask by six rotations (the Life idiom), padded with neighbors; the face list as an n by 5 array; face counts for solid, hollow and checkerboard chunks; the faces drawn as wireframe squares in scene, orbiting | none (scene segments) |
-| 3 | `voxels-solid` | the same chunk drawn solid: filled quads, depth-tested, shaded by direction, fog; orbiting | scene: `f_aces! id list` (filled quads by id), a depth buffer |
-| 4 | `voxels-world` | 4 by 2 by 4 chunks from value noise (2D heights, 3D caves optional), water, trees; each chunk's faces by id; X_eTaL culls chunks against the frustum | none beyond 3 |
-| 5 | `voxels-walk` | walking: first-person camera, WASD and mouse look, gravity and jumping, collision against the blocks (swept box per axis) | scene: first-person camera; key down and up, mouse motion events (and grabbing the pointer) |
+| 3 | `voxels-solid` | the same chunk drawn solid: filled quads, depth-tested, shaded by direction, fog; orbiting | scene: filled quads by id (`sc:q_uads!`), a depth buffer, fog (`sc:f_og!`) |
+| 4 | `voxels-world` | 4 by 2 by 4 chunks from value noise (2D heights), water, trees; each chunk's faces by id | none beyond 3 |
+| 5 | `voxels-walk` | walking: first-person camera, WASD and mouse look, gravity and jumping, collision against the blocks (swept box per axis); X_eTaL culls chunks against the frustum | scene: first-person camera; key down and up, mouse motion events (and grabbing the pointer) |
 | 6 | `voxels-dig` | picking with the ray march; breaking and placing blocks; the edited chunk (and a neighbor at its border) remeshed and patched | none |
 | 7 | `voxels-light` | sky light by a column scan, a torch's light spread in at most 15 rounds; faces carry a light level | scene: a light level per face |
 | 8 | `voxels-game` | the mini game (below) | a small text overlay (score, time), if not drawn by X_eTaL |
@@ -200,7 +201,7 @@ drawing and the clock of frames are Rust.
   libraries, headless frames, exact goldens, recordings with
   `XETAL_FRAMES`, the same code on macOS and Linux.
 - **GPU (later, if the CPU falls short):** wgpu (pure Rust, Metal and
-  Vulkan) behind the same `f_aces!`; X_eTaL would not change. SDL3,
+  Vulkan) behind the same `sc:q_uads!`; X_eTaL would not change. SDL3,
   as in the APL game, would add a system library to install and buys
   nothing here: the hard parts the APL game needed SDL's C for (event
   unions, pipeline structs, font lists) are already Rust's side of the
@@ -215,6 +216,33 @@ drawing and the clock of frames are Rust.
   for the whole meshing; the demos fit in that, a large streamed world
   would not. Where the time goes (allocation per primitive, widening
   of Booleans) is not measured yet.
+
+## Built so far
+
+Demos 1 to 4 are in `extensions/scene/demos/` with the shared library
+`Voxels.xtl`, each with a golden (headless frames pinned where it
+draws) and a recording (the scene page lists them):
+
+| Demo | What it showed |
+| ---- | -------------- |
+| `voxels-chunk` | a chunk from a height field in a few elementwise expressions; the view from above by a max-reduction down each column |
+| `voxels-faces` | the six-rotation mask checked on known shapes (1, 256, 452, 2,048 faces a direction) and the chunk's 1,389 faces of 10,446 |
+| `voxels-solid` | the chunk as shaded, depth-tested quads: 16,668 numbers crossed once |
+| `voxels-world` | 32 chunks, 64 by 32 by 64, from value noise made as M G M'; faces over the whole world (18,568 of 403,092) sent per chunk under ids; 0.4 s to build and mesh, about 13 ms a frame to draw |
+
+What changed from the plan above:
+
+- scene gained generic filled quads (`sc:q_uads!`, shaded by a fixed
+  light, behind a depth buffer) and fog (`sc:f_og!`) rather than a
+  voxel-specific `f_aces!`: X_eTaL turns faces into quads.
+- The world's faces are found over the whole world array at once
+  (55 ms of the 0.4 s), which also settles the chunk-border question
+  for a fixed world; remeshing one chunk after an edit (`voxels-dig`)
+  will need its neighbors' border planes.
+- Frustum culling moved to `voxels-walk`: an orbiting camera always
+  sees the whole island.
+- The CPU renderer is fast enough: about 13 ms for 18,568 quads at
+  640 by 560, so no GPU is needed for the game.
 
 ## Credits
 

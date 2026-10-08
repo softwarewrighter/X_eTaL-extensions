@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 17:10 `release` Voxels saga done: docs/voxels.md says what was built and what changed from the plan (generic quads and fog in scene, whole-world meshing, culling moved to the walking demo, the CPU renderer fast enough); README, status; Saga 13 retrospective.
+
 - 16:40 `ext` Voxels 4, `just demo scene voxels-world`: a 64 by 32 by 64 island of 32 chunks from value noise made by linear algebra (three octaves, each M G M'), terrain rules over the whole world at once (`vx:t_errain`), trees planted by folding `vx:t_ree` over places (`vx:f_orest`), faces over the whole array (`vx:w_orldFaces`; 18,568 of 403,092) sent per chunk and block under ids (123 objects); 0.4 s to build and mesh, about 13 ms a frame to draw. The quad corners are now `vx:c_orners` (blocks), `vx:q_uads` scaling them for a chunk. Frustum culling moved to the walking demo. Golden (seed 1) with two frames pinned; recording.
 
 - 15:40 `ext` Voxels 3, `just demo scene voxels-solid`: the chunk drawn solid -- each face a quad in X_eTaL (`vx:q_uads`, corners from a 6 by 4 table by direction), one quads object per kind of block, shaded, depth-tested and fogged by scene; 1,389 faces sent once as 16,668 numbers. Golden with three headless frames pinned; recording.

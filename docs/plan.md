@@ -481,7 +481,20 @@ each `voxels-*` demo shown before the next (the user's rule).
 | 3 | scene-faces | (done, generically: `sc:q_uads!` and `sc:f_og!`; X_eTaL turns faces into quads) scene: `f_aces!` (filled quads by id, flat colors by type and direction), a depth buffer, fog; Rust tests and headless frames |
 | 4 | voxels-solid | (done) the chunk drawn solid, orbiting; golden frames, recording |
 | 5 | voxels-world | (done; culling moved to voxels-walk, where a first-person camera makes it matter) 4 by 2 by 4 chunks from value noise, water, trees; each chunk by id; X_eTaL culls against the frustum |
-| 6 | voxels-release | recordings, docs, status, retrospective; the site checked online |
+| 6 | voxels-release | (done) docs/voxels.md updated (built so far, what changed), docs, status, retrospective; the site checked online |
+
+Saga 13 retrospective: voxels work in X_eTaL. A chunk is an array; its
+faces are six rotations compared with the mask, checked on shapes
+with known answers; a world of 32 chunks comes from value noise made
+by one linear-algebra expression per octave and meshes in 0.4 s;
+scene draws 18,568 shaded quads in about 13 ms on the CPU. The
+generic `sc:q_uads!` kept scene free of voxel knowledge. Found on the
+way: `s_elect` takes its indices on the left and `m_od` divides its
+left; values may not have an underline (`vx:colors`) and locals that
+are functions must (`r_w`); a local named like a library value
+clashes; `m_ap` goes over elements, so boxes of rows come from mapping
+row numbers; color tables are 1-based with air first. Next: Saga 14,
+the voxel game (walk, dig, light, Gem Hunt).
 
 ## Saga 14 -- voxel game
 

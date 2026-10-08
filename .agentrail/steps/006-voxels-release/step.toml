@@ -1,6 +1,6 @@
 number = 6
 slug = "voxels-release"
-status = "pending"
+status = "in-progress"
 description = "voxels step 6: recordings, docs (voxels.md updated with what was built), READ..."
 role = "production"
 context_files = []
