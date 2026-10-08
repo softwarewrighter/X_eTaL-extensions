@@ -1,0 +1,1 @@
+game step 6: Gem Hunt (docs/voxels.md).

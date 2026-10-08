@@ -1,0 +1,9 @@
+number = 4
+slug = "voxels-light"
+status = "pending"
+description = "game step 4: sky light by a column scan; torch light spreading in rounds over..."
+role = "production"
+context_files = []
+created_at = "2026-10-07T18:26:56"
+task_type = "feature"
+commits = []

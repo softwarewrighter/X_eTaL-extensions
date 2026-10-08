@@ -1,0 +1,1 @@
+game step 7: recordings, docs, status, retrospective; verify the site online.

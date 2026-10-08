@@ -1,14 +1,16 @@
-# voxels
+# voxel-game
 
-Voxel graphics from X_eTaL (docs/voxels.md): 16-cube chunks as arrays,
-exposed faces by six rotations, faces kept and drawn by scene on the
-CPU. Piece by piece: each voxels-* demo shown before the next.
+The voxel game (docs/voxels.md, "The game"; docs/plan.md, Saga 14):
+walking, fly-through, building, digging, lighting, water flow, then
+Gem Hunt. X_eTaL keeps the world (chunk arrays) and the rules; scene
+draws. Each demo shown before the next.
 
 ## Steps
 
-1. voxels-chunk -- a chunk as an array; the Voxels library.
-2. voxels-faces -- the exposed-face mask and list; wireframe.
-3. scene-faces -- filled, depth-tested faces in scene.
-4. voxels-solid -- the chunk drawn solid.
-5. voxels-world -- several chunks, noise terrain, culling.
-6. voxels-release -- recordings, docs, retrospective, site checked.
+1. voxels-walk -- first person, input, collision.
+2. voxels-fly -- flying, chunks generated as you go, culling.
+3. voxels-dig -- pick, break, place, remesh one chunk.
+4. voxels-light -- sky and torch light.
+5. voxels-water -- water flow.
+6. voxels-game -- Gem Hunt.
+7. game-release -- recordings, docs, retrospective, site checked.

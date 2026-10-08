@@ -1,0 +1,1 @@
+game step 4: sky light by a column scan; torch light spreading in rounds over frames; a brightness per quad in scene.

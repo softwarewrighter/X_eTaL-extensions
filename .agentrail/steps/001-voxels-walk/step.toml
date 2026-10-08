@@ -1,0 +1,9 @@
+number = 1
+slug = "voxels-walk"
+status = "pending"
+description = "game step 1: scene gains a first-person camera (eye x y z yaw pitch), held ke..."
+role = "production"
+context_files = []
+created_at = "2026-10-07T18:26:56"
+task_type = "feature"
+commits = []

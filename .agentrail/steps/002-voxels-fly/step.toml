@@ -1,0 +1,9 @@
+number = 2
+slug = "voxels-fly"
+status = "pending"
+description = "game step 2: flying (gravity and collision off); chunks generated as the play..."
+role = "production"
+context_files = []
+created_at = "2026-10-07T18:26:56"
+task_type = "feature"
+commits = []

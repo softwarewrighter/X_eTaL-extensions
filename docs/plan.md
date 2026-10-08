@@ -498,11 +498,19 @@ the voxel game (walk, dig, light, Gem Hunt).
 
 ## Saga 14 -- voxel game
 
-After Saga 13: `voxels-walk` (first-person camera, key up and down,
-mouse motion in scene; gravity and collision in X_eTaL),
-`voxels-dig` (ray-march picking, break and place, remesh a chunk),
-`voxels-light` (sky light by a column scan, torch light in rounds),
-`voxels-game` (Gem Hunt), a release.
+Started 2026-10-07 (the user: walking, fly-through, building, digging,
+lighting, water flow; the design is docs/voxels.md, "The game"). Each
+demo shown before the next.
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | voxels-walk | scene: first-person camera, held keys and mouse motion (scripted for headless tests), pointer grab, near-plane clipping; X_eTaL: gravity, jumping, collision per axis, the chunks' frustum test; golden with scripted input, recording |
+| 2 | voxels-fly | flying; chunks generated as the player goes (one a frame from a queue); scene skips objects outside the view |
+| 3 | voxels-dig | the ray-march pick; break and place; the world as chunk arrays, one remeshed and patched per edit; crosshair and hotbar |
+| 4 | voxels-light | sky light by a column scan; torch light in rounds over frames; brightness per quad in scene |
+| 5 | voxels-water | water flowing (levels 1 to 7, a cellular automaton on changed chunks); translucent water in scene |
+| 6 | voxels-game | Gem Hunt |
+| 7 | game-release | recordings, docs, status, retrospective; the site checked online |
 
 ## Saga 12 -- native hook (blocked)
 

@@ -244,6 +244,55 @@ What changed from the plan above:
 - The CPU renderer is fast enough: about 13 ms for 18,568 quads at
   640 by 560, so no GPU is needed for the game.
 
+## The game: walking, flying, building, digging, light, water
+
+Designed 2026-10-07 after demos 1 to 4 (the user: "how could we have a
+voxel game that allows walking, fly-through, building, digging,
+lighting, water flow?"). The numbers it rests on, measured above: about
+0.4 microseconds a cell for whole-array work in X_eTaL (1.6 ms a
+16-cube), 0.35 microseconds a number across the bridge, about 13 ms a
+frame for scene to draw 18,568 quads. The program and the window run
+on different threads, so drawing does not take X_eTaL's time; a frame
+is 16 ms.
+
+**The loop.** Each frame the program pulls one event, applies the
+input, moves the player, sets the camera, and then does at most one
+bounded job from a queue -- generate a chunk, remesh a chunk, a few
+rounds of light, a water tick -- so no frame does more than about 8 ms
+of X_eTaL.
+
+**The world** is a list of chunk arrays (16-cubes, boxed, keyed by
+chunk), not one big array: X_eTaL has no indexed assignment (values
+are immutable, lang-choices M1), so an edit rebuilds one 4,096-cell
+chunk (about 2 ms), never the world.
+
+| Feature | In X_eTaL | In scene (Rust) |
+| ------- | --------- | --------------- |
+| walking | the player as a few numbers (position, velocity, yaw, pitch); gravity and jumping; collision as a swept box per axis against the dozen cells around the player, read from the solid mask | a first-person camera (eye position, yaw, pitch); held keys, mouse motion, the pointer grabbed; quads clipped at the near plane (a face beside the eye must not vanish) |
+| fly-through | the same with gravity and collision off; chunks generated ahead of the player from the queue, one a frame (about 10 ms each: terrain, faces, sending) | objects outside the view skipped by their bounding boxes; fog hides the edge; an internal resolution below the window's if the frame time needs it (wgpu behind the same calls only if the CPU falls short) |
+| digging and building | the pick: 100 points marched along the view ray, rounded to cells, the first solid one -- one expression; the edit rebuilds one chunk, its faces remeshed with the neighbors' border planes and its objects replaced by id | a crosshair; the hotbar |
+| lighting | sky light: a running scan down each column; block light (torches) and soft sky light: rounds of "the brightest neighbor (six rotations) minus 1", blocked by solid blocks, about 2 ms a round a chunk, 15 rounds, only after a change, spread over frames; a face takes the light of the air cell in front of it | a brightness per quad (a fourth column) |
+| water flow | a cellular automaton like Life on levels 1 to 7: water falls into air below, else spreads sideways one level lower, sources stay full; a few rotations and comparisons a tick, about 15 ms a chunk, every few frames, only on chunks where water changed | water drawn after the solid blocks, translucent (alpha) -- opaque blue first |
+
+The two walls the APL game hit -- light and water, "spread from a point
+until blocked" -- are fixpoints over the whole array there; here they
+run over 16-cubes, only where something changed, a few rounds a frame.
+
+**An ask, not a blocker:** an "amend" that returns a new array with
+some indexes changed (APL's `@`) would make an edit cost the cells
+changed instead of the chunk; it fits immutable values.
+
+**The order**, each demo shown before the next:
+
+| # | Demo | Adds |
+| - | ---- | ---- |
+| 1 | `voxels-walk` | first-person camera, held keys, mouse look, near-plane clipping in scene; gravity, jumping, collision in X_eTaL; X_eTaL's frustum test of the chunks |
+| 2 | `voxels-fly` | flying, chunks generated as the player goes, culling by bounding box in scene |
+| 3 | `voxels-dig` | the ray-march pick, breaking and placing, per-chunk remeshing and patching; crosshair and hotbar |
+| 4 | `voxels-light` | sky light by a column scan, torches spreading in rounds; brightness per quad |
+| 5 | `voxels-water` | water flowing by a cellular automaton; translucent water |
+| 6 | `voxels-game` | Gem Hunt, with all of the above |
+
 ## Credits
 
 The approach -- chunks as arrays, the six-rotation face mask, AABB

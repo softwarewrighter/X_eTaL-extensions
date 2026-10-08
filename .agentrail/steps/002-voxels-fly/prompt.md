@@ -1,0 +1,1 @@
+game step 2: flying (gravity and collision off); chunks generated as the player goes, one a frame from a queue; scene skips objects outside the view by their bounding boxes.

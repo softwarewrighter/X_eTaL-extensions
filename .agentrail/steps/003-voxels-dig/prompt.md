@@ -1,0 +1,1 @@
+game step 3: the ray-march pick; break and place; the world as chunk arrays, one remeshed (neighbor border planes) and patched by id per edit; crosshair and hotbar.

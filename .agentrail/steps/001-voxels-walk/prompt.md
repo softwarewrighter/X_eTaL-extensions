@@ -1,0 +1,1 @@
+game step 1: scene gains a first-person camera (eye x y z yaw pitch), held keys and mouse motion (sc:c_ontrols: numbers; scripted keydown/keyup/mouse events for headless tests), pointer grab, near-plane clipping of quads; X_eTaL: walking with gravity, jumping, collision per axis against the cells around the player; the chunks' frustum test; golden with scripted input, recording.
