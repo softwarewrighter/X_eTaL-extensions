@@ -1,8 +1,9 @@
 number = 6
 slug = "xetal-pin"
-status = "in-progress"
+status = "completed"
 description = "game step 6 (inserted, the user): pin X_eTaL's newest (d284a8cb: the doc site..."
 role = "production"
 context_files = []
 created_at = "2026-10-08T13:16:52"
-commits = []
+completed_at = "2026-10-08T14:08:18"
+commits = ["5114ec6c30755910d995c7606ca922879565d3e9"]
