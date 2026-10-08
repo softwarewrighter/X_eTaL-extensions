@@ -1,4 +1,4 @@
-number = 6
+number = 7
 slug = "voxels-light"
 status = "pending"
 description = "game step 4: sky light by a column scan; torch light spreading in rounds over..."

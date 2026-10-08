@@ -1,0 +1,8 @@
+number = 5
+slug = "smooth-streaming"
+status = "pending"
+description = "game step 5 (inserted, the user: laggy at the edges, it pauses when new land ..."
+role = "production"
+context_files = []
+created_at = "2026-10-08T12:17:17"
+commits = []
