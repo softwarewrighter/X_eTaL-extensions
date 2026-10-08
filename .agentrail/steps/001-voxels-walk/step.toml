@@ -1,6 +1,6 @@
 number = 1
 slug = "voxels-walk"
-status = "pending"
+status = "in-progress"
 description = "game step 1: scene gains a first-person camera (eye x y z yaw pitch), held ke..."
 role = "production"
 context_files = []

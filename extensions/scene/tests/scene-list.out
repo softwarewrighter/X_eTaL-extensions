@@ -7,5 +7,7 @@ scene 0.1.0
   scene/fog : (Num a, Num b) => a -> b -> Int    # scene fog near far: quads fade into the background.
   scene/remove : (Num a, Num b) => a -> b -> Int    # scene remove object: 1 if it was there.
   scene/camera : (Num a, Num b) => a -> b -> Int    # scene camera yaw pitch distance spin.
+  scene/eye : (Num a, Num b) => a -> b -> Int    # scene eye x y z yaw pitch: a first-person camera.
+  scene/controls : Num a => a -> Float    # Mouse drag dx dy since last asked, then held: w a s d space shift left right up down.
   scene/next : Num a => a -> Char    # The next event (frame, key NAME, close), waiting up to a frame.
   scene/close : Num a => a -> Int    # Close the window.

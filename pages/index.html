@@ -141,6 +141,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <pre class="source">just demo scene voxels-solid</pre>
     </section>
     <section class="panel demo">
+      <h3>scene / voxels-walk</h3>
+      <p class="note">Voxels, 5: walking. The island of voxels-world, seen from inside it. The player is nine numbers -- x y z (feet), vx vy vz, yaw, pitch, on the ground -- and every frame X_eTaL reads the keys and the mouse, turns, falls, jumps, and moves one axis at a time against the solid blocks the player&#x27;s box would overlap, stopping at the face of the block it hits (a swept box per axis, as the APL game collides); then it sets scene&#x27;s first-person camera. It also tests the 32 chunks against the planes of the view, as the APL game culls (key c).</p>
+      <video src="scene/voxels-walk.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo scene voxels-walk</pre>
+    </section>
+    <section class="panel demo">
       <h3>scene / voxels-world</h3>
       <p class="note">Voxels, 4: a world of chunks. An island 64 by 32 by 64 -- 32 chunks of 16 cubed -- from value noise made by linear algebra (random heights on grids every 16, 8 and 4 blocks, each interpolated as M G M&#x27;), shaped by the chunk&#x27;s rules over the whole world at once, with trees planted by folding one tree over a list of places. Its faces are found over the whole array (so faces between chunks hide each other), then sent to scene chunk by chunk, each chunk&#x27;s kinds of block under their own ids -- the ids a later demo patches when a block changes.</p>
       <video src="scene/voxels-world.webm" autoplay loop muted playsinline controls preload="metadata"></video>
@@ -181,7 +187,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 512b3ee</span><span class="sep">&middot;</span>
-  <span>built at ce75adf</span>
+  <span>built at a64046c</span>
 </footer>
 </body>
 </html>

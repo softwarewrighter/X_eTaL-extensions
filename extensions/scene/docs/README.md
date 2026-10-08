@@ -33,6 +33,8 @@ e := sc:n_ext! w                                  # "frame", "key q", "close"
 | `head sc:s_egments! pts` | as above | the points taken in pairs |
 | `head sc:d_ots! pts` | as above | each point a dot |
 | `head sc:q_uads! pts` | as above | the points in fours (4n by 3), each four the corners of a filled quad in order round it; shaded by how it faces a fixed light (tops brightest), nearer quads hiding farther ones; lines and dots draw over quads |
+| `scene sc:e_ye! x y z yaw pitch` | as above | a first-person camera at the eye, looking along yaw (0 toward -z, turning right toward +x) and pitch (up positive), radians; faces crossing the near plane are clipped, not dropped; dragging then turns nothing by itself -- it is reported by `sc:c_ontrols`; `sc:c_amera!` goes back to orbiting |
+| `sc:c_ontrols scene` | `Num a => a -> Float` | how far the mouse was dragged since last asked (x, y pixels), then 1 or 0 for each key held: w a s d space shift and the arrows left right up down. The pointer is never grabbed. Headless, `XETAL_EVENTS` may hold `keydown w`, `keyup w` and `drag 10 0` |
 | `scene sc:f_og! near far` | as above | quads fade into the background between those depths (scene units from the camera); far at or below near turns fog off |
 | `s sc:r_emove! o` | `(Num a, Num b) => a -> b -> Int` | remove object `o`: 1 if it was there |
 | `s sc:c_amera! v` | `(Num a, Num b) => a -> b -> Int` | yaw, pitch (radians), distance, spin (radians a second) |
@@ -101,6 +103,17 @@ before the next builds on it. Their shared X_eTaL is the library
    chunk + block, 123 objects) -- the ids a later demo patches when a
    block changes. About 0.4 s to build and mesh; scene draws it in
    about 13 ms a frame. Recorded as `videos/voxels-world.webm`.
+5. `demos/voxels-walk.xtl` (`just demo scene voxels-walk`): walking on
+   the island in the first person -- W A S D, Space to jump, Shift to
+   run, drag the mouse or the arrows to look, c for the chunks in
+   view, q to quit. The player is nine numbers; each frame X_eTaL reads
+   `sc:c_ontrols`, turns, falls, jumps, and moves one axis at a time
+   against the solid blocks the player's box would overlap, stopping
+   at the face it hits, then sets `sc:e_ye!`. The chunks in view: each
+   chunk's box against the planes of the view, the planes turned into
+   the world by an inner product. Water is not solid yet (swimming
+   comes later). Recorded from a scripted walk as
+   `videos/voxels-walk.webm`.
 
 ## Build and test
 

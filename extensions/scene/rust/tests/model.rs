@@ -152,3 +152,75 @@ fn a_quad_behind_the_camera_is_left_out() {
     s.set(1, quad(square(5.0, 0.5), [1.0, 1.0, 1.0]));
     assert!(s.render(20, 20).iter().all(|&p| p == BG));
 }
+
+fn first_person(eye: [f64; 3], yaw: f64, pitch: f64) -> Scene {
+    let mut s = Scene::default();
+    s.camera.eye = Some(eye);
+    s.camera.yaw = yaw;
+    s.camera.pitch = pitch;
+    s
+}
+
+#[test]
+fn first_person_looks_along_yaw() {
+    // a wall 5 ahead along -z: seen at yaw 0, not at yaw pi (behind)
+    let wall = quad(square(-5.0, 1.0), [1.0, 1.0, 1.0]);
+    let mut s = first_person([0.0, 0.0, 0.0], 0.0, 0.0);
+    s.set(1, wall.clone());
+    assert_ne!(s.render(40, 40)[20 * 40 + 20], BG);
+    let mut s = first_person([0.0, 0.0, 0.0], std::f64::consts::PI, 0.0);
+    s.set(1, wall);
+    assert!(s.render(40, 40).iter().all(|&p| p == BG));
+    // yaw pi/2 looks toward +x: a wall there is in the middle
+    let east = quad(
+        vec![
+            [5.0, -1.0, -1.0],
+            [5.0, -1.0, 1.0],
+            [5.0, 1.0, 1.0],
+            [5.0, 1.0, -1.0],
+        ],
+        [1.0, 1.0, 1.0],
+    );
+    let mut s = first_person([0.0, 0.0, 0.0], std::f64::consts::FRAC_PI_2, 0.0);
+    s.set(1, east);
+    assert_ne!(s.render(40, 40)[20 * 40 + 20], BG);
+}
+
+#[test]
+fn a_floor_under_the_eye_is_clipped_not_dropped() {
+    // a big floor 1.6 below the eye, reaching behind it: without
+    // clipping at the near plane the whole quad would be left out
+    let floor = quad(
+        vec![
+            [-20.0, 0.0, 20.0],
+            [20.0, 0.0, 20.0],
+            [20.0, 0.0, -20.0],
+            [-20.0, 0.0, -20.0],
+        ],
+        [0.3, 0.8, 0.3],
+    );
+    let mut s = first_person([0.0, 1.6, 0.0], 0.0, -0.3);
+    s.set(1, floor);
+    let px = s.render(60, 40);
+    assert_ne!(px[39 * 60 + 30], BG, "the bottom middle is floor");
+    assert_eq!(px[0], BG, "the top corner is sky");
+}
+
+#[test]
+fn looking_up_and_down() {
+    let ceiling = quad(
+        vec![
+            [-5.0, 3.0, -5.0],
+            [5.0, 3.0, -5.0],
+            [5.0, 3.0, 5.0],
+            [-5.0, 3.0, 5.0],
+        ],
+        [1.0, 1.0, 1.0],
+    );
+    let mut s = first_person([0.0, 0.0, 0.0], 0.0, 1.4);
+    s.set(1, ceiling.clone());
+    assert_ne!(s.render(40, 40)[20 * 40 + 20], BG, "up: the ceiling");
+    let mut s = first_person([0.0, 0.0, 0.0], 0.0, -1.4);
+    s.set(1, ceiling);
+    assert!(s.render(40, 40).iter().all(|&p| p == BG), "down: nothing");
+}

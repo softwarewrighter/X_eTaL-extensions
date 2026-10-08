@@ -1,0 +1,167 @@
+# Voxels, 5: walking. The island of voxels-world, seen from inside it.
+# The player is nine numbers -- x y z (feet), vx vy vz, yaw, pitch, on
+# the ground -- and every frame X_eTaL reads the keys and the mouse,
+# turns, falls, jumps, and moves one axis at a time against the solid
+# blocks the player's box would overlap, stopping at the face of the
+# block it hits (a swept box per axis, as the APL game collides); then
+# it sets scene's first-person camera. It also tests the 32 chunks
+# against the planes of the view, as the APL game culls (key c).
+# Run: just demo scene voxels-walk   (a new island each run; --seed 1)
+#   W A S D walk, Space jump, Shift run, drag the mouse or the arrows to
+#   look, c: the chunks in view, q or close: quit
+"vx:" u_se< "Voxels"
+"sc:" u_se< "Scene"
+
+h := vx:h_eights 64
+b := vx:t_errain h
+ts := 12 2 r_eshape 3 + r_oll! 24 r_eshape 58
+b := ts vx:f_orest b
+f := vx:w_orldFaces b
+sv := r_avel vx:s_olid b
+"faces, and solid blocks:"
+(t_ally f) c_at '+ r_/ sv
+
+w := "Voxels 5: walking -- X_eTaL" sc:o_pen! 640 400
+g := w sc:f_og! 24.0 56.0
+c := vx:c_hunkOf f
+keys := u_nique (10 * c) + 5 s_elect_2 f
+u:p_ut := { i ->
+  key := i s_elect keys
+  sel := key = (10 * c) + 5 s_elect_2 f
+  head := (f_loat w c_at key) c_at (1 + key m_od 10) s_elect vx:colors
+  x := head sc:q_uads! vx:c_orners sel r_eplicate f
+  i + 1
+}
+put := (t_ally keys) 'u:p_ut p_ower 1
+
+# -- the player ----------------------------------------------------------
+# a box 0.6 wide and 1.75 tall, the eye 1.6 up; a frame is 1/60 s
+dt := 1.0 / 60.0
+
+# (i c_at v) u:s_et p: the state with element i replaced by v
+u:s_et := { l p -> p + (f_loat (r_ange 9) = f_loor 1 s_elect l) * (2 s_elect l) - p }
+
+# whether the box with its feet at (x y z) overlaps a solid block:
+# beyond the island's sides and below it is solid, above it is air
+u:h_it := { q ->
+  x := 1 s_elect q
+  y := 2 s_elect q
+  z := 3 s_elect q
+  cx := u_nique f_loor (x - 0.3) c_at x + 0.3
+  cy := u_nique f_loor y c_at (y + 0.9) c_at y + 1.75
+  cz := u_nique f_loor (z - 0.3) c_at z + 0.3
+  out := ('+ r_/ (cx < 0) + cx > 63) + ('+ r_/ (cz < 0) + cz > 63) + '+ r_/ cy < 0
+  out > 0 ? 1
+  cy := (cy <= 31) r_eplicate cy
+  0 = t_ally cy ? 0
+  i := 1 + (2048 * cx) '+ t_able (64 * cy) '+ t_able cz
+  f_loat 0 < '+ r_/ (r_avel i) s_elect sv
+}
+
+# v u:s_nap a: where to stop, moving at v, before the block at a
+# (the box reaches 0.3 to each side)
+u:s_nap := { v a ->
+  v > 0.0 ? (f_loat f_loor a + 0.3) - 0.3001
+  (f_loat 1 + f_loor a - 0.3) + 0.3001
+}
+
+# the three axes of a move: x and z stop at a wall; y lands (on the
+# ground) or bumps a ceiling
+u:m_x := { p ->
+  a := (1 s_elect p) + dt * 4 s_elect p
+  q := (1 c_at a) u:s_et p
+  0 = u:h_it q ? q
+  (4 c_at 0.0) u:s_et (1 c_at (4 s_elect p) u:s_nap a) u:s_et p
+}
+u:m_z := { p ->
+  a := (3 s_elect p) + dt * 6 s_elect p
+  q := (3 c_at a) u:s_et p
+  0 = u:h_it q ? q
+  (6 c_at 0.0) u:s_et (3 c_at (6 s_elect p) u:s_nap a) u:s_et p
+}
+u:m_y := { p ->
+  a := (2 s_elect p) + dt * 5 s_elect p
+  q := (9 c_at 0.0) u:s_et (2 c_at a) u:s_et p
+  0 = u:h_it q ? q
+  (5 s_elect p) > 0.0 ? (5 c_at 0.0) u:s_et (2 c_at (f_loat f_loor a + 1.75) - 1.7501) u:s_et p
+  (9 c_at 1.0) u:s_et (5 c_at 0.0) u:s_et (2 c_at f_loat 1 + f_loor a) u:s_et p
+}
+
+# one frame of the player: the controls are mouse dx dy, then w a s d
+# space shift left right up down (1 held)
+u:s_tep := { p ->
+  k := sc:c_ontrols w
+  yaw := (7 s_elect p) + (0.005 * 1 s_elect k) + 2.0 * dt * (10 s_elect k) - 9 s_elect k
+  pitch := -1.5 m_ax 1.5 m_in (8 s_elect p) + (-0.005 * 2 s_elect k) + 1.5 * dt * (11 s_elect k) - 12 s_elect k
+  fwd := (3 s_elect k) - 5 s_elect k
+  side := (6 s_elect k) - 4 s_elect k
+  speed := 4.5 * 1.0 + 8 s_elect k
+  vx := speed * ((s_in yaw) * fwd) + (c_os yaw) * side
+  vz := speed * ((0.0 - c_os yaw) * fwd) + (s_in yaw) * side
+  jump := (9 s_elect p) * 7 s_elect k
+  vy := (7.5 * jump) + (1.0 - jump) * -30.0 m_ax (5 s_elect p) - 22.0 * dt
+  p := (7 c_at yaw) u:s_et (8 c_at pitch) u:s_et (4 c_at vx) u:s_et (5 c_at vy) u:s_et (6 c_at vz) u:s_et p
+  p := u:m_y u:m_z u:m_x p
+  e := w sc:e_ye! (1 s_elect p) c_at ((2 s_elect p) + 1.6) c_at (3 s_elect p) c_at yaw c_at pitch
+  p
+}
+
+# -- the chunks in view --------------------------------------------------
+# each chunk's box against the planes of the view (left, right, bottom,
+# top, and the plane of the eye): a chunk is out when its box is wholly
+# behind one of them. The planes' normals are made in the camera's
+# frame and turned into the world's by an inner product with the frame.
+u:i_nView := { p ->
+  yaw := 7 s_elect p
+  pt := 8 s_elect p
+  right := (c_os yaw) c_at 0.0 c_at s_in yaw
+  up := (0.0 - (s_in yaw) * s_in pt) c_at (c_os pt) c_at (c_os yaw) * s_in pt
+  ahead := ((s_in yaw) * c_os pt) c_at (s_in pt) c_at 0.0 - (c_os yaw) * c_os pt
+  v := 0.6109
+  hh := a_tan 1.6 * (s_in v) / c_os v
+  nc := 5 3 r_eshape (c_os hh) c_at 0.0 c_at (s_in hh) c_at (0.0 - c_os hh) c_at 0.0 c_at (s_in hh) c_at 0.0 c_at (c_os v) c_at (s_in v) c_at 0.0 c_at (0.0 - c_os v) c_at (s_in v) c_at 0.0 0.0 1.0
+  nw := nc '+ '* i_nner 3 3 r_eshape right c_at up c_at ahead
+  j := (r_ange 32) - 1
+  centers := 2 1 t_ranspose 3 32 r_eshape (8.0 + 16.0 * f_loat j m_od 4) c_at (8.0 + 16.0 * f_loat j d_iv 16) c_at 8.0 + 16.0 * f_loat (j d_iv 4) m_od 4
+  eye := (1 s_elect p) c_at ((2 s_elect p) + 1.6) c_at 3 s_elect p
+  rel := centers - 32 3 r_eshape eye
+  d := rel '+ '* i_nner 2 1 t_ranspose nw
+  r := (a_bs nw) '+ '* i_nner 8.0 8.0 8.0
+  '& r_/_2 d >= 32 5 r_eshape 0.0 - r
+}
+u:c_hunks := { p ->
+  m := u:i_nView p
+  a := p_rint! "chunks in view (of 32), and by layer (bottom, top; rows north to south):"
+  a := p_rint! '+ r_/ m
+  a := p_rint! 2 4 4 r_eshape m
+  p
+}
+
+# -- the loop -------------------------------------------------------------
+# start above the island's highest inner column, dropping onto it, facing
+# north when the middle is north of it, else south
+# (the highest of the columns at least 8 from the island's sides)
+j := (r_ange 4096) - 1
+inner := ((j d_iv 64) >= 8) * ((j d_iv 64) < 56) * ((j m_od 64) >= 8) * (j m_od 64) < 56
+hv := r_avel h
+i := f_irst w_here inner * hv = 'm_ax r_/ inner * hv
+sx := (f_loat (i - 1) d_iv 64) + 0.5
+sz := (f_loat (i - 1) m_od 64) + 0.5
+yaw0 := 3.14159 * f_loat sz < 32.0
+start := sx c_at (f_loat 3 + i s_elect hv) c_at sz c_at 0.0 0.0 0.0 c_at yaw0 c_at 0.0 0.0
+s := u:c_hunks start
+e := w sc:e_ye! sx c_at (f_loat 5 + i s_elect hv) c_at sz c_at yaw0 c_at 0.0
+
+u:q_uit := { p ->
+  z := sc:c_lose! w
+  0 r_eshape 0.0
+}
+u:f_rame := { p ->
+  0 = t_ally p ? p
+  v := sc:n_ext! w
+  ((v m_atch "close") + (v m_atch "key q") + v m_atch "key Escape") > 0 ? u:q_uit p
+  (v m_atch "key c") ? u:s_tep u:c_hunks p
+  u:s_tep p
+}
+last := 100000 'u:f_rame p_ower start
+"bye"

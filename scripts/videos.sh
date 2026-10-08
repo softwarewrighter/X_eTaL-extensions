@@ -9,7 +9,8 @@
 #   - NAME.frames: a window demo run headless (XETAL_HEADLESS), every
 #     frame saved (XETAL_FRAMES) and joined by ffmpeg; with `audio=FILE`
 #     the file's sound goes into the webm (the visualizer: at 60 frames
-#     a second a headless frame is a 60th of a second of the audio);
+#     a second a headless frame is a 60th of a second of the audio;
+#     with `script` the events are the spec's own, keys and drags);
 #   - NAME.web: a web demo served on a free port (XETAL_WEB_PORT=0, its
 #     SQLite files in a fresh directory), driven by the spec's steps()
 #     with `shot PATH` (the page as headless Chrome renders it, with
@@ -56,13 +57,19 @@ for dir in extensions/${1:-*}/videos; do
   for spec in "$dir"/*.frames; do
     [ -e "$spec" ] || continue
     name="$(basename "$spec" .frames)"
-    demo=""; seed=1; frames=120; fps=15; scale=480; audio=""; wav=""
+    demo=""; seed=1; frames=120; fps=15; scale=480; audio=""; wav=""; script=""
     # shellcheck disable=SC1090
     . "$spec"
-    echo "==> frames $ext $name ($frames, headless)"
     out="$root/target/screens/$ext-$name-frames"
     rm -rf "$out" && mkdir -p "$out"
     events="$(printf 'frame,%.0s' $(seq "$frames"))"
+    # script=: the events themselves (keydown w, drag 10 0, ...) instead
+    # of frames only
+    if [ -n "$script" ]; then
+      events="$script"
+      frames="$(grep -o 'frame' <<< "$script" | wc -l | tr -d ' ')"
+    fi
+    echo "==> frames $ext $name ($frames, headless)"
     # wav=1: the demo makes its own sound (a voice); collect it as the soundtrack
     if [ -n "$wav" ]; then audio="$root/target/screens/$ext-$name.wav"; fi
     (cd "extensions/$ext" && XETAL_HEADLESS=1 XETAL_EVENTS="$events" XETAL_FRAMES="$out" XETAL_AUDIO_WAV="$root/target/screens/$ext-$name.wav" \

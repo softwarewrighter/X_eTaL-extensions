@@ -23,6 +23,75 @@ use xetal_ext_ui::{Events, Surface, frames_dir, headless, on_main, save_png, scr
 
 type Shared = Arc<Mutex<Scene>>;
 
+/// What the player is doing with the keyboard and mouse: the keys held
+/// down (by name, lower case) and how far the mouse was dragged since
+/// the program last asked -- for a first-person camera, which looks
+/// where it is dragged (the pointer is never grabbed).
+#[derive(Default)]
+pub struct Input {
+    held: std::collections::BTreeSet<String>,
+    look: (f64, f64),
+}
+
+/// The keys `sc:c_ontrols` reports, in order.
+pub const CONTROL_KEYS: [&str; 10] = [
+    "w",
+    "a",
+    "s",
+    "d",
+    "space",
+    "shift",
+    "arrowleft",
+    "arrowright",
+    "arrowup",
+    "arrowdown",
+];
+
+impl Input {
+    /// Applies a scripted event (`keydown w`, `keyup w`, `drag 10 -4`);
+    /// whether it was one.
+    fn script(&mut self, event: &str) -> bool {
+        let mut words = event.split_whitespace();
+        match (words.next(), words.next(), words.next()) {
+            (Some("keydown"), Some(k), None) => {
+                self.held.insert(k.to_lowercase());
+                true
+            }
+            (Some("keyup"), Some(k), None) => {
+                self.held.remove(&k.to_lowercase());
+                true
+            }
+            (Some("drag"), Some(x), Some(y)) => {
+                if let (Ok(x), Ok(y)) = (x.parse::<f64>(), y.parse::<f64>()) {
+                    self.look.0 += x;
+                    self.look.1 += y;
+                }
+                true
+            }
+            _ => false,
+        }
+    }
+
+    /// The mouse's drag since last asked (then cleared) and 1 or 0 for
+    /// each of [`CONTROL_KEYS`].
+    fn take(&mut self) -> Vec<f64> {
+        let mut v = vec![self.look.0, self.look.1];
+        self.look = (0.0, 0.0);
+        v.extend(
+            CONTROL_KEYS
+                .iter()
+                .map(|k| if self.held.contains(*k) { 1.0 } else { 0.0 }),
+        );
+        v
+    }
+}
+
+type SharedInput = Arc<Mutex<Input>>;
+
+fn input_of(i: &SharedInput) -> std::sync::MutexGuard<'_, Input> {
+    i.lock().unwrap_or_else(std::sync::PoisonError::into_inner)
+}
+
 fn locked(s: &Shared) -> std::sync::MutexGuard<'_, Scene> {
     s.lock().unwrap_or_else(std::sync::PoisonError::into_inner)
 }
@@ -32,6 +101,7 @@ struct Pane {
     surface: softbuffer::Surface<Arc<Window>, Arc<Window>>,
     scene: Shared,
     events: Events,
+    input: SharedInput,
     cursor: (f64, f64),
     dragging: bool,
 }
@@ -68,13 +138,21 @@ impl Surface for Pane {
         match event {
             WindowEvent::RedrawRequested => self.draw(),
             WindowEvent::CloseRequested => self.events.push("close"),
-            WindowEvent::KeyboardInput { event, .. }
-                if event.state == ElementState::Pressed && !event.repeat =>
-            {
-                if let Some(k) = key_name(&event.logical_key) {
-                    self.events.push(format!("key {k}"));
+            WindowEvent::KeyboardInput { event, .. } => {
+                let Some(k) = key_name(&event.logical_key) else {
+                    return;
+                };
+                if event.state == ElementState::Pressed {
+                    if !event.repeat {
+                        self.events.push(format!("key {k}"));
+                    }
+                    input_of(&self.input).held.insert(k.to_lowercase());
+                } else {
+                    input_of(&self.input).held.remove(&k.to_lowercase());
                 }
             }
+            // keys let go while the window was in the background
+            WindowEvent::Focused(false) => input_of(&self.input).held.clear(),
             WindowEvent::MouseInput {
                 state,
                 button: MouseButton::Left,
@@ -83,8 +161,17 @@ impl Surface for Pane {
             WindowEvent::CursorMoved { position, .. } => {
                 let (x, y) = (position.x, position.y);
                 if self.dragging {
-                    locked(&self.scene).drag(x - self.cursor.0, y - self.cursor.1);
-                    self.window.request_redraw();
+                    let (dx, dy) = (x - self.cursor.0, y - self.cursor.1);
+                    let mut scene = locked(&self.scene);
+                    if scene.camera.eye.is_some() {
+                        // first person: the program turns the camera
+                        let mut i = input_of(&self.input);
+                        i.look.0 += dx;
+                        i.look.1 += dy;
+                    } else {
+                        scene.drag(dx, dy);
+                        self.window.request_redraw();
+                    }
                 }
                 self.cursor = (x, y);
             }
@@ -102,6 +189,7 @@ struct Handle {
     window: Option<WindowId>,
     scene: Shared,
     events: Events,
+    input: SharedInput,
     size: (usize, usize),
     shown: usize,
     last: Instant,
@@ -158,12 +246,13 @@ fn open(args: &[Value]) -> Result<Value, OwnedError> {
         return Err(OwnedError::invalid_argument("size is width height"));
     };
     let scene: Shared = Arc::new(Mutex::new(Scene::default()));
+    let input: SharedInput = Arc::new(Mutex::new(Input::default()));
     static NEXT: AtomicI64 = AtomicI64::new(1);
     let (window, events) = if headless() {
         (None, scripted())
     } else {
         let events = Events::new();
-        let (pane_events, pane_scene) = (events.clone(), scene.clone());
+        let (pane_events, pane_scene, pane_input) = (events.clone(), scene.clone(), input.clone());
         let window = on_main(move |ui| {
             let attrs = Window::default_attributes()
                 .with_title(title)
@@ -179,6 +268,7 @@ fn open(args: &[Value]) -> Result<Value, OwnedError> {
                     surface,
                     scene: pane_scene,
                     events: pane_events,
+                    input: pane_input,
                     cursor: (0.0, 0.0),
                     dragging: false,
                 }))
@@ -195,6 +285,7 @@ fn open(args: &[Value]) -> Result<Value, OwnedError> {
             window,
             scene,
             events,
+            input,
             size: (w.max(1.0) as usize, h.max(1.0) as usize),
             shown: 0,
             last: Instant::now(),
@@ -309,6 +400,7 @@ fn camera(args: &[Value]) -> Result<Value, OwnedError> {
         sc.camera.pitch = pitch.clamp(-1.5, 1.5);
         sc.camera.distance = distance.max(0.1);
         sc.camera.spin = spin;
+        sc.camera.eye = None;
         h.window
     })?;
     redraw(window)?;
@@ -322,6 +414,7 @@ fn next(args: &[Value]) -> Result<Value, OwnedError> {
     let s = id_of(&args[0])?;
     let events = with(s, |h| h.events.clone())?;
     let event = events.next(Duration::from_micros(16_667));
+    with(s, |h| input_of(&h.input).script(&event))?;
     let (window, save) = with(s, |h| {
         let dt = if h.window.is_none() {
             1.0 / 60.0
@@ -349,6 +442,41 @@ fn next(args: &[Value]) -> Result<Value, OwnedError> {
     Ok(Value::Text(event))
 }
 
+/// scene eye x y z yaw pitch: a first-person camera at the eye,
+/// looking along yaw (0 toward -z, right toward +x) and pitch (up
+/// positive), radians; `sc:c_amera!` goes back to orbiting. The scene id.
+fn eye(args: &[Value]) -> Result<Value, OwnedError> {
+    let s = id_of(&args[0])?;
+    let (_, e) = float_vector(&args[1])?;
+    let [x, y, z, yaw, pitch] = e[..] else {
+        return Err(OwnedError::invalid_argument("eye is x y z yaw pitch"));
+    };
+    if e.iter().any(|v| !v.is_finite()) {
+        return Err(OwnedError::invalid_argument("eye: a NaN or an infinity"));
+    }
+    let window = with(s, |h| {
+        let mut sc = locked(&h.scene);
+        sc.camera.eye = Some([x, y, z]);
+        sc.camera.yaw = yaw;
+        sc.camera.pitch = pitch.clamp(-1.55, 1.55);
+        sc.camera.spin = 0.0;
+        h.window
+    })?;
+    redraw(window)?;
+    Ok(Value::Int(s))
+}
+
+/// controls scene: how far the mouse was dragged since last asked (x,
+/// y pixels), then 1 or 0 for each key held: w a s d space shift and the
+/// four arrows.
+fn controls(args: &[Value]) -> Result<Value, OwnedError> {
+    let s = id_of(&args[0])?;
+    let v = with(s, |h| input_of(&h.input).take())?;
+    xetal_ext_sdk::Array::new(vec![v.len()], xetal_ext_sdk::ArrayData::Float(v))
+        .map(Value::Array)
+        .map_err(|e| OwnedError::failure(e.to_string()))
+}
+
 /// close scene: close the window; 1.
 fn close(args: &[Value]) -> Result<Value, OwnedError> {
     let s = id_of(&args[0])?;
@@ -372,6 +500,8 @@ xetal_ext_sdk::xetal_extension! {
         fog: 2, "(Num a, Num b) => a -> b -> Int", "scene fog near far: quads fade into the background.";
         remove: 2, "(Num a, Num b) => a -> b -> Int", "scene remove object: 1 if it was there.";
         camera: 2, "(Num a, Num b) => a -> b -> Int", "scene camera yaw pitch distance spin.";
+        eye: 2, "(Num a, Num b) => a -> b -> Int", "scene eye x y z yaw pitch: a first-person camera.";
+        controls: 1, "Num a => a -> Float", "Mouse drag dx dy since last asked, then held: w a s d space shift left right up down.";
         next: 1, "Num a => a -> Char", "The next event (frame, key NAME, close), waiting up to a frame.";
         close: 1, "Num a => a -> Int", "Close the window.";
     }

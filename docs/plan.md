@@ -504,7 +504,7 @@ demo shown before the next.
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | voxels-walk | scene: first-person camera, held keys and mouse motion (scripted for headless tests), pointer grab, near-plane clipping; X_eTaL: gravity, jumping, collision per axis, the chunks' frustum test; golden with scripted input, recording |
+| 1 | voxels-walk | (done; no pointer grab: drag or arrows to look, kinder to a user with many windows) scene: first-person camera, held keys and mouse motion (scripted for headless tests), pointer grab, near-plane clipping; X_eTaL: gravity, jumping, collision per axis, the chunks' frustum test; golden with scripted input, recording |
 | 2 | voxels-fly | flying; chunks generated as the player goes (one a frame from a queue); scene skips objects outside the view |
 | 3 | voxels-dig | the ray-march pick; break and place; the world as chunk arrays, one remeshed and patched per edit; crosshair and hotbar |
 | 4 | voxels-light | sky light by a column scan; torch light in rounds over frames; brightness per quad in scene |

@@ -23,6 +23,15 @@
 # scene sc:f_og! near far: quads fade into the background between those
 # depths (scene units from the camera); far <= near: no fog.
 "f_og! : float float -> int"         ffi:b_ind< "scene/fog"
+# scene sc:e_ye! x y z yaw pitch: a first-person camera at the eye,
+# looking along yaw (0 toward -z, turning right toward +x) and pitch (up
+# positive), radians; sc:c_amera! goes back to orbiting.
+"e_ye! : float float -> int"         ffi:b_ind< "scene/eye"
+# sc:c_ontrols scene: how far the mouse was dragged since last asked (x
+# y, pixels), then 1 or 0 for each key held -- w a s d space shift and
+# the arrows left right up down. Headless, XETAL_EVENTS may hold
+# "keydown w", "keyup w" and "drag 10 0".
+"c_ontrols : float -> floats"        ffi:b_ind< "scene/controls"
 # scene sc:r_emove! object: 1 if it was there, else 0.
 "r_emove! : float float -> int"      ffi:b_ind< "scene/remove"
 # scene sc:c_amera! yaw pitch distance spin: where the camera orbits from

@@ -32,13 +32,23 @@ pub struct Object {
 
 /// The camera orbits the origin: yaw and pitch in radians, distance in
 /// scene units, and a yaw speed (radians per second) for auto-rotation.
+/// With an `eye` it is a first-person camera instead: at the eye,
+/// looking along yaw (0 toward -z, turning right toward +x) and pitch
+/// (up positive).
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Camera {
     pub yaw: f64,
     pub pitch: f64,
     pub distance: f64,
     pub spin: f64,
+    pub eye: Option<[f64; 3]>,
 }
+
+/// The first-person camera's vertical field of view: 70 degrees.
+pub const FOV: f64 = 70.0 * std::f64::consts::PI / 180.0;
+
+/// Nearer than this (scene units) is cut away.
+pub const NEAR: f64 = 0.05;
 
 impl Default for Camera {
     fn default() -> Self {
@@ -47,6 +57,7 @@ impl Default for Camera {
             pitch: 0.4,
             distance: 4.0,
             spin: 0.0,
+            eye: None,
         }
     }
 }
@@ -103,26 +114,47 @@ impl Scene {
         self.camera.yaw += self.camera.spin * seconds;
     }
 
-    /// A point on the screen (x right, y down) and its depth from the
-    /// camera, or None when it is behind the camera.
-    fn view(&self, p: [f64; 3], w: usize, h: usize) -> Option<(f64, f64, f64)> {
+    /// A point in the camera's frame: right, up, and depth ahead.
+    fn camera_space(&self, p: [f64; 3]) -> (f64, f64, f64) {
         let c = self.camera;
         let (sy, cy) = c.yaw.sin_cos();
         let (sp, cp) = c.pitch.sin_cos();
-        // rotate the world about y (yaw), then about x (pitch)
+        if let Some(e) = c.eye {
+            let r = [p[0] - e[0], p[1] - e[1], p[2] - e[2]];
+            let right = [cy, 0.0, sy];
+            let up = [-sy * sp, cp, cy * sp];
+            let ahead = [sy * cp, sp, -cy * cp];
+            let dot = |a: [f64; 3]| a[0] * r[0] + a[1] * r[1] + a[2] * r[2];
+            return (dot(right), dot(up), dot(ahead));
+        }
+        // orbit: rotate the world about y (yaw), then about x (pitch)
         let x1 = cy * p[0] - sy * p[2];
         let z1 = sy * p[0] + cy * p[2];
         let y2 = cp * p[1] - sp * z1;
         let z2 = sp * p[1] + cp * z1;
-        let depth = c.distance - z2;
-        if depth < 0.05 {
-            return None;
-        }
+        (x1, y2, c.distance - z2)
+    }
+
+    /// A point of the camera's frame on the screen (x right, y down),
+    /// with its depth; it must be ahead of the camera.
+    fn screen(&self, v: (f64, f64, f64), w: usize, h: usize) -> (f64, f64, f64) {
         #[allow(clippy::cast_precision_loss)]
-        let f = 0.9 * (w.min(h) as f64) / 2.0 * 2.0; // a 2-unit-wide view at distance 2 fills 90%
+        let m = w.min(h) as f64;
+        let f = if self.camera.eye.is_some() {
+            m / 2.0 / (FOV / 2.0).tan()
+        } else {
+            0.9 * m / 2.0 * 2.0 // a 2-unit-wide view at distance 2 fills 90%
+        };
         #[allow(clippy::cast_precision_loss)]
-        let (cx, cy2) = (w as f64 / 2.0, h as f64 / 2.0);
-        Some((cx + f * x1 / depth, cy2 - f * y2 / depth, depth))
+        let (cx, cy) = (w as f64 / 2.0, h as f64 / 2.0);
+        (cx + f * v.0 / v.2, cy - f * v.1 / v.2, v.2)
+    }
+
+    /// A point on the screen (x right, y down) and its depth from the
+    /// camera, or None when it is behind the camera.
+    fn view(&self, p: [f64; 3], w: usize, h: usize) -> Option<(f64, f64, f64)> {
+        let v = self.camera_space(p);
+        (v.2 >= NEAR).then(|| self.screen(v, w, h))
     }
 
     fn project(&self, p: [f64; 3], w: usize, h: usize) -> Option<(f64, f64)> {
@@ -171,9 +203,9 @@ impl Scene {
     }
 
     /// One quad: shaded by its normal against the light (both sides
-    /// lit alike), fogged by depth, drawn as two triangles where it is
-    /// nearer than what is there. A quad with a corner behind the
-    /// camera is left out.
+    /// lit alike), fogged by depth, clipped where it crosses the near
+    /// plane (so a face beside a first-person eye stays), drawn as a fan
+    /// of triangles where it is nearer than what is there.
     fn quad(
         &self,
         px: &mut [u32],
@@ -183,12 +215,22 @@ impl Scene {
         q: [[f64; 3]; 4],
         color: [f64; 3],
     ) {
-        let mut s = [(0.0, 0.0, 0.0); 4];
-        for (k, p) in q.iter().enumerate() {
-            match self.view(*p, w, h) {
-                Some(v) => s[k] = v,
-                None => return,
+        let cam: Vec<(f64, f64, f64)> = q.iter().map(|p| self.camera_space(*p)).collect();
+        // Sutherland-Hodgman against depth >= NEAR
+        let mut poly: Vec<(f64, f64, f64)> = Vec::with_capacity(6);
+        for k in 0..4 {
+            let (a, b) = (cam[k], cam[(k + 1) % 4]);
+            let (ina, inb) = (a.2 >= NEAR, b.2 >= NEAR);
+            if ina {
+                poly.push(a);
             }
+            if ina != inb {
+                let t = (NEAR - a.2) / (b.2 - a.2);
+                poly.push((a.0 + t * (b.0 - a.0), a.1 + t * (b.1 - a.1), NEAR));
+            }
+        }
+        if poly.len() < 3 {
+            return;
         }
         let sub = |a: [f64; 3], b: [f64; 3]| [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
         let (u, v) = (sub(q[1], q[0]), sub(q[3], q[0]));
@@ -206,8 +248,9 @@ impl Scene {
         };
         let shade = 0.45 + 0.55 * lit;
         let base = [color[0] * shade, color[1] * shade, color[2] * shade];
-        for tri in [[0, 1, 2], [0, 2, 3]] {
-            self.triangle(px, depth, w, h, [s[tri[0]], s[tri[1]], s[tri[2]]], base);
+        let s: Vec<(f64, f64, f64)> = poly.iter().map(|&p| self.screen(p, w, h)).collect();
+        for k in 1..s.len() - 1 {
+            self.triangle(px, depth, w, h, [s[0], s[k], s[k + 1]], base);
         }
     }
 
@@ -232,11 +275,9 @@ impl Scene {
         if area.abs() < 1e-9 {
             return;
         }
-        let lim = 4.0 * (w.max(h) as f64);
-        if [x0, y0, x1, y1, x2, y2]
-            .iter()
-            .any(|v| !v.is_finite() || v.abs() > lim)
-        {
+        // far off the screen is fine (a face clipped at the near plane
+        // projects far out); only the window's part is visited
+        if [x0, y0, x1, y1, x2, y2].iter().any(|v| !v.is_finite()) {
             return;
         }
         let xmin = x0.min(x1).min(x2).floor().max(0.0) as usize;
