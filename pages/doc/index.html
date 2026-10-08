@@ -14,31 +14,89 @@
 <a class="home" href="index.html">X_eTaL doc</a>
 <input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
 <h2>Files</h2>
+<h3>lib/</h3>
 <ul>
 <li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+</ul>
+<h3>extensions/audio/lib/</h3>
+<ul>
 <li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+</ul>
+<h3>extensions/canvas/lib/</h3>
+<ul>
 <li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+</ul>
+<h3>extensions/clock/lib/</h3>
+<ul>
 <li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+</ul>
+<h3>extensions/digest/lib/</h3>
+<ul>
 <li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>extensions/hello/lib/</h3>
+<ul>
 <li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+</ul>
+<h3>extensions/http/lib/</h3>
+<ul>
 <li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+</ul>
+<h3>extensions/image/lib/</h3>
+<ul>
 <li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+</ul>
+<h3>extensions/linalg/lib/</h3>
+<ul>
 <li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+</ul>
+<h3>extensions/scene/lib/</h3>
+<ul>
 <li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+</ul>
+<h3>extensions/sqlite/lib/</h3>
+<ul>
 <li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+</ul>
+<h3>extensions/web/lib/</h3>
+<ul>
 <li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+</ul>
+<h3>extensions/audio/demos/</h3>
+<ul>
 <li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
 <li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
 <li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
-<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
 <li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+</ul>
+<h3>extensions/canvas/demos/</h3>
+<ul>
 <li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+</ul>
+<h3>extensions/clock/demos/</h3>
+<ul>
 <li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+</ul>
+<h3>extensions/hello/demos/</h3>
+<ul>
 <li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+</ul>
+<h3>extensions/http/demos/</h3>
+<ul>
 <li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
 <li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
 <li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+</ul>
+<h3>extensions/image/demos/</h3>
+<ul>
 <li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+</ul>
+<h3>extensions/scene/demos/</h3>
+<ul>
 <li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
 <li><a href="extensions-scene-demos-Endless.xtl.html">Endless.xtl</a></li>
 <li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
@@ -49,9 +107,17 @@
 <li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+</ul>
+<h3>extensions/sqlite/demos/</h3>
+<ul>
 <li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+</ul>
+<h3>extensions/web/demos/</h3>
+<ul>
 <li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
 <li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+</ul>
+<ul>
 <li><a href="builtins.html">built-ins</a></li>
 </ul>
 </nav>
@@ -158,7 +224,7 @@ xetal). Import it with an alias of your choice: &quot;s:&quot; u_se&lt; &quot;St
 It is a demo library, loaded only by that import: a small subset of
 X_eTaL-libraries' Statistics, which has much more (a program may use
 either).
-Names with l: are exported; the others are private to this file.</li>
+Names with l: are exported; names with h: are private to this file.</li>
 <li>program <a href="extensions-audio-demos-synth.xtl.html">extensions/audio/demos/synth.xtl</a>: A synthesizer made of arrays: X_eTaL computes every sample of a little
 piece -- notes from equal temperament, harmonics, envelopes, chords,
 stereo (the instruments are in Instruments.xtl, beside this file) --
@@ -291,14 +357,14 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <h2>Items</h2>
 <table class="items">
 <tr><th>name</th><th>kind</th><th>type</th></tr>
-<tr><td><a href="lib-Ffi.xtlm.html#w_ords"><span class="c-builtin">w̲ords</span></a></td><td>function</td><td><code>Char -&gt; Box Char</code></td></tr>
-<tr><td><a href="lib-Ffi.xtlm.html#w_ord"><span class="c-builtin">w̲ord</span></a></td><td>function</td><td><code>Int -&gt; Box a -&gt; a</code></td></tr>
-<tr><td><a href="lib-Ffi.xtlm.html#v_alue"><span class="c-builtin">v̲alue</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
-<tr><td><a href="lib-Ffi.xtlm.html#q_uery"><span class="c-builtin">q̲uery</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
-<tr><td><a href="lib-Ffi.xtlm.html#p_ut"><span class="c-builtin">p̲ut</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
-<tr><td><a href="lib-Ffi.xtlm.html#g_et"><span class="c-builtin">g̲et</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
-<tr><td><a href="lib-Ffi.xtlm.html#p_arams"><span class="c-builtin">p̲arams</span></a></td><td>function</td><td><code>Num b =&gt; a -&gt; b -&gt; Char</code></td></tr>
-<tr><td><a href="lib-Ffi.xtlm.html#p_uts"><span class="c-builtin">p̲uts</span></a></td><td>function</td><td><code>Box Char -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="lib-Ffi.xtlm.html#h.w_ords"><span class="c-libfunc">ʰw̲ords</span></a></td><td>function</td><td><code>Char -&gt; Box Char</code></td></tr>
+<tr><td><a href="lib-Ffi.xtlm.html#h.w_ord"><span class="c-libfunc">ʰw̲ord</span></a></td><td>function</td><td><code>Int -&gt; Box a -&gt; a</code></td></tr>
+<tr><td><a href="lib-Ffi.xtlm.html#h.v_alue"><span class="c-libfunc">ʰv̲alue</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="lib-Ffi.xtlm.html#h.q_uery"><span class="c-libfunc">ʰq̲uery</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="lib-Ffi.xtlm.html#h.p_ut"><span class="c-libfunc">ʰp̲ut</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="lib-Ffi.xtlm.html#h.g_et"><span class="c-libfunc">ʰg̲et</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
+<tr><td><a href="lib-Ffi.xtlm.html#h.p_arams"><span class="c-libfunc">ʰp̲arams</span></a></td><td>function</td><td><code>(Any a, Num b) =&gt; a -&gt; b -&gt; Char</code></td></tr>
+<tr><td><a href="lib-Ffi.xtlm.html#h.p_uts"><span class="c-libfunc">ʰp̲uts</span></a></td><td>function</td><td><code>Box Char -&gt; Char -&gt; Char</code></td></tr>
 <tr><td><a href="lib-Ffi.xtlm.html#m.b_ind-3c"><span class="c-macro">ᵐb̲ind&lt;</span></a></td><td>macro</td><td><code>Char -&gt; Char -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-audio-lib-Audio.xtl.html#l.o_pen"><span class="c-libfunc">ˡo̲pen</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-audio-lib-Audio.xtl.html#l.i_nfo"><span class="c-libfunc">ˡi̲nfo</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
@@ -324,7 +390,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.i_so"><span class="c-libfunc">ˡi̲so</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.i_soOf"><span class="c-libfunc">ˡi̲soOf</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.m_illis"><span class="c-libfunc">ˡm̲illis</span></a></td><td>function</td><td><code>Unit -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.t_ime"><span class="c-libfunc">ˡt̲ime</span></a></td><td>function</td><td><code>(a -&gt; b) -&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.t_ime"><span class="c-libfunc">ˡt̲ime</span></a></td><td>function</td><td><code>(Any a, Any b) =&gt; (a -&gt; b) -&gt; a -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-digest-lib-Digest.xtl.html#l.s_ha256"><span class="c-libfunc">ˡs̲ha256</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-digest-lib-Digest.xtl.html#l.s_ha256File"><span class="c-libfunc">ˡs̲ha256File</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
@@ -415,7 +481,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-audio-demos-scope.xtl.html#u.f_eed"><span class="c-userfunc">ᵘf̲eed</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-audio-demos-scope.xtl.html#u.t_race"><span class="c-userfunc">ᵘt̲race</span></a></td><td>function</td><td><code>(Num a, Truthy a) =&gt; Float -&gt; a</code></td></tr>
 <tr><td><a href="extensions-audio-demos-scope.xtl.html#u.t_rigger"><span class="c-userfunc">ᵘt̲rigger</span></a></td><td>function</td><td><code>Float -&gt; Int -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-audio-demos-scope.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>Num b =&gt; a -&gt; b</code></td></tr>
+<tr><td><a href="extensions-audio-demos-scope.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>(Any a, Num b) =&gt; a -&gt; b</code></td></tr>
 <tr><td><a href="extensions-audio-demos-scope.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-audio-demos-scope.xtl.html#last">last</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-audio-demos-spectrum.xtl.html#a">a</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -439,13 +505,13 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-audio-demos-spectrum.xtl.html#ring">ring</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-audio-demos-spectrum.xtl.html#u.d_raw"><span class="c-userfunc">ᵘd̲raw</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-audio-demos-spectrum.xtl.html#p">p</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-audio-demos-spectrum.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-audio-demos-spectrum.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>Any a =&gt; a -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-audio-demos-spectrum.xtl.html#u.k_ey"><span class="c-userfunc">ᵘk̲ey</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-audio-demos-spectrum.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-audio-demos-spectrum.xtl.html#last">last</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="std-Stats.xtl.html#l.m_ean"><span class="c-libfunc">ˡm̲ean</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="std-Stats.xtl.html#s_quare"><span class="c-builtin">s̲quare</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
-<tr><td><a href="std-Stats.xtl.html#d_eviations"><span class="c-builtin">d̲eviations</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="std-Stats.xtl.html#h.s_quare"><span class="c-libfunc">ʰs̲quare</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
+<tr><td><a href="std-Stats.xtl.html#h.d_eviations"><span class="c-libfunc">ʰd̲eviations</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
 <tr><td><a href="std-Stats.xtl.html#l.v_ariance"><span class="c-libfunc">ˡv̲ariance</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
 <tr><td><a href="std-Stats.xtl.html#l.s_d"><span class="c-libfunc">ˡs̲d</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
 <tr><td><a href="std-Stats.xtl.html#l.r_ange"><span class="c-libfunc">ˡr̲ange</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
@@ -456,7 +522,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-canvas-demos-life.xtl.html#u.l_ife"><span class="c-userfunc">ᵘl̲ife</span></a></td><td>function</td><td><code>(Num a, Truthy a) =&gt; a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-canvas-demos-life.xtl.html#u.s_eed"><span class="c-userfunc">ᵘs̲eed</span></a></td><td>function</td><td><code>Truthy a =&gt; Int -&gt; a</code></td></tr>
 <tr><td><a href="extensions-canvas-demos-life.xtl.html#w">w</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-canvas-demos-life.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>Num b =&gt; a -&gt; b</code></td></tr>
+<tr><td><a href="extensions-canvas-demos-life.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>(Any a, Num b) =&gt; a -&gt; b</code></td></tr>
 <tr><td><a href="extensions-canvas-demos-life.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Truthy a) =&gt; a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-canvas-demos-life.xtl.html#last">last</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-clock-demos-bridge-cost.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -468,8 +534,8 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-http-demos-quakes-live.xtl.html#url">url</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-http-demos-quakes-live.xtl.html#csv">csv</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-http-demos-Seismic.xtl.html#db">db</a></td><td>value</td><td><code>Char</code></td></tr>
-<tr><td><a href="extensions-http-demos-Seismic.xtl.html#r_ound"><span class="c-builtin">r̲ound</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-http-demos-Seismic.xtl.html#m_ean"><span class="c-builtin">m̲ean</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-http-demos-Seismic.xtl.html#h.r_ound"><span class="c-libfunc">ʰr̲ound</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-http-demos-Seismic.xtl.html#h.m_ean"><span class="c-libfunc">ʰm̲ean</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-http-demos-Seismic.xtl.html#l.r_eport"><span class="c-libfunc">ˡr̲eport</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-http-demos-quakes.xtl.html#csv">csv</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-image-demos-photo-lab.xtl.html#src">src</a></td><td>value</td><td><code>Char</code></td></tr>
@@ -505,7 +571,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-cube.xtl.html#k">k</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-cube.xtl.html#x">x</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-cube.xtl.html#y">y</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-scene-demos-cube.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>Num b =&gt; a -&gt; b</code></td></tr>
+<tr><td><a href="extensions-scene-demos-cube.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>(Any a, Num b) =&gt; a -&gt; b</code></td></tr>
 <tr><td><a href="extensions-scene-demos-cube.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-scene-demos-cube.xtl.html#last">last</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.reach">ˡreach</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -514,31 +580,31 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.n_umbers"><span class="c-libfunc">ˡn̲umbers</span></a></td><td>function</td><td><code>Box a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.s_ettings"><span class="c-libfunc">ˡs̲ettings</span></a></td><td>function</td><td><code>Box a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.w_indow"><span class="c-libfunc">ˡw̲indow</span></a></td><td>function</td><td><code>Box a -&gt; a</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#k_ey"><span class="c-builtin">k̲ey</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#c_x"><span class="c-builtin">c̲x</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#c_z"><span class="c-builtin">c̲z</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#w_ithKeys"><span class="c-builtin">w̲ithKeys</span></a></td><td>function</td><td><code>a -&gt; Box a -&gt; Box a</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#w_ithNumbers"><span class="c-builtin">w̲ithNumbers</span></a></td><td>function</td><td><code>a -&gt; Box a -&gt; Box a</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#w_ithSettings"><span class="c-builtin">w̲ithSettings</span></a></td><td>function</td><td><code>a -&gt; Box a -&gt; Box a</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#w_ithJob"><span class="c-builtin">w̲ithJob</span></a></td><td>function</td><td><code>a -&gt; Box a -&gt; Box a</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.k_ey"><span class="c-libfunc">ʰk̲ey</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.c_x"><span class="c-libfunc">ʰc̲x</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.c_z"><span class="c-libfunc">ʰc̲z</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.w_ithKeys"><span class="c-libfunc">ʰw̲ithKeys</span></a></td><td>function</td><td><code>a -&gt; Box a -&gt; Box a</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.w_ithNumbers"><span class="c-libfunc">ʰw̲ithNumbers</span></a></td><td>function</td><td><code>a -&gt; Box a -&gt; Box a</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.w_ithSettings"><span class="c-libfunc">ʰw̲ithSettings</span></a></td><td>function</td><td><code>a -&gt; Box a -&gt; Box a</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.w_ithJob"><span class="c-libfunc">ʰw̲ithJob</span></a></td><td>function</td><td><code>a -&gt; Box a -&gt; Box a</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.w_ithPlayer"><span class="c-libfunc">ˡw̲ithPlayer</span></a></td><td>function</td><td><code>a -&gt; Box a -&gt; Box a</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.n_ew"><span class="c-libfunc">ˡn̲ew</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Box Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.s_tart"><span class="c-libfunc">ˡs̲tart</span></a></td><td>function</td><td><code>Box a -&gt; a</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h_ome"><span class="c-builtin">h̲ome</span></a></td><td>function</td><td><code>Box Float -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#t_rim"><span class="c-builtin">t̲rim</span></a></td><td>function</td><td><code>Box Float -&gt; Box Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#s_endOne"><span class="c-builtin">s̲endOne</span></a></td><td>function</td><td><code>Float -&gt; Int -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.h_ome"><span class="c-libfunc">ʰh̲ome</span></a></td><td>function</td><td><code>Box Float -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.t_rim"><span class="c-libfunc">ʰt̲rim</span></a></td><td>function</td><td><code>Box Float -&gt; Box Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.s_endOne"><span class="c-libfunc">ʰs̲endOne</span></a></td><td>function</td><td><code>Float -&gt; Int -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a></td><td>function</td><td><code>Box Float -&gt; Box Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#b_locks"><span class="c-builtin">b̲locks</span></a></td><td>function</td><td><code>Box Float -&gt; Box Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#f_aces"><span class="c-builtin">f̲aces</span></a></td><td>function</td><td><code>Box Float -&gt; Box Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#s_end"><span class="c-builtin">s̲end</span></a></td><td>function</td><td><code>Box Float -&gt; Box Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#c_ell"><span class="c-builtin">c̲ell</span></a></td><td>function</td><td><code>(Num a, Truthy a) =&gt; Box Float -&gt; Int -&gt; a</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.b_locks"><span class="c-libfunc">ʰb̲locks</span></a></td><td>function</td><td><code>Box Float -&gt; Box Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.f_aces"><span class="c-libfunc">ʰf̲aces</span></a></td><td>function</td><td><code>Box Float -&gt; Box Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.s_end"><span class="c-libfunc">ʰs̲end</span></a></td><td>function</td><td><code>Box Float -&gt; Box Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.c_ell"><span class="c-libfunc">ʰc̲ell</span></a></td><td>function</td><td><code>(Num a, Truthy a) =&gt; Box Float -&gt; Int -&gt; a</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.h_it"><span class="c-libfunc">ˡh̲it</span></a></td><td>function</td><td><code>Box Float -&gt; Float -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.dt">ˡdt</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#s_et"><span class="c-builtin">s̲et</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#s_nap"><span class="c-builtin">s̲nap</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#m_x"><span class="c-builtin">m̲x</span></a></td><td>function</td><td><code>Box Float -&gt; Float -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#m_z"><span class="c-builtin">m̲z</span></a></td><td>function</td><td><code>Box Float -&gt; Float -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#m_y"><span class="c-builtin">m̲y</span></a></td><td>function</td><td><code>Box Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.s_et"><span class="c-libfunc">ʰs̲et</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.s_nap"><span class="c-libfunc">ʰs̲nap</span></a></td><td>function</td><td><code>Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.m_x"><span class="c-libfunc">ʰm̲x</span></a></td><td>function</td><td><code>Box Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.m_z"><span class="c-libfunc">ʰm̲z</span></a></td><td>function</td><td><code>Box Float -&gt; Float -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.m_y"><span class="c-libfunc">ʰm̲y</span></a></td><td>function</td><td><code>Box Float -&gt; Float -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a></td><td>function</td><td><code>Box Float -&gt; Float -&gt; Box Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.h_omeAgain"><span class="c-libfunc">ˡh̲omeAgain</span></a></td><td>function</td><td><code>Box Float -&gt; Box Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.t_oggleFly"><span class="c-libfunc">ˡt̲oggleFly</span></a></td><td>function</td><td><code>Box Float -&gt; Box Float</code></td></tr>
@@ -572,7 +638,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.s_olid"><span class="c-libfunc">ˡs̲olid</span></a></td><td>function</td><td><code>(Num a, Num b, Truthy b) =&gt; a -&gt; b</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.e_xposed"><span class="c-libfunc">ˡe̲xposed</span></a></td><td>function</td><td><code>(Num a, Truthy b) =&gt; a -&gt; b</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.s_urface"><span class="c-libfunc">ˡs̲urface</span></a></td><td>function</td><td><code>(Num a, Truthy b) =&gt; a -&gt; b</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Voxels.xtl.html#r_ows"><span class="c-builtin">r̲ows</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Voxels.xtl.html#h.r_ows"><span class="c-libfunc">ʰr̲ows</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.f_aces"><span class="c-libfunc">ˡf̲aces</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.c_ount"><span class="c-libfunc">ˡc̲ount</span></a></td><td>function</td><td><code>(Num a, Truthy a) =&gt; Int -&gt; a</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#ox">ox</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -585,18 +651,18 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#cz">cz</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.c_orners"><span class="c-libfunc">ˡc̲orners</span></a></td><td>function</td><td><code>Int -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.q_uads"><span class="c-libfunc">ˡq̲uads</span></a></td><td>function</td><td><code>Int -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Voxels.xtl.html#w_eights"><span class="c-builtin">w̲eights</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Voxels.xtl.html#n_oise"><span class="c-builtin">n̲oise</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Voxels.xtl.html#h.w_eights"><span class="c-libfunc">ʰw̲eights</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Voxels.xtl.html#h.n_oise"><span class="c-libfunc">ʰn̲oise</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.h_eights"><span class="c-libfunc">ˡh̲eights</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Voxels.xtl.html#c_oords"><span class="c-builtin">c̲oords</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Voxels.xtl.html#h.c_oords"><span class="c-libfunc">ʰc̲oords</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.t_errain"><span class="c-libfunc">ˡt̲errain</span></a></td><td>function</td><td><code>(Num a, Truthy a) =&gt; Int -&gt; a</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.t_ree"><span class="c-libfunc">ˡt̲ree</span></a></td><td>function</td><td><code>(Num a, Truthy a) =&gt; Int -&gt; a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.w_orldFaces"><span class="c-libfunc">ˡw̲orldFaces</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.c_hunkOf"><span class="c-libfunc">ˡc̲hunkOf</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.f_orest"><span class="c-libfunc">ˡf̲orest</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.h_ash"><span class="c-libfunc">ˡh̲ash</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Voxels.xtl.html#w_eight"><span class="c-builtin">w̲eight</span></a></td><td>function</td><td><code>Num a =&gt; Float -&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Voxels.xtl.html#n_oiseOf"><span class="c-builtin">n̲oiseOf</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Voxels.xtl.html#h.w_eight"><span class="c-libfunc">ʰw̲eight</span></a></td><td>function</td><td><code>Num a =&gt; Float -&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Voxels.xtl.html#h.n_oiseOf"><span class="c-libfunc">ʰn̲oiseOf</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#l.h_eightsAt"><span class="c-libfunc">ˡh̲eightsAt</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#cell">cell</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Voxels.xtl.html#inner">inner</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -637,7 +703,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-voxels-faces.xtl.html#k">k</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-faces.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-faces.xtl.html#put">put</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-faces.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>Num b =&gt; a -&gt; b</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-faces.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>(Any a, Num b) =&gt; a -&gt; b</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-faces.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-faces.xtl.html#last">last</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#w">w</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -658,7 +724,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-voxels-solid.xtl.html#g">g</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-solid.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-solid.xtl.html#put">put</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-solid.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>Num b =&gt; a -&gt; b</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-solid.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>(Any a, Num b) =&gt; a -&gt; b</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-solid.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-solid.xtl.html#last">last</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-walk.xtl.html#h">h</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -693,7 +759,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-voxels-walk.xtl.html#start">start</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-walk.xtl.html#s">s</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-walk.xtl.html#e">e</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-walk.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-walk.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>Any a =&gt; a -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-walk.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-walk.xtl.html#last">last</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-world.xtl.html#h">h</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -708,7 +774,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-voxels-world.xtl.html#keys">keys</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-world.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-world.xtl.html#put">put</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-world.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>Num b =&gt; a -&gt; b</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-world.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>(Any a, Num b) =&gt; a -&gt; b</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-world.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-world.xtl.html#last">last</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-sqlite-demos-notebook.xtl.html#db">db</a></td><td>value</td><td><code>Char</code></td></tr>
@@ -751,7 +817,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-web-demos-todomvc.xtl.html#u.l_inks"><span class="c-userfunc">ᵘl̲inks</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-web-demos-todomvc.xtl.html#style">style</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-web-demos-todomvc.xtl.html#u.p_age"><span class="c-userfunc">ᵘp̲age</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-web-demos-todomvc.xtl.html#u.b_ack"><span class="c-userfunc">ᵘb̲ack</span></a></td><td>function</td><td><code>a -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-web-demos-todomvc.xtl.html#u.b_ack"><span class="c-userfunc">ᵘb̲ack</span></a></td><td>function</td><td><code>Any a =&gt; a -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-web-demos-todomvc.xtl.html#u.a_dd"><span class="c-userfunc">ᵘa̲dd</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-web-demos-todomvc.xtl.html#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-web-demos-todomvc.xtl.html#port">port</a></td><td>value</td><td><code>Int</code></td></tr>

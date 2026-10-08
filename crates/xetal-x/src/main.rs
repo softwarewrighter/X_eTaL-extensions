@@ -84,11 +84,12 @@ fn main() -> ExitCode {
     xetal_tty::install(std::sync::Arc::new(xetal_line::Terminal));
     let cli = Cli::parse_from(argv);
     let draw = cli.draw.clone();
+    let events = cli.events.clone();
     xetal_grid::set_ascii(cli.ascii);
     xetal_grid::set_boxed(cli.boxed);
     xetal_system::set_flags(cli.cfg.clone());
     let command = command(cli.command, cli.script);
-    install_store(draw, &command, registry);
+    install_store(draw, events, &command, registry);
     // The program runs on a thread of its own; this (the main) thread
     // serves windows for extensions like canvas (plan M1), and does
     // nothing at all unless the program opens one.
@@ -154,7 +155,12 @@ fn command(command: Option<Command>, script: Option<String>) -> Command {
 
 /// The vendored CLI's drawing store (pictures as numbered SVG files),
 /// wrapped so `ext:` paths reach the extensions.
-fn install_store(draw: Option<String>, command: &Command, registry: xetal_ext_loader::Registry) {
+fn install_store(
+    draw: Option<String>,
+    events: Option<String>,
+    command: &Command,
+    registry: xetal_ext_loader::Registry,
+) {
     let dir = draw
         .or_else(|| std::env::var("XETAL_DRAW").ok())
         .unwrap_or_else(|| ".".into());
@@ -171,6 +177,15 @@ fn install_store(draw: Option<String>, command: &Command, registry: xetal_ext_lo
         );
     let notify = |path: &std::path::Path| eprintln!("drawn {}", path.display());
     let inner = xetal_store::Drawing::new(dir, &stem, notify);
+    // --events FILE: scripted events for the program (as the CLI does)
+    let inner = match events.map(std::fs::read_to_string) {
+        Some(Ok(lines)) => inner.scripted(&lines),
+        Some(Err(e)) => {
+            eprintln!("error[io]: --events: {e}");
+            std::process::exit(2);
+        }
+        None => inner,
+    };
     xetal_store::install(std::sync::Arc::new(xetal_ext_bridge::ExtStore::new(
         inner, registry,
     )));

@@ -10,18 +10,18 @@
 ## floats and ints (any rank, reshaped by the reply's shape).
 
 ## private: the words of a text, and the i-th of them
-w_ords := { s -> (n_ot s = f_irst " ") p_artition s }
-w_ord := { i w -> d_isclose i s_elect w }
+h:w_ords := { s -> (n_ot s = f_irst " ") p_artition s }
+h:w_ord := { i w -> d_isclose i s_elect w }
 
 ## private: what an argument a of kind k is sent as, and the query that
 ## says its kind (and shape)
-v_alue := { k a ->
+h:v_alue := { k a ->
   k m_atch "text" ? a
   k m_atch "chars" ? "(r_avel " c_at a c_at ")"
   k m_atch "int" ? "(f_ormat r_avel f_loor " c_at a c_at ")"
   "(f_ormat r_avel f_loat " c_at a c_at ")"
 }
-q_uery := { k a ->
+h:q_uery := { k a ->
   k m_atch "text" ? "?text\""
   k m_atch "chars" ? "?chars=\" c_at f_ormat s_hape " c_at a
   k m_atch "int" ? "?int=\" c_at f_ormat s_hape " c_at a
@@ -29,14 +29,14 @@ q_uery := { k a ->
 }
 
 ## private: the line putting argument a (kind k) for the native function t
-p_ut := { ka t ->
-  k := 1 w_ord w_ords ka
-  a := 2 w_ord w_ords ka
-  "  p" c_at a c_at " := " c_at (k v_alue a) c_at " []N_PUT \"ext:" c_at t c_at (k q_uery a) c_at "\n"
+h:p_ut := { ka t ->
+  k := 1 h:w_ord h:w_ords ka
+  a := 2 h:w_ord h:w_ords ka
+  "  p" c_at a c_at " := " c_at (k h:v_alue a) c_at " []N_PUT \"ext:" c_at t c_at (k h:q_uery a) c_at "\n"
 }
 
 ## private: the lines getting the reply of t as kind k
-g_et := { k t ->
+h:g_et := { k t ->
   call := "[]N_GET \"ext:" c_at t c_at "\""
   shape := "(f_loor n_umbers []N_GET \"ext:" c_at t c_at "?shape\") r_eshape v\n"
   k m_atch "text" ? "  " c_at call c_at "\n"
@@ -48,22 +48,22 @@ g_et := { k t ->
 }
 
 ## private: the parameters and the put lines, by how many arguments there are
-p_arams := { w n ->
+h:p_arams := { w n ->
   n = 0 ? "@"
   n = 1 ? "a"
   "a b"
 }
-p_uts := { w t ->
+h:p_uts := { w t ->
   n := (t_ally w) - 4
-  (n = 1) * (3 w_ord w) m_atch "unit" ? ""
-  n = 1 ? ((3 w_ord w) c_at " a") p_ut t
-  (((3 w_ord w) c_at " a") p_ut t) c_at ((4 w_ord w) c_at " b") p_ut t
+  (n = 1) * (3 h:w_ord w) m_atch "unit" ? ""
+  n = 1 ? ((3 h:w_ord w) c_at " a") h:p_ut t
+  (((3 h:w_ord w) c_at " a") h:p_ut t) c_at ((4 h:w_ord w) c_at " b") h:p_ut t
 }
 
 # "NAME : KIND [KIND] -> KIND" ffi:b_ind< "EXTENSION/FUNCTION"
 m:b_ind< := { sig target ->
-  w := w_ords sig
+  w := h:w_ords sig
   n := t_ally w
-  args := (n - 4) - (3 w_ord w) m_atch "unit"
-  "l:" c_at (1 w_ord w) c_at " := { " c_at (w p_arams args) c_at " ->\n" c_at (w p_uts target) c_at ((n w_ord w) g_et target) c_at "}"
+  args := (n - 4) - (3 h:w_ord w) m_atch "unit"
+  "l:" c_at (1 h:w_ord w) c_at " := { " c_at (w h:p_arams args) c_at " ->\n" c_at (w h:p_uts target) c_at ((n h:w_ord w) h:g_et target) c_at "}"
 }

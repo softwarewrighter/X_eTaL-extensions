@@ -134,7 +134,7 @@ l:s_urface := { b -> (b = 5) > (1 o_-_2 b > 0) * Y < 15 }
 ## d r_ows mb: the faces of one direction as 5 rows -- x, y, z of the
 ## cell, the direction, the block -- from mb, the mask times 1 + the
 ## block (so one array carries both)
-r_ows := { d mb ->
+h:r_ows := { d mb ->
   k := w_here mb > 0
   (5 c_at t_ally k) r_eshape (k s_elect l:xs) c_at (k s_elect l:ys) c_at (k s_elect l:zs) c_at ((t_ally k) r_eshape d) c_at (k s_elect mb) - 1
 }
@@ -144,9 +144,9 @@ r_ows := { d mb ->
 l:f_aces := { b ->
   m := l:e_xposed b
   bb := 1 + r_avel b
-  r := (0 r_ows bb * 1 s_elect m) c_at_2 (1 r_ows bb * 2 s_elect m) c_at_2 (2 r_ows bb * 3 s_elect m)
-  r := r c_at_2 (3 r_ows bb * 4 s_elect m) c_at_2 (4 r_ows bb * 5 s_elect m) c_at_2 (5 r_ows bb * 6 s_elect m)
-  2 1 t_ranspose r c_at_2 3 r_ows bb * r_avel l:s_urface b
+  r := (0 h:r_ows bb * 1 s_elect m) c_at_2 (1 h:r_ows bb * 2 s_elect m) c_at_2 (2 h:r_ows bb * 3 s_elect m)
+  r := r c_at_2 (3 h:r_ows bb * 4 s_elect m) c_at_2 (4 h:r_ows bb * 5 s_elect m) c_at_2 (5 h:r_ows bb * 6 s_elect m)
+  2 1 t_ranspose r c_at_2 3 h:r_ows bb * r_avel l:s_urface b
 }
 
 ## vx:c_ount f: how many faces in each direction (west east down up
@@ -210,13 +210,13 @@ l:q_uads := { f -> ((l:c_orners f) - 8.0) / 8.0 }
 ## value noise, made by linear algebra: random heights on a grid every s
 ## blocks, interpolated to n by n -- M G M', M the n by k hat-function
 ## weights of each grid line
-w_eights := { s n ->
+h:w_eights := { s n ->
   k := 1 + n d_iv s
   t := (f_loat (r_ange n) - 1) / f_loat s
   0.0 m_ax 1.0 - a_bs t '- t_able f_loat (r_ange k) - 1
 }
-n_oise := { s n ->
-  m := s w_eights n
+h:n_oise := { s n ->
+  m := s h:w_eights n
   k := 1 + n d_iv s
   g := (f_loat r_oll! (k * k) r_eshape 1000) / 1000.0
   m '+ '* i_nner ((k c_at k) r_eshape g) '+ '* i_nner 2 1 t_ranspose m
@@ -225,12 +225,12 @@ n_oise := { s n ->
 ## vx:h_eights n: an n by n height field (x by z), three octaves of
 ## value noise -- every 16, 8 and 4 blocks -- from 4 to 29 (seeded)
 l:h_eights := { n ->
-  v := (16.0 * 16 n_oise n) + (7.0 * 8 n_oise n) + 3.0 * 4 n_oise n
+  v := (16.0 * 16 h:n_oise n) + (7.0 * 8 h:n_oise n) + 3.0 * 4 h:n_oise n
   4 m_ax 29 m_in f_loor 4.0 + v
 }
 
 ## a world's cells' coordinates, for a shape nx ny nz (x slowest)
-c_oords := { sh ->
+h:c_oords := { sh ->
   j := (r_ange '* r_/ sh) - 1
   yz := (2 s_elect sh) * 3 s_elect sh
   (3 c_at t_ally j) r_eshape (j d_iv yz) c_at ((j d_iv 3 s_elect sh) m_od 2 s_elect sh) c_at j m_od 3 s_elect sh
@@ -242,7 +242,7 @@ c_oords := { sh ->
 l:t_errain := { h ->
   nx := 1 s_elect s_hape h
   nz := 2 s_elect s_hape h
-  c := c_oords nx c_at 32 c_at nz
+  c := h:c_oords nx c_at 32 c_at nz
   xs := 1 s_elect c
   ys := 2 s_elect c
   zs := 3 s_elect c
@@ -293,7 +293,7 @@ l:t_ree := { t b ->
 ## world air
 l:w_orldFaces := { b ->
   sh := s_hape b
-  c := c_oords sh
+  c := h:c_oords sh
   s := l:s_olid b
   xs := sh r_eshape 1 s_elect c
   ys := sh r_eshape 2 s_elect c
@@ -344,7 +344,7 @@ l:h_ash := { i j ->
 
 # the smooth weight of grid line k for the coordinates t (in grid
 # units): smoothstep of 1 - |t - k|, 0 beyond a grid step
-w_eight := { t k ->
+h:w_eight := { t k ->
   d := 0.0 m_ax 1.0 - a_bs t '- t_able f_loat k
   d * d * 3.0 - 2.0 * d
 }
@@ -352,7 +352,7 @@ w_eight := { t k ->
 # s n_oiseOf c: value noise every s blocks over the n by n blocks from
 # c (x0 z0): grid values hashed from their coordinates, interpolated as
 # M G M'
-n_oiseOf := { s c ->
+h:n_oiseOf := { s c ->
   x0 := 1 s_elect c
   z0 := 2 s_elect c
   n := 3 s_elect c
@@ -360,7 +360,7 @@ n_oiseOf := { s c ->
   tz := (f_loat z0 + (r_ange n) - 1) / f_loat s
   gx := (f_loor 'm_in r_/ tx) + (r_ange 2 + (f_loor 'm_ax r_/ tx) - f_loor 'm_in r_/ tx) - 1
   gz := (f_loor 'm_in r_/ tz) + (r_ange 2 + (f_loor 'm_ax r_/ tz) - f_loor 'm_in r_/ tz) - 1
-  (tx w_eight gx) '+ '* i_nner (gx l:h_ash gz) '+ '* i_nner 2 1 t_ranspose tz w_eight gz
+  (tx h:w_eight gx) '+ '* i_nner (gx l:h_ash gz) '+ '* i_nner 2 1 t_ranspose tz h:w_eight gz
 }
 
 ## vx:h_eightsAt x0 z0 n: the heights of the n by n columns from block
@@ -368,7 +368,7 @@ n_oiseOf := { s c ->
 ## (every 32, 16 and 8 blocks), 3 to 29, the sea at 14 -- any square
 ## anywhere, always the same
 l:h_eightsAt := { c ->
-  v := (18.0 * 32 n_oiseOf c) + (8.0 * 16 n_oiseOf c) + 3.0 * 8 n_oiseOf c
+  v := (18.0 * 32 h:n_oiseOf c) + (8.0 * 16 h:n_oiseOf c) + 3.0 * 8 h:n_oiseOf c
   3 m_ax 29 m_in f_loor 2.0 + v
 }
 
@@ -404,7 +404,7 @@ l:p_atch := { c ->
 # the 18 by 32 by 18 block of a column with its border: its cells'
 # coordinates, made once (flat, x slowest, and as arrays), and which
 # cells are the column's own (x and z from 1 to 16)
-cc := c_oords 18 32 18
+cc := h:c_oords 18 32 18
 cx18 := 1 s_elect cc
 cy18 := 2 s_elect cc
 cz18 := 3 s_elect cc

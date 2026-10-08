@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-08
 
+- 06:30 `build` X_eTaL d284a8c (from 512b3ee, 204 commits; the user: its doc site is better) is the known-good commit. `xetal-x` follows the CLI (`--events`, the new `xetal-names` crate); the libraries' private functions are `h:` now, rewritten by `xetal migrate` (Ffi.xtlm, Voxels.xtl, Endless.xtl, Seismic.xtl), since bare ones are deprecated; one golden rebased (`clock-types`: `t_ime`'s type now shows `(Any a, Any b) =>`). The doc site is rebuilt with the new generator: files grouped by directory in the sidebar (our two `life.xtl` told apart), the helpers documented as `h:`. Asks E7 and E8 landed.
+
 - 05:00 `ext` Smooth streaming (the user: "laggy at edges ... pauses noticeably"). Measured: every frame that made a column took 40 to 68 ms. Now each column is made over three frames -- blocks and solid mask (`vx:c_olumnBlocks`, `vx:c_olumnMask`, 12 ms), faces of its own cells only with the column shape's coordinates cached (`vx:c_olumnFaces`, 12 ms instead of 22), sending -- at most one far column is dropped a frame, and each column's mask is its own box (nothing big copied). A flight's 445 frames: median 1 ms of X_eTaL, 95% within 14 ms, one over 20 (the first). The endless world and the player (walking, swimming, flying) are now the library `demos/Endless.xtl` (`en:`), which voxels-endless and voxels-fly use; their goldens and recordings follow.
 
 - 04:00 `docs` docs/voxels.md brought up to date (the user: it showed built demos as planned): both demo tables have a status column (seven built: chunk, faces, solid, world, walk, endless, fly; dig, light, water and the game planned), "Built so far" covers walk, endless and fly, and the pointer is never grabbed.

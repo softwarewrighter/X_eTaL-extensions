@@ -1,0 +1,8 @@
+number = 7
+slug = "voxels-rubik"
+status = "pending"
+description = "game step 7 (inserted, the user: a Rubik's cube from voxels, solved then a va..."
+role = "production"
+context_files = []
+created_at = "2026-10-08T13:51:15"
+commits = []

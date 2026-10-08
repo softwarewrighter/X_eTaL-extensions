@@ -1,4 +1,4 @@
-number = 6
+number = 10
 slug = "voxels-dig"
 status = "pending"
 description = "game step 3: the ray-march pick; break and place; the world as chunk arrays, ..."

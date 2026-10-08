@@ -1,0 +1,1 @@
+game step 6 (inserted, the user): pin X_eTaL's newest (d284a8cb: the doc site grouped by directory, sorted; private names, the h: namespace), its own commit; rebuild, re-run every golden, fix or rebase on purpose; adopt what the new doc generator offers (headers, sorting) and regenerate pages/doc; asks swept.

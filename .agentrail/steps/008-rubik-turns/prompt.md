@@ -1,0 +1,1 @@
+game step 8 (inserted): turns by keys (U D L R F B, Shift for the inverse), a history and undo (Z) back to solved, reset, a valid scramble (random legal turns); turns animated over a few frames.

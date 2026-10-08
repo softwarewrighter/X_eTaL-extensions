@@ -8,8 +8,8 @@
 
 db := "work/quakes.db"
 
-r_ound := { v -> (f_loat f_loor 0.5 + 100.0 * v) / 100.0 }
-m_ean := { v -> ('+ r_/ v) / f_loat t_ally v }
+h:r_ound := { v -> (f_loat f_loor 0.5 + 100.0 * v) / 100.0 }
+h:m_ean := { v -> ('+ r_/ v) / f_loat t_ally v }
 
 ## se:r_eport "path.csv": prints the report and draws its pictures
 l:r_eport := { csv ->
@@ -18,7 +18,7 @@ l:r_eport := { csv ->
 
   # -- 1. SQL: what is there
   a := p_rint! "quakes, the smallest and largest magnitude, the mean depth (km):"
-  a := p_rint! r_ound r_avel db sq:n_ums "select count(*), min(mag), max(mag), avg(depth) from quakes"
+  a := p_rint! h:r_ound r_avel db sq:n_ums "select count(*), min(mag), max(mag), avg(depth) from quakes"
   a := p_rint! "from, to (UTC):"
   a := p_rint! db sq:t_exts "select substr(min(time), 1, 16), substr(max(time), 1, 16) from quakes"
 
@@ -45,10 +45,10 @@ l:r_eport := { csv ->
   t := k t_ake t
   g := (l_og f_loat k t_ake c) / l_og 10.0
   a := p_rint! "log10 of the count at or above 2.5, 3, 3.5, ...:"
-  a := p_rint! r_ound g
+  a := p_rint! h:r_ound g
   big := (m >= 4.5) r_eplicate m
   a := p_rint! "quakes of 4.5 and up, and their b-value (Aki):"
-  a := p_rint! (f_loat t_ally big) c_at r_ound 0.4342944819 / (m_ean big) - 4.45
+  a := p_rint! (f_loat t_ally big) c_at h:r_ound 0.4342944819 / (h:m_ean big) - 4.45
 
   # -- 4. pictures
   # a world map: quakes counted in 10-degree cells, 18 rows (north at

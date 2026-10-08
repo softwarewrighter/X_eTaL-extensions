@@ -1,0 +1,8 @@
+number = 8
+slug = "rubik-turns"
+status = "pending"
+description = "game step 8 (inserted): turns by keys (U D L R F B, Shift for the inverse), a..."
+role = "production"
+context_files = []
+created_at = "2026-10-08T13:51:15"
+commits = []

@@ -1,0 +1,1 @@
+game step 9 (inserted): scene gains on-screen buttons (labeled rectangles drawn over the view, a small built-in font, clicks reported as button events); the cube's buttons: the 12 turns, Scramble, Undo, Reset.
