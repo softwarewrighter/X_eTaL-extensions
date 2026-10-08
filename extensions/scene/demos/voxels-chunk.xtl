@@ -1,8 +1,9 @@
-# Voxels, 1: a chunk is an array. 16 by 16 by 16 block numbers built
-# from a height field in a few array expressions -- grass, dirt, stone,
-# water below a level, sand at its shore, one tree -- then counted,
-# cut and seen from above. (docs/voxels.md; the next demos draw it.)
-# Run: just demo scene voxels-chunk   (pictures go to work/draw/)
+## Voxels, 1: a chunk is an array. 16 by 16 by 16 block numbers built
+## from a height field in a few array expressions -- grass, dirt, stone,
+## water below a level, sand at its shore, one tree -- then counted,
+## cut and seen from above. (docs/voxels.md; the next demos draw it.)
+## Run: just demo scene voxels-chunk   (pictures go to work/draw/)
+
 "vx:" u_se< "Voxels"
 
 h := vx:h_ills 0.0

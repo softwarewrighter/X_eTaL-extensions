@@ -1,23 +1,24 @@
-# Canvas.xtl -- the facade of the canvas extension: a native window
-# showing X_eTaL arrays as pixels, with keys, clicks and frame ticks back.
-# Import: "cv:" u_se< "Canvas"
-# Run with xetal-x, which links canvas and serves its windows on the main
-# thread (xetal-x --ext DIR puts this directory on XETAL_PATH).
-# Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+## Canvas.xtl -- the facade of the canvas extension: a native window
+## showing X_eTaL arrays as pixels, with keys, clicks and frame ticks back.
+## Import: "cv:" u_se< "Canvas"
+## Run with xetal-x, which links canvas and serves its windows on the main
+## thread (xetal-x --ext DIR puts this directory on XETAL_PATH).
+## Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+
 "ffi:" u_se< "Ffi"
 
-# title cv:o_pen! width height: a window that size (in points); its id.
+## title cv:o_pen! width height: a window that size (in points); its id.
 "o_pen! : text int -> int"      ffi:b_ind< "canvas/open"
-# id cv:s_how! pixels: draw an n by m matrix (gray) or an n by m by 3
-# array (red, green, blue), each from 0 (dark) to 1 (bright); a Bool
-# matrix draws its 1s white. Scaled to the window; the id.
+## id cv:s_how! pixels: draw an n by m matrix (gray) or an n by m by 3
+## array (red, green, blue), each from 0 (dark) to 1 (bright); a Bool
+## matrix draws its 1s white. Scaled to the window; the id.
 "s_how! : int float -> int"     ffi:b_ind< "canvas/show"
-# cv:n_ext! id: the next event, waiting at most a frame (1/60 s):
-# "frame", "key Space", "key q", "key ArrowLeft", "click ROW COL"
-# (where in the array shown, from 1), or "close".
+## cv:n_ext! id: the next event, waiting at most a frame (1/60 s):
+## "frame", "key Space", "key q", "key ArrowLeft", "click ROW COL"
+## (where in the array shown, from 1), or "close".
 "n_ext! : int -> text"          ffi:b_ind< "canvas/next"
-# cv:c_lose! id: close the window; 1.
+## cv:c_lose! id: close the window; 1.
 "c_lose! : int -> int"          ffi:b_ind< "canvas/close"
 
-# The native package behind these functions.
+## The native package behind these functions.
 l:package := "canvas"

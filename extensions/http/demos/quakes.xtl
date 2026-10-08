@@ -1,9 +1,10 @@
-# Earthquakes of a week: the USGS feed of magnitude 2.5 and up, saved
-# 2026-10-06 (demos/data/PROVENANCE.txt), checked against its SHA-256,
-# into SQLite; SQL selects and groups, X_eTaL computes (the
-# magnitude-frequency law), pictures show it.
-# Run: just demo http quakes   (pictures go to work/draw/; the live
-# feed: just live-quakes)
+## Earthquakes of a week: the USGS feed of magnitude 2.5 and up, saved
+## 2026-10-06 (demos/data/PROVENANCE.txt), checked against its SHA-256,
+## into SQLite; SQL selects and groups, X_eTaL computes (the
+## magnitude-frequency law), pictures show it.
+## Run: just demo http quakes   (pictures go to work/draw/; the live
+## feed: just live-quakes)
+
 "dg:" u_se< "Digest"
 "se:" u_se< "Seismic"
 

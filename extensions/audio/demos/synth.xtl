@@ -1,14 +1,15 @@
-# A synthesizer made of arrays: X_eTaL computes every sample of a little
-# piece -- notes from equal temperament, harmonics, envelopes, chords,
-# stereo (the instruments are in Instruments.xtl, beside this file) --
-# and the audio extension plays them as they are made.
-# Run: just demo audio synth
+## A synthesizer made of arrays: X_eTaL computes every sample of a little
+## piece -- notes from equal temperament, harmonics, envelopes, chords,
+## stereo (the instruments are in Instruments.xtl, beside this file) --
+## and the audio extension plays them as they are made.
+## Run: just demo audio synth
+
 "au:" u_se< "Audio"
 "in:" u_se< "Instruments"
 
 v := au:o_utput in:rate
 
-# play eight bars, each made while the one before is sounding
+## play eight bars, each made while the one before is sounding
 u:p_lay := { b ->
   s := v au:q_ueue! in:b_ar b
   w := v au:w_ait! 0.5

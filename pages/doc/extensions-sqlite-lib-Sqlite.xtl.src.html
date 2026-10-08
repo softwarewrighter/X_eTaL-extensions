@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/sqlite/lib/Sqlite.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L13"><span class="c-libfunc">ˡe̲xec</span></a></li>
+<li class="item"><a href="#L15"><span class="c-libfunc">ˡn̲ums</span></a></li>
+<li class="item"><a href="#L18"><span class="c-libfunc">ˡt̲exts</span></a></li>
+<li class="item"><a href="#L20"><span class="c-libfunc">ˡc̲ols</span></a></li>
+<li class="item"><a href="#L23"><span class="c-libfunc">ˡq̲uote</span></a></li>
+<li class="item"><a href="#L28"><span class="c-libfunc">ˡi̲mport</span></a></li>
+<li class="item"><a href="#L31">ˡpackage</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="extensions-sqlite-lib-Sqlite.xtl.html">extensions/sqlite/lib/Sqlite.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment"># Sqlite.xtl -- the facade of the sqlite extension: SQLite databases</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># for X_eTaL (rusqlite, SQLite compiled in).</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># Import: &quot;sq:&quot; u_se&lt; &quot;Sqlite&quot;</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># A database is named by its path, relative to the working directory</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># (or XETAL_SQLITE_ROOT), or &quot;:memory:&quot; for one call's scratch database;</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># each call opens it and closes it.</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-comment">⍝</span><span class="c-comment"># Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-comment">⍝</span><span class="c-comment"># Each signature line is written out by the binding macro (lib/Ffi.xtlm).</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-libfunc">ᶠᶠⁱ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="lib-Ffi.xtlm.html" class="c-string">&quot;Ffi&quot;</a></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-comment">⍝</span><span class="c-comment"># db sq:e_xec sql: run the statements; how many rows they changed.</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-string">&quot;e_xec : text text -&gt; int&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;sqlite/exec&quot;</span></span>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡe̲xec</span> ← { a b →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:sqlite/exec?text&quot;</span>
+  pb ← b <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:sqlite/exec?text&quot;</span>
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:sqlite/exec&quot;</span>
+}</pre></details>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-comment">⍝</span><span class="c-comment"># db sq:n_ums sql: the result as a Float matrix, rows by columns (NULL is NaN).</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-string">&quot;n_ums : text text -&gt; floats&quot;</span>   <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;sqlite/nums&quot;</span></span>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡn̲ums</span> ← { a b →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:sqlite/nums?text&quot;</span>
+  pb ← b <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:sqlite/nums?text&quot;</span>
+  v ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:sqlite/nums&quot;</span>
+  (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:sqlite/nums?shape&quot;</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
+}</pre></details>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-comment">⍝</span><span class="c-comment"># db sq:t_exts sql: every cell as text, a Char matrix with one row per</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-comment">⍝</span><span class="c-comment"># cell (the first row's cells, then the second's; padded with spaces).</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-string">&quot;t_exts : text text -&gt; chars&quot;</span>   <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;sqlite/texts&quot;</span></span>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡt̲exts</span> ← { a b →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:sqlite/texts?text&quot;</span>
+  pb ← b <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:sqlite/texts?text&quot;</span>
+  v ← <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:sqlite/texts&quot;</span>
+  (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:sqlite/texts?shape&quot;</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
+}</pre></details>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-comment">⍝</span><span class="c-comment"># db sq:c_ols sql: the query's column names, one per row.</span></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-string">&quot;c_ols : text text -&gt; chars&quot;</span>    <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;sqlite/cols&quot;</span></span>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡc̲ols</span> ← { a b →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:sqlite/cols?text&quot;</span>
+  pb ← b <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:sqlite/cols?text&quot;</span>
+  v ← <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:sqlite/cols&quot;</span>
+  (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:sqlite/cols?shape&quot;</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
+}</pre></details>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a><span class="c-comment">⍝</span><span class="c-comment"># sq:q_uote t: the text as an SQL literal ('O''Brien'), to put a value</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-comment">⍝</span><span class="c-comment"># into a statement as data, never as SQL.</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-string">&quot;q_uote : text -&gt; text&quot;</span>         <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;sqlite/quote&quot;</span></span>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡq̲uote</span> ← { a →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:sqlite/quote?text&quot;</span>
+  <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:sqlite/quote&quot;</span>
+}</pre></details>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-comment">⍝</span><span class="c-comment"># db sq:i_mport &quot;path.csv&quot; (or &quot;table=path.csv&quot;): a CSV file into a new</span></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-comment">⍝</span><span class="c-comment"># table named after the file; the header names the columns, their types</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-comment">⍝</span><span class="c-comment"># (INTEGER, REAL, TEXT) come from the data; empty fields are NULL. How</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a><span class="c-comment">⍝</span><span class="c-comment"># many rows it imported.</span></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-string">&quot;i_mport : text text -&gt; int&quot;</span>    <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;sqlite/import&quot;</span></span>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡi̲mport</span> ← { a b →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:sqlite/import?text&quot;</span>
+  pb ← b <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:sqlite/import?text&quot;</span>
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:sqlite/import&quot;</span>
+}</pre></details>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-comment">⍝</span><span class="c-comment"># The native package behind these functions.</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a>ˡpackage ← <span class="c-string">&quot;sqlite&quot;</span></span>
+</div>
+</main>
+</body>
+</html>

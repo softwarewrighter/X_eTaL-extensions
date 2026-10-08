@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/audio/demos/Instruments.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#l.rate">ˡrate</a></li>
+<li class="item"><a href="#l.h_z"><span class="c-libfunc">ˡh̲z</span></a></li>
+<li class="item"><a href="#n">n</a></li>
+<li class="item"><a href="#t">t</a></li>
+<li class="item"><a href="#env">env</a></li>
+<li class="item"><a href="#l.t_one"><span class="c-libfunc">ˡt̲one</span></a></li>
+<li class="item"><a href="#chords">chords</a></li>
+<li class="item"><a href="#l.b_ar"><span class="c-libfunc">ˡb̲ar</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">library</span>extensions/audio/demos/Instruments.xtl</h1>
+<div class="doc">
+<p>Instruments.xtl -- the instruments of the synthesizer demos (synth.xtl,
+scope.xtl): music as arrays. An ordinary X_eTaL library beside them.
+Import: &quot;in:&quot; u_se&lt; &quot;Instruments&quot;</p>
+</div>
+<p class="meta"><a href="extensions-audio-demos-Instruments.xtl.src.html">source</a></p>
+<div class="item" id="l.rate">
+<h3><a href="#l.rate">ˡrate</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-audio-demos-Instruments.xtl.src.html#L6">line 6</a></div>
+<div class="doc">
+<p>frames a second</p>
+</div>
+<pre class="code">ˡrate ← <span class="c-number">22050.0</span></pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-Instruments.xtl.html#n">n</a>, <a href="extensions-audio-demos-Instruments.xtl.html#t">t</a>, <a href="extensions-audio-demos-Instruments.xtl.html#l.b_ar"><span class="c-libfunc">ˡb̲ar</span></a>, <a href="extensions-audio-demos-scope.xtl.html#total">total</a>, <a href="extensions-audio-demos-scope.xtl.html#v">v</a>, <a href="extensions-audio-demos-scope.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-audio-demos-synth.xtl.html#v">v</a></div>
+</div>
+<div class="item" id="l.h_z">
+<h3><a href="#l.h_z"><span class="c-libfunc">ˡh̲z</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-audio-demos-Instruments.xtl.src.html#L9">line 9</a></div>
+<div class="doc">
+<p>a note's pitch: k semitones above A4 (440 Hz)</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡh̲z</span> ← { k → <span class="c-number">440.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">2.0</span> <a href="builtins.html#-5e" class="c-symbol">^</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">12.0</span> }</pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-Instruments.xtl.html#l.b_ar"><span class="c-libfunc">ˡb̲ar</span></a></div>
+</div>
+<div class="item" id="n">
+<h3><a href="#n">n</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-audio-demos-Instruments.xtl.src.html#L13">line 13</a></div>
+<div class="doc">
+<p>the times of the samples of a 0.25 s step, and its envelope: a quick
+attack, a decay toward 60%, and a release at the end</p>
+</div>
+<pre class="code">n ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.25</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-audio-demos-Instruments.xtl.html#l.rate">ˡrate</a></pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-Instruments.xtl.html#t">t</a>, <a href="extensions-audio-demos-Instruments.xtl.html#l.b_ar"><span class="c-libfunc">ˡb̲ar</span></a></div>
+</div>
+<div class="item" id="t">
+<h3><a href="#t">t</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-audio-demos-Instruments.xtl.src.html#L14">line 14</a></div>
+<pre class="code">t ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="extensions-audio-demos-Instruments.xtl.html#n">n</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="extensions-audio-demos-Instruments.xtl.html#l.rate">ˡrate</a></pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-Instruments.xtl.html#env">env</a>, <a href="extensions-audio-demos-Instruments.xtl.html#l.b_ar"><span class="c-libfunc">ˡb̲ar</span></a></div>
+</div>
+<div class="item" id="env">
+<h3><a href="#env">env</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-audio-demos-Instruments.xtl.src.html#L15">line 15</a></div>
+<pre class="code">env ← (<span class="c-number">1.0</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="extensions-audio-demos-Instruments.xtl.html#t">t</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.01</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (((<span class="c-number">0.25</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-audio-demos-Instruments.xtl.html#t">t</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.06</span>) <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">1.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0.6</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <span class="c-number">0.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-audio-demos-Instruments.xtl.html#t">t</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.12</span></pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-Instruments.xtl.html#l.b_ar"><span class="c-libfunc">ˡb̲ar</span></a></div>
+</div>
+<div class="item" id="l.t_one">
+<h3><a href="#l.t_one"><span class="c-libfunc">ˡt̲one</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-audio-demos-Instruments.xtl.src.html#L19">line 19</a></div>
+<div class="doc">
+<p>a tone: three harmonics (1, 1/2, 1/4) at each frequency of f, one row
+per frequency, along the times tt</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡt̲one</span> ← { f tt →
+  x ← <span class="c-number">6.283185307179586</span> <a href="builtins.html#-2a" class="c-symbol">×</a> f <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> tt
+  (<a href="builtins.html#s_in" class="c-builtin">s̲in</a> x) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_in" class="c-builtin">s̲in</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.25</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_in" class="c-builtin">s̲in</a> <span class="c-number">3.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x
+}</pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-Instruments.xtl.html#l.b_ar"><span class="c-libfunc">ˡb̲ar</span></a></div>
+</div>
+<div class="item" id="chords">
+<h3><a href="#chords">chords</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-audio-demos-Instruments.xtl.src.html#L25">line 25</a></div>
+<div class="doc">
+<p>the chords, as semitones from A4: C, Am, F, G (four notes each)</p>
+</div>
+<pre class="code">chords ← <span class="c-number">4</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-9</span> <span class="c-number">-5</span> <span class="c-number">-2</span> <span class="c-number">3</span>  <span class="c-number">-12</span> <span class="c-number">-9</span> <span class="c-number">-5</span> <span class="c-number">0</span>  <span class="c-number">-16</span> <span class="c-number">-12</span> <span class="c-number">-9</span> <span class="c-number">-4</span>  <span class="c-number">-14</span> <span class="c-number">-10</span> <span class="c-number">-7</span> <span class="c-number">-2</span></pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-Instruments.xtl.html#l.b_ar"><span class="c-libfunc">ˡb̲ar</span></a></div>
+</div>
+<div class="item" id="l.b_ar">
+<h3><a href="#l.b_ar"><span class="c-libfunc">ˡb̲ar</span></a> <span class="type">: Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-audio-demos-Instruments.xtl.src.html#L31">line 31</a></div>
+<div class="doc">
+<p>bar b (from 1): the chord's notes in turn (one row each, enveloped,
+then laid end to end), over its root two octaves down for the whole
+bar, mixed to stereo (2 by 22048): the arpeggio more to the right, the
+bass more to the left</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡb̲ar</span> ← { b →
+  k ← (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (b <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">4</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect₁</a> <a href="extensions-audio-demos-Instruments.xtl.html#chords">chords</a>
+  mel ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">0.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> ((<a href="extensions-audio-demos-Instruments.xtl.html#l.h_z" class="c-libfunc">ˡh̲z</a> k) <a href="extensions-audio-demos-Instruments.xtl.html#l.t_one" class="c-libfunc">ˡt̲one</a> <a href="extensions-audio-demos-Instruments.xtl.html#t">t</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">4</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-audio-demos-Instruments.xtl.html#n">n</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-audio-demos-Instruments.xtl.html#env">env</a>
+  tb ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-audio-demos-Instruments.xtl.html#n">n</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="extensions-audio-demos-Instruments.xtl.html#l.rate">ˡrate</a>
+  low ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="extensions-audio-demos-Instruments.xtl.html#l.h_z" class="c-libfunc">ˡh̲z</a> (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> k) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">24</span>) <a href="extensions-audio-demos-Instruments.xtl.html#l.t_one" class="c-libfunc">ˡt̲one</a> tb
+  bass ← <span class="c-number">0.25</span> <a href="builtins.html#-2a" class="c-symbol">×</a> low <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1.0</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> tb <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.02</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> ((<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> tb) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.1</span>) <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">1.0</span>
+  <span class="c-number">1.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-audio-demos-Instruments.xtl.html#n">n</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ((<span class="c-number">0.7</span> <a href="builtins.html#-2a" class="c-symbol">×</a> bass) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> mel) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> bass) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.7</span> <a href="builtins.html#-2a" class="c-symbol">×</a> mel
+}</pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#first">first</a>, <a href="extensions-audio-demos-scope.xtl.html#u.m_ore"><span class="c-userfunc">ᵘm̲ore</span></a>, <a href="extensions-audio-demos-synth.xtl.html#u.p_lay"><span class="c-userfunc">ᵘp̲lay</span></a></div>
+</div>
+</main>
+</body>
+</html>

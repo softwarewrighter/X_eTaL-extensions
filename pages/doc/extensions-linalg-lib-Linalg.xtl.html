@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/linalg/lib/Linalg.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#l.s_olve"><span class="c-libfunc">ˡs̲olve</span></a></li>
+<li class="item"><a href="#l.i_nverse"><span class="c-libfunc">ˡi̲nverse</span></a></li>
+<li class="item"><a href="#l.d_et"><span class="c-libfunc">ˡd̲et</span></a></li>
+<li class="item"><a href="#l.l_stsq"><span class="c-libfunc">ˡl̲stsq</span></a></li>
+<li><a href="#section-1">Eigenvalues</a></li>
+<li class="item"><a href="#l.e_ig"><span class="c-libfunc">ˡe̲ig</span></a></li>
+<li class="item"><a href="#l.e_igVecs"><span class="c-libfunc">ˡe̲igVecs</span></a></li>
+<li><a href="#section-2">The singular value decomposition</a></li>
+<li class="item"><a href="#l.s_vdS"><span class="c-libfunc">ˡs̲vdS</span></a></li>
+<li class="item"><a href="#l.s_vdU"><span class="c-libfunc">ˡs̲vdU</span></a></li>
+<li class="item"><a href="#l.s_vdV"><span class="c-libfunc">ˡs̲vdV</span></a></li>
+<li class="item"><a href="#l.package">ˡpackage</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">library</span>extensions/linalg/lib/Linalg.xtl</h1>
+<div class="doc">
+<p>Linalg.xtl -- the facade of the linalg extension: numerical linear
+algebra through nalgebra. Matrices are Float arrays (row by column);
+a right-hand side may be a vector or a matrix of columns.
+Import: &quot;la:&quot; u_se&lt; &quot;Linalg&quot;
+Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each signature line is written out by the binding macro (lib/Ffi.xtlm).</p>
+</div>
+<p class="meta"><a href="extensions-linalg-lib-Linalg.xtl.src.html">source</a> &middot; imports <code><span class="c-error">ffi:</span></code> <a href="lib-Ffi.xtlm.html">lib/Ffi.xtlm</a></p>
+<div class="item" id="l.s_olve">
+<h3><a href="#l.s_olve"><span class="c-libfunc">ˡs̲olve</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-linalg-lib-Linalg.xtl.src.html#L11">line 11</a></div>
+<div class="doc">
+<p>a la:s_olve b: x with a x = b (a square and not singular).</p>
+</div>
+<pre class="code"><span class="c-string">&quot;s_olve : float float -&gt; floats&quot;</span>    <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;linalg/solve&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡs̲olve</span> ← { a b →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:linalg/solve?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:linalg/solve?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
+  v ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/solve&quot;</span>
+  (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/solve?shape&quot;</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
+}</pre></details>
+</div>
+<div class="item" id="l.i_nverse">
+<h3><a href="#l.i_nverse"><span class="c-libfunc">ˡi̲nverse</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-linalg-lib-Linalg.xtl.src.html#L13">line 13</a></div>
+<div class="doc">
+<p>la:i_nverse a: the inverse of a square matrix.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;i_nverse : float -&gt; floats&quot;</span>        <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;linalg/inverse&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡi̲nverse</span> ← { a →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:linalg/inverse?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  v ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/inverse&quot;</span>
+  (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/inverse?shape&quot;</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
+}</pre></details>
+</div>
+<div class="item" id="l.d_et">
+<h3><a href="#l.d_et"><span class="c-libfunc">ˡd̲et</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-linalg-lib-Linalg.xtl.src.html#L15">line 15</a></div>
+<div class="doc">
+<p>la:d_et a: the determinant.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;d_et : float -&gt; float&quot;</span>             <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;linalg/det&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡd̲et</span> ← { a →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:linalg/det?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/det&quot;</span>
+}</pre></details>
+</div>
+<div class="item" id="l.l_stsq">
+<h3><a href="#l.l_stsq"><span class="c-libfunc">ˡl̲stsq</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-linalg-lib-Linalg.xtl.src.html#L17">line 17</a></div>
+<div class="doc">
+<p>a la:l_stsq b: the x minimizing |a x - b| (least squares, by the SVD).</p>
+</div>
+<pre class="code"><span class="c-string">&quot;l_stsq : float float -&gt; floats&quot;</span>    <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;linalg/lstsq&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡl̲stsq</span> ← { a b →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:linalg/lstsq?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:linalg/lstsq?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
+  v ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/lstsq&quot;</span>
+  (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/lstsq?shape&quot;</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
+}</pre></details>
+</div>
+<h2 class="section" id="section-1">Eigenvalues</h2>
+<div class="item" id="l.e_ig">
+<h3><a href="#l.e_ig"><span class="c-libfunc">ˡe̲ig</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-linalg-lib-Linalg.xtl.src.html#L21">line 21</a></div>
+<div class="doc">
+<p>la:e_ig a: a symmetric matrix's eigenvalues, ascending.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;e_ig : float -&gt; floats&quot;</span>            <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;linalg/eigsym&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡe̲ig</span> ← { a →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:linalg/eigsym?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  v ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/eigsym&quot;</span>
+  (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/eigsym?shape&quot;</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
+}</pre></details>
+</div>
+<div class="item" id="l.e_igVecs">
+<h3><a href="#l.e_igVecs"><span class="c-libfunc">ˡe̲igVecs</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-linalg-lib-Linalg.xtl.src.html#L24">line 24</a></div>
+<div class="doc">
+<p>la:e_igVecs a: a symmetric matrix's eigenvectors, one column each, in
+the order of <code><span class="c-libfunc">ˡᵃe̲ig</span></code>.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;e_igVecs : float -&gt; floats&quot;</span>        <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;linalg/eigvecs&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡe̲igVecs</span> ← { a →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:linalg/eigvecs?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  v ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/eigvecs&quot;</span>
+  (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/eigvecs?shape&quot;</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
+}</pre></details>
+</div>
+<h2 class="section" id="section-2">The singular value decomposition</h2>
+<div class="item" id="l.s_vdS">
+<h3><a href="#l.s_vdS"><span class="c-libfunc">ˡs̲vdS</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-linalg-lib-Linalg.xtl.src.html#L32">line 32</a></div>
+<div class="doc">
+<p>la:s_vdS a: the singular values s, descending.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;s_vdS : float -&gt; floats&quot;</span>           <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;linalg/svd_s&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡs̲vdS</span> ← { a →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:linalg/svd_s?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  v ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/svd_s&quot;</span>
+  (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/svd_s?shape&quot;</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-image-demos-photo-lab.xtl.html#s">s</a></div>
+</div>
+<div class="item" id="l.s_vdU">
+<h3><a href="#l.s_vdU"><span class="c-libfunc">ˡs̲vdU</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-linalg-lib-Linalg.xtl.src.html#L34">line 34</a></div>
+<div class="doc">
+<p>la:s_vdU a: the left singular vectors U, m by r, one column each.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;s_vdU : float -&gt; floats&quot;</span>           <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;linalg/svd_u&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡs̲vdU</span> ← { a →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:linalg/svd_u?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  v ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/svd_u&quot;</span>
+  (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/svd_u?shape&quot;</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-image-demos-photo-lab.xtl.html#u">u</a></div>
+</div>
+<div class="item" id="l.s_vdV">
+<h3><a href="#l.s_vdV"><span class="c-libfunc">ˡs̲vdV</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-linalg-lib-Linalg.xtl.src.html#L36">line 36</a></div>
+<div class="doc">
+<p>la:s_vdV a: the right singular vectors V, n by r, one column each.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;s_vdV : float -&gt; floats&quot;</span>           <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;linalg/svd_v&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡs̲vdV</span> ← { a →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:linalg/svd_v?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  v ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/svd_v&quot;</span>
+  (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:linalg/svd_v?shape&quot;</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-image-demos-photo-lab.xtl.html#v">v</a></div>
+</div>
+<div class="item" id="l.package">
+<h3><a href="#l.package">ˡpackage</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-linalg-lib-Linalg.xtl.src.html#L39">line 39</a></div>
+<div class="doc">
+<p>The native package behind these functions.</p>
+</div>
+<pre class="code">ˡpackage ← <span class="c-string">&quot;linalg&quot;</span></pre>
+</div>
+</main>
+</body>
+</html>

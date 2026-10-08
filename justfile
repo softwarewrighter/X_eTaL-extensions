@@ -78,6 +78,14 @@ pages:
 check-pages:
     scripts/check-pages.sh
 
+# Every export documented (## above it) and every ## >> example run
+check-docs:
+    scripts/check-docs.py
+
+# The cross-referenced docs (xetal doc) into pages/doc
+doc:
+    scripts/doc-site.sh
+
 # Preview pages/ as GitHub Pages serves it, at http://127.0.0.1:8470/X_eTaL-extensions/
 serve-pages:
     @rm -rf target/serve && mkdir -p target/serve && ln -s "$PWD/pages" target/serve/X_eTaL-extensions

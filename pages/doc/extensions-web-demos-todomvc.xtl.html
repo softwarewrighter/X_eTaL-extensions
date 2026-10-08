@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/web/demos/todomvc.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#db">db</a></li>
+<li class="item"><a href="#made">made</a></li>
+<li class="item"><a href="#items">items</a></li>
+<li class="item"><a href="#u.f_ilter"><span class="c-userfunc">ᵘf̲ilter</span></a></li>
+<li class="item"><a href="#u.l_eft"><span class="c-userfunc">ᵘl̲eft</span></a></li>
+<li class="item"><a href="#u.o_n"><span class="c-userfunc">ᵘo̲n</span></a></li>
+<li class="item"><a href="#u.l_ink"><span class="c-userfunc">ᵘl̲ink</span></a></li>
+<li class="item"><a href="#u.l_inks"><span class="c-userfunc">ᵘl̲inks</span></a></li>
+<li class="item"><a href="#style">style</a></li>
+<li class="item"><a href="#u.p_age"><span class="c-userfunc">ᵘp̲age</span></a></li>
+<li class="item"><a href="#u.b_ack"><span class="c-userfunc">ᵘb̲ack</span></a></li>
+<li class="item"><a href="#u.a_dd"><span class="c-userfunc">ᵘa̲dd</span></a></li>
+<li class="item"><a href="#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a></li>
+<li class="item"><a href="#port">port</a></li>
+<li class="item"><a href="#last">last</a></li>
+<li class="item"><a href="#port">port</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>extensions/web/demos/todomvc.xtl</h1>
+<div class="doc">
+<p>TodoMVC on the web: the todos live in SQLite, the X_eTaL program is
+the server -- it routes each request, keeps the filter, counts what is
+left, and writes the page; forms post and are redirected back.
+Run: just demo web todomvc, then open http://127.0.0.1:8470/
+  (the list is kept in work/todos.db; Quit ends the program)</p>
+</div>
+<p class="meta"><a href="extensions-web-demos-todomvc.xtl.src.html">source</a> &middot; imports <code><span class="c-error">wb:</span></code> <a href="extensions-web-lib-Web.xtl.html">extensions/web/lib/Web.xtl</a>; <code><span class="c-error">sq:</span></code> <a href="extensions-sqlite-lib-Sqlite.xtl.html">extensions/sqlite/lib/Sqlite.xtl</a></p>
+<div class="item" id="db">
+<h3><a href="#db">db</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L10">line 10</a></div>
+<pre class="code">db ← <span class="c-string">&quot;work/todos.db&quot;</span></pre>
+<div class="uses">Used in: <a href="extensions-web-demos-todomvc.xtl.html#made">made</a>, <a href="extensions-web-demos-todomvc.xtl.html#u.p_age"><span class="c-userfunc">ᵘp̲age</span></a>, <a href="extensions-web-demos-todomvc.xtl.html#u.a_dd"><span class="c-userfunc">ᵘa̲dd</span></a>, <a href="extensions-web-demos-todomvc.xtl.html#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a></div>
+</div>
+<div class="item" id="made">
+<h3><a href="#made">made</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L11">line 11</a></div>
+<pre class="code">made ← <a href="extensions-web-demos-todomvc.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.e_xec" class="c-libfunc">sq:e̲xec</a> <span class="c-string">&quot;create table if not exists todos (id integer primary key, title text not null, done integer not null default 0)&quot;</span></pre>
+</div>
+<div class="item" id="items">
+<h3><a href="#items">items</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L14">line 14</a></div>
+<div class="doc">
+<p>each todo as a list item, written by SQL (the title escaped there)</p>
+</div>
+<pre class="code">items ← <span class="c-string">&quot;select coalesce(group_concat('&lt;li class=' || case when done then 'done' else 'open' end || '&gt;&lt;form method=post action=/toggle&gt;&lt;input type=hidden name=id value=' || id || '&gt;&lt;button class=tick title=toggle&gt;' || case when done then '&amp;#x2611;' else '&amp;#x2610;' end || '&lt;/button&gt;&lt;/form&gt;&lt;span&gt;' || replace(replace(replace(title, '&amp;', '&amp;amp;'), '&lt;', '&amp;lt;'), '&gt;', '&amp;gt;') || '&lt;/span&gt;&lt;form method=post action=/delete&gt;&lt;input type=hidden name=id value=' || id || '&gt;&lt;button class=del title=delete&gt;&amp;#xd7;&lt;/button&gt;&lt;/form&gt;&lt;/li&gt;', ''), '') from (select * from todos&quot;</span></pre>
+<div class="uses">Used in: <a href="extensions-web-demos-todomvc.xtl.html#u.p_age"><span class="c-userfunc">ᵘp̲age</span></a></div>
+</div>
+<div class="item" id="u.f_ilter">
+<h3><a href="#u.f_ilter"><span class="c-userfunc">ᵘf̲ilter</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L17">line 17</a></div>
+<div class="doc">
+<p>the filter a request asks for (?show=active or completed), as SQL</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘf̲ilter</span> ← { s →
+  s <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;active&quot;</span> ? <span class="c-string">&quot; where done = 0&quot;</span>
+  s <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;completed&quot;</span> ? <span class="c-string">&quot; where done = 1&quot;</span>
+  <span class="c-string">&quot;&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-todomvc.xtl.html#u.p_age"><span class="c-userfunc">ᵘp̲age</span></a></div>
+</div>
+<div class="item" id="u.l_eft">
+<h3><a href="#u.l_eft"><span class="c-userfunc">ᵘl̲eft</span></a> <span class="type">: Num a =&gt; a -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L24">line 24</a></div>
+<div class="doc">
+<p>&quot;1 item left&quot;, &quot;3 items left&quot;: counted in X_eTaL from the done column</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘl̲eft</span> ← { d →
+  n ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> d
+  n <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? <span class="c-string">&quot;1 item left&quot;</span>
+  (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> n) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; items left&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-todomvc.xtl.html#u.p_age"><span class="c-userfunc">ᵘp̲age</span></a></div>
+</div>
+<div class="item" id="u.o_n">
+<h3><a href="#u.o_n"><span class="c-userfunc">ᵘo̲n</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L31">line 31</a></div>
+<div class="doc">
+<p>a filter link, marked when chosen</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘo̲n</span> ← { s name →
+  s <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> name ? <span class="c-string">&quot; class=on&quot;</span>
+  ((<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> s) <a href="builtins.html#-26" class="c-symbol">∧</a> name <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;all&quot;</span>) ? <span class="c-string">&quot; class=on&quot;</span>
+  <span class="c-string">&quot;&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-todomvc.xtl.html#u.l_ink"><span class="c-userfunc">ᵘl̲ink</span></a></div>
+</div>
+<div class="item" id="u.l_ink">
+<h3><a href="#u.l_ink"><span class="c-userfunc">ᵘl̲ink</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L36">line 36</a></div>
+<pre class="code"><span class="c-userfunc">ᵘl̲ink</span> ← { s name → <span class="c-string">&quot;&lt;a href='/?show=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;'&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (s <a href="extensions-web-demos-todomvc.xtl.html#u.o_n" class="c-userfunc">ᵘo̲n</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&gt;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&lt;/a&gt;&quot;</span> }</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-todomvc.xtl.html#u.l_inks"><span class="c-userfunc">ᵘl̲inks</span></a></div>
+</div>
+<div class="item" id="u.l_inks">
+<h3><a href="#u.l_inks"><span class="c-userfunc">ᵘl̲inks</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L37">line 37</a></div>
+<pre class="code"><span class="c-userfunc">ᵘl̲inks</span> ← { s → (s <a href="extensions-web-demos-todomvc.xtl.html#u.l_ink" class="c-userfunc">ᵘl̲ink</a> <span class="c-string">&quot;all&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (s <a href="extensions-web-demos-todomvc.xtl.html#u.l_ink" class="c-userfunc">ᵘl̲ink</a> <span class="c-string">&quot;active&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> s <a href="extensions-web-demos-todomvc.xtl.html#u.l_ink" class="c-userfunc">ᵘl̲ink</a> <span class="c-string">&quot;completed&quot;</span> }</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-todomvc.xtl.html#u.p_age"><span class="c-userfunc">ᵘp̲age</span></a></div>
+</div>
+<div class="item" id="style">
+<h3><a href="#style">style</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L39">line 39</a></div>
+<pre class="code">style ← <span class="c-string">&quot;&lt;style&gt;body{background:#f5f5f5;font:15px system-ui,sans-serif;color:#333}main{max-width:520px;margin:2em auto}h1{color:#c0392b;font-weight:200;font-size:56px;text-align:center;margin:.2em}.box{background:#fff;box-shadow:0 2px 6px #0003}form.add input{width:100%;box-sizing:border-box;font-size:20px;padding:.6em;border:0;border-bottom:1px solid #eee}ul{list-style:none;margin:0;padding:0}li{display:flex;align-items:center;border-bottom:1px solid #eee;padding:.3em .5em}li span{flex:1;font-size:18px;padding:.3em}li.done span{text-decoration:line-through;color:#aaa}li form{margin:0}button{border:0;background:none;font-size:20px;cursor:pointer}.del{color:#c0392b}footer{display:flex;justify-content:space-between;padding:.6em;font-size:13px;color:#777}footer a{margin:0 .3em;color:#777}a.on{color:#c0392b;font-weight:bold}p.note{text-align:center;color:#999;font-size:12px}&lt;/style&gt;&quot;</span></pre>
+<div class="uses">Used in: <a href="extensions-web-demos-todomvc.xtl.html#u.p_age"><span class="c-userfunc">ᵘp̲age</span></a></div>
+</div>
+<div class="item" id="u.p_age">
+<h3><a href="#u.p_age"><span class="c-userfunc">ᵘp̲age</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L42">line 42</a></div>
+<div class="doc">
+<p>the whole page</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘp̲age</span> ← { s →
+  done ← <a href="extensions-web-demos-todomvc.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.n_ums" class="c-libfunc">sq:n̲ums</a> <span class="c-string">&quot;select done from todos&quot;</span>
+  list ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-web-demos-todomvc.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.t_exts" class="c-libfunc">sq:t̲exts</a> <a href="extensions-web-demos-todomvc.xtl.html#items">items</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-web-demos-todomvc.xtl.html#u.f_ilter" class="c-userfunc">ᵘf̲ilter</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; order by id)&quot;</span>
+  <span class="c-string">&quot;&lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset='utf-8'&gt;&lt;title&gt;todos -- X_eTaL on the web&lt;/title&gt;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-web-demos-todomvc.xtl.html#style">style</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&lt;/head&gt;&lt;body&gt;&lt;main&gt;&lt;h1&gt;todos&lt;/h1&gt;&lt;div class=box&gt;&lt;form class=add method=post action=/add&gt;&lt;input name=title placeholder='What needs to be done?' autofocus autocomplete=off&gt;&lt;/form&gt;&lt;ul&gt;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> list <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&lt;/ul&gt;&lt;footer&gt;&lt;span&gt;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-web-demos-todomvc.xtl.html#u.l_eft" class="c-userfunc">ᵘl̲eft</a> done) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&lt;/span&gt;&lt;span&gt;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-web-demos-todomvc.xtl.html#u.l_inks" class="c-userfunc">ᵘl̲inks</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&lt;/span&gt;&lt;form method=post action=/clear&gt;&lt;button style='font-size:13px;color:#777'&gt;Clear completed&lt;/button&gt;&lt;/form&gt;&lt;/footer&gt;&lt;/div&gt;&lt;p class=note&gt;Served by an X_eTaL program; kept in SQLite. &lt;a href='/quit'&gt;Quit&lt;/a&gt;&lt;/p&gt;&lt;/main&gt;&lt;/body&gt;&lt;/html&gt;&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-todomvc.xtl.html#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a></div>
+</div>
+<div class="item" id="u.b_ack">
+<h3><a href="#u.b_ack"><span class="c-userfunc">ᵘb̲ack</span></a> <span class="type">: a -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L49">line 49</a></div>
+<div class="doc">
+<p>a change to the list, then back to the page (303 See Other)</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘb̲ack</span> ← { n →
+  h ← <a href="extensions-web-lib-Web.xtl.html#l.h_eader-21" class="c-libfunc">ʷᵇh̲eader!</a> <span class="c-string">&quot;Location: /&quot;</span>
+  <span class="c-number">303</span> <a href="extensions-web-lib-Web.xtl.html#l.r_eply-21" class="c-libfunc">ʷᵇr̲eply!</a> <span class="c-string">&quot;&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-todomvc.xtl.html#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a></div>
+</div>
+<div class="item" id="u.a_dd">
+<h3><a href="#u.a_dd"><span class="c-userfunc">ᵘa̲dd</span></a> <span class="type">: Char -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L55">line 55</a></div>
+<div class="doc">
+<p>a new todo, unless its title is empty</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘa̲dd</span> ← { t →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t ? <span class="c-number">0</span>
+  <a href="extensions-web-demos-todomvc.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.e_xec" class="c-libfunc">sq:e̲xec</a> <span class="c-string">&quot;insert into todos (title) values (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-sqlite-lib-Sqlite.xtl.html#l.q_uote" class="c-libfunc">sq:q̲uote</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-todomvc.xtl.html#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a></div>
+</div>
+<div class="item" id="u.a_nswer">
+<h3><a href="#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a> <span class="type">: Num a =&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L61">line 61</a></div>
+<div class="doc">
+<p>one request; 0 once quit</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘa̲nswer</span> ← { k →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> k ? <span class="c-number">0</span>
+  r ← <a href="extensions-web-lib-Web.xtl.html#l.n_ext-21" class="c-libfunc">ʷᵇn̲ext!</a> <span class="c-number">60</span>
+  r <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;none&quot;</span> ? k
+  r <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;GET /&quot;</span> ? (<span class="c-number">200</span> <a href="extensions-web-lib-Web.xtl.html#l.r_eply-21" class="c-libfunc">ʷᵇr̲eply!</a> <a href="extensions-web-demos-todomvc.xtl.html#u.p_age" class="c-userfunc">ᵘp̲age</a> <a href="extensions-web-lib-Web.xtl.html#l.p_aram" class="c-libfunc">ʷᵇp̲aram</a> <span class="c-string">&quot;show&quot;</span>) <a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> k
+  r <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;POST /add&quot;</span> ? (<a href="extensions-web-demos-todomvc.xtl.html#u.b_ack" class="c-userfunc">ᵘb̲ack</a> <a href="extensions-web-demos-todomvc.xtl.html#u.a_dd" class="c-userfunc">ᵘa̲dd</a> <a href="extensions-web-lib-Web.xtl.html#l.p_aram" class="c-libfunc">ʷᵇp̲aram</a> <span class="c-string">&quot;title&quot;</span>) <a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> k
+  r <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;POST /toggle&quot;</span> ? (<a href="extensions-web-demos-todomvc.xtl.html#u.b_ack" class="c-userfunc">ᵘb̲ack</a> <a href="extensions-web-demos-todomvc.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.e_xec" class="c-libfunc">sq:e̲xec</a> <span class="c-string">&quot;update todos set done = 1 - done where id = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.q_uote" class="c-libfunc">sq:q̲uote</a> <a href="extensions-web-lib-Web.xtl.html#l.p_aram" class="c-libfunc">ʷᵇp̲aram</a> <span class="c-string">&quot;id&quot;</span>) <a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> k
+  r <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;POST /delete&quot;</span> ? (<a href="extensions-web-demos-todomvc.xtl.html#u.b_ack" class="c-userfunc">ᵘb̲ack</a> <a href="extensions-web-demos-todomvc.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.e_xec" class="c-libfunc">sq:e̲xec</a> <span class="c-string">&quot;delete from todos where id = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.q_uote" class="c-libfunc">sq:q̲uote</a> <a href="extensions-web-lib-Web.xtl.html#l.p_aram" class="c-libfunc">ʷᵇp̲aram</a> <span class="c-string">&quot;id&quot;</span>) <a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> k
+  r <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;POST /clear&quot;</span> ? (<a href="extensions-web-demos-todomvc.xtl.html#u.b_ack" class="c-userfunc">ᵘb̲ack</a> <a href="extensions-web-demos-todomvc.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.e_xec" class="c-libfunc">sq:e̲xec</a> <span class="c-string">&quot;delete from todos where done = 1&quot;</span>) <a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> k
+  r <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;GET /quit&quot;</span> ? (<span class="c-number">200</span> <a href="extensions-web-lib-Web.xtl.html#l.r_eply-21" class="c-libfunc">ʷᵇr̲eply!</a> <span class="c-string">&quot;bye&quot;</span>) <a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <span class="c-number">0</span>
+  (<span class="c-number">404</span> <a href="extensions-web-lib-Web.xtl.html#l.r_eply-21" class="c-libfunc">ʷᵇr̲eply!</a> <span class="c-string">&quot;no such page: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-web-lib-Web.xtl.html#l.p_ath" class="c-libfunc">ʷᵇp̲ath</a> @) <a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> k
+}</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-todomvc.xtl.html#last">last</a></div>
+</div>
+<div class="item" id="port">
+<h3><a href="#port">port</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L74">line 74</a></div>
+<pre class="code">port ← <a href="extensions-web-lib-Web.xtl.html#l.s_erve-21" class="c-libfunc">ʷᵇs̲erve!</a> <span class="c-number">8470</span></pre>
+<div class="uses">Used in: <a href="extensions-web-demos-todomvc.xtl.src.html#L75">todomvc.xtl:75</a></div>
+</div>
+<div class="item" id="last">
+<h3><a href="#last">last</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L76">line 76</a></div>
+<pre class="code">last ← <span class="c-number">100000</span> <span class="c-userfunc">'</span><a href="extensions-web-demos-todomvc.xtl.html#u.a_nswer" class="c-userfunc">ᵘa̲nswer</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <span class="c-number">1</span></pre>
+</div>
+<div class="item" id="port">
+<h3><a href="#port">port</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-web-demos-todomvc.xtl.src.html#L77">line 77</a></div>
+<pre class="code">port ← <a href="extensions-web-lib-Web.xtl.html#l.s_top-21" class="c-libfunc">ʷᵇs̲top!</a> @</pre>
+</div>
+</main>
+</body>
+</html>

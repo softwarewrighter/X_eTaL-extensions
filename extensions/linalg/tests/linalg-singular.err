@@ -1,1 +1,1 @@
-error[io]: []N_GET: ext:linalg/inverse: the matrix is singular (no unique solution) at ./lib/Linalg.xtl:12:1
+error[io]: []N_GET: ext:linalg/inverse: the matrix is singular (no unique solution) at ./lib/Linalg.xtl:13:1

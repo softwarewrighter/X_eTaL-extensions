@@ -1,13 +1,14 @@
-# A live oscilloscope: the synthesizer's music (Instruments.xtl) plays
-# while a window draws the samples under the playhead -- the left
-# channel above, the right below -- each frame, triggered on the left
-# channel's rising zero crossing so a steady chord stands still.
-# Run: just demo audio scope   (q or close: quit)
+## A live oscilloscope: the synthesizer's music (Instruments.xtl) plays
+## while a window draws the samples under the playhead -- the left
+## channel above, the right below -- each frame, triggered on the left
+## channel's rising zero crossing so a steady chord stands still.
+## Run: just demo audio scope   (q or close: quit)
+
 "au:" u_se< "Audio"
 "in:" u_se< "Instruments"
 "cv:" u_se< "Canvas"
 
-# the whole piece, made first: 8 bars side by side (2 by 176384)
+## the whole piece, made first: 8 bars side by side (2 by 176384)
 first := in:b_ar 1
 blen := 2 s_elect s_hape first
 u:m_ore := { s -> s c_at_2 in:b_ar 1 + (2 s_elect s_hape s) d_iv blen }
@@ -19,15 +20,15 @@ total := (f_loat t_ally left) / in:rate
 w := "Oscilloscope -- X_eTaL" cv:o_pen! 768 384
 v := au:o_utput in:rate
 
-# feed bar k+1 when need is 1; how many bars are queued
+## feed bar k+1 when need is 1; how many bars are queued
 u:f_eed := { need k ->
   need = 0 ? k
   s := v au:q_ueue! ((k * blen) + r_ange blen) s_elect_2 song
   k + 1
 }
 
-# a trace: 256 samples as a 64 by 256 picture, each column lit from
-# its sample's row to the next one's, so steep edges stay joined
+## a trace: 256 samples as a 64 by 256 picture, each column lit from
+## its sample's row to the next one's, so steep edges stay joined
 u:t_race := { x ->
   y := 1 m_ax 64 m_in f_loor 32.5 - 30.0 * x
   z := (1 d_rop y) c_at -1 t_ake y
@@ -35,10 +36,10 @@ u:t_race := { x ->
   (r '>= t_able y m_in z) * r '<= t_able y m_ax z
 }
 
-# the trigger, as a real scope's: from sample i, the first rising zero
-# crossing of x (one sample below zero, the next at or above it) within
-# the next 2048 samples; i itself when there is none. Drawing from it
-# makes a steady note stand still instead of sliding.
+## the trigger, as a real scope's: from sample i, the first rising zero
+## crossing of x (one sample below zero, the next at or above it) within
+## the next 2048 samples; i itself when there is none. Drawing from it
+## makes a steady note stand still instead of sliding.
 u:t_rigger := { x i ->
   c := (t_ally x) m_in i + r_ange 2048
   s := c s_elect x
@@ -53,10 +54,10 @@ u:q_uit := { k ->
   -1
 }
 
-# a frame: an event, the playhead, more music when less than 0.6 s is
-# queued, and the 512 samples from the trigger (every other one) drawn:
-# both channels triggered by the left (the bass), as a scope triggers
-# from one channel
+## a frame: an event, the playhead, more music when less than 0.6 s is
+## queued, and the 512 samples from the trigger (every other one) drawn:
+## both channels triggered by the left (the bass), as a scope triggers
+## from one channel
 u:f_rame := { k ->
   k < 0 ? k
   e := cv:n_ext! w

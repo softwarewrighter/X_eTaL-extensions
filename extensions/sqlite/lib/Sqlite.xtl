@@ -1,30 +1,31 @@
-# Sqlite.xtl -- the facade of the sqlite extension: SQLite databases
-# for X_eTaL (rusqlite, SQLite compiled in).
-# Import: "sq:" u_se< "Sqlite"
-# A database is named by its path, relative to the working directory
-# (or XETAL_SQLITE_ROOT), or ":memory:" for one call's scratch database;
-# each call opens it and closes it.
-# Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
-# Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+## Sqlite.xtl -- the facade of the sqlite extension: SQLite databases
+## for X_eTaL (rusqlite, SQLite compiled in).
+## Import: "sq:" u_se< "Sqlite"
+## A database is named by its path, relative to the working directory
+## (or XETAL_SQLITE_ROOT), or ":memory:" for one call's scratch database;
+## each call opens it and closes it.
+## Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+## Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+
 "ffi:" u_se< "Ffi"
 
-# db sq:e_xec sql: run the statements; how many rows they changed.
+## db sq:e_xec sql: run the statements; how many rows they changed.
 "e_xec : text text -> int"      ffi:b_ind< "sqlite/exec"
-# db sq:n_ums sql: the result as a Float matrix, rows by columns (NULL is NaN).
+## db sq:n_ums sql: the result as a Float matrix, rows by columns (NULL is NaN).
 "n_ums : text text -> floats"   ffi:b_ind< "sqlite/nums"
-# db sq:t_exts sql: every cell as text, a Char matrix with one row per
-# cell (the first row's cells, then the second's; padded with spaces).
+## db sq:t_exts sql: every cell as text, a Char matrix with one row per
+## cell (the first row's cells, then the second's; padded with spaces).
 "t_exts : text text -> chars"   ffi:b_ind< "sqlite/texts"
-# db sq:c_ols sql: the query's column names, one per row.
+## db sq:c_ols sql: the query's column names, one per row.
 "c_ols : text text -> chars"    ffi:b_ind< "sqlite/cols"
-# sq:q_uote t: the text as an SQL literal ('O''Brien'), to put a value
-# into a statement as data, never as SQL.
+## sq:q_uote t: the text as an SQL literal ('O''Brien'), to put a value
+## into a statement as data, never as SQL.
 "q_uote : text -> text"         ffi:b_ind< "sqlite/quote"
-# db sq:i_mport "path.csv" (or "table=path.csv"): a CSV file into a new
-# table named after the file; the header names the columns, their types
-# (INTEGER, REAL, TEXT) come from the data; empty fields are NULL. How
-# many rows it imported.
+## db sq:i_mport "path.csv" (or "table=path.csv"): a CSV file into a new
+## table named after the file; the header names the columns, their types
+## (INTEGER, REAL, TEXT) come from the data; empty fields are NULL. How
+## many rows it imported.
 "i_mport : text text -> int"    ffi:b_ind< "sqlite/import"
 
-# The native package behind these functions.
+## The native package behind these functions.
 l:package := "sqlite"

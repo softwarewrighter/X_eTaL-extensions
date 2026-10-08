@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/audio/demos/scope.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#first">first</a></li>
+<li class="item"><a href="#blen">blen</a></li>
+<li class="item"><a href="#u.m_ore"><span class="c-userfunc">ᵘm̲ore</span></a></li>
+<li class="item"><a href="#song">song</a></li>
+<li class="item"><a href="#left">left</a></li>
+<li class="item"><a href="#right">right</a></li>
+<li class="item"><a href="#total">total</a></li>
+<li class="item"><a href="#w">w</a></li>
+<li class="item"><a href="#v">v</a></li>
+<li class="item"><a href="#u.f_eed"><span class="c-userfunc">ᵘf̲eed</span></a></li>
+<li class="item"><a href="#u.t_race"><span class="c-userfunc">ᵘt̲race</span></a></li>
+<li class="item"><a href="#u.t_rigger"><span class="c-userfunc">ᵘt̲rigger</span></a></li>
+<li class="item"><a href="#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></li>
+<li class="item"><a href="#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></li>
+<li class="item"><a href="#last">last</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>extensions/audio/demos/scope.xtl</h1>
+<div class="doc">
+<p>A live oscilloscope: the synthesizer's music (Instruments.xtl) plays
+while a window draws the samples under the playhead -- the left
+channel above, the right below -- each frame, triggered on the left
+channel's rising zero crossing so a steady chord stands still.
+Run: just demo audio scope   (q or close: quit)</p>
+</div>
+<p class="meta"><a href="extensions-audio-demos-scope.xtl.src.html">source</a> &middot; imports <code><span class="c-error">au:</span></code> <a href="extensions-audio-lib-Audio.xtl.html">extensions/audio/lib/Audio.xtl</a>; <code><span class="c-error">in:</span></code> <a href="extensions-audio-demos-Instruments.xtl.html">extensions/audio/demos/Instruments.xtl</a>; <code><span class="c-error">cv:</span></code> <a href="extensions-canvas-lib-Canvas.xtl.html">extensions/canvas/lib/Canvas.xtl</a></p>
+<div class="item" id="first">
+<h3><a href="#first">first</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L12">line 12</a></div>
+<div class="doc">
+<p>the whole piece, made first: 8 bars side by side (2 by 176384)</p>
+</div>
+<pre class="code">first ← <a href="extensions-audio-demos-Instruments.xtl.html#l.b_ar" class="c-libfunc">ⁱⁿb̲ar</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#blen">blen</a>, <a href="extensions-audio-demos-scope.xtl.html#song">song</a></div>
+</div>
+<div class="item" id="blen">
+<h3><a href="#blen">blen</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L13">line 13</a></div>
+<pre class="code">blen ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="extensions-audio-demos-scope.xtl.html#first">first</a></pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#u.m_ore"><span class="c-userfunc">ᵘm̲ore</span></a>, <a href="extensions-audio-demos-scope.xtl.html#u.f_eed"><span class="c-userfunc">ᵘf̲eed</span></a>, <a href="extensions-audio-demos-scope.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="u.m_ore">
+<h3><a href="#u.m_ore"><span class="c-userfunc">ᵘm̲ore</span></a> <span class="type">: Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L14">line 14</a></div>
+<pre class="code"><span class="c-userfunc">ᵘm̲ore</span> ← { s → s <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="extensions-audio-demos-Instruments.xtl.html#l.b_ar" class="c-libfunc">ⁱⁿb̲ar</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> s) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <a href="extensions-audio-demos-scope.xtl.html#blen">blen</a> }</pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#song">song</a></div>
+</div>
+<div class="item" id="song">
+<h3><a href="#song">song</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L15">line 15</a></div>
+<pre class="code">song ← <span class="c-number">7</span> <span class="c-userfunc">'</span><a href="extensions-audio-demos-scope.xtl.html#u.m_ore" class="c-userfunc">ᵘm̲ore</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <a href="extensions-audio-demos-scope.xtl.html#first">first</a></pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#left">left</a>, <a href="extensions-audio-demos-scope.xtl.html#right">right</a>, <a href="extensions-audio-demos-scope.xtl.html#u.f_eed"><span class="c-userfunc">ᵘf̲eed</span></a></div>
+</div>
+<div class="item" id="left">
+<h3><a href="#left">left</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L16">line 16</a></div>
+<pre class="code">left ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₁</a> <a href="extensions-audio-demos-scope.xtl.html#song">song</a></pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#total">total</a>, <a href="extensions-audio-demos-scope.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="right">
+<h3><a href="#right">right</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L17">line 17</a></div>
+<pre class="code">right ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₁</a> <a href="extensions-audio-demos-scope.xtl.html#song">song</a></pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="total">
+<h3><a href="#total">total</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L18">line 18</a></div>
+<pre class="code">total ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-audio-demos-scope.xtl.html#left">left</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="extensions-audio-demos-Instruments.xtl.html#l.rate">ⁱⁿrate</a></pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="w">
+<h3><a href="#w">w</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L20">line 20</a></div>
+<pre class="code">w ← <span class="c-string">&quot;Oscilloscope -- X_eTaL&quot;</span> <a href="extensions-canvas-lib-Canvas.xtl.html#l.o_pen-21" class="c-libfunc">ᶜᵛo̲pen!</a> <span class="c-number">768</span> <span class="c-number">384</span></pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-audio-demos-scope.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="v">
+<h3><a href="#v">v</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L21">line 21</a></div>
+<pre class="code">v ← <a href="extensions-audio-lib-Audio.xtl.html#l.o_utput" class="c-libfunc">ᵃᵘo̲utput</a> <a href="extensions-audio-demos-Instruments.xtl.html#l.rate">ⁱⁿrate</a></pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#u.f_eed"><span class="c-userfunc">ᵘf̲eed</span></a>, <a href="extensions-audio-demos-scope.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-audio-demos-scope.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="u.f_eed">
+<h3><a href="#u.f_eed"><span class="c-userfunc">ᵘf̲eed</span></a> <span class="type">: Num a =&gt; a -&gt; Int -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L24">line 24</a></div>
+<div class="doc">
+<p>feed bar k+1 when need is 1; how many bars are queued</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘf̲eed</span> ← { need k →
+  need <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span> ? k
+  s ← <a href="extensions-audio-demos-scope.xtl.html#v">v</a> <a href="extensions-audio-lib-Audio.xtl.html#l.q_ueue-21" class="c-libfunc">ᵃᵘq̲ueue!</a> ((k <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-audio-demos-scope.xtl.html#blen">blen</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="extensions-audio-demos-scope.xtl.html#blen">blen</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> <a href="extensions-audio-demos-scope.xtl.html#song">song</a>
+  k <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-audio-demos-scope.xtl.html#last">last</a></div>
+</div>
+<div class="item" id="u.t_race">
+<h3><a href="#u.t_race"><span class="c-userfunc">ᵘt̲race</span></a> <span class="type">: (Num a, Truthy a) =&gt; Float -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L32">line 32</a></div>
+<div class="doc">
+<p>a trace: 256 samples as a 64 by 256 picture, each column lit from
+its sample's row to the next one's, so steep edges stay joined</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘt̲race</span> ← { x →
+  y ← <span class="c-number">1</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">64</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">32.5</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">30.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x
+  z ← (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> y) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> y
+  r ← <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">64</span>
+  (r <span class="c-symbol">'</span><a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> y <a href="builtins.html#m_in" class="c-builtin">m̲in</a> z) <a href="builtins.html#-2a" class="c-symbol">×</a> r <span class="c-symbol">'</span><a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> y <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> z
+}</pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="u.t_rigger">
+<h3><a href="#u.t_rigger"><span class="c-userfunc">ᵘt̲rigger</span></a> <span class="type">: Float -&gt; Int -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L43">line 43</a></div>
+<div class="doc">
+<p>the trigger, as a real scope's: from sample i, the first rising zero
+crossing of x (one sample below zero, the next at or above it) within
+the next 2048 samples; i itself when there is none. Drawing from it
+makes a steady note stand still instead of sliding.</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘt̲rigger</span> ← { x i →
+  c ← (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> x) <a href="builtins.html#m_in" class="c-builtin">m̲in</a> i <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">2048</span>
+  s ← c <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> x
+  j ← (((<span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s) <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">0.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s) <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">0.0</span>) <a href="builtins.html#i_ndexOf" class="c-builtin">i̲ndexOf</a> <span class="c-number">1</span>
+  j <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> c ? i
+  (j <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> c
+}</pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="u.q_uit">
+<h3><a href="#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a> <span class="type">: Num b =&gt; a -&gt; b</span></h3>
+<div class="meta">function &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L51">line 51</a></div>
+<pre class="code"><span class="c-userfunc">ᵘq̲uit</span> ← { k →
+  x ← <a href="extensions-canvas-lib-Canvas.xtl.html#l.c_lose-21" class="c-libfunc">ᶜᵛc̲lose!</a> <a href="extensions-audio-demos-scope.xtl.html#w">w</a>
+  y ← <a href="extensions-audio-lib-Audio.xtl.html#l.c_lose-21" class="c-libfunc">ᵃᵘc̲lose!</a> <a href="extensions-audio-demos-scope.xtl.html#v">v</a>
+  <span class="c-number">-1</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="u.f_rame">
+<h3><a href="#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a> <span class="type">: Int -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L61">line 61</a></div>
+<div class="doc">
+<p>a frame: an event, the playhead, more music when less than 0.6 s is
+queued, and the 512 samples from the trigger (every other one) drawn:
+both channels triggered by the left (the bass), as a scope triggers
+from one channel</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘf̲rame</span> ← { k →
+  k <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">0</span> ? k
+  e ← <a href="extensions-canvas-lib-Canvas.xtl.html#l.n_ext-21" class="c-libfunc">ᶜᵛn̲ext!</a> <a href="extensions-audio-demos-scope.xtl.html#w">w</a>
+  ((e <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;close&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> e <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key q&quot;</span>) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span> ? <a href="extensions-audio-demos-scope.xtl.html#u.q_uit" class="c-userfunc">ᵘq̲uit</a> k
+  p ← <a href="extensions-audio-lib-Audio.xtl.html#l.p_layed" class="c-libfunc">ᵃᵘp̲layed</a> <a href="extensions-audio-demos-scope.xtl.html#v">v</a>
+  <span class="c-comment">⍝</span><span class="c-comment"> the end (within a tenth of a second: the device's count, converted</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> back from its own rate, can stop just short of the last frame)</span>
+  p <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <a href="extensions-audio-demos-scope.xtl.html#total">total</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.1</span> ? <a href="extensions-audio-demos-scope.xtl.html#u.q_uit" class="c-userfunc">ᵘq̲uit</a> k
+  ahead ← ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-audio-demos-scope.xtl.html#blen">blen</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="extensions-audio-demos-Instruments.xtl.html#l.rate">ⁱⁿrate</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> p
+  k2 ← ((k <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">8</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> ahead <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">0.6</span>) <a href="extensions-audio-demos-scope.xtl.html#u.f_eed" class="c-userfunc">ᵘf̲eed</a> k
+  i ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> p <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-audio-demos-Instruments.xtl.html#l.rate">ⁱⁿrate</a>
+  j ← <span class="c-number">1</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-audio-demos-scope.xtl.html#left">left</a>) <a href="builtins.html#m_in" class="c-builtin">m̲in</a> (<a href="extensions-audio-demos-scope.xtl.html#left">left</a> <a href="extensions-audio-demos-scope.xtl.html#u.t_rigger" class="c-userfunc">ᵘt̲rigger</a> i) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">256</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>
+  s ← <a href="extensions-audio-demos-scope.xtl.html#w">w</a> <a href="extensions-canvas-lib-Canvas.xtl.html#l.s_how-21" class="c-libfunc">ᶜᵛs̲how!</a> (<a href="extensions-audio-demos-scope.xtl.html#u.t_race" class="c-userfunc">ᵘt̲race</a> j <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-audio-demos-scope.xtl.html#left">left</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-audio-demos-scope.xtl.html#u.t_race" class="c-userfunc">ᵘt̲race</a> j <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-audio-demos-scope.xtl.html#right">right</a>
+  k2
+}</pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-scope.xtl.html#last">last</a></div>
+</div>
+<div class="item" id="last">
+<h3><a href="#last">last</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-audio-demos-scope.xtl.src.html#L76">line 76</a></div>
+<pre class="code">last ← <span class="c-number">100000</span> <span class="c-userfunc">'</span><a href="extensions-audio-demos-scope.xtl.html#u.f_rame" class="c-userfunc">ᵘf̲rame</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <span class="c-number">1</span> <a href="extensions-audio-demos-scope.xtl.html#u.f_eed" class="c-userfunc">ᵘf̲eed</a> <span class="c-number">0</span></pre>
+</div>
+</main>
+</body>
+</html>

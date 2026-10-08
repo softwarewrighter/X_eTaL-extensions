@@ -1,8 +1,9 @@
-# Seismic.xtl -- the earthquake report (quakes.xtl, quakes-live.xtl): a
-# USGS feed CSV into SQLite, SQL to select and group, X_eTaL arrays to
-# compute, pictures to see it. An ordinary X_eTaL library beside them
-# (not Quakes.xtl: on a case-insensitive file system that is quakes.xtl).
-# Import: "se:" u_se< "Seismic"
+## Seismic.xtl -- the earthquake report (quakes.xtl, quakes-live.xtl): a
+## USGS feed CSV into SQLite, SQL to select and group, X_eTaL arrays to
+## compute, pictures to see it. An ordinary X_eTaL library beside them
+## (not Quakes.xtl: on a case-insensitive file system that is quakes.xtl).
+## Import: "se:" u_se< "Seismic"
+
 "sq:" u_se< "Sqlite"
 
 db := "work/quakes.db"
@@ -10,7 +11,7 @@ db := "work/quakes.db"
 r_ound := { v -> (f_loat f_loor 0.5 + 100.0 * v) / 100.0 }
 m_ean := { v -> ('+ r_/ v) / f_loat t_ally v }
 
-# se:r_eport "path.csv": prints the report and draws its pictures
+## se:r_eport "path.csv": prints the report and draws its pictures
 l:r_eport := { csv ->
   x := db sq:e_xec "drop table if exists quakes"
   n := db sq:i_mport "quakes=" c_at csv

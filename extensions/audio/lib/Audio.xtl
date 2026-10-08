@@ -1,53 +1,54 @@
-# Audio.xtl -- the facade of the audio extension: decode Ogg Vorbis, MP3
-# and WAV, play them on the sound device, read what is playing as arrays,
-# and play arrays.
-# Import: "au:" u_se< "Audio"
-# Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
-# With XETAL_HEADLESS=1 (or XETAL_AUDIO=off) nothing sounds and playback
-# advances a 60th of a second per au:w_indow (or au:p_layed) -- for tests.
-# Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+## Audio.xtl -- the facade of the audio extension: decode Ogg Vorbis, MP3
+## and WAV, play them on the sound device, read what is playing as arrays,
+## and play arrays.
+## Import: "au:" u_se< "Audio"
+## Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+## With XETAL_HEADLESS=1 (or XETAL_AUDIO=off) nothing sounds and playback
+## advances a 60th of a second per au:w_indow (or au:p_layed) -- for tests.
+## Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+
 "ffi:" u_se< "Ffi"
 
-# au:o_pen path: an audio file (Ogg Vorbis, MP3 or WAV); its id.
+## au:o_pen path: an audio file (Ogg Vorbis, MP3 or WAV); its id.
 "o_pen : text -> int"                ffi:b_ind< "audio/open"
-# au:i_nfo id: sample rate, channels, frames, seconds (-1 when unknown).
+## au:i_nfo id: sample rate, channels, frames, seconds (-1 when unknown).
 "i_nfo : float -> floats"            ffi:b_ind< "audio/info"
-# id au:c_hunk n: the next n frames read in order (apart from playback):
-# a 2 by m matrix, left over right; fewer at the end, none after it.
+## id au:c_hunk n: the next n frames read in order (apart from playback):
+## a 2 by m matrix, left over right; fewer at the end, none after it.
 "c_hunk : float float -> floats"     ffi:b_ind< "audio/chunk"
-# au:p_lay! id: start or resume playing; the id.
+## au:p_lay! id: start or resume playing; the id.
 "p_lay! : float -> int"              ffi:b_ind< "audio/play"
-# au:p_ause! id: pause; the id.
+## au:p_ause! id: pause; the id.
 "p_ause! : float -> int"             ffi:b_ind< "audio/pause"
-# id au:s_eek! seconds: move playback there; the second it landed on.
+## id au:s_eek! seconds: move playback there; the second it landed on.
 "s_eek! : float float -> float"      ffi:b_ind< "audio/seek"
-# au:p_osition id: the second playing now.
+## au:p_osition id: the second playing now.
 "p_osition : float -> float"         ffi:b_ind< "audio/position"
-# id au:w_indow n: the n frames ending at what plays now, 2 by n (left
-# over right; zeros before the start). Call it once a frame.
+## id au:w_indow n: the n frames ending at what plays now, 2 by n (left
+## over right; zeros before the start). Call it once a frame.
 "w_indow : float float -> floats"    ffi:b_ind< "audio/window"
-# au:s_tate id: 0 stopped (not started, or at the end), 1 playing, 2 paused.
+## au:s_tate id: 0 stopped (not started, or at the end), 1 playing, 2 paused.
 "s_tate : float -> int"              ffi:b_ind< "audio/state"
-# au:c_lose! id: stop and forget a file; a voice plays out what is queued
-# (or writes its WAV) first; 1.
+## au:c_lose! id: stop and forget a file; a voice plays out what is queued
+## (or writes its WAV) first; 1.
 "c_lose! : float -> int"             ffi:b_ind< "audio/close"
 
-# -- sound out of arrays
+### Sound out of arrays
 
-# au:o_utput rate: a voice playing what the program queues, at rate
-# frames a second (22050 is plenty for a synthesizer); its id.
+## au:o_utput rate: a voice playing what the program queues, at rate
+## frames a second (22050 is plenty for a synthesizer); its id.
 "o_utput : float -> int"             ffi:b_ind< "audio/output"
-# id au:q_ueue! samples: play these after what is queued -- a vector
-# (mono) or 2 by n (left over right), from -1 to 1; the seconds now
-# queued ahead. With no device (XETAL_AUDIO=off) nothing sounds, and
-# XETAL_AUDIO_WAV=FILE collects everything queued in a WAV file.
+## id au:q_ueue! samples: play these after what is queued -- a vector
+## (mono) or 2 by n (left over right), from -1 to 1; the seconds now
+## queued ahead. With no device (XETAL_AUDIO=off) nothing sounds, and
+## XETAL_AUDIO_WAV=FILE collects everything queued in a WAV file.
 "q_ueue! : float float -> float"     ffi:b_ind< "audio/queue"
-# id au:w_ait! seconds: wait until at most that much is queued, so a
-# program can stream without hurrying; the seconds played so far.
+## id au:w_ait! seconds: wait until at most that much is queued, so a
+## program can stream without hurrying; the seconds played so far.
 "w_ait! : float float -> float"      ffi:b_ind< "audio/wait"
-# au:p_layed id: the second a voice is playing now -- to draw what is
-# heard (with no device, a 60th of a second more each time it is asked).
+## au:p_layed id: the second a voice is playing now -- to draw what is
+## heard (with no device, a 60th of a second more each time it is asked).
 "p_layed : float -> float"           ffi:b_ind< "audio/played"
 
-# The native package behind these functions.
+## The native package behind these functions.
 l:package := "audio"

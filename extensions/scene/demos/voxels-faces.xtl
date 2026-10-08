@@ -1,10 +1,11 @@
-# Voxels, 2: which faces to draw. A face shows where a solid block's
-# neighbor is not solid: six rotations of the solid mask, each compared
-# with the mask itself (the idiom of Life), give every exposed face of
-# the chunk at once; the faces become a list, one row each: x y z
-# direction block. Checked on shapes with known answers, then the
-# chunk's faces drawn as outlines in a 3D window, turning.
-# Run: just demo scene voxels-faces   (drag to turn it; q or close: quit)
+## Voxels, 2: which faces to draw. A face shows where a solid block's
+## neighbor is not solid: six rotations of the solid mask, each compared
+## with the mask itself (the idiom of Life), give every exposed face of
+## the chunk at once; the faces become a list, one row each: x y z
+## direction block. Checked on shapes with known answers, then the
+## chunk's faces drawn as outlines in a 3D window, turning.
+## Run: just demo scene voxels-faces   (drag to turn it; q or close: quit)
+
 "vx:" u_se< "Voxels"
 "sc:" u_se< "Scene"
 
@@ -30,7 +31,7 @@ t_ally f
 w := "Voxels 2: the faces -- X_eTaL" sc:o_pen! 560 560
 k := w sc:c_amera! 0.7 0.5 3.4 0.35
 
-# each kind of block as one object, in its color
+## each kind of block as one object, in its color
 u:p_ut := { t ->
   sel := (5 s_elect_2 f) = t
   0 = '+ r_/ sel ? t + 1

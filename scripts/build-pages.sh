@@ -12,5 +12,7 @@ mkdir -p "$out"
 touch "$out/.nojekyll"
 cp "$root/images/modern-xetal-logo.jpg" "$root/images/favicon.ico" "$root/web/shell/shell.css" "$out/"
 PAGES_DIR="$out" "$root/scripts/build-catalog.py"
+# the cross-referenced docs of every facade, shared library and demo
+DOC_OUT="$out/doc" "$root/scripts/doc-site.sh" > /dev/null
 [ -n "${PAGES_DIR:-}" ] && exit 0
 echo "pages/ built; commit it (git add -A pages/) and push to publish."

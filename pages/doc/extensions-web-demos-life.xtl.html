@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/web/demos/life.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#u.l_ife"><span class="c-userfunc">ᵘl̲ife</span></a></li>
+<li class="item"><a href="#u.s_eed"><span class="c-userfunc">ᵘs̲eed</span></a></li>
+<li class="item"><a href="#u.g_lider"><span class="c-userfunc">ᵘg̲lider</span></a></li>
+<li class="item"><a href="#u.s_ize"><span class="c-userfunc">ᵘs̲ize</span></a></li>
+<li class="item"><a href="#u.j_oin"><span class="c-userfunc">ᵘj̲oin</span></a></li>
+<li class="item"><a href="#u.s_vg"><span class="c-userfunc">ᵘs̲vg</span></a></li>
+<li class="item"><a href="#page">page</a></li>
+<li class="item"><a href="#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a></li>
+<li class="item"><a href="#port">port</a></li>
+<li class="item"><a href="#last">last</a></li>
+<li class="item"><a href="#port">port</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>extensions/web/demos/life.xtl</h1>
+<div class="doc">
+<p>A live page: Conway's Life kept by an X_eTaL program and drawn as SVG,
+one generation per request. The program is the server's request loop.
+Run: just demo web life, then open http://127.0.0.1:8470/
+  (New board, Glider; Quit ends the program)</p>
+</div>
+<p class="meta"><a href="extensions-web-demos-life.xtl.src.html">source</a> &middot; imports <code><span class="c-error">wb:</span></code> <a href="extensions-web-lib-Web.xtl.html">extensions/web/lib/Web.xtl</a></p>
+<div class="item" id="u.l_ife">
+<h3><a href="#u.l_ife"><span class="c-userfunc">ᵘl̲ife</span></a> <span class="type">: (Num a, Truthy a) =&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-life.xtl.src.html#L10">line 10</a></div>
+<div class="doc">
+<p>Life (as in X_eTaL's demos/life.xtl): every cell plus its neighbors
+by rotating along both axes and summing; alive next at 3, or 4 if alive</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘl̲ife</span> ← { (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁₂</a> <span class="c-number">-1</span> <span class="c-number">0</span> <span class="c-number">1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₁₂</a> <span class="c-lambdaarg">⍵</span>) { (<span class="c-lambdaarg">⍺</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">3</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-lambdaarg">⍵</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-lambdaarg">⍺</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">4</span> } <span class="c-lambdaarg">⍵</span> }</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-life.xtl.html#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a></div>
+</div>
+<div class="item" id="u.s_eed">
+<h3><a href="#u.s_eed"><span class="c-userfunc">ᵘs̲eed</span></a> <span class="type">: Truthy a =&gt; Int -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-life.xtl.src.html#L13">line 13</a></div>
+<div class="doc">
+<p>an n by n board, about one cell in four alive; or one glider</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲eed</span> ← { n → (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#r_oll-21" class="c-builtin">r̲oll!</a> (n <a href="builtins.html#-2a" class="c-symbol">×</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">4</span> }</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-life.xtl.html#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a>, <a href="extensions-web-demos-life.xtl.html#last">last</a></div>
+</div>
+<div class="item" id="u.g_lider">
+<h3><a href="#u.g_lider"><span class="c-userfunc">ᵘg̲lider</span></a> <span class="type">: Num a =&gt; Int -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-life.xtl.src.html#L15">line 15</a></div>
+<div class="doc">
+<p>(n * n - 3 is n times n - 3: the rows below the glider)</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘg̲lider</span> ← { n → (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (n <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#-2a" class="c-symbol">×</a> n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> }</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-life.xtl.html#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a></div>
+</div>
+<div class="item" id="u.s_ize">
+<h3><a href="#u.s_ize"><span class="c-userfunc">ᵘs̲ize</span></a> <span class="type">: Char -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-life.xtl.src.html#L18">line 18</a></div>
+<div class="doc">
+<p>the size a request asks for (?n=), 8 to 200, else 48</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲ize</span> ← { s →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> s ? <span class="c-number">48</span>
+  <span class="c-number">8</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">200</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> s
+}</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-life.xtl.html#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a></div>
+</div>
+<div class="item" id="u.j_oin">
+<h3><a href="#u.j_oin"><span class="c-userfunc">ᵘj̲oin</span></a> <span class="type">: Box Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-life.xtl.src.html#L25">line 25</a></div>
+<div class="doc">
+<p>the board as SVG: one unit square per live cell (&quot;M col row h1v1h-1z&quot;)
+boxed strings joined into one (from &quot;&quot;, so no live cells is &quot;&quot;)</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘj̲oin</span> ← { s → <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-quote">'</span>{ <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍺</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <span class="c-string">&quot;&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-life.xtl.html#u.s_vg"><span class="c-userfunc">ᵘs̲vg</span></a></div>
+</div>
+<div class="item" id="u.s_vg">
+<h3><a href="#u.s_vg"><span class="c-userfunc">ᵘs̲vg</span></a> <span class="type">: Truthy a =&gt; a -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-life.xtl.src.html#L26">line 26</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲vg</span> ← { b →
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b
+  w ← <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> n
+  d ← <a href="extensions-web-demos-life.xtl.html#u.j_oin" class="c-userfunc">ᵘj̲oin</a> <span class="c-quote">'</span>{ <span class="c-string">&quot;M&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-lambdaarg">⍵</span> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> n) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-lambdaarg">⍵</span> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> n) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;h1v1h-1z&quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> (<a href="builtins.html#w_here" class="c-builtin">w̲here</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> b) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>
+  <span class="c-string">&quot;&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;' shape-rendering='crispEdges'&gt;&lt;rect width='&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;' height='&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;' fill='#14161a'/&gt;&lt;path fill='#e8483b' d='&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> d <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;'/&gt;&lt;/svg&gt;&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-life.xtl.html#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a></div>
+</div>
+<div class="item" id="page">
+<h3><a href="#page">page</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-web-demos-life.xtl.src.html#L34">line 34</a></div>
+<div class="doc">
+<p>the page: the board, refreshed several times a second</p>
+</div>
+<pre class="code">page ← <span class="c-string">&quot;&lt;!doctype html&gt;&lt;html&gt;&lt;head&gt;&lt;meta charset='utf-8'&gt;&lt;title&gt;Life -- X_eTaL on the web&lt;/title&gt;&lt;style&gt;body{background:#0d0e10;color:#ddd;font-family:system-ui,sans-serif;text-align:center}img{width:min(90vw,600px);image-rendering:pixelated;border:1px solid #333}button{margin:.5em;padding:.4em 1em}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;h1&gt;Life, computed in X_eTaL&lt;/h1&gt;&lt;p&gt;Each frame is one request: the X_eTaL program steps the board and replies with SVG.&lt;/p&gt;&lt;img id='b' src='/life.svg' alt='the board'&gt;&lt;div&gt;&lt;button onclick=nw()&gt;New board&lt;/button&gt;&lt;button onclick=gl()&gt;Glider&lt;/button&gt;&lt;button onclick=qt()&gt;Quit&lt;/button&gt;&lt;/div&gt;&lt;script&gt;let on=true;function nw(){fetch('/new')}function gl(){fetch('/glider')}function qt(){on=false;fetch('/quit')}setInterval(()=&gt;{if(on){document.getElementById('b').src='/life.svg?'+Date.now()}},150)&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;&quot;</span></pre>
+<div class="uses">Used in: <a href="extensions-web-demos-life.xtl.html#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a></div>
+</div>
+<div class="item" id="u.a_nswer">
+<h3><a href="#u.a_nswer"><span class="c-userfunc">ᵘa̲nswer</span></a> <span class="type">: (Num a, Truthy a) =&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-web-demos-life.xtl.src.html#L38">line 38</a></div>
+<div class="doc">
+<p>one request: the board after answering it (an empty board: quit);
+x r_ight y is y, so a reply is sent and the board passed on</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘa̲nswer</span> ← { b →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b ? b
+  r ← <a href="extensions-web-lib-Web.xtl.html#l.n_ext-21" class="c-libfunc">ʷᵇn̲ext!</a> <span class="c-number">60</span>
+  r <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;none&quot;</span> ? b
+  r <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;GET /&quot;</span> ? (<span class="c-number">200</span> <a href="extensions-web-lib-Web.xtl.html#l.r_eply-21" class="c-libfunc">ʷᵇr̲eply!</a> <a href="extensions-web-demos-life.xtl.html#page">page</a>) <a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> b
+  r <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;GET /life.svg&quot;</span> ? (<span class="c-number">200</span> <a href="extensions-web-lib-Web.xtl.html#l.r_eply-21" class="c-libfunc">ʷᵇr̲eply!</a> <a href="extensions-web-demos-life.xtl.html#u.s_vg" class="c-userfunc">ᵘs̲vg</a> b) <a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="extensions-web-demos-life.xtl.html#u.l_ife" class="c-userfunc">ᵘl̲ife</a> b
+  r <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;GET /new&quot;</span> ? (<span class="c-number">200</span> <a href="extensions-web-lib-Web.xtl.html#l.r_eply-21" class="c-libfunc">ʷᵇr̲eply!</a> <span class="c-string">&quot;a new board&quot;</span>) <a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="extensions-web-demos-life.xtl.html#u.s_eed" class="c-userfunc">ᵘs̲eed</a> <a href="extensions-web-demos-life.xtl.html#u.s_ize" class="c-userfunc">ᵘs̲ize</a> <a href="extensions-web-lib-Web.xtl.html#l.p_aram" class="c-libfunc">ʷᵇp̲aram</a> <span class="c-string">&quot;n&quot;</span>
+  r <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;GET /glider&quot;</span> ? (<span class="c-number">200</span> <a href="extensions-web-lib-Web.xtl.html#l.r_eply-21" class="c-libfunc">ʷᵇr̲eply!</a> <span class="c-string">&quot;a glider&quot;</span>) <a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <a href="extensions-web-demos-life.xtl.html#u.g_lider" class="c-userfunc">ᵘg̲lider</a> <a href="extensions-web-demos-life.xtl.html#u.s_ize" class="c-userfunc">ᵘs̲ize</a> <a href="extensions-web-lib-Web.xtl.html#l.p_aram" class="c-libfunc">ʷᵇp̲aram</a> <span class="c-string">&quot;n&quot;</span>
+  r <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;GET /quit&quot;</span> ? (<span class="c-number">200</span> <a href="extensions-web-lib-Web.xtl.html#l.r_eply-21" class="c-libfunc">ʷᵇr̲eply!</a> <span class="c-string">&quot;bye&quot;</span>) <a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> <span class="c-number">0</span> <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>
+  (<span class="c-number">404</span> <a href="extensions-web-lib-Web.xtl.html#l.r_eply-21" class="c-libfunc">ʷᵇr̲eply!</a> <span class="c-string">&quot;no such page: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-web-lib-Web.xtl.html#l.p_ath" class="c-libfunc">ʷᵇp̲ath</a> @) <a href="builtins.html#r_ight" class="c-builtin">r̲ight</a> b
+}</pre>
+<div class="uses">Used in: <a href="extensions-web-demos-life.xtl.html#last">last</a></div>
+</div>
+<div class="item" id="port">
+<h3><a href="#port">port</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-web-demos-life.xtl.src.html#L50">line 50</a></div>
+<pre class="code">port ← <a href="extensions-web-lib-Web.xtl.html#l.s_erve-21" class="c-libfunc">ʷᵇs̲erve!</a> <span class="c-number">8470</span></pre>
+<div class="uses">Used in: <a href="extensions-web-demos-life.xtl.src.html#L51">life.xtl:51</a></div>
+</div>
+<div class="item" id="last">
+<h3><a href="#last">last</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-web-demos-life.xtl.src.html#L52">line 52</a></div>
+<pre class="code">last ← <span class="c-number">100000</span> <span class="c-userfunc">'</span><a href="extensions-web-demos-life.xtl.html#u.a_nswer" class="c-userfunc">ᵘa̲nswer</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <a href="extensions-web-demos-life.xtl.html#u.s_eed" class="c-userfunc">ᵘs̲eed</a> <span class="c-number">48</span></pre>
+</div>
+<div class="item" id="port">
+<h3><a href="#port">port</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-web-demos-life.xtl.src.html#L53">line 53</a></div>
+<pre class="code">port ← <a href="extensions-web-lib-Web.xtl.html#l.s_top-21" class="c-libfunc">ʷᵇs̲top!</a> @</pre>
+</div>
+</main>
+</body>
+</html>

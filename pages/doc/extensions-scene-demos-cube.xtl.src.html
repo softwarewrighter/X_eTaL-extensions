@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/scene/demos/cube.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L8">c</a></li>
+<li class="item"><a href="#L11">e</a></li>
+<li class="item"><a href="#L13">w</a></li>
+<li class="item"><a href="#L14">k</a></li>
+<li class="item"><a href="#L15">x</a></li>
+<li class="item"><a href="#L16">y</a></li>
+<li class="item"><a href="#L18"><span class="c-userfunc">ᵘq̲uit</span></a></li>
+<li class="item"><a href="#L22"><span class="c-userfunc">ᵘf̲rame</span></a></li>
+<li class="item"><a href="#L28">last</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="extensions-scene-demos-cube.xtl.html">extensions/scene/demos/cube.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment"># A wireframe cube turning in a native 3D window: its corners and edges</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># are X_eTaL arrays; Rust draws them.</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># Run: just demo scene cube   (drag to turn it; q or close: quit)</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-libfunc">ˢᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-scene-lib-Scene.xtl.html" class="c-string">&quot;Scene&quot;</a></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-comment">⍝</span><span class="c-comment"># the 8 corners: every sign combination of -1 1 in x, y and z</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a>c ← <span class="c-number">8</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-1</span> <span class="c-number">-1</span> <span class="c-number">-1</span>  <span class="c-number">1</span> <span class="c-number">-1</span> <span class="c-number">-1</span>  <span class="c-number">-1</span> <span class="c-number">1</span> <span class="c-number">-1</span>  <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">-1</span>  <span class="c-number">-1</span> <span class="c-number">-1</span> <span class="c-number">1</span>  <span class="c-number">1</span> <span class="c-number">-1</span> <span class="c-number">1</span>  <span class="c-number">-1</span> <span class="c-number">1</span> <span class="c-number">1</span>  <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-comment">⍝</span><span class="c-comment"># the 12 edges join corners that differ in one coordinate: pairs (from 1)</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a>e ← <span class="c-number">12</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <span class="c-number">2</span>  <span class="c-number">3</span> <span class="c-number">4</span>  <span class="c-number">5</span> <span class="c-number">6</span>  <span class="c-number">7</span> <span class="c-number">8</span>  <span class="c-number">1</span> <span class="c-number">3</span>  <span class="c-number">2</span> <span class="c-number">4</span>  <span class="c-number">5</span> <span class="c-number">7</span>  <span class="c-number">6</span> <span class="c-number">8</span>  <span class="c-number">1</span> <span class="c-number">5</span>  <span class="c-number">2</span> <span class="c-number">6</span>  <span class="c-number">3</span> <span class="c-number">7</span>  <span class="c-number">4</span> <span class="c-number">8</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a>w ← <span class="c-string">&quot;Cube -- X_eTaL&quot;</span> <a href="extensions-scene-lib-Scene.xtl.html#l.o_pen-21" class="c-libfunc">ˢᶜo̲pen!</a> <span class="c-number">480</span> <span class="c-number">480</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a>k ← <a href="extensions-scene-demos-cube.xtl.html#w">w</a> <a href="extensions-scene-lib-Scene.xtl.html#l.c_amera-21" class="c-libfunc">ˢᶜc̲amera!</a> <span class="c-number">0.6</span> <span class="c-number">0.45</span> <span class="c-number">5.0</span> <span class="c-number">0.8</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a>x ← ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-scene-demos-cube.xtl.html#w">w</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.4</span> <span class="c-number">0.8</span> <span class="c-number">1.0</span>) <a href="extensions-scene-lib-Scene.xtl.html#l.s_egments-21" class="c-libfunc">ˢᶜs̲egments!</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-scene-demos-cube.xtl.html#e">e</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-cube.xtl.html#c">c</a></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a>y ← ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-scene-demos-cube.xtl.html#w">w</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1.0</span> <span class="c-number">0.6</span> <span class="c-number">0.2</span>) <a href="extensions-scene-lib-Scene.xtl.html#l.d_ots-21" class="c-libfunc">ˢᶜd̲ots!</a> <a href="extensions-scene-demos-cube.xtl.html#c">c</a></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-userfunc">ᵘq̲uit</span> ← { n →</span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a>  z ← <a href="extensions-scene-lib-Scene.xtl.html#l.c_lose-21" class="c-libfunc">ˢᶜc̲lose!</a> <a href="extensions-scene-demos-cube.xtl.html#w">w</a></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a>  <span class="c-number">0</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a>}</span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-userfunc">ᵘf̲rame</span> ← { n →</span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a>  n <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span> ? <span class="c-number">0</span></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a>  v ← <a href="extensions-scene-lib-Scene.xtl.html#l.n_ext-21" class="c-libfunc">ˢᶜn̲ext!</a> <a href="extensions-scene-demos-cube.xtl.html#w">w</a></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a>  ((v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;close&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key q&quot;</span>) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span> ? <a href="extensions-scene-demos-cube.xtl.html#u.q_uit" class="c-userfunc">ᵘq̲uit</a> n</span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a>  n</span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a>}</span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a>last ← <span class="c-number">100000</span> <span class="c-userfunc">'</span><a href="extensions-scene-demos-cube.xtl.html#u.f_rame" class="c-userfunc">ᵘf̲rame</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <span class="c-number">1</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-string">&quot;bye&quot;</span></span>
+</div>
+</main>
+</body>
+</html>

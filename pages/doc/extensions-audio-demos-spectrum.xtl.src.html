@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/audio/demos/spectrum.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L12">a</a></li>
+<li class="item"><a href="#L13">rate</a></li>
+<li class="item"><a href="#L19">n</a></li>
+<li class="item"><a href="#L20">f</a></li>
+<li class="item"><a href="#L21">t</a></li>
+<li class="item"><a href="#L22">x</a></li>
+<li class="item"><a href="#L23">hann</a></li>
+<li class="item"><a href="#L24">taper</a></li>
+<li class="item"><a href="#L25"><span class="c-userfunc">ᵘl̲oudness</span></a></li>
+<li class="item"><a href="#L37">k</a></li>
+<li class="item"><a href="#L38">th</a></li>
+<li class="item"><a href="#L39">ang</a></li>
+<li class="item"><a href="#L40">r0</a></li>
+<li class="item"><a href="#L41"><span class="c-userfunc">ᵘs̲pokes</span></a></li>
+<li class="item"><a href="#L50">w</a></li>
+<li class="item"><a href="#L51">c</a></li>
+<li class="item"><a href="#L54"><span class="c-userfunc">ᵘr̲ows</span></a></li>
+<li class="item"><a href="#L61">g</a></li>
+<li class="item"><a href="#L62">ring</a></li>
+<li class="item"><a href="#L65"><span class="c-userfunc">ᵘd̲raw</span></a></li>
+<li class="item"><a href="#L76">p</a></li>
+<li class="item"><a href="#L77"><span class="c-userfunc">ᵘq̲uit</span></a></li>
+<li class="item"><a href="#L82"><span class="c-userfunc">ᵘk̲ey</span></a></li>
+<li class="item"><a href="#L90"><span class="c-userfunc">ᵘf̲rame</span></a></li>
+<li class="item"><a href="#L98">last</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="extensions-audio-demos-spectrum.xtl.html">extensions/audio/demos/spectrum.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment"># The music visualizer: an Ogg Vorbis (or MP3, WAV) file plays while</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># X_eTaL turns what is playing into a spectrum and the spectrum into 16</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># spokes in a 3D window -- Rust decodes, plays and draws; the analysis</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># and the picture's geometry are X_eTaL arrays.</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># Run: just demo audio spectrum   (Space: pause, j/k: back/on 5 s, q: quit)</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># Another file: change the path below (Ogg Vorbis, MP3 or WAV).</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-libfunc">ᵃᵘ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-audio-lib-Audio.xtl.html" class="c-string">&quot;Audio&quot;</a></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-libfunc">ˢᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-scene-lib-Scene.xtl.html" class="c-string">&quot;Scene&quot;</a></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-libfunc">ˢ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="std-Stats.xtl.html" class="c-string">&quot;Stats&quot;</a></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a>a ← <a href="extensions-audio-lib-Audio.xtl.html#l.o_pen" class="c-libfunc">ᵃᵘo̲pen</a> <span class="c-string">&quot;demos/data/arpeggio.ogg&quot;</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a>rate ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-audio-lib-Audio.xtl.html#l.i_nfo" class="c-libfunc">ᵃᵘi̲nfo</a> <a href="extensions-audio-demos-spectrum.xtl.html#a">a</a></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-comment">⍝</span><span class="c-comment">## The analysis: 1024 samples under the playhead, a Hann taper, and the</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-comment">⍝</span><span class="c-comment"># loudness at 8 frequencies an octave apart, 60 Hz to 7680 Hz, for each</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-comment">⍝</span><span class="c-comment"># channel: one inner product with cosine and sine tables (1024 by 8)</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a>n ← <span class="c-number">1024</span></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a>f ← <span class="c-number">60.0</span> <span class="c-number">120.0</span> <span class="c-number">240.0</span> <span class="c-number">480.0</span> <span class="c-number">960.0</span> <span class="c-number">1920.0</span> <span class="c-number">3840.0</span> <span class="c-number">7680.0</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a>t ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="extensions-audio-demos-spectrum.xtl.html#n">n</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="extensions-audio-demos-spectrum.xtl.html#rate">rate</a></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a>x ← <span class="c-number">6.283185307179586</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-audio-demos-spectrum.xtl.html#t">t</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="extensions-audio-demos-spectrum.xtl.html#f">f</a></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a>hann ← <span class="c-number">0.5</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#c_os" class="c-builtin">c̲os</a> <span class="c-number">6.283185307179586</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="extensions-audio-demos-spectrum.xtl.html#n">n</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-audio-demos-spectrum.xtl.html#n">n</a></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a>taper ← (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-audio-demos-spectrum.xtl.html#n">n</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-audio-demos-spectrum.xtl.html#hann">hann</a></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-userfunc">ᵘl̲oudness</span> ← { w →</span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a>  v ← w <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-audio-demos-spectrum.xtl.html#taper">taper</a></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a>  re ← v <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#c_os" class="c-builtin">c̲os</a> <a href="extensions-audio-demos-spectrum.xtl.html#x">x</a></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a>  im ← v <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="builtins.html#s_in" class="c-builtin">s̲in</a> <a href="extensions-audio-demos-spectrum.xtl.html#x">x</a></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a>  m ← ((re <a href="builtins.html#-2a" class="c-symbol">×</a> re) <a href="builtins.html#-2b" class="c-symbol">+</a> im <a href="builtins.html#-2a" class="c-symbol">×</a> im) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a>  <span class="c-number">1.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> m <a href="builtins.html#-2f" class="c-symbol">÷</a> m <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">12.0</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a>}</span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-comment">⍝</span><span class="c-comment">## The picture: 16 spokes, the left channel's 8 on one half of the</span></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a><span class="c-comment">⍝</span><span class="c-comment"># circle, the right's mirrored on the other; bass nearest the center;</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a><span class="c-comment">⍝</span><span class="c-comment"># loudness lengthens a spoke outward and lifts its tip</span></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a>k ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a>th ← <span class="c-number">3.141592653589793</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-audio-demos-spectrum.xtl.html#k">k</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.5</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">8.0</span></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a>ang ← <a href="extensions-audio-demos-spectrum.xtl.html#th">th</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-audio-demos-spectrum.xtl.html#th">th</a></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a>r0 ← <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.35</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.16</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-audio-demos-spectrum.xtl.html#k">k</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-userfunc">ᵘs̲pokes</span> ← { l →</span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a>  len ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> l</span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a>  r1 ← <a href="extensions-audio-demos-spectrum.xtl.html#r0">r0</a> <a href="builtins.html#-2b" class="c-symbol">+</a> len</span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a>  cs ← <a href="builtins.html#c_os" class="c-builtin">c̲os</a> <a href="extensions-audio-demos-spectrum.xtl.html#ang">ang</a></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a>  sn ← <a href="builtins.html#s_in" class="c-builtin">s̲in</a> <a href="extensions-audio-demos-spectrum.xtl.html#ang">ang</a></span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a>  flat ← (<a href="extensions-audio-demos-spectrum.xtl.html#r0">r0</a> <a href="builtins.html#-2a" class="c-symbol">×</a> cs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-audio-demos-spectrum.xtl.html#r0">r0</a> <a href="builtins.html#-2a" class="c-symbol">×</a> sn) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (r1 <a href="builtins.html#-2a" class="c-symbol">×</a> cs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> len) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r1 <a href="builtins.html#-2a" class="c-symbol">×</a> sn</span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a>  i ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">16</span>) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">16</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">6</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a>  <span class="c-number">16</span> <span class="c-number">6</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> flat</span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a>}</span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a>w ← <span class="c-string">&quot;Spectrum -- X_eTaL&quot;</span> <a href="extensions-scene-lib-Scene.xtl.html#l.o_pen-21" class="c-libfunc">ˢᶜo̲pen!</a> <span class="c-number">720</span> <span class="c-number">540</span></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a>c ← <a href="extensions-audio-demos-spectrum.xtl.html#w">w</a> <a href="extensions-scene-lib-Scene.xtl.html#l.c_amera-21" class="c-libfunc">ˢᶜc̲amera!</a> <span class="c-number">0.0</span> <span class="c-number">0.9</span> <span class="c-number">3.6</span> <span class="c-number">0.12</span></span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a><span class="c-comment">⍝</span><span class="c-comment"># n by 3 points from their x, y and z columns, laid end to end</span></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a><span class="c-userfunc">ᵘr̲ows</span> ← { flat →</span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a>  n ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> flat) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">3</span></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a>  i ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> n <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">3</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a>  (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> flat</span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a>}</span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a><span class="c-comment">⍝</span><span class="c-comment"># a faint ring where the spokes stand</span></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a>g ← <span class="c-number">6.283185307179586</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">65</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">64.0</span></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a>ring ← ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-audio-demos-spectrum.xtl.html#w">w</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">4</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.25</span> <span class="c-number">0.27</span> <span class="c-number">0.33</span>) <a href="extensions-scene-lib-Scene.xtl.html#l.p_olyline-21" class="c-libfunc">ˢᶜp̲olyline!</a> <a href="extensions-audio-demos-spectrum.xtl.html#u.r_ows" class="c-userfunc">ᵘr̲ows</a> (<span class="c-number">0.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#c_os" class="c-builtin">c̲os</a> <a href="extensions-audio-demos-spectrum.xtl.html#g">g</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">65</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#s_in" class="c-builtin">s̲in</a> <a href="extensions-audio-demos-spectrum.xtl.html#g">g</a></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a></span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a><span class="c-comment">⍝</span><span class="c-comment"># one colored object per band: bass blue, mid green, high orange</span></span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a><span class="c-userfunc">ᵘd̲raw</span> ← { l →</span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a>  m ← <a href="extensions-audio-demos-spectrum.xtl.html#u.s_pokes" class="c-userfunc">ᵘs̲pokes</a> l</span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a>  b ← ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-audio-demos-spectrum.xtl.html#w">w</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.25</span> <span class="c-number">0.55</span> <span class="c-number">1.0</span>) <a href="extensions-scene-lib-Scene.xtl.html#l.s_egments-21" class="c-libfunc">ˢᶜs̲egments!</a> <span class="c-number">12</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">9</span> <span class="c-number">10</span> <span class="c-number">11</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect₁</a> m</span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a>  d ← ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-audio-demos-spectrum.xtl.html#w">w</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.3</span> <span class="c-number">0.9</span> <span class="c-number">0.4</span>) <a href="extensions-scene-lib-Scene.xtl.html#l.s_egments-21" class="c-libfunc">ˢᶜs̲egments!</a> <span class="c-number">12</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">4</span> <span class="c-number">5</span> <span class="c-number">6</span> <span class="c-number">12</span> <span class="c-number">13</span> <span class="c-number">14</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect₁</a> m</span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a>  h ← ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-audio-demos-spectrum.xtl.html#w">w</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1.0</span> <span class="c-number">0.6</span> <span class="c-number">0.2</span>) <a href="extensions-scene-lib-Scene.xtl.html#l.s_egments-21" class="c-libfunc">ˢᶜs̲egments!</a> <span class="c-number">8</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">7</span> <span class="c-number">8</span> <span class="c-number">15</span> <span class="c-number">16</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect₁</a> m</span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a>  l</span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a>}</span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a></span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a><span class="c-comment">⍝</span><span class="c-comment">## The loop: each frame read an event, then the window, then draw; the</span></span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a></span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a><span class="c-comment">⍝</span><span class="c-comment"># spokes ease toward the new loudness so they move smoothly</span></span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a>p ← <a href="extensions-audio-lib-Audio.xtl.html#l.p_lay-21" class="c-libfunc">ᵃᵘp̲lay!</a> <a href="extensions-audio-demos-spectrum.xtl.html#a">a</a></span>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a><span class="c-userfunc">ᵘq̲uit</span> ← { l →</span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a>  x ← <a href="extensions-scene-lib-Scene.xtl.html#l.c_lose-21" class="c-libfunc">ˢᶜc̲lose!</a> <a href="extensions-audio-demos-spectrum.xtl.html#w">w</a></span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a>  y ← <a href="extensions-audio-lib-Audio.xtl.html#l.c_lose-21" class="c-libfunc">ᵃᵘc̲lose!</a> <a href="extensions-audio-demos-spectrum.xtl.html#a">a</a></span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a>  <span class="c-number">2</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-1.0</span></span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a>}</span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a><span class="c-userfunc">ᵘk̲ey</span> ← { e →</span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a>  s ← <a href="extensions-audio-lib-Audio.xtl.html#l.s_tate" class="c-libfunc">ᵃᵘs̲tate</a> <a href="extensions-audio-demos-spectrum.xtl.html#a">a</a></span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a>  (e <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key Space&quot;</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> s <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? <a href="extensions-audio-lib-Audio.xtl.html#l.p_ause-21" class="c-libfunc">ᵃᵘp̲ause!</a> <a href="extensions-audio-demos-spectrum.xtl.html#a">a</a></span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a>  e <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key Space&quot;</span> ? <a href="extensions-audio-lib-Audio.xtl.html#l.p_lay-21" class="c-libfunc">ᵃᵘp̲lay!</a> <a href="extensions-audio-demos-spectrum.xtl.html#a">a</a></span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a>  e <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key j&quot;</span> ? <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-audio-demos-spectrum.xtl.html#a">a</a> <a href="extensions-audio-lib-Audio.xtl.html#l.s_eek-21" class="c-libfunc">ᵃᵘs̲eek!</a> <span class="c-number">0.0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> (<a href="extensions-audio-lib-Audio.xtl.html#l.p_osition" class="c-libfunc">ᵃᵘp̲osition</a> <a href="extensions-audio-demos-spectrum.xtl.html#a">a</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">5.0</span></span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a>  e <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key k&quot;</span> ? <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-audio-demos-spectrum.xtl.html#a">a</a> <a href="extensions-audio-lib-Audio.xtl.html#l.s_eek-21" class="c-libfunc">ᵃᵘs̲eek!</a> (<a href="extensions-audio-lib-Audio.xtl.html#l.p_osition" class="c-libfunc">ᵃᵘp̲osition</a> <a href="extensions-audio-demos-spectrum.xtl.html#a">a</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">5.0</span></span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a>  <span class="c-number">0</span></span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a>}</span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a><span class="c-userfunc">ᵘf̲rame</span> ← { l →</span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a>  <span class="c-number">0.0</span> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> l ? l</span>
+<span class="line" id="L92"><a class="ln" href="#L92">92</a>  e ← <a href="extensions-scene-lib-Scene.xtl.html#l.n_ext-21" class="c-libfunc">ˢᶜn̲ext!</a> <a href="extensions-audio-demos-spectrum.xtl.html#w">w</a></span>
+<span class="line" id="L93"><a class="ln" href="#L93">93</a>  ((e <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;close&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (e <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key q&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="extensions-audio-lib-Audio.xtl.html#l.s_tate" class="c-libfunc">ᵃᵘs̲tate</a> <a href="extensions-audio-demos-spectrum.xtl.html#a">a</a>) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span> ? <a href="extensions-audio-demos-spectrum.xtl.html#u.q_uit" class="c-userfunc">ᵘq̲uit</a> l</span>
+<span class="line" id="L94"><a class="ln" href="#L94">94</a>  z ← <a href="extensions-audio-demos-spectrum.xtl.html#u.k_ey" class="c-userfunc">ᵘk̲ey</a> e</span>
+<span class="line" id="L95"><a class="ln" href="#L95">95</a>  now ← <a href="extensions-audio-demos-spectrum.xtl.html#u.l_oudness" class="c-userfunc">ᵘl̲oudness</a> <a href="extensions-audio-demos-spectrum.xtl.html#a">a</a> <a href="extensions-audio-lib-Audio.xtl.html#l.w_indow" class="c-libfunc">ᵃᵘw̲indow</a> <a href="extensions-audio-demos-spectrum.xtl.html#n">n</a></span>
+<span class="line" id="L96"><a class="ln" href="#L96">96</a>  <a href="extensions-audio-demos-spectrum.xtl.html#u.d_raw" class="c-userfunc">ᵘd̲raw</a> (<span class="c-number">0.6</span> <a href="builtins.html#-2a" class="c-symbol">×</a> l) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> now</span>
+<span class="line" id="L97"><a class="ln" href="#L97">97</a>}</span>
+<span class="line" id="L98"><a class="ln" href="#L98">98</a>last ← <span class="c-number">100000</span> <span class="c-userfunc">'</span><a href="extensions-audio-demos-spectrum.xtl.html#u.f_rame" class="c-userfunc">ᵘf̲rame</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <span class="c-number">2</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span></span>
+<span class="line" id="L99"><a class="ln" href="#L99">99</a><span class="c-string">&quot;bye&quot;</span></span>
+</div>
+</main>
+</body>
+</html>

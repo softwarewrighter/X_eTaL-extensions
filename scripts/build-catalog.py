@@ -56,7 +56,7 @@ for ext_dir in sorted(p.parent for p in root.glob("extensions/*/extension.toml")
         else:
             player = '<p class="note">(no recording yet)</p>'
         demos.append(f"""    <section class="panel demo" id="{ext}-{name}">
-      <h3>{html.escape(ext)} / {html.escape(name)}</h3>
+      <h3>{html.escape(ext)} / {html.escape(name)} <a class="docs" href="doc/extensions-{ext}-demos-{name}.xtl.html">source and docs</a></h3>
       <p class="note">{html.escape(what(demo))}</p>
       {player}
       <pre class="source">just demo {ext} {name}</pre>
@@ -65,7 +65,10 @@ for ext_dir in sorted(p.parent for p in root.glob("extensions/*/extension.toml")
                     for d in sorted(d.stem for d in (ext_dir / "demos").glob("*.xtl") if d.stem[0].islower()))
     toc.append(f'    <li><a href="#{ext}">{html.escape(ext)}</a>'
                + (f"<ul>{links}</ul>" if links else "") + "</li>")
-    sections.append(f"""  <h2 id="{ext}"><a href="{REPO}/blob/main/extensions/{ext}/docs/README.md">{html.escape(ext)}</a></h2>
+    facades = sorted(p.name for p in (ext_dir / "lib").glob("*.xtl"))
+    fdoc = (f' <a class="docs" href="doc/extensions-{ext}-lib-{facades[0]}.html">facade docs</a>'
+            if facades else "")
+    sections.append(f"""  <h2 id="{ext}"><a href="{REPO}/blob/main/extensions/{ext}/docs/README.md">{html.escape(ext)}</a>{fdoc}</h2>
   <p class="lede">{html.escape(first_para(ext))}</p>
   <div class="demos">
 {chr(10).join(demos) if demos else '    <p class="note">No demo yet.</p>'}
@@ -85,6 +88,7 @@ page = f"""<!doctype html>
 <body>
 <nav class="toc" aria-label="Demos">
   <p><a href="#top">X_eTaL extensions</a></p>
+  <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
   <ul>
 {chr(10).join(toc)}
   </ul>

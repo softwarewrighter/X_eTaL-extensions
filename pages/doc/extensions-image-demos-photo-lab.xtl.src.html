@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/image/demos/photo-lab.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L12">src</a></li>
+<li class="item"><a href="#L13">out</a></li>
+<li class="item"><a href="#L14"><span class="c-userfunc">ᵘr̲ound</span></a></li>
+<li class="item"><a href="#L15"><span class="c-userfunc">ᵘm̲ean</span></a></li>
+<li class="item"><a href="#L21">p</a></li>
+<li class="item"><a href="#L29">box</a></li>
+<li class="item"><a href="#L30">sharp</a></li>
+<li class="item"><a href="#L33">sx</a></li>
+<li class="item"><a href="#L34">sy</a></li>
+<li class="item"><a href="#L35">gx</a></li>
+<li class="item"><a href="#L36">gy</a></li>
+<li class="item"><a href="#L37">edge</a></li>
+<li class="item"><a href="#L40">n</a></li>
+<li class="item"><a href="#L45">c</a></li>
+<li class="item"><a href="#L46">sepia</a></li>
+<li class="item"><a href="#L47">toned</a></li>
+<li class="item"><a href="#L48">n</a></li>
+<li class="item"><a href="#L53">u</a></li>
+<li class="item"><a href="#L54">s</a></li>
+<li class="item"><a href="#L55">v</a></li>
+<li class="item"><a href="#L58">e</a></li>
+<li class="item"><a href="#L60"><span class="c-userfunc">ᵘr̲ank</span></a></li>
+<li class="item"><a href="#L61">r5</a></li>
+<li class="item"><a href="#L62">r20</a></li>
+<li class="item"><a href="#L63">r50</a></li>
+<li class="item"><a href="#L65"><span class="c-userfunc">ᵘe̲rr</span></a></li>
+<li class="item"><a href="#L67">n</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="extensions-image-demos-photo-lab.xtl.html">extensions/image/demos/photo-lab.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment"># The photo lab: a photo is an array. Buzz Aldrin on the Moon (Apollo</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># 11, NASA, public domain: demos/data/PROVENANCE.txt) read as numbers;</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># filters and edges by rotating the array (the Life idiom), a color</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># toning by an inner product, and the SVD compressing it at several</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># ranks -- the native code reads, writes and decomposes, X_eTaL does</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># the rest. Pictures go to work/photo-lab/.</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-comment">⍝</span><span class="c-comment"># Run: just demo image photo-lab</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-libfunc">ⁱᵐ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-image-lib-Image.xtl.html" class="c-string">&quot;Image&quot;</a></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-libfunc">ˡᵃ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-linalg-lib-Linalg.xtl.html" class="c-string">&quot;Linalg&quot;</a></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a>src ← <span class="c-string">&quot;demos/data/aldrin.jpg&quot;</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a>out ← <span class="c-string">&quot;work/photo-lab/&quot;</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-userfunc">ᵘr̲ound</span> ← { v → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1000.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> v) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000.0</span> }</span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-userfunc">ᵘm̲ean</span> ← { v → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> v) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> v }</span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-comment">⍝</span><span class="c-comment">## 1. the photo as numbers: 240 by 246, gray from 0 (black) to 1</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-string">&quot;the photo (height, width), and the working size:&quot;</span></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><a href="extensions-image-lib-Image.xtl.html#l.s_ize" class="c-libfunc">ⁱᵐs̲ize</a> <a href="extensions-image-demos-photo-lab.xtl.html#src">src</a></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a>p ← <span class="c-number">240</span> <span class="c-number">246</span> <a href="extensions-image-lib-Image.xtl.html#l.r_esize" class="c-libfunc">ⁱᵐr̲esize</a> <a href="extensions-image-lib-Image.xtl.html#l.g_ray" class="c-libfunc">ⁱᵐg̲ray</a> <a href="extensions-image-demos-photo-lab.xtl.html#src">src</a></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-string">&quot;mean brightness, darkest, brightest:&quot;</span></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><a href="extensions-image-demos-photo-lab.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> (<a href="extensions-image-demos-photo-lab.xtl.html#u.m_ean" class="c-userfunc">ᵘm̲ean</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-comment">⍝</span><span class="c-comment">## 2. filters by rotation: each pixel and its 8 neighbors, as Life</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-comment">⍝</span><span class="c-comment"># counts neighbors (the edges wrap around, as rotations do)</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a>box ← (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₁₂</a> <span class="c-number">-1</span> <span class="c-number">0</span> <span class="c-number">1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₁₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">9.0</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a>sharp ← <span class="c-number">0.0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">1.0</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-image-demos-photo-lab.xtl.html#box">box</a></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-comment">⍝</span><span class="c-comment"># edges: Sobel, horizontal and vertical differences of the blurred rows</span></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-comment">⍝</span><span class="c-comment"># and columns, and their length</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a>sx ← ((<span class="c-number">-1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a>)</span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a>sy ← ((<span class="c-number">-1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₁</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₁</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a>)</span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a>gx ← <a href="extensions-image-demos-photo-lab.xtl.html#sx">sx</a> <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₁</a> <a href="extensions-image-demos-photo-lab.xtl.html#sx">sx</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">-1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₁</a> <a href="extensions-image-demos-photo-lab.xtl.html#sx">sx</a></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a>gy ← <a href="extensions-image-demos-photo-lab.xtl.html#sy">sy</a> <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#sy">sy</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">-1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#sy">sy</a></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a>edge ← <span class="c-number">1.0</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> ((<a href="extensions-image-demos-photo-lab.xtl.html#gx">gx</a> <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">2.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-image-demos-photo-lab.xtl.html#gy">gy</a> <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">2.0</span>) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-string">&quot;edge strength: mean, share of pixels on a strong edge (over 0.5):&quot;</span></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a><a href="extensions-image-demos-photo-lab.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> (<a href="extensions-image-demos-photo-lab.xtl.html#u.m_ean" class="c-userfunc">ᵘm̲ean</a> <a href="extensions-image-demos-photo-lab.xtl.html#edge">edge</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-image-demos-photo-lab.xtl.html#u.m_ean" class="c-userfunc">ᵘm̲ean</a> <a href="extensions-image-demos-photo-lab.xtl.html#edge">edge</a> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.5</span></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a>n ← (<a href="extensions-image-demos-photo-lab.xtl.html#out">out</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;filters.png&quot;</span>) <a href="extensions-image-lib-Image.xtl.html#l.w_rite-21" class="c-libfunc">ⁱᵐw̲rite!</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#box">box</a> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#sharp">sharp</a> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#edge">edge</a></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-comment">⍝</span><span class="c-comment">## 3. color: a sepia toning, every pixel's red, green and blue times</span></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a></span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a><span class="c-comment">⍝</span><span class="c-comment"># one 3 by 3 matrix (an inner product over the last axis)</span></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a>c ← <span class="c-number">240</span> <span class="c-number">246</span> <a href="extensions-image-lib-Image.xtl.html#l.r_esize" class="c-libfunc">ⁱᵐr̲esize</a> <a href="extensions-image-lib-Image.xtl.html#l.r_ead" class="c-libfunc">ⁱᵐr̲ead</a> <a href="extensions-image-demos-photo-lab.xtl.html#src">src</a></span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a>sepia ← <span class="c-number">3</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.393</span> <span class="c-number">0.349</span> <span class="c-number">0.272</span> <span class="c-number">0.769</span> <span class="c-number">0.686</span> <span class="c-number">0.534</span> <span class="c-number">0.189</span> <span class="c-number">0.168</span> <span class="c-number">0.131</span></span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a>toned ← <span class="c-number">1.0</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="extensions-image-demos-photo-lab.xtl.html#c">c</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <a href="extensions-image-demos-photo-lab.xtl.html#sepia">sepia</a></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a>n ← (<a href="extensions-image-demos-photo-lab.xtl.html#out">out</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;sepia.png&quot;</span>) <a href="extensions-image-lib-Image.xtl.html#l.w_rite-21" class="c-libfunc">ⁱᵐw̲rite!</a> <a href="extensions-image-demos-photo-lab.xtl.html#c">c</a> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#toned">toned</a></span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a></span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a><span class="c-comment">⍝</span><span class="c-comment">## 4. the SVD: the photo as a sum of rank-1 pictures, largest first;</span></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a></span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a><span class="c-comment">⍝</span><span class="c-comment"># keeping k of 240 stores k times (240 + 246 + 1) numbers</span></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a>u ← <a href="extensions-linalg-lib-Linalg.xtl.html#l.s_vdU" class="c-libfunc">ˡᵃs̲vdU</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a>s ← <a href="extensions-linalg-lib-Linalg.xtl.html#l.s_vdS" class="c-libfunc">ˡᵃs̲vdS</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a>v ← <a href="extensions-linalg-lib-Linalg.xtl.html#l.s_vdV" class="c-libfunc">ˡᵃs̲vdV</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-string">&quot;the five largest singular values, and the share of the energy in the first 5, 20, 50:&quot;</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a><a href="extensions-image-demos-photo-lab.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> <span class="c-number">5</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="extensions-image-demos-photo-lab.xtl.html#s">s</a></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a>e ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#s_-5c" class="c-builtin">s̲\</a> <a href="extensions-image-demos-photo-lab.xtl.html#s">s</a> <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">2.0</span></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a><a href="extensions-image-demos-photo-lab.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> (<span class="c-number">5</span> <span class="c-number">20</span> <span class="c-number">50</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-image-demos-photo-lab.xtl.html#e">e</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="extensions-image-demos-photo-lab.xtl.html#e">e</a></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a><span class="c-userfunc">ᵘr̲ank</span> ← { k → ((k <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#u">u</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> k <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#u">u</a>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> k <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="extensions-image-demos-photo-lab.xtl.html#s">s</a>) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> k <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#v">v</a> }</span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a>r5 ← <a href="extensions-image-demos-photo-lab.xtl.html#u.r_ank" class="c-userfunc">ᵘr̲ank</a> <span class="c-number">5</span></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a>r20 ← <a href="extensions-image-demos-photo-lab.xtl.html#u.r_ank" class="c-userfunc">ᵘr̲ank</a> <span class="c-number">20</span></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a>r50 ← <a href="extensions-image-demos-photo-lab.xtl.html#u.r_ank" class="c-userfunc">ᵘr̲ank</a> <span class="c-number">50</span></span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a><span class="c-string">&quot;rank, storage (share of the photo's numbers), error (root mean square):&quot;</span></span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a><span class="c-userfunc">ᵘe̲rr</span> ← { r → (<a href="extensions-image-demos-photo-lab.xtl.html#u.m_ean" class="c-userfunc">ᵘm̲ean</a> (r <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a>) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">2.0</span>) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">0.5</span> }</span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a><a href="extensions-image-demos-photo-lab.xtl.html#u.r_ound" class="c-userfunc">ᵘr̲ound</a> <span class="c-number">3</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">5</span> <span class="c-number">20</span> <span class="c-number">50</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">5</span> <span class="c-number">20</span> <span class="c-number">50</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">487</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">59040.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-image-demos-photo-lab.xtl.html#u.e_rr" class="c-userfunc">ᵘe̲rr</a> <a href="extensions-image-demos-photo-lab.xtl.html#r5">r5</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-image-demos-photo-lab.xtl.html#u.e_rr" class="c-userfunc">ᵘe̲rr</a> <a href="extensions-image-demos-photo-lab.xtl.html#r20">r20</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-image-demos-photo-lab.xtl.html#u.e_rr" class="c-userfunc">ᵘe̲rr</a> <a href="extensions-image-demos-photo-lab.xtl.html#r50">r50</a></span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a>n ← (<a href="extensions-image-demos-photo-lab.xtl.html#out">out</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;svd.png&quot;</span>) <a href="extensions-image-lib-Image.xtl.html#l.w_rite-21" class="c-libfunc">ⁱᵐw̲rite!</a> <a href="extensions-image-demos-photo-lab.xtl.html#p">p</a> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#r50">r50</a> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#r20">r20</a> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="extensions-image-demos-photo-lab.xtl.html#r5">r5</a></span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a><span class="c-string">&quot;written: work/photo-lab/filters.png, sepia.png, svd.png&quot;</span></span>
+</div>
+</main>
+</body>
+</html>

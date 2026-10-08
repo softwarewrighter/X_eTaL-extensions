@@ -5,7 +5,7 @@ year,quakes
 200
 text/csv
 32
-error[io]: []N_GET: ext:http/get: GET BASE/missing.csv: 404 Not Found at ./lib/Http.xtl:12:1
+error[io]: []N_GET: ext:http/get: GET BASE/missing.csv: 404 Not Found at ./lib/Http.xtl:13:1
 exit: 1
 -- work/quakes.csv:
 year,quakes

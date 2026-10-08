@@ -10,6 +10,7 @@
 <body>
 <nav class="toc" aria-label="Demos">
   <p><a href="#top">X_eTaL extensions</a></p>
+  <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
   <ul>
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
@@ -41,155 +42,155 @@ cargo build --workspace
 just demos                  # the demos; then: just demo EXT NAME</pre>
 </header>
 <main>
-  <h2 id="audio"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/audio/docs/README.md">audio</a></h2>
+  <h2 id="audio"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/audio/docs/README.md">audio</a> <a class="docs" href="doc/extensions-audio-lib-Audio.xtl.html">facade docs</a></h2>
   <p class="lede">Audio files for X_eTaL: decode Ogg Vorbis, MP3 and WAV, play them on the sound device, and read what is playing as arrays -- the window of samples under the playhead, for analysis and pictures (the visualizer).</p>
   <div class="demos">
     <section class="panel demo" id="audio-scope">
-      <h3>audio / scope</h3>
+      <h3>audio / scope <a class="docs" href="doc/extensions-audio-demos-scope.xtl.html">source and docs</a></h3>
       <p class="note">A live oscilloscope: the synthesizer&#x27;s music (Instruments.xtl) plays while a window draws the samples under the playhead -- the left channel above, the right below -- each frame, triggered on the left channel&#x27;s rising zero crossing so a steady chord stands still.</p>
       <video src="audio/scope.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo audio scope</pre>
     </section>
     <section class="panel demo" id="audio-spectrum">
-      <h3>audio / spectrum</h3>
+      <h3>audio / spectrum <a class="docs" href="doc/extensions-audio-demos-spectrum.xtl.html">source and docs</a></h3>
       <p class="note">The music visualizer: an Ogg Vorbis (or MP3, WAV) file plays while X_eTaL turns what is playing into a spectrum and the spectrum into 16 spokes in a 3D window -- Rust decodes, plays and draws; the analysis and the picture&#x27;s geometry are X_eTaL arrays.</p>
       <video src="audio/spectrum.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo audio spectrum</pre>
     </section>
     <section class="panel demo" id="audio-synth">
-      <h3>audio / synth</h3>
+      <h3>audio / synth <a class="docs" href="doc/extensions-audio-demos-synth.xtl.html">source and docs</a></h3>
       <p class="note">A synthesizer made of arrays: X_eTaL computes every sample of a little piece -- notes from equal temperament, harmonics, envelopes, chords, stereo (the instruments are in Instruments.xtl, beside this file) -- and the audio extension plays them as they are made.</p>
       <video src="audio/synth.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo audio synth</pre>
     </section>
   </div>
-  <h2 id="canvas"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/canvas/docs/README.md">canvas</a></h2>
+  <h2 id="canvas"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/canvas/docs/README.md">canvas</a> <a class="docs" href="doc/extensions-canvas-lib-Canvas.xtl.html">facade docs</a></h2>
   <p class="lede">A native window showing X_eTaL arrays as pixels, with keys, clicks and frame ticks back -- the first extension served by the UI host (crates/xetal-ext-ui), and the base of the media saga&#x27;s visualizer.</p>
   <div class="demos">
     <section class="panel demo" id="canvas-life">
-      <h3>canvas / life</h3>
+      <h3>canvas / life <a class="docs" href="doc/extensions-canvas-demos-life.xtl.html">source and docs</a></h3>
       <p class="note">Conway&#x27;s Life in a native window: the board is an X_eTaL array, each generation one array expression, drawn by Rust with every frame.</p>
       <video src="canvas/life.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo canvas life</pre>
     </section>
   </div>
-  <h2 id="clock"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/clock/docs/README.md">clock</a></h2>
+  <h2 id="clock"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/clock/docs/README.md">clock</a> <a class="docs" href="doc/extensions-clock-lib-Clock.xtl.html">facade docs</a></h2>
   <p class="lede">Wall-clock and monotonic time: timestamps for programs (as Unix seconds or ISO 8601 text), and timing for benchmarks -- including the cost of the bridge itself. X_eTaL itself now has the time of day ([]TS) and a delay ([]D_L), but no monotonic clock yet (docs/xetal-asks.md in the repository, E4).</p>
   <div class="demos">
     <section class="panel demo" id="clock-bridge-cost">
-      <h3>clock / bridge-cost</h3>
+      <h3>clock / bridge-cost <a class="docs" href="doc/extensions-clock-demos-bridge-cost.xtl.html">source and docs</a></h3>
       <p class="note">What the text bridge costs (docs/bridge.md): calls per second, and Floats per second carried out and back (it uses hello too).</p>
       <video src="clock/bridge-cost.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo clock bridge-cost</pre>
     </section>
   </div>
-  <h2 id="digest"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/digest/docs/README.md">digest</a></h2>
+  <h2 id="digest"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/digest/docs/README.md">digest</a> <a class="docs" href="doc/extensions-digest-lib-Digest.xtl.html">facade docs</a></h2>
   <p class="lede">SHA-256 and CRC-32 for X_eTaL, of text and of files: to check that content is what it should be -- a downloaded feed against the digest recorded when it was saved, a file against a checksum published beside it.</p>
   <div class="demos">
     <p class="note">No demo yet.</p>
   </div>
-  <h2 id="hello"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/hello/docs/README.md">hello</a></h2>
+  <h2 id="hello"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/hello/docs/README.md">hello</a> <a class="docs" href="doc/extensions-hello-lib-Hello.xtl.html">facade docs</a></h2>
   <p class="lede">The smallest X_eTaL native extension. It exists to prove the boundary: each function exercises one thing a real extension needs.</p>
   <div class="demos">
     <section class="panel demo" id="hello-tour">
-      <h3>hello / tour</h3>
+      <h3>hello / tour <a class="docs" href="doc/extensions-hello-demos-tour.xtl.html">source and docs</a></h3>
       <p class="note">A tour of the hello extension: X_eTaL arrays handed to Rust and back.</p>
       <video src="hello/tour.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo hello tour</pre>
     </section>
   </div>
-  <h2 id="http"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/http/docs/README.md">http</a></h2>
+  <h2 id="http"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/http/docs/README.md">http</a> <a class="docs" href="doc/extensions-http-lib-Http.xtl.html">facade docs</a></h2>
   <p class="lede">&lt;p align=&quot;center&quot;&gt; &lt;img src=&quot;../videos/quakes.webp&quot; alt=&quot;The earthquake report at the command line&quot; width=&quot;640&quot;&gt; &lt;/p&gt;</p>
   <div class="demos">
     <section class="panel demo" id="http-quakes-live">
-      <h3>http / quakes-live</h3>
+      <h3>http / quakes-live <a class="docs" href="doc/extensions-http-demos-quakes-live.xtl.html">source and docs</a></h3>
       <p class="note">Earthquakes of the past week, live: the USGS feed of magnitude 2.5 and up, fetched now (the network: run it only when you mean to), its SHA-256 shown, then the same report as quakes.xtl.</p>
       <p class="note">(no recording yet)</p>
       <pre class="source">just demo http quakes-live</pre>
     </section>
     <section class="panel demo" id="http-quakes">
-      <h3>http / quakes</h3>
+      <h3>http / quakes <a class="docs" href="doc/extensions-http-demos-quakes.xtl.html">source and docs</a></h3>
       <p class="note">Earthquakes of a week: the USGS feed of magnitude 2.5 and up, saved 2026-10-06 (demos/data/PROVENANCE.txt), checked against its SHA-256, into SQLite; SQL selects and groups, X_eTaL computes (the magnitude-frequency law), pictures show it.</p>
       <video src="http/quakes.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo http quakes</pre>
     </section>
   </div>
-  <h2 id="image"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/image/docs/README.md">image</a></h2>
+  <h2 id="image"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/image/docs/README.md">image</a> <a class="docs" href="doc/extensions-image-lib-Image.xtl.html">facade docs</a></h2>
   <p class="lede">&lt;p align=&quot;center&quot;&gt; &lt;img src=&quot;../videos/photo-lab.webp&quot; alt=&quot;The photo lab: filters, the SVD at three ranks, sepia&quot; width=&quot;640&quot;&gt; &lt;/p&gt;</p>
   <div class="demos">
     <section class="panel demo" id="image-photo-lab">
-      <h3>image / photo-lab</h3>
+      <h3>image / photo-lab <a class="docs" href="doc/extensions-image-demos-photo-lab.xtl.html">source and docs</a></h3>
       <p class="note">The photo lab: a photo is an array. Buzz Aldrin on the Moon (Apollo 11, NASA, public domain: demos/data/PROVENANCE.txt) read as numbers; filters and edges by rotating the array (the Life idiom), a color toning by an inner product, and the SVD compressing it at several ranks -- the native code reads, writes and decomposes, X_eTaL does the rest. Pictures go to work/photo-lab/.</p>
       <video src="image/photo-lab.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo image photo-lab</pre>
     </section>
   </div>
-  <h2 id="linalg"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/linalg/docs/README.md">linalg</a></h2>
+  <h2 id="linalg"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/linalg/docs/README.md">linalg</a> <a class="docs" href="doc/extensions-linalg-lib-Linalg.xtl.html">facade docs</a></h2>
   <p class="lede">Numerical linear algebra for X_eTaL, through nalgebra: solving systems, inverses, determinants, least squares, symmetric eigenvalues and the singular value decomposition -- the algorithms an array language should call, not reinvent. Matrices are Float arrays, rows by columns.</p>
   <div class="demos">
     <p class="note">No demo yet.</p>
   </div>
-  <h2 id="scene"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/scene/docs/README.md">scene</a></h2>
+  <h2 id="scene"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/scene/docs/README.md">scene</a> <a class="docs" href="doc/extensions-scene-lib-Scene.xtl.html">facade docs</a></h2>
   <p class="lede">Retained 3D scenes in a native window: an X_eTaL program puts objects under ids it chooses (a polyline, segments, dots, filled quads) and patches them later; Rust draws them in perspective from an orbit camera, which the mouse turns -- quads shaded and depth-tested, lines over them. The base of the visualizer and of the voxel demos.</p>
   <div class="demos">
     <section class="panel demo" id="scene-cube">
-      <h3>scene / cube</h3>
+      <h3>scene / cube <a class="docs" href="doc/extensions-scene-demos-cube.xtl.html">source and docs</a></h3>
       <p class="note">A wireframe cube turning in a native 3D window: its corners and edges are X_eTaL arrays; Rust draws them.</p>
       <video src="scene/cube.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene cube</pre>
     </section>
     <section class="panel demo" id="scene-voxels-chunk">
-      <h3>scene / voxels-chunk</h3>
+      <h3>scene / voxels-chunk <a class="docs" href="doc/extensions-scene-demos-voxels-chunk.xtl.html">source and docs</a></h3>
       <p class="note">Voxels, 1: a chunk is an array. 16 by 16 by 16 block numbers built from a height field in a few array expressions -- grass, dirt, stone, water below a level, sand at its shore, one tree -- then counted, cut and seen from above. (docs/voxels.md; the next demos draw it.)</p>
       <video src="scene/voxels-chunk.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene voxels-chunk</pre>
     </section>
     <section class="panel demo" id="scene-voxels-faces">
-      <h3>scene / voxels-faces</h3>
+      <h3>scene / voxels-faces <a class="docs" href="doc/extensions-scene-demos-voxels-faces.xtl.html">source and docs</a></h3>
       <p class="note">Voxels, 2: which faces to draw. A face shows where a solid block&#x27;s neighbor is not solid: six rotations of the solid mask, each compared with the mask itself (the idiom of Life), give every exposed face of the chunk at once; the faces become a list, one row each: x y z direction block. Checked on shapes with known answers, then the chunk&#x27;s faces drawn as outlines in a 3D window, turning.</p>
       <video src="scene/voxels-faces.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene voxels-faces</pre>
     </section>
     <section class="panel demo" id="scene-voxels-solid">
-      <h3>scene / voxels-solid</h3>
+      <h3>scene / voxels-solid <a class="docs" href="doc/extensions-scene-demos-voxels-solid.xtl.html">source and docs</a></h3>
       <p class="note">Voxels, 3: the chunk drawn solid. The same faces as voxels-faces, each now a filled quad -- its four corners from a 6 by 4 table by direction -- one object per kind of block; scene shades each by how it faces the light and hides the farther ones behind the nearer (a depth buffer), with a little fog. All the array work is X_eTaL&#x27;s; Rust only draws.</p>
       <video src="scene/voxels-solid.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene voxels-solid</pre>
     </section>
     <section class="panel demo" id="scene-voxels-walk">
-      <h3>scene / voxels-walk</h3>
+      <h3>scene / voxels-walk <a class="docs" href="doc/extensions-scene-demos-voxels-walk.xtl.html">source and docs</a></h3>
       <p class="note">Voxels, 5: walking. The island of voxels-world, seen from inside it. The player is nine numbers -- x y z (feet), vx vy vz, yaw, pitch, on the ground -- and every frame X_eTaL reads the keys and the mouse, turns, falls, jumps, and moves one axis at a time against the solid blocks the player&#x27;s box would overlap, stopping at the face of the block it hits (a swept box per axis, as the APL game collides); then it sets scene&#x27;s first-person camera. It also tests the 32 chunks against the planes of the view, as the APL game culls (key c).</p>
       <video src="scene/voxels-walk.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene voxels-walk</pre>
     </section>
     <section class="panel demo" id="scene-voxels-world">
-      <h3>scene / voxels-world</h3>
+      <h3>scene / voxels-world <a class="docs" href="doc/extensions-scene-demos-voxels-world.xtl.html">source and docs</a></h3>
       <p class="note">Voxels, 4: a world of chunks. An island 64 by 32 by 64 -- 32 chunks of 16 cubed -- from value noise made by linear algebra (random heights on grids every 16, 8 and 4 blocks, each interpolated as M G M&#x27;), shaped by the chunk&#x27;s rules over the whole world at once, with trees planted by folding one tree over a list of places. Its faces are found over the whole array (so faces between chunks hide each other), then sent to scene chunk by chunk, each chunk&#x27;s kinds of block under their own ids -- the ids a later demo patches when a block changes.</p>
       <video src="scene/voxels-world.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene voxels-world</pre>
     </section>
   </div>
-  <h2 id="sqlite"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/sqlite/docs/README.md">sqlite</a></h2>
+  <h2 id="sqlite"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/sqlite/docs/README.md">sqlite</a> <a class="docs" href="doc/extensions-sqlite-lib-Sqlite.xtl.html">facade docs</a></h2>
   <p class="lede">SQLite databases for X_eTaL: run statements, and bring query results back as X_eTaL arrays -- numbers as a matrix to compute on, text as a Char matrix -- through rusqlite with SQLite compiled in.</p>
   <div class="demos">
     <section class="panel demo" id="sqlite-notebook">
-      <h3>sqlite / notebook</h3>
+      <h3>sqlite / notebook <a class="docs" href="doc/extensions-sqlite-demos-notebook.xtl.html">source and docs</a></h3>
       <p class="note">The data notebook: a CSV in SQLite, SQL to select and group, X_eTaL arrays to compute, pictures to see it. Atmospheric CO2 at Mauna Loa, 1959-2025 (NOAA GML and Scripps; demos/data/PROVENANCE.txt).</p>
       <video src="sqlite/notebook.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo sqlite notebook</pre>
     </section>
   </div>
-  <h2 id="web"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/web/docs/README.md">web</a></h2>
+  <h2 id="web"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/web/docs/README.md">web</a> <a class="docs" href="doc/extensions-web-lib-Web.xtl.html">facade docs</a></h2>
   <p class="lede">&lt;p align=&quot;center&quot;&gt; &lt;img src=&quot;../videos/todomvc.webp&quot; alt=&quot;TodoMVC served by an X_eTaL program&quot; width=&quot;420&quot;&gt; &lt;img src=&quot;../videos/life.webp&quot; alt=&quot;Life computed in X_eTaL, one generation per request&quot; width=&quot;320&quot;&gt; &lt;/p&gt;</p>
   <div class="demos">
     <section class="panel demo" id="web-life">
-      <h3>web / life</h3>
+      <h3>web / life <a class="docs" href="doc/extensions-web-demos-life.xtl.html">source and docs</a></h3>
       <p class="note">A live page: Conway&#x27;s Life kept by an X_eTaL program and drawn as SVG, one generation per request. The program is the server&#x27;s request loop.</p>
       <video src="web/life.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo web life</pre>
     </section>
     <section class="panel demo" id="web-todomvc">
-      <h3>web / todomvc</h3>
+      <h3>web / todomvc <a class="docs" href="doc/extensions-web-demos-todomvc.xtl.html">source and docs</a></h3>
       <p class="note">TodoMVC on the web: the todos live in SQLite, the X_eTaL program is the server -- it routes each request, keeps the filter, counts what is left, and writes the page; forms post and are redirected back.</p>
       <video src="web/todomvc.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo web todomvc</pre>
@@ -203,7 +204,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 512b3ee</span><span class="sep">&middot;</span>
-  <span>built at e835612</span>
+  <span>built at f30c0ef</span>
 </footer>
 </body>
 </html>

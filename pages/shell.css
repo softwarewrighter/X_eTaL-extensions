@@ -87,3 +87,6 @@ section.demo, main h2 { scroll-margin-top: 12px; }
   nav.toc { position: fixed; top: 0; left: 0; width: 220px; height: 100vh; box-sizing: border-box;
     overflow-y: auto; border-bottom: 0; border-right: 1px solid var(--line); background: var(--bg); }
 }
+a.docs { font-size: 0.8rem; font-weight: normal; margin-left: 10px; color: var(--accent); }
+nav.toc p.docs { font-weight: normal; margin-bottom: 10px; }
+nav.toc p.docs a { color: var(--accent); }

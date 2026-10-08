@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-07
 
+- 22:00 `docs` Cross-referenced docs (the user: do the demos and libraries have proper comments for the xref?). All 33 X_eTaL files follow X_eTaL's convention (lang-choices S9): file and definition comments became `##`, section dividers `###`, the rest stay `#` (a one-time converter, then hand edits so each grouped export -- Voxels' blocks, Linalg's eigen and SVD, Web's request parts -- has its own `##` block); runnable `## >>` examples in Voxels.xtl. `scripts/check-docs.py` (`just check-docs`, in the gate) fails on any undocumented export and runs the examples (9 pass). `scripts/doc-site.sh` (`just doc`; part of `just pages`) builds the site with `xetal doc --out` into `pages/doc` (74 pages: types, docs, decorated source with every name linked, the macro expansions, search); the site's TOC links it, each extension heading links its facade's page and each demo its source and docs. CLAUDE.md rule 17. Eighteen error goldens rebased: only the facade line numbers moved.
+
 - 21:00 `plan` Two steps inserted in the voxel game saga (the user): xref-docs (doc comments per X_eTaL's `##`/`###` convention, the cross-referenced doc site) and voxels-endless ("no edges, walls, or limits when walking": coordinate-hashed terrain, chunks streamed around the player, a curved horizon), before voxels-fly.
 
 - 20:20 `docs` The web extension's Life page is `life`, not `live` (the user: it read like a typo beside canvas's life): `demos/life.xtl`, `just demo web life`, `tests/life.sh`, golden `web-demo-life`, `videos/life.*`, docs and the site. docs/status.md names the group each later extension was built in (web, photo lab, fetch) instead of "roadmap".

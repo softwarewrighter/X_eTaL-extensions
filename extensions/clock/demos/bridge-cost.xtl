@@ -1,16 +1,17 @@
-# What the text bridge costs (docs/bridge.md): calls per second, and
-# Floats per second carried out and back (it uses hello too).
-# Run: just demo clock bridge-cost
+## What the text bridge costs (docs/bridge.md): calls per second, and
+## Floats per second carried out and back (it uses hello too).
+## Run: just demo clock bridge-cost
+
 "ck:" u_se< "Clock"
 "hx:" u_se< "Hello"
 
-# 200 calls of hello's answer: each is a get across the channel
+## 200 calls of hello's answer: each is a get across the channel
 n := 200
 ms := '{ k -> '{ i -> hx:a_nswer @ } e_ach r_ange k } ck:t_ime n
 "calls per second:"
 f_loor (1000.0 * f_loat n) / ms m_ax 0.001
 
-# a 100,000-element Float array out to Rust and back (echo)
+## a 100,000-element Float array out to Rust and back (echo)
 v := 0.5 + f_loat r_ange 100000
 ms := 'hx:e_cho ck:t_ime v
 "Floats per second, out and back:"

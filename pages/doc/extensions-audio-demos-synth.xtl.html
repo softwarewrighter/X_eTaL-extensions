@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/audio/demos/synth.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#v">v</a></li>
+<li class="item"><a href="#u.p_lay"><span class="c-userfunc">ᵘp̲lay</span></a></li>
+<li class="item"><a href="#last">last</a></li>
+<li class="item"><a href="#c">c</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>extensions/audio/demos/synth.xtl</h1>
+<div class="doc">
+<p>A synthesizer made of arrays: X_eTaL computes every sample of a little
+piece -- notes from equal temperament, harmonics, envelopes, chords,
+stereo (the instruments are in Instruments.xtl, beside this file) --
+and the audio extension plays them as they are made.
+Run: just demo audio synth</p>
+</div>
+<p class="meta"><a href="extensions-audio-demos-synth.xtl.src.html">source</a> &middot; imports <code><span class="c-error">au:</span></code> <a href="extensions-audio-lib-Audio.xtl.html">extensions/audio/lib/Audio.xtl</a>; <code><span class="c-error">in:</span></code> <a href="extensions-audio-demos-Instruments.xtl.html">extensions/audio/demos/Instruments.xtl</a></p>
+<div class="item" id="v">
+<h3><a href="#v">v</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-audio-demos-synth.xtl.src.html#L10">line 10</a></div>
+<pre class="code">v ← <a href="extensions-audio-lib-Audio.xtl.html#l.o_utput" class="c-libfunc">ᵃᵘo̲utput</a> <a href="extensions-audio-demos-Instruments.xtl.html#l.rate">ⁱⁿrate</a></pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-synth.xtl.html#u.p_lay"><span class="c-userfunc">ᵘp̲lay</span></a>, <a href="extensions-audio-demos-synth.xtl.html#c">c</a></div>
+</div>
+<div class="item" id="u.p_lay">
+<h3><a href="#u.p_lay"><span class="c-userfunc">ᵘp̲lay</span></a> <span class="type">: Int -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-audio-demos-synth.xtl.src.html#L13">line 13</a></div>
+<div class="doc">
+<p>play eight bars, each made while the one before is sounding</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘp̲lay</span> ← { b →
+  s ← <a href="extensions-audio-demos-synth.xtl.html#v">v</a> <a href="extensions-audio-lib-Audio.xtl.html#l.q_ueue-21" class="c-libfunc">ᵃᵘq̲ueue!</a> <a href="extensions-audio-demos-Instruments.xtl.html#l.b_ar" class="c-libfunc">ⁱⁿb̲ar</a> b
+  w ← <a href="extensions-audio-demos-synth.xtl.html#v">v</a> <a href="extensions-audio-lib-Audio.xtl.html#l.w_ait-21" class="c-libfunc">ᵃᵘw̲ait!</a> <span class="c-number">0.5</span>
+  b <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-audio-demos-synth.xtl.html#last">last</a></div>
+</div>
+<div class="item" id="last">
+<h3><a href="#last">last</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-audio-demos-synth.xtl.src.html#L18">line 18</a></div>
+<pre class="code">last ← <span class="c-number">8</span> <span class="c-userfunc">'</span><a href="extensions-audio-demos-synth.xtl.html#u.p_lay" class="c-userfunc">ᵘp̲lay</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <span class="c-number">1</span></pre>
+</div>
+<div class="item" id="c">
+<h3><a href="#c">c</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-audio-demos-synth.xtl.src.html#L19">line 19</a></div>
+<pre class="code">c ← <a href="extensions-audio-lib-Audio.xtl.html#l.c_lose-21" class="c-libfunc">ᵃᵘc̲lose!</a> <a href="extensions-audio-demos-synth.xtl.html#v">v</a></pre>
+</div>
+</main>
+</body>
+</html>

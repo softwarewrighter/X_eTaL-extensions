@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/audio/demos/synth.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L10">v</a></li>
+<li class="item"><a href="#L13"><span class="c-userfunc">ᵘp̲lay</span></a></li>
+<li class="item"><a href="#L18">last</a></li>
+<li class="item"><a href="#L19">c</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="extensions-audio-demos-synth.xtl.html">extensions/audio/demos/synth.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment"># A synthesizer made of arrays: X_eTaL computes every sample of a little</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># piece -- notes from equal temperament, harmonics, envelopes, chords,</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># stereo (the instruments are in Instruments.xtl, beside this file) --</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># and the audio extension plays them as they are made.</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># Run: just demo audio synth</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-libfunc">ᵃᵘ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-audio-lib-Audio.xtl.html" class="c-string">&quot;Audio&quot;</a></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-libfunc">ⁱⁿ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-audio-demos-Instruments.xtl.html" class="c-string">&quot;Instruments&quot;</a></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a>v ← <a href="extensions-audio-lib-Audio.xtl.html#l.o_utput" class="c-libfunc">ᵃᵘo̲utput</a> <a href="extensions-audio-demos-Instruments.xtl.html#l.rate">ⁱⁿrate</a></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-comment">⍝</span><span class="c-comment"># play eight bars, each made while the one before is sounding</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-userfunc">ᵘp̲lay</span> ← { b →</span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a>  s ← <a href="extensions-audio-demos-synth.xtl.html#v">v</a> <a href="extensions-audio-lib-Audio.xtl.html#l.q_ueue-21" class="c-libfunc">ᵃᵘq̲ueue!</a> <a href="extensions-audio-demos-Instruments.xtl.html#l.b_ar" class="c-libfunc">ⁱⁿb̲ar</a> b</span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a>  w ← <a href="extensions-audio-demos-synth.xtl.html#v">v</a> <a href="extensions-audio-lib-Audio.xtl.html#l.w_ait-21" class="c-libfunc">ᵃᵘw̲ait!</a> <span class="c-number">0.5</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a>  b <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a>}</span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a>last ← <span class="c-number">8</span> <span class="c-userfunc">'</span><a href="extensions-audio-demos-synth.xtl.html#u.p_lay" class="c-userfunc">ᵘp̲lay</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <span class="c-number">1</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a>c ← <a href="extensions-audio-lib-Audio.xtl.html#l.c_lose-21" class="c-libfunc">ᵃᵘc̲lose!</a> <a href="extensions-audio-demos-synth.xtl.html#v">v</a></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-string">&quot;played 8 bars (8 seconds), every sample computed in X_eTaL&quot;</span></span>
+</div>
+</main>
+</body>
+</html>

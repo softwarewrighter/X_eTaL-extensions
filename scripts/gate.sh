@@ -19,6 +19,7 @@ cd "$root"
 "$root/scripts/check-web.sh"
 "$root/scripts/status.py" --check
 "$root/scripts/check-pages.sh"
+"$root/scripts/check-docs.py"
 "$root/scripts/check-spelling.py" --self-test
 "$root/scripts/check-spelling.py"
 md=(README.md CHANGES.md docs/plan.md docs/xetal-asks.md)

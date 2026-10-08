@@ -1,14 +1,15 @@
-# Voxels, 5: walking. The island of voxels-world, seen from inside it.
-# The player is nine numbers -- x y z (feet), vx vy vz, yaw, pitch, on
-# the ground -- and every frame X_eTaL reads the keys and the mouse,
-# turns, falls, jumps, and moves one axis at a time against the solid
-# blocks the player's box would overlap, stopping at the face of the
-# block it hits (a swept box per axis, as the APL game collides); then
-# it sets scene's first-person camera. It also tests the 32 chunks
-# against the planes of the view, as the APL game culls (key c).
-# Run: just demo scene voxels-walk   (a new island each run; --seed 1)
-#   W A S D walk, Space jump, Shift run, drag the mouse or the arrows to
-#   look, c: the chunks in view, q or close: quit
+## Voxels, 5: walking. The island of voxels-world, seen from inside it.
+## The player is nine numbers -- x y z (feet), vx vy vz, yaw, pitch, on
+## the ground -- and every frame X_eTaL reads the keys and the mouse,
+## turns, falls, jumps, and moves one axis at a time against the solid
+## blocks the player's box would overlap, stopping at the face of the
+## block it hits (a swept box per axis, as the APL game collides); then
+## it sets scene's first-person camera. It also tests the 32 chunks
+## against the planes of the view, as the APL game culls (key c).
+## Run: just demo scene voxels-walk   (a new island each run; --seed 1)
+##   W A S D walk, Space jump, Shift run, drag the mouse or the arrows to
+##   look, c: the chunks in view, q or close: quit
+
 "vx:" u_se< "Voxels"
 "sc:" u_se< "Scene"
 
@@ -34,15 +35,16 @@ u:p_ut := { i ->
 }
 put := (t_ally keys) 'u:p_ut p_ower 1
 
-# -- the player ----------------------------------------------------------
-# a box 0.6 wide and 1.75 tall, the eye 1.6 up; a frame is 1/60 s
+### The player
+
+## a box 0.6 wide and 1.75 tall, the eye 1.6 up; a frame is 1/60 s
 dt := 1.0 / 60.0
 
-# (i c_at v) u:s_et p: the state with element i replaced by v
+## (i c_at v) u:s_et p: the state with element i replaced by v
 u:s_et := { l p -> p + (f_loat (r_ange 9) = f_loor 1 s_elect l) * (2 s_elect l) - p }
 
-# whether the box with its feet at (x y z) overlaps a solid block:
-# beyond the island's sides and below it is solid, above it is air
+## whether the box with its feet at (x y z) overlaps a solid block:
+## beyond the island's sides and below it is solid, above it is air
 u:h_it := { q ->
   x := 1 s_elect q
   y := 2 s_elect q
@@ -58,15 +60,15 @@ u:h_it := { q ->
   f_loat 0 < '+ r_/ (r_avel i) s_elect sv
 }
 
-# v u:s_nap a: where to stop, moving at v, before the block at a
-# (the box reaches 0.3 to each side)
+## v u:s_nap a: where to stop, moving at v, before the block at a
+## (the box reaches 0.3 to each side)
 u:s_nap := { v a ->
   v > 0.0 ? (f_loat f_loor a + 0.3) - 0.3001
   (f_loat 1 + f_loor a - 0.3) + 0.3001
 }
 
-# the three axes of a move: x and z stop at a wall; y lands (on the
-# ground) or bumps a ceiling
+## the three axes of a move: x and z stop at a wall; y lands (on the
+## ground) or bumps a ceiling
 u:m_x := { p ->
   a := (1 s_elect p) + dt * 4 s_elect p
   q := (1 c_at a) u:s_et p
@@ -87,8 +89,8 @@ u:m_y := { p ->
   (9 c_at 1.0) u:s_et (5 c_at 0.0) u:s_et (2 c_at f_loat 1 + f_loor a) u:s_et p
 }
 
-# one frame of the player: the controls are mouse dx dy, then w a s d
-# space shift left right up down (1 held)
+## one frame of the player: the controls are mouse dx dy, then w a s d
+## space shift left right up down (1 held)
 u:s_tep := { p ->
   k := sc:c_ontrols w
   yaw := (7 s_elect p) + (0.005 * 1 s_elect k) + 2.0 * dt * (10 s_elect k) - 9 s_elect k
@@ -106,11 +108,12 @@ u:s_tep := { p ->
   p
 }
 
-# -- the chunks in view --------------------------------------------------
-# each chunk's box against the planes of the view (left, right, bottom,
-# top, and the plane of the eye): a chunk is out when its box is wholly
-# behind one of them. The planes' normals are made in the camera's
-# frame and turned into the world's by an inner product with the frame.
+### The chunks in view
+
+## each chunk's box against the planes of the view (left, right, bottom,
+## top, and the plane of the eye): a chunk is out when its box is wholly
+## behind one of them. The planes' normals are made in the camera's
+## frame and turned into the world's by an inner product with the frame.
 u:i_nView := { p ->
   yaw := 7 s_elect p
   pt := 8 s_elect p
@@ -137,10 +140,11 @@ u:c_hunks := { p ->
   p
 }
 
-# -- the loop -------------------------------------------------------------
-# start above the island's highest inner column, dropping onto it, facing
-# north when the middle is north of it, else south
-# (the highest of the columns at least 8 from the island's sides)
+### The loop
+
+## start above the island's highest inner column, dropping onto it, facing
+## north when the middle is north of it, else south
+## (the highest of the columns at least 8 from the island's sides)
 j := (r_ange 4096) - 1
 inner := ((j d_iv 64) >= 8) * ((j d_iv 64) < 56) * ((j m_od 64) >= 8) * (j m_od 64) < 56
 hv := r_avel h

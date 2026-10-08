@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/hello/lib/Hello.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#l.a_nswer"><span class="c-libfunc">ˡa̲nswer</span></a></li>
+<li class="item"><a href="#l.a_dd"><span class="c-libfunc">ˡa̲dd</span></a></li>
+<li class="item"><a href="#l.s_hout"><span class="c-libfunc">ˡs̲hout</span></a></li>
+<li class="item"><a href="#l.s_um"><span class="c-libfunc">ˡs̲um</span></a></li>
+<li class="item"><a href="#l.e_cho"><span class="c-libfunc">ˡe̲cho</span></a></li>
+<li class="item"><a href="#l.f_ail"><span class="c-libfunc">ˡf̲ail</span></a></li>
+<li class="item"><a href="#l.p_anic"><span class="c-libfunc">ˡp̲anic</span></a></li>
+<li class="item"><a href="#l.package">ˡpackage</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">library</span>extensions/hello/lib/Hello.xtl</h1>
+<div class="doc">
+<p>Hello.xtl -- the facade of the hello extension, the smallest X_eTaL
+native extension: each function proves one thing about the boundary.
+Import: &quot;hx:&quot; u_se&lt; &quot;Hello&quot;
+Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each line below is a native function's signature; the binding macro
+(lib/Ffi.xtlm, docs/ffi-macro.md) writes the facade function from it.</p>
+</div>
+<p class="meta"><a href="extensions-hello-lib-Hello.xtl.src.html">source</a> &middot; imports <code><span class="c-error">ffi:</span></code> <a href="lib-Ffi.xtlm.html">lib/Ffi.xtlm</a></p>
+<div class="item" id="l.a_nswer">
+<h3><a href="#l.a_nswer"><span class="c-libfunc">ˡa̲nswer</span></a> <span class="type">: Unit -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-hello-lib-Hello.xtl.src.html#L11">line 11</a></div>
+<div class="doc">
+<p>The answer, 42.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;a_nswer : unit -&gt; int&quot;</span>        <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;hello/answer&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡa̲nswer</span> ← { @ →
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:hello/answer&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-clock-demos-bridge-cost.xtl.html#ms">ms</a>, <a href="extensions-hello-demos-tour.xtl.src.html#L7">tour.xtl:7</a></div>
+</div>
+<div class="item" id="l.a_dd">
+<h3><a href="#l.a_dd"><span class="c-libfunc">ˡa̲dd</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-hello-lib-Hello.xtl.src.html#L13">line 13</a></div>
+<div class="doc">
+<p>Left plus right, added natively.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;a_dd : float float -&gt; float&quot;</span>  <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;hello/add&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡa̲dd</span> ← { a b →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:hello/add?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:hello/add?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
+  <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:hello/add&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-hello-demos-tour.xtl.src.html#L9">tour.xtl:9</a></div>
+</div>
+<div class="item" id="l.s_hout">
+<h3><a href="#l.s_hout"><span class="c-libfunc">ˡs̲hout</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-hello-lib-Hello.xtl.src.html#L15">line 15</a></div>
+<div class="doc">
+<p>The text in upper case (Unicode).</p>
+</div>
+<pre class="code"><span class="c-string">&quot;s_hout : text -&gt; text&quot;</span>        <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;hello/shout&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡs̲hout</span> ← { a →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:hello/shout?text&quot;</span>
+  <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:hello/shout&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-hello-demos-tour.xtl.src.html#L8">tour.xtl:8</a></div>
+</div>
+<div class="item" id="l.s_um">
+<h3><a href="#l.s_um"><span class="c-libfunc">ˡs̲um</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-hello-lib-Hello.xtl.src.html#L17">line 17</a></div>
+<div class="doc">
+<p>The sum of every element of a numeric array.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;s_um : float -&gt; float&quot;</span>        <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;hello/sum&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡs̲um</span> ← { a →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:hello/sum?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:hello/sum&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-clock-demos-bridge-cost.xtl.src.html#L23">bridge-cost.xtl:23</a>, <a href="extensions-hello-demos-tour.xtl.src.html#L14">tour.xtl:14</a></div>
+</div>
+<div class="item" id="l.e_cho">
+<h3><a href="#l.e_cho"><span class="c-libfunc">ˡe̲cho</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-hello-lib-Hello.xtl.src.html#L19">line 19</a></div>
+<div class="doc">
+<p>A numeric array sent across and back: the same values and shape.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;e_cho : float -&gt; floats&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;hello/echo&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡe̲cho</span> ← { a →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:hello/echo?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  v ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:hello/echo&quot;</span>
+  (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:hello/echo?shape&quot;</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-clock-demos-bridge-cost.xtl.html#ms">ms</a>, <a href="extensions-hello-demos-tour.xtl.src.html#L18">tour.xtl:18</a>, <a href="extensions-hello-demos-tour.xtl.src.html#L19">tour.xtl:19</a></div>
+</div>
+<div class="item" id="l.f_ail">
+<h3><a href="#l.f_ail"><span class="c-libfunc">ˡf̲ail</span></a> <span class="type">: Unit -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-hello-lib-Hello.xtl.src.html#L21">line 21</a></div>
+<div class="doc">
+<p>Always fails: a native error is an X_eTaL error.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;f_ail : unit -&gt; int&quot;</span>          <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;hello/fail&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡf̲ail</span> ← { @ →
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:hello/fail&quot;</span>
+}</pre></details>
+</div>
+<div class="item" id="l.p_anic">
+<h3><a href="#l.p_anic"><span class="c-libfunc">ˡp̲anic</span></a> <span class="type">: Unit -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-hello-lib-Hello.xtl.src.html#L23">line 23</a></div>
+<div class="doc">
+<p>Always panics inside Rust: contained, reported as an X_eTaL error.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;p_anic : unit -&gt; int&quot;</span>         <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;hello/panic&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡp̲anic</span> ← { @ →
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:hello/panic&quot;</span>
+}</pre></details>
+</div>
+<div class="item" id="l.package">
+<h3><a href="#l.package">ˡpackage</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-hello-lib-Hello.xtl.src.html#L27">line 27</a></div>
+<div class="doc">
+<p>The native package behind these functions (a literal l: name also
+makes this file a library to <code>xetal type</code>: ask E7).</p>
+</div>
+<pre class="code">ˡpackage ← <span class="c-string">&quot;hello&quot;</span></pre>
+</div>
+</main>
+</body>
+</html>

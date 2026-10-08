@@ -1,6 +1,6 @@
 number = 2
 slug = "xref-docs"
-status = "pending"
+status = "in-progress"
 description = "game step 2 (inserted, the user): doc comments per X_eTaL's convention (lang-..."
 role = "production"
 context_files = []

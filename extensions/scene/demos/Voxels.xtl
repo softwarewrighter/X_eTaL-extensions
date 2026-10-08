@@ -1,34 +1,58 @@
-# Voxels.xtl -- voxel chunks as arrays, shared by the voxels-* demos
-# (docs/voxels.md). A chunk is a 16 by 16 by 16 array of block numbers,
-# indexed x (east), y (up), z (south); 0 is air.
-# Import: "vx:" u_se< "Voxels"
-# (Not voxels.xtl: on a case-insensitive file system a demo of that name
-# would be this file -- ask E8.)
+## Voxels.xtl -- voxel chunks as arrays, shared by the voxels-* demos
+## (docs/voxels.md). A chunk is a 16 by 16 by 16 array of block numbers,
+## indexed x (east), y (up), z (south); 0 is air.
+## Import: "vx:" u_se< "Voxels"
+## (Not voxels.xtl: on a case-insensitive file system a demo of that name
+## would be this file -- ask E8.)
 
-# the side of a chunk, and its cells
+### Chunks
+
+## the side of a chunk
 l:n := 16
+## the cells of a chunk, 16 cubed
 l:cells := 4096
 
-# block numbers, and a character for each when printed
+## block 0: air
 l:air := 0
+## block 1: stone, below the dirt
 l:stone := 1
+## block 2: dirt, three below the grass
 l:dirt := 2
+## block 3: grass, on top
 l:grass := 3
+## block 4: sand, where grass would be at or below the water
 l:sand := 4
+## block 5: water, filling air below its level (not solid)
 l:water := 5
+## block 6: wood, a tree's trunk
 l:wood := 6
+## block 7: leaves, a tree's crown
 l:leaves := 7
+## the blocks' names, in their order
+## >> "vx:" u_se< "Voxels"
+## >> vx:names
+## air stone dirt grass sand water wood leaves
 l:names := "air stone dirt grass sand water wood leaves"
+## a character for each block when a chunk is printed, air first:
+## stone #, dirt %, grass ", sand :, water ~, wood |, leaves *
 l:glyphs := " #%\":~|*"
 
-# every cell's x, y and z, as vectors in the chunk's order (x slowest)
 i := (r_ange 4096) - 1
+## every cell's x (east), as a vector in the chunk's order (x slowest)
+## >> "vx:" u_se< "Voxels"
+## >> 18 t_ake vx:xs
+## 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 l:xs := i d_iv 256
+## every cell's y (up), in the chunk's order
 l:ys := (i d_iv 16) m_od 16
+## every cell's z (south), in the chunk's order (z fastest)
+## >> "vx:" u_se< "Voxels"
+## >> 18 t_ake vx:zs
+## 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0 1
 l:zs := i m_od 16
 
-# vx:h_ills phase: a 16 by 16 height field (x by z), rolling hills of
-# heights 3 to 12; the phase shifts them
+## vx:h_ills phase: a 16 by 16 height field (x by z), rolling hills of
+## heights 3 to 12; the phase shifts them
 l:h_ills := { p ->
   x := f_loat (r_ange 16) - 1
   a := 2.5 * s_in p + x / 2.5
@@ -36,10 +60,10 @@ l:h_ills := { p ->
   f_loor 7.5 + a '+ t_able b
 }
 
-# vx:c_hunk h: the chunk on a height field h (x by z): grass on top,
-# three of dirt, stone below; water fills air below 7, and sand
-# replaces grass at or below it; one tree on the hill at (4, 4) when it
-# stands above the water
+## vx:c_hunk h: the chunk on a height field h (x by z): grass on top,
+## three of dirt, stone below; water fills air below 7, and sand
+## replaces grass at or below it; one tree on the hill at (4, 4) when it
+## stands above the water
 l:c_hunk := { h ->
   top := (1 + l:zs + 16 * l:xs) s_elect r_avel h
   d := top - l:ys
@@ -60,38 +84,39 @@ l:c_hunk := { h ->
   16 16 16 r_eshape b
 }
 
-# vx:c_ounts b: how many of each block, air first
+## vx:c_ounts b: how many of each block, air first
 l:c_ounts := { b -> '+ r_/_2 ((r_ange 8) - 1) '= t_able r_avel b }
 
-# x vx:s_ide b: the slice at x, as characters, up at the top
+## x vx:s_ide b: the slice at x, as characters, up at the top
 l:s_ide := { x b -> r_ev (1 + (x + 1) s_elect b) s_elect l:glyphs }
 
-# a column value (x by z) at every cell of its column
+## a column value (x by z) at every cell of its column
 l:c_olumn := { m -> 16 16 16 r_eshape (1 + l:zs + 16 * l:xs) s_elect r_avel m }
 
-# vx:t_op b: what is seen from above: the highest non-air block of each
-# column (x by z) -- the top's height by a max-reduction down each
-# column, then the block there picked by comparing heights
+## vx:t_op b: what is seen from above: the highest non-air block of each
+## column (x by z) -- the top's height by a max-reduction down each
+## column, then the block there picked by comparing heights
 l:t_op := { b ->
   y1 := 16 16 16 r_eshape l:ys + 1
   hi := 'm_ax r_/_2 y1 * b > 0
   '+ r_/_2 b * y1 = l:c_olumn hi
 }
 
-# -- faces --------------------------------------------------------------
-# the cells' coordinates as 16 by 16 by 16 arrays
+### Faces
+
+## the cells' coordinates as 16 by 16 by 16 arrays
 X := 16 16 16 r_eshape l:xs
 Y := 16 16 16 r_eshape l:ys
 Z := 16 16 16 r_eshape l:zs
 
-# a solid block is any but air and water
+## a solid block is any but air and water
 l:s_olid := { b -> (b > 0) * b != 5 }
 
-# the exposed faces in the six directions -- west, east, down, up,
-# north, south: numbered 0 to 5 -- as a 6 by 4096 Boolean array: a
-# solid cell whose neighbor that way is not solid. The neighbor is a
-# rotation along the axis (the six rotations of the Life idiom) with
-# the plane that wrapped around made air: beyond the border is air.
+## the exposed faces in the six directions -- west, east, down, up,
+## north, south: numbered 0 to 5 -- as a 6 by 4096 Boolean array: a
+## solid cell whose neighbor that way is not solid. The neighbor is a
+## rotation along the axis (the six rotations of the Life idiom) with
+## the plane that wrapped around made air: beyond the border is air.
 l:e_xposed := { b ->
   s := l:s_olid b
   w := s > (-1 o_-_1 s) * X > 0
@@ -103,19 +128,19 @@ l:e_xposed := { b ->
   6 4096 r_eshape (r_avel w) c_at (r_avel e) c_at (r_avel d) c_at (r_avel u) c_at (r_avel n) c_at r_avel so
 }
 
-# water's surface: water with air above it, facing up
+## water's surface: water with air above it, facing up
 l:s_urface := { b -> (b = 5) > (1 o_-_2 b > 0) * Y < 15 }
 
-# d r_ows mb: the faces of one direction as 5 rows -- x, y, z of the
-# cell, the direction, the block -- from mb, the mask times 1 + the
-# block (so one array carries both)
+## d r_ows mb: the faces of one direction as 5 rows -- x, y, z of the
+## cell, the direction, the block -- from mb, the mask times 1 + the
+## block (so one array carries both)
 r_ows := { d mb ->
   k := w_here mb > 0
   (5 c_at t_ally k) r_eshape (k s_elect l:xs) c_at (k s_elect l:ys) c_at (k s_elect l:zs) c_at ((t_ally k) r_eshape d) c_at (k s_elect mb) - 1
 }
 
-# vx:f_aces b: every face to draw, one row each -- x y z direction
-# block -- the six directions' exposed faces, then water's surface
+## vx:f_aces b: every face to draw, one row each -- x y z direction
+## block -- the six directions' exposed faces, then water's surface
 l:f_aces := { b ->
   m := l:e_xposed b
   bb := 1 + r_avel b
@@ -124,20 +149,25 @@ l:f_aces := { b ->
   2 1 t_ranspose r c_at_2 3 r_ows bb * r_avel l:s_urface b
 }
 
-# vx:c_ount f: how many faces in each direction (west east down up
-# north south)
+## vx:c_ount f: how many faces in each direction (west east down up
+## north south); a single block shows one face each way:
+## >> "vx:" u_se< "Voxels"
+## >> one := 16 16 16 r_eshape (vx:xs = 8) * (vx:ys = 8) * vx:zs = 8
+## >> vx:c_ount vx:f_aces one
+## 1 1 1 1 1 1
 l:c_ount := { f -> '+ r_/_2 (r_ange 6) '= t_able 1 + 4 s_elect_2 f }
 
-# -- drawing ------------------------------------------------------------
-# the corners of each direction's face, from its cell's corner, taken
-# in pairs round the square (1 2, 2 3, 3 4, 4 1): x, y, z, 6 by 8 each
+### Drawing
+
+## the corners of each direction's face, from its cell's corner, taken
+## in pairs round the square (1 2, 2 3, 3 4, 4 1): x, y, z, 6 by 8 each
 ox := 6 8 r_eshape (8 r_eshape 0) c_at (8 r_eshape 1) c_at (0 1 1 1 1 0 0 0) c_at (0 1 1 1 1 0 0 0) c_at (0 1 1 1 1 0 0 0) c_at 0 1 1 1 1 0 0 0
 oy := 6 8 r_eshape (0 1 1 1 1 0 0 0) c_at (0 1 1 1 1 0 0 0) c_at (8 r_eshape 0) c_at (8 r_eshape 1) c_at (0 0 0 1 1 1 1 0) c_at 0 0 0 1 1 1 1 0
 oz := 6 8 r_eshape (0 0 0 1 1 1 1 0) c_at (0 0 0 1 1 1 1 0) c_at (0 0 0 1 1 1 1 0) c_at (0 0 0 1 1 1 1 0) c_at (8 r_eshape 0) c_at 8 r_eshape 1
 
-# vx:e_dges f: the faces' outlines as segments for scene: 8 points a
-# face (4 edges, 2 points each), n*8 by 3, the chunk centered on the
-# origin and scaled to -1..1
+## vx:e_dges f: the faces' outlines as segments for scene: 8 points a
+## face (4 edges, 2 points each), n*8 by 3, the chunk centered on the
+## origin and scaled to -1..1
 l:e_dges := { f ->
   d := 1 + 4 s_elect_2 f
   z8 := 8 r_eshape 0
@@ -148,14 +178,16 @@ l:e_dges := { f ->
   ((f_loat p) - 8.0) / 8.0
 }
 
-# each block's color, red green blue (air first)
+## each block's color, red green blue (air first)
 l:colors := 8 3 r_eshape 0 0 0  0.55 0.55 0.58  0.55 0.38 0.22  0.35 0.7 0.25  0.9 0.82 0.55  0.25 0.45 0.9  0.45 0.3 0.15  0.2 0.5 0.2
 
-# vx:c_orners f: each face's four corners in order round it (the
-# outlines' corners 1 3 5 7), n*4 by 3, in blocks
+# the corners of each direction's face in order round it: the
+# outlines' corners 1 3 5 7
 cx := 1 3 5 7 s_elect_2 ox
 cy := 1 3 5 7 s_elect_2 oy
 cz := 1 3 5 7 s_elect_2 oz
+## vx:c_orners f: each face's four corners in order round it, n*4 by 3,
+## in blocks -- the quads scene draws for the faces
 l:c_orners := { f ->
   d := 1 + 4 s_elect_2 f
   z4 := 4 r_eshape 0
@@ -165,18 +197,19 @@ l:c_orners := { f ->
   f_loat 2 1 t_ranspose (3 c_at 4 * t_ally f) r_eshape (r_avel px) c_at (r_avel py) c_at r_avel pz
 }
 
-# vx:q_uads f: the faces as filled quads for scene, a chunk centered
-# on the origin and scaled to -1..1, like vx:e_dges
+## vx:q_uads f: the faces as filled quads for scene, a chunk centered
+## on the origin and scaled to -1..1, like vx:e_dges
 l:q_uads := { f -> ((l:c_orners f) - 8.0) / 8.0 }
 
-# -- worlds: many chunks ----------------------------------------------
+### Worlds: many chunks
+
 # A world is one array, x by 32 by z, made of 16-cubes; its exposed
 # faces are found over the whole of it at once (so faces between
 # chunks hide each other), then grouped by chunk for scene's ids.
 
-# value noise, made by linear algebra: random heights on a grid every s
-# blocks, interpolated to n by n -- M G M', M the n by k hat-function
-# weights of each grid line
+## value noise, made by linear algebra: random heights on a grid every s
+## blocks, interpolated to n by n -- M G M', M the n by k hat-function
+## weights of each grid line
 w_eights := { s n ->
   k := 1 + n d_iv s
   t := (f_loat (r_ange n) - 1) / f_loat s
@@ -189,23 +222,23 @@ n_oise := { s n ->
   m '+ '* i_nner ((k c_at k) r_eshape g) '+ '* i_nner 2 1 t_ranspose m
 }
 
-# vx:h_eights n: an n by n height field (x by z), three octaves of
-# value noise -- every 16, 8 and 4 blocks -- from 4 to 29 (seeded)
+## vx:h_eights n: an n by n height field (x by z), three octaves of
+## value noise -- every 16, 8 and 4 blocks -- from 4 to 29 (seeded)
 l:h_eights := { n ->
   v := (16.0 * 16 n_oise n) + (7.0 * 8 n_oise n) + 3.0 * 4 n_oise n
   4 m_ax 29 m_in f_loor 4.0 + v
 }
 
-# a world's cells' coordinates, for a shape nx ny nz (x slowest)
+## a world's cells' coordinates, for a shape nx ny nz (x slowest)
 c_oords := { sh ->
   j := (r_ange '* r_/ sh) - 1
   yz := (2 s_elect sh) * 3 s_elect sh
   (3 c_at t_ally j) r_eshape (j d_iv yz) c_at ((j d_iv 3 s_elect sh) m_od 2 s_elect sh) c_at j m_od 3 s_elect sh
 }
 
-# vx:t_errain h: the world on a height field h (nx by nz), 32 tall:
-# grass, dirt, stone, water filling air below 14, sand at the shore --
-# the chunk's rules, over the whole world
+## vx:t_errain h: the world on a height field h (nx by nz), 32 tall:
+## grass, dirt, stone, water filling air below 14, sand at the shore --
+## the chunk's rules, over the whole world
 l:t_errain := { h ->
   nx := 1 s_elect s_hape h
   nz := 2 s_elect s_hape h
@@ -222,8 +255,8 @@ l:t_errain := { h ->
   (nx c_at 32 c_at nz) r_eshape b
 }
 
-# t vx:t_ree b: a tree at column t (x z) when it stands on grass: a
-# trunk of 4 and a crown of leaves, placed into b
+## t vx:t_ree b: a tree at column t (x z) when it stands on grass: a
+## trunk of 4 and a crown of leaves, placed into b
 l:t_ree := { t b ->
   sh := s_hape b
   c := c_oords sh
@@ -245,9 +278,9 @@ l:t_ree := { t b ->
   sh r_eshape v
 }
 
-# vx:w_orldFaces b: every face of a world, one row each -- x y z
-# direction block -- as vx:f_aces does for a chunk, the borders of the
-# world air
+## vx:w_orldFaces b: every face of a world, one row each -- x y z
+## direction block -- as vx:f_aces does for a chunk, the borders of the
+## world air
 l:w_orldFaces := { b ->
   sh := s_hape b
   c := c_oords sh
@@ -275,11 +308,11 @@ l:w_orldFaces := { b ->
   2 1 t_ranspose r
 }
 
-# vx:c_hunkOf f: the chunk of each face (1 up): x, z and y in 16s
+## vx:c_hunkOf f: the chunk of each face (1 up): x, z and y in 16s
 l:c_hunkOf := { f -> 1 + ((1 s_elect_2 f) d_iv 16) + (4 * (3 s_elect_2 f) d_iv 16) + 16 * (2 s_elect_2 f) d_iv 16 }
 
-# ts vx:f_orest b: trees at the columns ts (n by 2: x z), each where it
-# stands on grass -- vx:t_ree folded over them
+## ts vx:f_orest b: trees at the columns ts (n by 2: x z), each where it
+## stands on grass -- vx:t_ree folded over them
 l:f_orest := { ts b ->
   boxes := ('{ _r s_elect ts } m_ap r_ange t_ally ts) c_at e_nclose b
   d_isclose '{ e_nclose (d_isclose _l) l:t_ree d_isclose _r } r_/ boxes

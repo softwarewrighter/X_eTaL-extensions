@@ -1,20 +1,20 @@
-# Ffi.xtlm -- the binding macro: a facade function written from the
-# signature of a native function (docs/ffi-macro.md).
-# Import: "ffi:" u_se< "Ffi"     (xetal-x puts this directory on XETAL_PATH)
-#
-#   "s_hout : text -> text" ffi:b_ind< "hello/shout"
-#
-# expands to the facade function l:s_hout, which speaks the ext: channel
-# (docs/bridge.md). Kinds: unit (no argument), text, chars, int, float
-# (an argument of any rank; as a result, a scalar), and as results also
-# floats and ints (any rank, reshaped by the reply's shape).
+## Ffi.xtlm -- the binding macro: a facade function written from the
+## signature of a native function (docs/ffi-macro.md).
+## Import: "ffi:" u_se< "Ffi"     (xetal-x puts this directory on XETAL_PATH)
+##
+##   "s_hout : text -> text" ffi:b_ind< "hello/shout"
+##
+## expands to the facade function l:s_hout, which speaks the ext: channel
+## (docs/bridge.md). Kinds: unit (no argument), text, chars, int, float
+## (an argument of any rank; as a result, a scalar), and as results also
+## floats and ints (any rank, reshaped by the reply's shape).
 
-# private: the words of a text, and the i-th of them
+## private: the words of a text, and the i-th of them
 w_ords := { s -> (n_ot s = f_irst " ") p_artition s }
 w_ord := { i w -> d_isclose i s_elect w }
 
-# private: what an argument a of kind k is sent as, and the query that
-# says its kind (and shape)
+## private: what an argument a of kind k is sent as, and the query that
+## says its kind (and shape)
 v_alue := { k a ->
   k m_atch "text" ? a
   k m_atch "chars" ? "(r_avel " c_at a c_at ")"
@@ -28,14 +28,14 @@ q_uery := { k a ->
   "?float=\" c_at f_ormat s_hape " c_at a
 }
 
-# private: the line putting argument a (kind k) for the native function t
+## private: the line putting argument a (kind k) for the native function t
 p_ut := { ka t ->
   k := 1 w_ord w_ords ka
   a := 2 w_ord w_ords ka
   "  p" c_at a c_at " := " c_at (k v_alue a) c_at " []N_PUT \"ext:" c_at t c_at (k q_uery a) c_at "\n"
 }
 
-# private: the lines getting the reply of t as kind k
+## private: the lines getting the reply of t as kind k
 g_et := { k t ->
   call := "[]N_GET \"ext:" c_at t c_at "\""
   shape := "(f_loor n_umbers []N_GET \"ext:" c_at t c_at "?shape\") r_eshape v\n"
@@ -47,7 +47,7 @@ g_et := { k t ->
   "  v := " c_at call c_at "\n  " c_at shape
 }
 
-# private: the parameters and the put lines, by how many arguments there are
+## private: the parameters and the put lines, by how many arguments there are
 p_arams := { w n ->
   n = 0 ? "@"
   n = 1 ? "a"

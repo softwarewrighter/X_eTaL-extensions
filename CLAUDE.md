@@ -368,6 +368,17 @@ Read before working:
     choice); the feat/ -> pr/ branch handoff in the briefing applies
     only to a parallel lane on its own branch.
 
+17. X_eTaL source is documented in X_eTaL's convention
+    (`../X_eTaL/docs/lang-choices.md` S9): `##` documents (a block at
+    the top of a file, then a blank line, documents the file; a block
+    directly above a definition documents it), `###` is a section
+    heading, `#` is an ordinary comment that `xetal doc` ignores, and
+    `## >> expression` with the expected output on the `##` lines
+    below is an example that `xetal doc --test` runs. Every export of a
+    facade, the binding macro and a shared demo library has its own
+    `##` block (`scripts/check-docs.py`, in the gate); `just pages`
+    builds the cross-referenced site into `pages/doc`.
+
 ## Every step ends with
 
 1. `just gate` passes (X_eTaL at XETAL_COMMIT, cargo fmt/clippy/test,

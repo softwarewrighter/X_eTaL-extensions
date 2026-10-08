@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/http/demos/Seismic.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L9">db</a></li>
+<li class="item"><a href="#L11"><span class="c-builtin">r̲ound</span></a></li>
+<li class="item"><a href="#L12"><span class="c-builtin">m̲ean</span></a></li>
+<li class="item"><a href="#L15"><span class="c-libfunc">ˡr̲eport</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="extensions-http-demos-Seismic.xtl.html">extensions/http/demos/Seismic.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment"># Seismic.xtl -- the earthquake report (quakes.xtl, quakes-live.xtl): a</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># USGS feed CSV into SQLite, SQL to select and group, X_eTaL arrays to</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># compute, pictures to see it. An ordinary X_eTaL library beside them</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># (not Quakes.xtl: on a case-insensitive file system that is quakes.xtl).</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># Import: &quot;se:&quot; u_se&lt; &quot;Seismic&quot;</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-string">&quot;sq:&quot;</span> <span class="c-macro">u̲se&lt;</span> <a href="extensions-sqlite-lib-Sqlite.xtl.html" class="c-string">&quot;Sqlite&quot;</a></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a>db ← <span class="c-string">&quot;work/quakes.db&quot;</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-builtin">r̲ound</span> ← { v → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">100.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> v) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">100.0</span> }</span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-builtin">m̲ean</span> ← { v → (<span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> v) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v }</span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-comment">⍝</span><span class="c-comment"># se:r_eport &quot;path.csv&quot;: prints the report and draws its pictures</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-libfunc">ˡr̲eport</span> ← { csv →</span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a>  x ← <a href="extensions-http-demos-Seismic.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.e_xec" class="c-libfunc">sq:e̲xec</a> <span class="c-string">&quot;drop table if exists quakes&quot;</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a>  n ← <a href="extensions-http-demos-Seismic.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.i_mport" class="c-libfunc">sq:i̲mport</a> <span class="c-string">&quot;quakes=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> csv</span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a>  <span class="c-comment">⍝</span><span class="c-comment"> -- 1. SQL: what is there</span></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a>  a ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <span class="c-string">&quot;quakes, the smallest and largest magnitude, the mean depth (km):&quot;</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a>  a ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <a href="extensions-http-demos-Seismic.xtl.html#r_ound" class="c-builtin">r̲ound</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-http-demos-Seismic.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.n_ums" class="c-libfunc">sq:n̲ums</a> <span class="c-string">&quot;select count(*), min(mag), max(mag), avg(depth) from quakes&quot;</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a>  a ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <span class="c-string">&quot;from, to (UTC):&quot;</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a>  a ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <a href="extensions-http-demos-Seismic.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.t_exts" class="c-libfunc">sq:t̲exts</a> <span class="c-string">&quot;select substr(min(time), 1, 16), substr(max(time), 1, 16) from quakes&quot;</span></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a>  <span class="c-comment">⍝</span><span class="c-comment"> -- 2. SQL groups: the largest three, and quakes per day</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a>  a ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <span class="c-string">&quot;the largest three: magnitude, place&quot;</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a>  a ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <a href="extensions-http-demos-Seismic.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.t_exts" class="c-libfunc">sq:t̲exts</a> <span class="c-string">&quot;select printf('%.1f', mag) || '  ' || place from quakes order by mag desc limit 3&quot;</span></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a>  a ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <span class="c-string">&quot;quakes per day:&quot;</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a>  a ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-http-demos-Seismic.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.n_ums" class="c-libfunc">sq:n̲ums</a> <span class="c-string">&quot;select count(*) from quakes group by substr(time, 1, 10) order by substr(time, 1, 10)&quot;</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a>  <span class="c-comment">⍝</span><span class="c-comment"> -- 3. arrays: magnitudes in half-unit bins (2.45 rounds into the</span></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a>  <span class="c-comment">⍝</span><span class="c-comment"> first), and the Gutenberg-Richter law: the count at or above each</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a>  <span class="c-comment">⍝</span><span class="c-comment"> magnitude falls about tenfold per unit -- its b-value is about 1.</span></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a>  <span class="c-comment">⍝</span><span class="c-comment"> Outside the US this feed lists quakes from about 4.5 up, so b is</span></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a>  <span class="c-comment">⍝</span><span class="c-comment"> estimated above 4.5 (Aki's maximum likelihood: log10 e over the</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a>  <span class="c-comment">⍝</span><span class="c-comment"> mean magnitude's excess, magnitudes given to 0.1)</span></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a>  m ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-http-demos-Seismic.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.n_ums" class="c-libfunc">sq:n̲ums</a> <span class="c-string">&quot;select mag from quakes&quot;</span></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a>  b ← <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> (m <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2.5</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">0.5</span></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a>  h ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">10</span>) <span class="c-symbol">'</span><a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> b</span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a>  a ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <span class="c-string">&quot;quakes in [2.5, 3), [3, 3.5), ... [7, 7.5):&quot;</span></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a>  a ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> h</span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a>  t ← <span class="c-number">2.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a>  c ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> t <span class="c-symbol">'</span><a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> m</span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a>  k ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> c <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a>  t ← k <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> t</span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a>  g ← (<a href="builtins.html#l_og" class="c-builtin">l̲og</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> c) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#l_og" class="c-builtin">l̲og</a> <span class="c-number">10.0</span></span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a>  a ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <span class="c-string">&quot;log10 of the count at or above 2.5, 3, 3.5, ...:&quot;</span></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a>  a ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <a href="extensions-http-demos-Seismic.xtl.html#r_ound" class="c-builtin">r̲ound</a> g</span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a>  big ← (m <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">4.5</span>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> m</span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a>  a ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <span class="c-string">&quot;quakes of 4.5 and up, and their b-value (Aki):&quot;</span></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a>  a ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> big) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-http-demos-Seismic.xtl.html#r_ound" class="c-builtin">r̲ound</a> <span class="c-number">0.4342944819</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> (<a href="extensions-http-demos-Seismic.xtl.html#m_ean" class="c-builtin">m̲ean</a> big) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">4.45</span></span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a>  <span class="c-comment">⍝</span><span class="c-comment"> -- 4. pictures</span></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a>  <span class="c-comment">⍝</span><span class="c-comment"> a world map: quakes counted in 10-degree cells, 18 rows (north at</span></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a>  <span class="c-comment">⍝</span><span class="c-comment"> the top) by 36 columns (from 180 W), one array index per quake</span></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a>  ll ← <a href="extensions-http-demos-Seismic.xtl.html#db">db</a> <a href="extensions-sqlite-lib-Sqlite.xtl.html#l.n_ums" class="c-libfunc">sq:n̲ums</a> <span class="c-string">&quot;select latitude, longitude from quakes&quot;</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a>  row ← <span class="c-number">17</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> (<span class="c-number">90.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> ll) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">10.0</span></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a>  col ← <span class="c-number">35</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> (<span class="c-number">180.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> ll) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">10.0</span></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a>  w ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">648</span>) <span class="c-symbol">'</span><a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> col <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">36</span> <a href="builtins.html#-2a" class="c-symbol">×</a> row</span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a>  p ← <a href="builtins.html#-5b-5dS_HOW" class="c-builtin">⎕S̲HOW</a> <a href="builtins.html#-5b-5dG_RID" class="c-builtin">⎕G̲RID</a> <span class="c-number">18</span> <span class="c-number">36</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (w <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (w <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">2</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> w <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">8</span></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a>  <span class="c-comment">⍝</span><span class="c-comment"> the magnitude histogram as bars, a cell per 5 quakes, and the law</span></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a>  <span class="c-comment">⍝</span><span class="c-comment"> as a line</span></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a>  h5 ← <a href="builtins.html#c_eiling" class="c-builtin">c̲eiling</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> h) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">5.0</span></span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a>  p ← <a href="builtins.html#-5b-5dS_HOW" class="c-builtin">⎕S̲HOW</a> <a href="builtins.html#-5b-5dG_RID" class="c-builtin">⎕G̲RID</a> (<a href="builtins.html#r_ev" class="c-builtin">r̲ev</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> h5) <span class="c-symbol">'</span><a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> h5</span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a>  p ← <a href="builtins.html#-5b-5dS_HOW" class="c-builtin">⎕S̲HOW</a> <a href="builtins.html#-5b-5dP_ATH" class="c-builtin">⎕P̲ATH</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> g</span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a>  <span class="c-string">&quot;drawn: the map, the histogram, the Gutenberg-Richter line&quot;</span></span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a>}</span>
+</div>
+</main>
+</body>
+</html>

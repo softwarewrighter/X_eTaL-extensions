@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/scene/demos/voxels-faces.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#ones">ones</a></li>
+<li class="item"><a href="#inside">inside</a></li>
+<li class="item"><a href="#one">one</a></li>
+<li class="item"><a href="#checker">checker</a></li>
+<li class="item"><a href="#b">b</a></li>
+<li class="item"><a href="#f">f</a></li>
+<li class="item"><a href="#w">w</a></li>
+<li class="item"><a href="#k">k</a></li>
+<li class="item"><a href="#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a></li>
+<li class="item"><a href="#put">put</a></li>
+<li class="item"><a href="#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></li>
+<li class="item"><a href="#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></li>
+<li class="item"><a href="#last">last</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>extensions/scene/demos/voxels-faces.xtl</h1>
+<div class="doc">
+<p>Voxels, 2: which faces to draw. A face shows where a solid block's
+neighbor is not solid: six rotations of the solid mask, each compared
+with the mask itself (the idiom of Life), give every exposed face of
+the chunk at once; the faces become a list, one row each: x y z
+direction block. Checked on shapes with known answers, then the
+chunk's faces drawn as outlines in a 3D window, turning.
+Run: just demo scene voxels-faces   (drag to turn it; q or close: quit)</p>
+</div>
+<p class="meta"><a href="extensions-scene-demos-voxels-faces.xtl.src.html">source</a> &middot; imports <code><span class="c-error">vx:</span></code> <a href="extensions-scene-demos-Voxels.xtl.html">extensions/scene/demos/Voxels.xtl</a>; <code><span class="c-error">sc:</span></code> <a href="extensions-scene-lib-Scene.xtl.html">extensions/scene/lib/Scene.xtl</a></p>
+<div class="item" id="ones">
+<h3><a href="#ones">ones</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L12">line 12</a></div>
+<pre class="code">ones ← <span class="c-number">16</span> <span class="c-number">16</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">4096</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L18">voxels-faces.xtl:18</a>, <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L19">voxels-faces.xtl:19</a></div>
+</div>
+<div class="item" id="inside">
+<h3><a href="#inside">inside</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L13">line 13</a></div>
+<pre class="code">inside ← <span class="c-number">16</span> <span class="c-number">16</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="extensions-scene-demos-Voxels.xtl.html#l.xs">ᵛˣxs</a> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-scene-demos-Voxels.xtl.html#l.xs">ᵛˣxs</a> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">15</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-scene-demos-Voxels.xtl.html#l.ys">ᵛˣys</a> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-scene-demos-Voxels.xtl.html#l.ys">ᵛˣys</a> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">15</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-scene-demos-Voxels.xtl.html#l.zs">ᵛˣzs</a> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.zs">ᵛˣzs</a> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">15</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L19">voxels-faces.xtl:19</a></div>
+</div>
+<div class="item" id="one">
+<h3><a href="#one">one</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L14">line 14</a></div>
+<pre class="code">one ← <span class="c-number">16</span> <span class="c-number">16</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="extensions-scene-demos-Voxels.xtl.html#l.xs">ᵛˣxs</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">8</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-scene-demos-Voxels.xtl.html#l.ys">ᵛˣys</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">8</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.zs">ᵛˣzs</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">8</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L17">voxels-faces.xtl:17</a></div>
+</div>
+<div class="item" id="checker">
+<h3><a href="#checker">checker</a> <span class="type">: Bool</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L15">line 15</a></div>
+<pre class="code">checker ← <span class="c-number">16</span> <span class="c-number">16</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> (<a href="extensions-scene-demos-Voxels.xtl.html#l.xs">ᵛˣxs</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.ys">ᵛˣys</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.zs">ᵛˣzs</a>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L20">voxels-faces.xtl:20</a></div>
+</div>
+<div class="item" id="b">
+<h3><a href="#b">b</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L22">line 22</a></div>
+<pre class="code">b ← <a href="extensions-scene-demos-Voxels.xtl.html#l.c_hunk" class="c-libfunc">ᵛˣc̲hunk</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.h_ills" class="c-libfunc">ᵛˣh̲ills</a> <span class="c-number">0.0</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-faces.xtl.html#f">f</a>, <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L27">voxels-faces.xtl:27</a></div>
+</div>
+<div class="item" id="f">
+<h3><a href="#f">f</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L23">line 23</a></div>
+<pre class="code">f ← <a href="extensions-scene-demos-Voxels.xtl.html#l.f_aces" class="c-libfunc">ᵛˣf̲aces</a> <a href="extensions-scene-demos-voxels-faces.xtl.html#b">b</a></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L25">voxels-faces.xtl:25</a>, <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L26">voxels-faces.xtl:26</a>, <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L29">voxels-faces.xtl:29</a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a></div>
+</div>
+<div class="item" id="w">
+<h3><a href="#w">w</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L31">line 31</a></div>
+<pre class="code">w ← <span class="c-string">&quot;Voxels 2: the faces -- X_eTaL&quot;</span> <a href="extensions-scene-lib-Scene.xtl.html#l.o_pen-21" class="c-libfunc">ˢᶜo̲pen!</a> <span class="c-number">560</span> <span class="c-number">560</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-faces.xtl.html#k">k</a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="k">
+<h3><a href="#k">k</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L32">line 32</a></div>
+<pre class="code">k ← <a href="extensions-scene-demos-voxels-faces.xtl.html#w">w</a> <a href="extensions-scene-lib-Scene.xtl.html#l.c_amera-21" class="c-libfunc">ˢᶜc̲amera!</a> <span class="c-number">0.7</span> <span class="c-number">0.5</span> <span class="c-number">3.4</span> <span class="c-number">0.35</span></pre>
+</div>
+<div class="item" id="u.p_ut">
+<h3><a href="#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a> <span class="type">: Int -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L35">line 35</a></div>
+<div class="doc">
+<p>each kind of block as one object, in its color</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘp̲ut</span> ← { t →
+  sel ← (<span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> <a href="extensions-scene-demos-voxels-faces.xtl.html#f">f</a>) <a href="builtins.html#-3d" class="c-symbol">=</a> t
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> sel ? t <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>
+  head ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-scene-demos-voxels-faces.xtl.html#w">w</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (t <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.colors">ᵛˣcolors</a>
+  x ← head <a href="extensions-scene-lib-Scene.xtl.html#l.s_egments-21" class="c-libfunc">ˢᶜs̲egments!</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.e_dges" class="c-libfunc">ᵛˣe̲dges</a> sel <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <a href="extensions-scene-demos-voxels-faces.xtl.html#f">f</a>
+  t <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-faces.xtl.html#put">put</a></div>
+</div>
+<div class="item" id="put">
+<h3><a href="#put">put</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L42">line 42</a></div>
+<pre class="code">put ← <span class="c-number">7</span> <span class="c-userfunc">'</span><a href="extensions-scene-demos-voxels-faces.xtl.html#u.p_ut" class="c-userfunc">ᵘp̲ut</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <span class="c-number">1</span></pre>
+</div>
+<div class="item" id="u.q_uit">
+<h3><a href="#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a> <span class="type">: Num b =&gt; a -&gt; b</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L44">line 44</a></div>
+<pre class="code"><span class="c-userfunc">ᵘq̲uit</span> ← { n →
+  z ← <a href="extensions-scene-lib-Scene.xtl.html#l.c_lose-21" class="c-libfunc">ˢᶜc̲lose!</a> <a href="extensions-scene-demos-voxels-faces.xtl.html#w">w</a>
+  <span class="c-number">0</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-faces.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="u.f_rame">
+<h3><a href="#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a> <span class="type">: Num a =&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L48">line 48</a></div>
+<pre class="code"><span class="c-userfunc">ᵘf̲rame</span> ← { n →
+  n <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span> ? <span class="c-number">0</span>
+  v ← <a href="extensions-scene-lib-Scene.xtl.html#l.n_ext-21" class="c-libfunc">ˢᶜn̲ext!</a> <a href="extensions-scene-demos-voxels-faces.xtl.html#w">w</a>
+  ((v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;close&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key q&quot;</span>) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span> ? <a href="extensions-scene-demos-voxels-faces.xtl.html#u.q_uit" class="c-userfunc">ᵘq̲uit</a> n
+  n
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-faces.xtl.html#last">last</a></div>
+</div>
+<div class="item" id="last">
+<h3><a href="#last">last</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-faces.xtl.src.html#L54">line 54</a></div>
+<pre class="code">last ← <span class="c-number">100000</span> <span class="c-userfunc">'</span><a href="extensions-scene-demos-voxels-faces.xtl.html#u.f_rame" class="c-userfunc">ᵘf̲rame</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <span class="c-number">1</span></pre>
+</div>
+</main>
+</body>
+</html>

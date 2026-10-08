@@ -1,47 +1,48 @@
-# Scene.xtl -- the facade of the scene extension: retained 3D line and
-# point scenes in a native window, patched by id, the mouse orbiting.
-# Import: "sc:" u_se< "Scene"
-# Run with xetal-x, which links scene and serves its windows on the main
-# thread (xetal-x --ext DIR puts this directory on XETAL_PATH).
-# Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+## Scene.xtl -- the facade of the scene extension: retained 3D line and
+## point scenes in a native window, patched by id, the mouse orbiting.
+## Import: "sc:" u_se< "Scene"
+## Run with xetal-x, which links scene and serves its windows on the main
+## thread (xetal-x --ext DIR puts this directory on XETAL_PATH).
+## Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+
 "ffi:" u_se< "Ffi"
 
-# title sc:o_pen! width height: a scene window that size (points); its id.
+## title sc:o_pen! width height: a scene window that size (points); its id.
 "o_pen! : text float -> int"         ffi:b_ind< "scene/open"
-# (scene c_at object c_at red green blue) sc:p_olyline! points: put
-# object (an id of your choice) as points joined in order; points are an
-# n by 3 matrix (x y z), colors 0 to 1. Putting an id again replaces it.
+## (scene c_at object c_at red green blue) sc:p_olyline! points: put
+## object (an id of your choice) as points joined in order; points are an
+## n by 3 matrix (x y z), colors 0 to 1. Putting an id again replaces it.
 "p_olyline! : float float -> int"    ffi:b_ind< "scene/polyline"
-# header sc:s_egments! points: the points taken in pairs, each a segment.
+## header sc:s_egments! points: the points taken in pairs, each a segment.
 "s_egments! : float float -> int"    ffi:b_ind< "scene/segments"
-# header sc:d_ots! points: each point a dot.
+## header sc:d_ots! points: each point a dot.
 "d_ots! : float float -> int"        ffi:b_ind< "scene/dots"
-# header sc:q_uads! points: the points taken in fours, each the corners
-# of a filled quad in order round it (4n by 3); shaded by how it faces
-# the light, nearer quads hiding farther ones; lines and dots draw over.
+## header sc:q_uads! points: the points taken in fours, each the corners
+## of a filled quad in order round it (4n by 3); shaded by how it faces
+## the light, nearer quads hiding farther ones; lines and dots draw over.
 "q_uads! : float float -> int"       ffi:b_ind< "scene/quads"
-# scene sc:f_og! near far: quads fade into the background between those
-# depths (scene units from the camera); far <= near: no fog.
+## scene sc:f_og! near far: quads fade into the background between those
+## depths (scene units from the camera); far <= near: no fog.
 "f_og! : float float -> int"         ffi:b_ind< "scene/fog"
-# scene sc:e_ye! x y z yaw pitch: a first-person camera at the eye,
-# looking along yaw (0 toward -z, turning right toward +x) and pitch (up
-# positive), radians; sc:c_amera! goes back to orbiting.
+## scene sc:e_ye! x y z yaw pitch: a first-person camera at the eye,
+## looking along yaw (0 toward -z, turning right toward +x) and pitch (up
+## positive), radians; sc:c_amera! goes back to orbiting.
 "e_ye! : float float -> int"         ffi:b_ind< "scene/eye"
-# sc:c_ontrols scene: how far the mouse was dragged since last asked (x
-# y, pixels), then 1 or 0 for each key held -- w a s d space shift and
-# the arrows left right up down. Headless, XETAL_EVENTS may hold
-# "keydown w", "keyup w" and "drag 10 0".
+## sc:c_ontrols scene: how far the mouse was dragged since last asked (x
+## y, pixels), then 1 or 0 for each key held -- w a s d space shift and
+## the arrows left right up down. Headless, XETAL_EVENTS may hold
+## "keydown w", "keyup w" and "drag 10 0".
 "c_ontrols : float -> floats"        ffi:b_ind< "scene/controls"
-# scene sc:r_emove! object: 1 if it was there, else 0.
+## scene sc:r_emove! object: 1 if it was there, else 0.
 "r_emove! : float float -> int"      ffi:b_ind< "scene/remove"
-# scene sc:c_amera! yaw pitch distance spin: where the camera orbits from
-# (radians, scene units) and how fast it turns by itself (radians a second).
+## scene sc:c_amera! yaw pitch distance spin: where the camera orbits from
+## (radians, scene units) and how fast it turns by itself (radians a second).
 "c_amera! : float float -> int"      ffi:b_ind< "scene/camera"
-# sc:n_ext! scene: the next event, waiting at most a frame (1/60 s):
-# "frame", "key Space", "key q", "close". Dragging orbits by itself.
+## sc:n_ext! scene: the next event, waiting at most a frame (1/60 s):
+## "frame", "key Space", "key q", "close". Dragging orbits by itself.
 "n_ext! : float -> text"             ffi:b_ind< "scene/next"
-# sc:c_lose! scene: close the window; 1.
+## sc:c_lose! scene: close the window; 1.
 "c_lose! : float -> int"             ffi:b_ind< "scene/close"
 
-# The native package behind these functions.
+## The native package behind these functions.
 l:package := "scene"

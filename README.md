@@ -44,7 +44,11 @@ just walkthrough                # a fresh clone, built and run, checked against 
 ```
 
 ([`just`](https://github.com/casey/just) runs the recipes.) What works
-today, extension by extension: [docs/status.md](docs/status.md).
+today, extension by extension: [docs/status.md](docs/status.md). Every
+facade, shared library and demo, cross-referenced with its types and
+its documentation:
+[the docs](https://softwarewrighter.github.io/X_eTaL-extensions/doc/)
+(`just doc`; built by X_eTaL's `xetal doc`).
 
 ## What this is
 
@@ -211,6 +215,8 @@ just test-exts       # every extension's reg-rs tests (reg-rs on PATH)
 just videos [EXT]    # record the demos (vhs; window demos from headless frames; web pages by headless Chrome): nothing on screen
 just pages           # build the site into pages/ (the recordings and how to run them); commit it, a push publishes it
 just check-pages     # pages/ is up to date (the gate fails if not)
+just check-docs      # every export documented (## above it), every ## >> example run
+just doc             # the cross-referenced docs alone (pages/doc)
 just serve-pages     # preview it at http://127.0.0.1:8470/X_eTaL-extensions/ (this repo's port: 8470)
 just xetal           # X_eTaL at XETAL_COMMIT: work/xetal, bin/xetal
 just xetal-version   # the known-good X_eTaL commit

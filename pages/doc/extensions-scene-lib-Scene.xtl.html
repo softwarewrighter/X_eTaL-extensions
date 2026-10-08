@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/scene/lib/Scene.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#l.o_pen-21"><span class="c-libfunc">ˡo̲pen!</span></a></li>
+<li class="item"><a href="#l.p_olyline-21"><span class="c-libfunc">ˡp̲olyline!</span></a></li>
+<li class="item"><a href="#l.s_egments-21"><span class="c-libfunc">ˡs̲egments!</span></a></li>
+<li class="item"><a href="#l.d_ots-21"><span class="c-libfunc">ˡd̲ots!</span></a></li>
+<li class="item"><a href="#l.q_uads-21"><span class="c-libfunc">ˡq̲uads!</span></a></li>
+<li class="item"><a href="#l.f_og-21"><span class="c-libfunc">ˡf̲og!</span></a></li>
+<li class="item"><a href="#l.e_ye-21"><span class="c-libfunc">ˡe̲ye!</span></a></li>
+<li class="item"><a href="#l.c_ontrols"><span class="c-libfunc">ˡc̲ontrols</span></a></li>
+<li class="item"><a href="#l.r_emove-21"><span class="c-libfunc">ˡr̲emove!</span></a></li>
+<li class="item"><a href="#l.c_amera-21"><span class="c-libfunc">ˡc̲amera!</span></a></li>
+<li class="item"><a href="#l.n_ext-21"><span class="c-libfunc">ˡn̲ext!</span></a></li>
+<li class="item"><a href="#l.c_lose-21"><span class="c-libfunc">ˡc̲lose!</span></a></li>
+<li class="item"><a href="#l.package">ˡpackage</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">library</span>extensions/scene/lib/Scene.xtl</h1>
+<div class="doc">
+<p>Scene.xtl -- the facade of the scene extension: retained 3D line and
+point scenes in a native window, patched by id, the mouse orbiting.
+Import: &quot;sc:&quot; u_se&lt; &quot;Scene&quot;
+Run with xetal-x, which links scene and serves its windows on the main
+thread (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each signature line is written out by the binding macro (lib/Ffi.xtlm).</p>
+</div>
+<p class="meta"><a href="extensions-scene-lib-Scene.xtl.src.html">source</a> &middot; imports <code><span class="c-error">ffi:</span></code> <a href="lib-Ffi.xtlm.html">lib/Ffi.xtlm</a></p>
+<div class="item" id="l.o_pen-21">
+<h3><a href="#l.o_pen-21"><span class="c-libfunc">ˡo̲pen!</span></a> <span class="type">: Num a =&gt; Char -&gt; a -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L11">line 11</a></div>
+<div class="doc">
+<p>title sc:o_pen! width height: a scene window that size (points); its id.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;o_pen! : text float -&gt; int&quot;</span>         <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;scene/open&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡo̲pen!</span> ← { a b →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/open?text&quot;</span>
+  pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/open?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/open&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-audio-demos-spectrum.xtl.html#w">w</a>, <a href="extensions-scene-demos-cube.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-world.xtl.html#w">w</a></div>
+</div>
+<div class="item" id="l.p_olyline-21">
+<h3><a href="#l.p_olyline-21"><span class="c-libfunc">ˡp̲olyline!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L15">line 15</a></div>
+<div class="doc">
+<p>(scene c_at object c_at red green blue) sc:p_olyline! points: put
+object (an id of your choice) as points joined in order; points are an
+n by 3 matrix (x y z), colors 0 to 1. Putting an id again replaces it.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;p_olyline! : float float -&gt; int&quot;</span>    <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;scene/polyline&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡp̲olyline!</span> ← { a b →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/polyline?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/polyline?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/polyline&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-audio-demos-spectrum.xtl.html#ring">ring</a></div>
+</div>
+<div class="item" id="l.s_egments-21">
+<h3><a href="#l.s_egments-21"><span class="c-libfunc">ˡs̲egments!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L17">line 17</a></div>
+<div class="doc">
+<p>header sc:s_egments! points: the points taken in pairs, each a segment.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;s_egments! : float float -&gt; int&quot;</span>    <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;scene/segments&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡs̲egments!</span> ← { a b →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/segments?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/segments?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/segments&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-audio-demos-spectrum.xtl.html#u.d_raw"><span class="c-userfunc">ᵘd̲raw</span></a>, <a href="extensions-scene-demos-cube.xtl.html#x">x</a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a></div>
+</div>
+<div class="item" id="l.d_ots-21">
+<h3><a href="#l.d_ots-21"><span class="c-libfunc">ˡd̲ots!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L19">line 19</a></div>
+<div class="doc">
+<p>header sc:d_ots! points: each point a dot.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;d_ots! : float float -&gt; int&quot;</span>        <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;scene/dots&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡd̲ots!</span> ← { a b →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/dots?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/dots?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/dots&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-scene-demos-cube.xtl.html#y">y</a></div>
+</div>
+<div class="item" id="l.q_uads-21">
+<h3><a href="#l.q_uads-21"><span class="c-libfunc">ˡq̲uads!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L23">line 23</a></div>
+<div class="doc">
+<p>header sc:q_uads! points: the points taken in fours, each the corners
+of a filled quad in order round it (4n by 3); shaded by how it faces
+the light, nearer quads hiding farther ones; lines and dots draw over.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;q_uads! : float float -&gt; int&quot;</span>       <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;scene/quads&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡq̲uads!</span> ← { a b →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/quads?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/quads?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/quads&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-solid.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-world.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a></div>
+</div>
+<div class="item" id="l.f_og-21">
+<h3><a href="#l.f_og-21"><span class="c-libfunc">ˡf̲og!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L26">line 26</a></div>
+<div class="doc">
+<p>scene sc:f_og! near far: quads fade into the background between those
+depths (scene units from the camera); far &lt;= near: no fog.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;f_og! : float float -&gt; int&quot;</span>         <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;scene/fog&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡf̲og!</span> ← { a b →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/fog?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/fog?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/fog&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-solid.xtl.html#g">g</a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#g">g</a>, <a href="extensions-scene-demos-voxels-world.xtl.html#g">g</a></div>
+</div>
+<div class="item" id="l.e_ye-21">
+<h3><a href="#l.e_ye-21"><span class="c-libfunc">ˡe̲ye!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L30">line 30</a></div>
+<div class="doc">
+<p>scene sc:e_ye! x y z yaw pitch: a first-person camera at the eye,
+looking along yaw (0 toward -z, turning right toward +x) and pitch (up
+positive), radians; sc:c_amera! goes back to orbiting.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;e_ye! : float float -&gt; int&quot;</span>         <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;scene/eye&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡe̲ye!</span> ← { a b →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/eye?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/eye?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/eye&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-walk.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#e">e</a></div>
+</div>
+<div class="item" id="l.c_ontrols">
+<h3><a href="#l.c_ontrols"><span class="c-libfunc">ˡc̲ontrols</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L35">line 35</a></div>
+<div class="doc">
+<p>sc:c_ontrols scene: how far the mouse was dragged since last asked (x
+y, pixels), then 1 or 0 for each key held -- w a s d space shift and
+the arrows left right up down. Headless, XETAL_EVENTS may hold
+&quot;keydown w&quot;, &quot;keyup w&quot; and &quot;drag 10 0&quot;.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;c_ontrols : float -&gt; floats&quot;</span>        <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;scene/controls&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡc̲ontrols</span> ← { a →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/controls?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  v ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/controls&quot;</span>
+  (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/controls?shape&quot;</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-walk.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></div>
+</div>
+<div class="item" id="l.r_emove-21">
+<h3><a href="#l.r_emove-21"><span class="c-libfunc">ˡr̲emove!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L37">line 37</a></div>
+<div class="doc">
+<p>scene sc:r_emove! object: 1 if it was there, else 0.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;r_emove! : float float -&gt; int&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;scene/remove&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡr̲emove!</span> ← { a b →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/remove?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/remove?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/remove&quot;</span>
+}</pre></details>
+</div>
+<div class="item" id="l.c_amera-21">
+<h3><a href="#l.c_amera-21"><span class="c-libfunc">ˡc̲amera!</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L40">line 40</a></div>
+<div class="doc">
+<p>scene sc:c_amera! yaw pitch distance spin: where the camera orbits from
+(radians, scene units) and how fast it turns by itself (radians a second).</p>
+</div>
+<pre class="code"><span class="c-string">&quot;c_amera! : float float -&gt; int&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;scene/camera&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡc̲amera!</span> ← { a b →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/camera?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  pb ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/camera?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> b
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/camera&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-audio-demos-spectrum.xtl.html#c">c</a>, <a href="extensions-scene-demos-cube.xtl.html#k">k</a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#k">k</a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#k">k</a>, <a href="extensions-scene-demos-voxels-world.xtl.html#k">k</a></div>
+</div>
+<div class="item" id="l.n_ext-21">
+<h3><a href="#l.n_ext-21"><span class="c-libfunc">ˡn̲ext!</span></a> <span class="type">: Num a =&gt; a -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L43">line 43</a></div>
+<div class="doc">
+<p>sc:n_ext! scene: the next event, waiting at most a frame (1/60 s):
+&quot;frame&quot;, &quot;key Space&quot;, &quot;key q&quot;, &quot;close&quot;. Dragging orbits by itself.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;n_ext! : float -&gt; text&quot;</span>             <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;scene/next&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡn̲ext!</span> ← { a →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/next?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/next&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-audio-demos-spectrum.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-cube.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-world.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="l.c_lose-21">
+<h3><a href="#l.c_lose-21"><span class="c-libfunc">ˡc̲lose!</span></a> <span class="type">: Num a =&gt; a -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L45">line 45</a></div>
+<div class="doc">
+<p>sc:c_lose! scene: close the window; 1.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;c_lose! : float -&gt; int&quot;</span>             <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;scene/close&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡc̲lose!</span> ← { a →
+  pa ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:scene/close?float=&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a
+  <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:scene/close&quot;</span>
+}</pre></details>
+<div class="uses">Used in: <a href="extensions-audio-demos-spectrum.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-cube.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-world.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></div>
+</div>
+<div class="item" id="l.package">
+<h3><a href="#l.package">ˡpackage</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-lib-Scene.xtl.src.html#L48">line 48</a></div>
+<div class="doc">
+<p>The native package behind these functions.</p>
+</div>
+<pre class="code">ˡpackage ← <span class="c-string">&quot;scene&quot;</span></pre>
+</div>
+</main>
+</body>
+</html>
