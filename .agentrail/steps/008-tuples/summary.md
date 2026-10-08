@@ -1,0 +1,1 @@
+tuples: Endless state (player, world, job, settings) and Rubik (colors, history, running); goldens unchanged
