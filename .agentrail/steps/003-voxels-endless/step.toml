@@ -1,8 +1,9 @@
 number = 3
 slug = "voxels-endless"
-status = "in-progress"
+status = "completed"
 description = "game step 3 (inserted, the user): endless walking with a curved horizon: terr..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T20:26:13"
-commits = []
+completed_at = "2026-10-07T23:11:49"
+commits = ["9b8187c0aa3e01750939bded41d050b257ce509a"]
