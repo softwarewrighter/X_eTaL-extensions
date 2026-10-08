@@ -1,6 +1,6 @@
 number = 5
 slug = "smooth-streaming"
-status = "pending"
+status = "in-progress"
 description = "game step 5 (inserted, the user: laggy at the edges, it pauses when new land ..."
 role = "production"
 context_files = []

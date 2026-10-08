@@ -398,3 +398,67 @@ l:p_atch := { c ->
   f := f + ((t_ally f) c_at 5) r_eshape x0 c_at 0 c_at z0 c_at 0 0
   (e_nclose f) c_at e_nclose inner s_elect r_avel l:s_olid b
 }
+
+### Columns, quickly
+
+# the 18 by 32 by 18 block of a column with its border: its cells'
+# coordinates, made once (flat, x slowest, and as arrays), and which
+# cells are the column's own (x and z from 1 to 16)
+cc := c_oords 18 32 18
+cx18 := 1 s_elect cc
+cy18 := 2 s_elect cc
+cz18 := 3 s_elect cc
+X18 := 18 32 18 r_eshape cx18
+Y18 := 18 32 18 r_eshape cy18
+Z18 := 18 32 18 r_eshape cz18
+own := (cx18 >= 1) * (cx18 <= 16) * (cz18 >= 1) * cz18 <= 16
+
+## vx:c_olumnBlocks c: the blocks of column c (cx cz) of the endless
+## world with a border of one from its neighbors, 18 by 32 by 18: the
+## heights, the terrain's rules, two trees placed by hash -- the first
+## of the three parts of making a column (about 12 ms)
+l:c_olumnBlocks := { c ->
+  x0 := (16 * 1 s_elect c) - 1
+  z0 := (16 * 2 s_elect c) - 1
+  h := l:h_eightsAt x0 c_at z0 c_at 18
+  d := ((1 + cz18 + 18 * cx18) s_elect r_avel h) - cy18
+  b := (d = 1) * 3
+  b := b + (d > 1) * (d < 5) * 2
+  b := b + (d >= 5) * 1
+  b := b + (b = 3) * (cy18 <= 14) * 1
+  b := b + (b = 0) * (cy18 < 14) * 5
+  b := 18 32 18 r_eshape b
+  r := (1 s_elect c) l:h_ash 2 s_elect c
+  q := (2 s_elect c) l:h_ash 1 s_elect c
+  t := 4 + f_loor 10.0 * (r_avel r) c_at (r_avel q) c_at (r_avel r * q) c_at r_avel 1.0 - r * q
+  (2 2 r_eshape t) l:f_orest b
+}
+
+## vx:c_olumnMask b: the solid mask of a column's own cells (16 by 32
+## by 16, flat, x slowest), from its blocks
+l:c_olumnMask := { b -> inner s_elect r_avel l:s_olid b }
+
+## c vx:c_olumnFaces b: the faces of column c's own cells, in world
+## coordinates, one row each (x y z direction block) -- found over the
+## block with its border, so faces against a solid neighbor hide; the
+## second part of making a column
+l:c_olumnFaces := { c b ->
+  s := l:s_olid b
+  w := s > (-1 o_-_1 s) * X18 > 0
+  e := s > (1 o_-_1 s) * X18 < 17
+  d := s > (-1 o_-_2 s) * Y18 > 0
+  u := s > (1 o_-_2 s) * Y18 < 31
+  n := s > (-1 o_-_3 s) * Z18 > 0
+  so := s > (1 o_-_3 s) * Z18 < 17
+  top := (b = 5) > (1 o_-_2 b > 0) * Y18 < 31
+  bb := own * 1 + r_avel b
+  x0 := (16 * 1 s_elect c) - 1
+  z0 := (16 * 2 s_elect c) - 1
+  r_w := { d m ->
+    k := w_here m > 0
+    (5 c_at t_ally k) r_eshape (x0 + k s_elect cx18) c_at (k s_elect cy18) c_at (z0 + k s_elect cz18) c_at ((t_ally k) r_eshape d) c_at (k s_elect m) - 1
+  }
+  r := (0 r_w bb * r_avel w) c_at_2 (1 r_w bb * r_avel e) c_at_2 (2 r_w bb * r_avel d) c_at_2 (3 r_w bb * r_avel u)
+  r := r c_at_2 (4 r_w bb * r_avel n) c_at_2 (5 r_w bb * r_avel so) c_at_2 3 r_w bb * r_avel top
+  2 1 t_ranspose r
+}

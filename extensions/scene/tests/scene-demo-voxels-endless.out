@@ -1,8 +1,8 @@
 keys: W A S D walk, Shift run, Space jump (in water: swim up, climb out), drag or arrows look, H home, q quit
-columns made at the start, and their faces' objects:
-49.0 50.0
-where the walk ended (x y z, blocks), the columns made in all, and those kept:
-19.0 21.0 -13.0 63.0 63.0
+columns made at the start:
+49
+where the walk ended (x y z, blocks), the columns kept:
+19.0 21.0 -13.0 63.0
 bye
 539086828 36617 work/ve/scene-1-2.png
 4155171495 24168 work/ve/scene-1-100.png

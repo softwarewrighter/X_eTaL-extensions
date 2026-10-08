@@ -147,7 +147,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
     </section>
     <section class="panel demo" id="scene-voxels-endless">
       <h3>scene / voxels-endless <a class="docs" href="doc/extensions-scene-demos-voxels-endless.xtl.html">source and docs</a></h3>
-      <p class="note">Voxels, 6: an endless world. Walk in any direction and it never ends: the land comes from value noise hashed from the coordinates (vx:h_eightsAt), so any column of 16 by 16 blocks can be made by itself and fits its neighbors; columns are made around the player as it walks -- the nearest missing one each frame -- and dropped behind it; fog hides the edge of what is made, and a curved horizon (scene lowers the world by d^2 / 2R) makes it look like a small planet. Collision asks the columns themselves.</p>
+      <p class="note">Voxels, 6: an endless world. Walk in any direction and it never ends: the land comes from value noise hashed from the coordinates (vx:h_eightsAt), so any column of 16 by 16 blocks can be made by itself and fits its neighbors; columns are made around the player as it walks -- the nearest missing one each frame -- and dropped behind it; fog hides the edge of what is made, and a curved horizon (scene lowers the world by d^2 / 2R) makes it look like a small planet. Collision asks the columns themselves. The world and the player are the library Endless.xtl, shared with voxels-fly: each column is made over three frames, so no frame waits long.</p>
       <video src="scene/voxels-endless.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene voxels-endless</pre>
     </section>
@@ -216,7 +216,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 512b3ee</span><span class="sep">&middot;</span>
-  <span>built at 4cde95a</span>
+  <span>built at 6c3ef09</span>
 </footer>
 </body>
 </html>

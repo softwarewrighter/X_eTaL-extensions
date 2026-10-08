@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/scene/demos/Endless.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-Endless.xtl.html">Endless.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">The state</a></li>
+<li class="item"><a href="#l.reach">ˡreach</a></li>
+<li class="item"><a href="#l.p_layer"><span class="c-libfunc">ˡp̲layer</span></a></li>
+<li class="item"><a href="#l.k_eys"><span class="c-libfunc">ˡk̲eys</span></a></li>
+<li class="item"><a href="#l.n_umbers"><span class="c-libfunc">ˡn̲umbers</span></a></li>
+<li class="item"><a href="#l.s_ettings"><span class="c-libfunc">ˡs̲ettings</span></a></li>
+<li class="item"><a href="#l.w_indow"><span class="c-libfunc">ˡw̲indow</span></a></li>
+<li class="item"><a href="#k_ey"><span class="c-builtin">k̲ey</span></a></li>
+<li class="item"><a href="#c_x"><span class="c-builtin">c̲x</span></a></li>
+<li class="item"><a href="#c_z"><span class="c-builtin">c̲z</span></a></li>
+<li class="item"><a href="#w_ithKeys"><span class="c-builtin">w̲ithKeys</span></a></li>
+<li class="item"><a href="#w_ithNumbers"><span class="c-builtin">w̲ithNumbers</span></a></li>
+<li class="item"><a href="#w_ithSettings"><span class="c-builtin">w̲ithSettings</span></a></li>
+<li class="item"><a href="#w_ithJob"><span class="c-builtin">w̲ithJob</span></a></li>
+<li class="item"><a href="#l.w_ithPlayer"><span class="c-libfunc">ˡw̲ithPlayer</span></a></li>
+<li class="item"><a href="#l.n_ew"><span class="c-libfunc">ˡn̲ew</span></a></li>
+<li class="item"><a href="#l.s_tart"><span class="c-libfunc">ˡs̲tart</span></a></li>
+<li><a href="#section-2">Making and dropping columns</a></li>
+<li class="item"><a href="#h_ome"><span class="c-builtin">h̲ome</span></a></li>
+<li class="item"><a href="#t_rim"><span class="c-builtin">t̲rim</span></a></li>
+<li class="item"><a href="#s_endOne"><span class="c-builtin">s̲endOne</span></a></li>
+<li class="item"><a href="#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a></li>
+<li class="item"><a href="#b_locks"><span class="c-builtin">b̲locks</span></a></li>
+<li class="item"><a href="#f_aces"><span class="c-builtin">f̲aces</span></a></li>
+<li class="item"><a href="#s_end"><span class="c-builtin">s̲end</span></a></li>
+<li><a href="#section-3">Collision</a></li>
+<li class="item"><a href="#c_ell"><span class="c-builtin">c̲ell</span></a></li>
+<li class="item"><a href="#l.h_it"><span class="c-libfunc">ˡh̲it</span></a></li>
+<li><a href="#section-4">The player</a></li>
+<li class="item"><a href="#l.dt">ˡdt</a></li>
+<li class="item"><a href="#s_et"><span class="c-builtin">s̲et</span></a></li>
+<li class="item"><a href="#s_nap"><span class="c-builtin">s̲nap</span></a></li>
+<li class="item"><a href="#m_x"><span class="c-builtin">m̲x</span></a></li>
+<li class="item"><a href="#m_z"><span class="c-builtin">m̲z</span></a></li>
+<li class="item"><a href="#m_y"><span class="c-builtin">m̲y</span></a></li>
+<li class="item"><a href="#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a></li>
+<li class="item"><a href="#l.h_omeAgain"><span class="c-libfunc">ˡh̲omeAgain</span></a></li>
+<li class="item"><a href="#l.t_oggleFly"><span class="c-libfunc">ˡt̲oggleFly</span></a></li>
+<li class="item"><a href="#l.s_top"><span class="c-libfunc">ˡs̲top</span></a></li>
+<li class="item"><a href="#l.s_topped"><span class="c-libfunc">ˡs̲topped</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">library</span>extensions/scene/demos/Endless.xtl</h1>
+<div class="doc">
+<p>Endless.xtl -- the endless world and its player, shared by the voxel
+demos that walk or fly in it (voxels-endless, voxels-fly, and those
+after): columns of 16 by 16 blocks made around the player and dropped
+behind it, each made over three frames so no frame waits long, and the
+player -- walking, swimming, flying -- moving against them.
+Import: &quot;en:&quot; u_se&lt; &quot;Endless&quot;</p>
+</div>
+<p class="meta"><a href="extensions-scene-demos-Endless.xtl.src.html">source</a> &middot; imports <code><span class="c-error">vx:</span></code> <a href="extensions-scene-demos-Voxels.xtl.html">extensions/scene/demos/Voxels.xtl</a>; <code><span class="c-error">sc:</span></code> <a href="extensions-scene-lib-Scene.xtl.html">extensions/scene/lib/Scene.xtl</a></p>
+<h2 class="section" id="section-1">The state</h2>
+<div class="item" id="l.reach">
+<h3><a href="#l.reach">ˡreach</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L23">line 23</a></div>
+<div class="doc">
+<p>the columns are kept this many (16-block steps) from the player's,
+each way, and made within it; beyond one more they are dropped</p>
+</div>
+<pre class="code">ˡreach ← <span class="c-number">3</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#t_rim"><span class="c-builtin">t̲rim</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#b_locks"><span class="c-builtin">b̲locks</span></a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a></div>
+</div>
+<div class="item" id="l.p_layer">
+<h3><a href="#l.p_layer"><span class="c-libfunc">ˡp̲layer</span></a> <span class="type">: Box a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L26">line 26</a></div>
+<div class="doc">
+<p>en:p_layer s: the player's ten numbers</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡp̲layer</span> ← { s → <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h_ome"><span class="c-builtin">h̲ome</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#l.t_oggleFly"><span class="c-libfunc">ˡt̲oggleFly</span></a>, <a href="extensions-scene-demos-voxels-endless.xtl.src.html#L50">voxels-endless.xtl:50</a>, <a href="extensions-scene-demos-voxels-fly.xtl.src.html#L52">voxels-fly.xtl:52</a></div>
+</div>
+<div class="item" id="l.k_eys">
+<h3><a href="#l.k_eys"><span class="c-libfunc">ˡk̲eys</span></a> <span class="type">: Box a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L28">line 28</a></div>
+<div class="doc">
+<p>en:k_eys s: the columns' keys</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡk̲eys</span> ← { s → <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#t_rim"><span class="c-builtin">t̲rim</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#b_locks"><span class="c-builtin">b̲locks</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#c_ell"><span class="c-builtin">c̲ell</span></a>, <a href="extensions-scene-demos-voxels-endless.xtl.src.html#L31">voxels-endless.xtl:31</a>, <a href="extensions-scene-demos-voxels-endless.xtl.src.html#L50">voxels-endless.xtl:50</a>, <a href="extensions-scene-demos-voxels-fly.xtl.src.html#L28">voxels-fly.xtl:28</a>, <a href="extensions-scene-demos-voxels-fly.xtl.src.html#L52">voxels-fly.xtl:52</a></div>
+</div>
+<div class="item" id="l.n_umbers">
+<h3><a href="#l.n_umbers"><span class="c-libfunc">ˡn̲umbers</span></a> <span class="type">: Box a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L30">line 30</a></div>
+<div class="doc">
+<p>en:n_umbers s: the columns' numbers</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡn̲umbers</span> ← { s → <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#t_rim"><span class="c-builtin">t̲rim</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#b_locks"><span class="c-builtin">b̲locks</span></a></div>
+</div>
+<div class="item" id="l.s_ettings">
+<h3><a href="#l.s_ettings"><span class="c-libfunc">ˡs̲ettings</span></a> <span class="type">: Box a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L32">line 32</a></div>
+<div class="doc">
+<p>en:s_ettings s: the window, the next number, the job, the start</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲ettings</span> ← { s → <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">4</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.w_indow"><span class="c-libfunc">ˡw̲indow</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#l.s_tart"><span class="c-libfunc">ˡs̲tart</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#b_locks"><span class="c-builtin">b̲locks</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#f_aces"><span class="c-builtin">f̲aces</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#s_end"><span class="c-builtin">s̲end</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#l.s_top"><span class="c-libfunc">ˡs̲top</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#l.s_topped"><span class="c-libfunc">ˡs̲topped</span></a></div>
+</div>
+<div class="item" id="l.w_indow">
+<h3><a href="#l.w_indow"><span class="c-libfunc">ˡw̲indow</span></a> <span class="type">: Box a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L34">line 34</a></div>
+<div class="doc">
+<p>en:w_indow s: the scene window the world is drawn in</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡw̲indow</span> ← { s → <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Endless.xtl.html#l.s_ettings" class="c-libfunc">ˡs̲ettings</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#t_rim"><span class="c-builtin">t̲rim</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a></div>
+</div>
+<div class="item" id="k_ey">
+<h3><a href="#k_ey"><span class="c-builtin">k̲ey</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L37">line 37</a></div>
+<pre class="code"><span class="c-builtin">k̲ey</span> ← { c → <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<span class="c-number">10000</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1000</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> c) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1000</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> c }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#c_ell"><span class="c-builtin">c̲ell</span></a></div>
+</div>
+<div class="item" id="c_x">
+<h3><a href="#c_x"><span class="c-builtin">c̲x</span></a> <span class="type">: Num a =&gt; a -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L38">line 38</a></div>
+<pre class="code"><span class="c-builtin">c̲x</span> ← { k → ((<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> k) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">10000</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1000</span> }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#t_rim"><span class="c-builtin">t̲rim</span></a></div>
+</div>
+<div class="item" id="c_z">
+<h3><a href="#c_z"><span class="c-builtin">c̲z</span></a> <span class="type">: Num a =&gt; a -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L39">line 39</a></div>
+<pre class="code"><span class="c-builtin">c̲z</span> ← { k → ((<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> k) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">10000</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1000</span> }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#t_rim"><span class="c-builtin">t̲rim</span></a></div>
+</div>
+<div class="item" id="w_ithKeys">
+<h3><a href="#w_ithKeys"><span class="c-builtin">w̲ithKeys</span></a> <span class="type">: a -&gt; Box a -&gt; Box a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L43">line 43</a></div>
+<pre class="code"><span class="c-builtin">w̲ithKeys</span> ← { v s → (<span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#t_rim"><span class="c-builtin">t̲rim</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#b_locks"><span class="c-builtin">b̲locks</span></a></div>
+</div>
+<div class="item" id="w_ithNumbers">
+<h3><a href="#w_ithNumbers"><span class="c-builtin">w̲ithNumbers</span></a> <span class="type">: a -&gt; Box a -&gt; Box a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L44">line 44</a></div>
+<pre class="code"><span class="c-builtin">w̲ithNumbers</span> ← { v s → (<span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#t_rim"><span class="c-builtin">t̲rim</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#b_locks"><span class="c-builtin">b̲locks</span></a></div>
+</div>
+<div class="item" id="w_ithSettings">
+<h3><a href="#w_ithSettings"><span class="c-builtin">w̲ithSettings</span></a> <span class="type">: a -&gt; Box a -&gt; Box a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L45">line 45</a></div>
+<pre class="code"><span class="c-builtin">w̲ithSettings</span> ← { v s → (<span class="c-number">3</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">4</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#b_locks"><span class="c-builtin">b̲locks</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#f_aces"><span class="c-builtin">f̲aces</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#s_end"><span class="c-builtin">s̲end</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#l.s_top"><span class="c-libfunc">ˡs̲top</span></a></div>
+</div>
+<div class="item" id="w_ithJob">
+<h3><a href="#w_ithJob"><span class="c-builtin">w̲ithJob</span></a> <span class="type">: a -&gt; Box a -&gt; Box a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L46">line 46</a></div>
+<pre class="code"><span class="c-builtin">w̲ithJob</span> ← { v s → (<span class="c-number">4</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">5</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#b_locks"><span class="c-builtin">b̲locks</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#f_aces"><span class="c-builtin">f̲aces</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#s_end"><span class="c-builtin">s̲end</span></a></div>
+</div>
+<div class="item" id="l.w_ithPlayer">
+<h3><a href="#l.w_ithPlayer"><span class="c-libfunc">ˡw̲ithPlayer</span></a> <span class="type">: a -&gt; Box a -&gt; Box a</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L49">line 49</a></div>
+<div class="doc">
+<p>en:w_ithPlayer p s: the state with the player p</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡw̲ithPlayer</span> ← { p s → (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> p) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#l.h_omeAgain"><span class="c-libfunc">ˡh̲omeAgain</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#l.t_oggleFly"><span class="c-libfunc">ˡt̲oggleFly</span></a></div>
+</div>
+<div class="item" id="l.n_ew">
+<h3><a href="#l.n_ew"><span class="c-libfunc">ˡn̲ew</span></a> <span class="type">: Num a =&gt; a -&gt; Box Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L53">line 53</a></div>
+<div class="doc">
+<p>en:n_ew w: a world for window w, no columns made yet, the player
+standing above the highest ground of column (0, 0), facing north</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡn̲ew</span> ← { w →
+  hv ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.h_eightsAt" class="c-libfunc">ᵛˣh̲eightsAt</a> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">16</span>
+  i ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> hv <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> hv
+  x ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (i <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">16</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>
+  y ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#-2b" class="c-symbol">+</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> hv
+  z ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (i <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">16</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>
+  p ← x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> y <a href="builtins.html#c_at" class="c-builtin">c̲at</a> z <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>
+  none ← <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>
+  set ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> y <a href="builtins.html#c_at" class="c-builtin">c̲at</a> z
+  (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> p) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> none) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> none) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> set) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> none
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-endless.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a></div>
+</div>
+<div class="item" id="l.s_tart">
+<h3><a href="#l.s_tart"><span class="c-libfunc">ˡs̲tart</span></a> <span class="type">: Box a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L66">line 66</a></div>
+<div class="doc">
+<p>en:s_tart s: where the player started (x y z)</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲tart</span> ← { s → <span class="c-number">3</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">6</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="extensions-scene-demos-Endless.xtl.html#l.s_ettings" class="c-libfunc">ˡs̲ettings</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.h_omeAgain"><span class="c-libfunc">ˡh̲omeAgain</span></a></div>
+</div>
+<h2 class="section" id="section-2">Making and dropping columns</h2>
+<div class="item" id="h_ome">
+<h3><a href="#h_ome"><span class="c-builtin">h̲ome</span></a> <span class="type">: Box Float -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L71">line 71</a></div>
+<div class="doc">
+<p>the player's column (cx cz)</p>
+</div>
+<pre class="code"><span class="c-builtin">h̲ome</span> ← { s →
+  p ← <a href="extensions-scene-demos-Endless.xtl.html#l.p_layer" class="c-libfunc">ˡp̲layer</a> s
+  (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> (<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">16.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> (<span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">16.0</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#t_rim"><span class="c-builtin">t̲rim</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#b_locks"><span class="c-builtin">b̲locks</span></a></div>
+</div>
+<div class="item" id="t_rim">
+<h3><a href="#t_rim"><span class="c-builtin">t̲rim</span></a> <span class="type">: Box Float -&gt; Box Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L78">line 78</a></div>
+<pre class="code"><span class="c-builtin">t̲rim</span> ← { s →
+  h ← <a href="extensions-scene-demos-Endless.xtl.html#h_ome" class="c-builtin">h̲ome</a> s
+  ks ← <a href="extensions-scene-demos-Endless.xtl.html#l.k_eys" class="c-libfunc">ˡk̲eys</a> s
+  far ← ((<a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> (<a href="extensions-scene-demos-Endless.xtl.html#c_x" class="c-builtin">c̲x</a> ks) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> h) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <a href="extensions-scene-demos-Endless.xtl.html#l.reach">ˡreach</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> (<a href="extensions-scene-demos-Endless.xtl.html#c_z" class="c-builtin">c̲z</a> ks) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> h) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <a href="extensions-scene-demos-Endless.xtl.html#l.reach">ˡreach</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> far ? s
+  j ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> far <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span>
+  n ← j <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Endless.xtl.html#l.n_umbers" class="c-libfunc">ˡn̲umbers</a> s
+  w ← <a href="extensions-scene-demos-Endless.xtl.html#l.w_indow" class="c-libfunc">ˡw̲indow</a> s
+  gone ← <span class="c-quote">'</span>{ w <a href="extensions-scene-lib-Scene.xtl.html#l.r_emove-21" class="c-libfunc">ˢᶜr̲emove!</a> (<span class="c-number">10.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> n) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">7</span>
+  keep ← j <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ks
+  s ← (keep <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> ks) <a href="extensions-scene-demos-Endless.xtl.html#w_ithKeys" class="c-builtin">w̲ithKeys</a> s
+  s ← (keep <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <a href="extensions-scene-demos-Endless.xtl.html#l.n_umbers" class="c-libfunc">ˡn̲umbers</a> s) <a href="extensions-scene-demos-Endless.xtl.html#w_ithNumbers" class="c-builtin">w̲ithNumbers</a> s
+  ((<span class="c-number">5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> j) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">6</span> <a href="builtins.html#-2b" class="c-symbol">+</a> j) <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a></div>
+</div>
+<div class="item" id="s_endOne">
+<h3><a href="#s_endOne"><span class="c-builtin">s̲endOne</span></a> <span class="type">: Float -&gt; Int -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L94">line 94</a></div>
+<pre class="code"><span class="c-builtin">s̲endOne</span> ← { nt f →
+  w ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> nt
+  t ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> nt
+  sel ← (<span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> f) <a href="builtins.html#-3d" class="c-symbol">=</a> t
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> sel ? <span class="c-number">0</span>
+  head ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">10.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> nt) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.colors">ᵛˣcolors</a>
+  head <a href="extensions-scene-lib-Scene.xtl.html#l.q_uads-21" class="c-libfunc">ˢᶜq̲uads!</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.c_orners" class="c-libfunc">ᵛˣc̲orners</a> sel <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> f
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#s_end"><span class="c-builtin">s̲end</span></a></div>
+</div>
+<div class="item" id="l.s_tream">
+<h3><a href="#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a> <span class="type">: Box Float -&gt; Box Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L107">line 107</a></div>
+<div class="doc">
+<p>en:s_tream s: one frame's work on the world: the first column too far
+away dropped, then a third of making a column -- the nearest missing
+one's blocks and solid mask (part 0), its faces (part 1), or sending
+them to scene (part 2) -- about 12 ms at most</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲tream</span> ← { s →
+  s ← <a href="extensions-scene-demos-Endless.xtl.html#t_rim" class="c-builtin">t̲rim</a> s
+  set ← <a href="extensions-scene-demos-Endless.xtl.html#l.s_ettings" class="c-libfunc">ˡs̲ettings</a> s
+  part ← <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> set
+  part <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1.0</span> ? <a href="extensions-scene-demos-Endless.xtl.html#f_aces" class="c-builtin">f̲aces</a> s
+  part <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">2.0</span> ? <a href="extensions-scene-demos-Endless.xtl.html#s_end" class="c-builtin">s̲end</a> s
+  <a href="extensions-scene-demos-Endless.xtl.html#b_locks" class="c-builtin">b̲locks</a> s
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-endless.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="b_locks">
+<h3><a href="#b_locks"><span class="c-builtin">b̲locks</span></a> <span class="type">: Box Float -&gt; Box Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L118">line 118</a></div>
+<pre class="code"><span class="c-builtin">b̲locks</span> ← { s →
+  h ← <a href="extensions-scene-demos-Endless.xtl.html#h_ome" class="c-builtin">h̲ome</a> s
+  ks ← <a href="extensions-scene-demos-Endless.xtl.html#l.k_eys" class="c-libfunc">ˡk̲eys</a> s
+  r ← <a href="extensions-scene-demos-Endless.xtl.html#l.reach">ˡreach</a>
+  o ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> r) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> r
+  dx ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> o <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> o
+  dz ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> o) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> o
+  ws ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<span class="c-number">10000</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1000</span> <a href="builtins.html#-2b" class="c-symbol">+</a> dx <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> h) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1000</span> <a href="builtins.html#-2b" class="c-symbol">+</a> dz <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> h
+  miss ← (<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> ws <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> ks) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ws)
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> miss ? s
+  d ← (miss <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> dx <a href="builtins.html#-2a" class="c-symbol">×</a> dx) <a href="builtins.html#-2b" class="c-symbol">+</a> miss <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> dz <a href="builtins.html#-2a" class="c-symbol">×</a> dz
+  i ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> (d <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> d) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> miss
+  c ← ((i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> dx) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> h) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> dz) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> h
+  b ← <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnBlocks" class="c-libfunc">ᵛˣc̲olumnBlocks</a> c
+  set ← <a href="extensions-scene-demos-Endless.xtl.html#l.s_ettings" class="c-libfunc">ˡs̲ettings</a> s
+  n ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> set
+  set ← (<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> set) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">6</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> set
+  s ← (ks <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ws) <a href="extensions-scene-demos-Endless.xtl.html#w_ithKeys" class="c-builtin">w̲ithKeys</a> s
+  s ← ((<a href="extensions-scene-demos-Endless.xtl.html#l.n_umbers" class="c-libfunc">ˡn̲umbers</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="extensions-scene-demos-Endless.xtl.html#w_ithNumbers" class="c-builtin">w̲ithNumbers</a> s
+  s ← (set) <a href="extensions-scene-demos-Endless.xtl.html#w_ithSettings" class="c-builtin">w̲ithSettings</a> s
+  s ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> b) <a href="extensions-scene-demos-Endless.xtl.html#w_ithJob" class="c-builtin">w̲ithJob</a> s
+  s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnMask" class="c-libfunc">ᵛˣc̲olumnMask</a> b
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a></div>
+</div>
+<div class="item" id="f_aces">
+<h3><a href="#f_aces"><span class="c-builtin">f̲aces</span></a> <span class="type">: Box Float -&gt; Box Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L143">line 143</a></div>
+<pre class="code"><span class="c-builtin">f̲aces</span> ← { s →
+  set ← <a href="extensions-scene-demos-Endless.xtl.html#l.s_ettings" class="c-libfunc">ˡs̲ettings</a> s
+  c ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">4</span> <span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> set
+  b ← <span class="c-number">18</span> <span class="c-number">32</span> <span class="c-number">18</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s
+  f ← c <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnFaces" class="c-libfunc">ᵛˣc̲olumnFaces</a> b
+  s ← ((<span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> set) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> set) <a href="extensions-scene-demos-Endless.xtl.html#w_ithSettings" class="c-builtin">w̲ithSettings</a> s
+  (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> f) <a href="extensions-scene-demos-Endless.xtl.html#w_ithJob" class="c-builtin">w̲ithJob</a> s
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a></div>
+</div>
+<div class="item" id="s_end">
+<h3><a href="#s_end"><span class="c-builtin">s̲end</span></a> <span class="type">: Box Float -&gt; Box Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L153">line 153</a></div>
+<pre class="code"><span class="c-builtin">s̲end</span> ← { s →
+  set ← <a href="extensions-scene-demos-Endless.xtl.html#l.s_ettings" class="c-libfunc">ˡs̲ettings</a> s
+  v ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s
+  f ← (((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">5</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">5</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> v
+  n ← <span class="c-number">6</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> set
+  w ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> set
+  sent ← <span class="c-quote">'</span>{ (w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-lambdaarg">⍵</span>) <a href="extensions-scene-demos-Endless.xtl.html#s_endOne" class="c-builtin">s̲endOne</a> f } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">7</span>
+  s ← ((<span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> set) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> set) <a href="extensions-scene-demos-Endless.xtl.html#w_ithSettings" class="c-builtin">w̲ithSettings</a> s
+  (<span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="extensions-scene-demos-Endless.xtl.html#w_ithJob" class="c-builtin">w̲ithJob</a> s
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a></div>
+</div>
+<h2 class="section" id="section-3">Collision</h2>
+<div class="item" id="c_ell">
+<h3><a href="#c_ell"><span class="c-builtin">c̲ell</span></a> <span class="type">: (Num a, Truthy a) =&gt; Box Float -&gt; Int -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L168">line 168</a></div>
+<pre class="code"><span class="c-builtin">c̲ell</span> ← { s v →
+  x ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> v
+  z ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> v
+  ys ← <span class="c-number">2</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> v
+  i ← (<a href="extensions-scene-demos-Endless.xtl.html#l.k_eys" class="c-libfunc">ˡk̲eys</a> s) <a href="builtins.html#i_ndexOf" class="c-builtin">i̲ndexOf</a> <a href="extensions-scene-demos-Endless.xtl.html#k_ey" class="c-builtin">k̲ey</a> (x <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">16</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> z <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">16</span>
+  i <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-scene-demos-Endless.xtl.html#l.k_eys" class="c-libfunc">ˡk̲eys</a> s ? <span class="c-number">1</span>
+  m ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> (<span class="c-number">5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> i) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (z <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">16</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">16</span> <a href="builtins.html#-2a" class="c-symbol">×</a> ys <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">32</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">16</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> m
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.h_it"><span class="c-libfunc">ˡh̲it</span></a></div>
+</div>
+<div class="item" id="l.h_it">
+<h3><a href="#l.h_it"><span class="c-libfunc">ˡh̲it</span></a> <span class="type">: Box Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L181">line 181</a></div>
+<div class="doc">
+<p>s en:h_it q: whether the player's box (0.6 wide, 1.75 tall) with its
+feet at q (x y z) overlaps a solid block; below the world is solid,
+above it air</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡh̲it</span> ← { s q →
+  x ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> q
+  y ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> q
+  z ← <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> q
+  cx ← <a href="builtins.html#u_nique" class="c-builtin">u̲nique</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> (x <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.3</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> x <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3</span>
+  cy ← <a href="builtins.html#u_nique" class="c-builtin">u̲nique</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> y <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (y <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.9</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> y <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.75</span>
+  cz ← <a href="builtins.html#u_nique" class="c-builtin">u̲nique</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> (z <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.3</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> z <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3</span>
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> cy <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">0</span> ? <span class="c-number">1.0</span>
+  cy ← (cy <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">31</span>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> cy
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> cy ? <span class="c-number">0.0</span>
+  px ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> cx <span class="c-quote">'</span>{ <span class="c-lambdaarg">⍺</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#t_able" class="c-builtin">t̲able</a> cz
+  pz ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> cx <span class="c-quote">'</span>{ <span class="c-lambdaarg">⍵</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-lambdaarg">⍺</span> } <a href="builtins.html#t_able" class="c-builtin">t̲able</a> cz
+  hits ← <span class="c-quote">'</span>{ s <a href="extensions-scene-demos-Endless.xtl.html#c_ell" class="c-builtin">c̲ell</a> (<span class="c-lambdaarg">⍵</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> px) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-lambdaarg">⍵</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> pz) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> cy } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> px
+  <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> hits
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#m_x"><span class="c-builtin">m̲x</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#m_z"><span class="c-builtin">m̲z</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#m_y"><span class="c-builtin">m̲y</span></a></div>
+</div>
+<h2 class="section" id="section-4">The player</h2>
+<div class="item" id="l.dt">
+<h3><a href="#l.dt">ˡdt</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L200">line 200</a></div>
+<div class="doc">
+<p>a frame: 1/60 s</p>
+</div>
+<pre class="code">ˡdt ← <span class="c-number">1.0</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">60.0</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#m_x"><span class="c-builtin">m̲x</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#m_z"><span class="c-builtin">m̲z</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#m_y"><span class="c-builtin">m̲y</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a></div>
+</div>
+<div class="item" id="s_et">
+<h3><a href="#s_et"><span class="c-builtin">s̲et</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L203">line 203</a></div>
+<pre class="code"><span class="c-builtin">s̲et</span> ← { l p → p <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">10</span>) <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> l) <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> l) <a href="builtins.html#-2d" class="c-symbol">−</a> p }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#m_x"><span class="c-builtin">m̲x</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#m_z"><span class="c-builtin">m̲z</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#m_y"><span class="c-builtin">m̲y</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a></div>
+</div>
+<div class="item" id="s_nap">
+<h3><a href="#s_nap"><span class="c-builtin">s̲nap</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L206">line 206</a></div>
+<pre class="code"><span class="c-builtin">s̲nap</span> ← { v a →
+  v <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span> ? (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> a <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.3001</span>
+  (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> a <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.3</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3001</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#m_x"><span class="c-builtin">m̲x</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#m_z"><span class="c-builtin">m̲z</span></a></div>
+</div>
+<div class="item" id="m_x">
+<h3><a href="#m_x"><span class="c-builtin">m̲x</span></a> <span class="type">: Box Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L213">line 213</a></div>
+<pre class="code"><span class="c-builtin">m̲x</span> ← { s p →
+  a ← (<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-Endless.xtl.html#l.dt">ˡdt</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">4</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p
+  q ← (<span class="c-number">1</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> p
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> s <a href="extensions-scene-demos-Endless.xtl.html#l.h_it" class="c-libfunc">ˡh̲it</a> q ? q
+  (<span class="c-number">4</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span>) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> (<span class="c-number">1</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">4</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="extensions-scene-demos-Endless.xtl.html#s_nap" class="c-builtin">s̲nap</a> a) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> p
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a></div>
+</div>
+<div class="item" id="m_z">
+<h3><a href="#m_z"><span class="c-builtin">m̲z</span></a> <span class="type">: Box Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L219">line 219</a></div>
+<pre class="code"><span class="c-builtin">m̲z</span> ← { s p →
+  a ← (<span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-Endless.xtl.html#l.dt">ˡdt</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">6</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p
+  q ← (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> p
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> s <a href="extensions-scene-demos-Endless.xtl.html#l.h_it" class="c-libfunc">ˡh̲it</a> q ? q
+  (<span class="c-number">6</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span>) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">6</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="extensions-scene-demos-Endless.xtl.html#s_nap" class="c-builtin">s̲nap</a> a) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> p
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a></div>
+</div>
+<div class="item" id="m_y">
+<h3><a href="#m_y"><span class="c-builtin">m̲y</span></a> <span class="type">: Box Float -&gt; Float -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L225">line 225</a></div>
+<pre class="code"><span class="c-builtin">m̲y</span> ← { s p →
+  a ← (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-Endless.xtl.html#l.dt">ˡdt</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p
+  q ← (<span class="c-number">9</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span>) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> p
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> s <a href="extensions-scene-demos-Endless.xtl.html#l.h_it" class="c-libfunc">ˡh̲it</a> q ? q
+  (<span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span> ? (<span class="c-number">5</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span>) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> a <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.75</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.7501</span>) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> p
+  (<span class="c-number">9</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1.0</span>) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> (<span class="c-number">5</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span>) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> a) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> p
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a></div>
+</div>
+<div class="item" id="l.m_ove">
+<h3><a href="#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a> <span class="type">: Box Float -&gt; Float -&gt; Box Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L240">line 240</a></div>
+<div class="doc">
+<p>s en:m_ove k: one frame of the player under the controls k (mouse dx
+dy, then 1 for each held: w a s d space shift left right up down),
+walking or flying, the camera set to its eye. Walking: W A S D, Shift
+runs, Space jumps; in water (all air below the sea at 14) it sinks
+slowly, Space swims up, and from the surface Space climbs onto a bank
+one block high. Flying: W A S D level by the heading, Space up, Shift
+down, 15 blocks a second, no gravity, the blocks still stopping it.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡm̲ove</span> ← { s k →
+  p ← <a href="extensions-scene-demos-Endless.xtl.html#l.p_layer" class="c-libfunc">ˡp̲layer</a> s
+  yaw ← (<span class="c-number">7</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">0.005</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-Endless.xtl.html#l.dt">ˡdt</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">10</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">9</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k
+  pitch ← <span class="c-number">-1.5</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">1.5</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> (<span class="c-number">8</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">-0.005</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-Endless.xtl.html#l.dt">ˡdt</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">11</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">12</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k
+  fwd ← (<span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k
+  side ← (<span class="c-number">6</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">4</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k
+  fly ← <span class="c-number">10</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p
+  wet ← (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> fly) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">14.0</span> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.9</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p
+  speed ← (fly <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">15.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> fly) <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> wet) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">4.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">8</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k
+  vx ← speed <a href="builtins.html#-2a" class="c-symbol">×</a> ((<a href="builtins.html#s_in" class="c-builtin">s̲in</a> yaw) <a href="builtins.html#-2a" class="c-symbol">×</a> fwd) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#c_os" class="c-builtin">c̲os</a> yaw) <a href="builtins.html#-2a" class="c-symbol">×</a> side
+  vz ← speed <a href="builtins.html#-2a" class="c-symbol">×</a> ((<span class="c-number">0.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#c_os" class="c-builtin">c̲os</a> yaw) <a href="builtins.html#-2a" class="c-symbol">×</a> fwd) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#s_in" class="c-builtin">s̲in</a> yaw) <a href="builtins.html#-2a" class="c-symbol">×</a> side
+  surface ← (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> fly) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">14.5</span> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">13.0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p
+  jump ← (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> fly) <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1.0</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> (<span class="c-number">9</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-2b" class="c-symbol">+</a> surface <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> wet) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">7</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k
+  swim ← wet <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">7</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k
+  fall ← <span class="c-number">-30.0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> (<span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">22.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-Endless.xtl.html#l.dt">ˡdt</a>
+  sink ← <span class="c-number">-2.0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> (<span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">6.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-Endless.xtl.html#l.dt">ˡdt</a>
+  walkVy ← (<span class="c-number">7.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> jump) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> jump) <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">4.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> swim) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> swim) <a href="builtins.html#-2a" class="c-symbol">×</a> (wet <a href="builtins.html#-2a" class="c-symbol">×</a> sink) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> wet) <a href="builtins.html#-2a" class="c-symbol">×</a> fall
+  flyVy ← ((<span class="c-number">80.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">60.0</span>) <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">15.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">7</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">8</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> k
+  vy ← (fly <a href="builtins.html#-2a" class="c-symbol">×</a> flyVy) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> fly) <a href="builtins.html#-2a" class="c-symbol">×</a> walkVy
+  p ← (<span class="c-number">7</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> yaw) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> (<span class="c-number">8</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> pitch) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> (<span class="c-number">4</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> vx) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> (<span class="c-number">5</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> vy) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> (<span class="c-number">6</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> vz) <a href="extensions-scene-demos-Endless.xtl.html#s_et" class="c-builtin">s̲et</a> p
+  p ← s <a href="extensions-scene-demos-Endless.xtl.html#m_y" class="c-builtin">m̲y</a> s <a href="extensions-scene-demos-Endless.xtl.html#m_z" class="c-builtin">m̲z</a> s <a href="extensions-scene-demos-Endless.xtl.html#m_x" class="c-builtin">m̲x</a> p
+  e ← (<a href="extensions-scene-demos-Endless.xtl.html#l.w_indow" class="c-libfunc">ˡw̲indow</a> s) <a href="extensions-scene-lib-Scene.xtl.html#l.e_ye-21" class="c-libfunc">ˢᶜe̲ye!</a> (<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.6</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> yaw <a href="builtins.html#c_at" class="c-builtin">c̲at</a> pitch
+  p <a href="extensions-scene-demos-Endless.xtl.html#l.w_ithPlayer" class="c-libfunc">ˡw̲ithPlayer</a> s
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-endless.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="l.h_omeAgain">
+<h3><a href="#l.h_omeAgain"><span class="c-libfunc">ˡh̲omeAgain</span></a> <span class="type">: Box Float -&gt; Box Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L267">line 267</a></div>
+<div class="doc">
+<p>en:h_omeAgain s: the player back at the start, standing still,
+walking</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡh̲omeAgain</span> ← { s → ((<a href="extensions-scene-demos-Endless.xtl.html#l.s_tart" class="c-libfunc">ˡs̲tart</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>) <a href="extensions-scene-demos-Endless.xtl.html#l.w_ithPlayer" class="c-libfunc">ˡw̲ithPlayer</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-endless.xtl.html#u.i_f"><span class="c-userfunc">ᵘi̲f</span></a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#u.i_f"><span class="c-userfunc">ᵘi̲f</span></a></div>
+</div>
+<div class="item" id="l.t_oggleFly">
+<h3><a href="#l.t_oggleFly"><span class="c-libfunc">ˡt̲oggleFly</span></a> <span class="type">: Box Float -&gt; Box Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L270">line 270</a></div>
+<div class="doc">
+<p>en:t_oggleFly s: flying, or walking again (falling from where it is)</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡt̲oggleFly</span> ← { s →
+  p ← <a href="extensions-scene-demos-Endless.xtl.html#l.p_layer" class="c-libfunc">ˡp̲layer</a> s
+  ((<span class="c-number">6</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> p) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">7</span> <span class="c-number">8</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">10</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p) <a href="extensions-scene-demos-Endless.xtl.html#l.w_ithPlayer" class="c-libfunc">ˡw̲ithPlayer</a> s
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_ly"><span class="c-userfunc">ᵘf̲ly</span></a></div>
+</div>
+<div class="item" id="l.s_top">
+<h3><a href="#l.s_top"><span class="c-libfunc">ˡs̲top</span></a> <span class="type">: Box Float -&gt; Box Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L276">line 276</a></div>
+<div class="doc">
+<p>en:s_top s: the state marked as finished (the next number negative)</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲top</span> ← { s → ((<span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="extensions-scene-demos-Endless.xtl.html#l.s_ettings" class="c-libfunc">ˡs̲ettings</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Endless.xtl.html#l.s_ettings" class="c-libfunc">ˡs̲ettings</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="extensions-scene-demos-Endless.xtl.html#l.s_ettings" class="c-libfunc">ˡs̲ettings</a> s) <a href="extensions-scene-demos-Endless.xtl.html#w_ithSettings" class="c-builtin">w̲ithSettings</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-endless.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="l.s_topped">
+<h3><a href="#l.s_topped"><span class="c-libfunc">ˡs̲topped</span></a> <span class="type">: Truthy a =&gt; Box Float -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L278">line 278</a></div>
+<div class="doc">
+<p>en:s_topped s: whether the state is marked as finished</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲topped</span> ← { s → <span class="c-number">0.0</span> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Endless.xtl.html#l.s_ettings" class="c-libfunc">ˡs̲ettings</a> s }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-endless.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+</main>
+</body>
+</html>

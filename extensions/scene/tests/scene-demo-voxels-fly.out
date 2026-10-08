@@ -1,8 +1,8 @@
 keys: F fly or walk; flying: W A S D level, Space up, Shift down; walking: Space jump/swim, Shift run; drag or arrows look; H home; q quit
-columns made at the start, and their faces' objects:
-49.0 50.0
-where the walk ended (x y z, blocks), the columns made in all, and those kept:
-15.0 23.0 -24.0 63.0 56.0
+columns made at the start:
+49
+where it ended (x y z, blocks), the columns kept:
+15.0 23.0 -24.0 56.0
 bye
 4245134459 31297 work/vy/scene-1-60.png
 1870448341 42656 work/vy/scene-1-150.png

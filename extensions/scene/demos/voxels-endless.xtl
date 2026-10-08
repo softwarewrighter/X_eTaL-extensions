@@ -5,13 +5,15 @@
 ## it walks -- the nearest missing one each frame -- and dropped behind
 ## it; fog hides the edge of what is made, and a curved horizon (scene
 ## lowers the world by d^2 / 2R) makes it look like a small planet.
-## Collision asks the columns themselves.
+## Collision asks the columns themselves. The world and the player are
+## the library Endless.xtl, shared with voxels-fly: each column is made
+## over three frames, so no frame waits long.
 ## Run: just demo scene voxels-endless
 ##   W A S D walk, Shift run, Space jump (in water: swim up; at the
 ##   surface: climb out onto a bank one block high), drag the mouse or
 ##   the arrows to look, H: back to the start, q or close: quit
 
-"vx:" u_se< "Voxels"
+"en:" u_se< "Endless"
 "sc:" u_se< "Scene"
 
 w := "Voxels 6: endless -- X_eTaL" sc:o_pen! 640 400
@@ -19,219 +21,31 @@ g := w sc:f_og! 22.0 44.0
 k := w sc:s_ky! 0.55 0.72 0.92
 k := w sc:c_urve! 160.0
 
-### The world's columns
-
-## columns are kept this many (16-block steps) from the player's, each
-## way; beyond one more they are dropped
-reach := 3
-
-## a column's key from its coordinates (cx cz), and back
-u:k_ey := { c -> f_loat (10000 * 1000 + 1 s_elect c) + 1000 + 2 s_elect c }
-u:c_x := { k -> ((f_loor k) d_iv 10000) - 1000 }
-u:c_z := { k -> ((f_loor k) m_od 10000) - 1000 }
-
-## The state is five boxes of Floats (the boxes of one array share a
-## type): the player (nine numbers: x y z, vx vy vz, yaw, pitch, on the
-## ground), the columns' keys, their solid masks one after another (8192
-## each, in the keys' order), their numbers (a column's objects are 10 *
-## number + block), and the next number
-u:p_layer := { s -> d_isclose 1 s_elect s }
-u:k_eys := { s -> d_isclose 2 s_elect s }
-u:m_asks := { s -> d_isclose 3 s_elect s }
-u:n_umbers := { s -> d_isclose 4 s_elect s }
-u:c_ount := { s -> d_isclose 5 s_elect s }
-
-## (n t) u:s_endOne f: the faces of block t of column n, as one object
-## of quads; 0 when there are none
-u:s_endOne := { nt f ->
-  t := f_loor 2 s_elect nt
-  sel := (5 s_elect_2 f) = t
-  0 = '+ r_/ sel ? 0
-  head := (f_loat w) c_at ((10.0 * 1 s_elect nt) + f_loat t) c_at (1 + t) s_elect vx:colors
-  head sc:q_uads! vx:c_orners sel r_eplicate f
-}
-
-## u:d_ropAll n: column n's objects taken out of scene
-u:d_ropAll := { n ->
-  gone := '{ w sc:r_emove! (10.0 * n) + f_loat _r } m_ap r_ange 7
-  n
-}
-
-## the player's column (cx cz)
-u:h_ome := { s ->
-  p := u:p_layer s
-  (f_loor (1 s_elect p) / 16.0) c_at f_loor (3 s_elect p) / 16.0
-}
-
-## the columns too far away dropped: their objects out of scene, their
-## keys, masks and numbers out of the state
-u:t_rim := { s ->
-  h := u:h_ome s
-  ks := u:k_eys s
-  far := ((a_bs (u:c_x ks) - 1 s_elect h) > reach + 1) + (a_bs (u:c_z ks) - 2 s_elect h) > reach + 1
-  0 = '+ r_/ far ? s
-  gone := '{ u:d_ropAll _r } m_ap (far > 0) r_eplicate u:n_umbers s
-  near := far = 0
-  # each column's flag 8192 times, for its cells in the masks
-  cells := r_avel 2 1 t_ranspose (8192 c_at t_ally near) r_eshape near
-  (1 s_elect s) c_at (e_nclose near r_eplicate ks) c_at (e_nclose cells r_eplicate u:m_asks s) c_at (e_nclose near r_eplicate u:n_umbers s) c_at 5 s_elect s
-}
-
-## one step of the world: the columns too far away dropped, then the
-## nearest missing column within reach made and sent -- at most one a
-## frame
-u:s_tream := { s ->
-  s := u:t_rim s
-  h := u:h_ome s
-  ks := u:k_eys s
-  o := (r_ange 1 + 2 * reach) - 1 + reach
-  dx := r_avel o '+ t_able 0 * o
-  dz := r_avel (0 * o) '+ t_able o
-  ws := f_loat (10000 * 1000 + dx + 1 s_elect h) + 1000 + dz + 2 s_elect h
-  miss := (0 = ws m_ember? ks) r_eplicate (r_ange t_ally ws)
-  0 = t_ally miss ? s
-  d := (miss s_elect dx * dx) + miss s_elect dz * dz
-  i := f_irst (d = 'm_in r_/ d) r_eplicate miss
-  c := ((i s_elect dx) + 1 s_elect h) c_at (i s_elect dz) + 2 s_elect h
-  p := vx:p_atch c
-  f := d_isclose 1 s_elect p
-  n := u:c_ount s
-  sent := '{ (n c_at f_loat _r) u:s_endOne f } m_ap r_ange 7
-  m := f_loat d_isclose 2 s_elect p
-  (1 s_elect s) c_at (e_nclose ks c_at i s_elect ws) c_at (e_nclose (u:m_asks s) c_at m) c_at (e_nclose (u:n_umbers s) c_at n) c_at e_nclose n + 1.0
-}
-
-### Collision
-
-## s u:c_ell v: whether any of the cells at column (x z) and heights ys
-## (v is x z then the ys) is solid; a column not made yet is solid
-u:c_ell := { s v ->
-  x := 1 s_elect v
-  z := 2 s_elect v
-  ys := 2 d_rop v
-  i := (u:k_eys s) i_ndexOf u:k_ey (x d_iv 16) c_at z d_iv 16
-  i > t_ally u:k_eys s ? 1
-  0 < '+ r_/ ((8192 * i - 1) + 1 + (z m_od 16) + 16 * ys + 32 * x m_od 16) s_elect u:m_asks s
-}
-
-## s u:h_it q: whether the player's box with its feet at q (x y z)
-## overlaps a solid block; below the world is solid, above it air
-u:h_it := { s q ->
-  x := 1 s_elect q
-  y := 2 s_elect q
-  z := 3 s_elect q
-  cx := u_nique f_loor (x - 0.3) c_at x + 0.3
-  cy := u_nique f_loor y c_at (y + 0.9) c_at y + 1.75
-  cz := u_nique f_loor (z - 0.3) c_at z + 0.3
-  0 < '+ r_/ cy < 0 ? 1.0
-  cy := (cy <= 31) r_eplicate cy
-  0 = t_ally cy ? 0.0
-  px := r_avel cx '{ _l + 0 * _r } t_able cz
-  pz := r_avel cx '{ _r + 0 * _l } t_able cz
-  hits := '{ s u:c_ell (_r s_elect px) c_at (_r s_elect pz) c_at cy } e_ach r_ange t_ally px
-  f_loat 0 < '+ r_/ hits
-}
-
-### The player
-
-dt := 1.0 / 60.0
-
-## (i v) u:s_et p: the player with number i replaced by v
-u:s_et := { l p -> p + (f_loat (r_ange 9) = f_loor 1 s_elect l) * (2 s_elect l) - p }
-
-## v u:s_nap a: where to stop, moving at v, before the block at a
-u:s_nap := { v a ->
-  v > 0.0 ? (f_loat f_loor a + 0.3) - 0.3001
-  (f_loat 1 + f_loor a - 0.3) + 0.3001
-}
-
-## the three axes of a move against the world s: x and z stop at a
-## wall; y lands (on the ground) or bumps a ceiling
-u:m_x := { s p ->
-  a := (1 s_elect p) + dt * 4 s_elect p
-  q := (1 c_at a) u:s_et p
-  0 = s u:h_it q ? q
-  (4 c_at 0.0) u:s_et (1 c_at (4 s_elect p) u:s_nap a) u:s_et p
-}
-u:m_z := { s p ->
-  a := (3 s_elect p) + dt * 6 s_elect p
-  q := (3 c_at a) u:s_et p
-  0 = s u:h_it q ? q
-  (6 c_at 0.0) u:s_et (3 c_at (6 s_elect p) u:s_nap a) u:s_et p
-}
-u:m_y := { s p ->
-  a := (2 s_elect p) + dt * 5 s_elect p
-  q := (9 c_at 0.0) u:s_et (2 c_at a) u:s_et p
-  0 = s u:h_it q ? q
-  (5 s_elect p) > 0.0 ? (5 c_at 0.0) u:s_et (2 c_at (f_loat f_loor a + 1.75) - 1.7501) u:s_et p
-  (9 c_at 1.0) u:s_et (5 c_at 0.0) u:s_et (2 c_at f_loat 1 + f_loor a) u:s_et p
-}
-
-## one frame of the player, as in voxels-walk: the controls are mouse
-## dx dy, then w a s d space shift left right up down (1 held)
-u:s_tep := { s ->
-  p := u:p_layer s
-  k := sc:c_ontrols w
-  yaw := (7 s_elect p) + (0.005 * 1 s_elect k) + 2.0 * dt * (10 s_elect k) - 9 s_elect k
-  pitch := -1.5 m_ax 1.5 m_in (8 s_elect p) + (-0.005 * 2 s_elect k) + 1.5 * dt * (11 s_elect k) - 12 s_elect k
-  fwd := (3 s_elect k) - 5 s_elect k
-  side := (6 s_elect k) - 4 s_elect k
-  # in water: all the air below the sea (14) is water; the body is in
-  # it when its middle is below the surface
-  wet := f_loat 14.0 > 0.9 + 2 s_elect p
-  speed := (1.0 - 0.4 * wet) * 4.5 * 1.0 + 8 s_elect k
-  vx := speed * ((s_in yaw) * fwd) + (c_os yaw) * side
-  vz := speed * ((0.0 - c_os yaw) * fwd) + (s_in yaw) * side
-  # a jump from the ground, or from the surface of the water (feet
-  # within half a block above it, not deeper): onto a bank one block high
-  surface := (f_loat 14.5 > 2 s_elect p) * f_loat 13.0 < 2 s_elect p
-  jump := (1.0 m_in (9 s_elect p) + surface * 1.0 - wet) * 7 s_elect k
-  # swimming: Space rises; otherwise a slow sink
-  swim := wet * 7 s_elect k
-  fall := -30.0 m_ax (5 s_elect p) - 22.0 * dt
-  sink := -2.0 m_ax (5 s_elect p) - 6.0 * dt
-  vy := (7.5 * jump) + (1.0 - jump) * (4.0 * swim) + (1.0 - swim) * (wet * sink) + (1.0 - wet) * fall
-  p := (7 c_at yaw) u:s_et (8 c_at pitch) u:s_et (4 c_at vx) u:s_et (5 c_at vy) u:s_et (6 c_at vz) u:s_et p
-  p := s u:m_y s u:m_z s u:m_x p
-  e := w sc:e_ye! (1 s_elect p) c_at ((2 s_elect p) + 1.6) c_at (3 s_elect p) c_at yaw c_at pitch
-  (e_nclose p) c_at 1 d_rop s
-}
-
-### The loop
-
-## start on the highest ground near the middle of column (0, 0), facing
-## north, dropping onto it once the columns around are made
-hs := vx:h_eightsAt 0 0 16
-hv := r_avel hs
-i := f_irst w_here hv = 'm_ax r_/ hv
-p0 := ((f_loat (i - 1) d_iv 16) + 0.5) c_at (f_loat 2 + i s_elect hv) c_at ((f_loat (i - 1) m_od 16) + 0.5) c_at 0.0 0.0 0.0 0.0 0.0 0.0
-none := 0 r_eshape 0.0
-s0 := (e_nclose p0) c_at (e_nclose none) c_at (e_nclose none) c_at (e_nclose none) c_at e_nclose 1.0
-made := (2 * reach + 1) * 2 * reach + 1
-s := made 'u:s_tream p_ower s0
 "keys: W A S D walk, Shift run, Space jump (in water: swim up, climb out), drag or arrows look, H home, q quit"
-"columns made at the start, and their faces' objects:"
-(f_loat t_ally u:k_eys s) c_at u:c_ount s
-e := w sc:e_ye! (1 s_elect p0) c_at ((2 s_elect p0) + 1.6) c_at (3 s_elect p0) c_at 0.0 0.0
 
-## quitting marks the state: the next number made negative
-u:q_uit := { s ->
-  z := sc:c_lose! w
-  (4 t_ake s) c_at e_nclose 0.0 - u:c_ount s
-}
-## H: back to the start, standing still
-u:h_omeAgain := { s -> (e_nclose p0) c_at 1 d_rop s }
+## the world around the start made before the first frame: each column
+## takes three steps
+s := en:n_ew w
+s := (3 * (1 + 2 * en:reach) * 1 + 2 * en:reach) 'en:s_tream p_ower s
+"columns made at the start:"
+t_ally en:k_eys s
 
+## one frame: an event, then a third of a column's work, then the
+## player
 u:f_rame := { s ->
-  0.0 > u:c_ount s ? s
+  en:s_topped s ? s
   v := sc:n_ext! w
-  ((v m_atch "close") + (v m_atch "key q") + v m_atch "key Escape") > 0 ? u:q_uit s
-  (v m_atch "key h") ? u:s_tep u:s_tream u:h_omeAgain s
-  u:s_tep u:s_tream s
+  ((v m_atch "close") + (v m_atch "key q") + v m_atch "key Escape") > 0 ? en:s_top s
+  s := (v m_atch "key h") u:i_f s
+  s := en:s_tream s
+  s en:m_ove sc:c_ontrols w
+}
+u:i_f := { yes s ->
+  yes ? en:h_omeAgain s
+  s
 }
 last := 100000 'u:f_rame p_ower s
-"where the walk ended (x y z, blocks), the columns made in all, and those kept:"
-u:r_ound := { v -> f_loat f_loor 0.5 + v }
-pl := u:p_layer last
-(u:r_ound 3 t_ake pl) c_at ((a_bs u:c_ount last) - 1.0) c_at f_loat t_ally u:k_eys last
+z := sc:c_lose! w
+"where the walk ended (x y z, blocks), the columns kept:"
+(f_loat f_loor 0.5 + 3 t_ake en:p_layer last) c_at f_loat t_ally en:k_eys last
 "bye"

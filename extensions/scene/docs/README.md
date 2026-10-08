@@ -127,8 +127,14 @@ before the next builds on it. Their shared X_eTaL is the library
    one each frame, and dropped beyond reach; collision asks the columns
    themselves; fog hides the edge of what is made, under a blue sky and
    a curved horizon. scene skips objects behind the eye, beside the
-   view or past the fog. About 8 ms of X_eTaL a frame. Recorded from a
-   scripted run as `videos/voxels-endless.webm`.
+   view or past the fog. The world and the player are the library
+   `demos/Endless.xtl` (`"en:" u_se< "Endless"`), shared with
+   voxels-fly: each column is made over three frames -- its blocks and
+   solid mask, its faces, sending them -- and at most one far column is
+   dropped a frame, so no frame waits long (a flight: median 1 ms of
+   X_eTaL a frame, 95% within 14 ms; making a column in one frame had
+   taken 40 to 68). Recorded from a scripted run as
+   `videos/voxels-endless.webm`.
 7. `demos/voxels-fly.xtl` (`just demo scene voxels-fly`): flying over the
    endless world. F switches between walking and flying; flying moves
    level whatever you look at (W A S D by the heading, Space up, Shift
