@@ -1,0 +1,1 @@
+xref docs: ##/### convention across 33 files, check-docs in gate with doctests, xetal doc site in pages/doc linked from the TOC

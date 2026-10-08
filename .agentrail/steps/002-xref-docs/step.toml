@@ -1,8 +1,9 @@
 number = 2
 slug = "xref-docs"
-status = "in-progress"
+status = "completed"
 description = "game step 2 (inserted, the user): doc comments per X_eTaL's convention (lang-..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T20:26:13"
-commits = []
+completed_at = "2026-10-07T21:14:00"
+commits = ["68ac0afbe753cbaa94904ff332c277515afb9ed2"]
