@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-08
 
+- 19:45 `plan` voxel saga reordered (the user: digging, water flow and lighting soon): voxels-dig (10), voxels-water (11), voxels-light (12), then rubik-buttons (13, now also the faster animated keys), the game and the release.
+
 - 19:30 `fix` the voxels-rubik recording shows the solved cube turning as a whole (the user: the site's video showed "unwanted random blinking square colors"): its spec no longer presses keys -- those turns changed the colors at once, unanimated; voxels-rubik-turn shows animated quarter turns. Recording re-made, pages rebuilt.
 
 - 12:10 `fix` scene draws whole frames only (the user: black faces blinking as the cube turned): the program's changes go to a staging scene, and the window takes all of it at the program's frame (`sc:n_ext!`), so a frame never shows a change half made -- one layer's cubies moved, their stickers not yet. Objects are shared (`Arc`), so handing a frame over is cheap; an orbit drag moves the shown view at once and the program's scene takes it at its next frame. Recordings were never affected (they render the program's scene at its frames).

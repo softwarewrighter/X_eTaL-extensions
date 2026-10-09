@@ -306,8 +306,8 @@ changed instead of the chunk; it fits immutable values.
 | 2 | `voxels-endless` | built | (added) walking with no edges: terrain from noise hashed from the coordinates, so any chunk can be made alone and fits its neighbors; chunks generated around the player and dropped behind; fog at the loaded radius and a curved horizon (distant land lowered by d^2/2R, so the world looks like a small planet); culling by bounding box in scene |
 | 3 | `voxels-fly` | built | flying over the endless world: F to fly, level by the heading, Space up, Shift down |
 | 4 | `voxels-dig` | planned | the ray-march pick, breaking and placing, per-chunk remeshing and patching; crosshair and hotbar |
-| 5 | `voxels-light` | planned | sky light by a column scan, torches spreading in rounds; brightness per quad |
-| 6 | `voxels-water` | planned | water flowing by a cellular automaton; translucent water |
+| 5 | `voxels-water` | planned | water flowing by a cellular automaton into what is dug; translucent water |
+| 6 | `voxels-light` | planned | sky light by a column scan, torches spreading in rounds; brightness per quad |
 | 7 | `voxels-game` | planned | Gem Hunt, with all of the above |
 
 ## Credits
