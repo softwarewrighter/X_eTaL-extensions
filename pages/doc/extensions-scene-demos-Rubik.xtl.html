@@ -101,6 +101,7 @@
 <li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik.xtl.html">voxels-rubik.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
@@ -148,6 +149,12 @@
 <li class="item"><a href="#l.bodies">ˡbodies</a></li>
 <li class="item"><a href="#l.c_olorSquares"><span class="c-libfunc">ˡc̲olorSquares</span></a></li>
 <li class="item"><a href="#l.rgb">ˡrgb</a></li>
+<li><a href="#section-4">Turning, drawn</a></li>
+<li class="item"><a href="#l.s_pec"><span class="c-libfunc">ˡs̲pec</span></a></li>
+<li class="item"><a href="#l.r_otation"><span class="c-libfunc">ˡr̲otation</span></a></li>
+<li class="item"><a href="#l.t_urned"><span class="c-libfunc">ˡt̲urned</span></a></li>
+<li class="item"><a href="#h.c_orners"><span class="c-libfunc">ʰc̲orners</span></a></li>
+<li class="item"><a href="#l.d_raw"><span class="c-libfunc">ˡd̲raw</span></a></li>
 </ul>
 </nav>
 <main>
@@ -165,29 +172,29 @@ is selecting its colors by that permutation. Every position reached
 by turns is a real cube's.
 Import: &quot;rb:&quot; u_se&lt; &quot;Rubik&quot;</p>
 </div>
-<p class="meta"><a href="extensions-scene-demos-Rubik.xtl.src.html">source</a></p>
+<p class="meta"><a href="extensions-scene-demos-Rubik.xtl.src.html">source</a> &middot; imports <code><span class="c-error">sc:</span></code> <a href="extensions-scene-lib-Scene.xtl.html">extensions/scene/lib/Scene.xtl</a></p>
 <h2 class="section" id="section-1">Stickers</h2>
 <div class="item" id="normals">
 <h3><a href="#normals">normals</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L15">line 15</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L17">line 17</a></div>
 <pre class="code">normals ← <span class="c-number">6</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">0</span>  <span class="c-number">0</span> <span class="c-number">-1</span> <span class="c-number">0</span>  <span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">0</span>  <span class="c-number">-1</span> <span class="c-number">0</span> <span class="c-number">0</span>  <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span>  <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">-1</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#h.m_akeStickers"><span class="c-libfunc">ʰm̲akeStickers</span></a>, <a href="extensions-scene-demos-Rubik.xtl.html#bodyrows">bodyrows</a></div>
 </div>
 <div class="item" id="q">
 <h3><a href="#q">q</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L18">line 18</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L20">line 20</a></div>
 <pre class="code">q ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">27</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#cubies">cubies</a></div>
 </div>
 <div class="item" id="cubies">
 <h3><a href="#cubies">cubies</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L19">line 19</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L21">line 21</a></div>
 <pre class="code">cubies ← <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> <span class="c-number">3</span> <span class="c-number">27</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ((<a href="extensions-scene-demos-Rubik.xtl.html#q">q</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">9</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (((<a href="extensions-scene-demos-Rubik.xtl.html#q">q</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">3</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">3</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-scene-demos-Rubik.xtl.html#q">q</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">3</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#h.m_akeStickers"><span class="c-libfunc">ʰm̲akeStickers</span></a>, <a href="extensions-scene-demos-Rubik.xtl.html#shell">shell</a></div>
 </div>
 <div class="item" id="h.m_akeStickers">
 <h3><a href="#h.m_akeStickers"><span class="c-libfunc">ʰm̲akeStickers</span></a> <span class="type">: Any a =&gt; a -&gt; Int</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L23">line 23</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L25">line 25</a></div>
 <div class="doc">
 <p>h:m_akeStickers 0: the stickers, face by face: the cubies whose
 coordinate along the face's normal is the normal's sign</p>
@@ -205,7 +212,7 @@ coordinate along the face's normal is the normal's sign</p>
 </div>
 <div class="item" id="l.stickers">
 <h3><a href="#l.stickers">ˡstickers</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L39">line 39</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L41">line 41</a></div>
 <div class="doc">
 <p>a sticker for each face and each of its 9 cubies, 54 by 6: x y z of
 the cubie, then the normal; the faces in the order up down right left
@@ -215,11 +222,11 @@ front back, 9 stickers each</p>
 54 6</pre>
 </div>
 <pre class="code">ˡstickers ← <a href="extensions-scene-demos-Rubik.xtl.html#h.m_akeStickers" class="c-libfunc">ʰm̲akeStickers</a> <span class="c-number">0</span></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#l.p_ermutation"><span class="c-libfunc">ˡp̲ermutation</span></a>, <a href="extensions-scene-demos-Rubik.xtl.html#l.squares">ˡsquares</a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#m">m</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#l.p_ermutation"><span class="c-libfunc">ˡp̲ermutation</span></a>, <a href="extensions-scene-demos-Rubik.xtl.html#l.squares">ˡsquares</a>, <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw"><span class="c-libfunc">ˡd̲raw</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#m">m</a></div>
 </div>
 <div class="item" id="l.solved">
 <h3><a href="#l.solved">ˡsolved</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L46">line 46</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L48">line 48</a></div>
 <div class="doc">
 <p>the solved cube's colors: each sticker its face's number, 0 to 5
 (up down right left front back)</p>
@@ -228,12 +235,12 @@ front back, 9 stickers each</p>
 0 0 0 0 0 0 0 0 0 1</pre>
 </div>
 <pre class="code">ˡsolved ← <span class="c-number">9</span> <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">6</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.r_eset"><span class="c-userfunc">ᵘr̲eset</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#last">last</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#shown">shown</a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#last">last</a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.r_eset"><span class="c-userfunc">ᵘr̲eset</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#last">last</a></div>
 </div>
 <h2 class="section" id="section-2">Turns</h2>
 <div class="item" id="h.k_ey">
 <h3><a href="#h.k_ey"><span class="c-libfunc">ʰk̲ey</span></a> <span class="type">: Num a =&gt; a -&gt; a</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L52">line 52</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L54">line 54</a></div>
 <div class="doc">
 <p>h:k_ey m: one number for each sticker row (x y z nx ny nz), the same
 for the same place and facing</p>
@@ -243,7 +250,7 @@ for the same place and facing</p>
 </div>
 <div class="item" id="h.r_otate">
 <h3><a href="#h.r_otate"><span class="c-libfunc">ʰr̲otate</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; b</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L58">line 58</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L60">line 60</a></div>
 <div class="doc">
 <p>k h:r_otate m: the rows (x y z, and the normal) turned a quarter turn
 counterclockwise about the axis k (1 x, 2 y, 3 z), seen from its
@@ -265,7 +272,7 @@ about z</p>
 </div>
 <div class="item" id="l.p_ermutation">
 <h3><a href="#l.p_ermutation"><span class="c-libfunc">ˡp̲ermutation</span></a> <span class="type">: Any a =&gt; Int -&gt; a -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L75">line 75</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L77">line 77</a></div>
 <div class="doc">
 <p>(axis layer quarters) rb:p_ermutation 0: the permutation of the 54
 stickers for turning the layer (the cubies whose coordinate on the
@@ -288,23 +295,23 @@ the colors before</p>
 </div>
 <div class="item" id="l.names">
 <h3><a href="#l.names">ˡnames</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L89">line 89</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L91">line 91</a></div>
 <div class="doc">
 <p>the twelve turns' names: a face turned clockwise as you look at it,
 and with ' counterclockwise</p>
 </div>
 <pre class="code">ˡnames ← <span class="c-string">&quot;U U' D D' R R' L L' F F' B B'&quot;</span></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#names">names</a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a></div>
 </div>
 <div class="item" id="specs">
 <h3><a href="#specs">specs</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L95">line 95</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L97">line 97</a></div>
 <pre class="code">specs ← <span class="c-number">12</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-number">3</span>  <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-number">1</span>  <span class="c-number">2</span> <span class="c-number">-1</span> <span class="c-number">1</span>  <span class="c-number">2</span> <span class="c-number">-1</span> <span class="c-number">3</span>  <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">3</span>  <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span>  <span class="c-number">1</span> <span class="c-number">-1</span> <span class="c-number">1</span>  <span class="c-number">1</span> <span class="c-number">-1</span> <span class="c-number">3</span>  <span class="c-number">3</span> <span class="c-number">1</span> <span class="c-number">3</span>  <span class="c-number">3</span> <span class="c-number">1</span> <span class="c-number">1</span>  <span class="c-number">3</span> <span class="c-number">-1</span> <span class="c-number">1</span>  <span class="c-number">3</span> <span class="c-number">-1</span> <span class="c-number">3</span></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#l.moves">ˡmoves</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#l.moves">ˡmoves</a>, <a href="extensions-scene-demos-Rubik.xtl.html#l.s_pec"><span class="c-libfunc">ˡs̲pec</span></a>, <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw"><span class="c-libfunc">ˡd̲raw</span></a></div>
 </div>
 <div class="item" id="l.moves">
 <h3><a href="#l.moves">ˡmoves</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L97">line 97</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L99">line 99</a></div>
 <div class="doc">
 <p>the twelve turns' permutations, 12 by 54, in the order of rb:names</p>
 </div>
@@ -313,7 +320,7 @@ and with ' counterclockwise</p>
 </div>
 <div class="item" id="l.t_urn">
 <h3><a href="#l.t_urn"><span class="c-libfunc">ˡt̲urn</span></a> <span class="type">: Int -&gt; a -&gt; a</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L104">line 104</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L106">line 106</a></div>
 <div class="doc">
 <p>i rb:t_urn c: the colors c after turn i (1 to 12, in the order of
 rb:names)</p>
@@ -322,11 +329,11 @@ rb:names)</p>
 1</pre>
 </div>
 <pre class="code"><span class="c-libfunc">ˡt̲urn</span> ← { i c → (i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.moves">ˡmoves</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> c }</pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.f_our"><span class="c-userfunc">ᵘf̲our</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.b_ack"><span class="c-userfunc">ᵘb̲ack</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_exy"><span class="c-userfunc">ᵘs̲exy</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.r_u"><span class="c-userfunc">ᵘr̲u</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.src.html#L39">extensions/scene/demos/voxels-rubik.xtl:39</a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.t_urnBy"><span class="c-userfunc">ᵘt̲urnBy</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.u_ndoLast"><span class="c-userfunc">ᵘu̲ndoLast</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.o_ne"><span class="c-userfunc">ᵘo̲ne</span></a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.p_aint"><span class="c-userfunc">ᵘp̲aint</span></a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.a_fter"><span class="c-userfunc">ᵘa̲fter</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.f_our"><span class="c-userfunc">ᵘf̲our</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.b_ack"><span class="c-userfunc">ᵘb̲ack</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_exy"><span class="c-userfunc">ᵘs̲exy</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.r_u"><span class="c-userfunc">ᵘr̲u</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.src.html#L39">extensions/scene/demos/voxels-rubik.xtl:39</a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.t_urnBy"><span class="c-userfunc">ᵘt̲urnBy</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.u_ndoLast"><span class="c-userfunc">ᵘu̲ndoLast</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.o_ne"><span class="c-userfunc">ᵘo̲ne</span></a></div>
 </div>
 <div class="item" id="l.u_ndo">
 <h3><a href="#l.u_ndo"><span class="c-libfunc">ˡu̲ndo</span></a> <span class="type">: Int -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L110">line 110</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L112">line 112</a></div>
 <div class="doc">
 <p>rb:u_ndo i: the turn that undoes turn i (U and U', and so on)</p>
 <pre class="example"><span class="prompt">      </span><span class="c-libfunc">ʳᵇ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-scene-demos-Rubik.xtl.html" class="c-string">&quot;Rubik&quot;</a></pre>
@@ -339,7 +346,7 @@ rb:names)</p>
 <h2 class="section" id="section-3">Drawing</h2>
 <div class="item" id="h.s_quaresAt">
 <h3><a href="#h.s_quaresAt"><span class="c-libfunc">ʰs̲quaresAt</span></a> <span class="type">: Float -&gt; Int -&gt; Float</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L117">line 117</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L119">line 119</a></div>
 <div class="doc">
 <p>(offset half) h:s_quaresAt rows: a square for each row (x y z of a
 cubie, then a normal), its center offset along the normal, its half
@@ -364,40 +371,40 @@ side half, its 4 corners in order round it; 4n by 3, row by row</p>
 </div>
 <div class="item" id="l.squares">
 <h3><a href="#l.squares">ˡsquares</a> <span class="type">: Float</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L136">line 136</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L138">line 138</a></div>
 <div class="doc">
 <p>the stickers as squares for scene, 4 corners each in order round
 them (216 by 3), in the stickers' order, just outside the cubies'
 dark bodies</p>
 </div>
 <pre class="code">ˡsquares ← <span class="c-number">0.485</span> <span class="c-number">0.42</span> <a href="extensions-scene-demos-Rubik.xtl.html#h.s_quaresAt" class="c-libfunc">ʰs̲quaresAt</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.stickers">ˡstickers</a></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#l.c_olorSquares"><span class="c-libfunc">ˡc̲olorSquares</span></a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#l.c_olorSquares"><span class="c-libfunc">ˡc̲olorSquares</span></a>, <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw"><span class="c-libfunc">ˡd̲raw</span></a></div>
 </div>
 <div class="item" id="shell">
 <h3><a href="#shell">shell</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L139">line 139</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L141">line 141</a></div>
 <pre class="code">shell ← (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <a href="extensions-scene-demos-Rubik.xtl.html#cubies">cubies</a>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <a href="extensions-scene-demos-Rubik.xtl.html#cubies">cubies</a></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#bodyrows">bodyrows</a></div>
 </div>
 <div class="item" id="bodyrows">
 <h3><a href="#bodyrows">bodyrows</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L140">line 140</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L142">line 142</a></div>
 <pre class="code">bodyrows ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-quote">'</span>{ <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍺</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ <a href="extensions-scene-demos-Rubik.xtl.html#shell">shell</a> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">26</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-lambdaarg">⍵</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Rubik.xtl.html#normals">normals</a> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">6</span></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#l.bodies">ˡbodies</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#l.bodies">ˡbodies</a>, <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw"><span class="c-libfunc">ˡd̲raw</span></a></div>
 </div>
 <div class="item" id="l.bodies">
 <h3><a href="#l.bodies">ˡbodies</a> <span class="type">: Float</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L144">line 144</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L146">line 146</a></div>
 <div class="doc">
 <p>the cubies' dark bodies as squares for scene (624 by 3): six faces
 each, 0.96 wide</p>
 </div>
 <pre class="code">ˡbodies ← <span class="c-number">0.48</span> <span class="c-number">0.48</span> <a href="extensions-scene-demos-Rubik.xtl.html#h.s_quaresAt" class="c-libfunc">ʰs̲quaresAt</a> <a href="extensions-scene-demos-Rubik.xtl.html#bodyrows">bodyrows</a></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik.xtl.html#b">b</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw"><span class="c-libfunc">ˡd̲raw</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#b">b</a></div>
 </div>
 <div class="item" id="l.c_olorSquares">
 <h3><a href="#l.c_olorSquares"><span class="c-libfunc">ˡc̲olorSquares</span></a> <span class="type">: Eq a =&gt; a -&gt; a -&gt; Float</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L151">line 151</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L153">line 153</a></div>
 <div class="doc">
 <p>k rb:c_olorSquares c: the squares of the stickers that are color k
 in the colors c (k 0 to 5), for one object of quads</p>
@@ -413,13 +420,86 @@ in the colors c (k 0 to 5), for one object of quads</p>
 </div>
 <div class="item" id="l.rgb">
 <h3><a href="#l.rgb">ˡrgb</a> <span class="type">: Float</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L158">line 158</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L160">line 160</a></div>
 <div class="doc">
 <p>each color, red green blue: white (up), yellow (down), red (right),
 orange (left), green (front), blue (back)</p>
 </div>
 <pre class="code">ˡrgb ← <span class="c-number">6</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.95</span> <span class="c-number">0.95</span> <span class="c-number">0.95</span>  <span class="c-number">1.0</span> <span class="c-number">0.84</span> <span class="c-number">0.1</span>  <span class="c-number">0.82</span> <span class="c-number">0.12</span> <span class="c-number">0.12</span>  <span class="c-number">1.0</span> <span class="c-number">0.5</span> <span class="c-number">0.08</span>  <span class="c-number">0.1</span> <span class="c-number">0.62</span> <span class="c-number">0.25</span>  <span class="c-number">0.12</span> <span class="c-number">0.32</span> <span class="c-number">0.85</span></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.d_raw"><span class="c-userfunc">ᵘd̲raw</span></a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw"><span class="c-libfunc">ˡd̲raw</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.d_raw"><span class="c-userfunc">ᵘd̲raw</span></a></div>
+</div>
+<h2 class="section" id="section-4">Turning, drawn</h2>
+<div class="item" id="l.s_pec">
+<h3><a href="#l.s_pec"><span class="c-libfunc">ˡs̲pec</span></a> <span class="type">: Int -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L169">line 169</a></div>
+<div class="doc">
+<p>rb:s_pec i: turn i's axis (1 x, 2 y, 3 z), layer (-1 or 1) and
+counterclockwise quarters about the axis (1 or 3)</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ʳᵇ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-scene-demos-Rubik.xtl.html" class="c-string">&quot;Rubik&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="extensions-scene-demos-Rubik.xtl.html#l.s_pec" class="c-libfunc">ʳᵇs̲pec</a> <span class="c-number">1</span>
+2 1 3</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲pec</span> ← { i → i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Rubik.xtl.html#specs">specs</a> }</pre>
+</div>
+<div class="item" id="l.r_otation">
+<h3><a href="#l.r_otation"><span class="c-libfunc">ˡr̲otation</span></a> <span class="type">: (Num a, Any b) =&gt; (a, Float) -&gt; b -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L174">line 174</a></div>
+<div class="doc">
+<p>(axis, degrees) rb:r_otation 0: the 3 by 3 matrix turning points that
+many degrees counterclockwise about the axis, seen from its positive
+end (90 degrees is the quarter turn of h:r_otate)</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡr̲otation</span> ← { (k, d) z →
+  t ← d <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">3.141592653589793</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">180.0</span>
+  c ← <a href="builtins.html#c_os" class="c-builtin">c̲os</a> t
+  s ← <a href="builtins.html#s_in" class="c-builtin">s̲in</a> t
+  k <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? <span class="c-number">3</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> c <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> c
+  k <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">2</span> ? <span class="c-number">3</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> c <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span> <span class="c-number">1.0</span> <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> c
+  <span class="c-number">3</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> c <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> c <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw"><span class="c-libfunc">ˡd̲raw</span></a></div>
+</div>
+<div class="item" id="l.t_urned">
+<h3><a href="#l.t_urned"><span class="c-libfunc">ˡt̲urned</span></a> <span class="type">: Num a =&gt; a -&gt; a -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L184">line 184</a></div>
+<div class="doc">
+<p>r rb:t_urned pts: the points (n by 3) turned by the matrix r</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡt̲urned</span> ← { r pts → pts <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#i_nner" class="c-builtin">i̲nner</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> r }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw"><span class="c-libfunc">ˡd̲raw</span></a></div>
+</div>
+<div class="item" id="h.c_orners">
+<h3><a href="#h.c_orners"><span class="c-libfunc">ʰc̲orners</span></a> <span class="type">: Truthy a =&gt; a -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L187">line 187</a></div>
+<pre class="code"><span class="c-libfunc">ʰc̲orners</span> ← { m → <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#w_here" class="c-builtin">w̲here</a> m) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span> }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw"><span class="c-libfunc">ˡd̲raw</span></a></div>
+</div>
+<div class="item" id="l.d_raw">
+<h3><a href="#l.d_raw"><span class="c-libfunc">ˡd̲raw</span></a> <span class="type">: (Num a, Num b) =&gt; (Int, Int, Float) -&gt; a -&gt; b</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Rubik.xtl.src.html#L194">line 194</a></div>
+<div class="doc">
+<p>(colors, turn, fraction) rb:d_raw w: the cube drawn in scene window w
+with turn i (1 to 12; 0 for none) that fraction of the way done: the
+turning layer's cubies -- their bodies and stickers -- rotated, the
+rest still. Objects: 1 and 2 the bodies still and turning, 10 + k
+and 20 + k the stickers of color k still and turning.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡd̲raw</span> ← { (c, i, frac) w →
+  sp ← (<span class="c-number">1</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> i) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Rubik.xtl.html#specs">specs</a>
+  ax ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> sp
+  turning ← <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> i
+  deg ← frac <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">90.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> sp) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> turning
+  r ← (ax, deg) <a href="extensions-scene-demos-Rubik.xtl.html#l.r_otation" class="c-libfunc">ˡr̲otation</a> <span class="c-number">0</span>
+  sm ← turning <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> sp) <a href="builtins.html#-3d" class="c-symbol">=</a> ax <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.stickers">ˡstickers</a>
+  bm ← turning <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> sp) <a href="builtins.html#-3d" class="c-symbol">=</a> ax <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> <a href="extensions-scene-demos-Rubik.xtl.html#bodyrows">bodyrows</a>
+  f ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> w
+  a ← (f <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1.0</span> <span class="c-number">0.1</span> <span class="c-number">0.1</span> <span class="c-number">0.11</span>) <a href="extensions-scene-lib-Scene.xtl.html#l.q_uads-21" class="c-libfunc">ˢᶜq̲uads!</a> (<a href="extensions-scene-demos-Rubik.xtl.html#h.c_orners" class="c-libfunc">ʰc̲orners</a> bm <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.bodies">ˡbodies</a>
+  b ← (f <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2.0</span> <span class="c-number">0.1</span> <span class="c-number">0.1</span> <span class="c-number">0.11</span>) <a href="extensions-scene-lib-Scene.xtl.html#l.q_uads-21" class="c-libfunc">ˢᶜq̲uads!</a> r <a href="extensions-scene-demos-Rubik.xtl.html#l.t_urned" class="c-libfunc">ˡt̲urned</a> (<a href="extensions-scene-demos-Rubik.xtl.html#h.c_orners" class="c-libfunc">ʰc̲orners</a> bm) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.bodies">ˡbodies</a>
+  st ← <span class="c-quote">'</span>{ (f <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">10.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-lambdaarg">⍵</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-lambdaarg">⍵</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.rgb">ˡrgb</a>) <a href="extensions-scene-lib-Scene.xtl.html#l.q_uads-21" class="c-libfunc">ˢᶜq̲uads!</a> (<a href="extensions-scene-demos-Rubik.xtl.html#h.c_orners" class="c-libfunc">ʰc̲orners</a> (c <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-lambdaarg">⍵</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> sm <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.squares">ˡsquares</a> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">6</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>
+  mv ← <span class="c-quote">'</span>{ (f <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">20.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-lambdaarg">⍵</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-lambdaarg">⍵</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.rgb">ˡrgb</a>) <a href="extensions-scene-lib-Scene.xtl.html#l.q_uads-21" class="c-libfunc">ˢᶜq̲uads!</a> r <a href="extensions-scene-demos-Rubik.xtl.html#l.t_urned" class="c-libfunc">ˡt̲urned</a> (<a href="extensions-scene-demos-Rubik.xtl.html#h.c_orners" class="c-libfunc">ʰc̲orners</a> (c <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-lambdaarg">⍵</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> sm) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.squares">ˡsquares</a> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">6</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>
+  <span class="c-number">0</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.p_aint"><span class="c-userfunc">ᵘp̲aint</span></a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#shown">shown</a></div>
 </div>
 </main>
 </body>

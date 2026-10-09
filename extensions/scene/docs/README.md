@@ -156,6 +156,14 @@ before the next builds on it. Their shared X_eTaL is the library
    scrambles (25 random turns, never the same face twice in a row, so
    always a real position), 0 resets. Recorded as
    `videos/voxels-rubik.webm`.
+9. `demos/voxels-rubik-turn.xtl` (`just demo scene voxels-rubik-turn`):
+   a quarter turn, seen. One layer -- a "plane" of 9 cubies -- turns a
+   quarter revolution while the rest of the cube stays still: its
+   cubies' bodies and stickers rotated a little more each frame by a
+   rotation matrix (`rb:r_otation`, one inner product, `rb:d_raw`),
+   then the colors permuted once it is done. The top, right and front
+   layers in turn, each a quarter turn one way and back (U U' R R' F
+   F'). Recorded as `videos/voxels-rubik-turn.webm`.
 
 ## Build and test
 

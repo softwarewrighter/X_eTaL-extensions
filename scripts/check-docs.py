@@ -39,7 +39,9 @@ tested = 0
 for f in files:
     if "## >>" not in f.read_text():
         continue
-    env = dict(os.environ, XETAL_PATH=str(root / "lib"))
+    # the binding macro and every facade, as xetal-x provides them
+    path = [str(root / "lib")] + [str(d) for d in sorted(root.glob("extensions/*/lib"))]
+    env = dict(os.environ, XETAL_PATH=os.pathsep.join(path))
     r = subprocess.run([xetal, "doc", "--test", f.name], cwd=f.parent, env=env,
                        capture_output=True, text=True)
     if r.returncode != 0:

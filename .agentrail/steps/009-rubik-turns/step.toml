@@ -1,6 +1,6 @@
 number = 9
 slug = "rubik-turns"
-status = "pending"
+status = "in-progress"
 description = "game step 8 (inserted): turns by keys (U D L R F B, Shift for the inverse), a..."
 role = "production"
 context_files = []

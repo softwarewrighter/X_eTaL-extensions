@@ -43,6 +43,7 @@ just demo scene voxels-walk     # walk on it in the first person (W A S D, Space
 just demo scene voxels-endless  # walk an endless world under a curved horizon
 just demo scene voxels-fly      # fly over it (F: fly or walk; Space up, Shift down)
 just demo scene voxels-rubik    # a Rubik's cube of voxels: u d r l f b turn, z undo, Space scramble
+just demo scene voxels-rubik-turn  # one layer of the cube turning a quarter revolution, on three axes
 just walkthrough                # a fresh clone, built and run, checked against the goldens
 ```
 

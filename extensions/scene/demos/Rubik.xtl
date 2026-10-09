@@ -8,6 +8,8 @@
 ## by turns is a real cube's.
 ## Import: "rb:" u_se< "Rubik"
 
+"sc:" u_se< "Scene"
+
 ### Stickers
 
 # the six faces' normals, in the order of the colors: up (+y), down,
@@ -156,3 +158,51 @@ l:c_olorSquares := { k c ->
 ## each color, red green blue: white (up), yellow (down), red (right),
 ## orange (left), green (front), blue (back)
 l:rgb := 6 3 r_eshape 0.95 0.95 0.95  1.0 0.84 0.1  0.82 0.12 0.12  1.0 0.5 0.08  0.1 0.62 0.25  0.12 0.32 0.85
+
+### Turning, drawn
+
+## rb:s_pec i: turn i's axis (1 x, 2 y, 3 z), layer (-1 or 1) and
+## counterclockwise quarters about the axis (1 or 3)
+## >> "rb:" u_se< "Rubik"
+## >> rb:s_pec 1
+## 2 1 3
+l:s_pec := { i -> i s_elect specs }
+
+## (axis, degrees) rb:r_otation 0: the 3 by 3 matrix turning points that
+## many degrees counterclockwise about the axis, seen from its positive
+## end (90 degrees is the quarter turn of h:r_otate)
+l:r_otation := { (k, d) z ->
+  t := d * 3.141592653589793 / 180.0
+  c := c_os t
+  s := s_in t
+  k = 1 ? 3 3 r_eshape 1.0 0.0 0.0 0.0 c_at c c_at (0.0 - s) c_at 0.0 c_at s c_at c
+  k = 2 ? 3 3 r_eshape c c_at 0.0 c_at s c_at 0.0 1.0 0.0 c_at (0.0 - s) c_at 0.0 c_at c
+  3 3 r_eshape c c_at (0.0 - s) c_at 0.0 c_at s c_at c c_at 0.0 0.0 0.0 1.0
+}
+
+## r rb:t_urned pts: the points (n by 3) turned by the matrix r
+l:t_urned := { r pts -> pts '+ '* i_nner 2 1 t_ranspose r }
+
+# the rows of the 4 corners of each square k, for squares by mask
+h:c_orners := { m -> r_avel (4 * (w_here m) - 1) '+ t_able 1 2 3 4 }
+
+## (colors, turn, fraction) rb:d_raw w: the cube drawn in scene window w
+## with turn i (1 to 12; 0 for none) that fraction of the way done: the
+## turning layer's cubies -- their bodies and stickers -- rotated, the
+## rest still. Objects: 1 and 2 the bodies still and turning, 10 + k
+## and 20 + k the stickers of color k still and turning.
+l:d_raw := { (c, i, frac) w ->
+  sp := (1 m_ax i) s_elect specs
+  ax := 1 s_elect sp
+  turning := 0 < i
+  deg := frac * 90.0 * (f_loat 2 - 3 s_elect sp) * f_loat turning
+  r := (ax, deg) l:r_otation 0
+  sm := turning * (2 s_elect sp) = ax s_elect_2 l:stickers
+  bm := turning * (2 s_elect sp) = ax s_elect_2 bodyrows
+  f := f_loat w
+  a := (f c_at 1.0 0.1 0.1 0.11) sc:q_uads! (h:c_orners bm = 0) s_elect l:bodies
+  b := (f c_at 2.0 0.1 0.1 0.11) sc:q_uads! r l:t_urned (h:c_orners bm) s_elect l:bodies
+  st := '{ (f c_at (10.0 + f_loat _r) c_at (_r + 1) s_elect l:rgb) sc:q_uads! (h:c_orners (c = _r) * sm = 0) s_elect l:squares } m_ap (r_ange 6) - 1
+  mv := '{ (f c_at (20.0 + f_loat _r) c_at (_r + 1) s_elect l:rgb) sc:q_uads! r l:t_urned (h:c_orners (c = _r) * sm) s_elect l:squares } m_ap (r_ange 6) - 1
+  0
+}

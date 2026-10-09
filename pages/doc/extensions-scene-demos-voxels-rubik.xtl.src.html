@@ -101,6 +101,7 @@
 <li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik.xtl.html">voxels-rubik.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
@@ -138,17 +139,17 @@
 <li class="item"><a href="#L45">b</a></li>
 <li class="item"><a href="#L48"><span class="c-userfunc">ᵘd̲raw</span></a></li>
 <li class="item"><a href="#L52">shown</a></li>
-<li class="item"><a href="#L62">letters</a></li>
-<li class="item"><a href="#L65"><span class="c-userfunc">ᵘt̲ell</span></a></li>
-<li class="item"><a href="#L71"><span class="c-userfunc">ᵘs̲ay</span></a></li>
-<li class="item"><a href="#L81"><span class="c-userfunc">ᵘt̲urnBy</span></a></li>
-<li class="item"><a href="#L88"><span class="c-userfunc">ᵘu̲ndoLast</span></a></li>
-<li class="item"><a href="#L99"><span class="c-userfunc">ᵘo̲ne</span></a></li>
+<li class="item"><a href="#L63">letters</a></li>
+<li class="item"><a href="#L66"><span class="c-userfunc">ᵘt̲ell</span></a></li>
+<li class="item"><a href="#L72"><span class="c-userfunc">ᵘs̲ay</span></a></li>
+<li class="item"><a href="#L82"><span class="c-userfunc">ᵘt̲urnBy</span></a></li>
+<li class="item"><a href="#L89"><span class="c-userfunc">ᵘu̲ndoLast</span></a></li>
+<li class="item"><a href="#L98"><span class="c-userfunc">ᵘo̲ne</span></a></li>
 <li class="item"><a href="#L106"><span class="c-userfunc">ᵘs̲cramble</span></a></li>
 <li class="item"><a href="#L113"><span class="c-userfunc">ᵘr̲eset</span></a></li>
 <li class="item"><a href="#L118"><span class="c-userfunc">ᵘq̲uit</span></a></li>
 <li class="item"><a href="#L124"><span class="c-userfunc">ᵘf̲rame</span></a></li>
-<li class="item"><a href="#L137">last</a></li>
+<li class="item"><a href="#L138">last</a></li>
 </ul>
 </nav>
 <main>
@@ -210,89 +211,90 @@
 <span class="line" id="L53"><a class="ln" href="#L53">53</a></span>
 <span class="line" id="L54"><a class="ln" href="#L54">54</a><span class="c-comment">⍝</span><span class="c-comment">## Turning it</span></span>
 <span class="line" id="L55"><a class="ln" href="#L55">55</a></span>
-<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-comment">⍝</span><span class="c-comment"># The state is one Int vector: the 54 colors, then the turns made so</span></span>
-<span class="line" id="L57"><a class="ln" href="#L57">57</a><span class="c-comment">⍝</span><span class="c-comment"># far (1 to 12, in the order of rb:names), the history undo walks back.</span></span>
-<span class="line" id="L58"><a class="ln" href="#L58">58</a><span class="c-comment">⍝</span><span class="c-comment"># Keys: u d r l f b turn that face clockwise (seen from outside it),</span></span>
-<span class="line" id="L59"><a class="ln" href="#L59">59</a><span class="c-comment">⍝</span><span class="c-comment"># with Shift counterclockwise; z undoes the last turn; Space scrambles</span></span>
-<span class="line" id="L60"><a class="ln" href="#L60">60</a><span class="c-comment">⍝</span><span class="c-comment"># (25 random turns, never the same face twice in a row); 0 resets.</span></span>
-<span class="line" id="L61"><a class="ln" href="#L61">61</a></span>
-<span class="line" id="L62"><a class="ln" href="#L62">62</a>letters ← <span class="c-string">&quot;uUdDrRlLfFbB&quot;</span></span>
-<span class="line" id="L63"><a class="ln" href="#L63">63</a></span>
-<span class="line" id="L64"><a class="ln" href="#L64">64</a><span class="c-comment">⍝</span><span class="c-comment"># m u:t_ell st: m printed, the state unchanged</span></span>
-<span class="line" id="L65"><a class="ln" href="#L65">65</a><span class="c-userfunc">ᵘt̲ell</span> ← { m st →</span>
-<span class="line" id="L66"><a class="ln" href="#L66">66</a>  said ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> m</span>
-<span class="line" id="L67"><a class="ln" href="#L67">67</a>  st</span>
-<span class="line" id="L68"><a class="ln" href="#L68">68</a>}</span>
-<span class="line" id="L69"><a class="ln" href="#L69">69</a></span>
-<span class="line" id="L70"><a class="ln" href="#L70">70</a><span class="c-comment">⍝</span><span class="c-comment"># the turns made, by name (and whether the cube is solved)</span></span>
-<span class="line" id="L71"><a class="ln" href="#L71">71</a><span class="c-userfunc">ᵘs̲ay</span> ← { st →</span>
-<span class="line" id="L72"><a class="ln" href="#L72">72</a>  h ← <span class="c-number">54</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> st</span>
-<span class="line" id="L73"><a class="ln" href="#L73">73</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> h ? <span class="c-string">&quot;solved, no turns&quot;</span> <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.t_ell" class="c-userfunc">ᵘt̲ell</a> st</span>
-<span class="line" id="L74"><a class="ln" href="#L74">74</a>  names ← (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.names">ʳᵇnames</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-string">&quot; &quot;</span>) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.names">ʳᵇnames</a></span>
-<span class="line" id="L75"><a class="ln" href="#L75">75</a>  said ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <span class="c-string">&quot;turns: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-quote">'</span>{ <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍺</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> h <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> names</span>
-<span class="line" id="L76"><a class="ln" href="#L76">76</a>  ((<span class="c-number">54</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> st) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a>) ? <span class="c-string">&quot;solved&quot;</span> <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.t_ell" class="c-userfunc">ᵘt̲ell</a> st</span>
-<span class="line" id="L77"><a class="ln" href="#L77">77</a>  st</span>
-<span class="line" id="L78"><a class="ln" href="#L78">78</a>}</span>
-<span class="line" id="L79"><a class="ln" href="#L79">79</a></span>
-<span class="line" id="L80"><a class="ln" href="#L80">80</a><span class="c-comment">⍝</span><span class="c-comment"># i u:t_urnBy st: turn i made and remembered, the cube redrawn</span></span>
-<span class="line" id="L81"><a class="ln" href="#L81">81</a><span class="c-userfunc">ᵘt̲urnBy</span> ← { i st →</span>
-<span class="line" id="L82"><a class="ln" href="#L82">82</a>  c ← i <a href="extensions-scene-demos-Rubik.xtl.html#l.t_urn" class="c-libfunc">ʳᵇt̲urn</a> <span class="c-number">54</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> st</span>
-<span class="line" id="L83"><a class="ln" href="#L83">83</a>  shown ← <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.d_raw" class="c-userfunc">ᵘd̲raw</a> c</span>
-<span class="line" id="L84"><a class="ln" href="#L84">84</a>  c <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">54</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> st) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i</span>
-<span class="line" id="L85"><a class="ln" href="#L85">85</a>}</span>
-<span class="line" id="L86"><a class="ln" href="#L86">86</a></span>
-<span class="line" id="L87"><a class="ln" href="#L87">87</a><span class="c-comment">⍝</span><span class="c-comment"># the last turn undone and forgotten</span></span>
-<span class="line" id="L88"><a class="ln" href="#L88">88</a><span class="c-userfunc">ᵘu̲ndoLast</span> ← { st →</span>
-<span class="line" id="L89"><a class="ln" href="#L89">89</a>  <span class="c-number">54</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> st ? st</span>
-<span class="line" id="L90"><a class="ln" href="#L90">90</a>  i ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> st</span>
-<span class="line" id="L91"><a class="ln" href="#L91">91</a>  c ← (<a href="extensions-scene-demos-Rubik.xtl.html#l.u_ndo" class="c-libfunc">ʳᵇu̲ndo</a> i) <a href="extensions-scene-demos-Rubik.xtl.html#l.t_urn" class="c-libfunc">ʳᵇt̲urn</a> <span class="c-number">54</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> st</span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-comment">⍝</span><span class="c-comment"># The state is a tuple: (the 54 colors, the turns made so far -- 1 to</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a><span class="c-comment">⍝</span><span class="c-comment"># 12, in the order of rb:names, the history undo walks back -- and</span></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a><span class="c-comment">⍝</span><span class="c-comment"># whether it runs, 1 or 0). Keys: u d r l f b turn that face</span></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a><span class="c-comment">⍝</span><span class="c-comment"># clockwise (seen from outside it), with Shift counterclockwise; z</span></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a><span class="c-comment">⍝</span><span class="c-comment"># undoes the last turn; Space scrambles (25 random turns, never the</span></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a><span class="c-comment">⍝</span><span class="c-comment"># same face twice in a row); 0 resets.</span></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a>letters ← <span class="c-string">&quot;uUdDrRlLfFbB&quot;</span></span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a></span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a><span class="c-comment">⍝</span><span class="c-comment"># m u:t_ell st: m printed, the state unchanged</span></span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a><span class="c-userfunc">ᵘt̲ell</span> ← { m st →</span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a>  said ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> m</span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a>  st</span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a>}</span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a></span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a><span class="c-comment">⍝</span><span class="c-comment"># the turns made, by name (and whether the cube is solved)</span></span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a><span class="c-userfunc">ᵘs̲ay</span> ← { st →</span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a>  (c, h, _) ← st</span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> h ? <span class="c-string">&quot;solved, no turns&quot;</span> <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.t_ell" class="c-userfunc">ᵘt̲ell</a> st</span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a>  names ← (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.names">ʳᵇnames</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-string">&quot; &quot;</span>) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.names">ʳᵇnames</a></span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a>  said ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <span class="c-string">&quot;turns: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-quote">'</span>{ <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍺</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> h <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> names</span>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a>  (c <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a>) ? <span class="c-string">&quot;solved&quot;</span> <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.t_ell" class="c-userfunc">ᵘt̲ell</a> st</span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a>  st</span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a>}</span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a></span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a><span class="c-comment">⍝</span><span class="c-comment"># i u:t_urnBy st: turn i made and remembered, the cube redrawn</span></span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a><span class="c-userfunc">ᵘt̲urnBy</span> ← { i (c, h, on) →</span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a>  c ← i <a href="extensions-scene-demos-Rubik.xtl.html#l.t_urn" class="c-libfunc">ʳᵇt̲urn</a> c</span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a>  shown ← <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.d_raw" class="c-userfunc">ᵘd̲raw</a> c</span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a>  (c, h <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i, on)</span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a>}</span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a></span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a><span class="c-comment">⍝</span><span class="c-comment"># the last turn undone and forgotten</span></span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a><span class="c-userfunc">ᵘu̲ndoLast</span> ← { (c, h, on) →</span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> h ? (c, h, on)</span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a>  c ← (<a href="extensions-scene-demos-Rubik.xtl.html#l.u_ndo" class="c-libfunc">ʳᵇu̲ndo</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> h) <a href="extensions-scene-demos-Rubik.xtl.html#l.t_urn" class="c-libfunc">ʳᵇt̲urn</a> c</span>
 <span class="line" id="L92"><a class="ln" href="#L92">92</a>  shown ← <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.d_raw" class="c-userfunc">ᵘd̲raw</a> c</span>
-<span class="line" id="L93"><a class="ln" href="#L93">93</a>  c <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">54</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> st</span>
+<span class="line" id="L93"><a class="ln" href="#L93">93</a>  (c, <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> h, on)</span>
 <span class="line" id="L94"><a class="ln" href="#L94">94</a>}</span>
 <span class="line" id="L95"><a class="ln" href="#L95">95</a></span>
-<span class="line" id="L96"><a class="ln" href="#L96">96</a><span class="c-comment">⍝</span><span class="c-comment"># 25 random turns, never the same face twice in a row (so none undoes</span></span>
-<span class="line" id="L97"><a class="ln" href="#L97">97</a><span class="c-comment">⍝</span><span class="c-comment"># or repeats the one before), remembered (so undo can walk back to</span></span>
-<span class="line" id="L98"><a class="ln" href="#L98">98</a><span class="c-comment">⍝</span><span class="c-comment"># solved)</span></span>
-<span class="line" id="L99"><a class="ln" href="#L99">99</a><span class="c-userfunc">ᵘo̲ne</span> ← { st →</span>
-<span class="line" id="L100"><a class="ln" href="#L100">100</a>  i ← <a href="builtins.html#r_oll-21" class="c-builtin">r̲oll!</a> <span class="c-number">12</span></span>
-<span class="line" id="L101"><a class="ln" href="#L101">101</a>  prev ← (<span class="c-number">55</span> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> st) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> st</span>
-<span class="line" id="L102"><a class="ln" href="#L102">102</a>  ((i <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span>) <a href="builtins.html#-3d" class="c-symbol">=</a> (prev <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span> ? <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.o_ne" class="c-userfunc">ᵘo̲ne</a> st</span>
-<span class="line" id="L103"><a class="ln" href="#L103">103</a>  c ← i <a href="extensions-scene-demos-Rubik.xtl.html#l.t_urn" class="c-libfunc">ʳᵇt̲urn</a> <span class="c-number">54</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> st</span>
-<span class="line" id="L104"><a class="ln" href="#L104">104</a>  c <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">54</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> st) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i</span>
-<span class="line" id="L105"><a class="ln" href="#L105">105</a>}</span>
+<span class="line" id="L96"><a class="ln" href="#L96">96</a><span class="c-comment">⍝</span><span class="c-comment"># one random turn, never the same face as the one before, remembered</span></span>
+<span class="line" id="L97"><a class="ln" href="#L97">97</a><span class="c-comment">⍝</span><span class="c-comment"># (so undo can walk back to solved)</span></span>
+<span class="line" id="L98"><a class="ln" href="#L98">98</a><span class="c-userfunc">ᵘo̲ne</span> ← { (c, h, on) →</span>
+<span class="line" id="L99"><a class="ln" href="#L99">99</a>  i ← <a href="builtins.html#r_oll-21" class="c-builtin">r̲oll!</a> <span class="c-number">12</span></span>
+<span class="line" id="L100"><a class="ln" href="#L100">100</a>  prev ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> h</span>
+<span class="line" id="L101"><a class="ln" href="#L101">101</a>  ((i <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span>) <a href="builtins.html#-3d" class="c-symbol">=</a> (prev <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span> ? <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.o_ne" class="c-userfunc">ᵘo̲ne</a> (c, h, on)</span>
+<span class="line" id="L102"><a class="ln" href="#L102">102</a>  (i <a href="extensions-scene-demos-Rubik.xtl.html#l.t_urn" class="c-libfunc">ʳᵇt̲urn</a> c, h <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i, on)</span>
+<span class="line" id="L103"><a class="ln" href="#L103">103</a>}</span>
+<span class="line" id="L104"><a class="ln" href="#L104">104</a></span>
+<span class="line" id="L105"><a class="ln" href="#L105">105</a><span class="c-comment">⍝</span><span class="c-comment"># 25 random turns, the cube redrawn</span></span>
 <span class="line" id="L106"><a class="ln" href="#L106">106</a><span class="c-userfunc">ᵘs̲cramble</span> ← { st →</span>
-<span class="line" id="L107"><a class="ln" href="#L107">107</a>  st ← <span class="c-number">25</span> <span class="c-userfunc">'</span><a href="extensions-scene-demos-voxels-rubik.xtl.html#u.o_ne" class="c-userfunc">ᵘo̲ne</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> st</span>
-<span class="line" id="L108"><a class="ln" href="#L108">108</a>  shown ← <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.d_raw" class="c-userfunc">ᵘd̲raw</a> <span class="c-number">54</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> st</span>
-<span class="line" id="L109"><a class="ln" href="#L109">109</a>  st</span>
+<span class="line" id="L107"><a class="ln" href="#L107">107</a>  (c, h, on) ← <span class="c-number">25</span> <span class="c-userfunc">'</span><a href="extensions-scene-demos-voxels-rubik.xtl.html#u.o_ne" class="c-userfunc">ᵘo̲ne</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> st</span>
+<span class="line" id="L108"><a class="ln" href="#L108">108</a>  shown ← <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.d_raw" class="c-userfunc">ᵘd̲raw</a> c</span>
+<span class="line" id="L109"><a class="ln" href="#L109">109</a>  (c, h, on)</span>
 <span class="line" id="L110"><a class="ln" href="#L110">110</a>}</span>
 <span class="line" id="L111"><a class="ln" href="#L111">111</a></span>
 <span class="line" id="L112"><a class="ln" href="#L112">112</a><span class="c-comment">⍝</span><span class="c-comment"># back to solved, no history</span></span>
-<span class="line" id="L113"><a class="ln" href="#L113">113</a><span class="c-userfunc">ᵘr̲eset</span> ← { st →</span>
+<span class="line" id="L113"><a class="ln" href="#L113">113</a><span class="c-userfunc">ᵘr̲eset</span> ← { (_, _, on) →</span>
 <span class="line" id="L114"><a class="ln" href="#L114">114</a>  shown ← <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.d_raw" class="c-userfunc">ᵘd̲raw</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a></span>
-<span class="line" id="L115"><a class="ln" href="#L115">115</a>  <a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a></span>
+<span class="line" id="L115"><a class="ln" href="#L115">115</a>  (<a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a>, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>, on)</span>
 <span class="line" id="L116"><a class="ln" href="#L116">116</a>}</span>
 <span class="line" id="L117"><a class="ln" href="#L117">117</a></span>
-<span class="line" id="L118"><a class="ln" href="#L118">118</a><span class="c-userfunc">ᵘq̲uit</span> ← { st →</span>
+<span class="line" id="L118"><a class="ln" href="#L118">118</a><span class="c-userfunc">ᵘq̲uit</span> ← { (c, h, _) →</span>
 <span class="line" id="L119"><a class="ln" href="#L119">119</a>  z ← <a href="extensions-scene-lib-Scene.xtl.html#l.c_lose-21" class="c-libfunc">ˢᶜc̲lose!</a> <a href="extensions-scene-demos-voxels-rubik.xtl.html#w">w</a></span>
-<span class="line" id="L120"><a class="ln" href="#L120">120</a>  <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span></span>
+<span class="line" id="L120"><a class="ln" href="#L120">120</a>  (c, h, <span class="c-number">0</span>)</span>
 <span class="line" id="L121"><a class="ln" href="#L121">121</a>}</span>
 <span class="line" id="L122"><a class="ln" href="#L122">122</a></span>
 <span class="line" id="L123"><a class="ln" href="#L123">123</a><span class="c-comment">⍝</span><span class="c-comment"># one frame: an event, and what it asks for</span></span>
 <span class="line" id="L124"><a class="ln" href="#L124">124</a><span class="c-userfunc">ᵘf̲rame</span> ← { st →</span>
-<span class="line" id="L125"><a class="ln" href="#L125">125</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> st ? st</span>
-<span class="line" id="L126"><a class="ln" href="#L126">126</a>  v ← <a href="extensions-scene-lib-Scene.xtl.html#l.n_ext-21" class="c-libfunc">ˢᶜn̲ext!</a> <a href="extensions-scene-demos-voxels-rubik.xtl.html#w">w</a></span>
-<span class="line" id="L127"><a class="ln" href="#L127">127</a>  ((v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;close&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key q&quot;</span>) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span> ? <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.q_uit" class="c-userfunc">ᵘq̲uit</a> st</span>
-<span class="line" id="L128"><a class="ln" href="#L128">128</a>  (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key z&quot;</span>) ? <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_ay" class="c-userfunc">ᵘs̲ay</a> <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.u_ndoLast" class="c-userfunc">ᵘu̲ndoLast</a> st</span>
-<span class="line" id="L129"><a class="ln" href="#L129">129</a>  (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key Space&quot;</span>) ? <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_ay" class="c-userfunc">ᵘs̲ay</a> <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_cramble" class="c-userfunc">ᵘs̲cramble</a> st</span>
-<span class="line" id="L130"><a class="ln" href="#L130">130</a>  (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key 0&quot;</span>) ? <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_ay" class="c-userfunc">ᵘs̲ay</a> <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.r_eset" class="c-userfunc">ᵘr̲eset</a> st</span>
-<span class="line" id="L131"><a class="ln" href="#L131">131</a>  ch ← <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> v</span>
-<span class="line" id="L132"><a class="ln" href="#L132">132</a>  i ← <a href="extensions-scene-demos-voxels-rubik.xtl.html#letters">letters</a> <a href="builtins.html#i_ndexOf" class="c-builtin">i̲ndexOf</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ch</span>
-<span class="line" id="L133"><a class="ln" href="#L133">133</a>  ((<span class="c-number">5</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#-2a" class="c-symbol">×</a> i <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">12</span>) ? <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_ay" class="c-userfunc">ᵘs̲ay</a> i <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.t_urnBy" class="c-userfunc">ᵘt̲urnBy</a> st</span>
-<span class="line" id="L134"><a class="ln" href="#L134">134</a>  st</span>
-<span class="line" id="L135"><a class="ln" href="#L135">135</a>}</span>
-<span class="line" id="L136"><a class="ln" href="#L136">136</a><span class="c-string">&quot;keys: u d r l f b turn a face clockwise, Shift+letter counterclockwise, z undo, Space scramble, 0 reset, q quit&quot;</span></span>
-<span class="line" id="L137"><a class="ln" href="#L137">137</a>last ← <span class="c-number">100000</span> <span class="c-userfunc">'</span><a href="extensions-scene-demos-voxels-rubik.xtl.html#u.f_rame" class="c-userfunc">ᵘf̲rame</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a></span>
-<span class="line" id="L138"><a class="ln" href="#L138">138</a><span class="c-string">&quot;bye&quot;</span></span>
+<span class="line" id="L125"><a class="ln" href="#L125">125</a>  (_, _, on) ← st</span>
+<span class="line" id="L126"><a class="ln" href="#L126">126</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> on ? st</span>
+<span class="line" id="L127"><a class="ln" href="#L127">127</a>  v ← <a href="extensions-scene-lib-Scene.xtl.html#l.n_ext-21" class="c-libfunc">ˢᶜn̲ext!</a> <a href="extensions-scene-demos-voxels-rubik.xtl.html#w">w</a></span>
+<span class="line" id="L128"><a class="ln" href="#L128">128</a>  ((v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;close&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key q&quot;</span>) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span> ? <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.q_uit" class="c-userfunc">ᵘq̲uit</a> st</span>
+<span class="line" id="L129"><a class="ln" href="#L129">129</a>  (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key z&quot;</span>) ? <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_ay" class="c-userfunc">ᵘs̲ay</a> <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.u_ndoLast" class="c-userfunc">ᵘu̲ndoLast</a> st</span>
+<span class="line" id="L130"><a class="ln" href="#L130">130</a>  (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key Space&quot;</span>) ? <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_ay" class="c-userfunc">ᵘs̲ay</a> <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_cramble" class="c-userfunc">ᵘs̲cramble</a> st</span>
+<span class="line" id="L131"><a class="ln" href="#L131">131</a>  (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key 0&quot;</span>) ? <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_ay" class="c-userfunc">ᵘs̲ay</a> <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.r_eset" class="c-userfunc">ᵘr̲eset</a> st</span>
+<span class="line" id="L132"><a class="ln" href="#L132">132</a>  ch ← <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> v</span>
+<span class="line" id="L133"><a class="ln" href="#L133">133</a>  i ← <a href="extensions-scene-demos-voxels-rubik.xtl.html#letters">letters</a> <a href="builtins.html#i_ndexOf" class="c-builtin">i̲ndexOf</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ch</span>
+<span class="line" id="L134"><a class="ln" href="#L134">134</a>  ((<span class="c-number">5</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#-2a" class="c-symbol">×</a> i <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">12</span>) ? <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_ay" class="c-userfunc">ᵘs̲ay</a> i <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.t_urnBy" class="c-userfunc">ᵘt̲urnBy</a> st</span>
+<span class="line" id="L135"><a class="ln" href="#L135">135</a>  st</span>
+<span class="line" id="L136"><a class="ln" href="#L136">136</a>}</span>
+<span class="line" id="L137"><a class="ln" href="#L137">137</a><span class="c-string">&quot;keys: u d r l f b turn a face clockwise, Shift+letter counterclockwise, z undo, Space scramble, 0 reset, q quit&quot;</span></span>
+<span class="line" id="L138"><a class="ln" href="#L138">138</a>last ← <span class="c-number">100000</span> <span class="c-userfunc">'</span><a href="extensions-scene-demos-voxels-rubik.xtl.html#u.f_rame" class="c-userfunc">ᵘf̲rame</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a>, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>, <span class="c-number">1</span>)</span>
+<span class="line" id="L139"><a class="ln" href="#L139">139</a><span class="c-string">&quot;bye&quot;</span></span>
 </div>
 </main>
 </body>

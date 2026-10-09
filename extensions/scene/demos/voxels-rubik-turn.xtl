@@ -1,0 +1,70 @@
+## Voxels, 9: a quarter turn, seen. One layer of the Rubik's cube -- 9
+## cubies, a "plane" -- turns a quarter revolution while the rest stays
+## still: its cubies' bodies and stickers rotated a little more each
+## frame (a rotation matrix, one inner product), then the cube's colors
+## permuted once it is done. Three orthogonal planes in turn, each a
+## quarter turn one way and back: the top (U, U'), the right (R, R'),
+## the front (F, F').
+## Run: just demo scene voxels-rubik-turn   (drag to turn it; q quit)
+
+"rb:" u_se< "Rubik"
+"sc:" u_se< "Scene"
+
+w := "Voxels 9: a quarter turn -- X_eTaL" sc:o_pen! 560 560
+k := w sc:c_amera! 0.6 0.45 7.5 0.0
+
+## the turns shown, in order: U U' R R' F F' (see rb:names)
+turns := 1 2 5 6 9 10
+## frames for a quarter turn, and still after it
+frames := 24
+rest := 18
+
+names := (n_ot rb:names = f_irst " ") p_artition rb:names
+
+## (colors, turn, frame) u:p_aint 0: the cube drawn at this frame of
+## the turn -- turning, or (at its end) with the turn made
+u:p_aint := { (c, i, f) z ->
+  f < frames ? (c, i, (f_loat f + 1) / f_loat frames) rb:d_raw w
+  f = frames ? (i rb:t_urn c, 0, 0.0) rb:d_raw w
+  0
+}
+
+## (turn, frame) u:a_fter c: the colors after this frame: turned once,
+## at the turn's end
+u:a_fter := { (i, f) c ->
+  f = frames ? i rb:t_urn c
+  c
+}
+
+## the turn about to be shown, printed
+u:a_nnounce := { yes i ->
+  0 = yes ? 0
+  said := p_rint! "turn " c_at d_isclose i s_elect names
+  0
+}
+
+## one frame of the show: the state is (colors, which turn, its frame,
+## running)
+u:s_how := { (c, j, f, on) ->
+  i := (1 + (j - 1) m_od t_ally turns) s_elect turns
+  said := (f = 0) u:a_nnounce i
+  drawn := (c, i, f) u:p_aint 0
+  c := (i, f) u:a_fter c
+  f < frames + rest ? (c, j, f + 1, on)
+  (c, j + 1, 0, on)
+}
+
+u:f_rame := { st ->
+  (c, j, f, on) := st
+  0 = on ? st
+  v := sc:n_ext! w
+  ((v m_atch "close") + v m_atch "key q") > 0 ? u:q_uit st
+  u:s_how st
+}
+u:q_uit := { (c, j, f, on) ->
+  z := sc:c_lose! w
+  (c, j, f, 0)
+}
+shown := (rb:solved, 0, 0.0) rb:d_raw w
+last := 100000 'u:f_rame p_ower (rb:solved, 1, 0, 1)
+"bye"
