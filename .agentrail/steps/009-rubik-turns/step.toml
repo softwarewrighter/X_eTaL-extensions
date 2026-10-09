@@ -1,8 +1,9 @@
 number = 9
 slug = "rubik-turns"
-status = "in-progress"
+status = "completed"
 description = "game step 8 (inserted): turns by keys (U D L R F B, Shift for the inverse), a..."
 role = "production"
 context_files = []
 created_at = "2026-10-08T13:51:15"
-commits = []
+completed_at = "2026-10-08T17:28:47"
+commits = ["61219ef85a436f6da59348927cdc7536e2bc809a"]
