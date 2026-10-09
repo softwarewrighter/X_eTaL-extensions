@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "state": {
+    "number": 10,
+    "step": "voxels-dig"
+  },
+  "action": "Rust overlay+clicks with test; Endless.xtl edits/remake queue/pick; headless scripted trials to tune the recording; reg-rs golden; videos, pages, gate",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-08T21:56:39"
+}
