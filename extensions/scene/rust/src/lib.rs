@@ -5,6 +5,7 @@
 //! `XETAL_HEADLESS=1` (events from `XETAL_EVENTS`) and
 //! `XETAL_FRAMES=DIR` (each frame saved as `DIR/scene-ID-N.png`).
 
+pub mod font;
 pub mod model;
 
 use std::collections::HashMap;
@@ -13,7 +14,7 @@ use std::sync::atomic::{AtomicI64, Ordering};
 use std::sync::{Arc, Mutex, OnceLock};
 use std::time::{Duration, Instant};
 
-use model::{Kind, Object, Rect, Scene};
+use model::{Kind, Label, Object, Rect, Scene};
 use xetal_ext_sdk::{OwnedError, Value, float_vector, text};
 use xetal_ext_ui::winit::dpi::LogicalSize;
 use xetal_ext_ui::winit::event::{ElementState, MouseButton, WindowEvent};
@@ -612,6 +613,44 @@ fn overlay(args: &[Value]) -> Result<Value, OwnedError> {
     Ok(Value::Int(s))
 }
 
+/// (scene label x y size red green blue) label text: a line of text over
+/// the scene in the built-in font, top left at x y and size tall
+/// (logical pixels), replacing label `label`; empty text removes it. The
+/// label id.
+fn label(args: &[Value]) -> Result<Value, OwnedError> {
+    let (_, head) = float_vector(&args[0])?;
+    let [s, id, x, y, size, r, g, b] = head[..] else {
+        return Err(OwnedError::invalid_argument(
+            "a label's header is scene label x y size red green blue",
+        ));
+    };
+    if head.iter().any(|v| !v.is_finite()) {
+        return Err(OwnedError::invalid_argument("label: a NaN or an infinity"));
+    }
+    let words = text(&args[1])?;
+    let (s, id) = (int(s), int(id));
+    let window = with(s, |h| {
+        let mut sc = locked(&h.scene);
+        if words.is_empty() {
+            sc.labels.remove(&id);
+        } else {
+            sc.labels.insert(
+                id,
+                Label {
+                    x,
+                    y,
+                    size: size.max(0.0),
+                    color: [r, g, b],
+                    text: words,
+                },
+            );
+        }
+        h.window
+    })?;
+    redraw(window)?;
+    Ok(Value::Int(id))
+}
+
 /// controls scene: how far the mouse was dragged since last asked (x,
 /// y pixels), then 1 or 0 for each key held: w a s d space shift and the
 /// four arrows.
@@ -650,6 +689,7 @@ xetal_ext_sdk::xetal_extension! {
         sky: 2, "(Num a, Num b) => a -> b -> Int", "scene sky red green blue: the background and fog color.";
         curve: 2, "(Num a, Num b) => a -> b -> Int", "scene curve radius: a curved horizon (0: flat).";
         overlay: 2, "(Num a, Num b) => a -> b -> Int", "scene overlay rects (n by 7: x y width height red green blue, logical pixels): drawn over the scene.";
+        label: 2, "Num a => a -> Char -> Int", "(scene label x y size red green blue) label text: a line of text over the scene; empty removes it.";
         controls: 1, "Num a => a -> Float", "Mouse drag dx dy since last asked, then held: w a s d space shift left right up down.";
         next: 1, "Num a => a -> Char", "The next event (frame, key NAME, click left|right X Y, close), waiting up to a frame.";
         close: 1, "Num a => a -> Int", "Close the window.";

@@ -1,7 +1,7 @@
 number = 17
-slug = "game-release"
+slug = "voxels-game"
 status = "pending"
-description = "game step 7: recordings, docs, status, retrospective; verify the site online."
+description = "game step 6: Gem Hunt (docs/voxels.md)."
 role = "production"
 context_files = []
 created_at = "2026-10-07T18:26:56"

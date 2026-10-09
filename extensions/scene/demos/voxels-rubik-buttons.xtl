@@ -1,0 +1,110 @@
+## Voxels, 12: the Rubik's cube with buttons. Six buttons under the cube
+## turn its top, right and front layers a quarter turn either way -- U
+## and U' the top, R and R' the right, F and F' the front (a letter
+## alone clockwise as you look at that face, with ' counterclockwise),
+## which between them reach every position of the cube. Each press is
+## animated, a quarter turn in 8 frames; presses made while a turn is
+## under way wait their turn, so the cube answers at once and never
+## drops one. The turns made are shown above the cube.
+## Run: just demo scene voxels-rubik-buttons
+##   click a button, or the keys u r f (Shift for '), z undo the last
+##   turn, 0 solved again, drag to look around, q quit
+
+"rb:" u_se< "Rubik"
+"rp:" u_se< "RubikPlay"
+"sc:" u_se< "Scene"
+
+w := "Voxels 12: Rubik's cube, buttons -- X_eTaL" sc:o_pen! 640 560
+k := w sc:c_amera! 0.6 0.45 7.5 0.25
+z := (rb:solved, 0, 0.0) rb:d_raw w
+
+### The buttons
+
+## the six buttons, their turns (in the order of rb:names) and the keys
+## that press them
+names := "U U' R R' F F'"
+turns := 1 2 5 6 9 10
+keys := "uUrRfF"
+top := 500.0
+o := w sc:o_verlay! (w, names, top, 640.0, 100) rp:d_rawRow 0
+# the buttons drawn again, the one whose turn is under way lit
+u:l_ight := { st z ->
+  (_, _, _, i, _) := st
+  o := w sc:o_verlay! (w, names, top, 640.0, 100) rp:d_rawRow turns i_ndexOf a_bs i
+  st
+}
+u:l_ightIf := { yes st ->
+  yes ? st u:l_ight 0
+  st
+}
+u:u_nder := { (_, _, _, i, _) -> i }
+title := ((f_loat w) c_at 1.0 20.0 20.0 14.0 1.0 1.0 1.0) sc:l_abel! "Turns:"
+
+"keys: u r f turn clockwise, Shift+letter counterclockwise, z undo, 0 solved, q quit; or click the buttons"
+
+### Playing
+
+## The state is a tuple: (the turning -- RubikPlay's colors, turns made,
+## turns waiting, turn under way and its frame -- and whether it runs).
+
+# st u:s_ay 0: the last 12 turns made, shown above the cube
+u:s_ay := { st z ->
+  (_, h, _, _, _) := st
+  said := ((f_loat w) c_at 2.0 100.0 20.0 14.0 1.0 1.0 0.6) sc:l_abel! rp:n_ames (0 - 12 m_in t_ally h) t_ake h
+  st
+}
+
+# the button or key of event v: its turn, else 0
+u:p_ressed := { v ->
+  b := (v, 6, top, 640.0) rp:h_it 0
+  b > 0 ? b s_elect turns
+  i := keys i_ndexOf f_irst -1 t_ake v
+  ((5 = t_ally v) * i <= 6) ? i s_elect turns
+  0
+}
+
+u:p_ush := { t st ->
+  t = 0 ? st
+  t rp:q_ueue st
+}
+u:u_ndoIf := { yes st ->
+  yes ? (rp:u_ndo st) u:s_ay 0
+  st
+}
+u:s_ayIf := { yes st ->
+  yes ? st u:s_ay 0
+  st
+}
+u:m_ade := { (_, h, _, _, _) -> t_ally h }
+
+## one frame: an event (a button, a key, undo, solved again, quit), then
+## a frame of turning
+u:f_rame := { (st, on) ->
+  0 = on ? (st, on)
+  v := sc:n_ext! w
+  ((v m_atch "close") + v m_atch "key q") > 0 ? (st, 0)
+  (v m_atch "key 0") ? (rp:start u:s_ay 0, on) u:r_edraw 0
+  st := (v m_atch "key z") u:u_ndoIf st
+  st := (u:p_ressed v) u:p_ush st
+  n := u:m_ade st
+  was := u:u_nder st
+  st := (w, 8) rp:a_dvance st
+  st := (was != u:u_nder st) u:l_ightIf st
+  ((n != u:m_ade st) u:s_ayIf st, on)
+}
+# the cube drawn again (after a reset)
+u:r_edraw := { sto z ->
+  (st, on) := sto
+  (c, _, _, _, _) := st
+  d := (c, 0, 0.0) rb:d_raw w
+  sto
+}
+
+last := 100000 'u:f_rame p_ower (rp:start, 1)
+z := sc:c_lose! w
+((c, h, _, _, _), _) := last
+"the turns made:"
+rp:n_ames h
+"the cube is those turns made at once on a solved cube:"
+c m_atch rp:a_pplied h
+"bye"

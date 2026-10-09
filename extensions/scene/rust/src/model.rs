@@ -92,6 +92,20 @@ pub struct Scene {
     /// The window's logical size, which the overlay is laid out in; a
     /// picture of another size scales the overlay to it.
     pub size: (f64, f64),
+    /// Text drawn over the overlay (button names, messages), by id.
+    pub labels: BTreeMap<i64, Label>,
+}
+
+/// A line of text over the scene in the built-in font: its top left and
+/// its height (logical pixels; a glyph is 7 font pixels tall, 5 wide,
+/// with one between), and its color.
+#[derive(Clone, Debug, PartialEq)]
+pub struct Label {
+    pub x: f64,
+    pub y: f64,
+    pub size: f64,
+    pub color: [f64; 3],
+    pub text: String,
 }
 
 /// An overlay rectangle: left, top, width, height (logical pixels) and
@@ -116,6 +130,7 @@ impl Default for Scene {
             sky: None,
             overlay: Vec::new(),
             size: (0.0, 0.0),
+            labels: BTreeMap::new(),
         }
     }
 }
@@ -327,7 +342,7 @@ impl Scene {
         clippy::cast_sign_loss
     )]
     fn draw_overlay(&self, px: &mut [u32], w: usize, h: usize) {
-        if self.overlay.is_empty() {
+        if self.overlay.is_empty() && self.labels.is_empty() {
             return;
         }
         let (lw, lh) = self.size;
@@ -338,12 +353,27 @@ impl Scene {
             let hi = ((a + len) * s).round().clamp(0.0, n as f64) as usize;
             lo..hi
         };
-        for r in &self.overlay {
-            let c = rgb(r.color);
-            for y in span(r.y, r.h, sy, h) {
-                for x in span(r.x, r.w, sx, w) {
+        let mut fill = |x0: f64, y0: f64, rw: f64, rh: f64, c: u32| {
+            for y in span(y0, rh, sy, h) {
+                for x in span(x0, rw, sx, w) {
                     px[y * w + x] = c;
                 }
+            }
+        };
+        for r in &self.overlay {
+            fill(r.x, r.y, r.w, r.h, rgb(r.color));
+        }
+        for l in self.labels.values() {
+            let unit = l.size / 7.0;
+            let c = rgb(l.color);
+            for (col, row) in crate::font::pixels(&l.text) {
+                fill(
+                    l.x + col as f64 * unit,
+                    l.y + row as f64 * unit,
+                    unit,
+                    unit,
+                    c,
+                );
             }
         }
     }

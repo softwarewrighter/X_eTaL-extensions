@@ -46,6 +46,7 @@ just demo scene voxels-rubik    # a Rubik's cube of voxels: u d r l f b turn, z 
 just demo scene voxels-rubik-turn  # one layer of the cube turning a quarter revolution, on three axes
 just demo scene voxels-dig      # dig (click) and build (right-click) in the endless world; 1-7 choose the block
 just demo scene voxels-water    # dig the rim of a lake on a hill and watch it run down the steps
+just demo scene voxels-rubik-buttons  # the cube with buttons: U U' R R' F F', animated, queued, undo
 just walkthrough                # a fresh clone, built and run, checked against the goldens
 ```
 
@@ -142,7 +143,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | [clock](extensions/clock/docs/README.md) | `Clock` | wall-clock and monotonic time; the bridge's cost | std | done: facade, tests, cost demo |
 | [audio](extensions/audio/docs/README.md) | `Audio` | decode Ogg Vorbis, MP3, WAV; play; read what plays as arrays; play arrays | symphonia, cpal | done: the music visualizer, the synthesizer, the oscilloscope |
 | [canvas](extensions/canvas/docs/README.md) | `Canvas` | a native window showing arrays as pixels; keys and clicks back | winit, softbuffer | done: Life demo (media work continues after the launch) |
-| [scene](extensions/scene/docs/README.md) | `Scene` | retained 3D lines, points and shaded quads in a native window, patched by id; orbit camera, depth buffer, fog | winit, softbuffer | done: the cube; voxels 1 to 10 (a chunk as an array, its faces, drawn solid, a world of chunks, walking, an endless world, flying, a Rubik's cube and its quarter turns, digging and building, water that flows) |
+| [scene](extensions/scene/docs/README.md) | `Scene` | retained 3D lines, points and shaded quads in a native window, patched by id; orbit camera, depth buffer, fog | winit, softbuffer | done: the cube; voxels 1 to 10 (a chunk as an array, its faces, drawn solid, a world of chunks, walking, an endless world, flying, a Rubik's cube and its quarter turns, digging and building, water that flows, a Rubik's cube with buttons) |
 | [sqlite](extensions/sqlite/docs/README.md) | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | done: facade, CSV import, tests, the data notebook |
 | [web](extensions/web/docs/README.md) | `Web` | serve HTTP on loopback: the program takes each request and replies | axum, tokio | done: facade, loopback tests, the live page, TodoMVC |
 | [image](extensions/image/docs/README.md) | `Image` | PNG and JPEG to and from Float arrays; resize | image | done: facade, round-trip tests, the photo lab |

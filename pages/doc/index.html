@@ -98,11 +98,13 @@
 <li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
 <li><a href="extensions-scene-demos-Play.xtl.html">Play.xtl</a></li>
 <li><a href="extensions-scene-demos-Rubik.xtl.html">Rubik.xtl</a></li>
+<li><a href="extensions-scene-demos-RubikPlay.xtl.html">RubikPlay.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-dig.xtl.html">voxels-dig.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik.xtl.html">voxels-rubik.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
@@ -291,6 +293,13 @@ gives where each one goes, a permutation of 54, and turning the cube
 is selecting its colors by that permutation. Every position reached
 by turns is a real cube's.
 Import: &quot;rb:&quot; u_se&lt; &quot;Rubik&quot;</li>
+<li>library <a href="extensions-scene-demos-RubikPlay.xtl.html">extensions/scene/demos/RubikPlay.xtl</a>: RubikPlay.xtl -- playing the voxel Rubik's cube (Rubik.xtl) with
+buttons and keys, shared by voxels-rubik-buttons and voxels-rubik-solve:
+a row of labeled buttons drawn over the scene and found under a click,
+and turns queued and animated one after another -- each a quarter
+turn of one layer seen as it happens, the next starting as soon as it
+is done, so a press always answers at once.
+Import: &quot;rp:&quot; u_se&lt; &quot;RubikPlay&quot;</li>
 <li>program <a href="extensions-scene-demos-voxels-chunk.xtl.html">extensions/scene/demos/voxels-chunk.xtl</a>: Voxels, 1: a chunk is an array. 16 by 16 by 16 block numbers built
 from a height field in a few array expressions -- grass, dirt, stone,
 water below a level, sand at its shore, one tree -- then counted,
@@ -341,6 +350,17 @@ Run: just demo scene voxels-fly
   F fly or walk; flying: W A S D level, Space up, Shift down; walking:
   Space jump or swim up, Shift run; drag the mouse or the arrows to
   look, H: back to the start, q quit</li>
+<li>program <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">extensions/scene/demos/voxels-rubik-buttons.xtl</a>: Voxels, 12: the Rubik's cube with buttons. Six buttons under the cube
+turn its top, right and front layers a quarter turn either way -- U
+and U' the top, R and R' the right, F and F' the front (a letter
+alone clockwise as you look at that face, with ' counterclockwise),
+which between them reach every position of the cube. Each press is
+animated, a quarter turn in 8 frames; presses made while a turn is
+under way wait their turn, so the cube answers at once and never
+drops one. The turns made are shown above the cube.
+Run: just demo scene voxels-rubik-buttons
+  click a button, or the keys u r f (Shift for '), z undo the last
+  turn, 0 solved again, drag to look around, q quit</li>
 <li>program <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">extensions/scene/demos/voxels-rubik-turn.xtl</a>: Voxels, 9: a quarter turn, seen. One layer of the Rubik's cube -- 9
 cubies, a &quot;plane&quot; -- turns a quarter revolution while the rest stays
 still: its cubies' bodies and stickers rotated a little more each
@@ -518,6 +538,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.s_ky-21"><span class="c-libfunc">ˡs̲ky!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.c_ontrols"><span class="c-libfunc">ˡc̲ontrols</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.o_verlay-21"><span class="c-libfunc">ˡo̲verlay!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.l_abel-21"><span class="c-libfunc">ˡl̲abel!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.r_emove-21"><span class="c-libfunc">ˡr̲emove!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.c_amera-21"><span class="c-libfunc">ˡc̲amera!</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-lib-Scene.xtl.html#l.n_ext-21"><span class="c-libfunc">ˡn̲ext!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>
@@ -788,6 +809,23 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-Rubik.xtl.html#l.t_urned"><span class="c-libfunc">ˡt̲urned</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Rubik.xtl.html#h.c_orners"><span class="c-libfunc">ʰc̲orners</span></a></td><td>function</td><td><code>Truthy a =&gt; a -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw"><span class="c-libfunc">ˡd̲raw</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; (Int, Int, Float) -&gt; a -&gt; b</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.bw">ˡbw</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.bh">ˡbh</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.gap">ˡgap</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.w_ords"><span class="c-libfunc">ˡw̲ords</span></a></td><td>function</td><td><code>Char -&gt; Box Char</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.l_efts"><span class="c-libfunc">ˡl̲efts</span></a></td><td>function</td><td><code>Any a =&gt; (Int, Float) -&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.d_rawRow"><span class="c-libfunc">ˡd̲rawRow</span></a></td><td>function</td><td><code>Num a =&gt; (a, Char, Float, Float, Int) -&gt; Int -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#h.l_abelHead"><span class="c-libfunc">ʰl̲abelHead</span></a></td><td>function</td><td><code>Num a =&gt; (a, Int, Float, Float, Int) -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.h_it"><span class="c-libfunc">ˡh̲it</span></a></td><td>function</td><td><code>Any a =&gt; (Char, Int, Float, Float) -&gt; a -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.start">ˡstart</a></td><td>value</td><td><code>(Int, Int, Int, Int, Int)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.q_ueue"><span class="c-libfunc">ˡq̲ueue</span></a></td><td>function</td><td><code>(Any b, Any c, Any d, Any e) =&gt; a -&gt; (b, c, a, d, e) -&gt; (b, c, a, d, e)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.a_dvance"><span class="c-libfunc">ˡa̲dvance</span></a></td><td>function</td><td><code>Num a =&gt; (a, a) -&gt; (Int, Int, Int, Int, a) -&gt; (Int, Int, Int, Int, a)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#h.s_how"><span class="c-libfunc">ʰs̲how</span></a></td><td>function</td><td><code>Num a =&gt; (Int, Int, Int, Int, a) -&gt; a -&gt; (Int, Int, Int, Int, a)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.u_ndo"><span class="c-libfunc">ˡu̲ndo</span></a></td><td>function</td><td><code>(Any a, Num b, Any c) =&gt; (a, Int, Int, b, c) -&gt; (a, Int, Int, b, c)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.a_pplied"><span class="c-libfunc">ˡa̲pplied</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#h.a_pply"><span class="c-libfunc">ʰa̲pply</span></a></td><td>function</td><td><code>Num a =&gt; (Int, Int) -&gt; a -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.i_dle"><span class="c-libfunc">ˡi̲dle</span></a></td><td>function</td><td><code>(Any a, Num b, Any c, Num d, Truthy d) =&gt; (a, Int, Int, b, c) -&gt; d</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.n_ames"><span class="c-libfunc">ˡn̲ames</span></a></td><td>function</td><td><code>Int -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-chunk.xtl.html#h">h</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-chunk.xtl.html#b">b</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-chunk.xtl.html#t">t</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -814,8 +852,8 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#k">k</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#s">s</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#s">s</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#u.i_f"><span class="c-userfunc">ᵘi̲f</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b, Num c) =&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#u.i_f"><span class="c-userfunc">ᵘi̲f</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c, Num d) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#last">last</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#z">z</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-faces.xtl.html#ones">ones</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -837,11 +875,37 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#k">k</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b, Num c) =&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.i_f"><span class="c-userfunc">ᵘi̲f</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c, Num d) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_ly"><span class="c-userfunc">ᵘf̲ly</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c, Num d) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.i_f"><span class="c-userfunc">ᵘi̲f</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_ly"><span class="c-userfunc">ᵘf̲ly</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#last">last</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#z">z</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#w">w</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#k">k</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#z">z</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#names">names</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#turns">turns</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#keys">keys</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#top">top</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#o">o</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.l_ight"><span class="c-userfunc">ᵘl̲ight</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d, Any e) =&gt; (a, b, c, Int, d) -&gt; e -&gt; (a, b, c, Int, d)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.l_ightIf"><span class="c-userfunc">ᵘl̲ightIf</span></a></td><td>function</td><td><code>(Truthy a, Any b, Any c, Any d, Any e) =&gt; a -&gt; (b, c, d, Int, e) -&gt; (b, c, d, Int, e)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.u_nder"><span class="c-userfunc">ᵘu̲nder</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d, Any e) =&gt; (a, b, c, d, e) -&gt; d</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#title">title</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d, Any e) =&gt; (a, Int, b, c, d) -&gt; e -&gt; (a, Int, b, c, d)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.p_ressed"><span class="c-userfunc">ᵘp̲ressed</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.p_ush"><span class="c-userfunc">ᵘp̲ush</span></a></td><td>function</td><td><code>(Num a, Any b, Any c, Any d, Any e) =&gt; a -&gt; (b, c, a, d, e) -&gt; (b, c, a, d, e)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.u_ndoIf"><span class="c-userfunc">ᵘu̲ndoIf</span></a></td><td>function</td><td><code>(Truthy a, Any b, Num c, Any d) =&gt; a -&gt; (b, Int, Int, c, d) -&gt; (b, Int, Int, c, d)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.s_ayIf"><span class="c-userfunc">ᵘs̲ayIf</span></a></td><td>function</td><td><code>(Truthy a, Any b, Any c, Any d, Any e) =&gt; a -&gt; (b, Int, c, d, e) -&gt; (b, Int, c, d, e)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.m_ade"><span class="c-userfunc">ᵘm̲ade</span></a></td><td>function</td><td><code>(Any a, Any c, Any d, Any e) =&gt; (a, b, c, d, e) -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>Num a =&gt; ((Int, Int, Int, Int, Int), a) -&gt; ((Int, Int, Int, Int, Int), a)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.r_edraw"><span class="c-userfunc">ᵘr̲edraw</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; ((Int, Int, Int, Int, Int), a) -&gt; b -&gt; ((Int, Int, Int, Int, Int), a)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#last">last</a></td><td>value</td><td><code>((Int, Int, Int, Int, Int), Int)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#z">z</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#-2521"><span class="c-error">%</span><span class="c-number">21</span></a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#-2522"><span class="c-error">%</span><span class="c-number">22</span></a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a></td><td>value</td><td><code></code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a></td><td>value</td><td><code></code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#w">w</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#k">k</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#scramble">scramble</a></td><td>value</td><td><code>Int</code></td></tr>

@@ -1,6 +1,6 @@
 number = 13
 slug = "rubik-buttons"
-status = "pending"
+status = "in-progress"
 description = "game step 9 (inserted): scene gains on-screen buttons (labeled rectangles dra..."
 role = "production"
 context_files = []

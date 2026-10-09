@@ -49,6 +49,13 @@
 ## (0 to 1); they replace the overlay before, and none (0 7 r_eshape 0.0)
 ## clears it.
 "o_verlay! : float float -> int"     ffi:b_ind< "scene/overlay"
+## (scene c_at label c_at x y size red green blue) sc:l_abel! text: a line
+## of text over the scene in scene's small built-in font (A to Z, the
+## digits, a little punctuation, ' for a prime), its top left at x y and
+## size tall (the window's logical pixels; 7 font pixels a glyph, so 14
+## draws each as 2 by 2); the label of that id is replaced, and empty
+## text removes it.
+"l_abel! : float text -> int"        ffi:b_ind< "scene/label"
 ## scene sc:r_emove! object: 1 if it was there, else 0.
 "r_emove! : float float -> int"      ffi:b_ind< "scene/remove"
 ## scene sc:c_amera! yaw pitch distance spin: where the camera orbits from

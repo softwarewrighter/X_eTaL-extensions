@@ -1,0 +1,142 @@
+## RubikPlay.xtl -- playing the voxel Rubik's cube (Rubik.xtl) with
+## buttons and keys, shared by voxels-rubik-buttons and voxels-rubik-solve:
+## a row of labeled buttons drawn over the scene and found under a click,
+## and turns queued and animated one after another -- each a quarter
+## turn of one layer seen as it happens, the next starting as soon as it
+## is done, so a press always answers at once.
+## Import: "rp:" u_se< "RubikPlay"
+
+"rb:" u_se< "Rubik"
+"sc:" u_se< "Scene"
+
+### Buttons
+
+## a button's width (the window's logical pixels)
+l:bw := 64.0
+## a button's height
+l:bh := 40.0
+## the gap between buttons in a row
+l:gap := 10.0
+
+## rp:w_ords t: the words of a text, boxed (the names of the buttons)
+## >> "rp:" u_se< "RubikPlay"
+## >> t_ally rp:w_ords "U U' R R'"
+## 4
+l:w_ords := { t -> (n_ot t = f_irst " ") p_artition t }
+
+## (n, wide) rp:l_efts 0: the left edges of a row of n buttons centered
+## across a window wide points wide
+## >> "rp:" u_se< "RubikPlay"
+## >> (2, 200.0) rp:l_efts 0
+## 31.0 105.0
+l:l_efts := { (n, wide) z ->
+  m := f_loat n
+  ((wide - (m * l:bw) + (m - 1.0) * l:gap) / 2.0) + (l:bw + l:gap) * f_loat (r_ange n) - 1
+}
+
+## (w, names, top, wide, first) rp:d_rawRow lit: a row of buttons drawn
+## over window w (wide points wide), their tops at top, labeled by the
+## words of names, their labels' ids from first, button lit (1 to n; 0
+## none) lit up; the row's rectangles, n by 7, for the overlay (the
+## caller puts all its rows at once)
+l:d_rawRow := { (w, names, top, wide, first) lit ->
+  ws := l:w_ords names
+  n := t_ally ws
+  ls := (n, wide) l:l_efts 0
+  on := f_loat lit = r_ange n
+  rects := 2 1 t_ranspose (7 c_at n) r_eshape ls c_at (n r_eshape top) c_at (n r_eshape l:bw) c_at (n r_eshape l:bh) c_at (0.22 + 0.2 * on) c_at (0.24 + 0.3 * on) c_at 0.3 + 0.5 * on
+  put := '{ (h:l_abelHead (w, first + _r, _r s_elect ls, top, t_ally d_isclose _r s_elect ws)) sc:l_abel! d_isclose _r s_elect ws } m_ap r_ange n
+  rects
+}
+
+# the header of a button's label: centered in it, 14 points tall
+h:l_abelHead := { (w, id, left, top, chars) ->
+  wide := 2.0 * f_loat (6 * chars) - 1
+  (f_loat w) c_at (f_loat id) c_at (left + (l:bw - wide) / 2.0) c_at (top + (l:bh - 14.0) / 2.0) c_at 14.0 1.0 1.0 1.0
+}
+
+## (v, n, top, wide) rp:h_it 0: which of a row of n buttons (1 to n) a
+## left click v ("click left X Y") is on, else 0
+## >> "rp:" u_se< "RubikPlay"
+## >> ("click left 200 520", 6, 500.0, 640.0) rp:h_it 0
+## 2
+l:h_it := { (v, n, top, wide) z ->
+  0 = (10 t_ake v) m_atch "click left" ? 0
+  p := n_umbers 11 d_rop v
+  x := 1 s_elect p
+  y := 2 s_elect p
+  ls := (n, wide) l:l_efts 0
+  on := (x >= ls) * (x < ls + l:bw) * (y >= top) * y < top + l:bh
+  0 = '+ r_/ on ? 0
+  f_irst w_here on
+}
+
+### Turning, queued
+
+## The turning state is a tuple: (the colors, the turns made -- 1 to 12
+## in the order of rb:names -- the turns waiting, the turn under way (0
+## none) and its frame).
+
+## the state of a solved cube, nothing turning
+l:start := (rb:solved, 0 r_eshape 0, 0 r_eshape 0, 0, 0)
+
+## t rp:q_ueue st: turns t (1 to 12) waiting after the others
+l:q_ueue := { t (c, h, q, i, f) -> (c, h, q c_at t, i, f) }
+
+## (w, frames) rp:a_dvance st: one frame of turning in window w: the
+## turn under way a frame further (frames to a quarter turn), or, done,
+## the colors turned and the turn remembered; with none under way the
+## next waiting one starts. A waiting turn queued negative (-t) is made
+## (turn t) but not remembered: an undo, whose turn has already left the
+## history.
+l:a_dvance := { wf st ->
+  (c, h, q, i, f) := st
+  (w, frames) := wf
+  (i = 0) * 0 = t_ally q ? st
+  i = 0 ? (c, h, 1 d_rop q, f_irst q, 0)
+  f := f + 1
+  f < frames ? (c, h, q, i, f) h:s_how w c_at frames
+  c := (a_bs i) rb:t_urn c
+  z := (c, 0, 0.0) rb:d_raw w
+  (c, h c_at (i > 0) r_eplicate i, q, 0, 0)
+}
+
+# st h:s_how (w frames): the turn under way drawn that far
+h:s_how := { st wfr ->
+  (c, h, q, i, f) := st
+  z := (c, a_bs i, (f_loat f) / f_loat 2 s_elect wfr) rb:d_raw 1 s_elect wfr
+  st
+}
+
+## rp:u_ndo st: the last turn made taken from the history and its
+## undoing queued (made, not remembered), when nothing is turning
+l:u_ndo := { st ->
+  (c, h, q, i, f) := st
+  0 = (0 < t_ally h) * l:i_dle st ? st
+  (c, -1 d_rop h, q c_at 0 - rb:u_ndo f_irst -1 t_ake h, i, f)
+}
+
+## rp:a_pplied ts: the colors of a solved cube after the turns ts, made
+## at once (to check what was animated)
+## >> "rp:" u_se< "RubikPlay"
+## >> "rb:" u_se< "Rubik"
+## >> (rp:a_pplied 1 2) m_atch rb:solved
+## 1
+l:a_pplied := { ts -> (ts, rb:solved) h:a_pply 0 }
+h:a_pply := { (ts, c) z ->
+  0 = t_ally ts ? c
+  (1 d_rop ts, (f_irst ts) rb:t_urn c) h:a_pply 0
+}
+
+## rp:i_dle st: whether nothing is turning or waiting
+l:i_dle := { (_, _, q, i, _) -> (i = 0) * 0 = t_ally q }
+
+## rp:n_ames ts: the turns ts (1 to 12) by name, "U R' F"
+## >> "rp:" u_se< "RubikPlay"
+## >> rp:n_ames 1 6 9
+## U R' F
+l:n_ames := { ts ->
+  0 = t_ally ts ? ""
+  nm := l:w_ords rb:names
+  d_isclose '{ e_nclose (d_isclose _l) c_at " " c_at d_isclose _r } r_/ ts s_elect nm
+}

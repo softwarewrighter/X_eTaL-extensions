@@ -41,6 +41,7 @@ e := sc:n_ext! w                                  # "frame", "key q", "close"
 | `s sc:r_emove! o` | `(Num a, Num b) => a -> b -> Int` | remove object `o`: 1 if it was there |
 | `s sc:c_amera! v` | `(Num a, Num b) => a -> b -> Int` | yaw, pitch (radians), distance, spin (radians a second) |
 | `scene sc:o_verlay! rects` | as above | flat rectangles drawn over the scene -- a crosshair, a hotbar, buttons: n by 7, each left, top, width, height in the window's logical pixels from its top left, then red green blue; they replace the overlay before, and none (`0 7 r_eshape 0.0`) clears it |
+| `head sc:l_abel! text` | `Num a => a -> Char -> Int` | a line of text over the scene in a small built-in 5 by 7 font (A to Z, digits, a little punctuation, `'` drawn as a prime): `head` is scene, label id, x, y, height (logical pixels), red, green, blue; a label put again is replaced, empty text removes it |
 | `sc:n_ext! s` | `Num a => a -> Char` | the next event, waiting at most a frame: `frame`, `key NAME`, `click left X Y` or `click right X Y` (a press and release without a drag, in logical pixels), `close`; dragging orbits by itself |
 | `sc:c_lose! s` | `Num a => a -> Int` | close the window |
 
@@ -206,6 +207,20 @@ before the next builds on it. Their shared X_eTaL is the library
     through and a run of water down a slope is solid to look at.
     Recorded as `videos/voxels-water.webm`: the rim dug, then the hill
     from the air as the lake runs down it.
+12. `demos/voxels-rubik-buttons.xtl` (`just demo scene
+    voxels-rubik-buttons`): the Rubik's cube with buttons. Six labeled
+    buttons under the cube (`sc:o_verlay!` rectangles, `sc:l_abel!`
+    names) turn the top, right and front layers a quarter turn either
+    way: U, U', R, R', F, F' (a letter alone clockwise as you look at
+    that face, ' counterclockwise), which between them reach every
+    position of the cube; the keys u r f do the same, with Shift for '.
+    Each press is a quarter turn animated in 8 frames; presses made
+    during a turn wait in a queue, so none is lost and the cube answers
+    at once; the button whose turn is under way is lit. z undoes the
+    last turn (animated), 0 makes it solved again; the turns made are
+    shown above the cube. The buttons and the queue are the library
+    `demos/RubikPlay.xtl`, shared with the solver demo to come. Recorded
+    as `videos/voxels-rubik-buttons.webm`.
 
 ## Build and test
 

@@ -9,6 +9,7 @@ l:c_urve! : (Num a, Num b) => a -> b -> Int
 l:s_ky! : (Num a, Num b) => a -> b -> Int
 l:c_ontrols : Num a => a -> Float
 l:o_verlay! : (Num a, Num b) => a -> b -> Int
+l:l_abel! : Num a => a -> Char -> Int
 l:r_emove! : (Num a, Num b) => a -> b -> Int
 l:c_amera! : (Num a, Num b) => a -> b -> Int
 l:n_ext! : Num a => a -> Char

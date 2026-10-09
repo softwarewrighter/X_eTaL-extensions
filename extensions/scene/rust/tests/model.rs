@@ -1,6 +1,6 @@
 //! The scene model, headless: objects by id, the camera, rendering.
 
-use xetal_ext_scene::model::{Kind, Object, Rect, Scene};
+use xetal_ext_scene::model::{Kind, Label, Object, Rect, Scene};
 
 const BG: u32 = 0x000c_0e14;
 
@@ -346,4 +346,34 @@ fn a_translucent_quad_blends_over_what_is_behind_it_and_hides_nothing() {
     let front = s.render(20, 20)[10 * 20 + 10];
     assert_eq!(front & 0xff, 0, "no blue over the nearer green wall");
     assert!((front >> 8) & 0xff > 0);
+}
+
+#[test]
+fn a_label_draws_its_glyphs_over_the_scene() {
+    // "U'" at the top left, 7 logical pixels tall: one picture pixel a
+    // font pixel in a 20 by 10 window drawn at 20 by 10
+    let mut s = Scene {
+        size: (20.0, 10.0),
+        ..Scene::default()
+    };
+    s.labels.insert(
+        1,
+        Label {
+            x: 0.0,
+            y: 0.0,
+            size: 7.0,
+            color: [1.0, 1.0, 1.0],
+            text: "U'".into(),
+        },
+    );
+    let px = s.render(20, 10);
+    let lit = |x: usize, y: usize| px[y * 20 + x] == 0x00ff_ffff;
+    // U: the sides down, the bottom curved in; nothing in the middle
+    assert!(lit(0, 0) && lit(4, 0) && !lit(2, 0));
+    assert!(lit(1, 6) && lit(3, 6) && !lit(0, 6));
+    // the prime after one blank column: 6 + 2 and 6 + 3 on the top row
+    assert!(lit(8, 0) && lit(9, 0) && !lit(5, 0));
+    // removed, nothing
+    s.labels.clear();
+    assert!(s.render(20, 10).iter().all(|&p| p == BG));
 }
