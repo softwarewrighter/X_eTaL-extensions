@@ -1,9 +1,10 @@
 number = 12
 slug = "voxels-water"
-status = "in-progress"
+status = "completed"
 description = "game step 5: water flowing (levels 1 to 7) as a cellular automaton on changed..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T18:26:56"
+completed_at = "2026-10-09T15:09:50"
 task_type = "feature"
-commits = []
+commits = ["bc48922d59c250cf0162a8bebbc1daa6da89df0b"]

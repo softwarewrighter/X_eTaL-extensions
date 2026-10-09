@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "state": {
+    "number": 12,
+    "step": "voxels-water"
+  },
+  "action": "X_eTaL CA over frontier arrays; Rust alpha blending with test; headless scripted runs to pace and frame the waterfall; reg-rs goldens; isolated nondeterminism by repeated xetal type runs",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-09T15:09:50"
+}
