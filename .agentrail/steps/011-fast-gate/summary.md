@@ -1,0 +1,1 @@
+fast-gate: goldens, check-xetal-x and recordings on release xetal-x; extensions' suites (and scene's tests) in parallel; X_eTaL demos compared in parallel; cargo test once; just videos EXT NAME. Gate ~6.5-9 min -> 60-87 s (goldens 258->13 s, check-xetal-x 97->14 s); no golden changed; failure still caught.

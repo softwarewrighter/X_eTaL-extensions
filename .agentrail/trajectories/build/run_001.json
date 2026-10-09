@@ -1,0 +1,11 @@
+{
+  "task_type": "build",
+  "state": {
+    "number": 11,
+    "step": "fast-gate"
+  },
+  "action": "timed each gate part; release builds; background jobs with per-extension logs; reg-rs --parallel opt-in; mutation check of failure reporting",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-09T12:31:36"
+}
