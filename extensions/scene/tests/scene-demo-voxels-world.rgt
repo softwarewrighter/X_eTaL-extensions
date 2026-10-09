@@ -1,3 +1,3 @@
-command = 'rm -rf work/vw && XETAL_HEADLESS=1 XETAL_EVENTS="frame,frame" XETAL_FRAMES=work/vw xetal-x --ext .. run --seed 1 demos/voxels-world.xtl && cksum work/vw/*.png'
+command = 'mkdir -p work/vw && XETAL_HEADLESS=1 XETAL_EVENTS="frame,frame" XETAL_FRAMES=work/vw xetal-x --ext .. run --seed 1 demos/voxels-world.xtl && cksum work/vw/*.png'
 exit_code = 0
 desc = "voxels 4: a 64 by 32 by 64 island of 32 chunks from value noise (seed 1), 18568 faces as 123 objects; two headless frames pinned"

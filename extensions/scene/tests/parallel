@@ -1,4 +1,4 @@
 # Marker: this extension's reg-rs tests never share a work directory
-# (each golden draws its frames into its own work/NAME and removes only
-# that one -- never all of work/, which raced the others once), so
+# (each golden draws its frames into its own work/NAME, written over,
+# never deleted: work/ is a cache that is never erased), so
 # scripts/reg-ext.sh runs them side by side (reg-rs --parallel).

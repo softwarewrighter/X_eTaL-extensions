@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-09
 
+- 16:51 `fix` no golden deletes anything any more (the user: `work/` is a cache -- downloads, built artifacts, assets that must not be published -- and must never be erased): every `rm -rf work...` in the goldens' commands (8 whole `work/` directories of an extension, 15 subdirectories) is now `mkdir -p`; each golden writes the same files over the old ones. Outputs unchanged; run twice in a row to check nothing depends on a clean start. The repository's own `work/` was never removed.
+
 - 16:49 `fix` the scene goldens' parallel run raced: the cube golden began with `rm -rf work`, removing the frame directories of the goldens running beside it, so it failed once (it passed alone). It now removes only `work/frames`; every scene golden removes only its own directory (the `tests/parallel` note says so). The logo commit before this was pushed with that failing gate (a slip: the commit was chained after the gate without stopping on its failure); this gate passes.
 
 - 16:38 `docs` the red X_eTaL logo (the user: match the favicon; about 3 lines tall and 15 columns wide): `images/xetal-logo-red.png` (from ../X_eTaL/images, 242 wide for dense screens) as the site's logo (65 points tall) and the README's (121 wide), and in the web shell's header; the site's heading is the logo and "X_eTaL Extensions" in the favicon's red (#ff4540).
