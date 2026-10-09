@@ -1,0 +1,9 @@
+number = 14
+slug = "rubik-solve"
+status = "pending"
+description = "game step (inserted, the user and the eigencube session's hand-off: Solve fir..."
+role = "production"
+context_files = []
+created_at = "2026-10-09T15:20:06"
+task_type = "feature"
+commits = []

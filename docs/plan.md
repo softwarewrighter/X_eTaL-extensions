@@ -516,10 +516,11 @@ demo shown before the next.
 | 10 | voxels-dig | (done; reordered 2026-10-08, the user: digging, water and light before the cube's controls) the ray-march pick over the masks; click digs, right-click places, 1-6 the hotbar; edits kept as rows (x y z block) the world makes every column with, an edited column (and a border neighbor) made again; scene: an overlay of rectangles (crosshair, hotbar, later buttons) and click events |
 | 11 | fast-gate | (done; inserted, the user: the gate was slow) goldens, check-xetal-x and recordings on the release build of xetal-x; the extensions' golden suites side by side (scene's tests too, `tests/parallel`); X_eTaL's demos compared side by side; `just videos EXT NAME` records one; cargo test once. The gate: about 6.5 minutes warm (9 with rebuilds) to 87 s -- goldens 258 s to 13 s, check-xetal-x 97 s to 14 s; no golden changed |
 | 12 | voxels-water | (done) water as a cellular automaton on its frontier (fall, else spread a level lower, 7 levels; sea and lakes as sources), reached cells as edits, a water mask per column, ticks paced; the user's showcase: a lake on a stepped hill's terrace, built as edits, that runs down the steps when the rim is dug; scene: translucent quads (alpha), water's sides against air; the controls shared as Play.xtl (water on the hotbar) |
-| 13 | voxels-light | sky light by a column scan; torch light in rounds over frames; brightness per quad in scene |
-| 14 | rubik-buttons | animated quarter turns from the keys, faster, presses queued (the user: "controls for the different rotations with a faster response"); scene gains on-screen buttons (labeled rectangles, a small built-in font, click events); the cube's buttons: 12 turns, Scramble, Undo, Reset |
-| 15 | voxels-game | Gem Hunt |
-| 16 | game-release | recordings, docs, status, retrospective; the site checked online |
+| 13 | rubik-buttons | (the user: before light; six buttons, a quarter turn of U, R and F each way, standard labels) animated quarter turns from the keys, faster, presses queued (the user: "controls for the different rotations with a faster response"); scene gains on-screen buttons (labeled rectangles, a small built-in font, click events); the cube's buttons: 12 turns, Scramble, Undo, Reset |
+| 14 | rubik-solve | (inserted, the user and the eigencube session's hand-off: Solve first) X_eTaL-libraries pinned (LIBRARIES_COMMIT, work/libraries) for its Eigencube solver; a golden that Rubik.xtl and Eigencube agree; voxels-rubik-solve: the six turn buttons plus Scramble, Solve, Step and Play; recorded |
+| 15 | voxels-light | sky light by a column scan; torch light in rounds over frames; brightness per quad in scene |
+| 16 | voxels-game | Gem Hunt |
+| 17 | game-release | recordings, docs, status, retrospective; the site checked online |
 
 ## Saga 12 -- native hook (blocked)
 
