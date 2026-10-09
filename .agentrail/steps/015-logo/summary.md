@@ -1,0 +1,1 @@
+red X_eTaL logo on the site (65 pt) and README (121 wide); heading 'X_eTaL Extensions' in the favicon's red #ff4540; web shell and trunk pages updated
