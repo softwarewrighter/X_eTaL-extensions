@@ -1,0 +1,1 @@
+game step 11 (inserted, the user: the gate is slow, speed it up before voxels-water): measure the gate (before and after, per part); run goldens and recordings with a release build of xetal-x; just videos EXT [NAME] records one demo; run the extensions' golden suites in parallel where they cannot collide; no golden may change.

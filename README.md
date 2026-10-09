@@ -216,8 +216,8 @@ just            # list the recipes
 just gate       # everything the pre-commit gate checks
 just build           # every crate and extension (shared libraries in target/debug/)
 just test [CRATE]    # the Rust tests
-just test-exts       # every extension's reg-rs tests (reg-rs on PATH)
-just videos [EXT]    # record the demos (vhs; window demos from headless frames; web pages by headless Chrome): nothing on screen
+just test-exts       # every extension's reg-rs tests (reg-rs on PATH; release build, extensions side by side)
+just videos [EXT [NAME]]  # record the demos, or one (vhs; window demos from headless frames; web pages by headless Chrome): nothing on screen
 just pages           # build the site into pages/ (the recordings and how to run them); commit it, a push publishes it
 just check-pages     # pages/ is up to date (the gate fails if not)
 just check-docs      # every export documented (## above it), every ## >> example run

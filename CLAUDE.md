@@ -346,7 +346,8 @@ Read before working:
 11. NEVER run `sw-install` unless the user explicitly asks.
 12. The site shows recordings, not live pages (the user's decision,
     2026-10-03: extensions are native): `just videos` records each demo
-    headlessly (vhs; window demos from saved frames; web demos from
+    (`just videos EXT NAME`: one recording, about 15 s; all of scene
+    takes minutes, so record only what changed) headlessly (vhs; window demos from saved frames; web demos from
     headless Chrome shots, `videos/NAME.web`; pictures a demo writes,
     `videos/NAME.pics`), `just pages`
     builds `pages/` (commit it); the Pages workflow only uploads it.

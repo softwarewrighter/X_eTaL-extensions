@@ -112,7 +112,7 @@ demo ext name *args:
 live-quakes:
     @scripts/demos.sh http quakes-live
 
-# Record the demo videos (vhs, ffmpeg, gif2webp; headless, nothing on screen): just videos [EXT]
+# Record the demo videos (vhs, ffmpeg, gif2webp; headless, nothing on screen): just videos [EXT [NAME]]
 videos *ext:
     scripts/videos.sh "$@"
 

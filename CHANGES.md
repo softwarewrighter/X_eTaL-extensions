@@ -11,6 +11,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-09
+
+- 12:27 `build` the gate in 87 s instead of 6.5 to 9 minutes (the user: "kinda slow"): goldens, check-xetal-x and recordings run the release build of xetal-x (the interpreter is several times faster; `just demo` already did); the extensions' golden suites run side by side after one build (scene's own tests side by side too, opted in by `tests/parallel`; audio's share a work directory, so not); X_eTaL's demos are compared side by side, each in its own scratch directory; check-rust runs the tests once. Goldens 258 s to 13 s, check-xetal-x 97 s to 14 s; no golden changed, and a broken golden is still caught. `just videos EXT NAME` records one demo (about 15 s instead of re-recording every scene demo, about 6.5 minutes).
+
 ## 2026-10-08
 
 - 21:15 `ext` Voxels 10, `just demo scene voxels-dig` (the user: digging, water flow and lighting soon): dig and build in the endless world. The pick marches 100 points along the view ray over the masks of the columns it crosses (`en:p_ick`); click or X digs, right-click or E places the hotbar's block (1-6: stone dirt grass sand wood leaves) in the empty cell before it, never inside the player. Edits are rows (x y z block), newest first, that every column is made with (`en:e_dited`, its border too); an edited column is made again first -- mask at once, faces and objects over two frames, an emptied block kind's object removed -- with its neighbor when the cell is on their border, so edits outlast a column dropped and made again. scene gains `sc:o_verlay!` (flat rectangles in logical pixels, drawn over the view: the crosshair and hotbar, later buttons) and `click left X Y` / `click right X Y` events (a press and release without a drag); Rust test for the overlay. Golden with the edits checked, a scripted trench and a pillar built jump by jump, three frames pinned; recording. voxels-endless's golden is unchanged (the world tuple grew its edits and remake queue).

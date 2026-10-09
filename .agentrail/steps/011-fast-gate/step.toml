@@ -1,0 +1,9 @@
+number = 11
+slug = "fast-gate"
+status = "in-progress"
+description = "game step 11 (inserted, the user: the gate is slow, speed it up before voxels..."
+role = "production"
+context_files = []
+created_at = "2026-10-08T22:22:26"
+task_type = "build"
+commits = []

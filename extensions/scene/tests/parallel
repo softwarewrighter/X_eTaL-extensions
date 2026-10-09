@@ -1,0 +1,3 @@
+# Marker: this extension's reg-rs tests never share a work directory
+# (each golden draws its frames into its own work/NAME), so
+# scripts/reg-ext.sh runs them side by side (reg-rs --parallel).

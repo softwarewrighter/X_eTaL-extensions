@@ -19,7 +19,8 @@
 #   - NAME.pics: a demo that writes pictures, run as it is, then those
 #     pictures (the spec's `pics`, paths in the extension's directory)
 #     shown in turn, `hold` seconds each.
-#   scripts/videos.sh [EXT]
+#   scripts/videos.sh [EXT [NAME]]     (NAME: that one recording only)
+# The demos run on the release build of xetal-x (as `just demo` does).
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # X_eTaL's clone (work/xetal) must exist: this repo's crates build on it
@@ -32,7 +33,7 @@ for c in "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" google-c
   [ -n "$chrome" ] && break
   if [ -x "$c" ] || command -v "$c" >/dev/null; then chrome="$c"; fi
 done
-cargo build -q --workspace
+cargo build -q --release --workspace
 mkdir -p target/screens
 encode() { # SRC DEST-BASE SCALE WEBP-SCALE [FPS [AUDIO]]
   local audio=(-an)
@@ -44,12 +45,14 @@ encode() { # SRC DEST-BASE SCALE WEBP-SCALE [FPS [AUDIO]]
   gif2webp -lossy -q 35 -m 4 "target/screens/$(basename "$2").gif" -o "$2.webp" > /dev/null
   ls -l "$2.webm" "$2.webp" | awk '{ print $9, $5 }'
 }
+only="${2:-}"
 for dir in extensions/${1:-*}/videos; do
   [ -d "$dir" ] || continue
   ext="$(basename "$(dirname "$dir")")"
   for tape in "$dir"/*.tape; do
     [ -e "$tape" ] || continue
     name="$(basename "$tape" .tape)"
+    [ -z "$only" ] || [ "$name" = "$only" ] || continue
     echo "==> vhs $ext $name"
     vhs "$tape" > /dev/null
     encode "target/screens/$ext-$name.mp4" "$dir/$name" 880 760
@@ -57,6 +60,7 @@ for dir in extensions/${1:-*}/videos; do
   for spec in "$dir"/*.frames; do
     [ -e "$spec" ] || continue
     name="$(basename "$spec" .frames)"
+    [ -z "$only" ] || [ "$name" = "$only" ] || continue
     demo=""; seed=1; frames=120; fps=15; scale=480; audio=""; wav=""; script=""
     # shellcheck disable=SC1090
     . "$spec"
@@ -73,7 +77,7 @@ for dir in extensions/${1:-*}/videos; do
     # wav=1: the demo makes its own sound (a voice); collect it as the soundtrack
     if [ -n "$wav" ]; then audio="$root/target/screens/$ext-$name.wav"; fi
     (cd "extensions/$ext" && XETAL_HEADLESS=1 XETAL_EVENTS="$events" XETAL_FRAMES="$out" XETAL_AUDIO_WAV="$root/target/screens/$ext-$name.wav" \
-      "$root/target/debug/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > /dev/null)
+      "$root/target/release/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > /dev/null)
     first="$(ls "$out" | head -1)"; prefix="${first%-1.png}"
     sound=()
     case "$audio" in /*) track="$audio" ;; *) track="extensions/$ext/$audio" ;; esac
@@ -86,6 +90,7 @@ for dir in extensions/${1:-*}/videos; do
   for spec in "$dir"/*.web; do
     [ -e "$spec" ] || continue
     name="$(basename "$spec" .web)"
+    [ -z "$only" ] || [ "$name" = "$only" ] || continue
     demo=""; seed=1; size=760,560; fps=2; scale=640
     # shellcheck disable=SC1090
     . "$spec"
@@ -94,7 +99,7 @@ for dir in extensions/${1:-*}/videos; do
     out="$root/target/screens/$ext-$name-shots"
     rm -rf "$out" && mkdir -p "$out"
     (cd "extensions/$ext" && XETAL_WEB_PORT=0 XETAL_SQLITE_ROOT="$work" \
-      exec "$root/target/debug/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > "$work/out" 2>&1) &
+      exec "$root/target/release/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > "$work/out" 2>&1) &
     server=$!
     port=""
     for _ in $(seq 100); do
@@ -131,11 +136,12 @@ for dir in extensions/${1:-*}/videos; do
   for spec in "$dir"/*.pics; do
     [ -e "$spec" ] || continue
     name="$(basename "$spec" .pics)"
+    [ -z "$only" ] || [ "$name" = "$only" ] || continue
     demo=""; seed=1; pics=(); hold=3; scale=760
     # shellcheck disable=SC1090
     . "$spec"
     echo "==> pics $ext $name"
-    (cd "extensions/$ext" && "$root/target/debug/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > /dev/null)
+    (cd "extensions/$ext" && "$root/target/release/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > /dev/null)
     out="$root/target/screens/$ext-$name-pics"
     rm -rf "$out" && mkdir -p "$out"
     i=0
@@ -152,13 +158,14 @@ for dir in extensions/${1:-*}/videos; do
   for spec in "$dir"/*.sound; do
     [ -e "$spec" ] || continue
     name="$(basename "$spec" .sound)"
+    [ -z "$only" ] || [ "$name" = "$only" ] || continue
     demo=""; seed=1
     # shellcheck disable=SC1090
     . "$spec"
     echo "==> sound $ext $name (no device)"
     wav="$root/target/screens/$ext-$name.wav"
     (cd "extensions/$ext" && XETAL_AUDIO=off XETAL_AUDIO_WAV="$wav" \
-      "$root/target/debug/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > /dev/null)
+      "$root/target/release/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > /dev/null)
     png="$root/target/screens/$ext-$name-spectrogram.png"
     sox "$wav" -n remix 1,2 spectrogram -x 880 -y 360 -z 80 -t "$ext/$demo.xtl: every sample computed in X_eTaL" -o "$png"
     ffmpeg -loglevel error -y -loop 1 -framerate 2 -i "$png" -i "$wav" -c:v libvpx-vp9 -crf 40 -b:v 0 \
