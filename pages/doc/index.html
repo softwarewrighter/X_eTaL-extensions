@@ -321,9 +321,10 @@ Run: just demo scene voxels-fly
 cubies, a &quot;plane&quot; -- turns a quarter revolution while the rest stays
 still: its cubies' bodies and stickers rotated a little more each
 frame (a rotation matrix, one inner product), then the cube's colors
-permuted once it is done. Three orthogonal planes in turn, each a
-quarter turn one way and back: the top (U, U'), the right (R, R'),
-the front (F, F').
+permuted once it is done. A scramble: twelve quarter turns, each on
+a different axis from the one before (the faces in the order U R F
+D L B, twice), the directions + + - - + - and then - + + + - +; a
+pause; then the same turns undone in reverse, back to solved.
 Run: just demo scene voxels-rubik-turn   (drag to turn it; q quit)</li>
 <li>program <a href="extensions-scene-demos-voxels-rubik.xtl.html">extensions/scene/demos/voxels-rubik.xtl</a>: Voxels, 8: a Rubik's cube. 26 dark cubies with their colored stickers,
 drawn as voxels; the cube itself is arrays (Rubik.xtl): its 54
@@ -759,13 +760,16 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#z">z</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#w">w</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#k">k</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#scramble">scramble</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#turns">turns</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#frames">frames</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#rest">rest</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#pause">pause</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#names">names</a></td><td>value</td><td><code>Box Char</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.p_aint"><span class="c-userfunc">ᵘp̲aint</span></a></td><td>function</td><td><code>(Any a, Num b) =&gt; (Int, Int, Int) -&gt; a -&gt; b</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.a_fter"><span class="c-userfunc">ᵘa̲fter</span></a></td><td>function</td><td><code>(Int, Int) -&gt; a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.a_nnounce"><span class="c-userfunc">ᵘa̲nnounce</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; Int -&gt; b</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a></td><td>function</td><td><code>(Num a, Truthy a, Num b) =&gt; a -&gt; Char -&gt; b</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.s_how"><span class="c-userfunc">ᵘs̲how</span></a></td><td>function</td><td><code>Any a =&gt; (Int, Int, Int, a) -&gt; (Int, Int, Int, a)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>Num a =&gt; (Int, Int, Int, a) -&gt; (Int, Int, Int, a)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>Num a =&gt; (Int, Int, Int, a) -&gt; (Int, Int, Int, a)</code></td></tr>

@@ -127,13 +127,16 @@
 <ul>
 <li class="item"><a href="#w">w</a></li>
 <li class="item"><a href="#k">k</a></li>
+<li class="item"><a href="#scramble">scramble</a></li>
 <li class="item"><a href="#turns">turns</a></li>
 <li class="item"><a href="#frames">frames</a></li>
 <li class="item"><a href="#rest">rest</a></li>
+<li class="item"><a href="#pause">pause</a></li>
 <li class="item"><a href="#names">names</a></li>
 <li class="item"><a href="#u.p_aint"><span class="c-userfunc">ᵘp̲aint</span></a></li>
 <li class="item"><a href="#u.a_fter"><span class="c-userfunc">ᵘa̲fter</span></a></li>
 <li class="item"><a href="#u.a_nnounce"><span class="c-userfunc">ᵘa̲nnounce</span></a></li>
+<li class="item"><a href="#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a></li>
 <li class="item"><a href="#u.s_how"><span class="c-userfunc">ᵘs̲how</span></a></li>
 <li class="item"><a href="#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></li>
 <li class="item"><a href="#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></li>
@@ -150,56 +153,72 @@
 cubies, a &quot;plane&quot; -- turns a quarter revolution while the rest stays
 still: its cubies' bodies and stickers rotated a little more each
 frame (a rotation matrix, one inner product), then the cube's colors
-permuted once it is done. Three orthogonal planes in turn, each a
-quarter turn one way and back: the top (U, U'), the right (R, R'),
-the front (F, F').
+permuted once it is done. A scramble: twelve quarter turns, each on
+a different axis from the one before (the faces in the order U R F
+D L B, twice), the directions + + - - + - and then - + + + - +; a
+pause; then the same turns undone in reverse, back to solved.
 Run: just demo scene voxels-rubik-turn   (drag to turn it; q quit)</p>
 </div>
 <p class="meta"><a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html">source</a> &middot; imports <code><span class="c-error">rb:</span></code> <a href="extensions-scene-demos-Rubik.xtl.html">extensions/scene/demos/Rubik.xtl</a>; <code><span class="c-error">sc:</span></code> <a href="extensions-scene-lib-Scene.xtl.html">extensions/scene/lib/Scene.xtl</a></p>
 <div class="item" id="w">
 <h3><a href="#w">w</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L13">line 13</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L14">line 14</a></div>
 <pre class="code">w ← <span class="c-string">&quot;Voxels 9: a quarter turn -- X_eTaL&quot;</span> <a href="extensions-scene-lib-Scene.xtl.html#l.o_pen-21" class="c-libfunc">ˢᶜo̲pen!</a> <span class="c-number">560</span> <span class="c-number">560</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#k">k</a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.p_aint"><span class="c-userfunc">ᵘp̲aint</span></a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#shown">shown</a></div>
 </div>
 <div class="item" id="k">
 <h3><a href="#k">k</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L14">line 14</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L15">line 15</a></div>
 <pre class="code">k ← <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#w">w</a> <a href="extensions-scene-lib-Scene.xtl.html#l.c_amera-21" class="c-libfunc">ˢᶜc̲amera!</a> <span class="c-number">0.6</span> <span class="c-number">0.45</span> <span class="c-number">7.5</span> <span class="c-number">0.0</span></pre>
+</div>
+<div class="item" id="scramble">
+<h3><a href="#scramble">scramble</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L20">line 20</a></div>
+<div class="doc">
+<p>the scramble, in the order of rb:names: U R' ... -- each turn on
+another axis than the one before -- then the way back: the same
+turns undone, last first</p>
+</div>
+<pre class="code">scramble ← <span class="c-number">1</span> <span class="c-number">5</span> <span class="c-number">10</span> <span class="c-number">4</span> <span class="c-number">7</span> <span class="c-number">12</span> <span class="c-number">2</span> <span class="c-number">5</span> <span class="c-number">9</span> <span class="c-number">3</span> <span class="c-number">8</span> <span class="c-number">11</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#turns">turns</a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.a_nnounce"><span class="c-userfunc">ᵘa̲nnounce</span></a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.s_how"><span class="c-userfunc">ᵘs̲how</span></a></div>
 </div>
 <div class="item" id="turns">
 <h3><a href="#turns">turns</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L17">line 17</a></div>
-<div class="doc">
-<p>the turns shown, in order: U U' R R' F F' (see rb:names)</p>
-</div>
-<pre class="code">turns ← <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">5</span> <span class="c-number">6</span> <span class="c-number">9</span> <span class="c-number">10</span></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.s_how"><span class="c-userfunc">ᵘs̲how</span></a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L21">line 21</a></div>
+<pre class="code">turns ← <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#scramble">scramble</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.u_ndo" class="c-libfunc">ʳᵇu̲ndo</a> <a href="builtins.html#r_ev" class="c-builtin">r̲ev</a> <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#scramble">scramble</a></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.a_nnounce"><span class="c-userfunc">ᵘa̲nnounce</span></a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.s_how"><span class="c-userfunc">ᵘs̲how</span></a></div>
 </div>
 <div class="item" id="frames">
 <h3><a href="#frames">frames</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L19">line 19</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L24">line 24</a></div>
 <div class="doc">
-<p>frames for a quarter turn, and still after it</p>
+<p>frames for a quarter turn, still after it, and still at the
+scrambled cube before solving</p>
 </div>
-<pre class="code">frames ← <span class="c-number">24</span></pre>
+<pre class="code">frames ← <span class="c-number">20</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.p_aint"><span class="c-userfunc">ᵘp̲aint</span></a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.a_fter"><span class="c-userfunc">ᵘa̲fter</span></a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.s_how"><span class="c-userfunc">ᵘs̲how</span></a></div>
 </div>
 <div class="item" id="rest">
 <h3><a href="#rest">rest</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L20">line 20</a></div>
-<pre class="code">rest ← <span class="c-number">18</span></pre>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L25">line 25</a></div>
+<pre class="code">rest ← <span class="c-number">8</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.s_how"><span class="c-userfunc">ᵘs̲how</span></a></div>
+</div>
+<div class="item" id="pause">
+<h3><a href="#pause">pause</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L26">line 26</a></div>
+<pre class="code">pause ← <span class="c-number">50</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.s_how"><span class="c-userfunc">ᵘs̲how</span></a></div>
 </div>
 <div class="item" id="names">
 <h3><a href="#names">names</a> <span class="type">: Box Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L22">line 22</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L28">line 28</a></div>
 <pre class="code">names ← (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.names">ʳᵇnames</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-string">&quot; &quot;</span>) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.names">ʳᵇnames</a></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.a_nnounce"><span class="c-userfunc">ᵘa̲nnounce</span></a></div>
 </div>
 <div class="item" id="u.p_aint">
 <h3><a href="#u.p_aint"><span class="c-userfunc">ᵘp̲aint</span></a> <span class="type">: (Any a, Num b) =&gt; (Int, Int, Int) -&gt; a -&gt; b</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L26">line 26</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L32">line 32</a></div>
 <div class="doc">
 <p>(colors, turn, frame) u:p_aint 0: the cube drawn at this frame of
 the turn -- turning, or (at its end) with the turn made</p>
@@ -213,7 +232,7 @@ the turn -- turning, or (at its end) with the turn made</p>
 </div>
 <div class="item" id="u.a_fter">
 <h3><a href="#u.a_fter"><span class="c-userfunc">ᵘa̲fter</span></a> <span class="type">: (Int, Int) -&gt; a -&gt; a</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L34">line 34</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L40">line 40</a></div>
 <div class="doc">
 <p>(turn, frame) u:a_fter c: the colors after this frame: turned once,
 at the turn's end</p>
@@ -226,37 +245,52 @@ at the turn's end</p>
 </div>
 <div class="item" id="u.a_nnounce">
 <h3><a href="#u.a_nnounce"><span class="c-userfunc">ᵘa̲nnounce</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; Int -&gt; b</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L40">line 40</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L46">line 46</a></div>
 <div class="doc">
-<p>the turn about to be shown, printed</p>
+<p>the turn about to be shown, printed (and the start of each half)</p>
 </div>
-<pre class="code"><span class="c-userfunc">ᵘa̲nnounce</span> ← { yes i →
+<pre class="code"><span class="c-userfunc">ᵘa̲nnounce</span> ← { yes j →
   <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> yes ? <span class="c-number">0</span>
+  k ← <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (j <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#turns">turns</a>
+  i ← k <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#turns">turns</a>
+  said ← (k <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>) <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.s_ay" class="c-userfunc">ᵘs̲ay</a> <span class="c-string">&quot;scrambling&quot;</span>
+  said ← (k <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#scramble">scramble</a>) <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.s_ay" class="c-userfunc">ᵘs̲ay</a> <span class="c-string">&quot;solving&quot;</span>
   said ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <span class="c-string">&quot;turn &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#names">names</a>
   <span class="c-number">0</span>
 }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.s_how"><span class="c-userfunc">ᵘs̲how</span></a></div>
 </div>
+<div class="item" id="u.s_ay">
+<h3><a href="#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a> <span class="type">: (Num a, Truthy a, Num b) =&gt; a -&gt; Char -&gt; b</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L55">line 55</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲ay</span> ← { yes m →
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> yes ? <span class="c-number">0</span>
+  said ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> m
+  <span class="c-number">0</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.a_nnounce"><span class="c-userfunc">ᵘa̲nnounce</span></a></div>
+</div>
 <div class="item" id="u.s_how">
 <h3><a href="#u.s_how"><span class="c-userfunc">ᵘs̲how</span></a> <span class="type">: Any a =&gt; (Int, Int, Int, a) -&gt; (Int, Int, Int, a)</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L48">line 48</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L63">line 63</a></div>
 <div class="doc">
 <p>one frame of the show: the state is (colors, which turn, its frame,
 running)</p>
 </div>
 <pre class="code"><span class="c-userfunc">ᵘs̲how</span> ← { (c, j, f, on) →
   i ← (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (j <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#turns">turns</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#turns">turns</a>
-  said ← (f <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span>) <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.a_nnounce" class="c-userfunc">ᵘa̲nnounce</a> i
+  said ← (f <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span>) <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.a_nnounce" class="c-userfunc">ᵘa̲nnounce</a> j
   drawn ← (c, i, f) <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.p_aint" class="c-userfunc">ᵘp̲aint</a> <span class="c-number">0</span>
   c ← (i, f) <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.a_fter" class="c-userfunc">ᵘa̲fter</a> c
-  f <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#frames">frames</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#rest">rest</a> ? (c, j, f <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>, on)
+  wait ← <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#rest">rest</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#pause">pause</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> (j <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#scramble">scramble</a>))
+  f <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#frames">frames</a> <a href="builtins.html#-2b" class="c-symbol">+</a> wait ? (c, j, f <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>, on)
   (c, j <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>, <span class="c-number">0</span>, on)
 }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
 </div>
 <div class="item" id="u.f_rame">
 <h3><a href="#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a> <span class="type">: Num a =&gt; (Int, Int, Int, a) -&gt; (Int, Int, Int, a)</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L57">line 57</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L73">line 73</a></div>
 <pre class="code"><span class="c-userfunc">ᵘf̲rame</span> ← { st →
   (c, j, f, on) ← st
   <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> on ? st
@@ -268,7 +302,7 @@ running)</p>
 </div>
 <div class="item" id="u.q_uit">
 <h3><a href="#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a> <span class="type">: Num a =&gt; (Int, Int, Int, a) -&gt; (Int, Int, Int, a)</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L64">line 64</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L80">line 80</a></div>
 <pre class="code"><span class="c-userfunc">ᵘq̲uit</span> ← { (c, j, f, on) →
   z ← <a href="extensions-scene-lib-Scene.xtl.html#l.c_lose-21" class="c-libfunc">ˢᶜc̲lose!</a> <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#w">w</a>
   (c, j, f, <span class="c-number">0</span>)
@@ -277,12 +311,12 @@ running)</p>
 </div>
 <div class="item" id="shown">
 <h3><a href="#shown">shown</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L68">line 68</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L84">line 84</a></div>
 <pre class="code">shown ← (<a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a>, <span class="c-number">0</span>, <span class="c-number">0.0</span>) <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw" class="c-libfunc">ʳᵇd̲raw</a> <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#w">w</a></pre>
 </div>
 <div class="item" id="last">
 <h3><a href="#last">last</a> <span class="type">: (Int, Int, Int, Int)</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L69">line 69</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-turn.xtl.src.html#L85">line 85</a></div>
 <pre class="code">last ← <span class="c-number">100000</span> <span class="c-userfunc">'</span><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.f_rame" class="c-userfunc">ᵘf̲rame</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a>, <span class="c-number">1</span>, <span class="c-number">0</span>, <span class="c-number">1</span>)</pre>
 </div>
 </main>

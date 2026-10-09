@@ -6,6 +6,7 @@
 //! X_eTaL's arrays.
 
 use std::collections::BTreeMap;
+use std::sync::Arc;
 
 /// What an object draws.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -69,7 +70,7 @@ impl Default for Camera {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Scene {
-    pub objects: BTreeMap<i64, Object>,
+    pub objects: BTreeMap<i64, Arc<Object>>,
     pub camera: Camera,
     /// Lines are this many pixels wide (parallel anti-aliased passes).
     pub line_width: f64,
@@ -116,7 +117,8 @@ impl Scene {
             }
         }
         self.bounds.insert(id, (lo, hi));
-        self.objects.insert(id, object);
+        // shared, so handing a whole scene to the window is cheap
+        self.objects.insert(id, Arc::new(object));
     }
 
     /// Removes object `id`; whether it was there.

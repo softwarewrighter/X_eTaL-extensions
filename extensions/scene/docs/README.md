@@ -161,9 +161,10 @@ before the next builds on it. Their shared X_eTaL is the library
    quarter revolution while the rest of the cube stays still: its
    cubies' bodies and stickers rotated a little more each frame by a
    rotation matrix (`rb:r_otation`, one inner product, `rb:d_raw`),
-   then the colors permuted once it is done. The top, right and front
-   layers in turn, each a quarter turn one way and back (U U' R R' F
-   F'). Recorded as `videos/voxels-rubik-turn.webm`.
+   then the colors permuted once it is done. A scramble of twelve
+   quarter turns, each on another axis than the one before (U R F' D' L
+   B' U' R F D L' B), a pause, then the same turns undone in reverse,
+   back to solved. Recorded as `videos/voxels-rubik-turn.webm`.
 
 ## Build and test
 

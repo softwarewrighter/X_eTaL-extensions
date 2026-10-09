@@ -31,6 +31,9 @@ type Shared = Arc<Mutex<Scene>>;
 pub struct Input {
     held: std::collections::BTreeSet<String>,
     look: (f64, f64),
+    /// An orbit drag the window has shown and the program's scene has not
+    /// yet taken.
+    orbit: (f64, f64),
 }
 
 /// The keys `sc:c_ontrols` reports, in order.
@@ -194,7 +197,12 @@ impl Surface for Pane {
                         i.look.0 += dx;
                         i.look.1 += dy;
                     } else {
+                        // shown at once; the program's scene takes it at
+                        // its next frame
                         scene.drag(dx, dy);
+                        let mut i = input_of(&self.input);
+                        i.orbit.0 += dx;
+                        i.orbit.1 += dy;
                         self.window.request_redraw();
                     }
                 }
@@ -209,10 +217,14 @@ impl Surface for Pane {
     }
 }
 
-/// The program's side of a scene window.
+/// The program's side of a scene window. The program changes `scene`;
+/// the window draws `display`, which takes the whole of `scene` at each
+/// of the program's frames (`next`) -- so a frame never shows a change
+/// half made (one layer's cubies moved, their stickers not yet).
 struct Handle {
     window: Option<WindowId>,
     scene: Shared,
+    display: Shared,
     events: Events,
     input: SharedInput,
     size: (usize, usize),
@@ -271,13 +283,15 @@ fn open(args: &[Value]) -> Result<Value, OwnedError> {
         return Err(OwnedError::invalid_argument("size is width height"));
     };
     let scene: Shared = Arc::new(Mutex::new(Scene::default()));
+    let display: Shared = Arc::new(Mutex::new(Scene::default()));
     let input: SharedInput = Arc::new(Mutex::new(Input::default()));
     static NEXT: AtomicI64 = AtomicI64::new(1);
     let (window, events) = if headless() {
         (None, scripted())
     } else {
         let events = Events::new();
-        let (pane_events, pane_scene, pane_input) = (events.clone(), scene.clone(), input.clone());
+        let (pane_events, pane_scene, pane_input) =
+            (events.clone(), display.clone(), input.clone());
         let window = on_main(move |ui| {
             let attrs = Window::default_attributes()
                 .with_title(title)
@@ -309,6 +323,7 @@ fn open(args: &[Value]) -> Result<Value, OwnedError> {
         Handle {
             window,
             scene,
+            display,
             events,
             input,
             size: (w.max(1.0) as usize, h.max(1.0) as usize),
@@ -447,7 +462,12 @@ fn next(args: &[Value]) -> Result<Value, OwnedError> {
             h.last.elapsed().as_secs_f64().min(0.25)
         };
         h.last = Instant::now();
+        let orbit = std::mem::take(&mut input_of(&h.input).orbit);
+        locked(&h.scene).drag(orbit.0, orbit.1);
         locked(&h.scene).tick(dt);
+        // the frame's changes, all at once, to the window
+        let shown = locked(&h.scene).clone();
+        *locked(&h.display) = shown;
         h.shown += 1;
         let save = frames_dir().map(|d| {
             let (w, ht) = h.size;

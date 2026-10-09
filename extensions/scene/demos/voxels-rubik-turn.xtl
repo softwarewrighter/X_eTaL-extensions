@@ -2,9 +2,10 @@
 ## cubies, a "plane" -- turns a quarter revolution while the rest stays
 ## still: its cubies' bodies and stickers rotated a little more each
 ## frame (a rotation matrix, one inner product), then the cube's colors
-## permuted once it is done. Three orthogonal planes in turn, each a
-## quarter turn one way and back: the top (U, U'), the right (R, R'),
-## the front (F, F').
+## permuted once it is done. A scramble: twelve quarter turns, each on
+## a different axis from the one before (the faces in the order U R F
+## D L B, twice), the directions + + - - + - and then - + + + - +; a
+## pause; then the same turns undone in reverse, back to solved.
 ## Run: just demo scene voxels-rubik-turn   (drag to turn it; q quit)
 
 "rb:" u_se< "Rubik"
@@ -13,11 +14,16 @@
 w := "Voxels 9: a quarter turn -- X_eTaL" sc:o_pen! 560 560
 k := w sc:c_amera! 0.6 0.45 7.5 0.0
 
-## the turns shown, in order: U U' R R' F F' (see rb:names)
-turns := 1 2 5 6 9 10
-## frames for a quarter turn, and still after it
-frames := 24
-rest := 18
+## the scramble, in the order of rb:names: U R' ... -- each turn on
+## another axis than the one before -- then the way back: the same
+## turns undone, last first
+scramble := 1 5 10 4 7 12 2 5 9 3 8 11
+turns := scramble c_at rb:u_ndo r_ev scramble
+## frames for a quarter turn, still after it, and still at the
+## scrambled cube before solving
+frames := 20
+rest := 8
+pause := 50
 
 names := (n_ot rb:names = f_irst " ") p_artition rb:names
 
@@ -36,10 +42,19 @@ u:a_fter := { (i, f) c ->
   c
 }
 
-## the turn about to be shown, printed
-u:a_nnounce := { yes i ->
+## the turn about to be shown, printed (and the start of each half)
+u:a_nnounce := { yes j ->
   0 = yes ? 0
+  k := 1 + (j - 1) m_od t_ally turns
+  i := k s_elect turns
+  said := (k = 1) u:s_ay "scrambling"
+  said := (k = 1 + t_ally scramble) u:s_ay "solving"
   said := p_rint! "turn " c_at d_isclose i s_elect names
+  0
+}
+u:s_ay := { yes m ->
+  0 = yes ? 0
+  said := p_rint! m
   0
 }
 
@@ -47,10 +62,11 @@ u:a_nnounce := { yes i ->
 ## running)
 u:s_how := { (c, j, f, on) ->
   i := (1 + (j - 1) m_od t_ally turns) s_elect turns
-  said := (f = 0) u:a_nnounce i
+  said := (f = 0) u:a_nnounce j
   drawn := (c, i, f) u:p_aint 0
   c := (i, f) u:a_fter c
-  f < frames + rest ? (c, j, f + 1, on)
+  wait := rest + pause * (0 = (j m_od t_ally scramble))
+  f < frames + wait ? (c, j, f + 1, on)
   (c, j + 1, 0, on)
 }
 

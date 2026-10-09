@@ -1,8 +1,8 @@
 # extensions/scene/videos/voxels-rubik-turn.webm and .webp: voxels 9, a
-# quarter turn seen -- the top, right and front layers each turned a
-# quarter revolution and back (just videos).
+# quarter turn seen -- a scramble of twelve turns, each on another
+# axis than the one before, then solved back (just videos).
 demo=voxels-rubik-turn
 seed=1
-frames=270
+frames=800
 fps=30
 scale=480
