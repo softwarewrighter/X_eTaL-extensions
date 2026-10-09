@@ -13,7 +13,7 @@ use std::sync::atomic::{AtomicI64, Ordering};
 use std::sync::{Arc, Mutex, OnceLock};
 use std::time::{Duration, Instant};
 
-use model::{Kind, Object, Scene};
+use model::{Kind, Object, Rect, Scene};
 use xetal_ext_sdk::{OwnedError, Value, float_vector, text};
 use xetal_ext_ui::winit::dpi::LogicalSize;
 use xetal_ext_ui::winit::event::{ElementState, MouseButton, WindowEvent};
@@ -107,6 +107,9 @@ struct Pane {
     input: SharedInput,
     cursor: (f64, f64),
     dragging: bool,
+    /// Where each button (left, right) went down, for telling a click
+    /// from a drag.
+    pressed: [Option<(f64, f64)>; 2],
 }
 
 impl Pane {
@@ -181,11 +184,28 @@ impl Surface for Pane {
             }
             // keys let go while the window was in the background
             WindowEvent::Focused(false) => input_of(&self.input).held.clear(),
-            WindowEvent::MouseInput {
-                state,
-                button: MouseButton::Left,
-                ..
-            } => self.dragging = *state == ElementState::Pressed,
+            WindowEvent::MouseInput { state, button, .. } => {
+                let (k, name) = match button {
+                    MouseButton::Left => (0, "left"),
+                    MouseButton::Right => (1, "right"),
+                    _ => return,
+                };
+                if k == 0 {
+                    self.dragging = *state == ElementState::Pressed;
+                }
+                if *state == ElementState::Pressed {
+                    self.pressed[k] = Some(self.cursor);
+                } else if let Some(p) = self.pressed[k].take() {
+                    // a press and release without a drag: a click, where
+                    // it was, in logical pixels
+                    let f = self.window.scale_factor();
+                    let (x, y) = (self.cursor.0 / f, self.cursor.1 / f);
+                    if (x - p.0 / f).hypot(y - p.1 / f) < 5.0 {
+                        self.events
+                            .push(format!("click {name} {} {}", x.round(), y.round()));
+                    }
+                }
+            }
             WindowEvent::CursorMoved { position, .. } => {
                 let (x, y) = (position.x, position.y);
                 if self.dragging {
@@ -282,8 +302,14 @@ fn open(args: &[Value]) -> Result<Value, OwnedError> {
     let [w, h] = size[..] else {
         return Err(OwnedError::invalid_argument("size is width height"));
     };
-    let scene: Shared = Arc::new(Mutex::new(Scene::default()));
-    let display: Shared = Arc::new(Mutex::new(Scene::default()));
+    let sized = || {
+        Arc::new(Mutex::new(Scene {
+            size: (w, h),
+            ..Scene::default()
+        }))
+    };
+    let scene: Shared = sized();
+    let display: Shared = sized();
     let input: SharedInput = Arc::new(Mutex::new(Input::default()));
     static NEXT: AtomicI64 = AtomicI64::new(1);
     let (window, events) = if headless() {
@@ -310,6 +336,7 @@ fn open(args: &[Value]) -> Result<Value, OwnedError> {
                     input: pane_input,
                     cursor: (0.0, 0.0),
                     dragging: false,
+                    pressed: [None, None],
                 }))
             })
         })
@@ -448,7 +475,8 @@ fn camera(args: &[Value]) -> Result<Value, OwnedError> {
 }
 
 /// next scene: the next event, waiting up to a frame (`frame`,
-/// `key NAME`, `close`); auto-rotation advances; with `XETAL_FRAMES`
+/// `key NAME`, `click left X Y` or `click right X Y` -- a press and
+/// release without a drag, in logical pixels -- `close`); auto-rotation advances; with `XETAL_FRAMES`
 /// the frame is saved.
 fn next(args: &[Value]) -> Result<Value, OwnedError> {
     let s = id_of(&args[0])?;
@@ -547,6 +575,41 @@ fn sky(args: &[Value]) -> Result<Value, OwnedError> {
     Ok(Value::Int(s))
 }
 
+/// scene overlay rects: flat rectangles drawn over the scene, n by 7 --
+/// left, top, width, height in the window's logical pixels from its top
+/// left, then red green blue (0 to 1) -- replacing the overlay before;
+/// none (0 by 7) clears it. The scene id.
+fn overlay(args: &[Value]) -> Result<Value, OwnedError> {
+    let s = id_of(&args[0])?;
+    let (shape, v) = float_vector(&args[1])?;
+    if !(matches!(shape[..], [_, 7] | [7]) || v.is_empty()) {
+        return Err(OwnedError::invalid_argument(format!(
+            "an overlay is n by 7 (x y width height red green blue), not {shape:?}"
+        )));
+    }
+    if v.iter().any(|x| !x.is_finite()) {
+        return Err(OwnedError::invalid_argument(
+            "overlay: a NaN or an infinity",
+        ));
+    }
+    let rects: Vec<Rect> = v
+        .chunks_exact(7)
+        .map(|r| Rect {
+            x: r[0],
+            y: r[1],
+            w: r[2].max(0.0),
+            h: r[3].max(0.0),
+            color: [r[4], r[5], r[6]],
+        })
+        .collect();
+    let window = with(s, |h| {
+        locked(&h.scene).overlay = rects;
+        h.window
+    })?;
+    redraw(window)?;
+    Ok(Value::Int(s))
+}
+
 /// controls scene: how far the mouse was dragged since last asked (x,
 /// y pixels), then 1 or 0 for each key held: w a s d space shift and the
 /// four arrows.
@@ -584,8 +647,9 @@ xetal_ext_sdk::xetal_extension! {
         eye: 2, "(Num a, Num b) => a -> b -> Int", "scene eye x y z yaw pitch: a first-person camera.";
         sky: 2, "(Num a, Num b) => a -> b -> Int", "scene sky red green blue: the background and fog color.";
         curve: 2, "(Num a, Num b) => a -> b -> Int", "scene curve radius: a curved horizon (0: flat).";
+        overlay: 2, "(Num a, Num b) => a -> b -> Int", "scene overlay rects (n by 7: x y width height red green blue, logical pixels): drawn over the scene.";
         controls: 1, "Num a => a -> Float", "Mouse drag dx dy since last asked, then held: w a s d space shift left right up down.";
-        next: 1, "Num a => a -> Char", "The next event (frame, key NAME, close), waiting up to a frame.";
+        next: 1, "Num a => a -> Char", "The next event (frame, key NAME, click left|right X Y, close), waiting up to a frame.";
         close: 1, "Num a => a -> Int", "Close the window.";
     }
 }

@@ -1,6 +1,6 @@
 //! The scene model, headless: objects by id, the camera, rendering.
 
-use xetal_ext_scene::model::{Kind, Object, Scene};
+use xetal_ext_scene::model::{Kind, Object, Rect, Scene};
 
 const BG: u32 = 0x000c_0e14;
 
@@ -270,4 +270,46 @@ fn a_curved_horizon_lowers_far_things_more() {
     s.camera.curve = 100.0;
     let curved = top_row(&s);
     assert!(curved > flat + 2, "flat {flat}, curved {curved}");
+}
+
+#[test]
+fn the_overlay_is_drawn_over_everything_and_scaled_from_the_window() {
+    // a white square at the center of a 40 by 30 window, over a red quad
+    // that fills the view
+    let mut s = first_person([0.0, 0.0, 0.0], 0.0, 0.0);
+    s.set(
+        1,
+        quad(
+            vec![
+                [-50.0, -50.0, -2.0],
+                [50.0, -50.0, -2.0],
+                [50.0, 50.0, -2.0],
+                [-50.0, 50.0, -2.0],
+            ],
+            [1.0, 0.0, 0.0],
+        ),
+    );
+    s.size = (40.0, 30.0);
+    s.overlay = vec![Rect {
+        x: 18.0,
+        y: 13.0,
+        w: 4.0,
+        h: 4.0,
+        color: [1.0, 1.0, 1.0],
+    }];
+    let white = 0x00ff_ffff;
+    // at the window's size: pixels 18 to 21 by 13 to 16
+    let px = s.render(40, 30);
+    assert_eq!(px[13 * 40 + 18], white);
+    assert_eq!(px[16 * 40 + 21], white);
+    assert_ne!(px[12 * 40 + 18], white);
+    assert_ne!(px[13 * 40 + 22], white);
+    // at twice the size (a dense screen): twice as far and as big
+    let px = s.render(80, 60);
+    assert_eq!(px[26 * 80 + 36], white);
+    assert_eq!(px[33 * 80 + 43], white);
+    assert_ne!(px[34 * 80 + 43], white);
+    // cleared
+    s.overlay.clear();
+    assert!(s.render(40, 30).iter().all(|&p| p != white));
 }

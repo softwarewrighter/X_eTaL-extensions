@@ -82,6 +82,24 @@ pub struct Scene {
     pub bounds: BTreeMap<i64, ([f64; 3], [f64; 3])>,
     /// The background (and the fog's color): None, the dark default.
     pub sky: Option<[f64; 3]>,
+    /// Flat rectangles drawn over everything (a crosshair, a hotbar,
+    /// buttons): x y width height in the window's logical pixels from its
+    /// top left, and a color.
+    pub overlay: Vec<Rect>,
+    /// The window's logical size, which the overlay is laid out in; a
+    /// picture of another size scales the overlay to it.
+    pub size: (f64, f64),
+}
+
+/// An overlay rectangle: left, top, width, height (logical pixels) and
+/// red green blue (0 to 1).
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Rect {
+    pub x: f64,
+    pub y: f64,
+    pub w: f64,
+    pub h: f64,
+    pub color: [f64; 3],
 }
 
 impl Default for Scene {
@@ -93,6 +111,8 @@ impl Default for Scene {
             fog: None,
             bounds: BTreeMap::new(),
             sky: None,
+            overlay: Vec::new(),
+            size: (0.0, 0.0),
         }
     }
 }
@@ -263,7 +283,37 @@ impl Scene {
                 Kind::Quads => {}
             }
         }
+        self.draw_overlay(&mut px, w, h);
         px
+    }
+
+    /// The overlay's rectangles, scaled from the window's logical size to
+    /// the picture's, each covering the pixels whose centers it holds.
+    #[allow(
+        clippy::cast_precision_loss,
+        clippy::cast_possible_truncation,
+        clippy::cast_sign_loss
+    )]
+    fn draw_overlay(&self, px: &mut [u32], w: usize, h: usize) {
+        if self.overlay.is_empty() {
+            return;
+        }
+        let (lw, lh) = self.size;
+        let sx = if lw > 0.0 { w as f64 / lw } else { 1.0 };
+        let sy = if lh > 0.0 { h as f64 / lh } else { 1.0 };
+        let span = |a: f64, len: f64, s: f64, n: usize| {
+            let lo = (a * s).round().clamp(0.0, n as f64) as usize;
+            let hi = ((a + len) * s).round().clamp(0.0, n as f64) as usize;
+            lo..hi
+        };
+        for r in &self.overlay {
+            let c = rgb(r.color);
+            for y in span(r.y, r.h, sy, h) {
+                for x in span(r.x, r.w, sx, w) {
+                    px[y * w + x] = c;
+                }
+            }
+        }
     }
 
     /// One quad: shaded by its normal against the light (both sides

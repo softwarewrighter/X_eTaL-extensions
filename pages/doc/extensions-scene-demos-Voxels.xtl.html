@@ -98,6 +98,7 @@
 <li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
 <li><a href="extensions-scene-demos-Rubik.xtl.html">Rubik.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-dig.xtl.html">voxels-dig.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
@@ -305,7 +306,7 @@ would be this file -- ask E8.)</p>
 air stone dirt grass sand water wood leaves</pre>
 </div>
 <pre class="code">ˡnames ← <span class="c-string">&quot;air stone dirt grass sand water wood leaves&quot;</span></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-chunk.xtl.src.html#L15">extensions/scene/demos/voxels-chunk.xtl:15</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-chunk.xtl.src.html#L15">extensions/scene/demos/voxels-chunk.xtl:15</a>, <a href="extensions-scene-demos-voxels-dig.xtl.html#u.p_lace"><span class="c-userfunc">ᵘp̲lace</span></a></div>
 </div>
 <div class="item" id="l.glyphs">
 <h3><a href="#l.glyphs">ˡglyphs</a> <span class="type">: Char</span></h3>
@@ -598,7 +599,7 @@ origin and scaled to -1..1</p>
 <p>each block's color, red green blue (air first)</p>
 </div>
 <pre class="code">ˡcolors ← <span class="c-number">8</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span>  <span class="c-number">0.55</span> <span class="c-number">0.55</span> <span class="c-number">0.58</span>  <span class="c-number">0.55</span> <span class="c-number">0.38</span> <span class="c-number">0.22</span>  <span class="c-number">0.35</span> <span class="c-number">0.7</span> <span class="c-number">0.25</span>  <span class="c-number">0.9</span> <span class="c-number">0.82</span> <span class="c-number">0.55</span>  <span class="c-number">0.25</span> <span class="c-number">0.45</span> <span class="c-number">0.9</span>  <span class="c-number">0.45</span> <span class="c-number">0.3</span> <span class="c-number">0.15</span>  <span class="c-number">0.2</span> <span class="c-number">0.5</span> <span class="c-number">0.2</span></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.s_endOne"><span class="c-libfunc">ʰs̲endOne</span></a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-world.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.s_endOne"><span class="c-libfunc">ʰs̲endOne</span></a>, <a href="extensions-scene-demos-voxels-dig.xtl.html#u.h_ud"><span class="c-userfunc">ᵘh̲ud</span></a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-world.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a></div>
 </div>
 <div class="item" id="cx">
 <h3><a href="#cx">cx</a> <span class="type">: Int</span></h3>
@@ -991,7 +992,7 @@ of the three parts of making a column (about 12 ms)</p>
   t ← <span class="c-number">4</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">10.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> q) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> r <a href="builtins.html#-2a" class="c-symbol">×</a> q) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> r <a href="builtins.html#-2a" class="c-symbol">×</a> q
   (<span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> t) <a href="extensions-scene-demos-Voxels.xtl.html#l.f_orest" class="c-libfunc">ˡf̲orest</a> b
 }</pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.b_locks"><span class="c-libfunc">ʰb̲locks</span></a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.b_locks"><span class="c-libfunc">ʰb̲locks</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.r_emake"><span class="c-libfunc">ʰr̲emake</span></a>, <a href="extensions-scene-demos-voxels-dig.xtl.html#b">b</a>, <a href="extensions-scene-demos-voxels-dig.xtl.src.html#L42">extensions/scene/demos/voxels-dig.xtl:42</a></div>
 </div>
 <div class="item" id="l.c_olumnMask">
 <h3><a href="#l.c_olumnMask"><span class="c-libfunc">ˡc̲olumnMask</span></a> <span class="type">: (Num a, Num b, Truthy b) =&gt; a -&gt; b</span></h3>
@@ -1001,7 +1002,7 @@ of the three parts of making a column (about 12 ms)</p>
 by 16, flat, x slowest), from its blocks</p>
 </div>
 <pre class="code"><span class="c-libfunc">ˡc̲olumnMask</span> ← { b → <a href="extensions-scene-demos-Voxels.xtl.html#inner">inner</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.s_olid" class="c-libfunc">ˡs̲olid</a> b }</pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.b_locks"><span class="c-libfunc">ʰb̲locks</span></a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.b_locks"><span class="c-libfunc">ʰb̲locks</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.r_emake"><span class="c-libfunc">ʰr̲emake</span></a></div>
 </div>
 <div class="item" id="l.c_olumnFaces">
 <h3><a href="#l.c_olumnFaces"><span class="c-libfunc">ˡc̲olumnFaces</span></a> <span class="type">: Int -&gt; Int -&gt; Int</span></h3>

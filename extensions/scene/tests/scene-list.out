@@ -10,6 +10,7 @@ scene 0.1.0
   scene/eye : (Num a, Num b) => a -> b -> Int    # scene eye x y z yaw pitch: a first-person camera.
   scene/sky : (Num a, Num b) => a -> b -> Int    # scene sky red green blue: the background and fog color.
   scene/curve : (Num a, Num b) => a -> b -> Int    # scene curve radius: a curved horizon (0: flat).
+  scene/overlay : (Num a, Num b) => a -> b -> Int    # scene overlay rects (n by 7: x y width height red green blue, logical pixels): drawn over the scene.
   scene/controls : Num a => a -> Float    # Mouse drag dx dy since last asked, then held: w a s d space shift left right up down.
-  scene/next : Num a => a -> Char    # The next event (frame, key NAME, close), waiting up to a frame.
+  scene/next : Num a => a -> Char    # The next event (frame, key NAME, click left|right X Y, close), waiting up to a frame.
   scene/close : Num a => a -> Int    # Close the window.

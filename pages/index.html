@@ -20,7 +20,7 @@
     <li><a href="#http">http</a><ul><li><a href="#http-quakes">quakes</a></li><li><a href="#http-quakes-live">quakes-live</a></li></ul></li>
     <li><a href="#image">image</a><ul><li><a href="#image-photo-lab">photo-lab</a></li></ul></li>
     <li><a href="#linalg">linalg</a></li>
-    <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-endless">voxels-endless</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-fly">voxels-fly</a></li><li><a href="#scene-voxels-rubik">voxels-rubik</a></li><li><a href="#scene-voxels-rubik-turn">voxels-rubik-turn</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-world">voxels-world</a></li></ul></li>
+    <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-dig">voxels-dig</a></li><li><a href="#scene-voxels-endless">voxels-endless</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-fly">voxels-fly</a></li><li><a href="#scene-voxels-rubik">voxels-rubik</a></li><li><a href="#scene-voxels-rubik-turn">voxels-rubik-turn</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-world">voxels-world</a></li></ul></li>
     <li><a href="#sqlite">sqlite</a><ul><li><a href="#sqlite-notebook">notebook</a></li></ul></li>
     <li><a href="#web">web</a><ul><li><a href="#web-life">life</a></li><li><a href="#web-todomvc">todomvc</a></li></ul></li>
   </ul>
@@ -145,6 +145,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <video src="scene/voxels-chunk.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene voxels-chunk</pre>
     </section>
+    <section class="panel demo" id="scene-voxels-dig">
+      <h3>scene / voxels-dig <a class="docs" href="doc/extensions-scene-demos-voxels-dig.xtl.html">source and docs</a></h3>
+      <p class="note">Voxels, 10: digging and building in the endless world. A crosshair marks where you look; the block under it, within 5 blocks, is found by marching 100 points along the view ray (en:p_ick). Click it to dig it out; right-click to place a block of the kind chosen on the hotbar against it. Each change is an edit the world remembers (x y z and the block), and every column is made with its edits -- the edited one made again at once (and its neighbor, when the block is on their border), so walk away and come back and the hole is still there.</p>
+      <video src="scene/voxels-dig.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo scene voxels-dig</pre>
+    </section>
     <section class="panel demo" id="scene-voxels-endless">
       <h3>scene / voxels-endless <a class="docs" href="doc/extensions-scene-demos-voxels-endless.xtl.html">source and docs</a></h3>
       <p class="note">Voxels, 6: an endless world. Walk in any direction and it never ends: the land comes from value noise hashed from the coordinates (vx:h_eightsAt), so any column of 16 by 16 blocks can be made by itself and fits its neighbors; columns are made around the player as it walks -- the nearest missing one each frame -- and dropped behind it; fog hides the edge of what is made, and a curved horizon (scene lowers the world by d^2 / 2R) makes it look like a small planet. Collision asks the columns themselves. The world and the player are the library Endless.xtl, shared with voxels-fly: each column is made over three frames, so no frame waits long.</p>
@@ -228,7 +234,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at 2ebce41</span>
+  <span>built at 64a8c59</span>
 </footer>
 </body>
 </html>

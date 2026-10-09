@@ -40,7 +40,8 @@ e := sc:n_ext! w                                  # "frame", "key q", "close"
 | `scene sc:f_og! near far` | as above | quads fade into the background between those depths (scene units from the camera); far at or below near turns fog off |
 | `s sc:r_emove! o` | `(Num a, Num b) => a -> b -> Int` | remove object `o`: 1 if it was there |
 | `s sc:c_amera! v` | `(Num a, Num b) => a -> b -> Int` | yaw, pitch (radians), distance, spin (radians a second) |
-| `sc:n_ext! s` | `Num a => a -> Char` | the next event, waiting at most a frame: `frame`, `key NAME`, `close`; dragging orbits by itself |
+| `scene sc:o_verlay! rects` | as above | flat rectangles drawn over the scene -- a crosshair, a hotbar, buttons: n by 7, each left, top, width, height in the window's logical pixels from its top left, then red green blue; they replace the overlay before, and none (`0 7 r_eshape 0.0`) clears it |
+| `sc:n_ext! s` | `Num a => a -> Char` | the next event, waiting at most a frame: `frame`, `key NAME`, `click left X Y` or `click right X Y` (a press and release without a drag, in logical pixels), `close`; dragging orbits by itself |
 | `sc:c_lose! s` | `Num a => a -> Int` | close the window |
 
 ## Without a screen
@@ -165,6 +166,25 @@ before the next builds on it. Their shared X_eTaL is the library
    quarter turns, each on another axis than the one before (U R F' D' L
    B' U' R F D L' B), a pause, then the same turns undone in reverse,
    back to solved. Recorded as `videos/voxels-rubik-turn.webm`.
+10. `demos/voxels-dig.xtl` (`just demo scene voxels-dig`): digging and
+    building in the endless world. A crosshair and a hotbar are drawn
+    over the view (`sc:o_verlay!`). The block under the crosshair,
+    within 5 blocks, is found by marching 100 points along the view ray
+    and looking them up in the masks of the columns they cross
+    (`en:p_ick`; water is not solid, so the ray goes through it).
+    Click (or X) digs it out; right-click (or E) places the hotbar's
+    block in the empty cell before it, never where the player stands;
+    1 to 6 choose stone, dirt, grass, sand, wood or leaves. Each change
+    is an edit the world remembers (x y z and the block, the newest
+    first), and every column is made with the edits in it and its
+    border (`en:e_dited`): the edited column is made again at once --
+    its mask first, so collision sees the change -- and its neighbor
+    too when the block is on their border; walk away and back and the
+    hole is still there. The demo first checks the edits (the newest
+    wins, a neighbor sees its border). Recorded as
+    `videos/voxels-dig.webm`: a trench, then a pillar of stone and wood
+    built jump by jump, a block placed under the feet at the top of
+    each jump.
 
 ## Build and test
 

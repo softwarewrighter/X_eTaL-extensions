@@ -40,13 +40,21 @@
 ## the arrows left right up down. Headless, XETAL_EVENTS may hold
 ## "keydown w", "keyup w" and "drag 10 0".
 "c_ontrols : float -> floats"        ffi:b_ind< "scene/controls"
+## scene sc:o_verlay! rects: flat rectangles drawn over the scene -- a
+## crosshair, a hotbar, buttons -- n by 7, each left, top, width, height
+## in the window's logical pixels from its top left, then red green blue
+## (0 to 1); they replace the overlay before, and none (0 7 r_eshape 0.0)
+## clears it.
+"o_verlay! : float float -> int"     ffi:b_ind< "scene/overlay"
 ## scene sc:r_emove! object: 1 if it was there, else 0.
 "r_emove! : float float -> int"      ffi:b_ind< "scene/remove"
 ## scene sc:c_amera! yaw pitch distance spin: where the camera orbits from
 ## (radians, scene units) and how fast it turns by itself (radians a second).
 "c_amera! : float float -> int"      ffi:b_ind< "scene/camera"
 ## sc:n_ext! scene: the next event, waiting at most a frame (1/60 s):
-## "frame", "key Space", "key q", "close". Dragging orbits by itself.
+## "frame", "key Space", "key q", "close", or a click -- a press and
+## release without a drag -- "click left 320 200" or "click right 12 40"
+## (where, in the window's logical pixels). Dragging orbits by itself.
 "n_ext! : float -> text"             ffi:b_ind< "scene/next"
 ## sc:c_lose! scene: close the window; 1.
 "c_lose! : float -> int"             ffi:b_ind< "scene/close"

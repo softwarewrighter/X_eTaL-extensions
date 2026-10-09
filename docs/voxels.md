@@ -5,11 +5,11 @@ Dyalog APL, MIT) and of how this repository could show voxel graphics
 from X_eTaL: what carries over, what our native windows can and
 cannot do today, measured costs, the chunk size to use, and a series
 of `voxels-*` demos that build up to a small game, each one runnable,
-tested and recorded before the next. Written 2026-10-07; seven demos
-are built -- voxels-chunk, voxels-faces, voxels-solid, voxels-world,
-voxels-walk, voxels-endless and voxels-fly (see "Built so far") -- and
-digging, light, water and the game follow (see "The game" for the
-order).
+tested and recorded before the next. Written 2026-10-07; eight demos
+of the world are built -- voxels-chunk, voxels-faces, voxels-solid,
+voxels-world, voxels-walk, voxels-endless, voxels-fly and voxels-dig
+(see "Built so far") -- and water, light and the game follow (see "The
+game" for the order).
 
 ## In short
 
@@ -169,7 +169,7 @@ started. The shared X_eTaL lives in a library beside them,
 | 3 | `voxels-solid` | built | the same chunk drawn solid: filled quads, depth-tested, shaded by direction, fog; orbiting | scene: filled quads by id (`sc:q_uads!`), a depth buffer, fog (`sc:f_og!`) |
 | 4 | `voxels-world` | built | 4 by 2 by 4 chunks from value noise (2D heights), water, trees; each chunk's faces by id | none beyond 3 |
 | 5 | `voxels-walk` | built | walking: first-person camera, WASD and mouse look, gravity and jumping, collision against the blocks (swept box per axis); X_eTaL culls chunks against the frustum | scene: first-person camera; key down and up, dragging to look (the pointer never grabbed) |
-| 6 | `voxels-dig` | planned | picking with the ray march; breaking and placing blocks; the edited chunk (and a neighbor at its border) remeshed and patched | none |
+| 6 | `voxels-dig` | built | picking with the ray march; breaking and placing blocks; the edited chunk (and a neighbor at its border) remeshed and patched | scene: an overlay of flat rectangles (crosshair, hotbar), click events |
 | 7 | `voxels-light` | planned | sky light by a column scan, a torch's light spread in at most 15 rounds; faces carry a light level | scene: a light level per face |
 | 8 | `voxels-game` | planned | the mini game (below) | a small text overlay (score, time), if not drawn by X_eTaL |
 
@@ -258,6 +258,7 @@ Demos 5 to 7 followed (the scene page lists them all with their keys):
 | `voxels-fly` | F to fly: level by the heading, Space up, Shift down, the blocks still stopping you; on a Retina screen scene draws at the logical size and scales up; trees placed by their own cells only (three times faster, and their crowns rounded as meant) |
 | `voxels-rubik` | a Rubik's cube (the user): 54 stickers, each quarter turn a permutation computed from the geometry and checked (order 4, inverses, R U R' U' of order 6, R U of order 105, directions); keys turn faces, z undoes to solved, Space a valid scramble |
 | (smoother streaming) | the user found the edges laggy: a column took 40 to 68 ms in one frame; now it is made over three frames (blocks, faces, sending), at most one far column is dropped a frame, the solid masks are separate boxes (nothing big is copied), and faces are found for the column's own cells with cached coordinates -- a flight's frames: median 1 ms of X_eTaL, 95% within 14 ms; the world and the player became the library `Endless.xtl` |
+| `voxels-dig` | digging and building: the pick as 100 points along the view ray looked up in the masks of the 1 to 4 columns they cross; an edit is a row (x y z block) the world keeps, newest first, and every column is made with the edits in it and its border (one `i_ndexOf` over its 10,368 cells), so an edited column is simply made again -- its mask at once, its faces and objects over the next two frames -- with a neighbor when the cell is on their border, and edits outlast a column dropped and made again; scene gained an overlay (the crosshair and the hotbar) and clicks |
 
 
 ## The game: walking, flying, building, digging, light, water
@@ -305,8 +306,8 @@ changed instead of the chunk; it fits immutable values.
 | 1 | `voxels-walk` | built | first-person camera, held keys, mouse look, near-plane clipping in scene; gravity, jumping, collision in X_eTaL; X_eTaL's frustum test of the chunks |
 | 2 | `voxels-endless` | built | (added) walking with no edges: terrain from noise hashed from the coordinates, so any chunk can be made alone and fits its neighbors; chunks generated around the player and dropped behind; fog at the loaded radius and a curved horizon (distant land lowered by d^2/2R, so the world looks like a small planet); culling by bounding box in scene |
 | 3 | `voxels-fly` | built | flying over the endless world: F to fly, level by the heading, Space up, Shift down |
-| 4 | `voxels-dig` | planned | the ray-march pick, breaking and placing, per-chunk remeshing and patching; crosshair and hotbar |
-| 5 | `voxels-water` | planned | water flowing by a cellular automaton into what is dug; translucent water |
+| 4 | `voxels-dig` | built | the ray-march pick, breaking and placing, per-chunk remeshing and patching; crosshair and hotbar |
+| 5 | `voxels-water` | planned | water flowing by a cellular automaton into what is dug; a hill with a lake on a terrace, held above the sea -- dig the ground downhill of it and the water runs out and falls down the slope (the user); translucent water |
 | 6 | `voxels-light` | planned | sky light by a column scan, torches spreading in rounds; brightness per quad |
 | 7 | `voxels-game` | planned | Gem Hunt, with all of the above |
 
