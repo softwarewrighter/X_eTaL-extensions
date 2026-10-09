@@ -1,1 +1,1 @@
-error[io]: []N_GET: ext:scene/quads: quads are 4n by 3 points (four corners each), not [6, 3] at ./lib/Scene.xtl:23:1
+error[io]: []N_GET: ext:scene/quads: quads are 4n by 3 points (four corners each), not [6, 3] at ./lib/Scene.xtl:26:1

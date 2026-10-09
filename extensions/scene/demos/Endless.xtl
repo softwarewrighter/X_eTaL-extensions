@@ -16,13 +16,14 @@
 ## (player, world, job, settings) --
 ## the player (position x y z, velocity, yaw, pitch, on the ground 0 or
 ## 1, flying 0 or 1); the world (the columns' keys, their numbers -- a
-## column's scene objects are 10 * number + block -- their solid masks,
-## a box each, in the keys' order; the edits, n by 4, x y z and block,
-## the newest first; and the keys of the columns to make again, edited);
-## the job, the column being
+## column's scene objects are 10 * number + block -- their solid masks
+## and their water masks, a box each, in the keys' order; the edits, n
+## by 4, x y z and block, the newest first; the keys of the columns to
+## make again, edited; the flowing water's frontier, n by 4, x y z and
+## level; and the frames until its next tick); the job, the column being
 ## made (its part 0 to 2, its column cx cz, its number, its data:
 ## blocks, then faces); the settings (the window, the next number, the
-## start x y z, whether it runs). Made by en:n_ew.
+## start x y z, whether it runs). Made by en:n_ew or en:n_ewAt.
 
 ## the columns are kept this many (16-block steps) from the player's,
 ## each way, and made within it; beyond one more they are dropped
@@ -33,13 +34,13 @@ l:p_layer := { (p, _, _, _) -> p }
 ## en:p_osition s: where the player's feet are, x y z
 l:p_osition := { ((x, _, _, _, _, _), _, _, _) -> x }
 ## en:k_eys s: the columns' keys
-l:k_eys := { (_, (ks, _, _, _, _), _, _) -> ks }
+l:k_eys := { (_, (ks, _, _, _, _, _, _, _), _, _) -> ks }
 ## en:w_orld s: the world (columns, masks, edits), for en:h_it and
 ## en:p_ick
 l:w_orld := { (_, wo, _, _) -> wo }
 ## en:e_dits s: the blocks dug out and placed, n by 4 (x y z block, air
 ## 0 for dug), the newest first
-l:e_dits := { (_, (_, _, _, ed, _), _, _) -> ed }
+l:e_dits := { (_, (_, _, _, _, ed, _, _, _), _, _) -> ed }
 ## en:e_ye s: the player's eye, x y z yaw pitch (1.6 above its feet)
 l:e_ye := { ((x, _, yaw, pitch, _, _), _, _, _) -> (x + 0.0 1.6 0.0) c_at yaw c_at pitch }
 ## en:w_indow s: the scene window the world is drawn in
@@ -61,9 +62,16 @@ l:n_ew := { w ->
   hv := r_avel vx:h_eightsAt 0 0 16
   i := f_irst w_here hv = 'm_ax r_/ hv
   x0 := ((f_loat (i - 1) d_iv 16) + 0.5) c_at (f_loat 2 + i s_elect hv) c_at (f_loat (i - 1) m_od 16) + 0.5
+  w l:n_ewAt x0
+}
+
+## w en:n_ewAt x0: a world for window w, no columns made yet, the player
+## standing at x0 (x y z, its feet; also where H goes back to), facing
+## north
+l:n_ewAt := { w x0 ->
   p := (x0, 0.0 0.0 0.0, 0.0, 0.0, 0.0, 0.0)
   none := 0 r_eshape 0
-  wo := (none, none, 0 r_eshape e_nclose none, 0 4 r_eshape 0, none)
+  wo := (none, none, 0 r_eshape e_nclose none, 0 r_eshape e_nclose none, 0 4 r_eshape 0, none, 0 4 r_eshape 0, 0)
   (p, wo, (0, 0 0, 0, none), (w, 1, x0, 1))
 }
 
@@ -78,7 +86,7 @@ h:h_ome := { s ->
 # the first column too far away, if any, dropped: its objects out of
 # scene, its key, number and mask out of the world
 h:t_rim := { s ->
-  (p, (ks, ns, ms, ed, rq), jb, st) := s
+  (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, st) := s
   h := h:h_ome s
   far := ((a_bs (h:c_x ks) - 1 s_elect h) > l:reach + 1) + (a_bs (h:c_z ks) - 2 s_elect h) > l:reach + 1
   0 = '+ r_/ far ? s
@@ -87,7 +95,7 @@ h:t_rim := { s ->
   w := l:w_indow s
   gone := '{ w sc:r_emove! (10 * n) + _r } m_ap r_ange 7
   keep := j != r_ange t_ally ks
-  (p, (keep r_eplicate ks, keep r_eplicate ns, keep r_eplicate ms, ed, rq), jb, st)
+  (p, (keep r_eplicate ks, keep r_eplicate ns, keep r_eplicate ms, keep r_eplicate wm, ed, rq, fl, fw), jb, st)
 }
 
 # (w n t) h:s_endOne f: block t's faces of column n, one object of quads
@@ -96,7 +104,7 @@ h:s_endOne := { wnt f ->
   t := 3 s_elect wnt
   sel := (5 s_elect_2 f) = t
   0 = '+ r_/ sel ? (f_irst wnt) sc:r_emove! (10 * 2 s_elect wnt) + t
-  head := (f_loat 1 s_elect wnt) c_at (f_loat (10 * 2 s_elect wnt) + t) c_at (1 + t) s_elect vx:colors
+  head := (f_loat 1 s_elect wnt) c_at (f_loat (10 * 2 s_elect wnt) + t) c_at ((1 + t) s_elect vx:colors) c_at (t = 5) r_eplicate 0.6
   head sc:q_uads! vx:c_orners sel r_eplicate f
 }
 
@@ -104,19 +112,27 @@ h:s_endOne := { wnt f ->
 ## away dropped, then a third of making a column -- an edited one again,
 ## or else the nearest missing one: its blocks and solid mask (part 0),
 ## its faces (part 1), or sending them to scene (part 2) -- about 12 ms
-## at most
+## at most; when no edited column waits, a tick of flowing water
 l:s_tream := { s ->
   s := h:t_rim s
-  (_, _, (part, _, _, _), _) := s
+  (_, (_, _, _, _, _, rq, fl, fw), (part, _, _, _), _) := s
   part = 1 ? h:f_aces s
   part = 2 ? h:s_end s
-  h:b_locks s
+  ((0 = t_ally rq) * (fw <= 0) * 0 < t_ally fl) ? h:f_low s
+  h:b_locks h:w_ait s
 }
+
+# a frame less to wait for the water's next tick
+h:w_ait := { (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, st) -> (p, (ks, ns, ms, wm, ed, rq, fl, 0 m_ax fw - 1), jb, st) }
+
+## the frames between ticks of flowing water: 10 ticks a second at most,
+## about as fast as water runs in a block game
+l:pace := 6
 
 # part 0: the nearest missing column's blocks and mask; the column is
 # known (collision sees it) from now on, drawn two frames later
 h:b_locks := { s ->
-  (p, (ks, ns, ms, ed, rq), jb, (w, nxt, x0, on)) := s
+  (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, (w, nxt, x0, on)) := s
   0 < t_ally rq ? h:r_emake s
   h := h:h_ome s
   r := l:reach
@@ -130,22 +146,23 @@ h:b_locks := { s ->
   i := f_irst (d = 'm_in r_/ d) r_eplicate miss
   c := ((i s_elect dx) + 1 s_elect h) c_at (i s_elect dz) + 2 s_elect h
   b := (ed, c) l:e_dited vx:c_olumnBlocks c
-  wo := (ks c_at i s_elect ws, ns c_at nxt, ms c_at (e_nclose vx:c_olumnMask b), ed, rq)
+  wo := (ks c_at i s_elect ws, ns c_at nxt, ms c_at (e_nclose vx:c_olumnMask b), wm c_at (e_nclose vx:c_olumnWater b), ed, rq, fl, fw)
   (p, wo, (1, c, nxt, r_avel b), (w, nxt + 1, x0, on))
 }
 
 # part 0 for an edited column: the first queued one's blocks again, with
 # the edits, its mask replaced at once (collision sees the edit from
 # now on); faces and sending as for a new column, its objects replaced
-h:r_emake := { (p, (ks, ns, ms, ed, rq), jb, st) ->
+h:r_emake := { (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, st) ->
   k := f_irst rq
   rest := 1 d_rop rq
   j := ks i_ndexOf k
-  j > t_ally ks ? (p, (ks, ns, ms, ed, rest), jb, st)
+  j > t_ally ks ? (p, (ks, ns, ms, wm, ed, rest, fl, fw), jb, st)
   c := (h:c_x k) c_at h:c_z k
   b := (ed, c) l:e_dited vx:c_olumnBlocks c
   ms := ((j - 1) t_ake ms) c_at (e_nclose vx:c_olumnMask b) c_at j d_rop ms
-  (p, (ks, ns, ms, ed, rest), (1, c, j s_elect ns, r_avel b), st)
+  wm := ((j - 1) t_ake wm) c_at (e_nclose vx:c_olumnWater b) c_at j d_rop wm
+  (p, (ks, ns, ms, wm, ed, rest, fl, fw), (1, c, j s_elect ns, r_avel b), st)
 }
 
 ## (edits, c) en:e_dited b: the blocks b of column c (18 by 32 by 18,
@@ -184,7 +201,7 @@ h:s_end := { (p, wo, (_, c, n, v), st) ->
 
 # wo h:c_ell v: whether any of the cells at column (x z) and heights ys
 # (v is x z then the ys) is solid; a column not made yet is solid
-h:c_ell := { (ks, _, ms, _, _) v ->
+h:c_ell := { (ks, _, ms, _, _, _, _, _) v ->
   x := 1 s_elect v
   z := 2 s_elect v
   ys := 2 d_rop v
@@ -221,7 +238,7 @@ l:h_it := { wo q ->
 ## goes), or 0 0 0 0 when there is none; all 0 when nothing solid is that
 ## near. Water is not solid (the ray goes through it); a column not made
 ## yet is empty.
-l:p_ick := { (ks, _, ms, _, _) e ->
+l:p_ick := { (ks, _, ms, _, _, _, _, _) e ->
   yaw := 4 s_elect e
   pitch := 5 s_elect e
   t := 0.05 * f_loat r_ange 100
@@ -249,16 +266,107 @@ l:p_ick := { (ks, _, ms, _, _) e ->
 ## (cell, block) en:s_et s: the block at the cell (x y z) set -- air, 0,
 ## to dig it out -- and remembered (the newest edit first); its column
 ## made again before any new one, and a neighbor too when the cell is on
-## their border (its faces against the cell change)
+## their border (its faces against the cell change). Dug out beside
+## water (at a side or above), the cell fills with water at once and the
+## water starts to flow from it (en:s_tream); water placed flows too.
 l:s_et := { (q, t) s ->
-  (p, (ks, ns, ms, ed, rq), jb, st) := s
-  ed := (1 4 r_eshape q c_at t) c_at ed
-  x := 1 s_elect q
-  z := 3 s_elect q
-  want := 1 c_at ((x m_od 16) = 0) c_at ((x m_od 16) = 15) c_at ((z m_od 16) = 0) c_at (z m_od 16) = 15
-  near := want r_eplicate (10000 * 1000 + (x d_iv 16) + 0 -1 1 0 0) + 1000 + (z d_iv 16) + 0 0 0 -1 1
-  (p, (ks, ns, ms, ed, near c_at (0 = rq m_ember? near) r_eplicate rq), jb, st)
+  t = 5 ? (1 4 r_eshape q c_at 7) h:f_lowing ((1 3 r_eshape q), 5) l:s_etAll s
+  (_, wo, _, _) := s
+  nb := (5 3 r_eshape q) + 5 3 r_eshape 0 1 0  -1 0 0  1 0 0  0 0 -1  0 0 1
+  wet := (t = 0) * 0 < '+ r_/ 2 = wo l:l_ook nb
+  0 = wet ? ((1 3 r_eshape q), t) l:s_etAll s
+  s := ((1 3 r_eshape q), 5) l:s_etAll s
+  (1 4 r_eshape q c_at 7) h:f_lowing s
 }
+
+## (cells, block) en:s_etAll s: the cells (n by 3, x y z) all set to the
+## block, as en:s_et (without the water), their columns queued once
+l:s_etAll := { (q, t) s ->
+  (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, st) := s
+  n := 1 s_elect s_hape q
+  ed := (q c_at_2 (n c_at 1) r_eshape t) c_at ed
+  x := 1 s_elect_2 q
+  z := 3 s_elect_2 q
+  want := 2 1 t_ranspose (5 c_at n) r_eshape (n r_eshape 1) c_at ((x m_od 16) = 0) c_at ((x m_od 16) = 15) c_at ((z m_od 16) = 0) c_at (z m_od 16) = 15
+  kx := (x d_iv 16) '+ t_able 0 -1 1 0 0
+  kz := (z d_iv 16) '+ t_able 0 0 0 -1 1
+  near := u_nique (r_avel want) r_eplicate r_avel (10000 * 1000 + kx) + 1000 + kz
+  (p, (ks, ns, ms, wm, ed, near c_at (0 = rq m_ember? near) r_eplicate rq, fl, fw), jb, st)
+}
+
+# f h:f_lowing s: the cells f (n by 4: x y z level) added to the water's
+# frontier
+h:f_lowing := { f (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, st) -> (p, (ks, ns, ms, wm, ed, rq, f c_at fl, fw), jb, st) }
+
+## wo en:l_ook q: what is at each cell of q (n by 3, x y z) in the world
+## wo: 0 air, 1 solid, 2 water; below the world, and a column not made
+## yet, are solid; above it is air
+l:l_ook := { (ks, _, ms, wm, _, _, _, _) q ->
+  0 = t_ally q ? 0 r_eshape 0
+  x := 1 s_elect_2 q
+  y := 2 s_elect_2 q
+  z := 3 s_elect_2 q
+  keys := (10000 * 1000 + x d_iv 16) + 1000 + z d_iv 16
+  u := u_nique keys
+  j := ks i_ndexOf u
+  m := 0 * d_isclose f_irst ms
+  sol := d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ j s_elect ms c_at e_nclose 1 + m
+  wat := d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ j s_elect wm c_at e_nclose m
+  ok := (y >= 0) * y <= 31
+  at := (8192 * (u i_ndexOf keys) - 1) + 1 + (z m_od 16) + 16 * (0 m_ax 31 m_in y) + 32 * x m_od 16
+  hard := 0 < (y < 0) + ok * at s_elect sol
+  wet := (1 - hard) * 0 < ok * at s_elect wat
+  # an Int for certain (f_loor f_loat), so the type checker settles it
+  # the same way every run (ask E9)
+  f_loor f_loat hard + 2 * wet
+}
+
+### Flowing water
+
+## Water flows as a cellular automaton on its frontier, the cells it has
+## just reached (x y z and a level, 7 down to 1). Each tick every
+## frontier cell falls into air below it (level 7 again), or, standing
+## on something solid, spreads into the air at its four sides one level
+## lower, until level 1. The cells reached are water (edits, block 5)
+## and the next frontier; the sea and lakes are sources that never
+## empty. A tick runs only when the columns it changed have been made
+## again, so what is drawn keeps up with the water.
+
+# one tick of the water's frontier
+h:f_low := { s ->
+  (p, wo, jb, st) := s
+  (ks, ns, ms, wm, ed, rq, fl, fw) := wo
+  n := 1 s_elect s_hape fl
+  q := 1 2 3 s_elect_2 fl
+  lv := 4 s_elect_2 fl
+  dn := q - (n c_at 3) r_eshape 0 1 0
+  below := wo l:l_ook dn
+  fall := below = 0
+  sp := (below = 1) * lv > 1
+  sq := sp r_eplicate q
+  m := 1 s_elect s_hape sq
+  sl := (sp r_eplicate lv) - 1
+  sides := (sq - (m c_at 3) r_eshape 1 0 0) c_at (sq + (m c_at 3) r_eshape 1 0 0) c_at (sq - (m c_at 3) r_eshape 0 0 1) c_at sq + (m c_at 3) r_eshape 0 0 1
+  open := 0 = wo l:l_ook sides
+  new := (fall r_eplicate dn) c_at open r_eplicate sides
+  lvl := ((t_ally w_here fall) r_eshape 7) c_at open r_eplicate sl c_at sl c_at sl c_at sl
+  s := (p, (ks, ns, ms, wm, ed, rq, 0 4 r_eshape 0, l:pace), jb, st)
+  0 = t_ally lvl ? s
+  o := g_rade 0 - lvl
+  new := o s_elect new
+  lvl := o s_elect lvl
+  k := (1000000 * 1000000 * 100000 + 1 s_elect_2 new) + (1000000 * 1000 + 2 s_elect_2 new) + 100000 + 3 s_elect_2 new
+  first := (k i_ndexOf k) = r_ange t_ally k
+  new := first r_eplicate new
+  lvl := first r_eplicate lvl
+  s := (new, 5) l:s_etAll s
+  (new c_at_2 ((t_ally lvl) c_at 1) r_eshape lvl) h:f_lowing s
+}
+
+## en:f_lowingCells s: how many cells the water is flowing from (0:
+## still)
+l:f_lowingCells := { (_, (_, _, _, _, _, _, fl, _), _, _) -> t_ally fl }
+
 
 ## p en:o_verlaps q: whether the player's box (0.6 wide, 1.75 tall) with
 ## its feet at p (x y z) overlaps the cell q (x y z) -- no block is

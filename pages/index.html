@@ -20,7 +20,7 @@
     <li><a href="#http">http</a><ul><li><a href="#http-quakes">quakes</a></li><li><a href="#http-quakes-live">quakes-live</a></li></ul></li>
     <li><a href="#image">image</a><ul><li><a href="#image-photo-lab">photo-lab</a></li></ul></li>
     <li><a href="#linalg">linalg</a></li>
-    <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-dig">voxels-dig</a></li><li><a href="#scene-voxels-endless">voxels-endless</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-fly">voxels-fly</a></li><li><a href="#scene-voxels-rubik">voxels-rubik</a></li><li><a href="#scene-voxels-rubik-turn">voxels-rubik-turn</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-world">voxels-world</a></li></ul></li>
+    <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-dig">voxels-dig</a></li><li><a href="#scene-voxels-endless">voxels-endless</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-fly">voxels-fly</a></li><li><a href="#scene-voxels-rubik">voxels-rubik</a></li><li><a href="#scene-voxels-rubik-turn">voxels-rubik-turn</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-water">voxels-water</a></li><li><a href="#scene-voxels-world">voxels-world</a></li></ul></li>
     <li><a href="#sqlite">sqlite</a><ul><li><a href="#sqlite-notebook">notebook</a></li></ul></li>
     <li><a href="#web">web</a><ul><li><a href="#web-life">life</a></li><li><a href="#web-todomvc">todomvc</a></li></ul></li>
   </ul>
@@ -193,6 +193,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <video src="scene/voxels-walk.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene voxels-walk</pre>
     </section>
+    <section class="panel demo" id="scene-voxels-water">
+      <h3>scene / voxels-water <a class="docs" href="doc/extensions-scene-demos-voxels-water.xtl.html">source and docs</a></h3>
+      <p class="note">Voxels, 11: water that flows. A stepped hill stands by the start with a lake on its top terrace, held in by a rim of grass. Dig into the rim and the lake spills out and runs down the steps like a waterfall; dig beside the sea and the hole fills. Water flows as a cellular automaton on the cells it has just reached (Endless.xtl): each tick a cell falls into the air below it, or, standing on something solid, spreads one level lower into the air at its sides, 7 levels from a source; the lake and the sea are sources that never empty. The cells it reaches are edits like any dug or placed block, so the water stays where it ran. Water is drawn translucent: the lake&#x27;s floor and the seabed show through.</p>
+      <video src="scene/voxels-water.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo scene voxels-water</pre>
+    </section>
     <section class="panel demo" id="scene-voxels-world">
       <h3>scene / voxels-world <a class="docs" href="doc/extensions-scene-demos-voxels-world.xtl.html">source and docs</a></h3>
       <p class="note">Voxels, 4: a world of chunks. An island 64 by 32 by 64 -- 32 chunks of 16 cubed -- from value noise made by linear algebra (random heights on grids every 16, 8 and 4 blocks, each interpolated as M G M&#x27;), shaped by the chunk&#x27;s rules over the whole world at once, with trees planted by folding one tree over a list of places. Its faces are found over the whole array (so faces between chunks hide each other), then sent to scene chunk by chunk, each chunk&#x27;s kinds of block under their own ids -- the ids a later demo patches when a block changes.</p>
@@ -234,7 +240,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at 64a8c59</span>
+  <span>built at 56f7767</span>
 </footer>
 </body>
 </html>

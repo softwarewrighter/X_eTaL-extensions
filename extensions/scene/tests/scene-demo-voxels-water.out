@@ -1,0 +1,14 @@
+keys: click or X dig, right-click or E place, 1-7 choose the block (7 water), W A S D walk, Space jump, F fly, drag or arrows look, H home, q quit
+the terrace's height, and the hill's cells (water, dirt, grass):
+22
+50 2640 254
+looking up no cells (a tick where no water spreads):
+0
+dug 9 22 11
+water cells added by the flow, and still flowing:
+526
+24
+bye
+1562978123 26636 work/vt/scene-1-30.png
+3455505385 63795 work/vt/scene-1-250.png
+3465928772 64553 work/vt/scene-1-495.png

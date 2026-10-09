@@ -20,6 +20,9 @@
 ## header sc:q_uads! points: the points taken in fours, each the corners
 ## of a filled quad in order round it (4n by 3); shaded by how it faces
 ## the light, nearer quads hiding farther ones; lines and dots draw over.
+## A sixth number in the header, alpha below 1, makes the quads
+## translucent: drawn after the opaque ones, blended over what is behind
+## them (water you can see into).
 "q_uads! : float float -> int"       ffi:b_ind< "scene/quads"
 ## scene sc:f_og! near far: quads fade into the background between those
 ## depths (scene units from the camera); far <= near: no fog.

@@ -7,13 +7,14 @@
 ## made again at once (and its neighbor, when the block is on their
 ## border), so walk away and come back and the hole is still there.
 ## Run: just demo scene voxels-dig
-##   click (or X) dig, right-click (or E) place, 1 to 6 choose the block
-##   (stone dirt grass sand wood leaves), W A S D walk, Space jump, Shift
+##   click (or X) dig, right-click (or E) place, 1 to 7 choose the block
+##   (stone dirt grass sand wood leaves water), W A S D walk, Space jump, Shift
 ##   run, F fly (Space up, Shift down), drag or the arrows to look, H
 ##   back to the start, q quit
 
 "en:" u_se< "Endless"
 "vx:" u_se< "Voxels"
+"pl:" u_se< "Play"
 "sc:" u_se< "Scene"
 
 w := "Voxels 10: dig and build -- X_eTaL" sc:o_pen! 640 400
@@ -21,7 +22,7 @@ g := w sc:f_og! 22.0 44.0
 k := w sc:s_ky! 0.55 0.72 0.92
 k := w sc:c_urve! 160.0
 
-"keys: click or X dig, right-click or E place, 1-6 choose the block, W A S D walk, Space jump, F fly, drag or arrows look, H home, q quit"
+pl:help
 
 ### Edits, checked
 
@@ -41,100 +42,15 @@ u:c_ell := { q m -> (1 + (3 s_elect q) + 18 * (2 s_elect q) + 32 * 1 s_elect q) 
 "the neighbor (1, 0) sees the edit in its border, x 0:"
 0 20 6 u:c_ell (ed, 1 0) en:e_dited vx:c_olumnBlocks 1 0
 
-### The hotbar and the crosshair
+### Playing
 
-## the blocks the hotbar places, keys 1 to 6: stone dirt grass sand
-## wood leaves
-kinds := 1 2 3 4 6 7
-
-## u:h_ud sel: the overlay -- the hotbar at the bottom (a dark bar, the
-## chosen block framed in white, a square of each block's color) and a
-## crosshair at the center of the 640 by 400 window
-u:h_ud := { sel ->
-  lefts := 197.0 + 42.0 * f_loat (r_ange 6) - 1
-  bar := 1 7 r_eshape 189.0 344.0 262.0 52.0 0.1 0.1 0.12
-  chosen := 1 7 r_eshape ((sel s_elect lefts) - 4.0) c_at 348.0 44.0 44.0 1.0 1.0 1.0
-  rgb := r_avel 2 1 t_ranspose (1 + kinds) s_elect vx:colors
-  squares := 2 1 t_ranspose 7 6 r_eshape lefts c_at (6 r_eshape 352.0) c_at (12 r_eshape 36.0) c_at rgb
-  cross := 2 7 r_eshape 310.0 199.0 20.0 2.0 1.0 1.0 1.0  319.0 190.0 2.0 20.0 1.0 1.0 1.0
-  w sc:o_verlay! bar c_at chosen c_at squares c_at cross
-}
-hud := u:h_ud 1
-
-### Digging and building
-
-## The state is a tuple: (the endless world and its player, the chosen
-## block 1 to 6).
-
-## u:d_ig s: the block looked at dug out (air), if there is one
-u:d_ig := { s ->
-  h := (en:w_orld s) en:p_ick en:e_ye s
-  0 = f_irst h ? s
-  q := 2 3 4 s_elect h
-  said := p_rint! "dug " c_at f_ormat q
-  (q, 0) en:s_et s
-}
-
-## u:p_lace (s, sel): a block of the chosen kind placed in the empty cell
-## before the one looked at -- not where the player stands, nor above the
-## world's top
-u:p_lace := { (s, sel) ->
-  h := (en:w_orld s) en:p_ick en:e_ye s
-  0 = 5 s_elect h ? (s, sel)
-  q := 6 7 8 s_elect h
-  (en:p_osition s) en:o_verlaps q ? (s, sel)
-  (2 s_elect q) > 31 ? (s, sel)
-  t := sel s_elect kinds
-  said := p_rint! "placed " c_at (d_isclose (1 + t) s_elect (n_ot vx:names = f_irst " ") p_artition vx:names) c_at " at " c_at f_ormat q
-  ((q, t) en:s_et s, sel)
-}
-
-## u:c_hoose (v, s, sel): a digit key chooses the hotbar's block
-u:c_hoose := { (v, s, sel) ->
-  i := "123456" i_ndexOf f_irst -1 t_ake v
-  ((5 = t_ally v) * i <= 6) = 0 ? (s, sel)
-  hud := u:h_ud i
-  (s, i)
-}
-
-u:i_f := { yes s ->
-  yes ? en:h_omeAgain s
-  s
-}
-u:f_ly := { yes s ->
-  yes ? en:t_oggleFly s
-  s
-}
-
-## one frame: an event (dig, place, choose, home, fly, quit), then a
-## third of a column's work, then the player
-u:f_rame := { (s, sel) ->
-  en:s_topped s ? (s, sel)
-  v := sc:n_ext! w
-  ((v m_atch "close") + (v m_atch "key q") + v m_atch "key Escape") > 0 ? (en:s_top s, sel)
-  s := (v m_atch "key h") u:i_f s
-  s := (v m_atch "key f") u:f_ly s
-  dig := ((10 t_ake v) m_atch "click left") + v m_atch "key x"
-  s := dig u:w_hen s
-  put := ((11 t_ake v) m_atch "click right") + v m_atch "key e"
-  (s, sel) := put u:p_laceIf (s, sel)
-  (s, sel) := u:c_hoose (v, s, sel)
-  s := en:s_tream s
-  (s en:m_ove sc:c_ontrols w, sel)
-}
-u:w_hen := { yes s ->
-  yes ? u:d_ig s
-  s
-}
-u:p_laceIf := { yes st ->
-  yes ? u:p_lace st
-  st
-}
-
-## the world around the start made before the first frame
+## The hotbar, digging, placing and a frame of the game are the library
+## Play.xtl, shared with voxels-water; the state is (the world and its
+## player, the chosen block).
+hud := w pl:h_ud 1
 s := en:n_ew w
 s := (3 * (1 + 2 * en:reach) * 1 + 2 * en:reach) 'en:s_tream p_ower s
-last := 100000 'u:f_rame p_ower (s, 1)
+last := 100000 'pl:f_rame p_ower (s, 1)
 z := sc:c_lose! w
 (s, _) := last
 "the edits (x y z block), the newest first:"

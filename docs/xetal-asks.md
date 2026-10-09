@@ -20,6 +20,7 @@ and the workaround in use.
 | E6 | landed (vendored X_eTaL f823212) | bug | `xetal --draw DIR run FILE` fails (clap takes `run` as the SCRIPT argument and FILE as a subcommand); `xetal run --draw DIR FILE` works | the sqlite notebook's test and every demo recipe | `--draw` written after `run` |
 | E7 | landed (X_eTaL d284a8c; re-checked: a facade without `l:package` types as a library) | bug | `xetal type FILE` calls a library whose `l:` names all come from macro calls a program (`library-name-in-program`): it decides before expanding | every facade written with the binding macro | one literal export per facade, `l:package := "NAME"` |
 | E8 | landed (X_eTaL d284a8c; re-checked: `quakes.xtl` importing `Quakes` no longer finds itself) | bug | a program `quakes.xtl` importing a library `Quakes` (`"q:" u_se< "Quakes"`) on a case-insensitive file system (macOS) finds the program itself and reports `import-cycle: quakes.xtl -> quakes.xtl`; wanted: library lookup matches the name's case exactly, or the error says the library resolved to the importing file | demos with a library beside them (audio, http) | name the library differently (`Instruments.xtl`, `Seismic.xtl`) |
+| E9 | open (found 2026-10-09 at X_eTaL d284a8c) | bug | `xetal type` (and so `xetal doc`) infers different types for the same file from run to run: free type variables or `Int` for the same tuple part, extra `Num e` constraints. Integer literals' types are settled in an order that varies (a hash map's?), so a doc page and the search index change on every build | scene's shared demo libraries (Endless.xtl, Play.xtl) and the demos that use them | the masks made Int for certain (`f_loor f_loat`); `scripts/check-pages.sh` ignores lines that differ only in an inferred type (a renamed or new function still changes other lines) |
 
 2026-10-08, X_eTaL d284a8c pinned (the user: the newer doc site): E7 and E8 landed; `l:package` is kept in each facade, as it names the native package on the doc pages; libraries' private functions are now `h:` (`xetal migrate`). E1, E3 and E5 still open.
 
@@ -211,3 +212,25 @@ report's `Quakes.xtl`). Wanted: `u_se<` matches the file name's case
 exactly (or warns when the case differs), or the error says the
 library resolved to the importing file. Workaround: libraries named
 unlike any program beside them (`Instruments.xtl`, `Seismic.xtl`).
+
+### E9: inferred types vary from run to run
+
+`xetal type` prints different types for the same file on different
+runs. Ten runs on this repo's `extensions/scene/demos/Play.xtl` (with
+`XETAL_PATH` reaching `extensions/scene/demos`, `extensions/scene/lib`
+and `lib`) gave four different outputs, for example:
+
+```
+l:p_lace : (Any a, Any b, Any c, Any d, Any e) => (((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, d, e)), Int) -> ...
+l:p_lace : (Any a, Any b, Any c, Num d, Num e, Any f, Any g) => (((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, d), (e, Int, Int, Int), (Int, Int, f, g)), Int) -> ...
+```
+
+The parts that vary hold integer literals (a tuple's `0`, `l:pace :=
+6`), so the order in which their `Num` types meet `Int` seems to vary.
+It started when a state tuple grew to eight parts with several such
+literals; a small function alone is stable. The doc site built from it
+(`xetal doc --out`) changes on every build. Wanted: the same file
+types the same way every run. Workaround: the masks are made Int for
+certain (`f_loor f_loat`), which settled `Endless.xtl`; the pages
+check ignores lines that differ only in an inferred type.
+

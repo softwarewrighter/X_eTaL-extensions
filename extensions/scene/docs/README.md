@@ -32,7 +32,7 @@ e := sc:n_ext! w                                  # "frame", "key q", "close"
 | `head sc:p_olyline! pts` | `(Num a, Num b) => a -> b -> Int` | put object: `head` is scene, object id, and optionally red green blue (0 to 1); `pts` an n by 3 matrix, joined in order; an id put again is replaced |
 | `head sc:s_egments! pts` | as above | the points taken in pairs |
 | `head sc:d_ots! pts` | as above | each point a dot |
-| `head sc:q_uads! pts` | as above | the points in fours (4n by 3), each four the corners of a filled quad in order round it; shaded by how it faces a fixed light (tops brightest), nearer quads hiding farther ones; lines and dots draw over quads |
+| `head sc:q_uads! pts` | as above | the points in fours (4n by 3), each four the corners of a filled quad in order round it; shaded by how it faces a fixed light (tops brightest), nearer quads hiding farther ones; lines and dots draw over quads; a sixth number in `head`, alpha below 1, makes them translucent (drawn after the opaque quads, blended over them) |
 | `scene sc:e_ye! x y z yaw pitch` | as above | a first-person camera (on a dense screen drawn at the window's logical size and scaled up, so a Retina window costs no more than an ordinary one) at the eye, looking along yaw (0 toward -z, turning right toward +x) and pitch (up positive), radians; faces crossing the near plane are clipped, not dropped; dragging then turns nothing by itself -- it is reported by `sc:c_ontrols`; `sc:c_amera!` goes back to orbiting |
 | `sc:c_ontrols scene` | `Num a => a -> Float` | how far the mouse was dragged since last asked (x, y pixels), then 1 or 0 for each key held: w a s d space shift and the arrows left right up down. The pointer is never grabbed. Headless, `XETAL_EVENTS` may hold `keydown w`, `keyup w` and `drag 10 0` |
 | `scene sc:c_urve! radius` | as above | a curved horizon for the first-person camera: the world lowered by d^2 / 2R at a distance d along the ground from the eye, as on a small planet; 0 turns it off |
@@ -174,7 +174,7 @@ before the next builds on it. Their shared X_eTaL is the library
     (`en:p_ick`; water is not solid, so the ray goes through it).
     Click (or X) digs it out; right-click (or E) places the hotbar's
     block in the empty cell before it, never where the player stands;
-    1 to 6 choose stone, dirt, grass, sand, wood or leaves. Each change
+    1 to 7 choose stone, dirt, grass, sand, wood, leaves or water. Each change
     is an edit the world remembers (x y z and the block, the newest
     first), and every column is made with the edits in it and its
     border (`en:e_dited`): the edited column is made again at once --
@@ -184,7 +184,28 @@ before the next builds on it. Their shared X_eTaL is the library
     wins, a neighbor sees its border). Recorded as
     `videos/voxels-dig.webm`: a trench, then a pillar of stone and wood
     built jump by jump, a block placed under the feet at the top of
-    each jump.
+    each jump. The hotbar, digging, placing and a frame of play are the
+    library `demos/Play.xtl`, shared with voxels-water.
+11. `demos/voxels-water.xtl` (`just demo scene voxels-water`): water
+    that flows. A stepped hill stands by the start, built as edits, with
+    a lake on its top terrace held in by a rim of grass; you start on
+    the rim. Dig into it and the lake runs out and down the steps; dig
+    beside the sea and the hole fills; place water (7) and it runs.
+    Water flows as a cellular automaton on its frontier, the cells it
+    has just reached (`Endless.xtl`): each tick a cell falls into the
+    air below it (level 7 again) or, standing on something solid,
+    spreads one level lower into the air at its sides, until level 1;
+    the lake and the sea are sources that never empty. The cells it
+    reaches are edits like any other, so the water stays where it ran;
+    each column keeps a water mask beside its solid mask, so a whole
+    frontier is looked up at once (`en:l_ook`: air, solid or water).
+    A tick waits for the columns it changed to be drawn again, and at
+    most one runs every 6 frames, about the pace of water in a block
+    game. Water is drawn translucent (scene's alpha), its sides and
+    bottom where it meets air, so the seabed and the lake's floor show
+    through and a run of water down a slope is solid to look at.
+    Recorded as `videos/voxels-water.webm`: the rim dug, then the hill
+    from the air as the lake runs down it.
 
 ## Build and test
 

@@ -362,14 +362,15 @@ fn open(args: &[Value]) -> Result<Value, OwnedError> {
 }
 
 /// The header of an object: scene id, object id, red, green, blue
-/// (0 to 1).
-fn header(v: &Value) -> Result<(i64, i64, [f64; 3]), OwnedError> {
+/// (0 to 1), and how opaque (0 to 1, 1 when left out).
+fn header(v: &Value) -> Result<(i64, i64, [f64; 3], f64), OwnedError> {
     let (_, h) = float_vector(v)?;
     match h[..] {
-        [s, o, r, g, b] => Ok((int(s), int(o), [r, g, b])),
-        [s, o] => Ok((int(s), int(o), [0.9, 0.9, 0.9])),
+        [s, o, r, g, b, a] => Ok((int(s), int(o), [r, g, b], a.clamp(0.0, 1.0))),
+        [s, o, r, g, b] => Ok((int(s), int(o), [r, g, b], 1.0)),
+        [s, o] => Ok((int(s), int(o), [0.9, 0.9, 0.9], 1.0)),
         _ => Err(OwnedError::invalid_argument(
-            "header: scene object, or scene object red green blue",
+            "header: scene object, then optionally red green blue, then optionally alpha",
         )),
     }
 }
@@ -386,7 +387,7 @@ fn points(v: &Value) -> Result<Vec<[f64; 3]>, OwnedError> {
 }
 
 fn put(kind: Kind, args: &[Value]) -> Result<Value, OwnedError> {
-    let (s, o, color) = header(&args[0])?;
+    let (s, o, color, alpha) = header(&args[0])?;
     let pts = points(&args[1])?;
     let window = with(s, |h| {
         locked(&h.scene).set(
@@ -395,6 +396,7 @@ fn put(kind: Kind, args: &[Value]) -> Result<Value, OwnedError> {
                 kind,
                 points: pts,
                 color,
+                alpha,
             },
         );
         h.window

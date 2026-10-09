@@ -29,6 +29,9 @@ pub struct Object {
     pub points: Vec<[f64; 3]>,
     /// Red, green, blue, 0 to 1.
     pub color: [f64; 3],
+    /// How opaque, 0 to 1: quads below 1 are drawn after the opaque
+    /// ones, blended over what is behind them (water you can see into).
+    pub alpha: f64,
 }
 
 /// The camera orbits the origin: yaw and pitch in radians, distance in
@@ -115,6 +118,23 @@ impl Default for Scene {
             size: (0.0, 0.0),
         }
     }
+}
+
+/// How a quad is filled: its color (red, green, blue, 0 to 1) and how
+/// opaque it is (below 1, blended over what is behind it).
+#[derive(Clone, Copy)]
+struct Paint {
+    color: [f64; 3],
+    alpha: f64,
+}
+
+/// What quads are drawn into: the picture's pixels and its depth buffer,
+/// `w` by `h`.
+struct Target<'a> {
+    px: &'a mut [u32],
+    depth: &'a mut [f64],
+    w: usize,
+    h: usize,
 }
 
 const BACKGROUND: u32 = 0x000c_0e14;
@@ -246,13 +266,25 @@ impl Scene {
         let mut px = vec![self.sky.map_or(BACKGROUND, rgb); w * h];
         // quads first, behind a depth buffer; lines and dots over them
         let mut depth = vec![f64::INFINITY; w * h];
-        for (_, o) in self
-            .objects
-            .iter()
-            .filter(|(id, o)| o.kind == Kind::Quads && self.might_see(**id, w, h))
-        {
-            for q in o.points.chunks_exact(4) {
-                self.quad(&mut px, &mut depth, w, h, [q[0], q[1], q[2], q[3]], o.color);
+        // opaque quads, then translucent ones over them (tested against
+        // the depth buffer, not writing it)
+        let mut out = Target {
+            px: &mut px,
+            depth: &mut depth,
+            w,
+            h,
+        };
+        for opaque in [true, false] {
+            for (_, o) in self.objects.iter().filter(|(id, o)| {
+                o.kind == Kind::Quads && (o.alpha >= 1.0) == opaque && self.might_see(**id, w, h)
+            }) {
+                let paint = Paint {
+                    color: o.color,
+                    alpha: o.alpha,
+                };
+                for q in o.points.chunks_exact(4) {
+                    self.quad(&mut out, [q[0], q[1], q[2], q[3]], paint);
+                }
             }
         }
         for o in self.objects.values().filter(|o| o.kind != Kind::Quads) {
@@ -320,15 +352,8 @@ impl Scene {
     /// lit alike), fogged by depth, clipped where it crosses the near
     /// plane (so a face beside a first-person eye stays), drawn as a fan
     /// of triangles where it is nearer than what is there.
-    fn quad(
-        &self,
-        px: &mut [u32],
-        depth: &mut [f64],
-        w: usize,
-        h: usize,
-        q: [[f64; 3]; 4],
-        color: [f64; 3],
-    ) {
+    fn quad(&self, out: &mut Target, q: [[f64; 3]; 4], paint: Paint) {
+        let (w, h, color) = (out.w, out.h, paint.color);
         let cam: Vec<(f64, f64, f64)> = q.iter().map(|p| self.camera_space(*p)).collect();
         // Sutherland-Hodgman against depth >= NEAR
         let mut poly: Vec<(f64, f64, f64)> = Vec::with_capacity(6);
@@ -364,7 +389,11 @@ impl Scene {
         let base = [color[0] * shade, color[1] * shade, color[2] * shade];
         let s: Vec<(f64, f64, f64)> = poly.iter().map(|&p| self.screen(p, w, h)).collect();
         for k in 1..s.len() - 1 {
-            self.triangle(px, depth, w, h, [s[0], s[k], s[k + 1]], base);
+            let shaded = Paint {
+                color: base,
+                ..paint
+            };
+            self.triangle(out, [s[0], s[k], s[k + 1]], shaded);
         }
     }
 
@@ -375,15 +404,10 @@ impl Scene {
         clippy::cast_sign_loss,
         clippy::cast_precision_loss
     )]
-    fn triangle(
-        &self,
-        px: &mut [u32],
-        depth: &mut [f64],
-        w: usize,
-        h: usize,
-        t: [(f64, f64, f64); 3],
-        color: [f64; 3],
-    ) {
+    fn triangle(&self, out: &mut Target, t: [(f64, f64, f64); 3], paint: Paint) {
+        let (w, h) = (out.w, out.h);
+        let Paint { color, alpha } = paint;
+        let (px, depth) = (&mut *out.px, &mut *out.depth);
         let [(x0, y0, d0), (x1, y1, d1), (x2, y2, d2)] = t;
         let area = (x1 - x0) * (y2 - y0) - (x2 - x0) * (y1 - y0);
         if area.abs() < 1e-9 {
@@ -413,7 +437,9 @@ impl Scene {
                 if d >= depth[k] {
                     continue;
                 }
-                depth[k] = d;
+                if alpha >= 1.0 {
+                    depth[k] = d;
+                }
                 let c = match self.fog {
                     Some((near, far)) if far > near => {
                         let f = ((d - near) / (far - near)).clamp(0.0, 1.0);
@@ -426,10 +452,26 @@ impl Scene {
                     }
                     _ => color,
                 };
-                px[k] = rgb(c);
+                px[k] = if alpha >= 1.0 {
+                    rgb(c)
+                } else {
+                    let old = unrgb(px[k]);
+                    let a = alpha.max(0.0);
+                    rgb([
+                        c[0] * a + old[0] * (1.0 - a),
+                        c[1] * a + old[1] * (1.0 - a),
+                        c[2] * a + old[2] * (1.0 - a),
+                    ])
+                };
             }
         }
     }
+}
+
+/// A pixel's red, green, blue, 0 to 1.
+fn unrgb(p: u32) -> [f64; 3] {
+    let c = |s: u32| f64::from((p >> s) & 0xff) / 255.0;
+    [c(16), c(8), c(0)]
 }
 
 #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]

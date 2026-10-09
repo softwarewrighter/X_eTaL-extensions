@@ -435,13 +435,21 @@ l:c_olumnBlocks := { c ->
 }
 
 ## vx:c_olumnMask b: the solid mask of a column's own cells (16 by 32
-## by 16, flat, x slowest), from its blocks
-l:c_olumnMask := { b -> inner s_elect r_avel l:s_olid b }
+## by 16, flat, x slowest), from its blocks; Ints (f_loor f_loat: so the
+## type checker settles the masks' type the same way every run, ask E9)
+l:c_olumnMask := { b -> inner s_elect r_avel f_loor f_loat l:s_olid b }
+
+## vx:c_olumnWater b: the water mask of a column's own cells (16 by 32
+## by 16, flat, x slowest), from its blocks: where water can be seen and
+## swum, and where flowing water cannot go again
+l:c_olumnWater := { b -> inner s_elect r_avel f_loor f_loat b = 5 }
 
 ## c vx:c_olumnFaces b: the faces of column c's own cells, in world
 ## coordinates, one row each (x y z direction block) -- found over the
-## block with its border, so faces against a solid neighbor hide; the
-## second part of making a column
+## block with its border, so faces against a solid neighbor hide; water
+## shows its top where air is above it and its sides and bottom where
+## air is beside or below it (water flowing down a slope); the second
+## part of making a column
 l:c_olumnFaces := { c b ->
   s := l:s_olid b
   w := s > (-1 o_-_1 s) * X18 > 0
@@ -451,6 +459,13 @@ l:c_olumnFaces := { c b ->
   n := s > (-1 o_-_3 s) * Z18 > 0
   so := s > (1 o_-_3 s) * Z18 < 17
   top := (b = 5) > (1 o_-_2 b > 0) * Y18 < 31
+  wet := b = 5
+  dry := b = 0
+  ww := wet * (-1 o_-_1 dry) * X18 > 0
+  we := wet * (1 o_-_1 dry) * X18 < 17
+  wd := wet * (-1 o_-_2 dry) * Y18 > 0
+  wn := wet * (-1 o_-_3 dry) * Z18 > 0
+  ws := wet * (1 o_-_3 dry) * Z18 < 17
   bb := own * 1 + r_avel b
   x0 := (16 * 1 s_elect c) - 1
   z0 := (16 * 2 s_elect c) - 1
@@ -460,5 +475,7 @@ l:c_olumnFaces := { c b ->
   }
   r := (0 r_w bb * r_avel w) c_at_2 (1 r_w bb * r_avel e) c_at_2 (2 r_w bb * r_avel d) c_at_2 (3 r_w bb * r_avel u)
   r := r c_at_2 (4 r_w bb * r_avel n) c_at_2 (5 r_w bb * r_avel so) c_at_2 3 r_w bb * r_avel top
+  r := r c_at_2 (0 r_w bb * r_avel ww) c_at_2 (1 r_w bb * r_avel we) c_at_2 (2 r_w bb * r_avel wd)
+  r := r c_at_2 (4 r_w bb * r_avel wn) c_at_2 5 r_w bb * r_avel ws
   2 1 t_ranspose r
 }

@@ -9,6 +9,7 @@ fn line(points: Vec<[f64; 3]>) -> Object {
         kind: Kind::Polyline,
         points,
         color: [1.0, 1.0, 1.0],
+        alpha: 1.0,
     }
 }
 
@@ -70,6 +71,7 @@ fn quad(points: Vec<[f64; 3]>, color: [f64; 3]) -> Object {
         kind: Kind::Quads,
         points,
         color,
+        alpha: 1.0,
     }
 }
 
@@ -312,4 +314,36 @@ fn the_overlay_is_drawn_over_everything_and_scaled_from_the_window() {
     // cleared
     s.overlay.clear();
     assert!(s.render(40, 30).iter().all(|&p| p != white));
+}
+
+#[test]
+fn a_translucent_quad_blends_over_what_is_behind_it_and_hides_nothing() {
+    // a red wall behind a half-opaque blue pane: the middle is a mix;
+    // a green wall in front of the pane still covers it
+    let wall = |z: f64, color: [f64; 3]| {
+        quad(
+            vec![
+                [-50.0, -50.0, z],
+                [50.0, -50.0, z],
+                [50.0, 50.0, z],
+                [-50.0, 50.0, z],
+            ],
+            color,
+        )
+    };
+    let mut s = first_person([0.0, 0.0, 0.0], 0.0, 0.0);
+    s.set(1, wall(-4.0, [1.0, 0.0, 0.0]));
+    let red = s.render(20, 20)[10 * 20 + 10];
+    let mut pane = wall(-2.0, [0.0, 0.0, 1.0]);
+    pane.alpha = 0.5;
+    s.set(2, pane);
+    let mixed = s.render(20, 20)[10 * 20 + 10];
+    let (r, b) = ((mixed >> 16) & 0xff, mixed & 0xff);
+    assert!(r > 0 && b > 0, "both show through: {mixed:06x}");
+    assert!(r < (red >> 16) & 0xff, "the red is dimmed");
+    // drawn after the opaque quads whatever the ids, and never hiding them
+    s.set(0, wall(-1.0, [0.0, 1.0, 0.0]));
+    let front = s.render(20, 20)[10 * 20 + 10];
+    assert_eq!(front & 0xff, 0, "no blue over the nearer green wall");
+    assert!((front >> 8) & 0xff > 0);
 }

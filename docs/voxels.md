@@ -5,11 +5,11 @@ Dyalog APL, MIT) and of how this repository could show voxel graphics
 from X_eTaL: what carries over, what our native windows can and
 cannot do today, measured costs, the chunk size to use, and a series
 of `voxels-*` demos that build up to a small game, each one runnable,
-tested and recorded before the next. Written 2026-10-07; eight demos
+tested and recorded before the next. Written 2026-10-07; nine demos
 of the world are built -- voxels-chunk, voxels-faces, voxels-solid,
-voxels-world, voxels-walk, voxels-endless, voxels-fly and voxels-dig
-(see "Built so far") -- and water, light and the game follow (see "The
-game" for the order).
+voxels-world, voxels-walk, voxels-endless, voxels-fly, voxels-dig and
+voxels-water (see "Built so far") -- and light and the game follow
+(see "The game" for the order).
 
 ## In short
 
@@ -259,6 +259,7 @@ Demos 5 to 7 followed (the scene page lists them all with their keys):
 | `voxels-rubik` | a Rubik's cube (the user): 54 stickers, each quarter turn a permutation computed from the geometry and checked (order 4, inverses, R U R' U' of order 6, R U of order 105, directions); keys turn faces, z undoes to solved, Space a valid scramble |
 | (smoother streaming) | the user found the edges laggy: a column took 40 to 68 ms in one frame; now it is made over three frames (blocks, faces, sending), at most one far column is dropped a frame, the solid masks are separate boxes (nothing big is copied), and faces are found for the column's own cells with cached coordinates -- a flight's frames: median 1 ms of X_eTaL, 95% within 14 ms; the world and the player became the library `Endless.xtl` |
 | `voxels-dig` | digging and building: the pick as 100 points along the view ray looked up in the masks of the 1 to 4 columns they cross; an edit is a row (x y z block) the world keeps, newest first, and every column is made with the edits in it and its border (one `i_ndexOf` over its 10,368 cells), so an edited column is simply made again -- its mask at once, its faces and objects over the next two frames -- with a neighbor when the cell is on their border, and edits outlast a column dropped and made again; scene gained an overlay (the crosshair and the hotbar) and clicks |
+| `voxels-water` | water that flows: a cellular automaton on the frontier of cells it has just reached -- fall into air below (level 7), else spread one level lower into air at the sides -- with the sea and lakes as sources; reached cells are edits, each column keeps a water mask so a frontier is classified at once; ticks paced (every 6 frames at most, after the changed columns are drawn); a lake on a stepped hill's terrace, built as edits, runs down the steps when its rim is dug (the user's showcase); scene draws translucent quads (alpha), water's sides and bottom against air |
 
 
 ## The game: walking, flying, building, digging, light, water
@@ -307,7 +308,7 @@ changed instead of the chunk; it fits immutable values.
 | 2 | `voxels-endless` | built | (added) walking with no edges: terrain from noise hashed from the coordinates, so any chunk can be made alone and fits its neighbors; chunks generated around the player and dropped behind; fog at the loaded radius and a curved horizon (distant land lowered by d^2/2R, so the world looks like a small planet); culling by bounding box in scene |
 | 3 | `voxels-fly` | built | flying over the endless world: F to fly, level by the heading, Space up, Shift down |
 | 4 | `voxels-dig` | built | the ray-march pick, breaking and placing, per-chunk remeshing and patching; crosshair and hotbar |
-| 5 | `voxels-water` | planned | water flowing by a cellular automaton into what is dug; a hill with a lake on a terrace, held above the sea -- dig the ground downhill of it and the water runs out and falls down the slope (the user); translucent water |
+| 5 | `voxels-water` | built | water flowing by a cellular automaton into what is dug; a hill with a lake on a terrace, held above the sea -- dig the ground downhill of it and the water runs out and falls down the slope (the user); translucent water |
 | 6 | `voxels-light` | planned | sky light by a column scan, torches spreading in rounds; brightness per quad |
 | 7 | `voxels-game` | planned | Gem Hunt, with all of the above |
 

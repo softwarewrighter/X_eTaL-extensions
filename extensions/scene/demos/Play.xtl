@@ -1,0 +1,105 @@
+## Play.xtl -- playing in the endless world (Endless.xtl), shared by the
+## voxel demos that dig, build and pour water (voxels-dig, voxels-water
+## and those after): a crosshair and a hotbar drawn over the view, the
+## block under the crosshair dug out or one placed against it, and one
+## frame of the game -- an event, the world's work, the player.
+## Import: "pl:" u_se< "Play"
+
+"en:" u_se< "Endless"
+"vx:" u_se< "Voxels"
+"sc:" u_se< "Scene"
+
+### The hotbar and the crosshair
+
+## the blocks the hotbar places, keys 1 to 7: stone dirt grass sand
+## wood leaves water (water placed flows)
+l:kinds := 1 2 3 4 6 7 5
+
+## the keys, said once at the start of a demo
+l:help := "keys: click or X dig, right-click or E place, 1-7 choose the block (7 water), W A S D walk, Space jump, F fly, drag or arrows look, H home, q quit"
+
+## w pl:h_ud sel: the overlay of window w (640 by 400) -- the hotbar at
+## the bottom (a dark bar, the chosen block framed in white, a square of
+## each block's color) and a crosshair at the center
+l:h_ud := { w sel ->
+  lefts := 176.0 + 42.0 * f_loat (r_ange 7) - 1
+  bar := 1 7 r_eshape 168.0 344.0 304.0 52.0 0.1 0.1 0.12
+  chosen := 1 7 r_eshape ((sel s_elect lefts) - 4.0) c_at 348.0 44.0 44.0 1.0 1.0 1.0
+  rgb := r_avel 2 1 t_ranspose (1 + l:kinds) s_elect vx:colors
+  squares := 2 1 t_ranspose 7 7 r_eshape lefts c_at (7 r_eshape 352.0) c_at (14 r_eshape 36.0) c_at rgb
+  cross := 2 7 r_eshape 310.0 199.0 20.0 2.0 1.0 1.0 1.0  319.0 190.0 2.0 20.0 1.0 1.0 1.0
+  w sc:o_verlay! bar c_at chosen c_at squares c_at cross
+}
+
+### Digging and building
+
+## The state of a game is a tuple: (the endless world and its player,
+## the chosen block 1 to 7).
+
+## pl:d_ig s: the block looked at dug out (air; water when it is beside
+## water, which then flows), if there is one; said
+l:d_ig := { s ->
+  h := (en:w_orld s) en:p_ick en:e_ye s
+  0 = f_irst h ? s
+  q := 2 3 4 s_elect h
+  said := p_rint! "dug " c_at f_ormat q
+  (q, 0) en:s_et s
+}
+
+## pl:p_lace (s, sel): a block of the chosen kind placed in the empty
+## cell before the one looked at -- not where the player stands, nor
+## above the world's top; said
+l:p_lace := { (s, sel) ->
+  h := (en:w_orld s) en:p_ick en:e_ye s
+  0 = 5 s_elect h ? (s, sel)
+  q := 6 7 8 s_elect h
+  (en:p_osition s) en:o_verlaps q ? (s, sel)
+  (2 s_elect q) > 31 ? (s, sel)
+  t := sel s_elect l:kinds
+  said := p_rint! "placed " c_at (d_isclose (1 + t) s_elect (n_ot vx:names = f_irst " ") p_artition vx:names) c_at " at " c_at f_ormat q
+  ((q, t) en:s_et s, sel)
+}
+
+# (v, s, sel) h:c_hoose 0: a digit key chooses the hotbar's block
+h:c_hoose := { (v, s, sel) z ->
+  i := "1234567" i_ndexOf f_irst -1 t_ake v
+  ((5 = t_ally v) * i <= 7) = 0 ? (s, sel)
+  hud := (en:w_indow s) l:h_ud i
+  (s, i)
+}
+
+h:i_f := { yes s ->
+  yes ? en:h_omeAgain s
+  s
+}
+h:f_ly := { yes s ->
+  yes ? en:t_oggleFly s
+  s
+}
+h:w_hen := { yes s ->
+  yes ? l:d_ig s
+  s
+}
+h:p_laceIf := { yes st ->
+  yes ? l:p_lace st
+  st
+}
+
+## pl:f_rame (s, sel): one frame of the game: an event (dig, place,
+## choose, home, fly, quit), then the world's work (a third of a column,
+## or a tick of flowing water), then the player
+l:f_rame := { (s, sel) ->
+  en:s_topped s ? (s, sel)
+  w := en:w_indow s
+  v := sc:n_ext! w
+  ((v m_atch "close") + (v m_atch "key q") + v m_atch "key Escape") > 0 ? (en:s_top s, sel)
+  s := (v m_atch "key h") h:i_f s
+  s := (v m_atch "key f") h:f_ly s
+  dig := ((10 t_ake v) m_atch "click left") + v m_atch "key x"
+  s := dig h:w_hen s
+  put := ((11 t_ake v) m_atch "click right") + v m_atch "key e"
+  (s, sel) := put h:p_laceIf (s, sel)
+  (s, sel) := (v, s, sel) h:c_hoose 0
+  s := en:s_tream s
+  (s en:m_ove sc:c_ontrols w, sel)
+}
