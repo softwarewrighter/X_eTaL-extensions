@@ -382,6 +382,16 @@ Read before working:
     facade, the binding macro and a shared demo library has its own
     `##` block (`scripts/check-docs.py`, in the gate); `just pages`
     builds the cross-referenced site into `pages/doc`.
+18. NEVER delete `work/` -- the repository's or any extension's
+    `extensions/<ext>/work/` -- or anything in it: `work/` is where work
+    has been done (downloads, built artifacts, assets that must not be
+    published, large files kept out of git), so replacing it costs
+    effort. Anything that may be thrown away goes in a temporary
+    directory (`mktemp -d`, outside the repository), never in `work/`.
+    Tests and scripts write over their own files instead of deleting to
+    start clean (the goldens `mkdir -p`, never `rm -rf`). Ask before any
+    deletion of an existing file or directory, naming exactly what (the
+    user, 2026-10-09).
 
 ## Every step ends with
 
