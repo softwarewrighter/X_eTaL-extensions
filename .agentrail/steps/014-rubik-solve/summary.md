@@ -1,0 +1,1 @@
+voxels-rubik-solve: Scramble/Solve/Back/Step/Play with X_eTaL-libraries Eigencube (hybrid 1, ~150 turns, 2-3 s), animated; LIBRARIES_COMMIT pin (just libraries) with Eigencube on XETAL_PATH everywhere; cross-check golden of the two models (mutation fails it); golden, 40 s recording live; URL sent to the eigencube session.
