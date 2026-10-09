@@ -47,8 +47,8 @@ step "clock: the time now"
 ck:i_so @')
 
 step "sqlite: the data notebook (CO2 at Mauna Loa)"
-(cd extensions/sqlite && rm -rf work && "$xx" --ext . run --draw work/draw demos/notebook.xtl 2>/dev/null | tail -9)
+(cd extensions/sqlite && mkdir -p work && "$xx" --ext . run --draw work/draw demos/notebook.xtl 2>/dev/null | tail -9)
 check "notebook" extensions/sqlite <(sed '/^[0-9]* [0-9]* work\/draw/d' extensions/sqlite/tests/sqlite-demo-notebook.out) \
-  sh -c "rm -rf work && '$xx' --ext . run --draw work/draw demos/notebook.xtl"
+  sh -c "mkdir -p work && '$xx' --ext . run --draw work/draw demos/notebook.xtl"
 
 step "walkthrough: ok (clone in $dir${KEEP:+, kept})"
