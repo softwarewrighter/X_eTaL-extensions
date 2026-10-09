@@ -25,6 +25,9 @@ set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # X_eTaL's clone (work/xetal) must exist: this repo's crates build on it
 "$root/scripts/xetal.sh" >/dev/null
+# the shared libraries used here (X_eTaL-libraries at LIBRARIES_COMMIT)
+XETAL_PATH="$("$root/scripts/libraries.sh")"
+export XETAL_PATH
 cd "$root"
 for tool in vhs ffmpeg gif2webp sox curl; do command -v "$tool" >/dev/null || { echo "$tool not found" >&2; exit 127; }; done
 # headless Chrome renders the web demos (.web): CHROME, else the usual places

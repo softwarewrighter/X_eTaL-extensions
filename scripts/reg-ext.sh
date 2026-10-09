@@ -27,6 +27,10 @@ export PATH="$root/target/release:$PATH"
 export XETAL_DRAW="$root/work/draw"
 mkdir -p "$XETAL_DRAW"
 unset XETAL_EXT_PATH XETAL_PATH
+# the shared libraries used here (X_eTaL-libraries at LIBRARIES_COMMIT;
+# XETAL_LIBS when the caller has fetched them)
+XETAL_PATH="${XETAL_LIBS:-$("$root/scripts/libraries.sh")}"
+export XETAL_PATH
 cd "$dir"
 if [ "${1:-}" = "run" ] && [ "$#" -eq 1 ]; then
   if ! ls "$REG_RS_DATA_DIR"/*.rgt >/dev/null 2>&1; then

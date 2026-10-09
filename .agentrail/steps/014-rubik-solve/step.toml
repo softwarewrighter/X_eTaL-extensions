@@ -1,6 +1,6 @@
 number = 14
 slug = "rubik-solve"
-status = "pending"
+status = "in-progress"
 description = "game step (inserted, the user and the eigencube session's hand-off: Solve fir..."
 role = "production"
 context_files = []

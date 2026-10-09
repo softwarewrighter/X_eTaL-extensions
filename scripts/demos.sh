@@ -28,5 +28,8 @@ file="$root/extensions/$ext/demos/$name.xtl"
 # release: demos like the visualizer need its speed (a debug build
 # draws about 9 frames a second)
 (cd "$root" && cargo build -q --release --workspace)
+# the shared libraries used here (X_eTaL-libraries at LIBRARIES_COMMIT)
+XETAL_PATH="$("$root/scripts/libraries.sh")${XETAL_PATH:+:$XETAL_PATH}"
+export XETAL_PATH
 cd "$root/extensions/$ext"
 exec "$root/target/release/xetal-x" --ext "$root/extensions" run --draw work/draw "$@" "demos/$name.xtl"

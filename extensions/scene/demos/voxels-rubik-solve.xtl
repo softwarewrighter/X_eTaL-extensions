@@ -1,0 +1,229 @@
+## Voxels, 13: the Rubik's cube solved. Scramble it, or turn it with the
+## six buttons, then Solve: the cube's turns so far are handed to the
+## Eigencube library (X_eTaL-libraries, at LIBRARIES_COMMIT), which holds
+## the cube as 26 rotation matrices and solves it by search, stage by
+## stage -- the first layer by plain search over the twelve turns, the
+## middle and last layers over known move sequences (slot inserts, an
+## edge flip, Sune, a corner cycle), which is what makes it fast enough
+## (2 to 3 seconds; a hundred and some moves). Then Step through the
+## solution a turn at a time, Back to undo one, or Play it through, every
+## turn animated on the voxel cube. The two models are checked to agree
+## (tests/rubik-eigencube.xtl).
+## Run: just demo scene voxels-rubik-solve
+##   the buttons, or keys: u r f turn (Shift for '), Space scramble,
+##   Enter solve, n step, b back, p play or pause, 0 solved again, drag
+##   to look around, q quit
+
+"rb:" u_se< "Rubik"
+"rp:" u_se< "RubikPlay"
+"ec:" u_se< "Eigencube"
+"sc:" u_se< "Scene"
+
+w := "Voxels 13: Rubik's cube, solved -- X_eTaL" sc:o_pen! 640 600
+k := w sc:c_amera! 0.6 0.45 7.5 0.25
+z := (rb:solved, 0, 0.0) rb:d_raw w
+
+### The two models
+
+## Rubik's turns (1 to 12: U U' D D' R R' L L' F F' B B') as
+## Eigencube's (U U' D D' F F' B B' R R' L L'), and back: the same vector
+map := 1 2 3 4 9 10 11 12 5 6 7 8
+
+### The buttons
+
+## the turns: six buttons, their turns, the keys that press them
+names := "U U' R R' F F'"
+turns := 1 2 5 6 9 10
+keys := "uUrRfF"
+top := 490.0
+## the controls: a second row, wider buttons
+controls := "Scramble Solve Back Step Play"
+top2 := 545.0
+cw := 100.0
+
+# both rows drawn, the turn under way's button lit
+u:b_uttons := { i ->
+  a := (w, names, top, 640.0, 100, rp:bw) rp:d_rawRow turns i_ndexOf a_bs i
+  b := (w, controls, top2, 640.0, 200, cw) rp:d_rawRow 0
+  o := w sc:o_verlay! a c_at b
+  i
+}
+o := u:b_uttons 0
+title := ((f_loat w) c_at 1.0 20.0 20.0 14.0 1.0 1.0 1.0) sc:l_abel! "Turns:"
+
+# the status line (solving, the solution, solved)
+u:t_ell := { m ->
+  said := ((f_loat w) c_at 3.0 20.0 44.0 14.0 0.6 1.0 0.6) sc:l_abel! m
+  m
+}
+
+"keys: u r f turn (Shift for '), Space scramble, Enter solve, n step, b back, p play or pause, 0 solved, q quit; or click the buttons"
+
+### Playing
+
+## The state is a tuple: (the turning -- RubikPlay's colors, turns made,
+## turns waiting, turn under way and its frame -- the solution, in
+## Rubik's numbers; how many of its turns are made; the mode, 0 still, 1
+## playing, 2 solving next frame; whether it runs).
+
+# the last 12 turns made, shown above the cube
+u:s_ay := { st z ->
+  (_, h, _, _, _) := st
+  said := ((f_loat w) c_at 2.0 100.0 20.0 14.0 1.0 1.0 0.6) sc:l_abel! rp:n_ames (0 - 12 m_in t_ally h) t_ake h
+  st
+}
+
+## u:s_crambled n: n random turns, never the same face twice in a row
+u:s_crambled := { n ->
+  (_, ts) := (n, 0 r_eshape 0) u:m_ore 0
+  ts
+}
+u:m_ore := { (n, ts) z ->
+  n = 0 ? (n, ts)
+  t := r_oll! 12
+  prev := f_irst -1 t_ake 0 c_at ts
+  ((t + 1) d_iv 2) = (prev + 1) d_iv 2 ? (n, ts) u:m_ore 0
+  (n - 1, ts c_at t) u:m_ore 0
+}
+
+## u:s_olution st: the turns that solve the cube made so far (Rubik's
+## numbers), found by Eigencube from the same turns
+u:s_olution := { st ->
+  (_, h, _, _, _) := st
+  (m, _, _) := 1 ec:s_olve (h s_elect map) ec:d_o ec:solved
+  m s_elect map
+}
+
+# the turn or control of event v: a turn 1 to 12 (positive), a control
+# 1 to 5 (negative), else 0
+u:p_ressed := { v ->
+  b := (v, 6, top, 640.0, rp:bw) rp:h_it 0
+  b > 0 ? b s_elect turns
+  c := (v, 5, top2, 640.0, cw) rp:h_it 0
+  c > 0 ? 0 - c
+  i := keys i_ndexOf f_irst -1 t_ake v
+  ((5 = t_ally v) * i <= 6) ? i s_elect turns
+  ks := (v m_atch "key Space") c_at (v m_atch "key Enter") c_at (v m_atch "key b") c_at (v m_atch "key n") c_at v m_atch "key p"
+  0 < '+ r_/ ks ? 0 - f_irst w_here ks
+  0
+}
+
+# a turn by hand: queued; any solution is stale
+u:t_urnBy := { t (st, sol, pos, mode, on) ->
+  z := u:t_ell " "
+  (t rp:q_ueue st, 0 r_eshape 0, 0, 0, on)
+}
+
+# the controls: 1 scramble, 2 solve, 3 back, 4 step, 5 play or pause
+u:c_ontrol := { k all ->
+  (st, sol, pos, mode, on) := all
+  0 = rp:i_dle st ? all
+  k = 1 ? u:s_cramble all
+  k = 2 ? u:s_olveSoon all
+  k = 3 ? u:b_ack all
+  k = 4 ? u:s_tep all
+  u:p_lay all
+}
+u:s_cramble := { (st, sol, pos, mode, on) ->
+  z := u:t_ell "Scrambled: 20 turns"
+  ((u:s_crambled 20) rp:q_ueue st, 0 r_eshape 0, 0, 0, on)
+}
+u:s_olveSoon := { (st, sol, pos, mode, on) ->
+  (c, _, _, _, _) := st
+  c m_atch rb:solved ? (st, sol, pos, mode, on) u:s_ayIt "Already solved"
+  z := u:t_ell "Solving..."
+  (st, sol, pos, 2, on)
+}
+u:s_ayIt := { all m ->
+  z := u:t_ell m
+  all
+}
+u:b_ack := { (st, sol, pos, mode, on) ->
+  pos = 0 ? (st, sol, pos, mode, on)
+  z := u:t_ell "Solution: " c_at (f_ormat pos - 1) c_at " of " c_at (f_ormat t_ally sol) c_at " made"
+  (rp:u_ndo st, sol, pos - 1, 0, on)
+}
+u:s_tep := { (st, sol, pos, mode, on) ->
+  pos >= t_ally sol ? (st, sol, pos, 0, on)
+  z := u:t_ell "Solution: " c_at (f_ormat pos + 1) c_at " of " c_at (f_ormat t_ally sol) c_at " made"
+  (((pos + 1) s_elect sol) rp:q_ueue st, sol, pos + 1, mode, on)
+}
+u:p_lay := { (st, sol, pos, mode, on) ->
+  pos >= t_ally sol ? (st, sol, pos, 0, on)
+  (st, sol, pos, 1 - mode, on)
+}
+
+# the solve, a frame after "Solving..." was shown
+u:s_olveNow := { (st, sol, pos, mode, on) ->
+  sol := u:s_olution st
+  (_, h, _, _, _) := st
+  said := p_rint! "solved by " c_at (f_ormat t_ally sol) c_at " turns; the cube solved by them: " c_at f_ormat (rp:a_pplied h c_at sol) m_atch rb:solved
+  z := u:t_ell "Solution: " c_at (f_ormat t_ally sol) c_at " turns -- Step or Play"
+  (st, sol, 0, 0, on)
+}
+
+# playing: the next turn of the solution whenever the cube is still
+u:p_layOn := { all ->
+  (st, sol, pos, mode, on) := all
+  0 = (mode = 1) * rp:i_dle st ? all
+  pos >= t_ally sol ? (st, sol, pos, 0, on) u:s_ayIt "Solved in " c_at (f_ormat t_ally sol) c_at " turns"
+  u:s_tep all
+}
+
+u:r_eset := { (st, sol, pos, mode, on) ->
+  d := (rb:solved, 0, 0.0) rb:d_raw w
+  z := u:t_ell " "
+  (rp:start u:s_ay 0, 0 r_eshape 0, 0, 0, on)
+}
+
+u:m_ade := { (_, h, _, _, _) -> t_ally h }
+u:u_nder := { (_, _, _, i, _) -> i }
+u:s_ayIf := { yes st ->
+  yes ? st u:s_ay 0
+  st
+}
+
+## one frame: an event (a turn, a control, solved again, quit), the
+## solve if it is due, playing, then a frame of turning: 4 frames a
+## quarter turn while more wait, 5 while playing, else 8
+u:f_rame := { all ->
+  (st, sol, pos, mode, on) := all
+  0 = on ? all
+  v := sc:n_ext! w
+  ((v m_atch "close") + v m_atch "key q") > 0 ? (st, sol, pos, mode, 0)
+  (v m_atch "key 0") ? u:r_eset all
+  all := (mode = 2) u:s_olveIf all
+  p := u:p_ressed v
+  all := (p, all) u:a_ct 0
+  all := u:p_layOn all
+  (st, sol, pos, mode, on) := all
+  (_, _, q, _, _) := st
+  fr := ((mode = 1) * 5) + (mode != 1) * 8 - 4 * 0 < t_ally q
+  n := u:m_ade st
+  was := u:u_nder st
+  st := (w, fr) rp:a_dvance st
+  lit := (was != u:u_nder st) u:l_ightIf u:u_nder st
+  ((n != u:m_ade st) u:s_ayIf st, sol, pos, mode, on)
+}
+u:s_olveIf := { yes all ->
+  yes ? u:s_olveNow all
+  all
+}
+u:a_ct := { (p, all) z ->
+  p > 0 ? p u:t_urnBy all
+  p < 0 ? (0 - p) u:c_ontrol all
+  all
+}
+u:l_ightIf := { yes i ->
+  yes ? u:b_uttons i
+  i
+}
+
+last := 100000 'u:f_rame p_ower (rp:start, 0 r_eshape 0, 0, 0, 1)
+z := sc:c_lose! w
+((c, h, _, _, _), sol, pos, _, _) := last
+"turns made in all, and the solution's turns made:"
+(t_ally h) c_at pos
+"the cube solved at the end:"
+c m_atch rb:solved
+"bye"

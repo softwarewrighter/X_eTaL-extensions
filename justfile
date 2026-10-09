@@ -40,10 +40,14 @@ check-rust:
 test crate="":
     @if [ -n "$1" ]; then cargo test -p "$1"; else cargo test --workspace; fi
 
+# Clone X_eTaL-libraries at LIBRARIES_COMMIT into work/libraries (its Eigencube solver); print the path
+libraries:
+    scripts/libraries.sh
+
 # Run a program with the bridge host and every extension here: just run-x FILE [ARGS]
 run-x file *args:
     @cargo build -q --workspace
-    @target/debug/xetal-x --ext extensions run "$@"
+    @XETAL_PATH="$(scripts/libraries.sh)" target/debug/xetal-x --ext extensions run "$@"
 
 # The loaded extensions and their functions
 ext-list:

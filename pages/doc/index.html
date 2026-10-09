@@ -105,12 +105,17 @@
 <li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">voxels-rubik-solve.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik.xtl.html">voxels-rubik.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-water.xtl.html">voxels-water.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+</ul>
+<h3>/Users/mike/github/softwarewrighter/X_eTaL-extensions/work/libraries/libs/Eigencube/src/</h3>
+<ul>
+<li><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html">Eigencube.xtl</a></li>
 </ul>
 <h3>extensions/sqlite/demos/</h3>
 <ul>
@@ -361,6 +366,33 @@ drops one. The turns made are shown above the cube.
 Run: just demo scene voxels-rubik-buttons
   click a button, or the keys u r f (Shift for '), z undo the last
   turn, 0 solved again, drag to look around, q quit</li>
+<li>program <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">extensions/scene/demos/voxels-rubik-solve.xtl</a>: Voxels, 13: the Rubik's cube solved. Scramble it, or turn it with the
+six buttons, then Solve: the cube's turns so far are handed to the
+Eigencube library (X_eTaL-libraries, at LIBRARIES_COMMIT), which holds
+the cube as 26 rotation matrices and solves it by search, stage by
+stage -- the first layer by plain search over the twelve turns, the
+middle and last layers over known move sequences (slot inserts, an
+edge flip, Sune, a corner cycle), which is what makes it fast enough
+(2 to 3 seconds; a hundred and some moves). Then Step through the
+solution a turn at a time, Back to undo one, or Play it through, every
+turn animated on the voxel cube. The two models are checked to agree
+(tests/rubik-eigencube.xtl).
+Run: just demo scene voxels-rubik-solve
+  the buttons, or keys: u r f turn (Shift for '), Space scramble,
+  Enter solve, n step, b back, p play or pause, 0 solved again, drag
+  to look around, q quit</li>
+<li>library <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html">/Users/mike/github/softwarewrighter/X_eTaL-extensions/work/libraries/libs/Eigencube/src/Eigencube.xtl</a>: Eigencube: a Rubik's cube as rotation matrices, turned by matrix
+products and solved by search. A port of Steffen Smolka's
+eigencube.py (github.com/smolkaj/eigencube, MIT). Each of the 26
+cubelets is the integer point c of {-1, 0, 1}^3 where it sits in the
+solved cube and carries a rotation matrix R: it sits now at R c. A
+quarter turn of the face with outward normal v moves the cubelets
+with v . (R c) &gt; 0, multiplying R by one rotation matrix. A batch of
+cubes is one array, n by 26 by 3 by 3, so all twelve turns of every
+cube in a search are two matrix products.
+Import it with an alias of your choice: &quot;ec:&quot; u_se&lt; &quot;Eigencube&quot;.
+Put libs/Eigencube/src on XETAL_PATH (&quot;just path&quot;); the reference is libs/Eigencube/docs.
+Names with l: are exported; those under h: are private to this file.</li>
 <li>program <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">extensions/scene/demos/voxels-rubik-turn.xtl</a>: Voxels, 9: a quarter turn, seen. One layer of the Rubik's cube -- 9
 cubies, a &quot;plane&quot; -- turns a quarter revolution while the rest stays
 still: its cubies' bodies and stickers rotated a little more each
@@ -775,13 +807,13 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-Play.xtl.html#l.kinds">ˡkinds</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Play.xtl.html#l.help">ˡhelp</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Play.xtl.html#l.h_ud"><span class="c-libfunc">ˡh̲ud</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Play.xtl.html#l.d_ig"><span class="c-libfunc">ˡd̲ig</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Num d, Num e, Any f, Any g) =&gt; ((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, d), (e, Int, Int, Int), (Int, Int, f, g)) -&gt; ((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, d), (e, Int, Int, Int), (Int, Int, f, g))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Play.xtl.html#l.p_lace"><span class="c-libfunc">ˡp̲lace</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Num d, Num e, Any f, Any g) =&gt; (((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, d), (e, Int, Int, Int), (Int, Int, f, g)), Int) -&gt; (((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, d), (e, Int, Int, Int), (Int, Int, f, g)), Int)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Play.xtl.html#l.d_ig"><span class="c-libfunc">ˡd̲ig</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Num d, Any e, Any f) =&gt; ((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (d, Int, Int, Int), (Int, Int, e, f)) -&gt; ((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (d, Int, Int, Int), (Int, Int, e, f))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Play.xtl.html#l.p_lace"><span class="c-libfunc">ˡp̲lace</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Num d, Any e, Any f) =&gt; (((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (d, Int, Int, Int), (Int, Int, e, f)), Int) -&gt; (((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (d, Int, Int, Int), (Int, Int, e, f)), Int)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Play.xtl.html#h.c_hoose"><span class="c-libfunc">ʰc̲hoose</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Num d, Any e, Any f, Any g, Any h) =&gt; (Char, (a, b, c, (d, e, f, g)), Int) -&gt; h -&gt; ((a, b, c, (d, e, f, g)), Int)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Play.xtl.html#h.i_f"><span class="c-libfunc">ʰi̲f</span></a></td><td>function</td><td><code>(Truthy a, Any b, Any c, Any d, Any e, Any f, Any g) =&gt; a -&gt; ((b, Float, Float, Float, Float, Float), c, d, (e, f, b, g)) -&gt; ((b, Float, Float, Float, Float, Float), c, d, (e, f, b, g))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Play.xtl.html#h.f_ly"><span class="c-libfunc">ʰf̲ly</span></a></td><td>function</td><td><code>(Truthy a, Any b, Any c, Any d, Any e, Any f, Any g) =&gt; a -&gt; ((b, Float, c, d, Float, Float), e, f, g) -&gt; ((b, Float, c, d, Float, Float), e, f, g)</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Play.xtl.html#h.w_hen"><span class="c-libfunc">ʰw̲hen</span></a></td><td>function</td><td><code>(Truthy a, Any b, Any c, Any d, Num e, Num f, Any g, Any h) =&gt; a -&gt; ((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, e), (f, Int, Int, Int), (Int, Int, g, h)) -&gt; ((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, e), (f, Int, Int, Int), (Int, Int, g, h))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Play.xtl.html#h.p_laceIf"><span class="c-libfunc">ʰp̲laceIf</span></a></td><td>function</td><td><code>(Truthy a, Any b, Any c, Any d, Num e, Num f, Any g, Any h) =&gt; a -&gt; (((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, e), (f, Int, Int, Int), (Int, Int, g, h)), Int) -&gt; (((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, e), (f, Int, Int, Int), (Int, Int, g, h)), Int)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Play.xtl.html#h.w_hen"><span class="c-libfunc">ʰw̲hen</span></a></td><td>function</td><td><code>(Truthy a, Any b, Any c, Any d, Num e, Any f, Any g) =&gt; a -&gt; ((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (e, Int, Int, Int), (Int, Int, f, g)) -&gt; ((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (e, Int, Int, Int), (Int, Int, f, g))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Play.xtl.html#h.p_laceIf"><span class="c-libfunc">ʰp̲laceIf</span></a></td><td>function</td><td><code>(Truthy a, Any b, Any c, Any d, Num e, Any f, Any g) =&gt; a -&gt; (((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (e, Int, Int, Int), (Int, Int, f, g)), Int) -&gt; (((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (e, Int, Int, Int), (Int, Int, f, g)), Int)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Play.xtl.html#l.f_rame"><span class="c-libfunc">ˡf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b)), Int) -&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b)), Int)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Rubik.xtl.html#normals">normals</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Rubik.xtl.html#q">q</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -813,10 +845,10 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.bh">ˡbh</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.gap">ˡgap</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.w_ords"><span class="c-libfunc">ˡw̲ords</span></a></td><td>function</td><td><code>Char -&gt; Box Char</code></td></tr>
-<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.l_efts"><span class="c-libfunc">ˡl̲efts</span></a></td><td>function</td><td><code>Any a =&gt; (Int, Float) -&gt; a -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.d_rawRow"><span class="c-libfunc">ˡd̲rawRow</span></a></td><td>function</td><td><code>Num a =&gt; (a, Char, Float, Float, Int) -&gt; Int -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#h.l_abelHead"><span class="c-libfunc">ʰl̲abelHead</span></a></td><td>function</td><td><code>Num a =&gt; (a, Int, Float, Float, Int) -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.h_it"><span class="c-libfunc">ˡh̲it</span></a></td><td>function</td><td><code>Any a =&gt; (Char, Int, Float, Float) -&gt; a -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.l_efts"><span class="c-libfunc">ˡl̲efts</span></a></td><td>function</td><td><code>Any a =&gt; (Int, Float, Float) -&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.d_rawRow"><span class="c-libfunc">ˡd̲rawRow</span></a></td><td>function</td><td><code>Num a =&gt; (a, Char, Float, Float, Int, Float) -&gt; Int -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#h.l_abelHead"><span class="c-libfunc">ʰl̲abelHead</span></a></td><td>function</td><td><code>Num a =&gt; (a, Int, Float, Float, Float, Int) -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.h_it"><span class="c-libfunc">ˡh̲it</span></a></td><td>function</td><td><code>Any a =&gt; (Char, Int, Float, Float, Float) -&gt; a -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.start">ˡstart</a></td><td>value</td><td><code>(Int, Int, Int, Int, Int)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.q_ueue"><span class="c-libfunc">ˡq̲ueue</span></a></td><td>function</td><td><code>(Any b, Any c, Any d, Any e) =&gt; a -&gt; (b, c, a, d, e) -&gt; (b, c, a, d, e)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-RubikPlay.xtl.html#l.a_dvance"><span class="c-libfunc">ˡa̲dvance</span></a></td><td>function</td><td><code>Num a =&gt; (a, a) -&gt; (Int, Int, Int, Int, a) -&gt; (Int, Int, Int, Int, a)</code></td></tr>
@@ -852,8 +884,8 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#k">k</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#s">s</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#s">s</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b, Num c) =&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#u.i_f"><span class="c-userfunc">ᵘi̲f</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c, Num d) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#u.i_f"><span class="c-userfunc">ᵘi̲f</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#last">last</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-endless.xtl.html#z">z</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-faces.xtl.html#ones">ones</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -875,9 +907,9 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#k">k</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.i_f"><span class="c-userfunc">ᵘi̲f</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_ly"><span class="c-userfunc">ᵘf̲ly</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b, Num c) =&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.i_f"><span class="c-userfunc">ᵘi̲f</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c, Num d) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_ly"><span class="c-userfunc">ᵘf̲ly</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c, Num d) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#last">last</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#z">z</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#w">w</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -906,6 +938,120 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#-2522"><span class="c-error">%</span><span class="c-number">22</span></a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a></td><td>value</td><td><code></code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a></td><td>value</td><td><code></code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#w">w</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#k">k</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#z">z</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#map">map</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#names">names</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#turns">turns</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#keys">keys</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#top">top</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#controls">controls</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#top2">top2</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#cw">cw</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_uttons"><span class="c-userfunc">ᵘb̲uttons</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#o">o</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#title">title</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_ell"><span class="c-userfunc">ᵘt̲ell</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d, Any e) =&gt; (a, Int, b, c, d) -&gt; e -&gt; (a, Int, b, c, d)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_crambled"><span class="c-userfunc">ᵘs̲crambled</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.m_ore"><span class="c-userfunc">ᵘm̲ore</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; (a, Int) -&gt; b -&gt; (a, Int)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olution"><span class="c-userfunc">ᵘs̲olution</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d) =&gt; (a, Int, b, c, d) -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_ressed"><span class="c-userfunc">ᵘp̲ressed</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_urnBy"><span class="c-userfunc">ᵘt̲urnBy</span></a></td><td>function</td><td><code>(Any b, Any c, Any d, Any e, Any f, Any g, Any h, Any i, Num j, Num k, Num l) =&gt; a -&gt; ((b, c, a, d, e), f, g, h, i) -&gt; ((b, c, a, d, e), j, k, l, i)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.c_ontrol"><span class="c-userfunc">ᵘc̲ontrol</span></a></td><td>function</td><td><code>(Num a, Num b, Any c, Num d, Any e) =&gt; a -&gt; ((Int, Int, Int, b, c), Int, Int, d, e) -&gt; ((Int, Int, Int, b, c), Int, Int, d, e)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_cramble"><span class="c-userfunc">ᵘs̲cramble</span></a></td><td>function</td><td><code>(Num a, Any b, Num c, Any d) =&gt; ((Int, Int, Int, a, b), Int, Int, c, d) -&gt; ((Int, Int, Int, a, b), Int, Int, c, d)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveSoon"><span class="c-userfunc">ᵘs̲olveSoon</span></a></td><td>function</td><td><code>(Num a, Any b, Num c, Any d) =&gt; ((Int, Int, Int, a, b), Int, Int, c, d) -&gt; ((Int, Int, Int, a, b), Int, Int, c, d)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_ayIt"><span class="c-userfunc">ᵘs̲ayIt</span></a></td><td>function</td><td><code>(Num a, Any b, Num c, Any d) =&gt; ((Int, Int, Int, a, b), Int, Int, c, d) -&gt; Char -&gt; ((Int, Int, Int, a, b), Int, Int, c, d)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_ack"><span class="c-userfunc">ᵘb̲ack</span></a></td><td>function</td><td><code>(Num a, Any b, Num c, Any d) =&gt; ((Int, Int, Int, a, b), Int, Int, c, d) -&gt; ((Int, Int, Int, a, b), Int, Int, c, d)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></td><td>function</td><td><code>(Num a, Any b, Num c, Any d) =&gt; ((Int, Int, Int, a, b), Int, Int, c, d) -&gt; ((Int, Int, Int, a, b), Int, Int, c, d)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_lay"><span class="c-userfunc">ᵘp̲lay</span></a></td><td>function</td><td><code>(Num a, Any b, Num c, Any d) =&gt; ((Int, Int, Int, a, b), Int, Int, c, d) -&gt; ((Int, Int, Int, a, b), Int, Int, c, d)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveNow"><span class="c-userfunc">ᵘs̲olveNow</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d, Any e, Any f, Any g, Any h, Num i, Num j) =&gt; ((a, Int, b, c, d), e, f, g, h) -&gt; ((a, Int, b, c, d), Int, i, j, h)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_layOn"><span class="c-userfunc">ᵘp̲layOn</span></a></td><td>function</td><td><code>(Num a, Any b, Num c, Any d) =&gt; ((Int, Int, Int, a, b), Int, Int, c, d) -&gt; ((Int, Int, Int, a, b), Int, Int, c, d)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.r_eset"><span class="c-userfunc">ᵘr̲eset</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d, Any e, Num f, Num g, Num h) =&gt; (a, b, c, d, e) -&gt; ((Int, Int, Int, Int, Int), f, g, h, e)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.m_ade"><span class="c-userfunc">ᵘm̲ade</span></a></td><td>function</td><td><code>(Any a, Any c, Any d, Any e) =&gt; (a, b, c, d, e) -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.u_nder"><span class="c-userfunc">ᵘu̲nder</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d, Any e) =&gt; (a, b, c, d, e) -&gt; d</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_ayIf"><span class="c-userfunc">ᵘs̲ayIf</span></a></td><td>function</td><td><code>(Truthy a, Any b, Any c, Any d, Any e) =&gt; a -&gt; (b, Int, c, d, e) -&gt; (b, Int, c, d, e)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; ((Int, Int, Int, Int, Int), Int, Int, a, b) -&gt; ((Int, Int, Int, Int, Int), Int, Int, a, b)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveIf"><span class="c-userfunc">ᵘs̲olveIf</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c) =&gt; a -&gt; ((Int, Int, Int, Int, Int), Int, Int, b, c) -&gt; ((Int, Int, Int, Int, Int), Int, Int, b, c)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.a_ct"><span class="c-userfunc">ᵘa̲ct</span></a></td><td>function</td><td><code>(Num a, Num b, Num c) =&gt; (Int, ((Int, Int, Int, Int, Int), Int, Int, a, b)) -&gt; c -&gt; ((Int, Int, Int, Int, Int), Int, Int, a, b)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.l_ightIf"><span class="c-userfunc">ᵘl̲ightIf</span></a></td><td>function</td><td><code>Truthy a =&gt; a -&gt; Int -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#last">last</a></td><td>value</td><td><code>((Int, Int, Int, Int, Int), Int, Int, Int, Int)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#z">z</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#-2546"><span class="c-error">%</span><span class="c-number">46</span></a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#-2547"><span class="c-error">%</span><span class="c-number">47</span></a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#c">c</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a></td><td>value</td><td><code></code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a></td><td>value</td><td><code></code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#pts">pts</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#C">C</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#kind">kind</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#z">z</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#I">I</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.solved">ˡsolved</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#N">N</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.faces">ˡfaces</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#V">V</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#dir">dir</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#E">E</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#Mf">Mf</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#M">M</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.t_urns"><span class="c-libfunc">ʰt̲urns</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.p_os"><span class="c-libfunc">ʰp̲os</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.c_hildren"><span class="c-libfunc">ʰc̲hildren</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.t_urn"><span class="c-libfunc">ˡt̲urn</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.d_o"><span class="c-libfunc">ˡd̲o</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#across">across</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#down">down</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.s_tickers"><span class="c-libfunc">ˡs̲tickers</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.g_row"><span class="c-libfunc">ʰg̲row</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#G">G</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#Tm">Tm</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.o_rient"><span class="c-libfunc">ʰo̲rient</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#at">at</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#layer">layer</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.n_ext"><span class="c-libfunc">ʰn̲ext</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.r_elax"><span class="c-libfunc">ʰr̲elax</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.d_istances"><span class="c-libfunc">ʰd̲istances</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#colDev">colDev</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#Dsolved">Dsolved</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.s_olved-3f"><span class="c-libfunc">ˡs̲olved?</span></a></td><td>function</td><td><code>Truthy a =&gt; Int -&gt; a</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#posDev">posDev</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#Dplace">Dplace</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#yellowDown">yellowDown</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#sets">sets</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.s_pec"><span class="c-libfunc">ʰs̲pec</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.o_f"><span class="c-libfunc">ʰo̲f</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.r_elevant"><span class="c-libfunc">ʰr̲elevant</span></a></td><td>function</td><td><code>Truthy a =&gt; Int -&gt; a</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.p_roject"><span class="c-libfunc">ʰp̲roject</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a -&gt; a</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.s_core"><span class="c-libfunc">ʰs̲core</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Float</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#batch">batch</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#greed">greed</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.i_nverse"><span class="c-libfunc">ˡi̲nverse</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.f_ace"><span class="c-libfunc">ʰf̲ace</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.c_ubes"><span class="c-libfunc">ʰc̲ubes</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.k_ey"><span class="c-libfunc">ʰk̲ey</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; a</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#macros">macros</a></td><td>value</td><td><code>Box Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#middle">middle</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#bottom">bottom</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.a_ctions"><span class="c-libfunc">ʰa̲ctions</span></a></td><td>function</td><td><code>(Num a, Num b) =&gt; a -&gt; b -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.a_long"><span class="c-libfunc">ʰa̲long</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.m_acros"><span class="c-libfunc">ʰm̲acros</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.e_xpand"><span class="c-libfunc">ʰe̲xpand</span></a></td><td>function</td><td><code>Int -&gt; Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.f_latten"><span class="c-libfunc">ʰf̲latten</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.s_tep"><span class="c-libfunc">ʰs̲tep</span></a></td><td>function</td><td><code>Num a =&gt; (Int, Int) -&gt; (Int, Int, Int, Int, a, Float, Int) -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.t_race"><span class="c-libfunc">ʰt̲race</span></a></td><td>function</td><td><code>(Int, Int) -&gt; Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.s_earch"><span class="c-libfunc">ʰs̲earch</span></a></td><td>function</td><td><code>(Int, Int) -&gt; Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.s_tage"><span class="c-libfunc">ʰs̲tage</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; (Int, Int, Int) -&gt; (Int, Int, Int)</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#twist">twist</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#bottomTurn">bottomTurn</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.o_riented-3f"><span class="c-libfunc">ʰo̲riented?</span></a></td><td>function</td><td><code>Int -&gt; Int</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.c_orner"><span class="c-libfunc">ʰc̲orner</span></a></td><td>function</td><td><code>(Int, Int) -&gt; (Int, Int)</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#h.f_inish"><span class="c-libfunc">ʰf̲inish</span></a></td><td>function</td><td><code>(Int, Int) -&gt; (Int, Int)</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.s_olve"><span class="c-libfunc">ˡs̲olve</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int -&gt; (Int, Int, Int)</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.n_ame"><span class="c-libfunc">ˡn̲ame</span></a></td><td>function</td><td><code>Int -&gt; Char</code></td></tr>
+<tr><td><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.p_arse"><span class="c-libfunc">ˡp̲arse</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#w">w</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#k">k</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#scramble">scramble</a></td><td>value</td><td><code>Int</code></td></tr>

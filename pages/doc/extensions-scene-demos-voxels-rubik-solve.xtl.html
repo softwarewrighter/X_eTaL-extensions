@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/scene/demos/voxels-rubik-solve.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>lib/</h3>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+</ul>
+<h3>extensions/audio/lib/</h3>
+<ul>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+</ul>
+<h3>extensions/audio/demos/</h3>
+<ul>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+</ul>
+<h3>extensions/canvas/lib/</h3>
+<ul>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+</ul>
+<h3>extensions/scene/lib/</h3>
+<ul>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+</ul>
+<h3>extensions/canvas/demos/</h3>
+<ul>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+</ul>
+<h3>extensions/clock/lib/</h3>
+<ul>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+</ul>
+<h3>extensions/clock/demos/</h3>
+<ul>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+</ul>
+<h3>extensions/hello/lib/</h3>
+<ul>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+</ul>
+<h3>extensions/digest/lib/</h3>
+<ul>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>extensions/hello/demos/</h3>
+<ul>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+</ul>
+<h3>extensions/http/lib/</h3>
+<ul>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+</ul>
+<h3>extensions/http/demos/</h3>
+<ul>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+</ul>
+<h3>extensions/sqlite/lib/</h3>
+<ul>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+</ul>
+<h3>extensions/image/lib/</h3>
+<ul>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+</ul>
+<h3>extensions/image/demos/</h3>
+<ul>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+</ul>
+<h3>extensions/linalg/lib/</h3>
+<ul>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+</ul>
+<h3>extensions/scene/demos/</h3>
+<ul>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-Endless.xtl.html">Endless.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-Play.xtl.html">Play.xtl</a></li>
+<li><a href="extensions-scene-demos-Rubik.xtl.html">Rubik.xtl</a></li>
+<li><a href="extensions-scene-demos-RubikPlay.xtl.html">RubikPlay.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-dig.xtl.html">voxels-dig.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">voxels-rubik-solve.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik.xtl.html">voxels-rubik.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-water.xtl.html">voxels-water.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+</ul>
+<h3>/Users/mike/github/softwarewrighter/X_eTaL-extensions/work/libraries/libs/Eigencube/src/</h3>
+<ul>
+<li><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html">Eigencube.xtl</a></li>
+</ul>
+<h3>extensions/sqlite/demos/</h3>
+<ul>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+</ul>
+<h3>extensions/web/lib/</h3>
+<ul>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+</ul>
+<h3>extensions/web/demos/</h3>
+<ul>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#w">w</a></li>
+<li class="item"><a href="#k">k</a></li>
+<li class="item"><a href="#z">z</a></li>
+<li><a href="#section-1">The two models</a></li>
+<li class="item"><a href="#map">map</a></li>
+<li><a href="#section-2">The buttons</a></li>
+<li class="item"><a href="#names">names</a></li>
+<li class="item"><a href="#turns">turns</a></li>
+<li class="item"><a href="#keys">keys</a></li>
+<li class="item"><a href="#top">top</a></li>
+<li class="item"><a href="#controls">controls</a></li>
+<li class="item"><a href="#top2">top2</a></li>
+<li class="item"><a href="#cw">cw</a></li>
+<li class="item"><a href="#u.b_uttons"><span class="c-userfunc">ᵘb̲uttons</span></a></li>
+<li class="item"><a href="#o">o</a></li>
+<li class="item"><a href="#title">title</a></li>
+<li class="item"><a href="#u.t_ell"><span class="c-userfunc">ᵘt̲ell</span></a></li>
+<li><a href="#section-3">Playing</a></li>
+<li class="item"><a href="#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a></li>
+<li class="item"><a href="#u.s_crambled"><span class="c-userfunc">ᵘs̲crambled</span></a></li>
+<li class="item"><a href="#u.m_ore"><span class="c-userfunc">ᵘm̲ore</span></a></li>
+<li class="item"><a href="#u.s_olution"><span class="c-userfunc">ᵘs̲olution</span></a></li>
+<li class="item"><a href="#u.p_ressed"><span class="c-userfunc">ᵘp̲ressed</span></a></li>
+<li class="item"><a href="#u.t_urnBy"><span class="c-userfunc">ᵘt̲urnBy</span></a></li>
+<li class="item"><a href="#u.c_ontrol"><span class="c-userfunc">ᵘc̲ontrol</span></a></li>
+<li class="item"><a href="#u.s_cramble"><span class="c-userfunc">ᵘs̲cramble</span></a></li>
+<li class="item"><a href="#u.s_olveSoon"><span class="c-userfunc">ᵘs̲olveSoon</span></a></li>
+<li class="item"><a href="#u.s_ayIt"><span class="c-userfunc">ᵘs̲ayIt</span></a></li>
+<li class="item"><a href="#u.b_ack"><span class="c-userfunc">ᵘb̲ack</span></a></li>
+<li class="item"><a href="#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a></li>
+<li class="item"><a href="#u.p_lay"><span class="c-userfunc">ᵘp̲lay</span></a></li>
+<li class="item"><a href="#u.s_olveNow"><span class="c-userfunc">ᵘs̲olveNow</span></a></li>
+<li class="item"><a href="#u.p_layOn"><span class="c-userfunc">ᵘp̲layOn</span></a></li>
+<li class="item"><a href="#u.r_eset"><span class="c-userfunc">ᵘr̲eset</span></a></li>
+<li class="item"><a href="#u.m_ade"><span class="c-userfunc">ᵘm̲ade</span></a></li>
+<li class="item"><a href="#u.u_nder"><span class="c-userfunc">ᵘu̲nder</span></a></li>
+<li class="item"><a href="#u.s_ayIf"><span class="c-userfunc">ᵘs̲ayIf</span></a></li>
+<li class="item"><a href="#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></li>
+<li class="item"><a href="#u.s_olveIf"><span class="c-userfunc">ᵘs̲olveIf</span></a></li>
+<li class="item"><a href="#u.a_ct"><span class="c-userfunc">ᵘa̲ct</span></a></li>
+<li class="item"><a href="#u.l_ightIf"><span class="c-userfunc">ᵘl̲ightIf</span></a></li>
+<li class="item"><a href="#last">last</a></li>
+<li class="item"><a href="#z">z</a></li>
+<li class="item"><a href="#-2546"><span class="c-error">%</span><span class="c-number">46</span></a></li>
+<li class="item"><a href="#-2547"><span class="c-error">%</span><span class="c-number">47</span></a></li>
+<li class="item"><a href="#c">c</a></li>
+<li class="item"><a href="#h">h</a></li>
+<li class="item"><a href="#sol">sol</a></li>
+<li class="item"><a href="#pos">pos</a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">program</span>extensions/scene/demos/voxels-rubik-solve.xtl</h1>
+<div class="doc">
+<p>Voxels, 13: the Rubik's cube solved. Scramble it, or turn it with the
+six buttons, then Solve: the cube's turns so far are handed to the
+Eigencube library (X_eTaL-libraries, at LIBRARIES_COMMIT), which holds
+the cube as 26 rotation matrices and solves it by search, stage by
+stage -- the first layer by plain search over the twelve turns, the
+middle and last layers over known move sequences (slot inserts, an
+edge flip, Sune, a corner cycle), which is what makes it fast enough
+(2 to 3 seconds; a hundred and some moves). Then Step through the
+solution a turn at a time, Back to undo one, or Play it through, every
+turn animated on the voxel cube. The two models are checked to agree
+(tests/rubik-eigencube.xtl).
+Run: just demo scene voxels-rubik-solve
+  the buttons, or keys: u r f turn (Shift for '), Space scramble,
+  Enter solve, n step, b back, p play or pause, 0 solved again, drag
+  to look around, q quit</p>
+</div>
+<p class="meta"><a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html">source</a> &middot; imports <code><span class="c-error">rb:</span></code> <a href="extensions-scene-demos-Rubik.xtl.html">extensions/scene/demos/Rubik.xtl</a>; <code><span class="c-error">rp:</span></code> <a href="extensions-scene-demos-RubikPlay.xtl.html">extensions/scene/demos/RubikPlay.xtl</a>; <code><span class="c-error">ec:</span></code> <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html">/Users/mike/github/softwarewrighter/X_eTaL-extensions/work/libraries/libs/Eigencube/src/Eigencube.xtl</a>; <code><span class="c-error">sc:</span></code> <a href="extensions-scene-lib-Scene.xtl.html">extensions/scene/lib/Scene.xtl</a></p>
+<div class="item" id="w">
+<h3><a href="#w">w</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L22">line 22</a></div>
+<pre class="code">w ← <span class="c-string">&quot;Voxels 13: Rubik's cube, solved -- X_eTaL&quot;</span> <a href="extensions-scene-lib-Scene.xtl.html#l.o_pen-21" class="c-libfunc">ˢᶜo̲pen!</a> <span class="c-number">640</span> <span class="c-number">600</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#k">k</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#z">z</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_uttons"><span class="c-userfunc">ᵘb̲uttons</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#title">title</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_ell"><span class="c-userfunc">ᵘt̲ell</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.r_eset"><span class="c-userfunc">ᵘr̲eset</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#z">z</a></div>
+</div>
+<div class="item" id="k">
+<h3><a href="#k">k</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L23">line 23</a></div>
+<pre class="code">k ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#w">w</a> <a href="extensions-scene-lib-Scene.xtl.html#l.c_amera-21" class="c-libfunc">ˢᶜc̲amera!</a> <span class="c-number">0.6</span> <span class="c-number">0.45</span> <span class="c-number">7.5</span> <span class="c-number">0.25</span></pre>
+</div>
+<div class="item" id="z">
+<h3><a href="#z">z</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L24">line 24</a></div>
+<pre class="code">z ← (<a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a>, <span class="c-number">0</span>, <span class="c-number">0.0</span>) <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw" class="c-libfunc">ʳᵇd̲raw</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#w">w</a></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.m_ore"><span class="c-userfunc">ᵘm̲ore</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.a_ct"><span class="c-userfunc">ᵘa̲ct</span></a></div>
+</div>
+<h2 class="section" id="section-1">The two models</h2>
+<div class="item" id="map">
+<h3><a href="#map">map</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L30">line 30</a></div>
+<div class="doc">
+<p>Rubik's turns (1 to 12: U U' D D' R R' L L' F F' B B') as
+Eigencube's (U U' D D' F F' B B' R R' L L'), and back: the same vector</p>
+</div>
+<pre class="code">map ← <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-number">9</span> <span class="c-number">10</span> <span class="c-number">11</span> <span class="c-number">12</span> <span class="c-number">5</span> <span class="c-number">6</span> <span class="c-number">7</span> <span class="c-number">8</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olution"><span class="c-userfunc">ᵘs̲olution</span></a></div>
+</div>
+<h2 class="section" id="section-2">The buttons</h2>
+<div class="item" id="names">
+<h3><a href="#names">names</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L35">line 35</a></div>
+<div class="doc">
+<p>the turns: six buttons, their turns, the keys that press them</p>
+</div>
+<pre class="code">names ← <span class="c-string">&quot;U U' R R' F F'&quot;</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_uttons"><span class="c-userfunc">ᵘb̲uttons</span></a></div>
+</div>
+<div class="item" id="turns">
+<h3><a href="#turns">turns</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L36">line 36</a></div>
+<pre class="code">turns ← <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">5</span> <span class="c-number">6</span> <span class="c-number">9</span> <span class="c-number">10</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_uttons"><span class="c-userfunc">ᵘb̲uttons</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_ressed"><span class="c-userfunc">ᵘp̲ressed</span></a></div>
+</div>
+<div class="item" id="keys">
+<h3><a href="#keys">keys</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L37">line 37</a></div>
+<pre class="code">keys ← <span class="c-string">&quot;uUrRfF&quot;</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_ressed"><span class="c-userfunc">ᵘp̲ressed</span></a></div>
+</div>
+<div class="item" id="top">
+<h3><a href="#top">top</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L38">line 38</a></div>
+<pre class="code">top ← <span class="c-number">490.0</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_uttons"><span class="c-userfunc">ᵘb̲uttons</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_ressed"><span class="c-userfunc">ᵘp̲ressed</span></a></div>
+</div>
+<div class="item" id="controls">
+<h3><a href="#controls">controls</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L40">line 40</a></div>
+<div class="doc">
+<p>the controls: a second row, wider buttons</p>
+</div>
+<pre class="code">controls ← <span class="c-string">&quot;Scramble Solve Back Step Play&quot;</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_uttons"><span class="c-userfunc">ᵘb̲uttons</span></a></div>
+</div>
+<div class="item" id="top2">
+<h3><a href="#top2">top2</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L41">line 41</a></div>
+<pre class="code">top2 ← <span class="c-number">545.0</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_uttons"><span class="c-userfunc">ᵘb̲uttons</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_ressed"><span class="c-userfunc">ᵘp̲ressed</span></a></div>
+</div>
+<div class="item" id="cw">
+<h3><a href="#cw">cw</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L42">line 42</a></div>
+<pre class="code">cw ← <span class="c-number">100.0</span></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_uttons"><span class="c-userfunc">ᵘb̲uttons</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_ressed"><span class="c-userfunc">ᵘp̲ressed</span></a></div>
+</div>
+<div class="item" id="u.b_uttons">
+<h3><a href="#u.b_uttons"><span class="c-userfunc">ᵘb̲uttons</span></a> <span class="type">: Int -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L45">line 45</a></div>
+<pre class="code"><span class="c-userfunc">ᵘb̲uttons</span> ← { i →
+  a ← (<a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#names">names</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#top">top</a>, <span class="c-number">640.0</span>, <span class="c-number">100</span>, <a href="extensions-scene-demos-RubikPlay.xtl.html#l.bw">ʳᵖbw</a>) <a href="extensions-scene-demos-RubikPlay.xtl.html#l.d_rawRow" class="c-libfunc">ʳᵖd̲rawRow</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#turns">turns</a> <a href="builtins.html#i_ndexOf" class="c-builtin">i̲ndexOf</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> i
+  b ← (<a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#w">w</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#controls">controls</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#top2">top2</a>, <span class="c-number">640.0</span>, <span class="c-number">200</span>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#cw">cw</a>) <a href="extensions-scene-demos-RubikPlay.xtl.html#l.d_rawRow" class="c-libfunc">ʳᵖd̲rawRow</a> <span class="c-number">0</span>
+  o ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#w">w</a> <a href="extensions-scene-lib-Scene.xtl.html#l.o_verlay-21" class="c-libfunc">ˢᶜo̲verlay!</a> a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b
+  i
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#o">o</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.l_ightIf"><span class="c-userfunc">ᵘl̲ightIf</span></a></div>
+</div>
+<div class="item" id="o">
+<h3><a href="#o">o</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L51">line 51</a></div>
+<pre class="code">o ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_uttons" class="c-userfunc">ᵘb̲uttons</a> <span class="c-number">0</span></pre>
+</div>
+<div class="item" id="title">
+<h3><a href="#title">title</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L52">line 52</a></div>
+<pre class="code">title ← ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#w">w</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1.0</span> <span class="c-number">20.0</span> <span class="c-number">20.0</span> <span class="c-number">14.0</span> <span class="c-number">1.0</span> <span class="c-number">1.0</span> <span class="c-number">1.0</span>) <a href="extensions-scene-lib-Scene.xtl.html#l.l_abel-21" class="c-libfunc">ˢᶜl̲abel!</a> <span class="c-string">&quot;Turns:&quot;</span></pre>
+</div>
+<div class="item" id="u.t_ell">
+<h3><a href="#u.t_ell"><span class="c-userfunc">ᵘt̲ell</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L55">line 55</a></div>
+<pre class="code"><span class="c-userfunc">ᵘt̲ell</span> ← { m →
+  said ← ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#w">w</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3.0</span> <span class="c-number">20.0</span> <span class="c-number">44.0</span> <span class="c-number">14.0</span> <span class="c-number">0.6</span> <span class="c-number">1.0</span> <span class="c-number">0.6</span>) <a href="extensions-scene-lib-Scene.xtl.html#l.l_abel-21" class="c-libfunc">ˢᶜl̲abel!</a> m
+  m
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_urnBy"><span class="c-userfunc">ᵘt̲urnBy</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_cramble"><span class="c-userfunc">ᵘs̲cramble</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveSoon"><span class="c-userfunc">ᵘs̲olveSoon</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_ayIt"><span class="c-userfunc">ᵘs̲ayIt</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_ack"><span class="c-userfunc">ᵘb̲ack</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveNow"><span class="c-userfunc">ᵘs̲olveNow</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.r_eset"><span class="c-userfunc">ᵘr̲eset</span></a></div>
+</div>
+<h2 class="section" id="section-3">Playing</h2>
+<div class="item" id="u.s_ay">
+<h3><a href="#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e) =&gt; (a, Int, b, c, d) -&gt; e -&gt; (a, Int, b, c, d)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L70">line 70</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲ay</span> ← { st z →
+  (_, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a>, _, _, _) ← st
+  said ← ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#w">w</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2.0</span> <span class="c-number">100.0</span> <span class="c-number">20.0</span> <span class="c-number">14.0</span> <span class="c-number">1.0</span> <span class="c-number">1.0</span> <span class="c-number">0.6</span>) <a href="extensions-scene-lib-Scene.xtl.html#l.l_abel-21" class="c-libfunc">ˢᶜl̲abel!</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.n_ames" class="c-libfunc">ʳᵖn̲ames</a> (<span class="c-number">0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">12</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a>) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a>
+  st
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.r_eset"><span class="c-userfunc">ᵘr̲eset</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_ayIf"><span class="c-userfunc">ᵘs̲ayIf</span></a></div>
+</div>
+<div class="item" id="u.s_crambled">
+<h3><a href="#u.s_crambled"><span class="c-userfunc">ᵘs̲crambled</span></a> <span class="type">: Num a =&gt; a -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L77">line 77</a></div>
+<div class="doc">
+<p>u:s_crambled n: n random turns, never the same face twice in a row</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲crambled</span> ← { n →
+  (_, ts) ← (n, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>) <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.m_ore" class="c-userfunc">ᵘm̲ore</a> <span class="c-number">0</span>
+  ts
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_cramble"><span class="c-userfunc">ᵘs̲cramble</span></a></div>
+</div>
+<div class="item" id="u.m_ore">
+<h3><a href="#u.m_ore"><span class="c-userfunc">ᵘm̲ore</span></a> <span class="type">: (Num a, Num b) =&gt; (a, Int) -&gt; b -&gt; (a, Int)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L81">line 81</a></div>
+<pre class="code"><span class="c-userfunc">ᵘm̲ore</span> ← { (n, ts) <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#z">z</a> →
+  n <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span> ? (n, ts)
+  t ← <a href="builtins.html#r_oll-21" class="c-builtin">r̲oll!</a> <span class="c-number">12</span>
+  prev ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ts
+  ((t <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span>) <a href="builtins.html#-3d" class="c-symbol">=</a> (prev <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span> ? (n, ts) <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.m_ore" class="c-userfunc">ᵘm̲ore</a> <span class="c-number">0</span>
+  (n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>, ts <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t) <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.m_ore" class="c-userfunc">ᵘm̲ore</a> <span class="c-number">0</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_crambled"><span class="c-userfunc">ᵘs̲crambled</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.m_ore"><span class="c-userfunc">ᵘm̲ore</span></a></div>
+</div>
+<div class="item" id="u.s_olution">
+<h3><a href="#u.s_olution"><span class="c-userfunc">ᵘs̲olution</span></a> <span class="type">: (Any a, Any b, Any c, Any d) =&gt; (a, Int, b, c, d) -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L91">line 91</a></div>
+<div class="doc">
+<p>u:s_olution st: the turns that solve the cube made so far (Rubik's
+numbers), found by Eigencube from the same turns</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘs̲olution</span> ← { st →
+  (_, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a>, _, _, _) ← st
+  (m, _, _) ← <span class="c-number">1</span> <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.s_olve" class="c-libfunc">ᵉᶜs̲olve</a> (<a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#map">map</a>) <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.d_o" class="c-libfunc">ᵉᶜd̲o</a> <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.solved">ᵉᶜsolved</a>
+  m <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#map">map</a>
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveNow"><span class="c-userfunc">ᵘs̲olveNow</span></a></div>
+</div>
+<div class="item" id="u.p_ressed">
+<h3><a href="#u.p_ressed"><span class="c-userfunc">ᵘp̲ressed</span></a> <span class="type">: Char -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L99">line 99</a></div>
+<pre class="code"><span class="c-userfunc">ᵘp̲ressed</span> ← { v →
+  b ← (v, <span class="c-number">6</span>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#top">top</a>, <span class="c-number">640.0</span>, <a href="extensions-scene-demos-RubikPlay.xtl.html#l.bw">ʳᵖbw</a>) <a href="extensions-scene-demos-RubikPlay.xtl.html#l.h_it" class="c-libfunc">ʳᵖh̲it</a> <span class="c-number">0</span>
+  b <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span> ? b <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#turns">turns</a>
+  c ← (v, <span class="c-number">5</span>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#top2">top2</a>, <span class="c-number">640.0</span>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#cw">cw</a>) <a href="extensions-scene-demos-RubikPlay.xtl.html#l.h_it" class="c-libfunc">ʳᵖh̲it</a> <span class="c-number">0</span>
+  c <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span> ? <span class="c-number">0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> c
+  i ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#keys">keys</a> <a href="builtins.html#i_ndexOf" class="c-builtin">i̲ndexOf</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> v
+  ((<span class="c-number">5</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#-2a" class="c-symbol">×</a> i <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">6</span>) ? i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#turns">turns</a>
+  ks ← (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key Space&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key Enter&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key b&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key n&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key p&quot;</span>
+  <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> ks ? <span class="c-number">0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> ks
+  <span class="c-number">0</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="u.t_urnBy">
+<h3><a href="#u.t_urnBy"><span class="c-userfunc">ᵘt̲urnBy</span></a> <span class="type">: (Any b, Any c, Any d, Any e, Any f, Any g, Any h, Any i, Num j, Num k, Num l) =&gt; a -&gt; ((b, c, a, d, e), f, g, h, i) -&gt; ((b, c, a, d, e), j, k, l, i)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L112">line 112</a></div>
+<pre class="code"><span class="c-userfunc">ᵘt̲urnBy</span> ← { t (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on) →
+  z ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_ell" class="c-userfunc">ᵘt̲ell</a> <span class="c-string">&quot; &quot;</span>
+  (t <a href="extensions-scene-demos-RubikPlay.xtl.html#l.q_ueue" class="c-libfunc">ʳᵖq̲ueue</a> st, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">0</span>, on)
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.a_ct"><span class="c-userfunc">ᵘa̲ct</span></a></div>
+</div>
+<div class="item" id="u.c_ontrol">
+<h3><a href="#u.c_ontrol"><span class="c-userfunc">ᵘc̲ontrol</span></a> <span class="type">: (Num a, Num b, Any c, Num d, Any e) =&gt; a -&gt; ((Int, Int, Int, b, c), Int, Int, d, e) -&gt; ((Int, Int, Int, b, c), Int, Int, d, e)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L118">line 118</a></div>
+<pre class="code"><span class="c-userfunc">ᵘc̲ontrol</span> ← { k all →
+  (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on) ← all
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.i_dle" class="c-libfunc">ʳᵖi̲dle</a> st ? all
+  k <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_cramble" class="c-userfunc">ᵘs̲cramble</a> all
+  k <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">2</span> ? <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveSoon" class="c-userfunc">ᵘs̲olveSoon</a> all
+  k <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">3</span> ? <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_ack" class="c-userfunc">ᵘb̲ack</a> all
+  k <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">4</span> ? <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> all
+  <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_lay" class="c-userfunc">ᵘp̲lay</a> all
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.a_ct"><span class="c-userfunc">ᵘa̲ct</span></a></div>
+</div>
+<div class="item" id="u.s_cramble">
+<h3><a href="#u.s_cramble"><span class="c-userfunc">ᵘs̲cramble</span></a> <span class="type">: (Num a, Any b, Num c, Any d) =&gt; ((Int, Int, Int, a, b), Int, Int, c, d) -&gt; ((Int, Int, Int, a, b), Int, Int, c, d)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L127">line 127</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲cramble</span> ← { (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on) →
+  z ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_ell" class="c-userfunc">ᵘt̲ell</a> <span class="c-string">&quot;Scrambled: 20 turns&quot;</span>
+  ((<a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_crambled" class="c-userfunc">ᵘs̲crambled</a> <span class="c-number">20</span>) <a href="extensions-scene-demos-RubikPlay.xtl.html#l.q_ueue" class="c-libfunc">ʳᵖq̲ueue</a> st, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">0</span>, on)
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.c_ontrol"><span class="c-userfunc">ᵘc̲ontrol</span></a></div>
+</div>
+<div class="item" id="u.s_olveSoon">
+<h3><a href="#u.s_olveSoon"><span class="c-userfunc">ᵘs̲olveSoon</span></a> <span class="type">: (Num a, Any b, Num c, Any d) =&gt; ((Int, Int, Int, a, b), Int, Int, c, d) -&gt; ((Int, Int, Int, a, b), Int, Int, c, d)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L131">line 131</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲olveSoon</span> ← { (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on) →
+  (<a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#c">c</a>, _, _, _, _) ← st
+  <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#c">c</a> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a> ? (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on) <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_ayIt" class="c-userfunc">ᵘs̲ayIt</a> <span class="c-string">&quot;Already solved&quot;</span>
+  z ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_ell" class="c-userfunc">ᵘt̲ell</a> <span class="c-string">&quot;Solving...&quot;</span>
+  (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, <span class="c-number">2</span>, on)
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.c_ontrol"><span class="c-userfunc">ᵘc̲ontrol</span></a></div>
+</div>
+<div class="item" id="u.s_ayIt">
+<h3><a href="#u.s_ayIt"><span class="c-userfunc">ᵘs̲ayIt</span></a> <span class="type">: (Num a, Any b, Num c, Any d) =&gt; ((Int, Int, Int, a, b), Int, Int, c, d) -&gt; Char -&gt; ((Int, Int, Int, a, b), Int, Int, c, d)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L137">line 137</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲ayIt</span> ← { all m →
+  z ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_ell" class="c-userfunc">ᵘt̲ell</a> m
+  all
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveSoon"><span class="c-userfunc">ᵘs̲olveSoon</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_layOn"><span class="c-userfunc">ᵘp̲layOn</span></a></div>
+</div>
+<div class="item" id="u.b_ack">
+<h3><a href="#u.b_ack"><span class="c-userfunc">ᵘb̲ack</span></a> <span class="type">: (Num a, Any b, Num c, Any d) =&gt; ((Int, Int, Int, a, b), Int, Int, c, d) -&gt; ((Int, Int, Int, a, b), Int, Int, c, d)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L141">line 141</a></div>
+<pre class="code"><span class="c-userfunc">ᵘb̲ack</span> ← { (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on) →
+  <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span> ? (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on)
+  z ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_ell" class="c-userfunc">ᵘt̲ell</a> <span class="c-string">&quot;Solution: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; of &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; made&quot;</span>
+  (<a href="extensions-scene-demos-RubikPlay.xtl.html#l.u_ndo" class="c-libfunc">ʳᵖu̲ndo</a> st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>, <span class="c-number">0</span>, on)
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.c_ontrol"><span class="c-userfunc">ᵘc̲ontrol</span></a></div>
+</div>
+<div class="item" id="u.s_tep">
+<h3><a href="#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a> <span class="type">: (Num a, Any b, Num c, Any d) =&gt; ((Int, Int, Int, a, b), Int, Int, c, d) -&gt; ((Int, Int, Int, a, b), Int, Int, c, d)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L146">line 146</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲tep</span> ← { (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on) →
+  <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a> <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a> ? (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, <span class="c-number">0</span>, on)
+  z ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_ell" class="c-userfunc">ᵘt̲ell</a> <span class="c-string">&quot;Solution: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; of &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; made&quot;</span>
+  (((<a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>) <a href="extensions-scene-demos-RubikPlay.xtl.html#l.q_ueue" class="c-libfunc">ʳᵖq̲ueue</a> st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>, mode, on)
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.c_ontrol"><span class="c-userfunc">ᵘc̲ontrol</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_layOn"><span class="c-userfunc">ᵘp̲layOn</span></a></div>
+</div>
+<div class="item" id="u.p_lay">
+<h3><a href="#u.p_lay"><span class="c-userfunc">ᵘp̲lay</span></a> <span class="type">: (Num a, Any b, Num c, Any d) =&gt; ((Int, Int, Int, a, b), Int, Int, c, d) -&gt; ((Int, Int, Int, a, b), Int, Int, c, d)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L151">line 151</a></div>
+<pre class="code"><span class="c-userfunc">ᵘp̲lay</span> ← { (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on) →
+  <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a> <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a> ? (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, <span class="c-number">0</span>, on)
+  (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, <span class="c-number">1</span> <a href="builtins.html#-2d" class="c-symbol">−</a> mode, on)
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.c_ontrol"><span class="c-userfunc">ᵘc̲ontrol</span></a></div>
+</div>
+<div class="item" id="u.s_olveNow">
+<h3><a href="#u.s_olveNow"><span class="c-userfunc">ᵘs̲olveNow</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g, Any h, Num i, Num j) =&gt; ((a, Int, b, c, d), e, f, g, h) -&gt; ((a, Int, b, c, d), Int, i, j, h)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L157">line 157</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲olveNow</span> ← { (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on) →
+  sol ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olution" class="c-userfunc">ᵘs̲olution</a> st
+  (_, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a>, _, _, _) ← st
+  said ← <a href="builtins.html#p_rint-21" class="c-builtin">p̲rint!</a> <span class="c-string">&quot;solved by &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> sol) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; turns; the cube solved by them: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> (<a href="extensions-scene-demos-RubikPlay.xtl.html#l.a_pplied" class="c-libfunc">ʳᵖa̲pplied</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> sol) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a>
+  z ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_ell" class="c-userfunc">ᵘt̲ell</a> <span class="c-string">&quot;Solution: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> sol) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; turns -- Step or Play&quot;</span>
+  (st, sol, <span class="c-number">0</span>, <span class="c-number">0</span>, on)
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveIf"><span class="c-userfunc">ᵘs̲olveIf</span></a></div>
+</div>
+<div class="item" id="u.p_layOn">
+<h3><a href="#u.p_layOn"><span class="c-userfunc">ᵘp̲layOn</span></a> <span class="type">: (Num a, Any b, Num c, Any d) =&gt; ((Int, Int, Int, a, b), Int, Int, c, d) -&gt; ((Int, Int, Int, a, b), Int, Int, c, d)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L166">line 166</a></div>
+<pre class="code"><span class="c-userfunc">ᵘp̲layOn</span> ← { all →
+  (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on) ← all
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> (mode <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.i_dle" class="c-libfunc">ʳᵖi̲dle</a> st ? all
+  <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a> <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a> ? (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, <span class="c-number">0</span>, on) <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_ayIt" class="c-userfunc">ᵘs̲ayIt</a> <span class="c-string">&quot;Solved in &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; turns&quot;</span>
+  <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_tep" class="c-userfunc">ᵘs̲tep</a> all
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="u.r_eset">
+<h3><a href="#u.r_eset"><span class="c-userfunc">ᵘr̲eset</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Num g, Num h) =&gt; (a, b, c, d, e) -&gt; ((Int, Int, Int, Int, Int), f, g, h, e)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L173">line 173</a></div>
+<pre class="code"><span class="c-userfunc">ᵘr̲eset</span> ← { (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on) →
+  d ← (<a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a>, <span class="c-number">0</span>, <span class="c-number">0.0</span>) <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw" class="c-libfunc">ʳᵇd̲raw</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#w">w</a>
+  z ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_ell" class="c-userfunc">ᵘt̲ell</a> <span class="c-string">&quot; &quot;</span>
+  (<a href="extensions-scene-demos-RubikPlay.xtl.html#l.start">ʳᵖstart</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_ay" class="c-userfunc">ᵘs̲ay</a> <span class="c-number">0</span>, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">0</span>, on)
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="u.m_ade">
+<h3><a href="#u.m_ade"><span class="c-userfunc">ᵘm̲ade</span></a> <span class="type">: (Any a, Any c, Any d, Any e) =&gt; (a, b, c, d, e) -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L179">line 179</a></div>
+<pre class="code"><span class="c-userfunc">ᵘm̲ade</span> ← { (_, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a>, _, _, _) → <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a> }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="u.u_nder">
+<h3><a href="#u.u_nder"><span class="c-userfunc">ᵘu̲nder</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e) =&gt; (a, b, c, d, e) -&gt; d</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L180">line 180</a></div>
+<pre class="code"><span class="c-userfunc">ᵘu̲nder</span> ← { (_, _, _, i, _) → i }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="u.s_ayIf">
+<h3><a href="#u.s_ayIf"><span class="c-userfunc">ᵘs̲ayIf</span></a> <span class="type">: (Truthy a, Any b, Any c, Any d, Any e) =&gt; a -&gt; (b, Int, c, d, e) -&gt; (b, Int, c, d, e)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L181">line 181</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲ayIf</span> ← { yes st →
+  yes ? st <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_ay" class="c-userfunc">ᵘs̲ay</a> <span class="c-number">0</span>
+  st
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="u.f_rame">
+<h3><a href="#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a> <span class="type">: (Num a, Num b) =&gt; ((Int, Int, Int, Int, Int), Int, Int, a, b) -&gt; ((Int, Int, Int, Int, Int), Int, Int, a, b)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L189">line 189</a></div>
+<div class="doc">
+<p>one frame: an event (a turn, a control, solved again, quit), the
+solve if it is due, playing, then a frame of turning: 4 frames a
+quarter turn while more wait, 5 while playing, else 8</p>
+</div>
+<pre class="code"><span class="c-userfunc">ᵘf̲rame</span> ← { all →
+  (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on) ← all
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> on ? all
+  v ← <a href="extensions-scene-lib-Scene.xtl.html#l.n_ext-21" class="c-libfunc">ˢᶜn̲ext!</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#w">w</a>
+  ((v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;close&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key q&quot;</span>) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span> ? (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, <span class="c-number">0</span>)
+  (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key 0&quot;</span>) ? <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.r_eset" class="c-userfunc">ᵘr̲eset</a> all
+  all ← (mode <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">2</span>) <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveIf" class="c-userfunc">ᵘs̲olveIf</a> all
+  p ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_ressed" class="c-userfunc">ᵘp̲ressed</a> v
+  all ← (p, all) <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.a_ct" class="c-userfunc">ᵘa̲ct</a> <span class="c-number">0</span>
+  all ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_layOn" class="c-userfunc">ᵘp̲layOn</a> all
+  (st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on) ← all
+  (_, _, q, _, _) ← st
+  fr ← ((mode <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">5</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (mode <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <span class="c-number">1</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">8</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> q
+  n ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.m_ade" class="c-userfunc">ᵘm̲ade</a> st
+  was ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.u_nder" class="c-userfunc">ᵘu̲nder</a> st
+  st ← (<a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#w">w</a>, fr) <a href="extensions-scene-demos-RubikPlay.xtl.html#l.a_dvance" class="c-libfunc">ʳᵖa̲dvance</a> st
+  lit ← (was <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.u_nder" class="c-userfunc">ᵘu̲nder</a> st) <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.l_ightIf" class="c-userfunc">ᵘl̲ightIf</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.u_nder" class="c-userfunc">ᵘu̲nder</a> st
+  ((n <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.m_ade" class="c-userfunc">ᵘm̲ade</a> st) <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_ayIf" class="c-userfunc">ᵘs̲ayIf</a> st, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, mode, on)
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#last">last</a></div>
+</div>
+<div class="item" id="u.s_olveIf">
+<h3><a href="#u.s_olveIf"><span class="c-userfunc">ᵘs̲olveIf</span></a> <span class="type">: (Truthy a, Num b, Num c) =&gt; a -&gt; ((Int, Int, Int, Int, Int), Int, Int, b, c) -&gt; ((Int, Int, Int, Int, Int), Int, Int, b, c)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L208">line 208</a></div>
+<pre class="code"><span class="c-userfunc">ᵘs̲olveIf</span> ← { yes all →
+  yes ? <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveNow" class="c-userfunc">ᵘs̲olveNow</a> all
+  all
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="u.a_ct">
+<h3><a href="#u.a_ct"><span class="c-userfunc">ᵘa̲ct</span></a> <span class="type">: (Num a, Num b, Num c) =&gt; (Int, ((Int, Int, Int, Int, Int), Int, Int, a, b)) -&gt; c -&gt; ((Int, Int, Int, Int, Int), Int, Int, a, b)</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L212">line 212</a></div>
+<pre class="code"><span class="c-userfunc">ᵘa̲ct</span> ← { (p, all) <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#z">z</a> →
+  p <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span> ? p <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_urnBy" class="c-userfunc">ᵘt̲urnBy</a> all
+  p <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">0</span> ? (<span class="c-number">0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> p) <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.c_ontrol" class="c-userfunc">ᵘc̲ontrol</a> all
+  all
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="u.l_ightIf">
+<h3><a href="#u.l_ightIf"><span class="c-userfunc">ᵘl̲ightIf</span></a> <span class="type">: Truthy a =&gt; a -&gt; Int -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L217">line 217</a></div>
+<pre class="code"><span class="c-userfunc">ᵘl̲ightIf</span> ← { yes i →
+  yes ? <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_uttons" class="c-userfunc">ᵘb̲uttons</a> i
+  i
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<div class="item" id="last">
+<h3><a href="#last">last</a> <span class="type">: ((Int, Int, Int, Int, Int), Int, Int, Int, Int)</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L222">line 222</a></div>
+<pre class="code">last ← <span class="c-number">100000</span> <span class="c-userfunc">'</span><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.f_rame" class="c-userfunc">ᵘf̲rame</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="extensions-scene-demos-RubikPlay.xtl.html#l.start">ʳᵖstart</a>, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">1</span>)</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#-2546"><span class="c-error">%</span><span class="c-number">46</span></a></div>
+</div>
+<div class="item" id="z">
+<h3><a href="#z">z</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L223">line 223</a></div>
+<pre class="code">z ← <a href="extensions-scene-lib-Scene.xtl.html#l.c_lose-21" class="c-libfunc">ˢᶜc̲lose!</a> <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#w">w</a></pre>
+</div>
+<div class="item" id="-2546">
+<h3><a href="#-2546"><span class="c-error">%</span><span class="c-number">46</span></a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L224">line 224</a></div>
+<pre class="code">((<a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#c">c</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a>, _, _, _), <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, _, _) ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#last">last</a></pre>
+</div>
+<div class="item" id="-2547">
+<h3><a href="#-2547"><span class="c-error">%</span><span class="c-number">47</span></a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L224">line 224</a></div>
+<pre class="code">((<a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#c">c</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a>, _, _, _), <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, _, _) ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#last">last</a></pre>
+</div>
+<div class="item" id="c">
+<h3><a href="#c">c</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L224">line 224</a></div>
+<pre class="code">((<a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#c">c</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a>, _, _, _), <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, _, _) ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#last">last</a></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveSoon"><span class="c-userfunc">ᵘs̲olveSoon</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#-2546"><span class="c-error">%</span><span class="c-number">46</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L228">extensions/scene/demos/voxels-rubik-solve.xtl:228</a></div>
+</div>
+<div class="item" id="h">
+<h3><a href="#h">h</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L224">line 224</a></div>
+<pre class="code">((<a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#c">c</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a>, _, _, _), <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, _, _) ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#last">last</a></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olution"><span class="c-userfunc">ᵘs̲olution</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveNow"><span class="c-userfunc">ᵘs̲olveNow</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.m_ade"><span class="c-userfunc">ᵘm̲ade</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#-2546"><span class="c-error">%</span><span class="c-number">46</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L226">extensions/scene/demos/voxels-rubik-solve.xtl:226</a></div>
+</div>
+<div class="item" id="sol">
+<h3><a href="#sol">sol</a></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L224">line 224</a></div>
+<pre class="code">((<a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#c">c</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a>, _, _, _), <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, _, _) ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#last">last</a></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_urnBy"><span class="c-userfunc">ᵘt̲urnBy</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.c_ontrol"><span class="c-userfunc">ᵘc̲ontrol</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_cramble"><span class="c-userfunc">ᵘs̲cramble</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveSoon"><span class="c-userfunc">ᵘs̲olveSoon</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_ack"><span class="c-userfunc">ᵘb̲ack</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_lay"><span class="c-userfunc">ᵘp̲lay</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveNow"><span class="c-userfunc">ᵘs̲olveNow</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_layOn"><span class="c-userfunc">ᵘp̲layOn</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.r_eset"><span class="c-userfunc">ᵘr̲eset</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#-2546"><span class="c-error">%</span><span class="c-number">46</span></a></div>
+</div>
+<div class="item" id="pos">
+<h3><a href="#pos">pos</a></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L224">line 224</a></div>
+<pre class="code">((<a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#c">c</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#h">h</a>, _, _, _), <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#sol">sol</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#pos">pos</a>, _, _) ← <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#last">last</a></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.t_urnBy"><span class="c-userfunc">ᵘt̲urnBy</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.c_ontrol"><span class="c-userfunc">ᵘc̲ontrol</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_cramble"><span class="c-userfunc">ᵘs̲cramble</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveSoon"><span class="c-userfunc">ᵘs̲olveSoon</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.b_ack"><span class="c-userfunc">ᵘb̲ack</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_tep"><span class="c-userfunc">ᵘs̲tep</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_lay"><span class="c-userfunc">ᵘp̲lay</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveNow"><span class="c-userfunc">ᵘs̲olveNow</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.p_layOn"><span class="c-userfunc">ᵘp̲layOn</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.r_eset"><span class="c-userfunc">ᵘr̲eset</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#-2546"><span class="c-error">%</span><span class="c-number">46</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L226">extensions/scene/demos/voxels-rubik-solve.xtl:226</a></div>
+</div>
+</main>
+</body>
+</html>

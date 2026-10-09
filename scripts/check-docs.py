@@ -35,12 +35,16 @@ if missing:
     sys.exit(f"check-docs: {len(missing)} undocumented (## above each export)")
 xetal = subprocess.run([str(root / "scripts/build-xetal.sh")], capture_output=True,
                        text=True, check=True).stdout.strip()
+# the shared libraries used here (X_eTaL-libraries at LIBRARIES_COMMIT)
+libs = subprocess.run([str(root / "scripts/libraries.sh")], capture_output=True,
+                      text=True, check=True).stdout.strip().split(":")
 tested = 0
 for f in files:
     if "## >>" not in f.read_text():
         continue
     # the binding macro and every facade, as xetal-x provides them
     path = [str(root / "lib")] + [str(d) for d in sorted(root.glob("extensions/*/lib"))]
+    path += libs
     env = dict(os.environ, XETAL_PATH=os.pathsep.join(path))
     r = subprocess.run([xetal, "doc", "--test", f.name], cwd=f.parent, env=env,
                        capture_output=True, text=True)

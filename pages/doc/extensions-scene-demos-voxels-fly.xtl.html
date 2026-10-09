@@ -105,12 +105,17 @@
 <li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">voxels-rubik-solve.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik.xtl.html">voxels-rubik.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-water.xtl.html">voxels-water.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+</ul>
+<h3>/Users/mike/github/softwarewrighter/X_eTaL-extensions/work/libraries/libs/Eigencube/src/</h3>
+<ul>
+<li><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html">Eigencube.xtl</a></li>
 </ul>
 <h3>extensions/sqlite/demos/</h3>
 <ul>
@@ -198,7 +203,7 @@ takes three steps</p>
 <pre class="code">s ← (<span class="c-number">3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-Endless.xtl.html#l.reach">ᵉⁿreach</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-Endless.xtl.html#l.reach">ᵉⁿreach</a>) <span class="c-libfunc">'</span><a href="extensions-scene-demos-Endless.xtl.html#l.s_tream" class="c-libfunc">ᵉⁿs̲tream</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a></pre>
 </div>
 <div class="item" id="u.f_rame">
-<h3><a href="#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a> <span class="type">: (Num a, Num b) =&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b))</span></h3>
+<h3><a href="#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a> <span class="type">: (Num a, Num b, Num c) =&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c))</span></h3>
 <div class="meta">function &middot; <a href="extensions-scene-demos-voxels-fly.xtl.src.html#L32">line 32</a></div>
 <div class="doc">
 <p>one frame: an event, then a third of a column's work, then the
@@ -216,7 +221,7 @@ player</p>
 <div class="uses">Used in: <a href="extensions-scene-demos-voxels-fly.xtl.html#last">last</a></div>
 </div>
 <div class="item" id="u.i_f">
-<h3><a href="#u.i_f"><span class="c-userfunc">ᵘi̲f</span></a> <span class="type">: (Truthy a, Num b, Num c) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c))</span></h3>
+<h3><a href="#u.i_f"><span class="c-userfunc">ᵘi̲f</span></a> <span class="type">: (Truthy a, Num b, Num c, Num d) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d))</span></h3>
 <div class="meta">function &middot; <a href="extensions-scene-demos-voxels-fly.xtl.src.html#L41">line 41</a></div>
 <pre class="code"><span class="c-userfunc">ᵘi̲f</span> ← { yes s →
   yes ? <a href="extensions-scene-demos-Endless.xtl.html#l.h_omeAgain" class="c-libfunc">ᵉⁿh̲omeAgain</a> s
@@ -225,7 +230,7 @@ player</p>
 <div class="uses">Used in: <a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
 </div>
 <div class="item" id="u.f_ly">
-<h3><a href="#u.f_ly"><span class="c-userfunc">ᵘf̲ly</span></a> <span class="type">: (Truthy a, Num b, Num c) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c))</span></h3>
+<h3><a href="#u.f_ly"><span class="c-userfunc">ᵘf̲ly</span></a> <span class="type">: (Truthy a, Num b, Num c, Num d) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d))</span></h3>
 <div class="meta">function &middot; <a href="extensions-scene-demos-voxels-fly.xtl.src.html#L45">line 45</a></div>
 <pre class="code"><span class="c-userfunc">ᵘf̲ly</span> ← { yes s →
   yes ? <a href="extensions-scene-demos-Endless.xtl.html#l.t_oggleFly" class="c-libfunc">ᵉⁿt̲oggleFly</a> s

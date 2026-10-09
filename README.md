@@ -47,6 +47,7 @@ just demo scene voxels-rubik-turn  # one layer of the cube turning a quarter rev
 just demo scene voxels-dig      # dig (click) and build (right-click) in the endless world; 1-7 choose the block
 just demo scene voxels-water    # dig the rim of a lake on a hill and watch it run down the steps
 just demo scene voxels-rubik-buttons  # the cube with buttons: U U' R R' F F', animated, queued, undo
+just demo scene voxels-rubik-solve    # scramble, solve (the Eigencube library), step or play the solution
 just walkthrough                # a fresh clone, built and run, checked against the goldens
 ```
 
@@ -143,7 +144,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | [clock](extensions/clock/docs/README.md) | `Clock` | wall-clock and monotonic time; the bridge's cost | std | done: facade, tests, cost demo |
 | [audio](extensions/audio/docs/README.md) | `Audio` | decode Ogg Vorbis, MP3, WAV; play; read what plays as arrays; play arrays | symphonia, cpal | done: the music visualizer, the synthesizer, the oscilloscope |
 | [canvas](extensions/canvas/docs/README.md) | `Canvas` | a native window showing arrays as pixels; keys and clicks back | winit, softbuffer | done: Life demo (media work continues after the launch) |
-| [scene](extensions/scene/docs/README.md) | `Scene` | retained 3D lines, points and shaded quads in a native window, patched by id; orbit camera, depth buffer, fog | winit, softbuffer | done: the cube; voxels 1 to 10 (a chunk as an array, its faces, drawn solid, a world of chunks, walking, an endless world, flying, a Rubik's cube and its quarter turns, digging and building, water that flows, a Rubik's cube with buttons) |
+| [scene](extensions/scene/docs/README.md) | `Scene` | retained 3D lines, points and shaded quads in a native window, patched by id; orbit camera, depth buffer, fog | winit, softbuffer | done: the cube; voxels 1 to 10 (a chunk as an array, its faces, drawn solid, a world of chunks, walking, an endless world, flying, a Rubik's cube and its quarter turns, digging and building, water that flows, a Rubik's cube with buttons and a solver) |
 | [sqlite](extensions/sqlite/docs/README.md) | `Sqlite` | execute and query SQLite files; CSV import | rusqlite | done: facade, CSV import, tests, the data notebook |
 | [web](extensions/web/docs/README.md) | `Web` | serve HTTP on loopback: the program takes each request and replies | axum, tokio | done: facade, loopback tests, the live page, TodoMVC |
 | [image](extensions/image/docs/README.md) | `Image` | PNG and JPEG to and from Float arrays; resize | image | done: facade, round-trip tests, the photo lab |
@@ -227,6 +228,7 @@ just doc             # the cross-referenced docs alone (pages/doc)
 just serve-pages     # preview it at http://127.0.0.1:8470/X_eTaL-extensions/ (this repo's port: 8470)
 just xetal           # X_eTaL at XETAL_COMMIT: work/xetal, bin/xetal
 just xetal-version   # the known-good X_eTaL commit
+just libraries       # X_eTaL-libraries at LIBRARIES_COMMIT in work/libraries (the cube's solver); prints its path
 just eval "'+ r_/ 1 2 3"   # evaluate with the known-good xetal
 ```
 

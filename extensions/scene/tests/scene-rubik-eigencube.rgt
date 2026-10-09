@@ -1,0 +1,3 @@
+command = 'XETAL_PATH="$PWD/demos:$XETAL_PATH" xetal-x --ext .. run --seed 1 tests/rubik-eigencube.xtl'
+exit_code = 0
+desc = "the voxel cube (Rubik.xtl) and X_eTaL-libraries Eigencube agree: names, each turn, 40 random lists by face colors, each undone solved in both"

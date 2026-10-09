@@ -16,6 +16,8 @@ rm -rf "$out"
 # facades and the shared demo libraries are found by name
 path="lib"
 for d in extensions/*/lib extensions/*/demos; do path="$path:$d"; done
+# and the shared libraries used here (X_eTaL-libraries at LIBRARIES_COMMIT)
+path="$path:$("$root/scripts/libraries.sh")"
 # the binding macro, then each extension's facade followed by its demos
 # (the sidebar groups files by directory, in this order)
 files=(lib/*.xtlm)

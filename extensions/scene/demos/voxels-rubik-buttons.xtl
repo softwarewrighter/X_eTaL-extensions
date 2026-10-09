@@ -26,11 +26,11 @@ names := "U U' R R' F F'"
 turns := 1 2 5 6 9 10
 keys := "uUrRfF"
 top := 500.0
-o := w sc:o_verlay! (w, names, top, 640.0, 100) rp:d_rawRow 0
+o := w sc:o_verlay! (w, names, top, 640.0, 100, rp:bw) rp:d_rawRow 0
 # the buttons drawn again, the one whose turn is under way lit
 u:l_ight := { st z ->
   (_, _, _, i, _) := st
-  o := w sc:o_verlay! (w, names, top, 640.0, 100) rp:d_rawRow turns i_ndexOf a_bs i
+  o := w sc:o_verlay! (w, names, top, 640.0, 100, rp:bw) rp:d_rawRow turns i_ndexOf a_bs i
   st
 }
 u:l_ightIf := { yes st ->
@@ -56,7 +56,7 @@ u:s_ay := { st z ->
 
 # the button or key of event v: its turn, else 0
 u:p_ressed := { v ->
-  b := (v, 6, top, 640.0) rp:h_it 0
+  b := (v, 6, top, 640.0, rp:bw) rp:h_it 0
   b > 0 ? b s_elect turns
   i := keys i_ndexOf f_irst -1 t_ake v
   ((5 = t_ally v) * i <= 6) ? i s_elect turns

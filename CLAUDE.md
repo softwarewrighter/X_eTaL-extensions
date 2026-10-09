@@ -327,7 +327,10 @@ Read before working:
    a saga start or when an ask has landed, never mid-step: change
    `XETAL_COMMIT`, run the gate, commit it on its own with whatever the
    new version changed. Never edit the clone (the gate checks it is
-   clean).
+   clean). X_eTaL-libraries is pinned the same way, at
+   `LIBRARIES_COMMIT` (`just libraries`, `scripts/libraries.sh`:
+   work/libraries; only the libraries used here, Eigencube, go on
+   `XETAL_PATH`, which demos, goldens, recordings and docs all get).
 5. Missing X_eTaL features and X_eTaL bugs go in `docs/xetal-asks.md`
    (status, kind, extensions, why, minimal repro, workaround). Do not
    fix X_eTaL from this repo and do not hide a workaround: name it in

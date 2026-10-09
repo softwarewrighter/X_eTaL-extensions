@@ -105,12 +105,17 @@
 <li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">voxels-rubik-solve.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik.xtl.html">voxels-rubik.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-water.xtl.html">voxels-water.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+</ul>
+<h3>/Users/mike/github/softwarewrighter/X_eTaL-extensions/work/libraries/libs/Eigencube/src/</h3>
+<ul>
+<li><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html">Eigencube.xtl</a></li>
 </ul>
 <h3>extensions/sqlite/demos/</h3>
 <ul>
@@ -130,23 +135,23 @@
 </ul>
 <h2>On this page</h2>
 <ul>
-<li class="item"><a href="#L15">ˡbw</a></li>
-<li class="item"><a href="#L17">ˡbh</a></li>
-<li class="item"><a href="#L19">ˡgap</a></li>
-<li class="item"><a href="#L25"><span class="c-libfunc">ˡw̲ords</span></a></li>
-<li class="item"><a href="#L32"><span class="c-libfunc">ˡl̲efts</span></a></li>
-<li class="item"><a href="#L42"><span class="c-libfunc">ˡd̲rawRow</span></a></li>
-<li class="item"><a href="#L53"><span class="c-libfunc">ʰl̲abelHead</span></a></li>
-<li class="item"><a href="#L63"><span class="c-libfunc">ˡh̲it</span></a></li>
-<li class="item"><a href="#L81">ˡstart</a></li>
-<li class="item"><a href="#L84"><span class="c-libfunc">ˡq̲ueue</span></a></li>
-<li class="item"><a href="#L92"><span class="c-libfunc">ˡa̲dvance</span></a></li>
-<li class="item"><a href="#L105"><span class="c-libfunc">ʰs̲how</span></a></li>
-<li class="item"><a href="#L113"><span class="c-libfunc">ˡu̲ndo</span></a></li>
-<li class="item"><a href="#L125"><span class="c-libfunc">ˡa̲pplied</span></a></li>
-<li class="item"><a href="#L126"><span class="c-libfunc">ʰa̲pply</span></a></li>
-<li class="item"><a href="#L132"><span class="c-libfunc">ˡi̲dle</span></a></li>
-<li class="item"><a href="#L138"><span class="c-libfunc">ˡn̲ames</span></a></li>
+<li class="item"><a href="#L16">ˡbw</a></li>
+<li class="item"><a href="#L18">ˡbh</a></li>
+<li class="item"><a href="#L20">ˡgap</a></li>
+<li class="item"><a href="#L26"><span class="c-libfunc">ˡw̲ords</span></a></li>
+<li class="item"><a href="#L33"><span class="c-libfunc">ˡl̲efts</span></a></li>
+<li class="item"><a href="#L43"><span class="c-libfunc">ˡd̲rawRow</span></a></li>
+<li class="item"><a href="#L54"><span class="c-libfunc">ʰl̲abelHead</span></a></li>
+<li class="item"><a href="#L64"><span class="c-libfunc">ˡh̲it</span></a></li>
+<li class="item"><a href="#L82">ˡstart</a></li>
+<li class="item"><a href="#L85"><span class="c-libfunc">ˡq̲ueue</span></a></li>
+<li class="item"><a href="#L93"><span class="c-libfunc">ˡa̲dvance</span></a></li>
+<li class="item"><a href="#L106"><span class="c-libfunc">ʰs̲how</span></a></li>
+<li class="item"><a href="#L114"><span class="c-libfunc">ˡu̲ndo</span></a></li>
+<li class="item"><a href="#L126"><span class="c-libfunc">ˡa̲pplied</span></a></li>
+<li class="item"><a href="#L127"><span class="c-libfunc">ʰa̲pply</span></a></li>
+<li class="item"><a href="#L133"><span class="c-libfunc">ˡi̲dle</span></a></li>
+<li class="item"><a href="#L139"><span class="c-libfunc">ˡn̲ames</span></a></li>
 </ul>
 </nav>
 <main>
@@ -166,135 +171,136 @@
 <span class="line" id="L11"><a class="ln" href="#L11">11</a></span>
 <span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-comment">⍝</span><span class="c-comment">## Buttons</span></span>
 <span class="line" id="L13"><a class="ln" href="#L13">13</a></span>
-<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-comment">⍝</span><span class="c-comment"># a button's width (the window's logical pixels)</span></span>
-<span class="line" id="L15"><a class="ln" href="#L15">15</a>ˡbw ← <span class="c-number">64.0</span></span>
-<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-comment">⍝</span><span class="c-comment"># a button's height</span></span>
-<span class="line" id="L17"><a class="ln" href="#L17">17</a>ˡbh ← <span class="c-number">40.0</span></span>
-<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-comment">⍝</span><span class="c-comment"># the gap between buttons in a row</span></span>
-<span class="line" id="L19"><a class="ln" href="#L19">19</a>ˡgap ← <span class="c-number">10.0</span></span>
-<span class="line" id="L20"><a class="ln" href="#L20">20</a></span>
-<span class="line" id="L21"><a class="ln" href="#L21">21</a><span class="c-comment">⍝</span><span class="c-comment"># rp:w_ords t: the words of a text, boxed (the names of the buttons)</span></span>
-<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rp:&quot; u_se&lt; &quot;RubikPlay&quot;</span></span>
-<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; t_ally rp:w_ords &quot;U U' R R'&quot;</span></span>
-<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-comment">⍝</span><span class="c-comment"># 4</span></span>
-<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-libfunc">ˡw̲ords</span> ← { t → (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> t <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-string">&quot; &quot;</span>) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> t }</span>
-<span class="line" id="L26"><a class="ln" href="#L26">26</a></span>
-<span class="line" id="L27"><a class="ln" href="#L27">27</a><span class="c-comment">⍝</span><span class="c-comment"># (n, wide) rp:l_efts 0: the left edges of a row of n buttons centered</span></span>
-<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-comment">⍝</span><span class="c-comment"># across a window wide points wide</span></span>
-<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rp:&quot; u_se&lt; &quot;RubikPlay&quot;</span></span>
-<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; (2, 200.0) rp:l_efts 0</span></span>
-<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-comment">⍝</span><span class="c-comment"># 31.0 105.0</span></span>
-<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-libfunc">ˡl̲efts</span> ← { (n, wide) z →</span>
-<span class="line" id="L33"><a class="ln" href="#L33">33</a>  m ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n</span>
-<span class="line" id="L34"><a class="ln" href="#L34">34</a>  ((wide <a href="builtins.html#-2d" class="c-symbol">−</a> (m <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.bw">ˡbw</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> (m <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.gap">ˡgap</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="extensions-scene-demos-RubikPlay.xtl.html#l.bw">ˡbw</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.gap">ˡgap</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></span>
-<span class="line" id="L35"><a class="ln" href="#L35">35</a>}</span>
-<span class="line" id="L36"><a class="ln" href="#L36">36</a></span>
-<span class="line" id="L37"><a class="ln" href="#L37">37</a><span class="c-comment">⍝</span><span class="c-comment"># (w, names, top, wide, first) rp:d_rawRow lit: a row of buttons drawn</span></span>
-<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-comment">⍝</span><span class="c-comment"># over window w (wide points wide), their tops at top, labeled by the</span></span>
-<span class="line" id="L39"><a class="ln" href="#L39">39</a><span class="c-comment">⍝</span><span class="c-comment"># words of names, their labels' ids from first, button lit (1 to n; 0</span></span>
-<span class="line" id="L40"><a class="ln" href="#L40">40</a><span class="c-comment">⍝</span><span class="c-comment"># none) lit up; the row's rectangles, n by 7, for the overlay (the</span></span>
-<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-comment">⍝</span><span class="c-comment"># caller puts all its rows at once)</span></span>
-<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-libfunc">ˡd̲rawRow</span> ← { (w, names, top, wide, first) lit →</span>
-<span class="line" id="L43"><a class="ln" href="#L43">43</a>  ws ← <a href="extensions-scene-demos-RubikPlay.xtl.html#l.w_ords" class="c-libfunc">ˡw̲ords</a> names</span>
-<span class="line" id="L44"><a class="ln" href="#L44">44</a>  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ws</span>
-<span class="line" id="L45"><a class="ln" href="#L45">45</a>  ls ← (n, wide) <a href="extensions-scene-demos-RubikPlay.xtl.html#l.l_efts" class="c-libfunc">ˡl̲efts</a> <span class="c-number">0</span></span>
-<span class="line" id="L46"><a class="ln" href="#L46">46</a>  on ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> lit <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n</span>
-<span class="line" id="L47"><a class="ln" href="#L47">47</a>  rects ← <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">7</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ls <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> top) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.bw">ˡbw</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.bh">ˡbh</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.22</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> on) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.24</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> on) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.3</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> on</span>
-<span class="line" id="L48"><a class="ln" href="#L48">48</a>  put ← <span class="c-quote">'</span>{ (<a href="extensions-scene-demos-RubikPlay.xtl.html#h.l_abelHead" class="c-libfunc">ʰl̲abelHead</a> (w, first <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-lambdaarg">⍵</span>, <span class="c-lambdaarg">⍵</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ls, top, <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍵</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ws)) <a href="extensions-scene-lib-Scene.xtl.html#l.l_abel-21" class="c-libfunc">ˢᶜl̲abel!</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍵</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ws } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n</span>
-<span class="line" id="L49"><a class="ln" href="#L49">49</a>  rects</span>
-<span class="line" id="L50"><a class="ln" href="#L50">50</a>}</span>
-<span class="line" id="L51"><a class="ln" href="#L51">51</a></span>
-<span class="line" id="L52"><a class="ln" href="#L52">52</a><span class="c-comment">⍝</span><span class="c-comment"> the header of a button's label: centered in it, 14 points tall</span></span>
-<span class="line" id="L53"><a class="ln" href="#L53">53</a><span class="c-libfunc">ʰl̲abelHead</span> ← { (w, id, left, top, chars) →</span>
-<span class="line" id="L54"><a class="ln" href="#L54">54</a>  wide ← <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<span class="c-number">6</span> <a href="builtins.html#-2a" class="c-symbol">×</a> chars) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></span>
-<span class="line" id="L55"><a class="ln" href="#L55">55</a>  (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> id) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (left <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="extensions-scene-demos-RubikPlay.xtl.html#l.bw">ˡbw</a> <a href="builtins.html#-2d" class="c-symbol">−</a> wide) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (top <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="extensions-scene-demos-RubikPlay.xtl.html#l.bh">ˡbh</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">14.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">14.0</span> <span class="c-number">1.0</span> <span class="c-number">1.0</span> <span class="c-number">1.0</span></span>
-<span class="line" id="L56"><a class="ln" href="#L56">56</a>}</span>
-<span class="line" id="L57"><a class="ln" href="#L57">57</a></span>
-<span class="line" id="L58"><a class="ln" href="#L58">58</a><span class="c-comment">⍝</span><span class="c-comment"># (v, n, top, wide) rp:h_it 0: which of a row of n buttons (1 to n) a</span></span>
-<span class="line" id="L59"><a class="ln" href="#L59">59</a><span class="c-comment">⍝</span><span class="c-comment"># left click v (&quot;click left X Y&quot;) is on, else 0</span></span>
-<span class="line" id="L60"><a class="ln" href="#L60">60</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rp:&quot; u_se&lt; &quot;RubikPlay&quot;</span></span>
-<span class="line" id="L61"><a class="ln" href="#L61">61</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; (&quot;click left 200 520&quot;, 6, 500.0, 640.0) rp:h_it 0</span></span>
-<span class="line" id="L62"><a class="ln" href="#L62">62</a><span class="c-comment">⍝</span><span class="c-comment"># 2</span></span>
-<span class="line" id="L63"><a class="ln" href="#L63">63</a><span class="c-libfunc">ˡh̲it</span> ← { (v, n, top, wide) z →</span>
-<span class="line" id="L64"><a class="ln" href="#L64">64</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> (<span class="c-number">10</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> v) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;click left&quot;</span> ? <span class="c-number">0</span></span>
-<span class="line" id="L65"><a class="ln" href="#L65">65</a>  p ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <span class="c-number">11</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> v</span>
-<span class="line" id="L66"><a class="ln" href="#L66">66</a>  x ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p</span>
-<span class="line" id="L67"><a class="ln" href="#L67">67</a>  y ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p</span>
-<span class="line" id="L68"><a class="ln" href="#L68">68</a>  ls ← (n, wide) <a href="extensions-scene-demos-RubikPlay.xtl.html#l.l_efts" class="c-libfunc">ˡl̲efts</a> <span class="c-number">0</span></span>
-<span class="line" id="L69"><a class="ln" href="#L69">69</a>  on ← (x <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> ls) <a href="builtins.html#-2a" class="c-symbol">×</a> (x <a href="builtins.html#-3c" class="c-symbol">&lt;</a> ls <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.bw">ˡbw</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> (y <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> top) <a href="builtins.html#-2a" class="c-symbol">×</a> y <a href="builtins.html#-3c" class="c-symbol">&lt;</a> top <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.bh">ˡbh</a></span>
-<span class="line" id="L70"><a class="ln" href="#L70">70</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> on ? <span class="c-number">0</span></span>
-<span class="line" id="L71"><a class="ln" href="#L71">71</a>  <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> on</span>
-<span class="line" id="L72"><a class="ln" href="#L72">72</a>}</span>
-<span class="line" id="L73"><a class="ln" href="#L73">73</a></span>
-<span class="line" id="L74"><a class="ln" href="#L74">74</a><span class="c-comment">⍝</span><span class="c-comment">## Turning, queued</span></span>
-<span class="line" id="L75"><a class="ln" href="#L75">75</a></span>
-<span class="line" id="L76"><a class="ln" href="#L76">76</a><span class="c-comment">⍝</span><span class="c-comment"># The turning state is a tuple: (the colors, the turns made -- 1 to 12</span></span>
-<span class="line" id="L77"><a class="ln" href="#L77">77</a><span class="c-comment">⍝</span><span class="c-comment"># in the order of rb:names -- the turns waiting, the turn under way (0</span></span>
-<span class="line" id="L78"><a class="ln" href="#L78">78</a><span class="c-comment">⍝</span><span class="c-comment"># none) and its frame).</span></span>
-<span class="line" id="L79"><a class="ln" href="#L79">79</a></span>
-<span class="line" id="L80"><a class="ln" href="#L80">80</a><span class="c-comment">⍝</span><span class="c-comment"># the state of a solved cube, nothing turning</span></span>
-<span class="line" id="L81"><a class="ln" href="#L81">81</a>ˡstart ← (<a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a>, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">0</span>)</span>
-<span class="line" id="L82"><a class="ln" href="#L82">82</a></span>
-<span class="line" id="L83"><a class="ln" href="#L83">83</a><span class="c-comment">⍝</span><span class="c-comment"># t rp:q_ueue st: turns t (1 to 12) waiting after the others</span></span>
-<span class="line" id="L84"><a class="ln" href="#L84">84</a><span class="c-libfunc">ˡq̲ueue</span> ← { t (c, h, q, i, f) → (c, h, q <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t, i, f) }</span>
-<span class="line" id="L85"><a class="ln" href="#L85">85</a></span>
-<span class="line" id="L86"><a class="ln" href="#L86">86</a><span class="c-comment">⍝</span><span class="c-comment"># (w, frames) rp:a_dvance st: one frame of turning in window w: the</span></span>
-<span class="line" id="L87"><a class="ln" href="#L87">87</a><span class="c-comment">⍝</span><span class="c-comment"># turn under way a frame further (frames to a quarter turn), or, done,</span></span>
-<span class="line" id="L88"><a class="ln" href="#L88">88</a><span class="c-comment">⍝</span><span class="c-comment"># the colors turned and the turn remembered; with none under way the</span></span>
-<span class="line" id="L89"><a class="ln" href="#L89">89</a><span class="c-comment">⍝</span><span class="c-comment"># next waiting one starts. A waiting turn queued negative (-t) is made</span></span>
-<span class="line" id="L90"><a class="ln" href="#L90">90</a><span class="c-comment">⍝</span><span class="c-comment"># (turn t) but not remembered: an undo, whose turn has already left the</span></span>
-<span class="line" id="L91"><a class="ln" href="#L91">91</a><span class="c-comment">⍝</span><span class="c-comment"># history.</span></span>
-<span class="line" id="L92"><a class="ln" href="#L92">92</a><span class="c-libfunc">ˡa̲dvance</span> ← { wf st →</span>
-<span class="line" id="L93"><a class="ln" href="#L93">93</a>  (c, h, q, i, f) ← st</span>
-<span class="line" id="L94"><a class="ln" href="#L94">94</a>  (w, frames) ← wf</span>
-<span class="line" id="L95"><a class="ln" href="#L95">95</a>  (i <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> q ? st</span>
-<span class="line" id="L96"><a class="ln" href="#L96">96</a>  i <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span> ? (c, h, <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> q, <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> q, <span class="c-number">0</span>)</span>
-<span class="line" id="L97"><a class="ln" href="#L97">97</a>  f ← f <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span></span>
-<span class="line" id="L98"><a class="ln" href="#L98">98</a>  f <a href="builtins.html#-3c" class="c-symbol">&lt;</a> frames ? (c, h, q, i, f) <a href="extensions-scene-demos-RubikPlay.xtl.html#h.s_how" class="c-libfunc">ʰs̲how</a> w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> frames</span>
-<span class="line" id="L99"><a class="ln" href="#L99">99</a>  c ← (<a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> i) <a href="extensions-scene-demos-Rubik.xtl.html#l.t_urn" class="c-libfunc">ʳᵇt̲urn</a> c</span>
-<span class="line" id="L100"><a class="ln" href="#L100">100</a>  z ← (c, <span class="c-number">0</span>, <span class="c-number">0.0</span>) <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw" class="c-libfunc">ʳᵇd̲raw</a> w</span>
-<span class="line" id="L101"><a class="ln" href="#L101">101</a>  (c, h <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (i <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> i, q, <span class="c-number">0</span>, <span class="c-number">0</span>)</span>
-<span class="line" id="L102"><a class="ln" href="#L102">102</a>}</span>
-<span class="line" id="L103"><a class="ln" href="#L103">103</a></span>
-<span class="line" id="L104"><a class="ln" href="#L104">104</a><span class="c-comment">⍝</span><span class="c-comment"> st h:s_how (w frames): the turn under way drawn that far</span></span>
-<span class="line" id="L105"><a class="ln" href="#L105">105</a><span class="c-libfunc">ʰs̲how</span> ← { st wfr →</span>
-<span class="line" id="L106"><a class="ln" href="#L106">106</a>  (c, h, q, i, f) ← st</span>
-<span class="line" id="L107"><a class="ln" href="#L107">107</a>  z ← (c, <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> i, (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> f) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> wfr) <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw" class="c-libfunc">ʳᵇd̲raw</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> wfr</span>
-<span class="line" id="L108"><a class="ln" href="#L108">108</a>  st</span>
-<span class="line" id="L109"><a class="ln" href="#L109">109</a>}</span>
-<span class="line" id="L110"><a class="ln" href="#L110">110</a></span>
-<span class="line" id="L111"><a class="ln" href="#L111">111</a><span class="c-comment">⍝</span><span class="c-comment"># rp:u_ndo st: the last turn made taken from the history and its</span></span>
-<span class="line" id="L112"><a class="ln" href="#L112">112</a><span class="c-comment">⍝</span><span class="c-comment"># undoing queued (made, not remembered), when nothing is turning</span></span>
-<span class="line" id="L113"><a class="ln" href="#L113">113</a><span class="c-libfunc">ˡu̲ndo</span> ← { st →</span>
-<span class="line" id="L114"><a class="ln" href="#L114">114</a>  (c, h, q, i, f) ← st</span>
-<span class="line" id="L115"><a class="ln" href="#L115">115</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> h) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.i_dle" class="c-libfunc">ˡi̲dle</a> st ? st</span>
-<span class="line" id="L116"><a class="ln" href="#L116">116</a>  (c, <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> h, q <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.u_ndo" class="c-libfunc">ʳᵇu̲ndo</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> h, i, f)</span>
-<span class="line" id="L117"><a class="ln" href="#L117">117</a>}</span>
-<span class="line" id="L118"><a class="ln" href="#L118">118</a></span>
-<span class="line" id="L119"><a class="ln" href="#L119">119</a><span class="c-comment">⍝</span><span class="c-comment"># rp:a_pplied ts: the colors of a solved cube after the turns ts, made</span></span>
-<span class="line" id="L120"><a class="ln" href="#L120">120</a><span class="c-comment">⍝</span><span class="c-comment"># at once (to check what was animated)</span></span>
-<span class="line" id="L121"><a class="ln" href="#L121">121</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rp:&quot; u_se&lt; &quot;RubikPlay&quot;</span></span>
-<span class="line" id="L122"><a class="ln" href="#L122">122</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rb:&quot; u_se&lt; &quot;Rubik&quot;</span></span>
-<span class="line" id="L123"><a class="ln" href="#L123">123</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; (rp:a_pplied 1 2) m_atch rb:solved</span></span>
-<span class="line" id="L124"><a class="ln" href="#L124">124</a><span class="c-comment">⍝</span><span class="c-comment"># 1</span></span>
-<span class="line" id="L125"><a class="ln" href="#L125">125</a><span class="c-libfunc">ˡa̲pplied</span> ← { ts → (ts, <a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a>) <a href="extensions-scene-demos-RubikPlay.xtl.html#h.a_pply" class="c-libfunc">ʰa̲pply</a> <span class="c-number">0</span> }</span>
-<span class="line" id="L126"><a class="ln" href="#L126">126</a><span class="c-libfunc">ʰa̲pply</span> ← { (ts, c) z →</span>
-<span class="line" id="L127"><a class="ln" href="#L127">127</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ts ? c</span>
-<span class="line" id="L128"><a class="ln" href="#L128">128</a>  (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> ts, (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ts) <a href="extensions-scene-demos-Rubik.xtl.html#l.t_urn" class="c-libfunc">ʳᵇt̲urn</a> c) <a href="extensions-scene-demos-RubikPlay.xtl.html#h.a_pply" class="c-libfunc">ʰa̲pply</a> <span class="c-number">0</span></span>
-<span class="line" id="L129"><a class="ln" href="#L129">129</a>}</span>
-<span class="line" id="L130"><a class="ln" href="#L130">130</a></span>
-<span class="line" id="L131"><a class="ln" href="#L131">131</a><span class="c-comment">⍝</span><span class="c-comment"># rp:i_dle st: whether nothing is turning or waiting</span></span>
-<span class="line" id="L132"><a class="ln" href="#L132">132</a><span class="c-libfunc">ˡi̲dle</span> ← { (_, _, q, i, _) → (i <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> q }</span>
-<span class="line" id="L133"><a class="ln" href="#L133">133</a></span>
-<span class="line" id="L134"><a class="ln" href="#L134">134</a><span class="c-comment">⍝</span><span class="c-comment"># rp:n_ames ts: the turns ts (1 to 12) by name, &quot;U R' F&quot;</span></span>
-<span class="line" id="L135"><a class="ln" href="#L135">135</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rp:&quot; u_se&lt; &quot;RubikPlay&quot;</span></span>
-<span class="line" id="L136"><a class="ln" href="#L136">136</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; rp:n_ames 1 6 9</span></span>
-<span class="line" id="L137"><a class="ln" href="#L137">137</a><span class="c-comment">⍝</span><span class="c-comment"># U R' F</span></span>
-<span class="line" id="L138"><a class="ln" href="#L138">138</a><span class="c-libfunc">ˡn̲ames</span> ← { ts →</span>
-<span class="line" id="L139"><a class="ln" href="#L139">139</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ts ? <span class="c-string">&quot;&quot;</span></span>
-<span class="line" id="L140"><a class="ln" href="#L140">140</a>  nm ← <a href="extensions-scene-demos-RubikPlay.xtl.html#l.w_ords" class="c-libfunc">ˡw̲ords</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.names">ʳᵇnames</a></span>
-<span class="line" id="L141"><a class="ln" href="#L141">141</a>  <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-quote">'</span>{ <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍺</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> ts <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> nm</span>
-<span class="line" id="L142"><a class="ln" href="#L142">142</a>}</span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-comment">⍝</span><span class="c-comment"># a button's width when a row does not say (the window's logical</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-comment">⍝</span><span class="c-comment"># pixels)</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a>ˡbw ← <span class="c-number">64.0</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-comment">⍝</span><span class="c-comment"># a button's height</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a>ˡbh ← <span class="c-number">40.0</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-comment">⍝</span><span class="c-comment"># the gap between buttons in a row</span></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a>ˡgap ← <span class="c-number">10.0</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-comment">⍝</span><span class="c-comment"># rp:w_ords t: the words of a text, boxed (the names of the buttons)</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rp:&quot; u_se&lt; &quot;RubikPlay&quot;</span></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; t_ally rp:w_ords &quot;U U' R R'&quot;</span></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-comment">⍝</span><span class="c-comment"># 4</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-libfunc">ˡw̲ords</span> ← { t → (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> t <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-string">&quot; &quot;</span>) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> t }</span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-comment">⍝</span><span class="c-comment"># (n, wide, bw) rp:l_efts 0: the left edges of a row of n buttons, bw</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-comment">⍝</span><span class="c-comment"># wide, centered across a window wide points wide</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rp:&quot; u_se&lt; &quot;RubikPlay&quot;</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; (2, 200.0, 64.0) rp:l_efts 0</span></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-comment">⍝</span><span class="c-comment"># 31.0 105.0</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-libfunc">ˡl̲efts</span> ← { (n, wide, bw) z →</span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a>  m ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> n</span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a>  ((wide <a href="builtins.html#-2d" class="c-symbol">−</a> (m <a href="builtins.html#-2a" class="c-symbol">×</a> bw) <a href="builtins.html#-2b" class="c-symbol">+</a> (m <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.gap">ˡgap</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (bw <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.gap">ˡgap</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a>}</span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-comment">⍝</span><span class="c-comment"># (w, names, top, wide, first, bw) rp:d_rawRow lit: a row of buttons</span></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a><span class="c-comment">⍝</span><span class="c-comment"># bw wide drawn over window w (wide points wide), their tops at top,</span></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a><span class="c-comment">⍝</span><span class="c-comment"># labeled by the words of names, their labels' ids from first, button</span></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-comment">⍝</span><span class="c-comment"># lit (1 to n; 0 none) lit up; the row's rectangles, n by 7, for the</span></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-comment">⍝</span><span class="c-comment"># overlay (the caller puts all its rows at once)</span></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a><span class="c-libfunc">ˡd̲rawRow</span> ← { (w, names, top, wide, first, bw) lit →</span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a>  ws ← <a href="extensions-scene-demos-RubikPlay.xtl.html#l.w_ords" class="c-libfunc">ˡw̲ords</a> names</span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a>  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ws</span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a>  ls ← (n, wide, bw) <a href="extensions-scene-demos-RubikPlay.xtl.html#l.l_efts" class="c-libfunc">ˡl̲efts</a> <span class="c-number">0</span></span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a>  on ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> lit <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n</span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a>  rects ← <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">7</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ls <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> top) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> bw) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.bh">ˡbh</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.22</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> on) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.24</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> on) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.3</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> on</span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a>  put ← <span class="c-quote">'</span>{ (<a href="extensions-scene-demos-RubikPlay.xtl.html#h.l_abelHead" class="c-libfunc">ʰl̲abelHead</a> (w, first <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-lambdaarg">⍵</span>, <span class="c-lambdaarg">⍵</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ls, top, bw, <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍵</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ws)) <a href="extensions-scene-lib-Scene.xtl.html#l.l_abel-21" class="c-libfunc">ˢᶜl̲abel!</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍵</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ws } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n</span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a>  rects</span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a>}</span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a><span class="c-comment">⍝</span><span class="c-comment"> the header of a button's label: centered in it, 14 points tall</span></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a><span class="c-libfunc">ʰl̲abelHead</span> ← { (w, id, left, top, bw, chars) →</span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a>  wide ← <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<span class="c-number">6</span> <a href="builtins.html#-2a" class="c-symbol">×</a> chars) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a>  (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> id) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (left <a href="builtins.html#-2b" class="c-symbol">+</a> (bw <a href="builtins.html#-2d" class="c-symbol">−</a> wide) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (top <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="extensions-scene-demos-RubikPlay.xtl.html#l.bh">ˡbh</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">14.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">14.0</span> <span class="c-number">1.0</span> <span class="c-number">1.0</span> <span class="c-number">1.0</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a>}</span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a><span class="c-comment">⍝</span><span class="c-comment"># (v, n, top, wide, bw) rp:h_it 0: which of a row of n buttons (1 to</span></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a><span class="c-comment">⍝</span><span class="c-comment"># n), bw wide, a left click v (&quot;click left X Y&quot;) is on, else 0</span></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rp:&quot; u_se&lt; &quot;RubikPlay&quot;</span></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; (&quot;click left 200 520&quot;, 6, 500.0, 640.0, 64.0) rp:h_it 0</span></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a><span class="c-comment">⍝</span><span class="c-comment"># 2</span></span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a><span class="c-libfunc">ˡh̲it</span> ← { (v, n, top, wide, bw) z →</span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> (<span class="c-number">10</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> v) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;click left&quot;</span> ? <span class="c-number">0</span></span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a>  p ← <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <span class="c-number">11</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> v</span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a>  x ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p</span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a>  y ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> p</span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a>  ls ← (n, wide, bw) <a href="extensions-scene-demos-RubikPlay.xtl.html#l.l_efts" class="c-libfunc">ˡl̲efts</a> <span class="c-number">0</span></span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a>  on ← (x <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> ls) <a href="builtins.html#-2a" class="c-symbol">×</a> (x <a href="builtins.html#-3c" class="c-symbol">&lt;</a> ls <a href="builtins.html#-2b" class="c-symbol">+</a> bw) <a href="builtins.html#-2a" class="c-symbol">×</a> (y <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> top) <a href="builtins.html#-2a" class="c-symbol">×</a> y <a href="builtins.html#-3c" class="c-symbol">&lt;</a> top <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.bh">ˡbh</a></span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> on ? <span class="c-number">0</span></span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a>  <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> on</span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a>}</span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a></span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a><span class="c-comment">⍝</span><span class="c-comment">## Turning, queued</span></span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a></span>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a><span class="c-comment">⍝</span><span class="c-comment"># The turning state is a tuple: (the colors, the turns made -- 1 to 12</span></span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a><span class="c-comment">⍝</span><span class="c-comment"># in the order of rb:names -- the turns waiting, the turn under way (0</span></span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a><span class="c-comment">⍝</span><span class="c-comment"># none) and its frame).</span></span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a></span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a><span class="c-comment">⍝</span><span class="c-comment"># the state of a solved cube, nothing turning</span></span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a>ˡstart ← (<a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a>, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">0</span>)</span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a></span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a><span class="c-comment">⍝</span><span class="c-comment"># t rp:q_ueue st: turns t (1 to 12) waiting after the others</span></span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a><span class="c-libfunc">ˡq̲ueue</span> ← { t (c, h, q, i, f) → (c, h, q <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t, i, f) }</span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a></span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a><span class="c-comment">⍝</span><span class="c-comment"># (w, frames) rp:a_dvance st: one frame of turning in window w: the</span></span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a><span class="c-comment">⍝</span><span class="c-comment"># turn under way a frame further (frames to a quarter turn), or, done,</span></span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a><span class="c-comment">⍝</span><span class="c-comment"># the colors turned and the turn remembered; with none under way the</span></span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a><span class="c-comment">⍝</span><span class="c-comment"># next waiting one starts. A waiting turn queued negative (-t) is made</span></span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a><span class="c-comment">⍝</span><span class="c-comment"># (turn t) but not remembered: an undo, whose turn has already left the</span></span>
+<span class="line" id="L92"><a class="ln" href="#L92">92</a><span class="c-comment">⍝</span><span class="c-comment"># history.</span></span>
+<span class="line" id="L93"><a class="ln" href="#L93">93</a><span class="c-libfunc">ˡa̲dvance</span> ← { wf st →</span>
+<span class="line" id="L94"><a class="ln" href="#L94">94</a>  (c, h, q, i, f) ← st</span>
+<span class="line" id="L95"><a class="ln" href="#L95">95</a>  (w, frames) ← wf</span>
+<span class="line" id="L96"><a class="ln" href="#L96">96</a>  (i <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> q ? st</span>
+<span class="line" id="L97"><a class="ln" href="#L97">97</a>  i <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span> ? (c, h, <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> q, <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> q, <span class="c-number">0</span>)</span>
+<span class="line" id="L98"><a class="ln" href="#L98">98</a>  f ← f <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span></span>
+<span class="line" id="L99"><a class="ln" href="#L99">99</a>  f <a href="builtins.html#-3c" class="c-symbol">&lt;</a> frames ? (c, h, q, i, f) <a href="extensions-scene-demos-RubikPlay.xtl.html#h.s_how" class="c-libfunc">ʰs̲how</a> w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> frames</span>
+<span class="line" id="L100"><a class="ln" href="#L100">100</a>  c ← (<a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> i) <a href="extensions-scene-demos-Rubik.xtl.html#l.t_urn" class="c-libfunc">ʳᵇt̲urn</a> c</span>
+<span class="line" id="L101"><a class="ln" href="#L101">101</a>  z ← (c, <span class="c-number">0</span>, <span class="c-number">0.0</span>) <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw" class="c-libfunc">ʳᵇd̲raw</a> w</span>
+<span class="line" id="L102"><a class="ln" href="#L102">102</a>  (c, h <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (i <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> i, q, <span class="c-number">0</span>, <span class="c-number">0</span>)</span>
+<span class="line" id="L103"><a class="ln" href="#L103">103</a>}</span>
+<span class="line" id="L104"><a class="ln" href="#L104">104</a></span>
+<span class="line" id="L105"><a class="ln" href="#L105">105</a><span class="c-comment">⍝</span><span class="c-comment"> st h:s_how (w frames): the turn under way drawn that far</span></span>
+<span class="line" id="L106"><a class="ln" href="#L106">106</a><span class="c-libfunc">ʰs̲how</span> ← { st wfr →</span>
+<span class="line" id="L107"><a class="ln" href="#L107">107</a>  (c, h, q, i, f) ← st</span>
+<span class="line" id="L108"><a class="ln" href="#L108">108</a>  z ← (c, <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> i, (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> f) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> wfr) <a href="extensions-scene-demos-Rubik.xtl.html#l.d_raw" class="c-libfunc">ʳᵇd̲raw</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> wfr</span>
+<span class="line" id="L109"><a class="ln" href="#L109">109</a>  st</span>
+<span class="line" id="L110"><a class="ln" href="#L110">110</a>}</span>
+<span class="line" id="L111"><a class="ln" href="#L111">111</a></span>
+<span class="line" id="L112"><a class="ln" href="#L112">112</a><span class="c-comment">⍝</span><span class="c-comment"># rp:u_ndo st: the last turn made taken from the history and its</span></span>
+<span class="line" id="L113"><a class="ln" href="#L113">113</a><span class="c-comment">⍝</span><span class="c-comment"># undoing queued (made, not remembered), when nothing is turning</span></span>
+<span class="line" id="L114"><a class="ln" href="#L114">114</a><span class="c-libfunc">ˡu̲ndo</span> ← { st →</span>
+<span class="line" id="L115"><a class="ln" href="#L115">115</a>  (c, h, q, i, f) ← st</span>
+<span class="line" id="L116"><a class="ln" href="#L116">116</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> (<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> h) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.i_dle" class="c-libfunc">ˡi̲dle</a> st ? st</span>
+<span class="line" id="L117"><a class="ln" href="#L117">117</a>  (c, <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> h, q <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.u_ndo" class="c-libfunc">ʳᵇu̲ndo</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> h, i, f)</span>
+<span class="line" id="L118"><a class="ln" href="#L118">118</a>}</span>
+<span class="line" id="L119"><a class="ln" href="#L119">119</a></span>
+<span class="line" id="L120"><a class="ln" href="#L120">120</a><span class="c-comment">⍝</span><span class="c-comment"># rp:a_pplied ts: the colors of a solved cube after the turns ts, made</span></span>
+<span class="line" id="L121"><a class="ln" href="#L121">121</a><span class="c-comment">⍝</span><span class="c-comment"># at once (to check what was animated)</span></span>
+<span class="line" id="L122"><a class="ln" href="#L122">122</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rp:&quot; u_se&lt; &quot;RubikPlay&quot;</span></span>
+<span class="line" id="L123"><a class="ln" href="#L123">123</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rb:&quot; u_se&lt; &quot;Rubik&quot;</span></span>
+<span class="line" id="L124"><a class="ln" href="#L124">124</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; (rp:a_pplied 1 2) m_atch rb:solved</span></span>
+<span class="line" id="L125"><a class="ln" href="#L125">125</a><span class="c-comment">⍝</span><span class="c-comment"># 1</span></span>
+<span class="line" id="L126"><a class="ln" href="#L126">126</a><span class="c-libfunc">ˡa̲pplied</span> ← { ts → (ts, <a href="extensions-scene-demos-Rubik.xtl.html#l.solved">ʳᵇsolved</a>) <a href="extensions-scene-demos-RubikPlay.xtl.html#h.a_pply" class="c-libfunc">ʰa̲pply</a> <span class="c-number">0</span> }</span>
+<span class="line" id="L127"><a class="ln" href="#L127">127</a><span class="c-libfunc">ʰa̲pply</span> ← { (ts, c) z →</span>
+<span class="line" id="L128"><a class="ln" href="#L128">128</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ts ? c</span>
+<span class="line" id="L129"><a class="ln" href="#L129">129</a>  (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> ts, (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ts) <a href="extensions-scene-demos-Rubik.xtl.html#l.t_urn" class="c-libfunc">ʳᵇt̲urn</a> c) <a href="extensions-scene-demos-RubikPlay.xtl.html#h.a_pply" class="c-libfunc">ʰa̲pply</a> <span class="c-number">0</span></span>
+<span class="line" id="L130"><a class="ln" href="#L130">130</a>}</span>
+<span class="line" id="L131"><a class="ln" href="#L131">131</a></span>
+<span class="line" id="L132"><a class="ln" href="#L132">132</a><span class="c-comment">⍝</span><span class="c-comment"># rp:i_dle st: whether nothing is turning or waiting</span></span>
+<span class="line" id="L133"><a class="ln" href="#L133">133</a><span class="c-libfunc">ˡi̲dle</span> ← { (_, _, q, i, _) → (i <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> q }</span>
+<span class="line" id="L134"><a class="ln" href="#L134">134</a></span>
+<span class="line" id="L135"><a class="ln" href="#L135">135</a><span class="c-comment">⍝</span><span class="c-comment"># rp:n_ames ts: the turns ts (1 to 12) by name, &quot;U R' F&quot;</span></span>
+<span class="line" id="L136"><a class="ln" href="#L136">136</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rp:&quot; u_se&lt; &quot;RubikPlay&quot;</span></span>
+<span class="line" id="L137"><a class="ln" href="#L137">137</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; rp:n_ames 1 6 9</span></span>
+<span class="line" id="L138"><a class="ln" href="#L138">138</a><span class="c-comment">⍝</span><span class="c-comment"># U R' F</span></span>
+<span class="line" id="L139"><a class="ln" href="#L139">139</a><span class="c-libfunc">ˡn̲ames</span> ← { ts →</span>
+<span class="line" id="L140"><a class="ln" href="#L140">140</a>  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ts ? <span class="c-string">&quot;&quot;</span></span>
+<span class="line" id="L141"><a class="ln" href="#L141">141</a>  nm ← <a href="extensions-scene-demos-RubikPlay.xtl.html#l.w_ords" class="c-libfunc">ˡw̲ords</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.names">ʳᵇnames</a></span>
+<span class="line" id="L142"><a class="ln" href="#L142">142</a>  <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-quote">'</span>{ <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍺</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> ts <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> nm</span>
+<span class="line" id="L143"><a class="ln" href="#L143">143</a>}</span>
 </div>
 </main>
 </body>

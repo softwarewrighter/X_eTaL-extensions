@@ -1,0 +1,59 @@
+## The two Rubik's cube models agree: this repo's Rubik.xtl (54 sticker
+## colors, each turn a permutation) and X_eTaL-libraries' Eigencube
+## (26 rotation matrices), which the solver demo uses to solve the voxel
+## cube. The same turns, by name, made in both must give each face the
+## same colors (sorted: the two lay a face's cells out in different
+## orders), so no notation or axis can drift between them unseen.
+
+"rb:" u_se< "Rubik"
+"ec:" u_se< "Eigencube"
+
+## Rubik's turns (1 to 12: U U' D D' R R' L L' F F' B B') as
+## Eigencube's (U U' D D' F F' B B' R R' L L'); the same vector maps back
+map := 1 2 3 4 9 10 11 12 5 6 7 8
+## Rubik's faces and colors (up down right left front back, 0 to 5) as
+## Eigencube's (1 to 6: U D F B R L)
+col := 1 2 5 6 3 4
+
+"the twelve turns' names agree:"
+(ec:n_ame map) m_atch rb:names
+"the map is its own inverse:"
+(map s_elect map) m_atch r_ange 12
+
+# (ms, c) u:a_pply 0: Rubik's colors c after the turns ms, in order
+u:a_pply := { (ms, c) z ->
+  0 = t_ally ms ? c
+  (1 d_rop ms, (f_irst ms) rb:t_urn c) u:a_pply 0
+}
+
+## u:a_gree ms: whether the turns ms (Rubik's numbers) leave every face
+## with the same colors in both models
+u:a_gree := { ms ->
+  c := (ms, rb:solved) u:a_pply 0
+  mine := 6 9 r_eshape (c + 1) s_elect col
+  theirs := col s_elect ec:s_tickers (ms s_elect map) ec:d_o ec:solved
+  # each face's colors sorted, all at once: 10 times the face added
+  off := 10 * ((r_ange 54) - 1) d_iv 9
+  (s_ort off + r_avel mine) m_atch s_ort off + r_avel theirs
+}
+
+## u:b_ack ms: whether the turns then their undoing, in reverse, solve
+## the cube in both models
+u:b_ack := { ms ->
+  un := r_ev rb:u_ndo ms
+  c := (ms c_at un, rb:solved) u:a_pply 0
+  (c m_atch rb:solved) * ec:s_olved? ((ms c_at un) s_elect map) ec:d_o ec:solved
+}
+
+"each of the twelve turns alone, in both models:"
+'{ u:a_gree 1 r_eshape _r } e_ach r_ange 12
+# one round: a random list of 1 to 30 turns, checked both ways
+u:r_ound := { (a, b) ->
+  ms := r_oll! (r_oll! 30) r_eshape 12
+  (a + u:a_gree ms, b + u:b_ack ms)
+}
+(a, b) := 40 'u:r_ound p_ower (0, 0)
+"40 random lists of 1 to 30 turns -- the faces agree:"
+a
+"and each list undone is solved in both:"
+b

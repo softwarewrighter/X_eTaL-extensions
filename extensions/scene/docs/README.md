@@ -219,8 +219,27 @@ before the next builds on it. Their shared X_eTaL is the library
     at once; the button whose turn is under way is lit. z undoes the
     last turn (animated), 0 makes it solved again; the turns made are
     shown above the cube. The buttons and the queue are the library
-    `demos/RubikPlay.xtl`, shared with the solver demo to come. Recorded
-    as `videos/voxels-rubik-buttons.webm`.
+    `demos/RubikPlay.xtl`, shared with the solver demo. Recorded as
+    `videos/voxels-rubik-buttons.webm`.
+13. `demos/voxels-rubik-solve.xtl` (`just demo scene
+    voxels-rubik-solve`): the Rubik's cube solved. Below the six turn
+    buttons a second row: Scramble (20 random turns, never one face
+    twice running), Solve, Back, Step and Play (keys Space, Enter, b, n,
+    p). Solve hands the turns made so far to the Eigencube library
+    (`../X_eTaL-libraries`, `libs/Eigencube`, fetched at
+    `LIBRARIES_COMMIT` by `just libraries`), which holds the cube as 26
+    rotation matrices and solves it stage by stage: the first layer by
+    plain search over the twelve turns, the middle and last layers by
+    search over known move sequences (slot inserts, an edge flip, Sune,
+    a corner cycle) -- that is what makes it fast (2 to 3 seconds, about
+    110 to 180 turns); with plain search alone the last layer takes
+    minutes to hours. "Solving..." shows first; then Step makes the
+    solution a turn at a time, Back undoes one, Play runs it through,
+    every turn animated. The solution is checked (made at once, it
+    solves the cube), and `tests/rubik-eigencube.xtl` checks that the
+    two models agree: the turns' names, and for 40 random lists the
+    colors on every face. Recorded as `videos/voxels-rubik-solve.webm`:
+    Scramble, Solve, three Steps, Play to solved.
 
 ## Build and test
 

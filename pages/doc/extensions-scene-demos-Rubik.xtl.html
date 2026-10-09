@@ -105,12 +105,17 @@
 <li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">voxels-rubik-solve.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik.xtl.html">voxels-rubik.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-water.xtl.html">voxels-water.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+</ul>
+<h3>/Users/mike/github/softwarewrighter/X_eTaL-extensions/work/libraries/libs/Eigencube/src/</h3>
+<ul>
+<li><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html">Eigencube.xtl</a></li>
 </ul>
 <h3>extensions/sqlite/demos/</h3>
 <ul>
@@ -240,7 +245,7 @@ front back, 9 stickers each</p>
 0 0 0 0 0 0 0 0 0 1</pre>
 </div>
 <pre class="code">ˡsolved ← <span class="c-number">9</span> <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">6</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-RubikPlay.xtl.html#l.start">ˡstart</a>, <a href="extensions-scene-demos-RubikPlay.xtl.html#l.a_pplied"><span class="c-libfunc">ˡa̲pplied</span></a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#z">z</a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#shown">shown</a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#last">last</a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.r_eset"><span class="c-userfunc">ᵘr̲eset</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#last">last</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-RubikPlay.xtl.html#l.start">ˡstart</a>, <a href="extensions-scene-demos-RubikPlay.xtl.html#l.a_pplied"><span class="c-libfunc">ˡa̲pplied</span></a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#z">z</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#z">z</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveSoon"><span class="c-userfunc">ᵘs̲olveSoon</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.s_olveNow"><span class="c-userfunc">ᵘs̲olveNow</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.r_eset"><span class="c-userfunc">ᵘr̲eset</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.src.html#L228">extensions/scene/demos/voxels-rubik-solve.xtl:228</a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#shown">shown</a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#last">last</a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#u.r_eset"><span class="c-userfunc">ᵘr̲eset</span></a>, <a href="extensions-scene-demos-voxels-rubik.xtl.html#last">last</a></div>
 </div>
 <h2 class="section" id="section-2">Turns</h2>
 <div class="item" id="h.k_ey">
@@ -504,7 +509,7 @@ and 20 + k the stickers of color k still and turning.</p>
   mv ← <span class="c-quote">'</span>{ (f <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">20.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-lambdaarg">⍵</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-lambdaarg">⍵</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.rgb">ˡrgb</a>) <a href="extensions-scene-lib-Scene.xtl.html#l.q_uads-21" class="c-libfunc">ˢᶜq̲uads!</a> r <a href="extensions-scene-demos-Rubik.xtl.html#l.t_urned" class="c-libfunc">ˡt̲urned</a> (<a href="extensions-scene-demos-Rubik.xtl.html#h.c_orners" class="c-libfunc">ʰc̲orners</a> (c <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-lambdaarg">⍵</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> sm) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Rubik.xtl.html#l.squares">ˡsquares</a> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">6</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>
   <span class="c-number">0</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-RubikPlay.xtl.html#l.a_dvance"><span class="c-libfunc">ˡa̲dvance</span></a>, <a href="extensions-scene-demos-RubikPlay.xtl.html#h.s_how"><span class="c-libfunc">ʰs̲how</span></a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#z">z</a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.r_edraw"><span class="c-userfunc">ᵘr̲edraw</span></a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.p_aint"><span class="c-userfunc">ᵘp̲aint</span></a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#shown">shown</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-RubikPlay.xtl.html#l.a_dvance"><span class="c-libfunc">ˡa̲dvance</span></a>, <a href="extensions-scene-demos-RubikPlay.xtl.html#h.s_how"><span class="c-libfunc">ʰs̲how</span></a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#z">z</a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.r_edraw"><span class="c-userfunc">ᵘr̲edraw</span></a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#z">z</a>, <a href="extensions-scene-demos-voxels-rubik-solve.xtl.html#u.r_eset"><span class="c-userfunc">ᵘr̲eset</span></a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#u.p_aint"><span class="c-userfunc">ᵘp̲aint</span></a>, <a href="extensions-scene-demos-voxels-rubik-turn.xtl.html#shown">shown</a></div>
 </div>
 </main>
 </body>

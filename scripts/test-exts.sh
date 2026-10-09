@@ -10,6 +10,8 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 "$root/scripts/xetal.sh" >/dev/null
 (cd "$root" && cargo build -q --release --workspace)
 export REG_EXT_BUILT=1
+XETAL_LIBS="$("$root/scripts/libraries.sh")"
+export XETAL_LIBS
 logs="$(mktemp -d)"
 trap 'rm -rf "$logs"' EXIT
 names=()
