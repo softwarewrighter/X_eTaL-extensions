@@ -7,6 +7,7 @@
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #141518; --fg: #e8e6e3; --muted: #a0a4ab; --card: #1d1f23; --line: #30333a; --off: #26292f;
+  --brand: #ff4540; /* the favicon's red */
   --accent: #ff6b6b; --accent-soft: #3b1f22;
   --t-builtin: #8fb0ff; --t-user: #8ce99a; --t-arg: #f783ac; --t-num: #ffd43b; --t-sym: #66d9e8;
 } }
@@ -21,8 +22,9 @@ body { margin: 0; background: var(--bg); color: var(--fg);
 header, main, footer { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
 header { padding-top: 20px; }
 .brand { display: flex; align-items: center; gap: 14px; }
-.brand h1 { margin: 0; font-size: 1.7rem; }
-.logo { height: 44px; width: auto; border-radius: 6px; display: block; }
+.brand h1 { margin: 0; font-size: 1.7rem; color: var(--brand); }
+/* about 3 lines tall and 15 columns wide, its own aspect kept */
+.logo { height: 65px; width: auto; border-radius: 6px; display: block; }
 .lede { color: var(--muted); margin: 8px 0 12px; max-width: 80ch; }
 code, .source, .editor, .out, .error { font-family: "JuliaMono", "DejaVu Sans Mono", Menlo, ui-monospace, monospace; }
 .t-builtin { color: var(--t-builtin); } .t-user { color: var(--t-user); } .t-arg { color: var(--t-arg); }

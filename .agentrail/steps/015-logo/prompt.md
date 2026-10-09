@@ -1,0 +1,1 @@
+inserted, the user: the red X_eTaL logo (../X_eTaL/images/xetal-logo-red.png, matching the favicon) as the live demo's and the README's logo, about 3 lines tall and 15 columns wide, aspect kept; the live demo's heading is the image plus 'X_eTaL Extensions' in bright red.

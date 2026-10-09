@@ -95,8 +95,8 @@ page = f"""<!doctype html>
 </nav>
 <header id="top">
   <div class="brand">
-    <img class="logo" src="modern-xetal-logo.jpg" alt="X_eTaL" />
-    <h1>X_eTaL extensions</h1>
+    <img class="logo" src="xetal-logo-red.png" alt="X_eTaL: X underlined, a raised e, T, a raised a, L" />
+    <h1>X_eTaL Extensions</h1>
   </div>
   <p class="lede"><b>Libraries extend the vocabulary; macros extend the language; native
   extensions extend the machine.</b> These are X_eTaL's native extensions: Rust shared

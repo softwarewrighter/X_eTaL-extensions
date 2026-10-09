@@ -10,7 +10,7 @@ pub fn header(title: &str, lede: &str) -> Html {
     html! {
         <header>
             <div class="brand">
-                <a href="../" title="All extensions"><img class="logo" src="modern-xetal-logo.jpg" alt="X_eTaL" /></a>
+                <a href="../" title="All extensions"><img class="logo" src="xetal-logo-red.png" alt="X_eTaL" /></a>
                 <h1>{title}</h1>
             </div>
             <p class="lede">{lede}</p>
