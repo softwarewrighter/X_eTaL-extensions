@@ -1,8 +1,9 @@
 number = 13
 slug = "rubik-buttons"
-status = "in-progress"
+status = "completed"
 description = "game step 9 (inserted): scene gains on-screen buttons (labeled rectangles dra..."
 role = "production"
 context_files = []
 created_at = "2026-10-08T13:51:15"
-commits = []
+completed_at = "2026-10-09T15:42:09"
+commits = ["dc4a51cfd96ce4d3e5c7825db19f041d0e588f87"]
