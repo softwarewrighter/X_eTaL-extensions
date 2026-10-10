@@ -523,7 +523,60 @@ demo shown before the next.
 | 17 | water-literate | (done; the user) `docs/literate/water.org`, Water that drains: runnable cups explaining the rules (half the difference; trading places), the code as checked listings, pictures, the lake test; run and exported with X_eTaL's own literate tools from the clone; published as the site's literate/, linked from the footer, the voxels-water demo and docs/voxel-water.md |
 | 18 | voxels-light | (done) a lit world: sunlight by a column scan, lamplight from lamps (hotbar 8), spread 5 rounds; a face lit by the cell it faces; scene: per-quad sunlight and lamplight, `sc:d_aylight!`; N for night and day; checked on a tunnel; lighting a world setting, so the earlier demos are unchanged |
 | 19 | voxels-game | (done) Gem Hunt: ten glowing gems (block 9) buried around the start as edits, the first four blocks down; finds from the world's newest edits; labels for gems, time, nearest gem; G gives up; end screen; left for later: slower stone, a sound, a high-score table |
-| 20 | game-release | recordings, docs, status, retrospective; the site checked online |
+| 20 | game-release | (done) every demo recorded and on the site (http/quakes-live excepted: it reads the live feed; quakes shows the saved one); the site checked online -- 141 files load, 27 live videos match their commits; docs and status brought up to date; this retrospective |
+
+### Retrospective (2026-10-09)
+
+The saga set out to show a voxel game built from X_eTaL arrays --
+walking, flying, building, digging, lighting, water -- demo by demo,
+and ended with Gem Hunt and, asked for on the way, a Rubik's cube of
+voxels that solves itself. Twenty steps, nine of them inserted at the
+user's request.
+
+What held up:
+
+- Arrays all the way: a column of the world is one 18 by 32 by 18
+  array; faces are six shifts of it; light is a scan and rounds of the
+  same shifts; water is a list of cells moved in passes. Each rule is a
+  few lines of X_eTaL (Voxels.xtl, Endless.xtl).
+- Small libraries over the demos: Voxels (the world's blocks, faces and
+  light), Endless (the world that streams round the player, edits,
+  water, light), Play (the hotbar, digging, placing, a frame), Rubik and
+  RubikPlay (the cube and its buttons). A new demo is mostly a script.
+- Every demo has a golden (headless, scripted input, frames pinned) and
+  a recording; numbers are checked where they matter -- the cube's
+  turns against a second model, the lake's level after each dig, the
+  light along a tunnel.
+
+What the user caught, and what changed because of it:
+
+- The cube's turns looked random, then blinked: animated quarter turns,
+  then whole frames only (a staging scene committed at each frame).
+- The world paused at its edges: each column made over several frames.
+- The water copied itself, wrapped terraces and never drained: water
+  became an amount that is moved and never made (64 units a block),
+  gravity first, half the difference at most, momentum and drops; the
+  user's own test -- a lake drops a layer per area of water out, and
+  stops at the breach until it is dug deeper -- is its golden.
+- The gate took six to nine minutes: release builds, suites side by
+  side, only the frames a golden checks saved (about a minute now).
+- Goldens deleted work/ to start clean: they write over their own
+  files in temporary directories now, and CLAUDE.md rule 18 says never
+  to delete work/ or anything in it, nor anything else without asking.
+- A commit went out with the gate failing (a commit chained after it):
+  commits now go only when the gate has passed.
+
+Numbers: a column made in three or four stages of about 12 ms (light
+about 20 ms, down from 168 ms); the water's test drains 25 blocks to
+1.72, then 25 to 2.11; the light along a tunnel 15 12 9 6 3.
+
+Left for later: swimming in moving water (only below sea level now);
+lamplight reaching more than a block into a neighboring column; slower
+stone, a sound and a high-score table for Gem Hunt; X_eTaL asks E9
+(types that vary from run to run) and E10 (a tuple pattern's hidden
+value on the doc pages); the cube's solver searching known move
+sequences in its later stages (Eigencube's hybrid mode, the only one
+fast enough today).
 
 ## Saga 12 -- native hook (blocked)
 

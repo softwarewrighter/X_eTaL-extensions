@@ -1,6 +1,6 @@
 number = 20
 slug = "game-release"
-status = "pending"
+status = "in-progress"
 description = "game step 7: recordings, docs, status, retrospective; verify the site online."
 role = "production"
 context_files = []

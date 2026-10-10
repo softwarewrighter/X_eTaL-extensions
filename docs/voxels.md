@@ -5,11 +5,14 @@ Dyalog APL, MIT) and of how this repository could show voxel graphics
 from X_eTaL: what carries over, what our native windows can and
 cannot do today, measured costs, the chunk size to use, and a series
 of `voxels-*` demos that build up to a small game, each one runnable,
-tested and recorded before the next. Written 2026-10-07; nine demos
-of the world are built -- voxels-chunk, voxels-faces, voxels-solid,
-voxels-world, voxels-walk, voxels-endless, voxels-fly, voxels-dig and
-voxels-water (see "Built so far") -- and light and the game follow
-(see "The game" for the order).
+tested and recorded before the next. Written 2026-10-07; finished
+2026-10-09: all of it is built -- voxels-chunk, voxels-faces,
+voxels-solid, voxels-world, voxels-walk, voxels-endless, voxels-fly,
+voxels-dig, voxels-water, voxels-light and the game, Gem Hunt
+(voxels-game) -- and, asked for along the way, a Rubik's cube of
+voxels (voxels-rubik, -rubik-turn, -rubik-buttons, -rubik-solve). See
+"Built so far"; how the water flows is in voxel-water.md and the
+literate document docs/literate/water.org.
 
 ## In short
 
