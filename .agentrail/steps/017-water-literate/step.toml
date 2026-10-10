@@ -1,9 +1,10 @@
 number = 17
 slug = "water-literate"
-status = "in-progress"
+status = "completed"
 description = "inserted, the user: a literate program document of the water demo, in the sty..."
 role = "production"
 context_files = []
 created_at = "2026-10-09T21:34:46"
+completed_at = "2026-10-09T21:54:48"
 task_type = "docs"
-commits = []
+commits = ["96e7459f6dc8acef57db184073e774de1b6155b6"]
