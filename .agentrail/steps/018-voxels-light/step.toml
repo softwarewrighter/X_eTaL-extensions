@@ -1,9 +1,10 @@
 number = 18
 slug = "voxels-light"
-status = "in-progress"
+status = "completed"
 description = "game step 4: sky light by a column scan; torch light spreading in rounds over..."
 role = "production"
 context_files = []
 created_at = "2026-10-07T18:26:56"
+completed_at = "2026-10-09T22:27:24"
 task_type = "feature"
-commits = []
+commits = ["39260237c64caa7db32847a8de13e6a280b32397"]

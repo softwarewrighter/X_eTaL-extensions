@@ -1,0 +1,1 @@
+voxels-light: lit world setting; sunlight by a column scan + lamplight from lamps (block 8), spread 5 rounds; face light from the faced cell; scene per-quad sun/lamp light and sc:d_aylight!; N day/night; tunnel check 15 12 9 6 3; 168->22 ms per column; earlier demos unchanged; golden and recording live.

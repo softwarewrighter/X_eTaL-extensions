@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "state": {
+    "number": 18,
+    "step": "voxels-light"
+  },
+  "action": "Rust lit quads + daylight with test; X_eTaL scan/rounds with constant masks; opt-in pipeline stage; headless scripts; reg-rs",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-09T22:27:24"
+}
