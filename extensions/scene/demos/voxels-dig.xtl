@@ -52,7 +52,10 @@ s := en:n_ew w
 s := (3 * (1 + 2 * en:reach) * 1 + 2 * en:reach) 'en:s_tream p_ower s
 last := 100000 'pl:f_rame p_ower (s, 1)
 z := sc:c_lose! w
-(s, _) := last
+# (an accessor, not a top-level tuple pattern: xetal doc would list a
+# hidden %N value for one, ask E10)
+u:w_orldOf := { (s, _) -> s }
+s := u:w_orldOf last
 "the edits (x y z block), the newest first:"
 en:e_dits s
 "bye"

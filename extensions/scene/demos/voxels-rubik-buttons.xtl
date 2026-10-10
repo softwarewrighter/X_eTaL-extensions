@@ -102,7 +102,12 @@ u:r_edraw := { sto z ->
 
 last := 100000 'u:f_rame p_ower (rp:start, 1)
 z := sc:c_lose! w
-((c, h, _, _, _), _) := last
+# (an accessor, not a top-level tuple pattern: xetal doc would list a
+# hidden %N value for one, ask E10)
+u:c_olorsOf := { ((c, _, _, _, _), _) -> c }
+u:t_urnsOf := { ((_, h, _, _, _), _) -> h }
+c := u:c_olorsOf last
+h := u:t_urnsOf last
 "the turns made:"
 rp:n_ames h
 "the cube is those turns made at once on a solved cube:"

@@ -159,8 +159,8 @@
 <li class="item"><a href="#u.r_edraw"><span class="c-userfunc">ᵘr̲edraw</span></a></li>
 <li class="item"><a href="#last">last</a></li>
 <li class="item"><a href="#z">z</a></li>
-<li class="item"><a href="#-2521"><span class="c-error">%</span><span class="c-number">21</span></a></li>
-<li class="item"><a href="#-2522"><span class="c-error">%</span><span class="c-number">22</span></a></li>
+<li class="item"><a href="#u.c_olorsOf"><span class="c-userfunc">ᵘc̲olorsOf</span></a></li>
+<li class="item"><a href="#u.t_urnsOf"><span class="c-userfunc">ᵘt̲urnsOf</span></a></li>
 <li class="item"><a href="#c">c</a></li>
 <li class="item"><a href="#h">h</a></li>
 </ul>
@@ -356,34 +356,36 @@ a frame of turning</p>
 <h3><a href="#last">last</a> <span class="type">: ((Int, Int, Int, Int, Int), Int)</span></h3>
 <div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L103">line 103</a></div>
 <pre class="code">last ← <span class="c-number">100000</span> <span class="c-userfunc">'</span><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.f_rame" class="c-userfunc">ᵘf̲rame</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="extensions-scene-demos-RubikPlay.xtl.html#l.start">ʳᵖstart</a>, <span class="c-number">1</span>)</pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#-2521"><span class="c-error">%</span><span class="c-number">21</span></a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a></div>
 </div>
 <div class="item" id="z">
 <h3><a href="#z">z</a> <span class="type">: Int</span></h3>
 <div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L104">line 104</a></div>
 <pre class="code">z ← <a href="extensions-scene-lib-Scene.xtl.html#l.c_lose-21" class="c-libfunc">ˢᶜc̲lose!</a> <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#w">w</a></pre>
 </div>
-<div class="item" id="-2521">
-<h3><a href="#-2521"><span class="c-error">%</span><span class="c-number">21</span></a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L105">line 105</a></div>
-<pre class="code">((<a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a>, _, _, _), _) ← <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#last">last</a></pre>
+<div class="item" id="u.c_olorsOf">
+<h3><a href="#u.c_olorsOf"><span class="c-userfunc">ᵘc̲olorsOf</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f) =&gt; ((a, b, c, d, e), f) -&gt; a</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L107">line 107</a></div>
+<pre class="code"><span class="c-userfunc">ᵘc̲olorsOf</span> ← { ((<a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a>, _, _, _, _), _) → <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a> }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a></div>
 </div>
-<div class="item" id="-2522">
-<h3><a href="#-2522"><span class="c-error">%</span><span class="c-number">22</span></a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L105">line 105</a></div>
-<pre class="code">((<a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a>, _, _, _), _) ← <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#last">last</a></pre>
+<div class="item" id="u.t_urnsOf">
+<h3><a href="#u.t_urnsOf"><span class="c-userfunc">ᵘt̲urnsOf</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f) =&gt; ((a, b, c, d, e), f) -&gt; b</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L108">line 108</a></div>
+<pre class="code"><span class="c-userfunc">ᵘt̲urnsOf</span> ← { ((_, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a>, _, _, _), _) → <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a> }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a></div>
 </div>
 <div class="item" id="c">
-<h3><a href="#c">c</a></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L105">line 105</a></div>
-<pre class="code">((<a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a>, _, _, _), _) ← <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#last">last</a></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.r_edraw"><span class="c-userfunc">ᵘr̲edraw</span></a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#-2521"><span class="c-error">%</span><span class="c-number">21</span></a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L109">extensions/scene/demos/voxels-rubik-buttons.xtl:109</a></div>
+<h3><a href="#c">c</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L109">line 109</a></div>
+<pre class="code">c ← <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.c_olorsOf" class="c-userfunc">ᵘc̲olorsOf</a> <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#last">last</a></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.r_edraw"><span class="c-userfunc">ᵘr̲edraw</span></a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.c_olorsOf"><span class="c-userfunc">ᵘc̲olorsOf</span></a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L114">extensions/scene/demos/voxels-rubik-buttons.xtl:114</a></div>
 </div>
 <div class="item" id="h">
-<h3><a href="#h">h</a></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L105">line 105</a></div>
-<pre class="code">((<a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a>, _, _, _), _) ← <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#last">last</a></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.m_ade"><span class="c-userfunc">ᵘm̲ade</span></a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#-2521"><span class="c-error">%</span><span class="c-number">21</span></a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L107">extensions/scene/demos/voxels-rubik-buttons.xtl:107</a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L109">extensions/scene/demos/voxels-rubik-buttons.xtl:109</a></div>
+<h3><a href="#h">h</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L110">line 110</a></div>
+<pre class="code">h ← <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.t_urnsOf" class="c-userfunc">ᵘt̲urnsOf</a> <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#last">last</a></pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.s_ay"><span class="c-userfunc">ᵘs̲ay</span></a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.m_ade"><span class="c-userfunc">ᵘm̲ade</span></a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.t_urnsOf"><span class="c-userfunc">ᵘt̲urnsOf</span></a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L112">extensions/scene/demos/voxels-rubik-buttons.xtl:112</a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.src.html#L114">extensions/scene/demos/voxels-rubik-buttons.xtl:114</a></div>
 </div>
 </main>
 </body>

@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-09
 
+- 21:27 `docs` X_eTaL ask E10 (the user asked what `%85` on voxels-water's doc page was): `xetal doc` lists the hidden value a top-level tuple pattern binds (`(a, b) := pair` shows `%1`, in the error color). Workaround, named in the ask: no top-level tuple patterns here -- voxels-dig, -water, -rubik-buttons, -rubik-solve and the cube cross-check take what they need with small accessor functions. Outputs unchanged; the doc site has no `%N` entries left.
+
 - 20:42 `build` `just check-quick` (the user: why run the whole gate for a video change?): the gate's checks a change without code can affect -- every extension's goldens, the status page, the site up to date, every export documented, spellings, markdown -- in about 20 seconds; it refuses when the working tree changes code (Rust, Cargo files, scripts, the justfiles, the pinned commits). CLAUDE.md says a commit with no code may use it.
 
 - 20:39 `fix` the water recording shows the stream (the user: the waterfall was hidden behind the hotbar; zoom back and aim down): the camera flies higher and farther back and looks down more steeply, both times, so the whole hill and its stream sit above the hotbar. The lake's measurements are unchanged (the golden's frame counts and pinned frames moved); recording re-made.

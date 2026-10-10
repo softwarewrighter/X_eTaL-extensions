@@ -157,10 +157,10 @@
 <li class="item"><a href="#L96"><span class="c-userfunc">ᵘr̲edraw</span></a></li>
 <li class="item"><a href="#L103">last</a></li>
 <li class="item"><a href="#L104">z</a></li>
-<li class="item"><a href="#L105"><span class="c-error">%</span><span class="c-number">21</span></a></li>
-<li class="item"><a href="#L105"><span class="c-error">%</span><span class="c-number">22</span></a></li>
-<li class="item"><a href="#L105">c</a></li>
-<li class="item"><a href="#L105">h</a></li>
+<li class="item"><a href="#L107"><span class="c-userfunc">ᵘc̲olorsOf</span></a></li>
+<li class="item"><a href="#L108"><span class="c-userfunc">ᵘt̲urnsOf</span></a></li>
+<li class="item"><a href="#L109">c</a></li>
+<li class="item"><a href="#L110">h</a></li>
 </ul>
 </nav>
 <main>
@@ -271,12 +271,17 @@
 <span class="line" id="L102"><a class="ln" href="#L102">102</a></span>
 <span class="line" id="L103"><a class="ln" href="#L103">103</a>last ← <span class="c-number">100000</span> <span class="c-userfunc">'</span><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.f_rame" class="c-userfunc">ᵘf̲rame</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="extensions-scene-demos-RubikPlay.xtl.html#l.start">ʳᵖstart</a>, <span class="c-number">1</span>)</span>
 <span class="line" id="L104"><a class="ln" href="#L104">104</a>z ← <a href="extensions-scene-lib-Scene.xtl.html#l.c_lose-21" class="c-libfunc">ˢᶜc̲lose!</a> <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#w">w</a></span>
-<span class="line" id="L105"><a class="ln" href="#L105">105</a>((<a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a>, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a>, _, _, _), _) ← <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#last">last</a></span>
-<span class="line" id="L106"><a class="ln" href="#L106">106</a><span class="c-string">&quot;the turns made:&quot;</span></span>
-<span class="line" id="L107"><a class="ln" href="#L107">107</a><a href="extensions-scene-demos-RubikPlay.xtl.html#l.n_ames" class="c-libfunc">ʳᵖn̲ames</a> <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a></span>
-<span class="line" id="L108"><a class="ln" href="#L108">108</a><span class="c-string">&quot;the cube is those turns made at once on a solved cube:&quot;</span></span>
-<span class="line" id="L109"><a class="ln" href="#L109">109</a><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.a_pplied" class="c-libfunc">ʳᵖa̲pplied</a> <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a></span>
-<span class="line" id="L110"><a class="ln" href="#L110">110</a><span class="c-string">&quot;bye&quot;</span></span>
+<span class="line" id="L105"><a class="ln" href="#L105">105</a><span class="c-comment">⍝</span><span class="c-comment"> (an accessor, not a top-level tuple pattern: xetal doc would list a</span></span>
+<span class="line" id="L106"><a class="ln" href="#L106">106</a><span class="c-comment">⍝</span><span class="c-comment"> hidden %N value for one, ask E10)</span></span>
+<span class="line" id="L107"><a class="ln" href="#L107">107</a><span class="c-userfunc">ᵘc̲olorsOf</span> ← { ((<a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a>, _, _, _, _), _) → <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a> }</span>
+<span class="line" id="L108"><a class="ln" href="#L108">108</a><span class="c-userfunc">ᵘt̲urnsOf</span> ← { ((_, <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a>, _, _, _), _) → <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a> }</span>
+<span class="line" id="L109"><a class="ln" href="#L109">109</a>c ← <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.c_olorsOf" class="c-userfunc">ᵘc̲olorsOf</a> <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#last">last</a></span>
+<span class="line" id="L110"><a class="ln" href="#L110">110</a>h ← <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#u.t_urnsOf" class="c-userfunc">ᵘt̲urnsOf</a> <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#last">last</a></span>
+<span class="line" id="L111"><a class="ln" href="#L111">111</a><span class="c-string">&quot;the turns made:&quot;</span></span>
+<span class="line" id="L112"><a class="ln" href="#L112">112</a><a href="extensions-scene-demos-RubikPlay.xtl.html#l.n_ames" class="c-libfunc">ʳᵖn̲ames</a> <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a></span>
+<span class="line" id="L113"><a class="ln" href="#L113">113</a><span class="c-string">&quot;the cube is those turns made at once on a solved cube:&quot;</span></span>
+<span class="line" id="L114"><a class="ln" href="#L114">114</a><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#c">c</a> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <a href="extensions-scene-demos-RubikPlay.xtl.html#l.a_pplied" class="c-libfunc">ʳᵖa̲pplied</a> <a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html#h">h</a></span>
+<span class="line" id="L115"><a class="ln" href="#L115">115</a><span class="c-string">&quot;bye&quot;</span></span>
 </div>
 </main>
 </body>

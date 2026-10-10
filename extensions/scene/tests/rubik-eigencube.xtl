@@ -52,7 +52,13 @@ u:r_ound := { (a, b) ->
   ms := r_oll! (r_oll! 30) r_eshape 12
   (a + u:a_gree ms, b + u:b_ack ms)
 }
-(a, b) := 40 'u:r_ound p_ower (0, 0)
+# (an accessor, not a top-level tuple pattern: xetal doc would list a
+# hidden %N value for one, ask E10)
+r := 40 'u:r_ound p_ower (0, 0)
+u:f_irstOf := { (a, _) -> a }
+u:s_econdOf := { (_, b) -> b }
+a := u:f_irstOf r
+b := u:s_econdOf r
 "40 random lists of 1 to 30 turns -- the faces agree:"
 a
 "and each list undone is solved in both:"
