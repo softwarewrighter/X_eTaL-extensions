@@ -1,6 +1,6 @@
 number = 19
 slug = "voxels-game"
-status = "pending"
+status = "in-progress"
 description = "game step 6: Gem Hunt (docs/voxels.md)."
 role = "production"
 context_files = []

@@ -171,7 +171,7 @@ started. The shared X_eTaL lives in a library beside them,
 | 5 | `voxels-walk` | built | walking: first-person camera, WASD and mouse look, gravity and jumping, collision against the blocks (swept box per axis); X_eTaL culls chunks against the frustum | scene: first-person camera; key down and up, dragging to look (the pointer never grabbed) |
 | 6 | `voxels-dig` | built | picking with the ray march; breaking and placing blocks; the edited chunk (and a neighbor at its border) remeshed and patched | scene: an overlay of flat rectangles (crosshair, hotbar), click events |
 | 7 | `voxels-light` | built | sky light by a column scan, a torch's light spread in at most 15 rounds; faces carry a light level | scene: a light level per face |
-| 8 | `voxels-game` | planned | the mini game (below) | a small text overlay (score, time), if not drawn by X_eTaL |
+| 8 | `voxels-game` | built | the mini game (below) | a small text overlay (score, time), if not drawn by X_eTaL |
 
 (The order changed as the work went: after voxels-world came
 voxels-walk, then voxels-endless and voxels-fly, added at the user's
@@ -261,6 +261,7 @@ Demos 5 to 7 followed (the scene page lists them all with their keys):
 | `voxels-dig` | digging and building: the pick as 100 points along the view ray looked up in the masks of the 1 to 4 columns they cross; an edit is a row (x y z block) the world keeps, newest first, and every column is made with the edits in it and its border (one `i_ndexOf` over its 10,368 cells), so an edited column is simply made again -- its mask at once, its faces and objects over the next two frames -- with a neighbor when the cell is on their border, and edits outlast a column dropped and made again; scene gained an overlay (the crosshair and the hotbar) and clicks |
 | `voxels-water` | conserved water (the user: a trench should dribble down one face, a lake should drain): an amount per cell, 64 units a block, moved and never made or lost -- gravity first, then toward less water by at most half the difference, more the way it moves (momentum) and toward a drop; the sea the one infinite source and sink; a lake of 25 cells a layer drains one layer through a breach, stops at the breach's bottom, and drains the next when the trench is dug deeper (the golden measures it) |
 | `voxels-light` | light: sunlight by one scan down each column and lamplight from lamps, each spread 5 rounds (a step of 3 a block), a face lit by the cell it faces; scene shades by the larger of sunlight times daylight and lamplight, so N switches day and night at once; checked on a tunnel off a sunlit shaft (15 12 9 6 3) |
+| `voxels-game` | Gem Hunt in the endless, lit world: ten glowing gems buried as edits around the start, the first four blocks down; a find is a dig of a gem's cell; labels for the gems found, the time (three minutes of frames) and the nearest gem; G gives up; the end screen shows the score. Left from the plan: stone slower to dig, a sound, a high-score table |
 | `voxels-rubik-buttons` | the cube played with six labeled buttons (U U' R R' F F') and keys: every press a quarter turn animated in 8 frames, presses queued so none is lost, the turning button lit, undo animated; scene gained labels in a built-in font |
 | `voxels-rubik-solve` | Scramble, Solve, Step, Back and Play: the turns handed to X_eTaL-libraries' Eigencube (26 rotation matrices; search, with known move sequences in the later stages) and its solution animated on the voxel cube; the two models checked to agree |
 
@@ -313,7 +314,7 @@ changed instead of the chunk; it fits immutable values.
 | 4 | `voxels-dig` | built | the ray-march pick, breaking and placing, per-chunk remeshing and patching; crosshair and hotbar |
 | 5 | `voxels-water` | built | water flowing by a cellular automaton into what is dug; a hill with a lake on a terrace, held above the sea -- dig the ground downhill of it and the water runs out and falls down the slope (the user); translucent water |
 | 6 | `voxels-light` | built | sky light by a column scan, torches spreading in rounds; brightness per quad |
-| 7 | `voxels-game` | planned | Gem Hunt, with all of the above |
+| 7 | `voxels-game` | built | Gem Hunt, with all of the above |
 
 ## Credits
 

@@ -104,6 +104,7 @@
 <li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-game.xtl.html">voxels-game.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-light.xtl.html">voxels-light.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">voxels-rubik-solve.xtl</a></li>
@@ -148,6 +149,7 @@
 <li class="item"><a href="#l.wood">ˡwood</a></li>
 <li class="item"><a href="#l.leaves">ˡleaves</a></li>
 <li class="item"><a href="#l.lamp">ˡlamp</a></li>
+<li class="item"><a href="#l.gem">ˡgem</a></li>
 <li class="item"><a href="#l.names">ˡnames</a></li>
 <li class="item"><a href="#l.glyphs">ˡglyphs</a></li>
 <li class="item"><a href="#i">i</a></li>
@@ -327,37 +329,47 @@ never made by the terrain)</p>
 </div>
 <pre class="code">ˡlamp ← <span class="c-number">8</span></pre>
 </div>
+<div class="item" id="l.gem">
+<h3><a href="#l.gem">ˡgem</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L36">line 36</a></div>
+<div class="doc">
+<p>block 9: a gem, solid, that glows a little (12 where a lamp is 15):
+buried by the game (voxels-game), never made by the terrain</p>
+</div>
+<pre class="code">ˡgem ← <span class="c-number">9</span></pre>
+</div>
 <div class="item" id="l.names">
 <h3><a href="#l.names">ˡnames</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L38">line 38</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L41">line 41</a></div>
 <div class="doc">
 <p>the blocks' names, in their order</p>
 <pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="extensions-scene-demos-Voxels.xtl.html#l.names">ᵛˣnames</a>
-air stone dirt grass sand water wood leaves lamp</pre>
+air stone dirt grass sand water wood leaves lamp gem</pre>
 </div>
-<pre class="code">ˡnames ← <span class="c-string">&quot;air stone dirt grass sand water wood leaves lamp&quot;</span></pre>
+<pre class="code">ˡnames ← <span class="c-string">&quot;air stone dirt grass sand water wood leaves lamp gem&quot;</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Play.xtl.html#l.p_lace"><span class="c-libfunc">ˡp̲lace</span></a>, <a href="extensions-scene-demos-voxels-chunk.xtl.src.html#L15">extensions/scene/demos/voxels-chunk.xtl:15</a></div>
 </div>
 <div class="item" id="l.glyphs">
 <h3><a href="#l.glyphs">ˡglyphs</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L41">line 41</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L45">line 45</a></div>
 <div class="doc">
 <p>a character for each block when a chunk is printed, air first:
-stone #, dirt %, grass &quot;, sand :, water ~, wood |, leaves *, lamp o</p>
+stone #, dirt %, grass &quot;, sand :, water ~, wood |, leaves *, lamp o,
+gem $</p>
 </div>
-<pre class="code">ˡglyphs ← <span class="c-string">&quot; #%\&quot;:~|*o&quot;</span></pre>
+<pre class="code">ˡglyphs ← <span class="c-string">&quot; #%\&quot;:~|*o$&quot;</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#l.s_ide"><span class="c-libfunc">ˡs̲ide</span></a></div>
 </div>
 <div class="item" id="i">
 <h3><a href="#i">i</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L43">line 43</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L47">line 47</a></div>
 <pre class="code">i ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">4096</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#l.xs">ˡxs</a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.ys">ˡys</a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.zs">ˡzs</a></div>
 </div>
 <div class="item" id="l.xs">
 <h3><a href="#l.xs">ˡxs</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L48">line 48</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L52">line 52</a></div>
 <div class="doc">
 <p>every cell's x (east), as a vector in the chunk's order (x slowest)</p>
 <pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
@@ -369,7 +381,7 @@ stone #, dirt %, grass &quot;, sand :, water ~, wood |, leaves *, lamp o</p>
 </div>
 <div class="item" id="l.ys">
 <h3><a href="#l.ys">ˡys</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L50">line 50</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L54">line 54</a></div>
 <div class="doc">
 <p>every cell's y (up), in the chunk's order</p>
 </div>
@@ -378,7 +390,7 @@ stone #, dirt %, grass &quot;, sand :, water ~, wood |, leaves *, lamp o</p>
 </div>
 <div class="item" id="l.zs">
 <h3><a href="#l.zs">ˡzs</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L55">line 55</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L59">line 59</a></div>
 <div class="doc">
 <p>every cell's z (south), in the chunk's order (z fastest)</p>
 <pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
@@ -390,7 +402,7 @@ stone #, dirt %, grass &quot;, sand :, water ~, wood |, leaves *, lamp o</p>
 </div>
 <div class="item" id="l.h_ills">
 <h3><a href="#l.h_ills"><span class="c-libfunc">ˡh̲ills</span></a> <span class="type">: Float -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L59">line 59</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L63">line 63</a></div>
 <div class="doc">
 <p>vx:h_ills phase: a 16 by 16 height field (x by z), rolling hills of
 heights 3 to 12; the phase shifts them</p>
@@ -405,7 +417,7 @@ heights 3 to 12; the phase shifts them</p>
 </div>
 <div class="item" id="l.c_hunk">
 <h3><a href="#l.c_hunk"><span class="c-libfunc">ˡc̲hunk</span></a> <span class="type">: (Num a, Truthy a) =&gt; Int -&gt; a</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L70">line 70</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L74">line 74</a></div>
 <div class="doc">
 <p>vx:c_hunk h: the chunk on a height field h (x by z): grass on top,
 three of dirt, stone below; water fills air below 7, and sand
@@ -435,7 +447,7 @@ stands above the water</p>
 </div>
 <div class="item" id="l.c_ounts">
 <h3><a href="#l.c_ounts"><span class="c-libfunc">ˡc̲ounts</span></a> <span class="type">: (Num a, Truthy a) =&gt; Int -&gt; a</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L91">line 91</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L95">line 95</a></div>
 <div class="doc">
 <p>vx:c_ounts b: how many of each block, air first</p>
 </div>
@@ -444,7 +456,7 @@ stands above the water</p>
 </div>
 <div class="item" id="l.s_ide">
 <h3><a href="#l.s_ide"><span class="c-libfunc">ˡs̲ide</span></a> <span class="type">: Int -&gt; Int -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L94">line 94</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L98">line 98</a></div>
 <div class="doc">
 <p>x vx:s_ide b: the slice at x, as characters, up at the top</p>
 </div>
@@ -453,7 +465,7 @@ stands above the water</p>
 </div>
 <div class="item" id="l.c_olumn">
 <h3><a href="#l.c_olumn"><span class="c-libfunc">ˡc̲olumn</span></a> <span class="type">: a -&gt; a</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L97">line 97</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L101">line 101</a></div>
 <div class="doc">
 <p>a column value (x by z) at every cell of its column</p>
 </div>
@@ -462,7 +474,7 @@ stands above the water</p>
 </div>
 <div class="item" id="l.t_op">
 <h3><a href="#l.t_op"><span class="c-libfunc">ˡt̲op</span></a> <span class="type">: (Num a, Truthy a) =&gt; a -&gt; a</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L102">line 102</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L106">line 106</a></div>
 <div class="doc">
 <p>vx:t_op b: what is seen from above: the highest non-air block of each
 column (x by z) -- the top's height by a max-reduction down each
@@ -478,7 +490,7 @@ column, then the block there picked by comparing heights</p>
 <h2 class="section" id="section-2">Faces</h2>
 <div class="item" id="X">
 <h3><a href="#X">X</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L111">line 111</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L115">line 115</a></div>
 <div class="doc">
 <p>the cells' coordinates as 16 by 16 by 16 arrays</p>
 </div>
@@ -487,19 +499,19 @@ column, then the block there picked by comparing heights</p>
 </div>
 <div class="item" id="Y">
 <h3><a href="#Y">Y</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L112">line 112</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L116">line 116</a></div>
 <pre class="code">Y ← <span class="c-number">16</span> <span class="c-number">16</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.ys">ˡys</a></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#l.e_xposed"><span class="c-libfunc">ˡe̲xposed</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.s_urface"><span class="c-libfunc">ˡs̲urface</span></a></div>
 </div>
 <div class="item" id="Z">
 <h3><a href="#Z">Z</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L113">line 113</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L117">line 117</a></div>
 <pre class="code">Z ← <span class="c-number">16</span> <span class="c-number">16</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.zs">ˡzs</a></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#l.e_xposed"><span class="c-libfunc">ˡe̲xposed</span></a></div>
 </div>
 <div class="item" id="l.s_olid">
 <h3><a href="#l.s_olid"><span class="c-libfunc">ˡs̲olid</span></a> <span class="type">: (Num a, Num b, Truthy b) =&gt; a -&gt; b</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L116">line 116</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L120">line 120</a></div>
 <div class="doc">
 <p>a solid block is any but air and water</p>
 </div>
@@ -508,7 +520,7 @@ column, then the block there picked by comparing heights</p>
 </div>
 <div class="item" id="l.e_xposed">
 <h3><a href="#l.e_xposed"><span class="c-libfunc">ˡe̲xposed</span></a> <span class="type">: (Num a, Truthy b) =&gt; a -&gt; b</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L123">line 123</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L127">line 127</a></div>
 <div class="doc">
 <p>the exposed faces in the six directions -- west, east, down, up,
 north, south: numbered 0 to 5 -- as a 6 by 4096 Boolean array: a
@@ -530,7 +542,7 @@ the plane that wrapped around made air: beyond the border is air.</p>
 </div>
 <div class="item" id="l.s_urface">
 <h3><a href="#l.s_urface"><span class="c-libfunc">ˡs̲urface</span></a> <span class="type">: (Num a, Truthy b) =&gt; a -&gt; b</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L135">line 135</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L139">line 139</a></div>
 <div class="doc">
 <p>water's surface: water with air above it, facing up</p>
 </div>
@@ -539,7 +551,7 @@ the plane that wrapped around made air: beyond the border is air.</p>
 </div>
 <div class="item" id="h.r_ows">
 <h3><a href="#h.r_ows"><span class="c-libfunc">ʰr̲ows</span></a> <span class="type">: Int -&gt; Int -&gt; Int</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L140">line 140</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L144">line 144</a></div>
 <div class="doc">
 <p>d r_ows mb: the faces of one direction as 5 rows -- x, y, z of the
 cell, the direction, the block -- from mb, the mask times 1 + the
@@ -553,7 +565,7 @@ block (so one array carries both)</p>
 </div>
 <div class="item" id="l.f_aces">
 <h3><a href="#l.f_aces"><span class="c-libfunc">ˡf̲aces</span></a> <span class="type">: Int -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L147">line 147</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L151">line 151</a></div>
 <div class="doc">
 <p>vx:f_aces b: every face to draw, one row each -- x y z direction
 block -- the six directions' exposed faces, then water's surface</p>
@@ -569,7 +581,7 @@ block -- the six directions' exposed faces, then water's surface</p>
 </div>
 <div class="item" id="l.c_ount">
 <h3><a href="#l.c_ount"><span class="c-libfunc">ˡc̲ount</span></a> <span class="type">: (Num a, Truthy a) =&gt; Int -&gt; a</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L161">line 161</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L165">line 165</a></div>
 <div class="doc">
 <p>vx:c_ount f: how many faces in each direction (west east down up
 north south); a single block shows one face each way:</p>
@@ -584,7 +596,7 @@ north south); a single block shows one face each way:</p>
 <h2 class="section" id="section-3">Drawing</h2>
 <div class="item" id="ox">
 <h3><a href="#ox">ox</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L167">line 167</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L171">line 171</a></div>
 <div class="doc">
 <p>the corners of each direction's face, from its cell's corner, taken
 in pairs round the square (1 2, 2 3, 3 4, 4 1): x, y, z, 6 by 8 each</p>
@@ -594,19 +606,19 @@ in pairs round the square (1 2, 2 3, 3 4, 4 1): x, y, z, 6 by 8 each</p>
 </div>
 <div class="item" id="oy">
 <h3><a href="#oy">oy</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L168">line 168</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L172">line 172</a></div>
 <pre class="code">oy ← <span class="c-number">6</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">0</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#l.e_dges"><span class="c-libfunc">ˡe̲dges</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#cy">cy</a></div>
 </div>
 <div class="item" id="oz">
 <h3><a href="#oz">oz</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L169">line 169</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L173">line 173</a></div>
 <pre class="code">oz ← <span class="c-number">6</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#l.e_dges"><span class="c-libfunc">ˡe̲dges</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#cz">cz</a></div>
 </div>
 <div class="item" id="l.e_dges">
 <h3><a href="#l.e_dges"><span class="c-libfunc">ˡe̲dges</span></a> <span class="type">: Int -&gt; Float</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L174">line 174</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L178">line 178</a></div>
 <div class="doc">
 <p>vx:e_dges f: the faces' outlines as segments for scene: 8 points a
 face (4 edges, 2 points each), n*8 by 3, the chunk centered on the
@@ -625,34 +637,34 @@ origin and scaled to -1..1</p>
 </div>
 <div class="item" id="l.colors">
 <h3><a href="#l.colors">ˡcolors</a> <span class="type">: Float</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L185">line 185</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L189">line 189</a></div>
 <div class="doc">
 <p>each block's color, red green blue (air first)</p>
 </div>
-<pre class="code">ˡcolors ← <span class="c-number">9</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span>  <span class="c-number">0.55</span> <span class="c-number">0.55</span> <span class="c-number">0.58</span>  <span class="c-number">0.55</span> <span class="c-number">0.38</span> <span class="c-number">0.22</span>  <span class="c-number">0.35</span> <span class="c-number">0.7</span> <span class="c-number">0.25</span>  <span class="c-number">0.9</span> <span class="c-number">0.82</span> <span class="c-number">0.55</span>  <span class="c-number">0.25</span> <span class="c-number">0.45</span> <span class="c-number">0.9</span>  <span class="c-number">0.45</span> <span class="c-number">0.3</span> <span class="c-number">0.15</span>  <span class="c-number">0.2</span> <span class="c-number">0.5</span> <span class="c-number">0.2</span>  <span class="c-number">1.0</span> <span class="c-number">0.88</span> <span class="c-number">0.45</span></pre>
+<pre class="code">ˡcolors ← <span class="c-number">10</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span>  <span class="c-number">0.55</span> <span class="c-number">0.55</span> <span class="c-number">0.58</span>  <span class="c-number">0.55</span> <span class="c-number">0.38</span> <span class="c-number">0.22</span>  <span class="c-number">0.35</span> <span class="c-number">0.7</span> <span class="c-number">0.25</span>  <span class="c-number">0.9</span> <span class="c-number">0.82</span> <span class="c-number">0.55</span>  <span class="c-number">0.25</span> <span class="c-number">0.45</span> <span class="c-number">0.9</span>  <span class="c-number">0.45</span> <span class="c-number">0.3</span> <span class="c-number">0.15</span>  <span class="c-number">0.2</span> <span class="c-number">0.5</span> <span class="c-number">0.2</span>  <span class="c-number">1.0</span> <span class="c-number">0.88</span> <span class="c-number">0.45</span>  <span class="c-number">0.25</span> <span class="c-number">0.95</span> <span class="c-number">0.95</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.s_endOne"><span class="c-libfunc">ʰs̲endOne</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.d_rawWater"><span class="c-libfunc">ʰd̲rawWater</span></a>, <a href="extensions-scene-demos-Play.xtl.html#h.h_udOf"><span class="c-libfunc">ʰh̲udOf</span></a>, <a href="extensions-scene-demos-voxels-faces.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-solid.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-walk.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a>, <a href="extensions-scene-demos-voxels-world.xtl.html#u.p_ut"><span class="c-userfunc">ᵘp̲ut</span></a></div>
 </div>
 <div class="item" id="cx">
 <h3><a href="#cx">cx</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L189">line 189</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L193">line 193</a></div>
 <pre class="code">cx ← <span class="c-number">1</span> <span class="c-number">3</span> <span class="c-number">5</span> <span class="c-number">7</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> <a href="extensions-scene-demos-Voxels.xtl.html#ox">ox</a></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#l.c_orners"><span class="c-libfunc">ˡc̲orners</span></a></div>
 </div>
 <div class="item" id="cy">
 <h3><a href="#cy">cy</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L190">line 190</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L194">line 194</a></div>
 <pre class="code">cy ← <span class="c-number">1</span> <span class="c-number">3</span> <span class="c-number">5</span> <span class="c-number">7</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> <a href="extensions-scene-demos-Voxels.xtl.html#oy">oy</a></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#l.c_orners"><span class="c-libfunc">ˡc̲orners</span></a></div>
 </div>
 <div class="item" id="cz">
 <h3><a href="#cz">cz</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L191">line 191</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L195">line 195</a></div>
 <pre class="code">cz ← <span class="c-number">1</span> <span class="c-number">3</span> <span class="c-number">5</span> <span class="c-number">7</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> <a href="extensions-scene-demos-Voxels.xtl.html#oz">oz</a></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#l.c_orners"><span class="c-libfunc">ˡc̲orners</span></a></div>
 </div>
 <div class="item" id="l.c_orners">
 <h3><a href="#l.c_orners"><span class="c-libfunc">ˡc̲orners</span></a> <span class="type">: Int -&gt; Float</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L194">line 194</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L198">line 198</a></div>
 <div class="doc">
 <p>vx:c_orners f: each face's four corners in order round it, n*4 by 3,
 in blocks -- the quads scene draws for the faces</p>
@@ -669,7 +681,7 @@ in blocks -- the quads scene draws for the faces</p>
 </div>
 <div class="item" id="l.q_uads">
 <h3><a href="#l.q_uads"><span class="c-libfunc">ˡq̲uads</span></a> <span class="type">: Int -&gt; Float</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L205">line 205</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L209">line 209</a></div>
 <div class="doc">
 <p>vx:q_uads f: the faces as filled quads for scene, a chunk centered
 on the origin and scaled to -1..1, like vx:e_dges</p>
@@ -680,7 +692,7 @@ on the origin and scaled to -1..1, like vx:e_dges</p>
 <h2 class="section" id="section-4">Worlds: many chunks</h2>
 <div class="item" id="h.w_eights">
 <h3><a href="#h.w_eights"><span class="c-libfunc">ʰw̲eights</span></a> <span class="type">: Int -&gt; Int -&gt; Float</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L216">line 216</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L220">line 220</a></div>
 <div class="doc">
 <p>value noise, made by linear algebra: random heights on a grid every s
 blocks, interpolated to n by n -- M G M', M the n by k hat-function
@@ -695,7 +707,7 @@ weights of each grid line</p>
 </div>
 <div class="item" id="h.n_oise">
 <h3><a href="#h.n_oise"><span class="c-libfunc">ʰn̲oise</span></a> <span class="type">: Int -&gt; Int -&gt; Float</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L221">line 221</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L225">line 225</a></div>
 <pre class="code"><span class="c-libfunc">ʰn̲oise</span> ← { s n →
   m ← s <a href="extensions-scene-demos-Voxels.xtl.html#h.w_eights" class="c-libfunc">ʰw̲eights</a> n
   k ← <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> n <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> s
@@ -706,7 +718,7 @@ weights of each grid line</p>
 </div>
 <div class="item" id="l.h_eights">
 <h3><a href="#l.h_eights"><span class="c-libfunc">ˡh̲eights</span></a> <span class="type">: Int -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L230">line 230</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L234">line 234</a></div>
 <div class="doc">
 <p>vx:h_eights n: an n by n height field (x by z), three octaves of
 value noise -- every 16, 8 and 4 blocks -- from 4 to 29 (seeded)</p>
@@ -719,7 +731,7 @@ value noise -- every 16, 8 and 4 blocks -- from 4 to 29 (seeded)</p>
 </div>
 <div class="item" id="h.c_oords">
 <h3><a href="#h.c_oords"><span class="c-libfunc">ʰc̲oords</span></a> <span class="type">: Int -&gt; Int</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L236">line 236</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L240">line 240</a></div>
 <div class="doc">
 <p>a world's cells' coordinates, for a shape nx ny nz (x slowest)</p>
 </div>
@@ -732,7 +744,7 @@ value noise -- every 16, 8 and 4 blocks -- from 4 to 29 (seeded)</p>
 </div>
 <div class="item" id="l.t_errain">
 <h3><a href="#l.t_errain"><span class="c-libfunc">ˡt̲errain</span></a> <span class="type">: (Num a, Truthy a) =&gt; Int -&gt; a</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L245">line 245</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L249">line 249</a></div>
 <div class="doc">
 <p>vx:t_errain h: the world on a height field h (nx by nz), 32 tall:
 grass, dirt, stone, water filling air below 14, sand at the shore --
@@ -757,7 +769,7 @@ the chunk's rules, over the whole world</p>
 </div>
 <div class="item" id="l.t_ree">
 <h3><a href="#l.t_ree"><span class="c-libfunc">ˡt̲ree</span></a> <span class="type">: (Num a, Truthy a) =&gt; Int -&gt; a -&gt; a</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L265">line 265</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L269">line 269</a></div>
 <div class="doc">
 <p>t vx:t_ree b: a tree at column t (x z) when it stands on grass: a
 trunk of 4 and a crown of leaves, placed into b -- only the tree's
@@ -796,7 +808,7 @@ membership mask, so a tree costs little in a big block</p>
 </div>
 <div class="item" id="l.w_orldFaces">
 <h3><a href="#l.w_orldFaces"><span class="c-libfunc">ˡw̲orldFaces</span></a> <span class="type">: Int -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L297">line 297</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L301">line 301</a></div>
 <div class="doc">
 <p>vx:w_orldFaces b: every face of a world, one row each -- x y z
 direction block -- as vx:f_aces does for a chunk, the borders of the
@@ -832,7 +844,7 @@ world air</p>
 </div>
 <div class="item" id="l.c_hunkOf">
 <h3><a href="#l.c_hunkOf"><span class="c-libfunc">ˡc̲hunkOf</span></a> <span class="type">: Int -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L325">line 325</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L329">line 329</a></div>
 <div class="doc">
 <p>vx:c_hunkOf f: the chunk of each face (1 up): x, z and y in 16s</p>
 </div>
@@ -841,7 +853,7 @@ world air</p>
 </div>
 <div class="item" id="l.f_orest">
 <h3><a href="#l.f_orest"><span class="c-libfunc">ˡf̲orest</span></a> <span class="type">: Int -&gt; Int -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L329">line 329</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L333">line 333</a></div>
 <div class="doc">
 <p>ts vx:f_orest b: trees at the columns ts (n by 2: x z), each where it
 stands on grass -- vx:t_ree folded over them</p>
@@ -855,7 +867,7 @@ stands on grass -- vx:t_ree folded over them</p>
 <h2 class="section" id="section-5">Endless worlds</h2>
 <div class="item" id="l.h_ash">
 <h3><a href="#l.h_ash"><span class="c-libfunc">ˡh̲ash</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Float</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L343">line 343</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L347">line 347</a></div>
 <div class="doc">
 <p>a grid point's random value, 0 to 1, from its coordinates alone (i
 by j, any integers): the same point always gets the same value, so
@@ -873,7 +885,7 @@ neighbors</p>
 </div>
 <div class="item" id="h.w_eight">
 <h3><a href="#h.w_eight"><span class="c-libfunc">ʰw̲eight</span></a> <span class="type">: Num a =&gt; Float -&gt; a -&gt; Float</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L350">line 350</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L354">line 354</a></div>
 <pre class="code"><span class="c-libfunc">ʰw̲eight</span> ← { t k →
   d ← <span class="c-number">0.0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> t <span class="c-symbol">'</span><a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k
   d <a href="builtins.html#-2a" class="c-symbol">×</a> d <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">3.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> d
@@ -882,7 +894,7 @@ neighbors</p>
 </div>
 <div class="item" id="h.n_oiseOf">
 <h3><a href="#h.n_oiseOf"><span class="c-libfunc">ʰn̲oiseOf</span></a> <span class="type">: Num a =&gt; a -&gt; Int -&gt; Float</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L358">line 358</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L362">line 362</a></div>
 <pre class="code"><span class="c-libfunc">ʰn̲oiseOf</span> ← { s c →
   x0 ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> c
   z0 ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> c
@@ -897,7 +909,7 @@ neighbors</p>
 </div>
 <div class="item" id="l.h_eightsAt">
 <h3><a href="#l.h_eightsAt"><span class="c-libfunc">ˡh̲eightsAt</span></a> <span class="type">: Int -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L373">line 373</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L377">line 377</a></div>
 <div class="doc">
 <p>vx:h_eightsAt x0 z0 n: the heights of the n by n columns from block
 (x0, z0), x by z, of the endless world: three octaves of value noise
@@ -908,23 +920,23 @@ anywhere, always the same</p>
   v ← (<span class="c-number">18.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">32</span> <a href="extensions-scene-demos-Voxels.xtl.html#h.n_oiseOf" class="c-libfunc">ʰn̲oiseOf</a> c) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">8.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">16</span> <a href="extensions-scene-demos-Voxels.xtl.html#h.n_oiseOf" class="c-libfunc">ʰn̲oiseOf</a> c) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">3.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">8</span> <a href="extensions-scene-demos-Voxels.xtl.html#h.n_oiseOf" class="c-libfunc">ʰn̲oiseOf</a> c
   <span class="c-number">3</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">29</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">2.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> v
 }</pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.n_ew"><span class="c-libfunc">ˡn̲ew</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.p_atch"><span class="c-libfunc">ˡp̲atch</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnBlocks"><span class="c-libfunc">ˡc̲olumnBlocks</span></a>, <a href="extensions-scene-demos-voxels-water.xtl.html#hv">hv</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.n_ew"><span class="c-libfunc">ˡn̲ew</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.p_atch"><span class="c-libfunc">ˡp̲atch</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnBlocks"><span class="c-libfunc">ˡc̲olumnBlocks</span></a>, <a href="extensions-scene-demos-voxels-game.xtl.html#u.t_op"><span class="c-userfunc">ᵘt̲op</span></a>, <a href="extensions-scene-demos-voxels-water.xtl.html#hv">hv</a></div>
 </div>
 <div class="item" id="cell">
 <h3><a href="#cell">cell</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L380">line 380</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L384">line 384</a></div>
 <pre class="code">cell ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8192</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#inner">inner</a></div>
 </div>
 <div class="item" id="inner">
 <h3><a href="#inner">inner</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L381">line 381</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L385">line 385</a></div>
 <pre class="code">inner ← <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-Voxels.xtl.html#cell">cell</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">16</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">18</span> <a href="builtins.html#-2a" class="c-symbol">×</a> ((<a href="extensions-scene-demos-Voxels.xtl.html#cell">cell</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">16</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">32</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">32</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-Voxels.xtl.html#cell">cell</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">512</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#l.p_atch"><span class="c-libfunc">ˡp̲atch</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnMask"><span class="c-libfunc">ˡc̲olumnMask</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnWater"><span class="c-libfunc">ˡc̲olumnWater</span></a></div>
 </div>
 <div class="item" id="l.p_atch">
 <h3><a href="#l.p_atch"><span class="c-libfunc">ˡp̲atch</span></a> <span class="type">: Int -&gt; Box Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L389">line 389</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L393">line 393</a></div>
 <div class="doc">
 <p>vx:p_atch c: column c (cx cz) of the endless world, 16 by 32 by 16
 blocks: made with a border of one block from its neighbors' heights,
@@ -952,55 +964,55 @@ its solid mask (16 by 32 by 16, flat, x slowest)</p>
 <h2 class="section" id="section-6">Columns, quickly</h2>
 <div class="item" id="cc">
 <h3><a href="#cc">cc</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L410">line 410</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L414">line 414</a></div>
 <pre class="code">cc ← <a href="extensions-scene-demos-Voxels.xtl.html#h.c_oords" class="c-libfunc">ʰc̲oords</a> <span class="c-number">18</span> <span class="c-number">32</span> <span class="c-number">18</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#cx18">cx18</a>, <a href="extensions-scene-demos-Voxels.xtl.html#cy18">cy18</a>, <a href="extensions-scene-demos-Voxels.xtl.html#cz18">cz18</a></div>
 </div>
 <div class="item" id="cx18">
 <h3><a href="#cx18">cx18</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L411">line 411</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L415">line 415</a></div>
 <pre class="code">cx18 ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Voxels.xtl.html#cc">cc</a></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#X18">X18</a>, <a href="extensions-scene-demos-Voxels.xtl.html#own">own</a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnBlocks"><span class="c-libfunc">ˡc̲olumnBlocks</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnFaces"><span class="c-libfunc">ˡc̲olumnFaces</span></a></div>
 </div>
 <div class="item" id="cy18">
 <h3><a href="#cy18">cy18</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L412">line 412</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L416">line 416</a></div>
 <pre class="code">cy18 ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Voxels.xtl.html#cc">cc</a></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#Y18">Y18</a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnBlocks"><span class="c-libfunc">ˡc̲olumnBlocks</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnFaces"><span class="c-libfunc">ˡc̲olumnFaces</span></a></div>
 </div>
 <div class="item" id="cz18">
 <h3><a href="#cz18">cz18</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L413">line 413</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L417">line 417</a></div>
 <pre class="code">cz18 ← <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Voxels.xtl.html#cc">cc</a></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#Z18">Z18</a>, <a href="extensions-scene-demos-Voxels.xtl.html#own">own</a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnBlocks"><span class="c-libfunc">ˡc̲olumnBlocks</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnFaces"><span class="c-libfunc">ˡc̲olumnFaces</span></a></div>
 </div>
 <div class="item" id="X18">
 <h3><a href="#X18">X18</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L414">line 414</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L418">line 418</a></div>
 <pre class="code">X18 ← <span class="c-number">18</span> <span class="c-number">32</span> <span class="c-number">18</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-scene-demos-Voxels.xtl.html#cx18">cx18</a></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnFaces"><span class="c-libfunc">ˡc̲olumnFaces</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#ex0">ex0</a>, <a href="extensions-scene-demos-Voxels.xtl.html#ex1">ex1</a></div>
 </div>
 <div class="item" id="Y18">
 <h3><a href="#Y18">Y18</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L415">line 415</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L419">line 419</a></div>
 <pre class="code">Y18 ← <span class="c-number">18</span> <span class="c-number">32</span> <span class="c-number">18</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-scene-demos-Voxels.xtl.html#cy18">cy18</a></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnFaces"><span class="c-libfunc">ˡc̲olumnFaces</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#ey0">ey0</a>, <a href="extensions-scene-demos-Voxels.xtl.html#ey1">ey1</a></div>
 </div>
 <div class="item" id="Z18">
 <h3><a href="#Z18">Z18</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L416">line 416</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L420">line 420</a></div>
 <pre class="code">Z18 ← <span class="c-number">18</span> <span class="c-number">32</span> <span class="c-number">18</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-scene-demos-Voxels.xtl.html#cz18">cz18</a></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnFaces"><span class="c-libfunc">ˡc̲olumnFaces</span></a>, <a href="extensions-scene-demos-Voxels.xtl.html#ez0">ez0</a>, <a href="extensions-scene-demos-Voxels.xtl.html#ez1">ez1</a></div>
 </div>
 <div class="item" id="own">
 <h3><a href="#own">own</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L417">line 417</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L421">line 421</a></div>
 <pre class="code">own ← (<a href="extensions-scene-demos-Voxels.xtl.html#cx18">cx18</a> <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">1</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-scene-demos-Voxels.xtl.html#cx18">cx18</a> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">16</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-scene-demos-Voxels.xtl.html#cz18">cz18</a> <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">1</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-Voxels.xtl.html#cz18">cz18</a> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">16</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnFaces"><span class="c-libfunc">ˡc̲olumnFaces</span></a></div>
 </div>
 <div class="item" id="l.c_olumnBlocks">
 <h3><a href="#l.c_olumnBlocks"><span class="c-libfunc">ˡc̲olumnBlocks</span></a> <span class="type">: Int -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L423">line 423</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L427">line 427</a></div>
 <div class="doc">
 <p>vx:c_olumnBlocks c: the blocks of column c (cx cz) of the endless
 world with a border of one from its neighbors, 18 by 32 by 18: the
@@ -1027,7 +1039,7 @@ of the three parts of making a column (about 12 ms)</p>
 </div>
 <div class="item" id="l.c_olumnMask">
 <h3><a href="#l.c_olumnMask"><span class="c-libfunc">ˡc̲olumnMask</span></a> <span class="type">: Num a =&gt; a -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L443">line 443</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L447">line 447</a></div>
 <div class="doc">
 <p>vx:c_olumnMask b: the solid mask of a column's own cells (16 by 32
 by 16, flat, x slowest), from its blocks; Ints (f_loor f_loat: so the
@@ -1038,7 +1050,7 @@ type checker settles the masks' type the same way every run, ask E9)</p>
 </div>
 <div class="item" id="l.c_olumnWater">
 <h3><a href="#l.c_olumnWater"><span class="c-libfunc">ˡc̲olumnWater</span></a> <span class="type">: Num a =&gt; a -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L448">line 448</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L452">line 452</a></div>
 <div class="doc">
 <p>vx:c_olumnWater b: the water mask of a column's own cells (16 by 32
 by 16, flat, x slowest), from its blocks: where water can be seen and
@@ -1049,7 +1061,7 @@ swum, and where flowing water cannot go again</p>
 </div>
 <div class="item" id="l.c_olumnFaces">
 <h3><a href="#l.c_olumnFaces"><span class="c-libfunc">ˡc̲olumnFaces</span></a> <span class="type">: Int -&gt; Int -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L456">line 456</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L460">line 460</a></div>
 <div class="doc">
 <p>c vx:c_olumnFaces b: the faces of column c's own cells, in world
 coordinates, one row each (x y z direction block) -- found over the
@@ -1092,49 +1104,49 @@ part of making a column</p>
 <h2 class="section" id="section-7">Light</h2>
 <div class="item" id="ex0">
 <h3><a href="#ex0">ex0</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L490">line 490</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L494">line 494</a></div>
 <pre class="code">ex0 ← (<a href="extensions-scene-demos-Voxels.xtl.html#X18">X18</a> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#h.g_low"><span class="c-libfunc">ʰg̲low</span></a></div>
 </div>
 <div class="item" id="ex1">
 <h3><a href="#ex1">ex1</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L491">line 491</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L495">line 495</a></div>
 <pre class="code">ex1 ← (<a href="extensions-scene-demos-Voxels.xtl.html#X18">X18</a> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">17</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#h.g_low"><span class="c-libfunc">ʰg̲low</span></a></div>
 </div>
 <div class="item" id="ey0">
 <h3><a href="#ey0">ey0</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L492">line 492</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L496">line 496</a></div>
 <pre class="code">ey0 ← (<a href="extensions-scene-demos-Voxels.xtl.html#Y18">Y18</a> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#h.g_low"><span class="c-libfunc">ʰg̲low</span></a></div>
 </div>
 <div class="item" id="ey1">
 <h3><a href="#ey1">ey1</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L493">line 493</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L497">line 497</a></div>
 <pre class="code">ey1 ← (<a href="extensions-scene-demos-Voxels.xtl.html#Y18">Y18</a> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">31</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#h.g_low"><span class="c-libfunc">ʰg̲low</span></a></div>
 </div>
 <div class="item" id="ez0">
 <h3><a href="#ez0">ez0</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L494">line 494</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L498">line 498</a></div>
 <pre class="code">ez0 ← (<a href="extensions-scene-demos-Voxels.xtl.html#Z18">Z18</a> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#h.g_low"><span class="c-libfunc">ʰg̲low</span></a></div>
 </div>
 <div class="item" id="ez1">
 <h3><a href="#ez1">ez1</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L495">line 495</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L499">line 499</a></div>
 <pre class="code">ez1 ← (<a href="extensions-scene-demos-Voxels.xtl.html#Z18">Z18</a> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">17</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span></pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Voxels.xtl.html#h.g_low"><span class="c-libfunc">ʰg̲low</span></a></div>
 </div>
 <div class="item" id="l.c_olumnLight">
 <h3><a href="#l.c_olumnLight"><span class="c-libfunc">ˡc̲olumnLight</span></a> <span class="type">: Num a =&gt; a -&gt; (Int, Int)</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L511">line 511</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L515">line 515</a></div>
 <div class="doc">
 <p>vx:c_olumnLight b: the light in a column's blocks with their border
 (18 by 32 by 18), as (sunlight, lamplight), each 0 to 15 a cell.
 Sunlight: an open cell (air or water) with only open cells above it
 sees the sky, 15 -- a running minimum down each column, one scan.
-Lamplight: a lamp is 15 (none: none to spread). Each then spreads 5
+Lamplight: a lamp is 15, a gem 12 (none: none to spread). Each then spreads 5
 rounds through open cells, a cell taking the brightest of its six
 neighbors less 3 (the same six shifts as the faces), so light reaches
 under overhangs and into tunnels and fades over 5 blocks. Light from
@@ -1149,15 +1161,15 @@ neighboring column does not light this one.</p>
   op ← <span class="c-number">1</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.s_olid" class="c-libfunc">ˡs̲olid</a> b
   sky ← <a href="builtins.html#r_ev" class="c-builtin">r̲ev₂</a> <span class="c-builtin">'</span><a href="builtins.html#m_in" class="c-builtin">m̲in</a> <a href="builtins.html#s_-5c" class="c-builtin">s̲\₂</a> <a href="builtins.html#r_ev" class="c-builtin">r̲ev₂</a> op
   sun ← <span class="c-number">5</span> <span class="c-quote">'</span>{ op <a href="extensions-scene-demos-Voxels.xtl.html#h.g_low" class="c-libfunc">ʰg̲low</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <span class="c-number">15</span> <a href="builtins.html#-2a" class="c-symbol">×</a> sky
-  lamps ← b <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">8</span>
-  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> lamps ? (sun, <span class="c-number">0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> sun)
-  (sun, <span class="c-number">5</span> <span class="c-quote">'</span>{ op <a href="extensions-scene-demos-Voxels.xtl.html#h.g_low" class="c-libfunc">ʰg̲low</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <span class="c-number">15</span> <a href="builtins.html#-2a" class="c-symbol">×</a> lamps)
+  glow ← (<span class="c-number">15</span> <a href="builtins.html#-2a" class="c-symbol">×</a> b <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">8</span>) <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">12</span> <a href="builtins.html#-2a" class="c-symbol">×</a> b <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">9</span>
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> glow ? (sun, <span class="c-number">0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> sun)
+  (sun, <span class="c-number">5</span> <span class="c-quote">'</span>{ op <a href="extensions-scene-demos-Voxels.xtl.html#h.g_low" class="c-libfunc">ʰg̲low</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> glow)
 }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.l_ight"><span class="c-libfunc">ʰl̲ight</span></a>, <a href="extensions-scene-demos-voxels-light.xtl.html#L">L</a></div>
 </div>
 <div class="item" id="h.g_low">
 <h3><a href="#h.g_low"><span class="c-libfunc">ʰg̲low</span></a> <span class="type">: Int -&gt; Int -&gt; Int</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L522">line 522</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L526">line 526</a></div>
 <pre class="code"><span class="c-libfunc">ʰg̲low</span> ← { op L →
   n ← (<span class="c-number">-1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₁</a> L) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-Voxels.xtl.html#ex0">ex0</a>
   n ← n <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> (<span class="c-number">1</span> <a href="builtins.html#o_-2d" class="c-builtin">o̲-₁</a> L) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-Voxels.xtl.html#ex1">ex1</a>
@@ -1171,11 +1183,11 @@ neighboring column does not light this one.</p>
 </div>
 <div class="item" id="l.f_aceLight">
 <h3><a href="#l.f_aceLight"><span class="c-libfunc">ˡf̲aceLight</span></a> <span class="type">: (Num a, Truthy a) =&gt; (Int, (a, a)) -&gt; Int -&gt; a</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L535">line 535</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L539">line 539</a></div>
 <div class="doc">
 <p>(c, (sun, lamp)) vx:f_aceLight f: each face's sunlight and lamplight
 (n by 2, 0 to 15): the light of the cell it faces (the sky above the
-world); a lamp's own faces are fully lit</p>
+world); a lamp's and a gem's own faces are fully lit</p>
 </div>
 <pre class="code"><span class="c-libfunc">ˡf̲aceLight</span> ← { csl f →
   (c, (sun, lamp)) ← csl
@@ -1188,7 +1200,7 @@ world); a lamp's own faces are fully lit</p>
   lz ← oz <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> f) <a href="builtins.html#-2d" class="c-symbol">−</a> (<span class="c-number">16</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> c) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>
   i ← <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> lz <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">18</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">31</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> ly) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">32</span> <a href="builtins.html#-2a" class="c-symbol">×</a> lx
   s ← (<span class="c-number">15</span> <a href="builtins.html#-2a" class="c-symbol">×</a> ly <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">31</span>) <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> sun
-  l ← (<span class="c-number">15</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">8</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> f) <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> lamp
+  l ← (<span class="c-number">15</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">8</span> <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> f) <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> lamp
   <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> s) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> l
 }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.l_ight"><span class="c-libfunc">ʰl̲ight</span></a></div>

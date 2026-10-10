@@ -259,6 +259,23 @@ before the next builds on it. Their shared X_eTaL is the library
     than a block into a neighboring column is not seen. Recorded as
     `videos/voxels-light.webm`: the landscape by day, a ring of lamps,
     night, day.
+15. `demos/voxels-game.xtl` (`just demo scene voxels-game`): Gem Hunt.
+    Ten gems (a block that glows a little: lamplight 12) are buried
+    around the start, a few blocks under the surface, as edits; dig
+    them out in three minutes. The first lies four blocks straight
+    down from the start; the others are scattered within a dozen
+    blocks, 2 to 6 under the ground's top. Labels across the top show
+    the gems found, the time left and how far the nearest gem not yet
+    found is; gems' glow lights a tunnel near one. Everything from the
+    voxel demos works (dig, place, lamps, water, night); G gives up.
+    The end -- time up, all found, or G -- shows the score across the
+    middle. The game is X_eTaL: a find is a dig (the world's newest
+    edits, block 0) whose cell is a gem's; the clock is the frames, 60
+    a second (`pl:f_rameV` hands the game each frame's event). Not
+    done from the first plan: stone slower to dig than dirt, a sound
+    for a find, a high-score table. Recorded as
+    `videos/voxels-game.webm`: a look round, four digs to the first
+    gem, G and the score.
 
 ## Build and test
 

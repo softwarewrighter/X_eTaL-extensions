@@ -104,6 +104,7 @@
 <li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-game.xtl.html">voxels-game.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-light.xtl.html">voxels-light.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">voxels-rubik-solve.xtl</a></li>
@@ -153,6 +154,7 @@
 <li class="item"><a href="#L105"><span class="c-libfunc">ʰw̲hen</span></a></li>
 <li class="item"><a href="#L109"><span class="c-libfunc">ʰp̲laceIf</span></a></li>
 <li class="item"><a href="#L117"><span class="c-libfunc">ˡf̲rame</span></a></li>
+<li class="item"><a href="#L124"><span class="c-libfunc">ˡf̲rameV</span></a></li>
 </ul>
 </nav>
 <main>
@@ -275,22 +277,29 @@
 <span class="line" id="L114"><a class="ln" href="#L114">114</a><span class="c-comment">⍝</span><span class="c-comment"># pl:f_rame (s, sel): one frame of the game: an event (dig, place,</span></span>
 <span class="line" id="L115"><a class="ln" href="#L115">115</a><span class="c-comment">⍝</span><span class="c-comment"># choose, home, fly, quit), then the world's work (a third of a column,</span></span>
 <span class="line" id="L116"><a class="ln" href="#L116">116</a><span class="c-comment">⍝</span><span class="c-comment"># or a tick of flowing water), then the player</span></span>
-<span class="line" id="L117"><a class="ln" href="#L117">117</a><span class="c-libfunc">ˡf̲rame</span> ← { (s, sel) →</span>
-<span class="line" id="L118"><a class="ln" href="#L118">118</a>  <a href="extensions-scene-demos-Endless.xtl.html#l.s_topped" class="c-libfunc">ᵉⁿs̲topped</a> s ? (s, sel)</span>
-<span class="line" id="L119"><a class="ln" href="#L119">119</a>  w ← <a href="extensions-scene-demos-Endless.xtl.html#l.w_indow" class="c-libfunc">ᵉⁿw̲indow</a> s</span>
-<span class="line" id="L120"><a class="ln" href="#L120">120</a>  v ← <a href="extensions-scene-lib-Scene.xtl.html#l.n_ext-21" class="c-libfunc">ˢᶜn̲ext!</a> w</span>
-<span class="line" id="L121"><a class="ln" href="#L121">121</a>  ((v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;close&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key q&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key Escape&quot;</span>) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span> ? (<a href="extensions-scene-demos-Endless.xtl.html#l.s_top" class="c-libfunc">ᵉⁿs̲top</a> s, sel)</span>
-<span class="line" id="L122"><a class="ln" href="#L122">122</a>  s ← (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key h&quot;</span>) <a href="extensions-scene-demos-Play.xtl.html#h.i_f" class="c-libfunc">ʰi̲f</a> s</span>
-<span class="line" id="L123"><a class="ln" href="#L123">123</a>  s ← (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key f&quot;</span>) <a href="extensions-scene-demos-Play.xtl.html#h.f_ly" class="c-libfunc">ʰf̲ly</a> s</span>
-<span class="line" id="L124"><a class="ln" href="#L124">124</a>  s ← ((v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key n&quot;</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="extensions-scene-demos-Endless.xtl.html#l.l_it" class="c-libfunc">ᵉⁿl̲it</a> s) <a href="extensions-scene-demos-Play.xtl.html#h.n_ightIf" class="c-libfunc">ʰn̲ightIf</a> s</span>
-<span class="line" id="L125"><a class="ln" href="#L125">125</a>  dig ← ((<span class="c-number">10</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> v) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;click left&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key x&quot;</span></span>
-<span class="line" id="L126"><a class="ln" href="#L126">126</a>  s ← dig <a href="extensions-scene-demos-Play.xtl.html#h.w_hen" class="c-libfunc">ʰw̲hen</a> s</span>
-<span class="line" id="L127"><a class="ln" href="#L127">127</a>  put ← ((<span class="c-number">11</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> v) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;click right&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key e&quot;</span></span>
-<span class="line" id="L128"><a class="ln" href="#L128">128</a>  (s, sel) ← put <a href="extensions-scene-demos-Play.xtl.html#h.p_laceIf" class="c-libfunc">ʰp̲laceIf</a> (s, sel)</span>
-<span class="line" id="L129"><a class="ln" href="#L129">129</a>  (s, sel) ← (v, s, sel) <a href="extensions-scene-demos-Play.xtl.html#h.c_hoose" class="c-libfunc">ʰc̲hoose</a> <span class="c-number">0</span></span>
-<span class="line" id="L130"><a class="ln" href="#L130">130</a>  s ← <a href="extensions-scene-demos-Endless.xtl.html#l.s_tream" class="c-libfunc">ᵉⁿs̲tream</a> s</span>
-<span class="line" id="L131"><a class="ln" href="#L131">131</a>  (s <a href="extensions-scene-demos-Endless.xtl.html#l.m_ove" class="c-libfunc">ᵉⁿm̲ove</a> <a href="extensions-scene-lib-Scene.xtl.html#l.c_ontrols" class="c-libfunc">ˢᶜc̲ontrols</a> w, sel)</span>
-<span class="line" id="L132"><a class="ln" href="#L132">132</a>}</span>
+<span class="line" id="L117"><a class="ln" href="#L117">117</a><span class="c-libfunc">ˡf̲rame</span> ← { st →</span>
+<span class="line" id="L118"><a class="ln" href="#L118">118</a>  (s, sel, _) ← <a href="extensions-scene-demos-Play.xtl.html#l.f_rameV" class="c-libfunc">ˡf̲rameV</a> st</span>
+<span class="line" id="L119"><a class="ln" href="#L119">119</a>  (s, sel)</span>
+<span class="line" id="L120"><a class="ln" href="#L120">120</a>}</span>
+<span class="line" id="L121"><a class="ln" href="#L121">121</a></span>
+<span class="line" id="L122"><a class="ln" href="#L122">122</a><span class="c-comment">⍝</span><span class="c-comment"># pl:f_rameV (s, sel): pl:f_rame, and the frame's event too (for a game</span></span>
+<span class="line" id="L123"><a class="ln" href="#L123">123</a><span class="c-comment">⍝</span><span class="c-comment"># with keys of its own)</span></span>
+<span class="line" id="L124"><a class="ln" href="#L124">124</a><span class="c-libfunc">ˡf̲rameV</span> ← { (s, sel) →</span>
+<span class="line" id="L125"><a class="ln" href="#L125">125</a>  <a href="extensions-scene-demos-Endless.xtl.html#l.s_topped" class="c-libfunc">ᵉⁿs̲topped</a> s ? (s, sel, <span class="c-string">&quot;&quot;</span>)</span>
+<span class="line" id="L126"><a class="ln" href="#L126">126</a>  w ← <a href="extensions-scene-demos-Endless.xtl.html#l.w_indow" class="c-libfunc">ᵉⁿw̲indow</a> s</span>
+<span class="line" id="L127"><a class="ln" href="#L127">127</a>  v ← <a href="extensions-scene-lib-Scene.xtl.html#l.n_ext-21" class="c-libfunc">ˢᶜn̲ext!</a> w</span>
+<span class="line" id="L128"><a class="ln" href="#L128">128</a>  ((v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;close&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key q&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key Escape&quot;</span>) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span> ? (<a href="extensions-scene-demos-Endless.xtl.html#l.s_top" class="c-libfunc">ᵉⁿs̲top</a> s, sel, v)</span>
+<span class="line" id="L129"><a class="ln" href="#L129">129</a>  s ← (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key h&quot;</span>) <a href="extensions-scene-demos-Play.xtl.html#h.i_f" class="c-libfunc">ʰi̲f</a> s</span>
+<span class="line" id="L130"><a class="ln" href="#L130">130</a>  s ← (v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key f&quot;</span>) <a href="extensions-scene-demos-Play.xtl.html#h.f_ly" class="c-libfunc">ʰf̲ly</a> s</span>
+<span class="line" id="L131"><a class="ln" href="#L131">131</a>  s ← ((v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key n&quot;</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="extensions-scene-demos-Endless.xtl.html#l.l_it" class="c-libfunc">ᵉⁿl̲it</a> s) <a href="extensions-scene-demos-Play.xtl.html#h.n_ightIf" class="c-libfunc">ʰn̲ightIf</a> s</span>
+<span class="line" id="L132"><a class="ln" href="#L132">132</a>  dig ← ((<span class="c-number">10</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> v) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;click left&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key x&quot;</span></span>
+<span class="line" id="L133"><a class="ln" href="#L133">133</a>  s ← dig <a href="extensions-scene-demos-Play.xtl.html#h.w_hen" class="c-libfunc">ʰw̲hen</a> s</span>
+<span class="line" id="L134"><a class="ln" href="#L134">134</a>  put ← ((<span class="c-number">11</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> v) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;click right&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> v <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;key e&quot;</span></span>
+<span class="line" id="L135"><a class="ln" href="#L135">135</a>  (s, sel) ← put <a href="extensions-scene-demos-Play.xtl.html#h.p_laceIf" class="c-libfunc">ʰp̲laceIf</a> (s, sel)</span>
+<span class="line" id="L136"><a class="ln" href="#L136">136</a>  (s, sel) ← (v, s, sel) <a href="extensions-scene-demos-Play.xtl.html#h.c_hoose" class="c-libfunc">ʰc̲hoose</a> <span class="c-number">0</span></span>
+<span class="line" id="L137"><a class="ln" href="#L137">137</a>  s ← <a href="extensions-scene-demos-Endless.xtl.html#l.s_tream" class="c-libfunc">ᵉⁿs̲tream</a> s</span>
+<span class="line" id="L138"><a class="ln" href="#L138">138</a>  (s <a href="extensions-scene-demos-Endless.xtl.html#l.m_ove" class="c-libfunc">ᵉⁿm̲ove</a> <a href="extensions-scene-lib-Scene.xtl.html#l.c_ontrols" class="c-libfunc">ˢᶜc̲ontrols</a> w, sel, v)</span>
+<span class="line" id="L139"><a class="ln" href="#L139">139</a>}</span>
 </div>
 </main>
 </body>

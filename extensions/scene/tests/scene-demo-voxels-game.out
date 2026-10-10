@@ -1,0 +1,27 @@
+Gem Hunt: ten gems are buried near you. Dig them out in three minutes.
+The first is four blocks straight down. Gems glow; the top of the screen says how far the nearest is.
+keys: click or X dig, right-click or E place, 1-8 choose the block (7 water, 8 a lamp), N night or day, W A S D walk, Space jump, F fly, drag or arrows look, H home, q quit
+G: give up
+the gems (x y z), the first under the start:
+14 13  6
+17 15 13
+12  9  5
+22 18  2
+ 2  1  6
+11  8 16
+16 13 -1
+16 14 11
+21 17  4
+20 13  3
+dug 14 16 6
+dug 14 15 6
+dug 14 14 6
+dug 14 13 6
+found a gem at 14 13 6 (1 of 10)
+game over: 1 of 10 gems -- stopped with 2:55 left
+gems found:
+1
+bye
+3067472881 47965 scene-1-20.png
+2108375 21457 scene-1-250.png
+3250871864 30436 scene-1-389.png

@@ -114,11 +114,18 @@ h:p_laceIf := { yes st ->
 ## pl:f_rame (s, sel): one frame of the game: an event (dig, place,
 ## choose, home, fly, quit), then the world's work (a third of a column,
 ## or a tick of flowing water), then the player
-l:f_rame := { (s, sel) ->
-  en:s_topped s ? (s, sel)
+l:f_rame := { st ->
+  (s, sel, _) := l:f_rameV st
+  (s, sel)
+}
+
+## pl:f_rameV (s, sel): pl:f_rame, and the frame's event too (for a game
+## with keys of its own)
+l:f_rameV := { (s, sel) ->
+  en:s_topped s ? (s, sel, "")
   w := en:w_indow s
   v := sc:n_ext! w
-  ((v m_atch "close") + (v m_atch "key q") + v m_atch "key Escape") > 0 ? (en:s_top s, sel)
+  ((v m_atch "close") + (v m_atch "key q") + v m_atch "key Escape") > 0 ? (en:s_top s, sel, v)
   s := (v m_atch "key h") h:i_f s
   s := (v m_atch "key f") h:f_ly s
   s := ((v m_atch "key n") * 0 < en:l_it s) h:n_ightIf s
@@ -128,5 +135,5 @@ l:f_rame := { (s, sel) ->
   (s, sel) := put h:p_laceIf (s, sel)
   (s, sel) := (v, s, sel) h:c_hoose 0
   s := en:s_tream s
-  (s en:m_ove sc:c_ontrols w, sel)
+  (s en:m_ove sc:c_ontrols w, sel, v)
 }

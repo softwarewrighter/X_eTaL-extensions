@@ -522,7 +522,7 @@ demo shown before the next.
 | 16 | water-flow | (done; the user: the water was unrealistic) conserved water, 64 units a block, gravity first, half-difference spreading with momentum and drops, the sea the one source and sink; the user's test passes and is pinned: a lake breached drains its top layer (25 to 1.7 blocks) and stops at the breach's bottom; the trench dug deeper drains the next (25 to 2.1) |
 | 17 | water-literate | (done; the user) `docs/literate/water.org`, Water that drains: runnable cups explaining the rules (half the difference; trading places), the code as checked listings, pictures, the lake test; run and exported with X_eTaL's own literate tools from the clone; published as the site's literate/, linked from the footer, the voxels-water demo and docs/voxel-water.md |
 | 18 | voxels-light | (done) a lit world: sunlight by a column scan, lamplight from lamps (hotbar 8), spread 5 rounds; a face lit by the cell it faces; scene: per-quad sunlight and lamplight, `sc:d_aylight!`; N for night and day; checked on a tunnel; lighting a world setting, so the earlier demos are unchanged |
-| 19 | voxels-game | Gem Hunt |
+| 19 | voxels-game | (done) Gem Hunt: ten glowing gems (block 9) buried around the start as edits, the first four blocks down; finds from the world's newest edits; labels for gems, time, nearest gem; G gives up; end screen; left for later: slower stone, a sound, a high-score table |
 | 20 | game-release | recordings, docs, status, retrospective; the site checked online |
 
 ## Saga 12 -- native hook (blocked)

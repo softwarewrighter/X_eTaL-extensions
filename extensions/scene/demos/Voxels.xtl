@@ -31,14 +31,18 @@ l:leaves := 7
 ## block 8: a lamp, solid, that glows: light spreads from it (placed,
 ## never made by the terrain)
 l:lamp := 8
+## block 9: a gem, solid, that glows a little (12 where a lamp is 15):
+## buried by the game (voxels-game), never made by the terrain
+l:gem := 9
 ## the blocks' names, in their order
 ## >> "vx:" u_se< "Voxels"
 ## >> vx:names
-## air stone dirt grass sand water wood leaves lamp
-l:names := "air stone dirt grass sand water wood leaves lamp"
+## air stone dirt grass sand water wood leaves lamp gem
+l:names := "air stone dirt grass sand water wood leaves lamp gem"
 ## a character for each block when a chunk is printed, air first:
-## stone #, dirt %, grass ", sand :, water ~, wood |, leaves *, lamp o
-l:glyphs := " #%\":~|*o"
+## stone #, dirt %, grass ", sand :, water ~, wood |, leaves *, lamp o,
+## gem $
+l:glyphs := " #%\":~|*o$"
 
 i := (r_ange 4096) - 1
 ## every cell's x (east), as a vector in the chunk's order (x slowest)
@@ -182,7 +186,7 @@ l:e_dges := { f ->
 }
 
 ## each block's color, red green blue (air first)
-l:colors := 9 3 r_eshape 0 0 0  0.55 0.55 0.58  0.55 0.38 0.22  0.35 0.7 0.25  0.9 0.82 0.55  0.25 0.45 0.9  0.45 0.3 0.15  0.2 0.5 0.2  1.0 0.88 0.45
+l:colors := 10 3 r_eshape 0 0 0  0.55 0.55 0.58  0.55 0.38 0.22  0.35 0.7 0.25  0.9 0.82 0.55  0.25 0.45 0.9  0.45 0.3 0.15  0.2 0.5 0.2  1.0 0.88 0.45  0.25 0.95 0.95
 
 # the corners of each direction's face in order round it: the
 # outlines' corners 1 3 5 7
@@ -498,7 +502,7 @@ ez1 := (Z18 < 17) * 1
 ## (18 by 32 by 18), as (sunlight, lamplight), each 0 to 15 a cell.
 ## Sunlight: an open cell (air or water) with only open cells above it
 ## sees the sky, 15 -- a running minimum down each column, one scan.
-## Lamplight: a lamp is 15 (none: none to spread). Each then spreads 5
+## Lamplight: a lamp is 15, a gem 12 (none: none to spread). Each then spreads 5
 ## rounds through open cells, a cell taking the brightest of its six
 ## neighbors less 3 (the same six shifts as the faces), so light reaches
 ## under overhangs and into tunnels and fades over 5 blocks. Light from
@@ -512,9 +516,9 @@ l:c_olumnLight := { b ->
   op := 1 - l:s_olid b
   sky := r_ev_2 'm_in s_\_2 r_ev_2 op
   sun := 5 '{ op h:g_low _r } p_ower 15 * sky
-  lamps := b = 8
-  0 = '+ r_/ r_avel lamps ? (sun, 0 * sun)
-  (sun, 5 '{ op h:g_low _r } p_ower 15 * lamps)
+  glow := (15 * b = 8) m_ax 12 * b = 9
+  0 = '+ r_/ r_avel glow ? (sun, 0 * sun)
+  (sun, 5 '{ op h:g_low _r } p_ower glow)
 }
 
 # op h:g_low L: one round of light spreading: each open cell the
@@ -531,7 +535,7 @@ h:g_low := { op L ->
 
 ## (c, (sun, lamp)) vx:f_aceLight f: each face's sunlight and lamplight
 ## (n by 2, 0 to 15): the light of the cell it faces (the sky above the
-## world); a lamp's own faces are fully lit
+## world); a lamp's and a gem's own faces are fully lit
 l:f_aceLight := { csl f ->
   (c, (sun, lamp)) := csl
   d := 1 + 4 s_elect_2 f
@@ -543,6 +547,6 @@ l:f_aceLight := { csl f ->
   lz := oz + (3 s_elect_2 f) - (16 * 2 s_elect c) - 1
   i := 1 + lz + 18 * (0 m_ax 31 m_in ly) + 32 * lx
   s := (15 * ly > 31) m_ax i s_elect r_avel sun
-  l := (15 * 8 = 5 s_elect_2 f) m_ax i s_elect r_avel lamp
+  l := (15 * 8 <= 5 s_elect_2 f) m_ax i s_elect r_avel lamp
   2 1 t_ranspose (2 c_at t_ally s) r_eshape s c_at l
 }

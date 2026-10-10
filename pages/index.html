@@ -20,7 +20,7 @@
     <li><a href="#http">http</a><ul><li><a href="#http-quakes">quakes</a></li><li><a href="#http-quakes-live">quakes-live</a></li></ul></li>
     <li><a href="#image">image</a><ul><li><a href="#image-photo-lab">photo-lab</a></li></ul></li>
     <li><a href="#linalg">linalg</a></li>
-    <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-dig">voxels-dig</a></li><li><a href="#scene-voxels-endless">voxels-endless</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-fly">voxels-fly</a></li><li><a href="#scene-voxels-light">voxels-light</a></li><li><a href="#scene-voxels-rubik">voxels-rubik</a></li><li><a href="#scene-voxels-rubik-buttons">voxels-rubik-buttons</a></li><li><a href="#scene-voxels-rubik-solve">voxels-rubik-solve</a></li><li><a href="#scene-voxels-rubik-turn">voxels-rubik-turn</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-water">voxels-water</a></li><li><a href="#scene-voxels-world">voxels-world</a></li></ul></li>
+    <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-dig">voxels-dig</a></li><li><a href="#scene-voxels-endless">voxels-endless</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-fly">voxels-fly</a></li><li><a href="#scene-voxels-game">voxels-game</a></li><li><a href="#scene-voxels-light">voxels-light</a></li><li><a href="#scene-voxels-rubik">voxels-rubik</a></li><li><a href="#scene-voxels-rubik-buttons">voxels-rubik-buttons</a></li><li><a href="#scene-voxels-rubik-solve">voxels-rubik-solve</a></li><li><a href="#scene-voxels-rubik-turn">voxels-rubik-turn</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-water">voxels-water</a></li><li><a href="#scene-voxels-world">voxels-world</a></li></ul></li>
     <li><a href="#sqlite">sqlite</a><ul><li><a href="#sqlite-notebook">notebook</a></li></ul></li>
     <li><a href="#web">web</a><ul><li><a href="#web-life">life</a></li><li><a href="#web-todomvc">todomvc</a></li></ul></li>
   </ul>
@@ -169,6 +169,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <video src="scene/voxels-fly.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo scene voxels-fly</pre>
     </section>
+    <section class="panel demo" id="scene-voxels-game">
+      <h3>scene / voxels-game <a class="docs" href="doc/extensions-scene-demos-voxels-game.xtl.html">source and docs</a></h3>
+      <p class="note">Voxels, 15: Gem Hunt. Ten gems are buried around the start, a few blocks under the surface; dig them out in three minutes. The first lies four blocks straight down from where you start; the others are scattered within a dozen blocks, deeper. Gems glow a little (12 where a lamp is 15), so a tunnel near one is lit -- and the corner of the screen says how far the nearest gem you have not found is. Everything from the voxel demos works: dig, place, lamps, water, night. G gives up and shows the score. The game is X_eTaL: the gems are edits, a find is a dig whose cell is a gem&#x27;s, the clock is the frames (60 a second), the labels are scene&#x27;s.</p>
+      <video src="scene/voxels-game.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo scene voxels-game</pre>
+    </section>
     <section class="panel demo" id="scene-voxels-light">
       <h3>scene / voxels-light <a class="docs" href="doc/extensions-scene-demos-voxels-light.xtl.html">source and docs</a></h3>
       <p class="note">Voxels, 14: light. The endless world, lit: a face open to the sky is in full sunlight; under an overhang, beneath a tree&#x27;s crown or down a tunnel the light fades, a step a block, as it spreads from the open air. A lamp (the hotbar&#x27;s eighth block) glows: its light spreads the same way through the air around it. N turns day to night and back -- the sunlight and the sky go, the lamps stay -- by one number in scene, so nothing is worked out again. Each column&#x27;s light is worked out as it is made (vx:c_olumnLight: sunlight by a scan down each column, then rounds of spreading), and again when an edit makes it again: dig a tunnel&#x27;s roof open and the sun comes in.</p>
@@ -259,7 +265,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at 3eec0b9</span>
+  <span>built at d42ec75</span>
 </footer>
 </body>
 </html>

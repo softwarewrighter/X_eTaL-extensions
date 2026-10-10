@@ -93,7 +93,7 @@ h:t_rim := { s ->
   j := f_irst w_here far > 0
   n := j s_elect ns
   w := l:w_indow s
-  gone := '{ w sc:r_emove! (10 * n) + _r } m_ap r_ange 8
+  gone := '{ w sc:r_emove! (10 * n) + _r } m_ap r_ange 9
   keep := j != r_ange t_ally ks
   (p, (keep r_eplicate ks, keep r_eplicate ns, keep r_eplicate ms, keep r_eplicate wm, ed, rq, fl, fw), jb, st)
 }
@@ -212,7 +212,7 @@ h:s_end := { (p, wo, (_, c, n, v), st) ->
   (w, _, _, _, lit) := st
   k := 5 + 2 * 0 < lit
   f := (((t_ally v) d_iv k) c_at k) r_eshape v
-  sent := '{ (w c_at n c_at _r) h:s_endOne f } m_ap r_ange 8
+  sent := '{ (w c_at n c_at _r) h:s_endOne f } m_ap r_ange 9
   (p, wo, (0, c, n, 0 r_eshape 0), st)
 }
 

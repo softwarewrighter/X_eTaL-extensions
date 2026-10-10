@@ -1,0 +1,160 @@
+## Voxels, 15: Gem Hunt. Ten gems are buried around the start, a few
+## blocks under the surface; dig them out in three minutes. The first
+## lies four blocks straight down from where you start; the others are
+## scattered within a dozen blocks, deeper. Gems glow a little (12 where
+## a lamp is 15), so a tunnel near one is lit -- and the corner of the
+## screen says how far the nearest gem you have not found is. Everything
+## from the voxel demos works: dig, place, lamps, water, night. G gives
+## up and shows the score. The game is X_eTaL: the gems are edits, a
+## find is a dig whose cell is a gem's, the clock is the frames (60 a
+## second), the labels are scene's.
+## Run: just demo scene voxels-game
+##   click (or X) dig, right-click (or E) place, 1 to 8 choose the block
+##   (8 a lamp), N night or day, W A S D walk, Space jump, F fly, drag or
+##   the arrows to look, G give up, H back to the start, q quit
+
+"en:" u_se< "Endless"
+"vx:" u_se< "Voxels"
+"pl:" u_se< "Play"
+"sc:" u_se< "Scene"
+
+w := "Voxels 15: Gem Hunt -- X_eTaL" sc:o_pen! 640 400
+g := w sc:f_og! 22.0 44.0
+k := w sc:s_ky! 0.55 0.72 0.92
+k := w sc:c_urve! 160.0
+
+"Gem Hunt: ten gems are buried near you. Dig them out in three minutes."
+"The first is four blocks straight down. Gems glow; the top of the screen says how far the nearest is."
+pl:helpLit
+"G: give up"
+
+### The gems
+
+s := en:l_ighting en:n_ew w
+x0 := f_loor en:s_tart s
+
+# the ground's top block at column x z: one below the height
+u:t_op := { xz -> (f_irst r_avel vx:h_eightsAt xz c_at 1) - 1 }
+
+## u:m_ore gs: one more gem, at a random column within 12 blocks of the
+## start (not the start's own), 2 to 6 blocks under the ground's top,
+## never above the world's bottom
+u:m_ore := { gs ->
+  o := (r_oll! 25 25) - 13
+  xz := (1 3 s_elect x0) + o
+  y := 1 m_ax (u:t_op xz) - 1 + r_oll! 5
+  gs c_at 1 3 r_eshape (1 s_elect xz) c_at y c_at 2 s_elect xz
+}
+
+## the first gem four blocks down under the start (its fourth dig), then
+## nine more
+first := 1 3 r_eshape (1 s_elect x0) c_at ((u:t_op 1 3 s_elect x0) - 3) c_at 3 s_elect x0
+gems := 9 'u:m_ore p_ower first
+"the gems (x y z), the first under the start:"
+gems
+s := (gems, 9) en:s_etAll s
+
+### Playing
+
+## The game is a tuple: (the gems not found yet, n by 3; how many found;
+## the frames left; whether it is over; the edits seen so far). With the
+## world and its player and the chosen block it makes the state.
+
+minutes := 3
+total := 1 s_elect s_hape gems
+
+# a cell's key, for finding gems among dug cells
+u:k_ey := { q -> (200000 * (64 * 100000 + 1 s_elect_2 q) + 2 s_elect_2 q) + 100000 + 3 s_elect_2 q }
+
+# the time left as m:ss
+u:c_lock := { frames ->
+  secs := frames d_iv 60
+  (f_ormat secs d_iv 60) c_at ":" c_at -2 t_ake "0" c_at f_ormat secs m_od 60
+}
+
+# the labels: gems found, the time, how far the nearest gem is
+u:s_how := { (s, game) ->
+  (gs, found, left, over, _) := game
+  p := en:p_osition s
+  a := ((f_loat w) c_at 1.0 16.0 14.0 14.0 1.0 1.0 1.0) sc:l_abel! "Gems " c_at (f_ormat found) c_at " of " c_at f_ormat total
+  b := ((f_loat w) c_at 2.0 200.0 14.0 14.0 1.0 1.0 0.6) sc:l_abel! "Time " c_at u:c_lock left
+  hint := (0 < t_ally gs) u:n_ear (gs, p)
+  c := ((f_loat w) c_at 3.0 340.0 14.0 14.0 0.6 1.0 1.0) sc:l_abel! hint
+  game
+}
+u:n_ear := { yes gp ->
+  (gs, p) := gp
+  0 = yes ? ""
+  d := ((f_loat gs) + 0.5) - ((t_ally gs) c_at 3) r_eshape p
+  "Nearest gem " c_at (f_ormat f_loor 0.5 + ('m_in r_/ '+ r_/_2 d * d) ^ 0.5) c_at " blocks"
+}
+
+# the end: the score, big, across the middle
+u:e_nd := { game ->
+  (gs, found, left, over, seen) := game
+  over ? game
+  m := (0 = t_ally gs) u:v_erdict (found, left)
+  said := p_rint! "game over: " c_at m
+  z := ((f_loat w) c_at 4.0 c_at (320.0 - 1.5 * f_loat (6 * t_ally m) - 1) c_at 170.0 21.0 1.0 0.85 0.3) sc:l_abel! m
+  (gs, found, left, 1, seen)
+}
+u:v_erdict := { all fl ->
+  (found, left) := fl
+  all ? "All " c_at (f_ormat total) c_at " gems with " c_at (u:c_lock left) c_at " to spare!"
+  left = 0 ? (f_ormat found) c_at " of " c_at (f_ormat total) c_at " gems -- time is up"
+  (f_ormat found) c_at " of " c_at (f_ormat total) c_at " gems -- stopped with " c_at (u:c_lock left) c_at " left"
+}
+
+# the gems found this frame: dug cells (the newest edits, block 0) that
+# are gems' cells
+u:f_inds := { (s, game) ->
+  (gs, found, left, over, seen) := game
+  ed := en:e_dits s
+  n := t_ally ed
+  new := (n - seen) t_ake ed
+  dug := (0 = 4 s_elect_2 new) r_eplicate 1 2 3 s_elect_2 new
+  hit := (u:k_ey gs) m_ember? u:k_ey dug
+  k := '+ r_/ hit
+  said := (k > 0) u:t_ell (hit r_eplicate gs, found + k)
+  ((0 = hit) r_eplicate gs, found + k, left, over, n)
+}
+u:t_ell := { yes cf ->
+  (cells, found) := cf
+  0 = yes ? ""
+  p_rint! "found a gem at " c_at (f_ormat r_avel cells) c_at " (" c_at (f_ormat found) c_at " of " c_at (f_ormat total) c_at ")"
+}
+
+## one frame: the world's frame (pl:f_rameV), then the game's turn and
+## its labels
+u:f_rame := { (s, sel, game) ->
+  en:s_topped s ? (s, sel, game)
+  (s, sel, v) := pl:f_rameV (s, sel)
+  game := u:t_urn (s, v, game)
+  (s, sel, u:s_how (s, game))
+}
+
+## the game's turn: the gems found, the clock, and the end when the
+## time is up, all are found or G is pressed (once over, it stays over)
+u:t_urn := { (s, v, game) ->
+  (gs, found, left, over, seen) := game
+  over ? game
+  game := u:f_inds (s, game)
+  (gs, found, left, over, seen) := game
+  left := 0 m_ax left - 1
+  game := (gs, found, left, over, seen)
+  done := (0 = left) + (0 = t_ally gs) + v m_atch "key g"
+  0 < done ? u:e_nd game
+  game
+}
+
+hud := w pl:h_udLit 1
+s := (4 * (1 + 2 * en:reach) * 1 + 2 * en:reach) 'en:s_tream p_ower s
+game := (gems, 0, minutes * 60 * 60, 0, t_ally en:e_dits s)
+last := 100000 'u:f_rame p_ower (s, 1, game)
+z := sc:c_lose! w
+# (accessors, not top-level tuple patterns: ask E10)
+u:g_ameOf := { (_, _, game) -> game }
+u:f_oundOf := { (_, found, _, _, _) -> found }
+"gems found:"
+u:f_oundOf u:g_ameOf last
+"bye"
