@@ -17,6 +17,30 @@ REPO = "https://github.com/softwarewrighter/X_eTaL-extensions"
 pages = pathlib.Path(os.environ.get("PAGES_DIR", root / "pages"))
 
 
+def literate():
+    """The literate documents (docs/literate/*.org) by the demo each
+    explains (its `#+DEMO: EXT NAME` line): {(ext, name): (page, title)}."""
+    docs = {}
+    for org in sorted((root / "docs/literate").glob("*.org")):
+        text = org.read_text()
+        demo = next((l.split()[1:3] for l in text.splitlines() if l.startswith("#+DEMO: ")), None)
+        title = next((l[len("#+TITLE: "):] for l in text.splitlines() if l.startswith("#+TITLE: ")), org.stem)
+        if demo and len(demo) == 2:
+            docs[tuple(demo)] = (f"literate/{org.stem}.html", title)
+    return docs
+
+
+LITERATE = literate()
+
+
+def lit_link(ext, name):
+    """A demo's link to the literate document that explains it, if any."""
+    if (ext, name) not in LITERATE:
+        return ""
+    page, title = LITERATE[(ext, name)]
+    return f' <a class="docs" href="{page}" title="{html.escape(title)}">literate document</a>'
+
+
 def first_para(name):
     text = (root / "extensions" / name / "docs" / "README.md").read_text()
     paras = [p.strip() for p in text.split("\n\n")]
@@ -56,7 +80,7 @@ for ext_dir in sorted(p.parent for p in root.glob("extensions/*/extension.toml")
         else:
             player = '<p class="note">(no recording yet)</p>'
         demos.append(f"""    <section class="panel demo" id="{ext}-{name}">
-      <h3>{html.escape(ext)} / {html.escape(name)} <a class="docs" href="doc/extensions-{ext}-demos-{name}.xtl.html">source and docs</a></h3>
+      <h3>{html.escape(ext)} / {html.escape(name)} <a class="docs" href="doc/extensions-{ext}-demos-{name}.xtl.html">source and docs</a>{lit_link(ext, name)}</h3>
       <p class="note">{html.escape(what(demo))}</p>
       {player}
       <pre class="source">just demo {ext} {name}</pre>
@@ -116,6 +140,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <span>Copyright (c) 2026 Michael A Wright</span><span class="sep">&middot;</span>
   <span>MIT License</span><span class="sep">&middot;</span>
   <a href="{REPO}">Repository</a><span class="sep">&middot;</span>
+  <a href="literate/">Literate documents</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL {vendored()}</span><span class="sep">&middot;</span>

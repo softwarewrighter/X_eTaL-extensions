@@ -129,6 +129,14 @@ check-spelling:
 gate:
     scripts/gate.sh
 
+# Run the literate documents (docs/literate/*.org): draw each block, record its result
+literate *docs:
+    scripts/literate.sh "$@"
+
+# The literate documents are current (their results and drawings, their listings match the code)
+check-literate:
+    scripts/literate.sh --check
+
 # A quick gate for commits that change no code (recordings, docs, goldens): about 20 s
 check-quick:
     scripts/check-quick.sh

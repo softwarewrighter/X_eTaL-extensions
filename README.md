@@ -228,6 +228,7 @@ just doc             # the cross-referenced docs alone (pages/doc)
 just serve-pages     # preview it at http://127.0.0.1:8470/X_eTaL-extensions/ (this repo's port: 8470)
 just xetal           # X_eTaL at XETAL_COMMIT: work/xetal, bin/xetal
 just xetal-version   # the known-good X_eTaL commit
+just literate        # run the literate documents (docs/literate/*.org), recording each block's result
 just libraries       # X_eTaL-libraries at LIBRARIES_COMMIT in work/libraries (the cube's solver); prints its path
 just eval "'+ r_/ 1 2 3"   # evaluate with the known-good xetal
 ```

@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Water that drains</title>
+<meta name="author" content="Michael A Wright" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Water that drains
+<br />
+<span class="subtitle">a lake on a voxel hill, emptied a layer at a time, by moving cups of water</span>
+</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgc867ff1">Cups of water</a></li>
+<li><a href="#org1b80131">A row of five cups</a></li>
+<li><a href="#org897e9aa">Why only half</a></li>
+<li><a href="#org3294c4f">Gravity first</a></li>
+<li><a href="#orge21375e">Spreading, with momentum and edges</a></li>
+<li><a href="#org7cd5f22">The sea, and sleep</a></li>
+<li><a href="#org6760aa8">The lake, measured</a></li>
+</ul>
+</div>
+</div>
+<p>
+In the endless voxel world of X_eTaL's extensions a stepped hill holds
+a lake on its top terrace. Dig into the rim and the lake runs out as a
+thin stream down one face of the hill, its level falling a block at a
+time, until it reaches the bottom of the breach; dig the trench deeper
+and the next layer goes. The water is a cellular automaton written in
+X_eTaL, and it never makes or loses water. This document builds its
+rules up from a row of five cups, then shows the code that runs them in
+the game: <code>extensions/scene/demos/Endless.xtl</code> (its "Moving water"
+section) and the demo <code>extensions/scene/demos/voxels-water.xtl</code>. A
+shorter account is <code>docs/voxel-water.md</code>.
+</p>
+
+
+<div id="org0fe0b6a" class="figure">
+<p><img src="images/water-lake.png" alt="water-lake.png" />
+</p>
+</div>
+<div id="outline-container-orgc867ff1" class="outline-2">
+<h2 id="orgc867ff1">Cups of water</h2>
+<div class="outline-text-2" id="text-orgc867ff1">
+<p>
+A cell of moving water is a cup holding up to 64 spoonfuls: 64 is a
+full block, 32 half of one. Water is moved from cup to cup and never
+made, so the spoonfuls can be counted at any time and the count only
+changes at the sea. The game keeps every cup in one array, a row each:
+x y z, the amount, and the direction it last moved.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡfull ← <span class="c-number">64</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:full := 64</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡw̲ater</span> ← { (_, (_, _, _, _, _, _, W, _), _, _) → W }
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:w_ater := { (_, (_, _, _, _, _, _, W, _), _, _) -&gt; W }</span></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1b80131" class="outline-2">
+<h2 id="org1b80131">A row of five cups</h2>
+<div class="outline-text-2" id="text-org1b80131">
+<p>
+The rules are easiest to see in one dimension. Five cups in a row, the
+first one full:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">row ← <span class="c-number">64</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span>
+row
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   row := 64 0 0 0 0</span>
+<span class="c-comment typed">⍝   row</span></pre>
+</div>
+
+<pre class="example">
+64 0 0 0 0
+</pre>
+
+
+<p>
+Spreading is done in passes, one a direction. In a pass east, each cup
+gives part of the difference to the cup east of it when that cup holds
+less; the last cup has no one to give to. The part is half the
+difference, and why it is no more than half comes next.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-userfunc">ᵘe̲ast</span> ← { a →
+  t ← <span class="c-number">0</span> <span class="c-builtin">m̲ax</span> ((a <span class="c-symbol">−</span> <span class="c-number">1</span> <span class="c-builtin">d̲rop</span> a <span class="c-builtin">c̲at</span> <span class="c-number">0</span>) <span class="c-builtin">d̲iv</span> <span class="c-number">2</span>) <span class="c-symbol">×</span> (<span class="c-builtin">r̲ange</span> <span class="c-builtin">t̲ally</span> a) <span class="c-symbol">&lt;</span> <span class="c-builtin">t̲ally</span> a
+  (a <span class="c-symbol">−</span> t) <span class="c-symbol">+</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> t
+}
+<span class="c-userfunc">ᵘw̲est</span> ← { a →
+  t ← <span class="c-number">0</span> <span class="c-builtin">m̲ax</span> ((a <span class="c-symbol">−</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> a) <span class="c-builtin">d̲iv</span> <span class="c-number">2</span>) <span class="c-symbol">×</span> (<span class="c-builtin">r̲ange</span> <span class="c-builtin">t̲ally</span> a) <span class="c-symbol">&gt;</span> <span class="c-number">1</span>
+  (a <span class="c-symbol">−</span> t) <span class="c-symbol">+</span> <span class="c-number">1</span> <span class="c-builtin">d̲rop</span> t <span class="c-builtin">c̲at</span> <span class="c-number">0</span>
+}
+<span class="c-userfunc">ᵘt̲ick</span> ← { a → <span class="c-userfunc">ᵘe̲ast</span> <span class="c-userfunc">ᵘw̲est</span> a }
+<span class="c-userfunc">ᵘt̲ick</span> row
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   u:e_ast := { a -&gt;</span>
+<span class="c-comment typed">⍝     t := 0 m_ax ((a - 1 d_rop a c_at 0) d_iv 2) * (r_ange t_ally a) &lt; t_ally a</span>
+<span class="c-comment typed">⍝     (a - t) + 0 c_at -1 d_rop t</span>
+<span class="c-comment typed">⍝   }</span>
+<span class="c-comment typed">⍝   u:w_est := { a -&gt;</span>
+<span class="c-comment typed">⍝     t := 0 m_ax ((a - 0 c_at -1 d_rop a) d_iv 2) * (r_ange t_ally a) &gt; 1</span>
+<span class="c-comment typed">⍝     (a - t) + 1 d_rop t c_at 0</span>
+<span class="c-comment typed">⍝   }</span>
+<span class="c-comment typed">⍝   u:t_ick := { a -&gt; u:e_ast u:w_est a }</span>
+<span class="c-comment typed">⍝   u:t_ick row</span></pre>
+</div>
+
+<pre class="example">
+32 32 0 0 0
+</pre>
+
+
+<p>
+A tick is a pass west then a pass east. Six ticks, each row printed,
+and the water counted at the end:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-userfunc">ᵘs̲how</span> ← { n a →
+  said ← <span class="c-builtin">p̲rint!</span> <span class="c-builtin">f̲ormat</span> a
+  n <span class="c-symbol">=</span> <span class="c-number">0</span> ? a
+  (n <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-userfunc">ᵘs̲how</span> <span class="c-userfunc">ᵘt̲ick</span> a
+}
+z ← <span class="c-number">6</span> <span class="c-userfunc">ᵘs̲how</span> row
+<span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> z
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   u:s_how := { n a -&gt;</span>
+<span class="c-comment typed">⍝     said := p_rint! f_ormat a</span>
+<span class="c-comment typed">⍝     n = 0 ? a</span>
+<span class="c-comment typed">⍝     (n - 1) u:s_how u:t_ick a</span>
+<span class="c-comment typed">⍝   }</span>
+<span class="c-comment typed">⍝   z := 6 u:s_how row</span>
+<span class="c-comment typed">⍝   '+ r_/ z</span></pre>
+</div>
+
+<pre class="example">
+64 0 0 0 0
+32 32 0 0 0
+32 16 16 0 0
+24 24 8 8 0
+24 16 16 4 4
+20 20 10 10 4
+20 15 15 7 7
+64
+</pre>
+
+
+<p>
+The water spreads out and evens, and all 64 spoonfuls are still there.
+</p>
+</div>
+</div>
+<div id="outline-container-org897e9aa" class="outline-2">
+<h2 id="org897e9aa">Why only half</h2>
+<div class="outline-text-2" id="text-org897e9aa">
+<p>
+The first version gave the whole difference. Two cups, 0 and 64: the
+pass west moves all 64 into the first cup, the pass east moves them all
+back &#x2013; every tick ends where it began. The game saw that nothing had
+changed and put the water to sleep, the lake still full. Here is that
+rule, a pass west, then a tick, then two ticks:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-userfunc">ᵘe̲astAll</span> ← { a →
+  t ← <span class="c-number">0</span> <span class="c-builtin">m̲ax</span> (a <span class="c-symbol">−</span> <span class="c-number">1</span> <span class="c-builtin">d̲rop</span> a <span class="c-builtin">c̲at</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> (<span class="c-builtin">r̲ange</span> <span class="c-builtin">t̲ally</span> a) <span class="c-symbol">&lt;</span> <span class="c-builtin">t̲ally</span> a
+  (a <span class="c-symbol">−</span> t) <span class="c-symbol">+</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> t
+}
+<span class="c-userfunc">ᵘw̲estAll</span> ← { a →
+  t ← <span class="c-number">0</span> <span class="c-builtin">m̲ax</span> (a <span class="c-symbol">−</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> a) <span class="c-symbol">×</span> (<span class="c-builtin">r̲ange</span> <span class="c-builtin">t̲ally</span> a) <span class="c-symbol">&gt;</span> <span class="c-number">1</span>
+  (a <span class="c-symbol">−</span> t) <span class="c-symbol">+</span> <span class="c-number">1</span> <span class="c-builtin">d̲rop</span> t <span class="c-builtin">c̲at</span> <span class="c-number">0</span>
+}
+pair ← <span class="c-number">0</span> <span class="c-number">64</span>
+said ← <span class="c-builtin">p̲rint!</span> <span class="c-builtin">f̲ormat</span> <span class="c-userfunc">ᵘw̲estAll</span> pair
+said ← <span class="c-builtin">p̲rint!</span> <span class="c-builtin">f̲ormat</span> <span class="c-userfunc">ᵘe̲astAll</span> <span class="c-userfunc">ᵘw̲estAll</span> pair
+<span class="c-userfunc">ᵘe̲astAll</span> <span class="c-userfunc">ᵘw̲estAll</span> <span class="c-userfunc">ᵘe̲astAll</span> <span class="c-userfunc">ᵘw̲estAll</span> pair
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   u:e_astAll := { a -&gt;</span>
+<span class="c-comment typed">⍝     t := 0 m_ax (a - 1 d_rop a c_at 0) * (r_ange t_ally a) &lt; t_ally a</span>
+<span class="c-comment typed">⍝     (a - t) + 0 c_at -1 d_rop t</span>
+<span class="c-comment typed">⍝   }</span>
+<span class="c-comment typed">⍝   u:w_estAll := { a -&gt;</span>
+<span class="c-comment typed">⍝     t := 0 m_ax (a - 0 c_at -1 d_rop a) * (r_ange t_ally a) &gt; 1</span>
+<span class="c-comment typed">⍝     (a - t) + 1 d_rop t c_at 0</span>
+<span class="c-comment typed">⍝   }</span>
+<span class="c-comment typed">⍝   pair := 0 64</span>
+<span class="c-comment typed">⍝   said := p_rint! f_ormat u:w_estAll pair</span>
+<span class="c-comment typed">⍝   said := p_rint! f_ormat u:e_astAll u:w_estAll pair</span>
+<span class="c-comment typed">⍝   u:e_astAll u:w_estAll u:e_astAll u:w_estAll pair</span></pre>
+</div>
+
+<pre class="example">
+64 0
+0 64
+0 64
+</pre>
+
+
+<p>
+With half the difference two cups meet in the middle and stay there.
+</p>
+</div>
+</div>
+<div id="outline-container-org3294c4f" class="outline-2">
+<h2 id="org3294c4f">Gravity first</h2>
+<div class="outline-text-2" id="text-org3294c4f">
+<p>
+In the game a tick starts with gravity. Each cup pours down into what
+is below it: into air or a cup with room, as much as fits; onto rock,
+nothing; into the sea, all of it, and that water is now sea. Only then
+does water spread.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ʰf̲all</span> ← { wo (P, A, D) →
+  n ← <span class="c-builtin">t̲ally</span> A
+  keys ← <span class="c-libfunc">ʰc̲ellKey</span> P
+  dn ← P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">-1</span> <span class="c-number">0</span>
+  kd ← wo <span class="c-libfunc">ˡl̲ook</span> dn
+  jd ← keys <span class="c-builtin">i̲ndexOf</span> <span class="c-libfunc">ʰc̲ellKey</span> dn
+  bd ← jd <span class="c-builtin">s̲elect</span> A <span class="c-builtin">c̲at</span> <span class="c-number">0</span>
+  room ← (kd <span class="c-symbol">=</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> ˡfull <span class="c-symbol">−</span> bd
+  f ← ((kd <span class="c-symbol">=</span> <span class="c-number">2</span>) <span class="c-symbol">×</span> A) <span class="c-symbol">+</span> (kd <span class="c-symbol">≠</span> <span class="c-number">2</span>) <span class="c-symbol">×</span> A <span class="c-builtin">m̲in</span> room
+  ja ← keys <span class="c-builtin">i̲ndexOf</span> <span class="c-libfunc">ʰc̲ellKey</span> P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">0</span>
+  A ← (A <span class="c-symbol">−</span> f) <span class="c-symbol">+</span> (ja <span class="c-builtin">s̲elect</span> f <span class="c-builtin">c̲at</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> ja <span class="c-symbol">≤</span> n
+  new ← (f <span class="c-symbol">&gt;</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> (kd <span class="c-symbol">=</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> jd <span class="c-symbol">&gt;</span> n
+  m ← <span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> new
+  (P <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> dn, A <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> f, D <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> D)
+}
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   h:f_all := { wo (P, A, D) -&gt;</span>
+<span class="c-comment typed">⍝     n := t_ally A</span>
+<span class="c-comment typed">⍝     keys := h:c_ellKey P</span>
+<span class="c-comment typed">⍝     dn := P h:s_hift 0 -1 0</span>
+<span class="c-comment typed">⍝     kd := wo l:l_ook dn</span>
+<span class="c-comment typed">⍝     jd := keys i_ndexOf h:c_ellKey dn</span>
+<span class="c-comment typed">⍝     bd := jd s_elect A c_at 0</span>
+<span class="c-comment typed">⍝     room := (kd = 0) * l:full - bd</span>
+<span class="c-comment typed">⍝     f := ((kd = 2) * A) + (kd != 2) * A m_in room</span>
+<span class="c-comment typed">⍝     ja := keys i_ndexOf h:c_ellKey P h:s_hift 0 1 0</span>
+<span class="c-comment typed">⍝     A := (A - f) + (ja s_elect f c_at 0) * ja &lt;= n</span>
+<span class="c-comment typed">⍝     new := (f &gt; 0) * (kd = 0) * jd &gt; n</span>
+<span class="c-comment typed">⍝     m := '+ r_/ new</span>
+<span class="c-comment typed">⍝     (P c_at new r_eplicate dn, A c_at new r_eplicate f, D c_at new r_eplicate D)</span>
+<span class="c-comment typed">⍝   }</span></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge21375e" class="outline-2">
+<h2 id="orge21375e">Spreading, with momentum and edges</h2>
+<div class="outline-text-2" id="text-orge21375e">
+<p>
+Then the four passes, west, east, north, south. A cup spreads only when
+it cannot fall: rock, or a full cup, is under it (<code>held</code>). It gives
+only to a neighbor holding less (<code>go</code>). Its share of the difference is
+4/16, more the way it is already moving &#x2013; momentum, 7/16, which is
+why a stream keeps going straight down a narrow trench &#x2013; and the most
+toward a neighbor with a drop under it, 8/16, so water pours off an
+edge. Never more than half; at least one spoonful when the difference
+is two or more; and the front of a stream moves on into an empty cell
+even by one, so a lake drains all the way instead of resting on a
+gentle slope.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ʰs̲pread</span> ← { woo (P, A, D) →
+  (wo, o) ← woo
+  n ← <span class="c-builtin">t̲ally</span> A
+  off ← (<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> o) <span class="c-builtin">c̲at</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> o
+  keys ← <span class="c-libfunc">ʰc̲ellKey</span> P
+  side ← P <span class="c-libfunc">ʰs̲hift</span> off
+  ks ← wo <span class="c-libfunc">ˡl̲ook</span> side
+  js ← keys <span class="c-builtin">i̲ndexOf</span> <span class="c-libfunc">ʰc̲ellKey</span> side
+  bs ← js <span class="c-builtin">s̲elect</span> A <span class="c-builtin">c̲at</span> <span class="c-number">0</span>
+  dn ← P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">-1</span> <span class="c-number">0</span>
+  jd ← keys <span class="c-builtin">i̲ndexOf</span> <span class="c-libfunc">ʰc̲ellKey</span> dn
+  held ← ((wo <span class="c-libfunc">ˡl̲ook</span> dn) <span class="c-symbol">=</span> <span class="c-number">1</span>) <span class="c-symbol">+</span> ˡfull <span class="c-symbol">=</span> jd <span class="c-builtin">s̲elect</span> A <span class="c-builtin">c̲at</span> <span class="c-number">0</span>
+  drop ← <span class="c-number">0</span> <span class="c-symbol">=</span> wo <span class="c-libfunc">ˡl̲ook</span> side <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">-1</span> <span class="c-number">0</span>
+  ahead ← ((<span class="c-number">1</span> <span class="c-builtin">s̲elect₂</span> D) <span class="c-symbol">=</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> o) <span class="c-symbol">×</span> (<span class="c-number">2</span> <span class="c-builtin">s̲elect₂</span> D) <span class="c-symbol">=</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> o
+  wt ← <span class="c-number">4</span> <span class="c-builtin">m̲ax</span> (<span class="c-number">7</span> <span class="c-symbol">×</span> ahead) <span class="c-builtin">m̲ax</span> <span class="c-number">8</span> <span class="c-symbol">×</span> drop
+  go ← (ks <span class="c-symbol">=</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> (<span class="c-number">0</span> <span class="c-symbol">&lt;</span> held) <span class="c-symbol">×</span> A <span class="c-symbol">&gt;</span> bs
+  <span class="c-comment">⍝ at most half the difference: neighbors even out, never trade places</span>
+  t ← go <span class="c-symbol">×</span> ((A <span class="c-symbol">−</span> bs) <span class="c-symbol">×</span> wt) <span class="c-builtin">d̲iv</span> <span class="c-number">16</span>
+  <span class="c-comment">⍝ a stream's front keeps going the way it moves, and over an edge,</span>
+  <span class="c-comment">⍝ even by 1 (only into an empty cell, so water cannot circle)</span>
+  t ← t <span class="c-builtin">m̲ax</span> go <span class="c-symbol">×</span> ((A <span class="c-symbol">−</span> bs) <span class="c-symbol">≥</span> <span class="c-number">2</span>) <span class="c-symbol">+</span> (bs <span class="c-symbol">=</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> <span class="c-number">0</span> <span class="c-symbol">&lt;</span> ahead <span class="c-symbol">+</span> drop
+  t ← t <span class="c-builtin">m̲in</span> (ˡfull <span class="c-symbol">−</span> bs) <span class="c-builtin">m̲in</span> A
+  jf ← keys <span class="c-builtin">i̲ndexOf</span> <span class="c-libfunc">ʰc̲ellKey</span> P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-symbol">−</span> off
+  got ← (jf <span class="c-builtin">s̲elect</span> t <span class="c-builtin">c̲at</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> jf <span class="c-symbol">≤</span> n
+  A ← (A <span class="c-symbol">−</span> t) <span class="c-symbol">+</span> got
+  dx ← ((got <span class="c-symbol">&gt;</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> o) <span class="c-symbol">+</span> (got <span class="c-symbol">=</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect₂</span> D
+  dz ← ((got <span class="c-symbol">&gt;</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> o) <span class="c-symbol">+</span> (got <span class="c-symbol">=</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect₂</span> D
+  D ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> (<span class="c-number">2</span> <span class="c-builtin">c̲at</span> n) <span class="c-builtin">r̲eshape</span> dx <span class="c-builtin">c̲at</span> dz
+  new ← (t <span class="c-symbol">&gt;</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> js <span class="c-symbol">&gt;</span> n
+  m ← <span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> new
+  (P <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> side, A <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> t, D <span class="c-builtin">c̲at</span> (m <span class="c-builtin">c̲at</span> <span class="c-number">2</span>) <span class="c-builtin">r̲eshape</span> o)
+}
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   h:s_pread := { woo (P, A, D) -&gt;</span>
+<span class="c-comment typed">⍝     (wo, o) := woo</span>
+<span class="c-comment typed">⍝     n := t_ally A</span>
+<span class="c-comment typed">⍝     off := (1 s_elect o) c_at 0 c_at 2 s_elect o</span>
+<span class="c-comment typed">⍝     keys := h:c_ellKey P</span>
+<span class="c-comment typed">⍝     side := P h:s_hift off</span>
+<span class="c-comment typed">⍝     ks := wo l:l_ook side</span>
+<span class="c-comment typed">⍝     js := keys i_ndexOf h:c_ellKey side</span>
+<span class="c-comment typed">⍝     bs := js s_elect A c_at 0</span>
+<span class="c-comment typed">⍝     dn := P h:s_hift 0 -1 0</span>
+<span class="c-comment typed">⍝     jd := keys i_ndexOf h:c_ellKey dn</span>
+<span class="c-comment typed">⍝     held := ((wo l:l_ook dn) = 1) + l:full = jd s_elect A c_at 0</span>
+<span class="c-comment typed">⍝     drop := 0 = wo l:l_ook side h:s_hift 0 -1 0</span>
+<span class="c-comment typed">⍝     ahead := ((1 s_elect_2 D) = 1 s_elect o) * (2 s_elect_2 D) = 2 s_elect o</span>
+<span class="c-comment typed">⍝     wt := 4 m_ax (7 * ahead) m_ax 8 * drop</span>
+<span class="c-comment typed">⍝     go := (ks = 0) * (0 &lt; held) * A &gt; bs</span>
+<span class="c-comment typed">⍝     t := go * ((A - bs) * wt) d_iv 16</span>
+<span class="c-comment typed">⍝     t := t m_ax go * ((A - bs) &gt;= 2) + (bs = 0) * 0 &lt; ahead + drop</span>
+<span class="c-comment typed">⍝     t := t m_in (l:full - bs) m_in A</span>
+<span class="c-comment typed">⍝     jf := keys i_ndexOf h:c_ellKey P h:s_hift 0 - off</span>
+<span class="c-comment typed">⍝     got := (jf s_elect t c_at 0) * jf &lt;= n</span>
+<span class="c-comment typed">⍝     A := (A - t) + got</span>
+<span class="c-comment typed">⍝     dx := ((got &gt; 0) * 1 s_elect o) + (got = 0) * 1 s_elect_2 D</span>
+<span class="c-comment typed">⍝     dz := ((got &gt; 0) * 2 s_elect o) + (got = 0) * 2 s_elect_2 D</span>
+<span class="c-comment typed">⍝     D := 2 1 t_ranspose (2 c_at n) r_eshape dx c_at dz</span>
+<span class="c-comment typed">⍝     new := (t &gt; 0) * js &gt; n</span>
+<span class="c-comment typed">⍝     m := '+ r_/ new</span>
+<span class="c-comment typed">⍝     (P c_at new r_eplicate side, A c_at new r_eplicate t, D c_at (m c_at 2) r_eshape o)</span>
+<span class="c-comment typed">⍝   }</span></pre>
+</div>
+
+
+<div id="org56eabc4" class="figure">
+<p><img src="images/water-stream.png" alt="water-stream.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org7cd5f22" class="outline-2">
+<h2 id="org7cd5f22">The sea, and sleep</h2>
+<div class="outline-text-2" id="text-org7cd5f22">
+<p>
+The sea is the one endless supply: it is made of ordinary blocks, not
+cups, and a cup beside it is kept full &#x2013; so a hole dug next to the sea
+fills &#x2013; while water falling into it becomes sea.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ʰr̲efill</span> ← { wo W →
+  P ← <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-builtin">s̲elect₂</span> W
+  A ← <span class="c-number">4</span> <span class="c-builtin">s̲elect₂</span> W
+  D ← <span class="c-number">5</span> <span class="c-number">6</span> <span class="c-builtin">s̲elect₂</span> W
+  sides ← (P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">-1</span> <span class="c-number">0</span> <span class="c-number">0</span>) <span class="c-builtin">c̲at</span> (P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">0</span>) <span class="c-builtin">c̲at</span> (P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">-1</span>) <span class="c-builtin">c̲at</span> (P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span>) <span class="c-builtin">c̲at</span> P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">0</span>
+  sea ← <span class="c-number">0</span> <span class="c-symbol">&lt;</span> <span class="c-symbol">'+</span> <span class="c-builtin">r̲/₁</span> (<span class="c-number">5</span> <span class="c-builtin">c̲at</span> <span class="c-builtin">t̲ally</span> A) <span class="c-builtin">r̲eshape</span> <span class="c-number">2</span> <span class="c-symbol">=</span> wo <span class="c-libfunc">ˡl̲ook</span> sides
+  (P, (ˡfull <span class="c-symbol">×</span> sea) <span class="c-symbol">+</span> (<span class="c-number">1</span> <span class="c-symbol">−</span> sea) <span class="c-symbol">×</span> A, D)
+}
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   h:r_efill := { wo W -&gt;</span>
+<span class="c-comment typed">⍝     P := 1 2 3 s_elect_2 W</span>
+<span class="c-comment typed">⍝     A := 4 s_elect_2 W</span>
+<span class="c-comment typed">⍝     D := 5 6 s_elect_2 W</span>
+<span class="c-comment typed">⍝     sides := (P h:s_hift -1 0 0) c_at (P h:s_hift 1 0 0) c_at (P h:s_hift 0 0 -1) c_at (P h:s_hift 0 0 1) c_at P h:s_hift 0 1 0</span>
+<span class="c-comment typed">⍝     sea := 0 &lt; '+ r_/_1 (5 c_at t_ally A) r_eshape 2 = wo l:l_ook sides</span>
+<span class="c-comment typed">⍝     (P, (l:full * sea) + (1 - sea) * A, D)</span>
+<span class="c-comment typed">⍝   }</span></pre>
+</div>
+
+<p>
+A tick does the four steps in order and draws the water, see-through,
+each cup's top at its height. When a tick moves nothing the water
+sleeps until something changes: a block dug or placed, water poured, a
+column of the world made again.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ʰf̲low</span> ← { s →
+  (p, wo, jb, st) ← s
+  (ks, ns, ms, wm, ed, rq, W, fw) ← wo
+  (P, A, D) ← wo <span class="c-libfunc">ʰr̲efill</span> W
+  (P, A, D) ← wo <span class="c-libfunc">ʰf̲all</span> (P, A, D)
+  (P, A, D) ← (wo, <span class="c-number">-1</span> <span class="c-number">0</span>) <span class="c-libfunc">ʰs̲pread</span> (P, A, D)
+  (P, A, D) ← (wo, <span class="c-number">1</span> <span class="c-number">0</span>) <span class="c-libfunc">ʰs̲pread</span> (P, A, D)
+  (P, A, D) ← (wo, <span class="c-number">0</span> <span class="c-number">-1</span>) <span class="c-libfunc">ʰs̲pread</span> (P, A, D)
+  (P, A, D) ← (wo, <span class="c-number">0</span> <span class="c-number">1</span>) <span class="c-libfunc">ʰs̲pread</span> (P, A, D)
+  live ← A <span class="c-symbol">&gt;</span> <span class="c-number">0</span>
+  n ← <span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> live
+  W2 ← (live <span class="c-builtin">r̲eplicate</span> P) <span class="c-builtin">c̲at₂</span> ((n <span class="c-builtin">c̲at</span> <span class="c-number">1</span>) <span class="c-builtin">r̲eshape</span> live <span class="c-builtin">r̲eplicate</span> A) <span class="c-builtin">c̲at₂</span> live <span class="c-builtin">r̲eplicate</span> D
+  still ← W2 <span class="c-builtin">m̲atch</span> W
+  z ← (wo, W2) <span class="c-libfunc">ʰd̲rawWater</span> <span class="c-libfunc">ˡw̲indow</span> s
+  (p, (ks, ns, ms, wm, ed, rq, W2, still <span class="c-libfunc">ʰn̲ext</span> <span class="c-number">0</span>), jb, st)
+}
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   h:f_low := { s -&gt;</span>
+<span class="c-comment typed">⍝     (p, wo, jb, st) := s</span>
+<span class="c-comment typed">⍝     (ks, ns, ms, wm, ed, rq, W, fw) := wo</span>
+<span class="c-comment typed">⍝     (P, A, D) := wo h:r_efill W</span>
+<span class="c-comment typed">⍝     (P, A, D) := wo h:f_all (P, A, D)</span>
+<span class="c-comment typed">⍝     (P, A, D) := (wo, -1 0) h:s_pread (P, A, D)</span>
+<span class="c-comment typed">⍝     (P, A, D) := (wo, 1 0) h:s_pread (P, A, D)</span>
+<span class="c-comment typed">⍝     (P, A, D) := (wo, 0 -1) h:s_pread (P, A, D)</span>
+<span class="c-comment typed">⍝     (P, A, D) := (wo, 0 1) h:s_pread (P, A, D)</span>
+<span class="c-comment typed">⍝     live := A &gt; 0</span>
+<span class="c-comment typed">⍝     n := '+ r_/ live</span>
+<span class="c-comment typed">⍝     W2 := (live r_eplicate P) c_at_2 ((n c_at 1) r_eshape live r_eplicate A) c_at_2 live r_eplicate D</span>
+<span class="c-comment typed">⍝     still := W2 m_atch W</span>
+<span class="c-comment typed">⍝     z := (wo, W2) h:d_rawWater l:w_indow s</span>
+<span class="c-comment typed">⍝     (p, (ks, ns, ms, wm, ed, rq, W2, still h:n_ext 0), jb, st)</span>
+<span class="c-comment typed">⍝   }</span></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6760aa8" class="outline-2">
+<h2 id="org6760aa8">The lake, measured</h2>
+<div class="outline-text-2" id="text-org6760aa8">
+<p>
+The demo's lake is 25 cups a layer, two layers deep. Dig the rim: the
+cups at the top layer's height flow out through the gap, every
+spoonful that leaves is gone from the lake, and its level falls a layer
+for every 25 blocks of water that leave. When the top layer is down to
+a film nothing is above the breach's floor and the flow stops. Dig the
+trench one block deeper and the layer below drains the same way. The
+demo prints the lake each time the water comes to rest; these are the
+numbers its test pins (<code>scene-demo-voxels-water</code>):
+</p>
+
+<pre class="example" id="org1472ff4">
+lake: top layer 25.0 of 25 blocks, the layer below 25.0 of 25; all the moving water 50.0
+dug 9 22 11
+lake: top layer 1.72 of 25 blocks, the layer below 25.0 of 25; all the moving water 26.72
+dug 9 21 12
+dug 9 21 11
+lake: top layer 0.0 of 25 blocks, the layer below 2.11 of 25; all the moving water 2.13
+</pre>
+
+
+<div id="org42a0ab9" class="figure">
+<p><img src="images/water-first-layer.png" alt="water-first-layer.png" />
+</p>
+</div>
+
+
+<div id="org3dba1fe" class="figure">
+<p><img src="images/water-second-layer.png" alt="water-second-layer.png" />
+</p>
+</div>
+
+<p>
+The water that left ran down one face of the hill and into the sea. A
+second lesson came with the lake: with 8 spoonfuls a block a lake
+rested on a slope of one spoonful a cell (a difference of one never
+moves, or water would slosh forever) and kept a third of its top
+layer; with 64 a block, and a stream's front allowed to move by one,
+what stays behind is a sliver.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p><a href="index.html">Literate documents</a> &middot; <a href="../">The demos</a> &middot; <a href="https://github.com/softwarewrighter/X_eTaL-extensions">Repository</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+/* The literate documents' HTML (scripts/literate-html.sh): dark, like
+   the live demo, with JuliaMono for code where it is installed. */
+:root { --bg: #16181d; --fg: #d8dbe2; --dim: #8a90a0; --code: #1e2129; --accent: #f5c518; --link: #7cb3ff; }
+@media (prefers-color-scheme: light) {
+  :root { --bg: #fdfdfb; --fg: #20242c; --dim: #626874; --code: #f2f2ee; --accent: #a67c00; --link: #1f5fbf; }
+}
+body { background: var(--bg); color: var(--fg); margin: 0; font: 17px/1.55 Georgia, "Times New Roman", serif; }
+#content, #postamble { max-width: 46rem; margin: 0 auto; padding: 0 16px; }
+h1.title { margin-top: 2rem; }
+.subtitle { color: var(--dim); font-size: 1.1rem; }
+h2, h3 { border-bottom: 1px solid var(--code); padding-bottom: .2rem; }
+a { color: var(--link); }
+code, pre { font-family: "JuliaMono", "PT Mono", Menlo, monospace; font-size: 15px; }
+code { background: var(--code); padding: 0 .25em; border-radius: 3px; }
+pre { background: var(--code); padding: .7rem 1rem; overflow-x: auto; border-radius: 6px; }
+pre.src { border-left: 3px solid var(--accent); }
+pre.example { border-left: 3px solid var(--dim); }
+/* Token classes, as the live demo's Rendered pane and xetal render
+   --html name them; the typed lines are dimmer comments. */
+.c-builtin { color: #5b9cff; } .c-userfunc { color: #3fbf5f; } .c-libfunc { color: #22b8c8; }
+.c-lambdaarg { color: #d25fd2; } .c-number, .c-exponent { color: #e0b400; }
+.c-string { color: #e8d27a; } .c-symbol { color: #7fbfff; } .c-quote { font-weight: bold; }
+.c-comment { color: var(--dim); } .c-macro { color: #e0b400; font-weight: bold; }
+.c-error { color: #ff6b6b; } .typed { font-style: italic; }
+@media (prefers-color-scheme: light) {
+  .c-builtin { color: #1f5fbf; } .c-userfunc { color: #1e7a34; } .c-libfunc { color: #0b7d8a; }
+  .c-lambdaarg { color: #9b2f9b; } .c-number, .c-exponent { color: #9a6a00; }
+  .c-string { color: #8a6d00; } .c-symbol { color: #2c6fb8; } .c-macro { color: #9a6a00; }
+  .c-error { color: #c62828; }
+}
+img { max-width: 100%; background: #fff; border-radius: 6px; }
+#table-of-contents { font-size: .95rem; }
+ul.index li { margin: .6rem 0; }
+#postamble { color: var(--dim); font-size: .9rem; padding-bottom: 2rem; }

@@ -4,7 +4,11 @@ The water in the endless voxel world (`just demo scene voxels-water`)
 is conserved: it moves from cell to cell and is never made or lost,
 except at the sea. This page explains the rules simply, with the lines
 of `extensions/scene/demos/Endless.xtl` that carry them out (the "Moving
-water" section, from line 333).
+water" section, from line 333). The longer, literate account -- the
+rules built up from a row of five cups that run, the code drawn as
+X_eTaL draws it, pictures from the run -- is
+[Water that drains](https://softwarewrighter.github.io/X_eTaL-extensions/literate/water.html)
+(its source: `docs/literate/water.org`).
 
 ## The idea
 

@@ -23,6 +23,8 @@ cp "$root/images/xetal-logo-red.png" "$root/images/favicon.ico" "$root/web/shell
 PAGES_DIR="$out" "$root/scripts/build-catalog.py"
 # the cross-referenced docs of every facade, shared library and demo
 DOC_OUT="$out/doc" "$root/scripts/doc-site.sh" > /dev/null
+# the literate documents (docs/literate/*.org), as X_eTaL exports its own
+"$root/scripts/literate-html.sh" "$out/literate"
 [ -n "${PAGES_DIR:-}" ] && exit 0
 "$root/scripts/sync-pages.py" "$out" "$root/pages"
 echo "pages/ built; commit it (git add pages/) and push to publish."
