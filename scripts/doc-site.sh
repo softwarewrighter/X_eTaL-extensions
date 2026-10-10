@@ -4,15 +4,19 @@
 # extension's facade, the libraries the demos share and every demo --
 # each definition with its type, its `##` doc comment, its source drawn
 # decorated with every name linked, the built-ins among them. Run by
-# scripts/build-pages.sh (just pages); `just doc` builds it alone.
+# scripts/build-pages.sh (just pages); `just doc` builds it alone. Built
+# in a temporary directory, then copied only where something really
+# changed (scripts/sync-pages.py); nothing is deleted.
 #   scripts/doc-site.sh          # into pages/doc
 #   DOC_OUT=DIR scripts/doc-site.sh
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$root"
 xetal="$("$root/scripts/build-xetal.sh")"
-out="${DOC_OUT:-pages/doc}"
-rm -rf "$out"
+dest="${DOC_OUT:-pages/doc}"
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+out="$tmp/doc"
 # facades and the shared demo libraries are found by name
 path="lib"
 for d in extensions/*/lib extensions/*/demos; do path="$path:$d"; done
@@ -25,4 +29,6 @@ for d in extensions/*; do
   for f in "$d"/lib/*.xtl "$d"/demos/*.xtl; do [ -e "$f" ] && files+=("$f"); done
 done
 XETAL_PATH="$path" "$xetal" doc --out "$out" "${files[@]}" > /dev/null
-echo "doc: $(find "$out" -name '*.html' | wc -l | tr -d ' ') pages in $out"
+mkdir -p "$dest"
+"$root/scripts/sync-pages.py" "$out" "$dest" >&2
+echo "doc: $(find "$out" -name '*.html' | wc -l | tr -d ' ') pages in $dest"

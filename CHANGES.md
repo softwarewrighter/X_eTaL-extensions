@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-09
 
+- 17:47 `build` `just pages` (and `just doc`) rebuild only what changed (the user: pages/doc should be rebuilt only when needed, or the repository fills up): the site is built in a temporary directory and `scripts/sync-pages.py` copies a file into `pages/` only when it is new or differs in a line that matters -- not the build stamp, not an inferred type that varies from run to run (ask E9). A rebuild with no source change now writes nothing (it rewrote 5 files before); nothing in `pages/` is deleted any more (a page no longer made is listed, to ask about). Checked: three rebuilds write 0 files; a doc comment edited reaches its 2 pages and the 2 indexes.
+
 - 16:55 `build` the pages check builds its fresh copy in a temporary directory outside the repository (it rebuilt `work/pages-check`, clearing it first: a deletion in `work/`, against rule 18); the walkthrough's sqlite step writes over `work` instead of removing it (it ran in a temporary clone, but the rule holds everywhere). The old `work/pages-check` is left as it is.
 
 - 16:53 `docs` CLAUDE.md (AGENTS.md links to it) rule 18 (the user): never delete `work/` or anything in it -- it is where work has been done; throwaway things go in a temporary directory outside the repository; tests write over their own files; ask before deleting anything.
