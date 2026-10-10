@@ -1,0 +1,63 @@
+## Voxels, 14: light. The endless world, lit: a face open to the sky is
+## in full sunlight; under an overhang, beneath a tree's crown or down a
+## tunnel the light fades, a step a block, as it spreads from the open
+## air. A lamp (the hotbar's eighth block) glows: its light spreads the
+## same way through the air around it. N turns day to night and back --
+## the sunlight and the sky go, the lamps stay -- by one number in scene,
+## so nothing is worked out again. Each column's light is worked out as
+## it is made (vx:c_olumnLight: sunlight by a scan down each column,
+## then rounds of spreading), and again when an edit makes it again: dig
+## a tunnel's roof open and the sun comes in.
+## Run: just demo scene voxels-light
+##   click (or X) dig, right-click (or E) place, 1 to 8 choose the block
+##   (8 a lamp), N night or day, W A S D walk, Space jump, Shift run, F
+##   fly, drag or the arrows to look, H back to the start, q quit
+
+"en:" u_se< "Endless"
+"pl:" u_se< "Play"
+"sc:" u_se< "Scene"
+
+w := "Voxels 14: light -- X_eTaL" sc:o_pen! 640 400
+g := w sc:f_og! 22.0 44.0
+k := w sc:s_ky! 0.55 0.72 0.92
+k := w sc:c_urve! 160.0
+
+pl:helpLit
+
+### The light, checked
+
+## Stone, 18 by 32 by 18 (a column with its border), with a shaft open to
+## the sky at x 4, z 9 down to y 10, a tunnel at y 10 from it east to x
+## 15, and a lamp at the tunnel's end (x 16). Along the tunnel the
+## sunlight falls 3 a block from the shaft's 15; the lamplight falls 3 a
+## block back from the lamp.
+"vx:" u_se< "Voxels"
+cell := (r_ange 18 * 32 * 18) - 1
+x := cell d_iv 32 * 18
+y := (cell d_iv 18) m_od 32
+z := cell m_od 18
+shaft := (x = 4) * (z = 9) * y >= 10
+tunnel := (y = 10) * (z = 9) * (x >= 4) * x <= 15
+lamp := (y = 10) * (z = 9) * x = 16
+b := 18 32 18 r_eshape (8 * lamp) + (1 - lamp) * 1 - 0 < shaft + tunnel
+u:s_unOf := { (sun, _) -> sun }
+u:l_ampOf := { (_, lamp) -> lamp }
+L := vx:c_olumnLight b
+row := 1 + tunnel r_eplicate cell
+"sunlight along the tunnel, x 4 to 15:"
+row s_elect r_avel u:s_unOf L
+"lamplight along it, the lamp at x 16:"
+row s_elect r_avel u:l_ampOf L
+
+hud := w pl:h_udLit 1
+s := en:l_ighting en:n_ew w
+s := (4 * (1 + 2 * en:reach) * 1 + 2 * en:reach) 'en:s_tream p_ower s
+last := 100000 'pl:f_rame p_ower (s, 1)
+z := sc:c_lose! w
+# (an accessor, not a top-level tuple pattern: ask E10)
+u:w_orldOf := { (s, _) -> s }
+s := u:w_orldOf last
+"by day (1) or night (2) at the end, and the lamps placed:"
+en:l_it s
+'+ r_/ 8 = 4 s_elect_2 en:e_dits s
+"bye"

@@ -32,6 +32,11 @@ pub struct Object {
     /// How opaque, 0 to 1: quads below 1 are drawn after the opaque
     /// ones, blended over what is behind them (water you can see into).
     pub alpha: f64,
+    /// Each quad's light (quads only; empty: fully lit): how much of the
+    /// sky reaches it and how much lamplight, each 0 to 1. A quad is as
+    /// bright as the larger of sunlight times the scene's daylight and
+    /// lamplight.
+    pub light: Vec<[f64; 2]>,
 }
 
 /// The camera orbits the origin: yaw and pitch in radians, distance in
@@ -94,6 +99,9 @@ pub struct Scene {
     pub size: (f64, f64),
     /// Text drawn over the overlay (button names, messages), by id.
     pub labels: BTreeMap<i64, Label>,
+    /// How much daylight there is, 0 (night) to 1 (day): it scales the
+    /// sunlight quads carry, and the sky (and so the fog) darkens with it.
+    pub daylight: f64,
 }
 
 /// A line of text over the scene in the built-in font: its top left and
@@ -131,6 +139,7 @@ impl Default for Scene {
             overlay: Vec::new(),
             size: (0.0, 0.0),
             labels: BTreeMap::new(),
+            daylight: 1.0,
         }
     }
 }
@@ -141,6 +150,8 @@ impl Default for Scene {
 struct Paint {
     color: [f64; 3],
     alpha: f64,
+    /// How brightly lit, 0 to 1 (1: as shaded by the fixed light alone).
+    bright: f64,
 }
 
 /// What quads are drawn into: the picture's pixels and its depth buffer,
@@ -161,6 +172,13 @@ const BACKGROUND_RGB: [f64; 3] = [12.0 / 255.0, 14.0 / 255.0, 20.0 / 255.0];
 const LIGHT: [f64; 3] = [0.35, 0.85, 0.4];
 
 impl Scene {
+    /// The sky's color now: the sky set, darkened as daylight goes (a
+    /// little light is left at night).
+    fn sky_now(&self) -> Option<[f64; 3]> {
+        let d = 0.12 + 0.88 * self.daylight.clamp(0.0, 1.0);
+        self.sky.map(|c| [c[0] * d, c[1] * d, c[2] * d])
+    }
+
     /// Puts (or replaces) object `id`.
     pub fn set(&mut self, id: i64, object: Object) {
         let mut lo = [f64::INFINITY; 3];
@@ -278,7 +296,7 @@ impl Scene {
 
     /// The scene drawn into `w` by `h` 0RGB pixels.
     pub fn render(&self, w: usize, h: usize) -> Vec<u32> {
-        let mut px = vec![self.sky.map_or(BACKGROUND, rgb); w * h];
+        let mut px = vec![self.sky_now().map_or(BACKGROUND, rgb); w * h];
         // quads first, behind a depth buffer; lines and dots over them
         let mut depth = vec![f64::INFINITY; w * h];
         // opaque quads, then translucent ones over them (tested against
@@ -293,11 +311,16 @@ impl Scene {
             for (_, o) in self.objects.iter().filter(|(id, o)| {
                 o.kind == Kind::Quads && (o.alpha >= 1.0) == opaque && self.might_see(**id, w, h)
             }) {
-                let paint = Paint {
-                    color: o.color,
-                    alpha: o.alpha,
-                };
-                for q in o.points.chunks_exact(4) {
+                for (k, q) in o.points.chunks_exact(4).enumerate() {
+                    let bright = o.light.get(k).map_or(1.0, |&[sun, lamp]| {
+                        // never quite black: a tenth of the light at least
+                        0.1 + 0.9 * (sun * self.daylight).max(lamp).clamp(0.0, 1.0)
+                    });
+                    let paint = Paint {
+                        color: o.color,
+                        alpha: o.alpha,
+                        bright,
+                    };
                     self.quad(&mut out, [q[0], q[1], q[2], q[3]], paint);
                 }
             }
@@ -415,7 +438,7 @@ impl Scene {
         } else {
             ((n[0] * LIGHT[0] + n[1] * LIGHT[1] + n[2] * LIGHT[2]) / len).abs()
         };
-        let shade = 0.45 + 0.55 * lit;
+        let shade = (0.45 + 0.55 * lit) * paint.bright;
         let base = [color[0] * shade, color[1] * shade, color[2] * shade];
         let s: Vec<(f64, f64, f64)> = poly.iter().map(|&p| self.screen(p, w, h)).collect();
         for k in 1..s.len() - 1 {
@@ -436,7 +459,7 @@ impl Scene {
     )]
     fn triangle(&self, out: &mut Target, t: [(f64, f64, f64); 3], paint: Paint) {
         let (w, h) = (out.w, out.h);
-        let Paint { color, alpha } = paint;
+        let Paint { color, alpha, .. } = paint;
         let (px, depth) = (&mut *out.px, &mut *out.depth);
         let [(x0, y0, d0), (x1, y1, d1), (x2, y2, d2)] = t;
         let area = (x1 - x0) * (y2 - y0) - (x2 - x0) * (y1 - y0);
@@ -473,7 +496,7 @@ impl Scene {
                 let c = match self.fog {
                     Some((near, far)) if far > near => {
                         let f = ((d - near) / (far - near)).clamp(0.0, 1.0);
-                        let bg = self.sky.unwrap_or(BACKGROUND_RGB);
+                        let bg = self.sky_now().unwrap_or(BACKGROUND_RGB);
                         [
                             color[0] + (bg[0] - color[0]) * f,
                             color[1] + (bg[1] - color[1]) * f,

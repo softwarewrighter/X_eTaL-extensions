@@ -10,6 +10,7 @@ fn line(points: Vec<[f64; 3]>) -> Object {
         points,
         color: [1.0, 1.0, 1.0],
         alpha: 1.0,
+        light: Vec::new(),
     }
 }
 
@@ -72,6 +73,7 @@ fn quad(points: Vec<[f64; 3]>, color: [f64; 3]) -> Object {
         points,
         color,
         alpha: 1.0,
+        light: Vec::new(),
     }
 }
 
@@ -376,4 +378,36 @@ fn a_label_draws_its_glyphs_over_the_scene() {
     // removed, nothing
     s.labels.clear();
     assert!(s.render(20, 10).iter().all(|&p| p == BG));
+}
+
+#[test]
+fn a_quad_is_as_bright_as_its_sunlight_by_daylight_or_its_lamplight() {
+    // one wall facing the eye; the center pixel's red for a light
+    let red_at = |light: Vec<[f64; 2]>, daylight: f64| {
+        let mut s = first_person([0.0, 0.0, 0.0], 0.0, 0.0);
+        let mut wall = quad(
+            vec![
+                [-50.0, -50.0, -2.0],
+                [50.0, -50.0, -2.0],
+                [50.0, 50.0, -2.0],
+                [-50.0, 50.0, -2.0],
+            ],
+            [1.0, 0.0, 0.0],
+        );
+        wall.light = light;
+        s.set(1, wall);
+        s.daylight = daylight;
+        (s.render(20, 20)[10 * 20 + 10] >> 16) & 0xff
+    };
+    let full = red_at(Vec::new(), 1.0);
+    // in the open by day: as if unlit; in the dark: a tenth
+    assert_eq!(red_at(vec![[1.0, 0.0]], 1.0), full);
+    let dark = red_at(vec![[0.0, 0.0]], 1.0);
+    assert!(dark < full / 5 && dark > 0, "dark {dark} of {full}");
+    // at night sunlight is gone, lamplight stays
+    assert!(red_at(vec![[1.0, 0.0]], 0.0) < full / 5);
+    assert_eq!(red_at(vec![[1.0, 1.0]], 0.0), full);
+    // half the sun at half the day: a quarter
+    let quarter = red_at(vec![[0.5, 0.0]], 0.5);
+    assert!(quarter < full / 2 && quarter > dark);
 }

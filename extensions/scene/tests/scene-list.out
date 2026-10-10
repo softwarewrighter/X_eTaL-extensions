@@ -8,6 +8,7 @@ scene 0.1.0
   scene/remove : (Num a, Num b) => a -> b -> Int    # scene remove object: 1 if it was there.
   scene/camera : (Num a, Num b) => a -> b -> Int    # scene camera yaw pitch distance spin.
   scene/eye : (Num a, Num b) => a -> b -> Int    # scene eye x y z yaw pitch: a first-person camera.
+  scene/daylight : (Num a, Num b) => a -> b -> Int    # scene daylight d (0 night to 1 day): scales the sunlight quads carry.
   scene/sky : (Num a, Num b) => a -> b -> Int    # scene sky red green blue: the background and fog color.
   scene/curve : (Num a, Num b) => a -> b -> Int    # scene curve radius: a curved horizon (0: flat).
   scene/overlay : (Num a, Num b) => a -> b -> Int    # scene overlay rects (n by 7: x y width height red green blue, logical pixels): drawn over the scene.

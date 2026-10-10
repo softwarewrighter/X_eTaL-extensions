@@ -390,8 +390,19 @@ fn points(v: &Value) -> Result<Vec<[f64; 3]>, OwnedError> {
 }
 
 fn put(kind: Kind, args: &[Value]) -> Result<Value, OwnedError> {
-    let (s, o, color, alpha) = header(&args[0])?;
     let pts = points(&args[1])?;
+    put_lit(kind, args, pts, Vec::new())
+}
+
+/// Puts an object of `kind` from `args`' header with these points and,
+/// for quads, each quad's light (empty: fully lit).
+fn put_lit(
+    kind: Kind,
+    args: &[Value],
+    pts: Vec<[f64; 3]>,
+    light: Vec<[f64; 2]>,
+) -> Result<Value, OwnedError> {
+    let (s, o, color, alpha) = header(&args[0])?;
     let window = with(s, |h| {
         locked(&h.scene).set(
             o,
@@ -400,6 +411,7 @@ fn put(kind: Kind, args: &[Value]) -> Result<Value, OwnedError> {
                 points: pts,
                 color,
                 alpha,
+                light,
             },
         );
         h.window
@@ -420,15 +432,50 @@ fn dots(args: &[Value]) -> Result<Value, OwnedError> {
     put(Kind::Points, args)
 }
 
-/// header quads points: taken in fours, each a filled quad.
+/// header quads points: taken in fours, each a filled quad; 4n by 3 (x y
+/// z), or 4n by 5 with each corner's sunlight and lamplight (0 to 1; a
+/// quad takes its first corner's).
 fn quads(args: &[Value]) -> Result<Value, OwnedError> {
-    let (shape, _) = float_vector(&args[1])?;
-    if shape.first().is_some_and(|n| n % 4 != 0) || shape.len() != 2 {
-        return Err(OwnedError::invalid_argument(format!(
-            "quads are 4n by 3 points (four corners each), not {shape:?}"
-        )));
+    let (shape, v) = float_vector(&args[1])?;
+    let cols = match shape[..] {
+        [n, c @ (3 | 5)] if n % 4 == 0 => c,
+        _ => {
+            return Err(OwnedError::invalid_argument(format!(
+                "quads are 4n by 3 points (four corners each), or 4n by 5 with light, not {shape:?}"
+            )));
+        }
+    };
+    let rows: Vec<&[f64]> = v.chunks_exact(cols).collect();
+    let pts = rows.iter().map(|r| [r[0], r[1], r[2]]).collect();
+    let light = if cols == 5 {
+        rows.iter().step_by(4).map(|r| [r[3], r[4]]).collect()
+    } else {
+        Vec::new()
+    };
+    put_lit(Kind::Quads, args, pts, light)
+}
+
+/// scene daylight d: how much daylight, 0 (night) to 1 (day): it scales
+/// the sunlight quads carry and darkens the sky and fog. The scene id.
+fn daylight(args: &[Value]) -> Result<Value, OwnedError> {
+    let s = id_of(&args[0])?;
+    let (_, d) = float_vector(&args[1])?;
+    let [d] = d[..] else {
+        return Err(OwnedError::invalid_argument(
+            "daylight is one number, 0 to 1",
+        ));
+    };
+    if !d.is_finite() {
+        return Err(OwnedError::invalid_argument(
+            "daylight: a NaN or an infinity",
+        ));
     }
-    put(Kind::Quads, args)
+    let window = with(s, |h| {
+        locked(&h.scene).daylight = d.clamp(0.0, 1.0);
+        h.window
+    })?;
+    redraw(window)?;
+    Ok(Value::Int(s))
 }
 
 /// scene fog near far: quads fade into the background from depth near
@@ -689,6 +736,7 @@ xetal_ext_sdk::xetal_extension! {
         remove: 2, "(Num a, Num b) => a -> b -> Int", "scene remove object: 1 if it was there.";
         camera: 2, "(Num a, Num b) => a -> b -> Int", "scene camera yaw pitch distance spin.";
         eye: 2, "(Num a, Num b) => a -> b -> Int", "scene eye x y z yaw pitch: a first-person camera.";
+        daylight: 2, "(Num a, Num b) => a -> b -> Int", "scene daylight d (0 night to 1 day): scales the sunlight quads carry.";
         sky: 2, "(Num a, Num b) => a -> b -> Int", "scene sky red green blue: the background and fog color.";
         curve: 2, "(Num a, Num b) => a -> b -> Int", "scene curve radius: a curved horizon (0: flat).";
         overlay: 2, "(Num a, Num b) => a -> b -> Int", "scene overlay rects (n by 7: x y width height red green blue, logical pixels): drawn over the scene.";

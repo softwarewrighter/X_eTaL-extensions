@@ -521,7 +521,7 @@ demo shown before the next.
 | 15 | logo | (done; inserted, the user) the red X_eTaL logo, matching the favicon, as the site's and the README's logo (about 3 lines by 15 columns); the site's heading the logo and "X_eTaL Extensions" in the favicon's red |
 | 16 | water-flow | (done; the user: the water was unrealistic) conserved water, 64 units a block, gravity first, half-difference spreading with momentum and drops, the sea the one source and sink; the user's test passes and is pinned: a lake breached drains its top layer (25 to 1.7 blocks) and stops at the breach's bottom; the trench dug deeper drains the next (25 to 2.1) |
 | 17 | water-literate | (done; the user) `docs/literate/water.org`, Water that drains: runnable cups explaining the rules (half the difference; trading places), the code as checked listings, pictures, the lake test; run and exported with X_eTaL's own literate tools from the clone; published as the site's literate/, linked from the footer, the voxels-water demo and docs/voxel-water.md |
-| 18 | voxels-light | sky light by a column scan; torch light in rounds over frames; brightness per quad in scene |
+| 18 | voxels-light | (done) a lit world: sunlight by a column scan, lamplight from lamps (hotbar 8), spread 5 rounds; a face lit by the cell it faces; scene: per-quad sunlight and lamplight, `sc:d_aylight!`; N for night and day; checked on a tunnel; lighting a world setting, so the earlier demos are unchanged |
 | 19 | voxels-game | Gem Hunt |
 | 20 | game-release | recordings, docs, status, retrospective; the site checked online |
 

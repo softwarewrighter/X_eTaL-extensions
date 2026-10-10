@@ -1,0 +1,15 @@
+keys: click or X dig, right-click or E place, 1-8 choose the block (7 water, 8 a lamp), N night or day, W A S D walk, Space jump, F fly, drag or arrows look, H home, q quit
+sunlight along the tunnel, x 4 to 15:
+15 12 9 6 3 0 0 0 0 0 0 0
+lamplight along it, the lamp at x 16:
+0 0 0 0 0 0 0 0 3 6 9 12
+placed lamp at 14 16 3
+placed lamp at 15 17 6
+placed lamp at 14 17 8
+by day (1) or night (2) at the end, and the lamps placed:
+1
+3
+bye
+1830229214 20845 scene-1-60.png
+50573988 37123 scene-1-362.png
+2421423121 50861 scene-1-512.png

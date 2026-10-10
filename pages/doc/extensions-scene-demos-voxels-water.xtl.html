@@ -104,6 +104,7 @@
 <li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-light.xtl.html">voxels-light.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">voxels-rubik-solve.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
@@ -307,7 +308,7 @@ grass; on it a lake (r up to 2) two blocks deep, held in by the rim
 <div class="uses">Used in: <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-water.xtl.html#lake">lake</a></div>
 </div>
 <div class="item" id="s">
-<h3><a href="#s">s</a> <span class="type">: ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</span></h3>
+<h3><a href="#s">s</a> <span class="type">: ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int, Int))</span></h3>
 <div class="meta">value &middot; <a href="extensions-scene-demos-voxels-water.xtl.src.html#L57">line 57</a></div>
 <div class="doc">
 <p>the player on the rim, south of the lake, facing it (north)</p>
@@ -316,7 +317,7 @@ grass; on it a lake (r up to 2) two blocks deep, held in by the rim
 <div class="uses">Used in: <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-water.xtl.src.html#L62">extensions/scene/demos/voxels-water.xtl:62</a>, <a href="extensions-scene-demos-voxels-water.xtl.html#u.m_easureIf"><span class="c-userfunc">ᵘm̲easureIf</span></a>, <a href="extensions-scene-demos-voxels-water.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-water.xtl.html#last">last</a>, <a href="extensions-scene-demos-voxels-water.xtl.html#u.w_orldOf"><span class="c-userfunc">ᵘw̲orldOf</span></a>, <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a></div>
 </div>
 <div class="item" id="s">
-<h3><a href="#s">s</a> <span class="type">: ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</span></h3>
+<h3><a href="#s">s</a> <span class="type">: ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int, Int))</span></h3>
 <div class="meta">value &middot; <a href="extensions-scene-demos-voxels-water.xtl.src.html#L58">line 58</a></div>
 <pre class="code">s ← (<a href="extensions-scene-demos-voxels-water.xtl.html#u.c_ells" class="c-userfunc">ᵘc̲ells</a> <a href="extensions-scene-demos-voxels-water.xtl.html#fill">fill</a>, <a href="extensions-scene-demos-voxels-water.xtl.html#fill">fill</a> <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <a href="extensions-scene-demos-voxels-water.xtl.html#blk">blk</a>) <a href="extensions-scene-demos-Endless.xtl.html#l.s_etAll" class="c-libfunc">ᵉⁿs̲etAll</a> <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a></pre>
 </div>
@@ -327,7 +328,7 @@ grass; on it a lake (r up to 2) two blocks deep, held in by the rim
 <div class="uses">Used in: <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a></div>
 </div>
 <div class="item" id="s">
-<h3><a href="#s">s</a> <span class="type">: ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</span></h3>
+<h3><a href="#s">s</a> <span class="type">: ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int, Int))</span></h3>
 <div class="meta">value &middot; <a href="extensions-scene-demos-voxels-water.xtl.src.html#L60">line 60</a></div>
 <pre class="code">s ← (<a href="extensions-scene-demos-voxels-water.xtl.html#lake">lake</a> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-scene-demos-voxels-water.xtl.html#lake">lake</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-scene-demos-Endless.xtl.html#l.full">ᵉⁿfull</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0</span> <span class="c-number">0</span>) <a href="extensions-scene-demos-Endless.xtl.html#l.p_our" class="c-libfunc">ᵉⁿp̲our</a> <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a></pre>
 </div>
@@ -373,7 +374,7 @@ blocks of water, said</p>
 </div>
 <h2 class="section" id="section-3">Playing</h2>
 <div class="item" id="u.f_rame">
-<h3><a href="#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a> <span class="type">: (Num a, Num b, Num c, Num d, Truthy d, Num e) =&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c)), Int, d, e) -&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c)), Int, d, e)</span></h3>
+<h3><a href="#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a> <span class="type">: (Num a, Num b, Num c, Num d, Truthy d, Num e) =&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b, c)), Int, d, e) -&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b, c)), Int, d, e)</span></h3>
 <div class="meta">function &middot; <a href="extensions-scene-demos-voxels-water.xtl.src.html#L94">line 94</a></div>
 <div class="doc">
 <p>The state is (the world and its player, the chosen block, whether the
@@ -394,17 +395,17 @@ asleep after moving, the lake is measured.</p>
 <pre class="code">hud ← <a href="extensions-scene-demos-voxels-water.xtl.html#w">w</a> <a href="extensions-scene-demos-Play.xtl.html#l.h_ud" class="c-libfunc">ᵖˡh̲ud</a> <span class="c-number">1</span></pre>
 </div>
 <div class="item" id="s">
-<h3><a href="#s">s</a> <span class="type">: ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</span></h3>
+<h3><a href="#s">s</a> <span class="type">: ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int, Int))</span></h3>
 <div class="meta">value &middot; <a href="extensions-scene-demos-voxels-water.xtl.src.html#L102">line 102</a></div>
 <pre class="code">s ← (<span class="c-number">3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-Endless.xtl.html#l.reach">ᵉⁿreach</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-Endless.xtl.html#l.reach">ᵉⁿreach</a>) <span class="c-libfunc">'</span><a href="extensions-scene-demos-Endless.xtl.html#l.s_tream" class="c-libfunc">ᵉⁿs̲tream</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a></pre>
 </div>
 <div class="item" id="s">
-<h3><a href="#s">s</a> <span class="type">: ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</span></h3>
+<h3><a href="#s">s</a> <span class="type">: ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int, Int))</span></h3>
 <div class="meta">value &middot; <a href="extensions-scene-demos-voxels-water.xtl.src.html#L103">line 103</a></div>
 <pre class="code">s ← <a href="extensions-scene-demos-voxels-water.xtl.html#u.m_easure" class="c-userfunc">ᵘm̲easure</a> <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a></pre>
 </div>
 <div class="item" id="last">
-<h3><a href="#last">last</a> <span class="type">: (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int)), Int, Int, Int)</span></h3>
+<h3><a href="#last">last</a> <span class="type">: (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int, Int)), Int, Int, Int)</span></h3>
 <div class="meta">value &middot; <a href="extensions-scene-demos-voxels-water.xtl.src.html#L104">line 104</a></div>
 <pre class="code">last ← <span class="c-number">100000</span> <span class="c-userfunc">'</span><a href="extensions-scene-demos-voxels-water.xtl.html#u.f_rame" class="c-userfunc">ᵘf̲rame</a> <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a>, <span class="c-number">1</span>, <span class="c-number">1</span>, <span class="c-number">0</span>)</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a></div>
@@ -421,12 +422,12 @@ asleep after moving, the lake is measured.</p>
 <div class="uses">Used in: <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a></div>
 </div>
 <div class="item" id="s">
-<h3><a href="#s">s</a> <span class="type">: ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</span></h3>
+<h3><a href="#s">s</a> <span class="type">: ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int, Int))</span></h3>
 <div class="meta">value &middot; <a href="extensions-scene-demos-voxels-water.xtl.src.html#L109">line 109</a></div>
 <pre class="code">s ← <a href="extensions-scene-demos-voxels-water.xtl.html#u.w_orldOf" class="c-userfunc">ᵘw̲orldOf</a> <a href="extensions-scene-demos-voxels-water.xtl.html#last">last</a></pre>
 </div>
 <div class="item" id="s">
-<h3><a href="#s">s</a> <span class="type">: ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int))</span></h3>
+<h3><a href="#s">s</a> <span class="type">: ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int, Int))</span></h3>
 <div class="meta">value &middot; <a href="extensions-scene-demos-voxels-water.xtl.src.html#L111">line 111</a></div>
 <pre class="code">s ← <a href="extensions-scene-demos-voxels-water.xtl.html#u.m_easure" class="c-userfunc">ᵘm̲easure</a> <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a></pre>
 </div>

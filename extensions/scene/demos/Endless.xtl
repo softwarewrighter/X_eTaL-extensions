@@ -44,9 +44,9 @@ l:e_dits := { (_, (_, _, _, _, ed, _, _, _), _, _) -> ed }
 ## en:e_ye s: the player's eye, x y z yaw pitch (1.6 above its feet)
 l:e_ye := { ((x, _, yaw, pitch, _, _), _, _, _) -> (x + 0.0 1.6 0.0) c_at yaw c_at pitch }
 ## en:w_indow s: the scene window the world is drawn in
-l:w_indow := { (_, _, _, (w, _, _, _)) -> w }
+l:w_indow := { (_, _, _, (w, _, _, _, _)) -> w }
 ## en:s_tart s: where the player started (x y z)
-l:s_tart := { (_, _, _, (_, _, x0, _)) -> x0 }
+l:s_tart := { (_, _, _, (_, _, x0, _, _)) -> x0 }
 
 # a column's key from its coordinates (cx cz), and back
 h:k_ey := { c -> (10000 * 1000 + 1 s_elect c) + 1000 + 2 s_elect c }
@@ -72,7 +72,7 @@ l:n_ewAt := { w x0 ->
   p := (x0, 0.0 0.0 0.0, 0.0, 0.0, 0.0, 0.0)
   none := 0 r_eshape 0
   wo := (none, none, 0 r_eshape e_nclose none, 0 r_eshape e_nclose none, 0 4 r_eshape 0, none, 0 6 r_eshape 0, 0)
-  (p, wo, (0, 0 0, 0, none), (w, 1, x0, 1))
+  (p, wo, (0, 0 0, 0, none), (w, 1, x0, 1, 0))
 }
 
 ### Making and dropping columns
@@ -93,7 +93,7 @@ h:t_rim := { s ->
   j := f_irst w_here far > 0
   n := j s_elect ns
   w := l:w_indow s
-  gone := '{ w sc:r_emove! (10 * n) + _r } m_ap r_ange 7
+  gone := '{ w sc:r_emove! (10 * n) + _r } m_ap r_ange 8
   keep := j != r_ange t_ally ks
   (p, (keep r_eplicate ks, keep r_eplicate ns, keep r_eplicate ms, keep r_eplicate wm, ed, rq, fl, fw), jb, st)
 }
@@ -105,19 +105,26 @@ h:s_endOne := { wnt f ->
   sel := (5 s_elect_2 f) = t
   0 = '+ r_/ sel ? (f_irst wnt) sc:r_emove! (10 * 2 s_elect wnt) + t
   head := (f_loat 1 s_elect wnt) c_at (f_loat (10 * 2 s_elect wnt) + t) c_at ((1 + t) s_elect vx:colors) c_at (t = 5) r_eplicate 0.6
-  head sc:q_uads! vx:c_orners sel r_eplicate f
+  fs := sel r_eplicate f
+  7 > 2 s_elect s_hape f ? head sc:q_uads! vx:c_orners fs
+  # lit: each corner its face's sunlight and lamplight, 0 to 1
+  k := t_ally fs
+  lc := (1 + ((r_ange 4 * k) - 1) d_iv 4) s_elect 6 7 s_elect_2 fs
+  head sc:q_uads! (vx:c_orners fs) c_at_2 (f_loat lc) / 15.0
 }
 
 ## en:s_tream s: one frame's work on the world: the first column too far
-## away dropped, then a third of making a column -- an edited one again,
+## away dropped, then a stage of making a column -- an edited one again,
 ## or else the nearest missing one: its blocks and solid mask (part 0),
-## its faces (part 1), or sending them to scene (part 2) -- about 12 ms
+## its faces (part 1), in a lit world its light (part 3), or sending
+## them to scene (part 2) -- about 12 ms (20 for light)
 ## at most; or, when it is time, a tick of moving water
 l:s_tream := { s ->
   s := h:t_rim s
   (_, (_, _, _, _, _, rq, fl, fw), (part, _, _, _), _) := s
   part = 1 ? h:f_aces s
   part = 2 ? h:s_end s
+  part = 3 ? h:l_ight s
   ((fw <= 0) * 0 < t_ally fl) ? h:f_low s
   h:b_locks h:w_ait s
 }
@@ -129,7 +136,7 @@ h:w_ait := { (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, st) -> (p, (ks, ns, ms, w
 # part 0: the nearest missing column's blocks and mask; the column is
 # known (collision sees it) from now on, drawn two frames later
 h:b_locks := { s ->
-  (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, (w, nxt, x0, on)) := s
+  (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, (w, nxt, x0, on, lit)) := s
   0 < t_ally rq ? h:r_emake s
   h := h:h_ome s
   r := l:reach
@@ -144,7 +151,7 @@ h:b_locks := { s ->
   c := ((i s_elect dx) + 1 s_elect h) c_at (i s_elect dz) + 2 s_elect h
   b := (ed, c) l:e_dited vx:c_olumnBlocks c
   wo := (ks c_at i s_elect ws, ns c_at nxt, ms c_at (e_nclose vx:c_olumnMask b), wm c_at (e_nclose vx:c_olumnWater b), ed, rq, fl, fw)
-  (p, wo, (1, c, nxt, r_avel b), (w, nxt + 1, x0, on))
+  (p, wo, (1, c, nxt, r_avel b), (w, nxt + 1, x0, on, lit))
 }
 
 # part 0 for an edited column: the first queued one's blocks again, with
@@ -181,17 +188,31 @@ l:e_dited := { (ed, c) b ->
   18 32 18 r_eshape (v * 1 - set) + set * hit s_elect t c_at 0
 }
 
-# part 1: the job's faces, from its blocks
+# part 1: the job's faces, from its blocks (in a lit world the blocks
+# are kept too, for part 3)
 h:f_aces := { (p, wo, (_, c, n, b), st) ->
+  (_, _, _, _, lit) := st
   f := c vx:c_olumnFaces 18 32 18 r_eshape b
+  0 = lit ? (p, wo, (2, c, n, r_avel f), st)
+  (p, wo, (3, c, n, b c_at r_avel f), st)
+}
+
+# part 3, in a lit world: the column's light (vx:c_olumnLight) and each
+# face's sunlight and lamplight, two more numbers a face
+h:l_ight := { (p, wo, (_, c, n, v), st) ->
+  b := 18 32 18 r_eshape 10368 t_ake v
+  f := (((t_ally 10368 d_rop v) d_iv 5) c_at 5) r_eshape 10368 d_rop v
+  f := f c_at_2 (c, vx:c_olumnLight b) vx:f_aceLight f
   (p, wo, (2, c, n, r_avel f), st)
 }
 
 # part 2: the job's faces to scene, one object for each kind of block
+# (5 numbers a face, or 7 with its light)
 h:s_end := { (p, wo, (_, c, n, v), st) ->
-  (w, _, _, _) := st
-  f := (((t_ally v) d_iv 5) c_at 5) r_eshape v
-  sent := '{ (w c_at n c_at _r) h:s_endOne f } m_ap r_ange 7
+  (w, _, _, _, lit) := st
+  k := 5 + 2 * 0 < lit
+  f := (((t_ally v) d_iv k) c_at k) r_eshape v
+  sent := '{ (w c_at n c_at _r) h:s_endOne f } m_ap r_ange 8
   (p, wo, (0, c, n, 0 r_eshape 0), st)
 }
 
@@ -485,7 +506,8 @@ h:d_rawWater := { woW w ->
   q := q c_at (d_ry 0 0 1, (x, y, z + 1.0), (x + 1.0, y, z + 1.0), (x + 1.0, ht, z + 1.0), (x, ht, z + 1.0)) h:q_uads 0
   q := q c_at (d_ry 0 -1 0, (x, y, z), (x + 1.0, y, z), (x + 1.0, y, z + 1.0), (x, y, z + 1.0)) h:q_uads 0
   0 = t_ally q ? w sc:r_emove! 9
-  ((f_loat w) c_at 9.0 c_at ((6 s_elect vx:colors) c_at 0.6)) sc:q_uads! q
+  # in full sunlight: as bright as unlit by day, dimming at night
+  ((f_loat w) c_at 9.0 c_at ((6 s_elect vx:colors) c_at 0.6)) sc:q_uads! q c_at_2 ((t_ally q) c_at 2) r_eshape 1.0 0.0
 }
 
 # (mask, corner1 ... corner4) h:q_uads 0: a quad for each cell in the
@@ -595,6 +617,32 @@ l:t_oggleFly := { s ->
 }
 
 ## en:s_top s: the state marked as finished
-l:s_top := { (p, wo, jb, (w, nxt, x0, _)) -> (p, wo, jb, (w, nxt, x0, 0)) }
+l:s_top := { (p, wo, jb, (w, nxt, x0, _, lit)) -> (p, wo, jb, (w, nxt, x0, 0, lit)) }
 ## en:s_topped s: whether the state is marked as finished
-l:s_topped := { (_, _, _, (_, _, _, on)) -> on = 0 }
+l:s_topped := { (_, _, _, (_, _, _, on, _)) -> on = 0 }
+
+### Light
+
+## A world can be lit (en:l_ighting): each column is then made with its
+## light (a third stage after its faces: vx:c_olumnLight, about 20 ms)
+## and its faces sent with their sunlight and lamplight; scene shades
+## each by the larger of sunlight times its daylight and lamplight. Day
+## and night (en:n_ight) change only scene's daylight, so the switch is
+## instant.
+
+## en:l_it s: 0 when the world is not lit, 1 by day, 2 by night
+l:l_it := { (_, _, _, (_, _, _, _, lit)) -> lit }
+
+## en:l_ighting s: the world lit (call it before columns are made), by
+## day
+l:l_ighting := { (p, wo, jb, (w, nxt, x0, on, _)) ->
+  z := w sc:d_aylight! 1.0
+  (p, wo, jb, (w, nxt, x0, on, 1))
+}
+
+## en:n_ight s: day becomes night (the sunlight and the sky gone, the
+## lamps left) and night day
+l:n_ight := { (p, wo, jb, (w, nxt, x0, on, lit)) ->
+  z := w sc:d_aylight! f_loat lit = 2
+  (p, wo, jb, (w, nxt, x0, on, 3 - lit))
+}

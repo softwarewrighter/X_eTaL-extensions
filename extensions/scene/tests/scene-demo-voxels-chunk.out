@@ -17,7 +17,7 @@ the height field (x across, z down), 3 to 12:
  8  8  8  7  7 6 5 5 5 4 4 5 5 6 6  7
 16 16 16
 blocks of each kind:
-air stone dirt grass sand water wood leaves
+air stone dirt grass sand water wood leaves lamp
 2089 721 744 57 199 266 3 17
 the slice at x = 8, looking east (up is up):
                 

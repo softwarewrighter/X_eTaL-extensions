@@ -22,7 +22,10 @@
 ## the light, nearer quads hiding farther ones; lines and dots draw over.
 ## A sixth number in the header, alpha below 1, makes the quads
 ## translucent: drawn after the opaque ones, blended over what is behind
-## them (water you can see into).
+## them (water you can see into). Points 4n by 5 carry light: each
+## corner's sunlight and lamplight (0 to 1; a quad takes its first
+## corner's), and the quad is as bright as the larger of sunlight times
+## the daylight (sc:d_aylight!) and lamplight.
 "q_uads! : float float -> int"       ffi:b_ind< "scene/quads"
 ## scene sc:f_og! near far: quads fade into the background between those
 ## depths (scene units from the camera); far <= near: no fog.
@@ -35,6 +38,10 @@
 ## camera -- the world lowered by d^2 / 2R at a distance d along the
 ## ground from the eye, as on a small planet; 0 turns it off.
 "c_urve! : float float -> int"       ffi:b_ind< "scene/curve"
+## scene sc:d_aylight! d: how much daylight, 0 (night) to 1 (day, as
+## at the start): it scales the sunlight lit quads carry, and the sky
+## (and so the fog) darkens with it; lamplight stays.
+"d_aylight! : float float -> int"    ffi:b_ind< "scene/daylight"
 ## scene sc:s_ky! red green blue: the background, which fog fades to
 ## (0 to 1); -1 -1 -1 goes back to the dark default.
 "s_ky! : float float -> int"         ffi:b_ind< "scene/sky"

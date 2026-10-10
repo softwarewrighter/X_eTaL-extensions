@@ -15,18 +15,39 @@
 ## wood leaves water (water placed flows)
 l:kinds := 1 2 3 4 6 7 5
 
+## in a lit world (en:l_ighting) the hotbar has an eighth: a lamp
+l:kindsLit := 1 2 3 4 6 7 5 8
+
+# the hotbar's blocks in the world of s
+h:k_inds := { s ->
+  0 < en:l_it s ? l:kindsLit
+  l:kinds
+}
+
 ## the keys, said once at the start of a demo
 l:help := "keys: click or X dig, right-click or E place, 1-7 choose the block (7 water), W A S D walk, Space jump, F fly, drag or arrows look, H home, q quit"
+
+## the keys in a lit world
+l:helpLit := "keys: click or X dig, right-click or E place, 1-8 choose the block (7 water, 8 a lamp), N night or day, W A S D walk, Space jump, F fly, drag or arrows look, H home, q quit"
 
 ## w pl:h_ud sel: the overlay of window w (640 by 400) -- the hotbar at
 ## the bottom (a dark bar, the chosen block framed in white, a square of
 ## each block's color) and a crosshair at the center
-l:h_ud := { w sel ->
-  lefts := 176.0 + 42.0 * f_loat (r_ange 7) - 1
-  bar := 1 7 r_eshape 168.0 344.0 304.0 52.0 0.1 0.1 0.12
+l:h_ud := { w sel -> (w, l:kinds) h:h_udOf sel }
+
+## w pl:h_udLit sel: the same with a lit world's hotbar (with the lamp)
+l:h_udLit := { w sel -> (w, l:kindsLit) h:h_udOf sel }
+
+# (w, kinds) h:h_udOf sel: the hotbar of those blocks, centered
+h:h_udOf := { wk sel ->
+  (w, ks) := wk
+  n := t_ally ks
+  left := 320.0 - (42.0 * f_loat n) / 2.0
+  lefts := (left + 3.0) + 42.0 * f_loat (r_ange n) - 1
+  bar := 1 7 r_eshape (left - 5.0) c_at 344.0 c_at (10.0 + 42.0 * f_loat n) c_at 52.0 0.1 0.1 0.12
   chosen := 1 7 r_eshape ((sel s_elect lefts) - 4.0) c_at 348.0 44.0 44.0 1.0 1.0 1.0
-  rgb := r_avel 2 1 t_ranspose (1 + l:kinds) s_elect vx:colors
-  squares := 2 1 t_ranspose 7 7 r_eshape lefts c_at (7 r_eshape 352.0) c_at (14 r_eshape 36.0) c_at rgb
+  rgb := r_avel 2 1 t_ranspose (1 + ks) s_elect vx:colors
+  squares := 2 1 t_ranspose (7 c_at n) r_eshape lefts c_at (n r_eshape 352.0) c_at ((2 * n) r_eshape 36.0) c_at rgb
   cross := 2 7 r_eshape 310.0 199.0 20.0 2.0 1.0 1.0 1.0  319.0 190.0 2.0 20.0 1.0 1.0 1.0
   w sc:o_verlay! bar c_at chosen c_at squares c_at cross
 }
@@ -55,17 +76,22 @@ l:p_lace := { (s, sel) ->
   q := 6 7 8 s_elect h
   (en:p_osition s) en:o_verlaps q ? (s, sel)
   (2 s_elect q) > 31 ? (s, sel)
-  t := sel s_elect l:kinds
+  t := sel s_elect h:k_inds s
   said := p_rint! "placed " c_at (d_isclose (1 + t) s_elect (n_ot vx:names = f_irst " ") p_artition vx:names) c_at " at " c_at f_ormat q
   ((q, t) en:s_et s, sel)
 }
 
 # (v, s, sel) h:c_hoose 0: a digit key chooses the hotbar's block
 h:c_hoose := { (v, s, sel) z ->
-  i := "1234567" i_ndexOf f_irst -1 t_ake v
-  ((5 = t_ally v) * i <= 7) = 0 ? (s, sel)
-  hud := (en:w_indow s) l:h_ud i
+  ks := h:k_inds s
+  i := "12345678" i_ndexOf f_irst -1 t_ake v
+  ((5 = t_ally v) * i <= t_ally ks) = 0 ? (s, sel)
+  hud := (en:w_indow s, ks) h:h_udOf i
   (s, i)
+}
+h:n_ightIf := { yes s ->
+  yes ? en:n_ight s
+  s
 }
 
 h:i_f := { yes s ->
@@ -95,6 +121,7 @@ l:f_rame := { (s, sel) ->
   ((v m_atch "close") + (v m_atch "key q") + v m_atch "key Escape") > 0 ? (en:s_top s, sel)
   s := (v m_atch "key h") h:i_f s
   s := (v m_atch "key f") h:f_ly s
+  s := ((v m_atch "key n") * 0 < en:l_it s) h:n_ightIf s
   dig := ((10 t_ake v) m_atch "click left") + v m_atch "key x"
   s := dig h:w_hen s
   put := ((11 t_ake v) m_atch "click right") + v m_atch "key e"

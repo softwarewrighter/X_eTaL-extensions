@@ -32,7 +32,8 @@ e := sc:n_ext! w                                  # "frame", "key q", "close"
 | `head sc:p_olyline! pts` | `(Num a, Num b) => a -> b -> Int` | put object: `head` is scene, object id, and optionally red green blue (0 to 1); `pts` an n by 3 matrix, joined in order; an id put again is replaced |
 | `head sc:s_egments! pts` | as above | the points taken in pairs |
 | `head sc:d_ots! pts` | as above | each point a dot |
-| `head sc:q_uads! pts` | as above | the points in fours (4n by 3), each four the corners of a filled quad in order round it; shaded by how it faces a fixed light (tops brightest), nearer quads hiding farther ones; lines and dots draw over quads; a sixth number in `head`, alpha below 1, makes them translucent (drawn after the opaque quads, blended over them) |
+| `head sc:q_uads! pts` | as above | the points in fours (4n by 3), each four the corners of a filled quad in order round it; shaded by how it faces a fixed light (tops brightest), nearer quads hiding farther ones; lines and dots draw over quads; a sixth number in `head`, alpha below 1, makes them translucent (drawn after the opaque quads, blended over them); points 4n by 5 carry each corner's sunlight and lamplight (0 to 1), and a quad is as bright as the larger of sunlight times the daylight and lamplight |
+| `scene sc:d_aylight! d` | as above | how much daylight, 0 (night) to 1 (day): it scales the sunlight lit quads carry and darkens the sky and fog; lamplight stays. One number, so day and night switch at once |
 | `scene sc:e_ye! x y z yaw pitch` | as above | a first-person camera (on a dense screen drawn at the window's logical size and scaled up, so a Retina window costs no more than an ordinary one) at the eye, looking along yaw (0 toward -z, turning right toward +x) and pitch (up positive), radians; faces crossing the near plane are clipped, not dropped; dragging then turns nothing by itself -- it is reported by `sc:c_ontrols`; `sc:c_amera!` goes back to orbiting |
 | `sc:c_ontrols scene` | `Num a => a -> Float` | how far the mouse was dragged since last asked (x, y pixels), then 1 or 0 for each key held: w a s d space shift and the arrows left right up down. The pointer is never grabbed. Headless, `XETAL_EVENTS` may hold `keydown w`, `keyup w` and `drag 10 0` |
 | `scene sc:c_urve! radius` | as above | a curved horizon for the first-person camera: the world lowered by d^2 / 2R at a distance d along the ground from the eye, as on a small planet; 0 turns it off |
@@ -240,6 +241,24 @@ before the next builds on it. Their shared X_eTaL is the library
     two models agree: the turns' names, and for 40 random lists the
     colors on every face. Recorded as `videos/voxels-rubik-solve.webm`:
     Scramble, Solve, three Steps, Play to solved.
+14. `demos/voxels-light.xtl` (`just demo scene voxels-light`): light. A
+    lit endless world (`en:l_ighting`): each column's light is worked
+    out as it is made (`vx:c_olumnLight`, a fourth stage of making a
+    column, about 20 ms): sunlight by one scan down each column -- an
+    open cell sees the sky when every cell above it is open -- and
+    lamplight from lamps (the hotbar's eighth block), each spread 5
+    rounds through open cells, a cell taking its brightest neighbor
+    less 3, so light reaches under overhangs and into tunnels and fades
+    over 5 blocks. A face takes the light of the cell it faces
+    (`vx:f_aceLight`) and is sent with it; scene shades it by the
+    larger of sunlight times its daylight and lamplight. N turns day to
+    night and back (`en:n_ight`: one number in scene, nothing worked
+    out again). An edit makes its column again, light and all. The demo
+    first checks a tunnel off a sunlit shaft: sunlight 15 12 9 6 3 0
+    along it, lamplight rising 3 6 9 12 toward a lamp. Light from more
+    than a block into a neighboring column is not seen. Recorded as
+    `videos/voxels-light.webm`: the landscape by day, a ring of lamps,
+    night, day.
 
 ## Build and test
 

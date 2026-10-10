@@ -104,6 +104,7 @@
 <li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-light.xtl.html">voxels-light.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">voxels-rubik-solve.xtl</a></li>
 <li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
@@ -161,6 +162,7 @@
 <li class="item"><a href="#h.r_emake"><span class="c-libfunc">ʰr̲emake</span></a></li>
 <li class="item"><a href="#l.e_dited"><span class="c-libfunc">ˡe̲dited</span></a></li>
 <li class="item"><a href="#h.f_aces"><span class="c-libfunc">ʰf̲aces</span></a></li>
+<li class="item"><a href="#h.l_ight"><span class="c-libfunc">ʰl̲ight</span></a></li>
 <li class="item"><a href="#h.s_end"><span class="c-libfunc">ʰs̲end</span></a></li>
 <li><a href="#section-3">Collision</a></li>
 <li class="item"><a href="#h.c_ell"><span class="c-libfunc">ʰc̲ell</span></a></li>
@@ -200,6 +202,10 @@
 <li class="item"><a href="#l.t_oggleFly"><span class="c-libfunc">ˡt̲oggleFly</span></a></li>
 <li class="item"><a href="#l.s_top"><span class="c-libfunc">ˡs̲top</span></a></li>
 <li class="item"><a href="#l.s_topped"><span class="c-libfunc">ˡs̲topped</span></a></li>
+<li><a href="#section-7">Light</a></li>
+<li class="item"><a href="#l.l_it"><span class="c-libfunc">ˡl̲it</span></a></li>
+<li class="item"><a href="#l.l_ighting"><span class="c-libfunc">ˡl̲ighting</span></a></li>
+<li class="item"><a href="#l.n_ight"><span class="c-libfunc">ˡn̲ight</span></a></li>
 </ul>
 </nav>
 <main>
@@ -226,7 +232,7 @@ Import: &quot;en:&quot; u_se&lt; &quot;Endless&quot;</p>
 each way, and made within it; beyond one more they are dropped</p>
 </div>
 <pre class="code">ˡreach ← <span class="c-number">3</span></pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.t_rim"><span class="c-libfunc">ʰt̲rim</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.b_locks"><span class="c-libfunc">ʰb̲locks</span></a>, <a href="extensions-scene-demos-voxels-dig.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.t_rim"><span class="c-libfunc">ʰt̲rim</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.b_locks"><span class="c-libfunc">ʰb̲locks</span></a>, <a href="extensions-scene-demos-voxels-dig.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-light.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a></div>
 </div>
 <div class="item" id="l.p_layer">
 <h3><a href="#l.p_layer"><span class="c-libfunc">ˡp̲layer</span></a> <span class="type">: (Any a, Any b, Any c, Any d) =&gt; (a, b, c, d) -&gt; a</span></h3>
@@ -272,7 +278,7 @@ en:p_ick</p>
 0 for dug), the newest first</p>
 </div>
 <pre class="code"><span class="c-libfunc">ˡe̲dits</span> ← { (_, (_, _, _, _, ed, _, _, _), _, _) → ed }</pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-dig.xtl.src.html#L60">extensions/scene/demos/voxels-dig.xtl:60</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-dig.xtl.src.html#L60">extensions/scene/demos/voxels-dig.xtl:60</a>, <a href="extensions-scene-demos-voxels-light.xtl.src.html#L62">extensions/scene/demos/voxels-light.xtl:62</a></div>
 </div>
 <div class="item" id="l.e_ye">
 <h3><a href="#l.e_ye"><span class="c-libfunc">ˡe̲ye</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f) =&gt; ((Float, a, Float, Float, b, c), d, e, f) -&gt; Float</span></h3>
@@ -284,21 +290,21 @@ en:p_ick</p>
 <div class="uses">Used in: <a href="extensions-scene-demos-Play.xtl.html#l.d_ig"><span class="c-libfunc">ˡd̲ig</span></a>, <a href="extensions-scene-demos-Play.xtl.html#l.p_lace"><span class="c-libfunc">ˡp̲lace</span></a></div>
 </div>
 <div class="item" id="l.w_indow">
-<h3><a href="#l.w_indow"><span class="c-libfunc">ˡw̲indow</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g) =&gt; (a, b, c, (d, e, f, g)) -&gt; d</span></h3>
+<h3><a href="#l.w_indow"><span class="c-libfunc">ˡw̲indow</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g, Any h) =&gt; (a, b, c, (d, e, f, g, h)) -&gt; d</span></h3>
 <div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L47">line 47</a></div>
 <div class="doc">
 <p>en:w_indow s: the scene window the world is drawn in</p>
 </div>
-<pre class="code"><span class="c-libfunc">ˡw̲indow</span> ← { (_, _, _, (w, _, _, _)) → w }</pre>
+<pre class="code"><span class="c-libfunc">ˡw̲indow</span> ← { (_, _, _, (w, _, _, _, _)) → w }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.t_rim"><span class="c-libfunc">ʰt̲rim</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.f_low"><span class="c-libfunc">ʰf̲low</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a>, <a href="extensions-scene-demos-Play.xtl.html#h.c_hoose"><span class="c-libfunc">ʰc̲hoose</span></a>, <a href="extensions-scene-demos-Play.xtl.html#l.f_rame"><span class="c-libfunc">ˡf̲rame</span></a></div>
 </div>
 <div class="item" id="l.s_tart">
-<h3><a href="#l.s_tart"><span class="c-libfunc">ˡs̲tart</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g) =&gt; (a, b, c, (d, e, f, g)) -&gt; f</span></h3>
+<h3><a href="#l.s_tart"><span class="c-libfunc">ˡs̲tart</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g, Any h) =&gt; (a, b, c, (d, e, f, g, h)) -&gt; f</span></h3>
 <div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L49">line 49</a></div>
 <div class="doc">
 <p>en:s_tart s: where the player started (x y z)</p>
 </div>
-<pre class="code"><span class="c-libfunc">ˡs̲tart</span> ← { (_, _, _, (_, _, x0, _)) → x0 }</pre>
+<pre class="code"><span class="c-libfunc">ˡs̲tart</span> ← { (_, _, _, (_, _, x0, _, _)) → x0 }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.h_omeAgain"><span class="c-libfunc">ˡh̲omeAgain</span></a></div>
 </div>
 <div class="item" id="h.k_ey">
@@ -329,7 +335,7 @@ en:p_ick</p>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.h_omeAgain"><span class="c-libfunc">ˡh̲omeAgain</span></a></div>
 </div>
 <div class="item" id="l.n_ew">
-<h3><a href="#l.n_ew"><span class="c-libfunc">ˡn̲ew</span></a> <span class="type">: (Any a, Num b, Num c, Num d, Num e, Num f, Num g, Num h, Num i, Num j) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (b, b, Box b, Box b, c, b, d, e), (f, g, h, b), (a, i, Float, j))</span></h3>
+<h3><a href="#l.n_ew"><span class="c-libfunc">ˡn̲ew</span></a> <span class="type">: (Any a, Num b, Num c, Num d, Num e, Num f, Num g, Num h, Num i, Num j, Num k) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (b, b, Box b, Box b, c, b, d, e), (f, g, h, b), (a, i, Float, j, k))</span></h3>
 <div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L61">line 61</a></div>
 <div class="doc">
 <p>en:n_ew w: a world for window w, no columns made yet, the player
@@ -341,10 +347,10 @@ standing above the highest ground of column (0, 0), facing north</p>
   x0 ← ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (i <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">16</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#-2b" class="c-symbol">+</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> hv) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (i <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">16</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>
   w <a href="extensions-scene-demos-Endless.xtl.html#l.n_ewAt" class="c-libfunc">ˡn̲ewAt</a> x0
 }</pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-voxels-dig.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-dig.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-light.xtl.html#s">s</a></div>
 </div>
 <div class="item" id="l.n_ewAt">
-<h3><a href="#l.n_ewAt"><span class="c-libfunc">ˡn̲ewAt</span></a> <span class="type">: (Any a, Num b, Num c, Num d, Num e, Num f, Num g, Num h, Num i, Num j) =&gt; a -&gt; Float -&gt; ((Float, Float, Float, Float, Float, Float), (b, b, Box b, Box b, c, b, d, e), (f, g, h, b), (a, i, Float, j))</span></h3>
+<h3><a href="#l.n_ewAt"><span class="c-libfunc">ˡn̲ewAt</span></a> <span class="type">: (Any a, Num b, Num c, Num d, Num e, Num f, Num g, Num h, Num i, Num j, Num k) =&gt; a -&gt; Float -&gt; ((Float, Float, Float, Float, Float, Float), (b, b, Box b, Box b, c, b, d, e), (f, g, h, b), (a, i, Float, j, k))</span></h3>
 <div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L71">line 71</a></div>
 <div class="doc">
 <p>w en:n_ewAt x0: a world for window w, no columns made yet, the player
@@ -355,7 +361,7 @@ north</p>
   p ← (x0, <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">0.0</span>, <span class="c-number">0.0</span>, <span class="c-number">0.0</span>, <span class="c-number">0.0</span>)
   none ← <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>
   wo ← (none, none, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> none, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> none, <span class="c-number">0</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>, none, <span class="c-number">0</span> <span class="c-number">6</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>, <span class="c-number">0</span>)
-  (p, wo, (<span class="c-number">0</span>, <span class="c-number">0</span> <span class="c-number">0</span>, <span class="c-number">0</span>, none), (w, <span class="c-number">1</span>, x0, <span class="c-number">1</span>))
+  (p, wo, (<span class="c-number">0</span>, <span class="c-number">0</span> <span class="c-number">0</span>, <span class="c-number">0</span>, none), (w, <span class="c-number">1</span>, x0, <span class="c-number">1</span>, <span class="c-number">0</span>))
 }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.n_ew"><span class="c-libfunc">ˡn̲ew</span></a>, <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a></div>
 </div>
@@ -370,7 +376,7 @@ north</p>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.t_rim"><span class="c-libfunc">ʰt̲rim</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.b_locks"><span class="c-libfunc">ʰb̲locks</span></a></div>
 </div>
 <div class="item" id="h.t_rim">
-<h3><a href="#h.t_rim"><span class="c-libfunc">ʰt̲rim</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any h, Any i, Any j, Any k, Any l, Num m, Any n, Any o, Any p) =&gt; ((Float, a, b, c, d, e), (Int, Int, f, g, h, i, j, k), l, (m, n, o, p)) -&gt; ((Float, a, b, c, d, e), (Int, Int, f, g, h, i, j, k), l, (m, n, o, p))</span></h3>
+<h3><a href="#h.t_rim"><span class="c-libfunc">ʰt̲rim</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any h, Any i, Any j, Any k, Any l, Num m, Any n, Any o, Any p, Any q) =&gt; ((Float, a, b, c, d, e), (Int, Int, f, g, h, i, j, k), l, (m, n, o, p, q)) -&gt; ((Float, a, b, c, d, e), (Int, Int, f, g, h, i, j, k), l, (m, n, o, p, q))</span></h3>
 <div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L88">line 88</a></div>
 <pre class="code"><span class="c-libfunc">ʰt̲rim</span> ← { s →
   (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, st) ← s
@@ -380,7 +386,7 @@ north</p>
   j ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#w_here" class="c-builtin">w̲here</a> far <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span>
   n ← j <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ns
   w ← <a href="extensions-scene-demos-Endless.xtl.html#l.w_indow" class="c-libfunc">ˡw̲indow</a> s
-  gone ← <span class="c-quote">'</span>{ w <a href="extensions-scene-lib-Scene.xtl.html#l.r_emove-21" class="c-libfunc">ˢᶜr̲emove!</a> (<span class="c-number">10</span> <a href="builtins.html#-2a" class="c-symbol">×</a> n) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">7</span>
+  gone ← <span class="c-quote">'</span>{ w <a href="extensions-scene-lib-Scene.xtl.html#l.r_emove-21" class="c-libfunc">ˢᶜr̲emove!</a> (<span class="c-number">10</span> <a href="builtins.html#-2a" class="c-symbol">×</a> n) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span>
   keep ← j <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ks
   (p, (keep <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> ks, keep <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> ns, keep <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> ms, keep <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> wm, ed, rq, fl, fw), jb, st)
 }</pre>
@@ -394,18 +400,24 @@ north</p>
   sel ← (<span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> f) <a href="builtins.html#-3d" class="c-symbol">=</a> t
   <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> sel ? (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> wnt) <a href="extensions-scene-lib-Scene.xtl.html#l.r_emove-21" class="c-libfunc">ˢᶜr̲emove!</a> (<span class="c-number">10</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> wnt) <a href="builtins.html#-2b" class="c-symbol">+</a> t
   head ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> wnt) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<span class="c-number">10</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> wnt) <a href="builtins.html#-2b" class="c-symbol">+</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> t) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.colors">ᵛˣcolors</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (t <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">5</span>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <span class="c-number">0.6</span>
-  head <a href="extensions-scene-lib-Scene.xtl.html#l.q_uads-21" class="c-libfunc">ˢᶜq̲uads!</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.c_orners" class="c-libfunc">ᵛˣc̲orners</a> sel <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> f
+  fs ← sel <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> f
+  <span class="c-number">7</span> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> f ? head <a href="extensions-scene-lib-Scene.xtl.html#l.q_uads-21" class="c-libfunc">ˢᶜq̲uads!</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.c_orners" class="c-libfunc">ᵛˣc̲orners</a> fs
+  <span class="c-comment">⍝</span><span class="c-comment"> lit: each corner its face's sunlight and lamplight, 0 to 1</span>
+  k ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> fs
+  lc ← (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> ((<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> k) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">4</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">6</span> <span class="c-number">7</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> fs
+  head <a href="extensions-scene-lib-Scene.xtl.html#l.q_uads-21" class="c-libfunc">ˢᶜq̲uads!</a> (<a href="extensions-scene-demos-Voxels.xtl.html#l.c_orners" class="c-libfunc">ᵛˣc̲orners</a> fs) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> lc) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">15.0</span>
 }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.s_end"><span class="c-libfunc">ʰs̲end</span></a></div>
 </div>
 <div class="item" id="l.s_tream">
-<h3><a href="#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h))</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L116">line 116</a></div>
+<h3><a href="#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h, Num i) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i))</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L122">line 122</a></div>
 <div class="doc">
 <p>en:s_tream s: one frame's work on the world: the first column too far
-away dropped, then a third of making a column -- an edited one again,
+away dropped, then a stage of making a column -- an edited one again,
 or else the nearest missing one: its blocks and solid mask (part 0),
-its faces (part 1), or sending them to scene (part 2) -- about 12 ms
+its faces (part 1), in a lit world its light (part 3), or sending
+them to scene (part 2) -- about 12 ms (20 for light)
 at most; or, when it is time, a tick of moving water</p>
 </div>
 <pre class="code"><span class="c-libfunc">ˡs̲tream</span> ← { s →
@@ -413,22 +425,23 @@ at most; or, when it is time, a tick of moving water</p>
   (_, (_, _, _, _, _, rq, fl, fw), (part, _, _, _), _) ← s
   part <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? <a href="extensions-scene-demos-Endless.xtl.html#h.f_aces" class="c-libfunc">ʰf̲aces</a> s
   part <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">2</span> ? <a href="extensions-scene-demos-Endless.xtl.html#h.s_end" class="c-libfunc">ʰs̲end</a> s
+  part <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">3</span> ? <a href="extensions-scene-demos-Endless.xtl.html#h.l_ight" class="c-libfunc">ʰl̲ight</a> s
   ((fw <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> fl) ? <a href="extensions-scene-demos-Endless.xtl.html#h.f_low" class="c-libfunc">ʰf̲low</a> s
   <a href="extensions-scene-demos-Endless.xtl.html#h.b_locks" class="c-libfunc">ʰb̲locks</a> <a href="extensions-scene-demos-Endless.xtl.html#h.w_ait" class="c-libfunc">ʰw̲ait</a> s
 }</pre>
-<div class="uses">Used in: <a href="extensions-scene-demos-Play.xtl.html#l.f_rame"><span class="c-libfunc">ˡf̲rame</span></a>, <a href="extensions-scene-demos-voxels-dig.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a></div>
+<div class="uses">Used in: <a href="extensions-scene-demos-Play.xtl.html#l.f_rame"><span class="c-libfunc">ˡf̲rame</span></a>, <a href="extensions-scene-demos-voxels-dig.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-light.xtl.html#s">s</a>, <a href="extensions-scene-demos-voxels-water.xtl.html#s">s</a></div>
 </div>
 <div class="item" id="h.w_ait">
-<h3><a href="#h.w_ait"><span class="c-libfunc">ʰw̲ait</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h))</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L126">line 126</a></div>
+<h3><a href="#h.w_ait"><span class="c-libfunc">ʰw̲ait</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h, Num i) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i))</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L133">line 133</a></div>
 <pre class="code"><span class="c-libfunc">ʰw̲ait</span> ← { (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, st) → (p, (ks, ns, ms, wm, ed, rq, fl, <span class="c-number">0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> fw <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>), jb, st) }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a></div>
 </div>
 <div class="item" id="h.b_locks">
-<h3><a href="#h.b_locks"><span class="c-libfunc">ʰb̲locks</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h))</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L131">line 131</a></div>
+<h3><a href="#h.b_locks"><span class="c-libfunc">ʰb̲locks</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h, Num i) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i))</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L138">line 138</a></div>
 <pre class="code"><span class="c-libfunc">ʰb̲locks</span> ← { s →
-  (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, (w, nxt, x0, on)) ← s
+  (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, (w, nxt, x0, on, lit)) ← s
   <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> rq ? <a href="extensions-scene-demos-Endless.xtl.html#h.r_emake" class="c-libfunc">ʰr̲emake</a> s
   h ← <a href="extensions-scene-demos-Endless.xtl.html#h.h_ome" class="c-libfunc">ʰh̲ome</a> s
   r ← <a href="extensions-scene-demos-Endless.xtl.html#l.reach">ˡreach</a>
@@ -443,13 +456,13 @@ at most; or, when it is time, a tick of moving water</p>
   c ← ((i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> dx) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> h) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> dz) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> h
   b ← (ed, c) <a href="extensions-scene-demos-Endless.xtl.html#l.e_dited" class="c-libfunc">ˡe̲dited</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnBlocks" class="c-libfunc">ᵛˣc̲olumnBlocks</a> c
   wo ← (ks <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ws, ns <a href="builtins.html#c_at" class="c-builtin">c̲at</a> nxt, ms <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnMask" class="c-libfunc">ᵛˣc̲olumnMask</a> b), wm <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnWater" class="c-libfunc">ᵛˣc̲olumnWater</a> b), ed, rq, fl, fw)
-  (p, wo, (<span class="c-number">1</span>, c, nxt, <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> b), (w, nxt <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>, x0, on))
+  (p, wo, (<span class="c-number">1</span>, c, nxt, <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> b), (w, nxt <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>, x0, on, lit))
 }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a></div>
 </div>
 <div class="item" id="h.r_emake">
-<h3><a href="#h.r_emake"><span class="c-libfunc">ʰr̲emake</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h))</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L153">line 153</a></div>
+<h3><a href="#h.r_emake"><span class="c-libfunc">ʰr̲emake</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h, Num i) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i))</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L160">line 160</a></div>
 <pre class="code"><span class="c-libfunc">ʰr̲emake</span> ← { (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, st) →
   k ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> rq
   rest ← <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> rq
@@ -466,7 +479,7 @@ at most; or, when it is time, a tick of moving water</p>
 </div>
 <div class="item" id="l.e_dited">
 <h3><a href="#l.e_dited"><span class="c-libfunc">ˡe̲dited</span></a> <span class="type">: (Int, Int) -&gt; Int -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L169">line 169</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L176">line 176</a></div>
 <div class="doc">
 <p>(edits, c) en:e_dited b: the blocks b of column c (18 by 32 by 18,
 with its border of one) with the edits (n by 4, x y z block) that fall
@@ -489,21 +502,35 @@ in them -- the newest first, so the newest edit of a cell wins</p>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.b_locks"><span class="c-libfunc">ʰb̲locks</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.r_emake"><span class="c-libfunc">ʰr̲emake</span></a>, <a href="extensions-scene-demos-voxels-dig.xtl.html#e">e</a>, <a href="extensions-scene-demos-voxels-dig.xtl.src.html#L43">extensions/scene/demos/voxels-dig.xtl:43</a></div>
 </div>
 <div class="item" id="h.f_aces">
-<h3><a href="#h.f_aces"><span class="c-libfunc">ʰf̲aces</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h))</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L185">line 185</a></div>
+<h3><a href="#h.f_aces"><span class="c-libfunc">ʰf̲aces</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h, Num i) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i))</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L193">line 193</a></div>
 <pre class="code"><span class="c-libfunc">ʰf̲aces</span> ← { (p, wo, (_, c, n, b), st) →
+  (_, _, _, _, lit) ← st
   f ← c <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnFaces" class="c-libfunc">ᵛˣc̲olumnFaces</a> <span class="c-number">18</span> <span class="c-number">32</span> <span class="c-number">18</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> b
+  <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> lit ? (p, wo, (<span class="c-number">2</span>, c, n, <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> f), st)
+  (p, wo, (<span class="c-number">3</span>, c, n, b <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> f), st)
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a></div>
+</div>
+<div class="item" id="h.l_ight">
+<h3><a href="#h.l_ight"><span class="c-libfunc">ʰl̲ight</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h, Num i) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i))</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L202">line 202</a></div>
+<pre class="code"><span class="c-libfunc">ʰl̲ight</span> ← { (p, wo, (_, c, n, v), st) →
+  b ← <span class="c-number">18</span> <span class="c-number">32</span> <span class="c-number">18</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">10368</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> v
+  f ← (((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <span class="c-number">10368</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> v) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">5</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">5</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">10368</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> v
+  f ← f <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (c, <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnLight" class="c-libfunc">ᵛˣc̲olumnLight</a> b) <a href="extensions-scene-demos-Voxels.xtl.html#l.f_aceLight" class="c-libfunc">ᵛˣf̲aceLight</a> f
   (p, wo, (<span class="c-number">2</span>, c, n, <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> f), st)
 }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a></div>
 </div>
 <div class="item" id="h.s_end">
-<h3><a href="#h.s_end"><span class="c-libfunc">ʰs̲end</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h))</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L191">line 191</a></div>
+<h3><a href="#h.s_end"><span class="c-libfunc">ʰs̲end</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h, Num i) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i))</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L211">line 211</a></div>
 <pre class="code"><span class="c-libfunc">ʰs̲end</span> ← { (p, wo, (_, c, n, v), st) →
-  (w, _, _, _) ← st
-  f ← (((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">5</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">5</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
-  sent ← <span class="c-quote">'</span>{ (w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-lambdaarg">⍵</span>) <a href="extensions-scene-demos-Endless.xtl.html#h.s_endOne" class="c-libfunc">ʰs̲endOne</a> f } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">7</span>
+  (w, _, _, _, lit) ← st
+  k ← <span class="c-number">5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> lit
+  f ← (((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> k) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v
+  sent ← <span class="c-quote">'</span>{ (w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-lambdaarg">⍵</span>) <a href="extensions-scene-demos-Endless.xtl.html#h.s_endOne" class="c-libfunc">ʰs̲endOne</a> f } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span>
   (p, wo, (<span class="c-number">0</span>, c, n, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>), st)
 }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.s_tream"><span class="c-libfunc">ˡs̲tream</span></a></div>
@@ -511,7 +538,7 @@ in them -- the newest first, so the newest edit of a cell wins</p>
 <h2 class="section" id="section-3">Collision</h2>
 <div class="item" id="h.c_ell">
 <h3><a href="#h.c_ell"><span class="c-libfunc">ʰc̲ell</span></a> <span class="type">: (Any a, Num b, Any c, Any d, Any e, Any f, Any g, Num h, Truthy h) =&gt; (Int, a, Box b, c, d, e, f, g) -&gt; Int -&gt; h</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L202">line 202</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L223">line 223</a></div>
 <pre class="code"><span class="c-libfunc">ʰc̲ell</span> ← { (ks, _, ms, _, _, _, _, _) v →
   x ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> v
   z ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> v
@@ -524,7 +551,7 @@ in them -- the newest first, so the newest edit of a cell wins</p>
 </div>
 <div class="item" id="l.h_it">
 <h3><a href="#l.h_it"><span class="c-libfunc">ˡh̲it</span></a> <span class="type">: (Any a, Num b, Any c, Any d, Any e, Any f, Any g) =&gt; (Int, a, Box b, c, d, e, f, g) -&gt; Float -&gt; Float</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L214">line 214</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L235">line 235</a></div>
 <div class="doc">
 <p>wo en:h_it q: whether the player's box (0.6 wide, 1.75 tall) with its
 feet at q (x y z) overlaps a solid block of the world wo; below the
@@ -550,7 +577,7 @@ world is solid, above it air</p>
 <h2 class="section" id="section-4">Digging and building</h2>
 <div class="item" id="l.p_ick">
 <h3><a href="#l.p_ick"><span class="c-libfunc">ˡp̲ick</span></a> <span class="type">: (Any a, Num b, Truthy b, Any c, Any d, Any e, Any f, Any g) =&gt; (Int, a, Box b, c, d, e, f, g) -&gt; Float -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L239">line 239</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L260">line 260</a></div>
 <div class="doc">
 <p>wo en:p_ick e: the block looked at from the eye e (x y z yaw pitch)
 within 5 blocks, found by 100 points marched along the view ray and
@@ -588,7 +615,7 @@ yet is empty.</p>
 </div>
 <div class="item" id="l.s_et">
 <h3><a href="#l.s_et"><span class="c-libfunc">ˡs̲et</span></a> <span class="type">: (Any a, Any b, Any c) =&gt; (Int, Int) -&gt; (a, (Int, Int, Box Int, Box Int, Int, Int, Int, Int), b, c) -&gt; (a, (Int, Int, Box Int, Box Int, Int, Int, Int, Int), b, c)</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L272">line 272</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L293">line 293</a></div>
 <div class="doc">
 <p>(cell, block) en:s_et s: the block at the cell (x y z) set -- air, 0,
 to dig it out -- and remembered (the newest edit first); its column
@@ -613,7 +640,7 @@ gone). Any change wakes the water.</p>
 </div>
 <div class="item" id="l.s_etAll">
 <h3><a href="#l.s_etAll"><span class="c-libfunc">ˡs̲etAll</span></a> <span class="type">: (Any a, Any b, Any c) =&gt; (Int, Int) -&gt; (a, (Int, Int, Box Int, Box Int, Int, Int, Int, Int), b, c) -&gt; (a, (Int, Int, Box Int, Box Int, Int, Int, Int, Int), b, c)</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L285">line 285</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L306">line 306</a></div>
 <div class="doc">
 <p>(cells, block) en:s_etAll s: the cells (n by 3, x y z) all set to the
 block, as en:s_et (without the water), their columns queued once</p>
@@ -634,7 +661,7 @@ block, as en:s_et (without the water), their columns queued once</p>
 </div>
 <div class="item" id="l.p_our">
 <h3><a href="#l.p_our"><span class="c-libfunc">ˡp̲our</span></a> <span class="type">: (Any a, Any b, Any c) =&gt; Int -&gt; (a, (Int, Int, Box Int, Box Int, Int, Int, Int, Int), b, c) -&gt; (a, (Int, Int, Box Int, Box Int, Int, Int, Int, Int), b, c)</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L300">line 300</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L321">line 321</a></div>
 <div class="doc">
 <p>f en:p_our s: the cells f (n by 6: x y z, amount 1 to en:full, and the
 direction it moves, dx dz) added to the moving water, which wakes</p>
@@ -644,7 +671,7 @@ direction it moves, dx dz) added to the moving water, which wakes</p>
 </div>
 <div class="item" id="h.d_isplace">
 <h3><a href="#h.d_isplace"><span class="c-libfunc">ʰd̲isplace</span></a> <span class="type">: (Any a, Any b, Any c) =&gt; (Int, Int) -&gt; (a, (Int, Int, Box Int, Box Int, Int, Int, Int, Int), b, c) -&gt; (a, (Int, Int, Box Int, Box Int, Int, Int, Int, Int), b, c)</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L304">line 304</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L325">line 325</a></div>
 <pre class="code"><span class="c-libfunc">ʰd̲isplace</span> ← { qt (p, (ks, ns, ms, wm, ed, rq, W, fw), jb, st) →
   (q, t) ← qt
   keep ← (t <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="extensions-scene-demos-Endless.xtl.html#h.c_ellKey" class="c-libfunc">ʰc̲ellKey</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> W) <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="extensions-scene-demos-Endless.xtl.html#h.c_ellKey" class="c-libfunc">ʰc̲ellKey</a> <span class="c-number">1</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> q
@@ -654,7 +681,7 @@ direction it moves, dx dz) added to the moving water, which wakes</p>
 </div>
 <div class="item" id="l.l_ook">
 <h3><a href="#l.l_ook"><span class="c-libfunc">ˡl̲ook</span></a> <span class="type">: (Int, Int, Box Int, Box Int, Int, Int, Int, Int) -&gt; Int -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L312">line 312</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L333">line 333</a></div>
 <div class="doc">
 <p>wo en:l_ook q: what is at each cell of q (n by 3, x y z) in the world
 wo: 0 air, 1 solid, 2 water; below the world, and a column not made
@@ -685,7 +712,7 @@ yet, are solid; above it is air</p>
 <h2 class="section" id="section-5">Moving water</h2>
 <div class="item" id="l.pace">
 <h3><a href="#l.pace">ˡpace</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L363">line 363</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L384">line 384</a></div>
 <div class="doc">
 <p>the frames between ticks of moving water</p>
 </div>
@@ -694,7 +721,7 @@ yet, are solid; above it is air</p>
 </div>
 <div class="item" id="l.full">
 <h3><a href="#l.full">ˡfull</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L367">line 367</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L388">line 388</a></div>
 <div class="doc">
 <p>the units of water in a full block: fine enough that a lake can drain
 to within a sliver of its breach (a difference of one unit stays put)</p>
@@ -704,19 +731,19 @@ to within a sliver of its breach (a difference of one unit stays put)</p>
 </div>
 <div class="item" id="h.c_ellKey">
 <h3><a href="#h.c_ellKey"><span class="c-libfunc">ʰc̲ellKey</span></a> <span class="type">: Int -&gt; Int</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L371">line 371</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L392">line 392</a></div>
 <pre class="code"><span class="c-libfunc">ʰc̲ellKey</span> ← { q → (<span class="c-number">200000</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">64</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">100000</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> q) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> q) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">100000</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> q }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.d_isplace"><span class="c-libfunc">ʰd̲isplace</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.f_all"><span class="c-libfunc">ʰf̲all</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.s_pread"><span class="c-libfunc">ʰs̲pread</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.d_rawWater"><span class="c-libfunc">ʰd̲rawWater</span></a></div>
 </div>
 <div class="item" id="h.s_hift">
 <h3><a href="#h.s_hift"><span class="c-libfunc">ʰs̲hift</span></a> <span class="type">: Int -&gt; Int -&gt; Int</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L374">line 374</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L395">line 395</a></div>
 <pre class="code"><span class="c-libfunc">ʰs̲hift</span> ← { q o → q <a href="builtins.html#-2b" class="c-symbol">+</a> ((<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> q) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> o }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.r_efill"><span class="c-libfunc">ʰr̲efill</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.f_all"><span class="c-libfunc">ʰf̲all</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.s_pread"><span class="c-libfunc">ʰs̲pread</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.d_rawWater"><span class="c-libfunc">ʰd̲rawWater</span></a></div>
 </div>
 <div class="item" id="h.f_low">
-<h3><a href="#h.f_low"><span class="c-libfunc">ʰf̲low</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h))</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L377">line 377</a></div>
+<h3><a href="#h.f_low"><span class="c-libfunc">ʰf̲low</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h, Num i) =&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i)) -&gt; ((Float, a, b, c, d, e), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (f, Int, Int, Int), (Int, Int, g, h, i))</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L398">line 398</a></div>
 <pre class="code"><span class="c-libfunc">ʰf̲low</span> ← { s →
   (p, wo, jb, st) ← s
   (ks, ns, ms, wm, ed, rq, W, fw) ← wo
@@ -737,7 +764,7 @@ to within a sliver of its breach (a difference of one unit stays put)</p>
 </div>
 <div class="item" id="h.n_ext">
 <h3><a href="#h.n_ext"><span class="c-libfunc">ʰn̲ext</span></a> <span class="type">: (Truthy a, Num b) =&gt; a -&gt; b -&gt; Int</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L395">line 395</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L416">line 416</a></div>
 <pre class="code"><span class="c-libfunc">ʰn̲ext</span> ← { still z →
   still ? <span class="c-number">1000000000</span>
   <a href="extensions-scene-demos-Endless.xtl.html#l.pace">ˡpace</a>
@@ -746,7 +773,7 @@ to within a sliver of its breach (a difference of one unit stays put)</p>
 </div>
 <div class="item" id="h.r_efill">
 <h3><a href="#h.r_efill"><span class="c-libfunc">ʰr̲efill</span></a> <span class="type">: (Int, Int, Box Int, Box Int, Int, Int, Int, Int) -&gt; Int -&gt; (Int, Int, Int)</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L402">line 402</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L423">line 423</a></div>
 <pre class="code"><span class="c-libfunc">ʰr̲efill</span> ← { wo W →
   P ← <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> W
   A ← <span class="c-number">4</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> W
@@ -759,7 +786,7 @@ to within a sliver of its breach (a difference of one unit stays put)</p>
 </div>
 <div class="item" id="h.f_all">
 <h3><a href="#h.f_all"><span class="c-libfunc">ʰf̲all</span></a> <span class="type">: (Int, Int, Box Int, Box Int, Int, Int, Int, Int) -&gt; (Int, Int, Int) -&gt; (Int, Int, Int)</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L413">line 413</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L434">line 434</a></div>
 <pre class="code"><span class="c-libfunc">ʰf̲all</span> ← { wo (P, A, D) →
   n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> A
   keys ← <a href="extensions-scene-demos-Endless.xtl.html#h.c_ellKey" class="c-libfunc">ʰc̲ellKey</a> P
@@ -779,7 +806,7 @@ to within a sliver of its breach (a difference of one unit stays put)</p>
 </div>
 <div class="item" id="h.s_pread">
 <h3><a href="#h.s_pread"><span class="c-libfunc">ʰs̲pread</span></a> <span class="type">: ((Int, Int, Box Int, Box Int, Int, Int, Int, Int), Int) -&gt; (Int, Int, Int) -&gt; (Int, Int, Int)</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L432">line 432</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L453">line 453</a></div>
 <pre class="code"><span class="c-libfunc">ʰs̲pread</span> ← { woo (P, A, D) →
   (wo, o) ← woo
   n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> A
@@ -816,7 +843,7 @@ to within a sliver of its breach (a difference of one unit stays put)</p>
 </div>
 <div class="item" id="h.d_rawWater">
 <h3><a href="#h.d_rawWater"><span class="c-libfunc">ʰd̲rawWater</span></a> <span class="type">: ((Int, Int, Box Int, Box Int, Int, Int, Int, Int), Int) -&gt; Int -&gt; Int</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L468">line 468</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L489">line 489</a></div>
 <pre class="code"><span class="c-libfunc">ʰd̲rawWater</span> ← { woW w →
   (wo, W) ← woW
   <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> W ? w <a href="extensions-scene-lib-Scene.xtl.html#l.r_emove-21" class="c-libfunc">ˢᶜr̲emove!</a> <span class="c-number">9</span>
@@ -837,13 +864,14 @@ to within a sliver of its breach (a difference of one unit stays put)</p>
   q ← q <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-builtin">d̲ry</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span>, (x, y, z <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span>), (x <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span>, y, z <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span>), (x <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span>, ht, z <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span>), (x, ht, z <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span>)) <a href="extensions-scene-demos-Endless.xtl.html#h.q_uads" class="c-libfunc">ʰq̲uads</a> <span class="c-number">0</span>
   q ← q <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-builtin">d̲ry</span> <span class="c-number">0</span> <span class="c-number">-1</span> <span class="c-number">0</span>, (x, y, z), (x <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span>, y, z), (x <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span>, y, z <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span>), (x, y, z <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span>)) <a href="extensions-scene-demos-Endless.xtl.html#h.q_uads" class="c-libfunc">ʰq̲uads</a> <span class="c-number">0</span>
   <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> q ? w <a href="extensions-scene-lib-Scene.xtl.html#l.r_emove-21" class="c-libfunc">ˢᶜr̲emove!</a> <span class="c-number">9</span>
-  ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">9.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">6</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.colors">ᵛˣcolors</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.6</span>)) <a href="extensions-scene-lib-Scene.xtl.html#l.q_uads-21" class="c-libfunc">ˢᶜq̲uads!</a> q
+  <span class="c-comment">⍝</span><span class="c-comment"> in full sunlight: as bright as unlit by day, dimming at night</span>
+  ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">9.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">6</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.colors">ᵛˣcolors</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.6</span>)) <a href="extensions-scene-lib-Scene.xtl.html#l.q_uads-21" class="c-libfunc">ˢᶜq̲uads!</a> q <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> q) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">0.0</span>
 }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.f_low"><span class="c-libfunc">ʰf̲low</span></a></div>
 </div>
 <div class="item" id="h.q_uads">
-<h3><a href="#h.q_uads"><span class="c-libfunc">ʰq̲uads</span></a> <span class="type">: Num a =&gt; (Int, (Float, Float, Float), (Float, Float, Float), (Float, Float, Float), (Float, Float, Float)) -&gt; a -&gt; Float</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L494">line 494</a></div>
+<h3><a href="#h.q_uads"><span class="c-libfunc">ʰq̲uads</span></a> <span class="type">: (Int, (Float, Float, Float), (Float, Float, Float), (Float, Float, Float), (Float, Float, Float)) -&gt; Int -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L516">line 516</a></div>
 <pre class="code"><span class="c-libfunc">ʰq̲uads</span> ← { (m, k1, k2, k3, k4) z →
   k ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> m
   <span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> k ? <span class="c-number">0</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>
@@ -854,7 +882,7 @@ to within a sliver of its breach (a difference of one unit stays put)</p>
 </div>
 <div class="item" id="l.w_ater">
 <h3><a href="#l.w_ater"><span class="c-libfunc">ˡw̲ater</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g, Any h, Any i, Any j, Any k) =&gt; (a, (b, c, d, e, f, g, h, i), j, k) -&gt; h</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L503">line 503</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L525">line 525</a></div>
 <div class="doc">
 <p>en:w_ater s: the moving water, n by 6: x y z, amount (1 to en:full
 units, a full block) and the direction it moves (dx dz)</p>
@@ -864,7 +892,7 @@ units, a full block) and the direction it moves (dx dz)</p>
 </div>
 <div class="item" id="l.a_sleep">
 <h3><a href="#l.a_sleep"><span class="c-libfunc">ˡa̲sleep</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g, Any h, Num i, Any j, Any k, Truthy l) =&gt; (a, (b, c, d, e, f, g, h, i), j, k) -&gt; l</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L507">line 507</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L529">line 529</a></div>
 <div class="doc">
 <p>en:a_sleep s: whether the water is asleep (a tick moved nothing and
 nothing has changed since)</p>
@@ -874,7 +902,7 @@ nothing has changed since)</p>
 </div>
 <div class="item" id="l.w_aterUnits">
 <h3><a href="#l.w_aterUnits"><span class="c-libfunc">ˡw̲aterUnits</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g, Num h, Any i, Any j, Any k) =&gt; (a, (b, c, d, e, f, g, h, i), j, k) -&gt; h</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L510">line 510</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L532">line 532</a></div>
 <div class="doc">
 <p>en:w_aterUnits s: how much water is moving, in units (en:full a block)</p>
 </div>
@@ -883,7 +911,7 @@ nothing has changed since)</p>
 </div>
 <div class="item" id="l.o_verlaps">
 <h3><a href="#l.o_verlaps"><span class="c-libfunc">ˡo̲verlaps</span></a> <span class="type">: (Num a, Truthy b) =&gt; Float -&gt; a -&gt; b</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L515">line 515</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L537">line 537</a></div>
 <div class="doc">
 <p>p en:o_verlaps q: whether the player's box (0.6 wide, 1.75 tall) with
 its feet at p (x y z) overlaps the cell q (x y z) -- no block is
@@ -898,7 +926,7 @@ placed there</p>
 <h2 class="section" id="section-6">The player</h2>
 <div class="item" id="l.dt">
 <h3><a href="#l.dt">ˡdt</a> <span class="type">: Float</span></h3>
-<div class="meta">value &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L523">line 523</a></div>
+<div class="meta">value &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L545">line 545</a></div>
 <div class="doc">
 <p>a frame: 1/60 s</p>
 </div>
@@ -907,13 +935,13 @@ placed there</p>
 </div>
 <div class="item" id="h.s_et3">
 <h3><a href="#h.s_et3"><span class="c-libfunc">ʰs̲et3</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L526">line 526</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L548">line 548</a></div>
 <pre class="code"><span class="c-libfunc">ʰs̲et3</span> ← { l x → x <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">3</span>) <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> l) <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> l) <a href="builtins.html#-2d" class="c-symbol">−</a> x }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#h.m_x"><span class="c-libfunc">ʰm̲x</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.m_z"><span class="c-libfunc">ʰm̲z</span></a>, <a href="extensions-scene-demos-Endless.xtl.html#h.m_y"><span class="c-libfunc">ʰm̲y</span></a></div>
 </div>
 <div class="item" id="h.s_nap">
 <h3><a href="#h.s_nap"><span class="c-libfunc">ʰs̲nap</span></a> <span class="type">: Float -&gt; Float -&gt; Float</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L529">line 529</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L551">line 551</a></div>
 <pre class="code"><span class="c-libfunc">ʰs̲nap</span> ← { v a →
   v <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.0</span> ? (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> a <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.3001</span>
   (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> a <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.3</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3001</span>
@@ -922,7 +950,7 @@ placed there</p>
 </div>
 <div class="item" id="h.m_x">
 <h3><a href="#h.m_x"><span class="c-libfunc">ʰm̲x</span></a> <span class="type">: (Any a, Num b, Any c, Any d, Any e, Any f, Any g, Any h, Any i, Any j, Any k) =&gt; (Int, a, Box b, c, d, e, f, g) -&gt; (Float, Float, h, i, j, k) -&gt; (Float, Float, h, i, j, k)</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L536">line 536</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L558">line 558</a></div>
 <pre class="code"><span class="c-libfunc">ʰm̲x</span> ← { wo (x, v, yaw, pitch, g, fly) →
   a ← (<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> x) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-Endless.xtl.html#l.dt">ˡdt</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> v
   q ← (<span class="c-number">1.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a) <a href="extensions-scene-demos-Endless.xtl.html#h.s_et3" class="c-libfunc">ʰs̲et3</a> x
@@ -933,7 +961,7 @@ placed there</p>
 </div>
 <div class="item" id="h.m_z">
 <h3><a href="#h.m_z"><span class="c-libfunc">ʰm̲z</span></a> <span class="type">: (Any a, Num b, Any c, Any d, Any e, Any f, Any g, Any h, Any i, Any j, Any k) =&gt; (Int, a, Box b, c, d, e, f, g) -&gt; (Float, Float, h, i, j, k) -&gt; (Float, Float, h, i, j, k)</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L542">line 542</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L564">line 564</a></div>
 <pre class="code"><span class="c-libfunc">ʰm̲z</span> ← { wo (x, v, yaw, pitch, g, fly) →
   a ← (<span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> x) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-Endless.xtl.html#l.dt">ˡdt</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> v
   q ← (<span class="c-number">3.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a) <a href="extensions-scene-demos-Endless.xtl.html#h.s_et3" class="c-libfunc">ʰs̲et3</a> x
@@ -944,7 +972,7 @@ placed there</p>
 </div>
 <div class="item" id="h.m_y">
 <h3><a href="#h.m_y"><span class="c-libfunc">ʰm̲y</span></a> <span class="type">: (Any a, Num b, Any c, Any d, Any e, Any f, Any g, Any h, Any i, Any j) =&gt; (Int, a, Box b, c, d, e, f, g) -&gt; (Float, Float, h, i, Float, j) -&gt; (Float, Float, h, i, Float, j)</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L548">line 548</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L570">line 570</a></div>
 <pre class="code"><span class="c-libfunc">ʰm̲y</span> ← { wo (x, v, yaw, pitch, g, fly) →
   a ← (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> x) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-scene-demos-Endless.xtl.html#l.dt">ˡdt</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> v
   q ← (<span class="c-number">2.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> a) <a href="extensions-scene-demos-Endless.xtl.html#h.s_et3" class="c-libfunc">ʰs̲et3</a> x
@@ -955,8 +983,8 @@ placed there</p>
 <div class="uses">Used in: <a href="extensions-scene-demos-Endless.xtl.html#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a></div>
 </div>
 <div class="item" id="l.m_ove">
-<h3><a href="#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a> <span class="type">: (Any a, Num b, Any c, Any d, Any e, Any f, Any g, Any h, Num i, Any j, Any k, Any l) =&gt; ((Float, Float, Float, Float, Float, Float), (Int, a, Box b, c, d, e, f, g), h, (i, j, k, l)) -&gt; Float -&gt; ((Float, Float, Float, Float, Float, Float), (Int, a, Box b, c, d, e, f, g), h, (i, j, k, l))</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L563">line 563</a></div>
+<h3><a href="#l.m_ove"><span class="c-libfunc">ˡm̲ove</span></a> <span class="type">: (Any a, Num b, Any c, Any d, Any e, Any f, Any g, Any h, Num i, Any j, Any k, Any l, Any m) =&gt; ((Float, Float, Float, Float, Float, Float), (Int, a, Box b, c, d, e, f, g), h, (i, j, k, l, m)) -&gt; Float -&gt; ((Float, Float, Float, Float, Float, Float), (Int, a, Box b, c, d, e, f, g), h, (i, j, k, l, m))</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L585">line 585</a></div>
 <div class="doc">
 <p>s en:m_ove k: one frame of the player under the controls k (mouse dx
 dy, then 1 for each held: w a s d space shift left right up down),
@@ -992,8 +1020,8 @@ down, 15 blocks a second, no gravity, the blocks still stopping it.</p>
 <div class="uses">Used in: <a href="extensions-scene-demos-Play.xtl.html#l.f_rame"><span class="c-libfunc">ˡf̲rame</span></a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
 </div>
 <div class="item" id="l.h_omeAgain">
-<h3><a href="#l.h_omeAgain"><span class="c-libfunc">ˡh̲omeAgain</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g) =&gt; (a, b, c, (d, e, f, g)) -&gt; ((f, Float, Float, Float, Float, Float), b, c, (d, e, f, g))</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L589">line 589</a></div>
+<h3><a href="#l.h_omeAgain"><span class="c-libfunc">ˡh̲omeAgain</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g, Any h) =&gt; (a, b, c, (d, e, f, g, h)) -&gt; ((f, Float, Float, Float, Float, Float), b, c, (d, e, f, g, h))</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L611">line 611</a></div>
 <div class="doc">
 <p>en:h_omeAgain s: the player back at the start, standing still,
 walking</p>
@@ -1003,7 +1031,7 @@ walking</p>
 </div>
 <div class="item" id="l.t_oggleFly">
 <h3><a href="#l.t_oggleFly"><span class="c-libfunc">ˡt̲oggleFly</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g, Any h) =&gt; ((a, b, c, d, e, Float), f, g, h) -&gt; ((a, Float, c, d, Float, Float), f, g, h)</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L592">line 592</a></div>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L614">line 614</a></div>
 <div class="doc">
 <p>en:t_oggleFly s: flying, or walking again (falling from where it is)</p>
 </div>
@@ -1014,22 +1042,58 @@ walking</p>
 <div class="uses">Used in: <a href="extensions-scene-demos-Play.xtl.html#h.f_ly"><span class="c-libfunc">ʰf̲ly</span></a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_ly"><span class="c-userfunc">ᵘf̲ly</span></a></div>
 </div>
 <div class="item" id="l.s_top">
-<h3><a href="#l.s_top"><span class="c-libfunc">ˡs̲top</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g, Num h) =&gt; (a, b, c, (d, e, f, g)) -&gt; (a, b, c, (d, e, f, h))</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L598">line 598</a></div>
+<h3><a href="#l.s_top"><span class="c-libfunc">ˡs̲top</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g, Any h, Num i) =&gt; (a, b, c, (d, e, f, g, h)) -&gt; (a, b, c, (d, e, f, i, h))</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L620">line 620</a></div>
 <div class="doc">
 <p>en:s_top s: the state marked as finished</p>
 </div>
-<pre class="code"><span class="c-libfunc">ˡs̲top</span> ← { (p, wo, jb, (w, nxt, x0, _)) → (p, wo, jb, (w, nxt, x0, <span class="c-number">0</span>)) }</pre>
+<pre class="code"><span class="c-libfunc">ˡs̲top</span> ← { (p, wo, jb, (w, nxt, x0, _, lit)) → (p, wo, jb, (w, nxt, x0, <span class="c-number">0</span>, lit)) }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Play.xtl.html#l.f_rame"><span class="c-libfunc">ˡf̲rame</span></a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
 </div>
 <div class="item" id="l.s_topped">
-<h3><a href="#l.s_topped"><span class="c-libfunc">ˡs̲topped</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Num g, Truthy h) =&gt; (a, b, c, (d, e, f, g)) -&gt; h</span></h3>
-<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L600">line 600</a></div>
+<h3><a href="#l.s_topped"><span class="c-libfunc">ˡs̲topped</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Num g, Any h, Truthy i) =&gt; (a, b, c, (d, e, f, g, h)) -&gt; i</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L622">line 622</a></div>
 <div class="doc">
 <p>en:s_topped s: whether the state is marked as finished</p>
 </div>
-<pre class="code"><span class="c-libfunc">ˡs̲topped</span> ← { (_, _, _, (_, _, _, on)) → on <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span> }</pre>
+<pre class="code"><span class="c-libfunc">ˡs̲topped</span> ← { (_, _, _, (_, _, _, on, _)) → on <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span> }</pre>
 <div class="uses">Used in: <a href="extensions-scene-demos-Play.xtl.html#l.f_rame"><span class="c-libfunc">ˡf̲rame</span></a>, <a href="extensions-scene-demos-voxels-endless.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a>, <a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></div>
+</div>
+<h2 class="section" id="section-7">Light</h2>
+<div class="item" id="l.l_it">
+<h3><a href="#l.l_it"><span class="c-libfunc">ˡl̲it</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g, Any h) =&gt; (a, b, c, (d, e, f, g, h)) -&gt; h</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L634">line 634</a></div>
+<div class="doc">
+<p>en:l_it s: 0 when the world is not lit, 1 by day, 2 by night</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡl̲it</span> ← { (_, _, _, (_, _, _, _, lit)) → lit }</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Play.xtl.html#h.k_inds"><span class="c-libfunc">ʰk̲inds</span></a>, <a href="extensions-scene-demos-Play.xtl.html#l.f_rame"><span class="c-libfunc">ˡf̲rame</span></a>, <a href="extensions-scene-demos-voxels-light.xtl.src.html#L61">extensions/scene/demos/voxels-light.xtl:61</a></div>
+</div>
+<div class="item" id="l.l_ighting">
+<h3><a href="#l.l_ighting"><span class="c-libfunc">ˡl̲ighting</span></a> <span class="type">: (Any a, Any b, Any c, Num d, Any e, Any f, Any g, Any h, Num i) =&gt; (a, b, c, (d, e, f, g, h)) -&gt; (a, b, c, (d, e, f, g, i))</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L638">line 638</a></div>
+<div class="doc">
+<p>en:l_ighting s: the world lit (call it before columns are made), by
+day</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡl̲ighting</span> ← { (p, wo, jb, (w, nxt, x0, on, _)) →
+  z ← w <a href="extensions-scene-lib-Scene.xtl.html#l.d_aylight-21" class="c-libfunc">ˢᶜd̲aylight!</a> <span class="c-number">1.0</span>
+  (p, wo, jb, (w, nxt, x0, on, <span class="c-number">1</span>))
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-voxels-light.xtl.html#s">s</a></div>
+</div>
+<div class="item" id="l.n_ight">
+<h3><a href="#l.n_ight"><span class="c-libfunc">ˡn̲ight</span></a> <span class="type">: (Any a, Any b, Any c, Num d, Any e, Any f, Any g, Num h) =&gt; (a, b, c, (d, e, f, g, h)) -&gt; (a, b, c, (d, e, f, g, h))</span></h3>
+<div class="meta">function &middot; <a href="extensions-scene-demos-Endless.xtl.src.html#L645">line 645</a></div>
+<div class="doc">
+<p>en:n_ight s: day becomes night (the sunlight and the sky gone, the
+lamps left) and night day</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡn̲ight</span> ← { (p, wo, jb, (w, nxt, x0, on, lit)) →
+  z ← w <a href="extensions-scene-lib-Scene.xtl.html#l.d_aylight-21" class="c-libfunc">ˢᶜd̲aylight!</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> lit <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">2</span>
+  (p, wo, jb, (w, nxt, x0, on, <span class="c-number">3</span> <a href="builtins.html#-2d" class="c-symbol">−</a> lit))
+}</pre>
+<div class="uses">Used in: <a href="extensions-scene-demos-Play.xtl.html#h.n_ightIf"><span class="c-libfunc">ʰn̲ightIf</span></a></div>
 </div>
 </main>
 </body>
