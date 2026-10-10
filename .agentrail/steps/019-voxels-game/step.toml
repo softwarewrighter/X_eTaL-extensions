@@ -1,9 +1,10 @@
 number = 19
 slug = "voxels-game"
-status = "in-progress"
+status = "completed"
 description = "game step 6: Gem Hunt (docs/voxels.md)."
 role = "production"
 context_files = []
 created_at = "2026-10-07T18:26:56"
+completed_at = "2026-10-09T23:07:00"
 task_type = "feature"
-commits = []
+commits = ["f46c4f15aafd945e7f26c7924aa3660398aa5e67"]

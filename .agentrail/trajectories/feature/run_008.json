@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "state": {
+    "number": 19,
+    "step": "voxels-game"
+  },
+  "action": "X_eTaL game state tuple over Play; scene labels; scripted headless find; reg-rs",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-09T23:07:00"
+}

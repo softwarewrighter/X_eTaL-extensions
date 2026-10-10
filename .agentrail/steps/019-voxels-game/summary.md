@@ -1,0 +1,1 @@
+voxels-game (Gem Hunt): ten glowing gems buried as edits around the start (first four blocks down), three minutes, finds from newest edits, labels for gems/time/nearest gem, G gives up, end screen; pl:f_rameV; nine block kinds; golden and recording live. Deferred: slower stone, sound, high-score table.
