@@ -1,6 +1,6 @@
 number = 17
 slug = "voxels-light"
-status = "pending"
+status = "in-progress"
 description = "game step 4: sky light by a column scan; torch light spreading in rounds over..."
 role = "production"
 context_files = []
