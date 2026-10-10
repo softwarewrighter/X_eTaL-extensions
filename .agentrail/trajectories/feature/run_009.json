@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "state": {
+    "number": 20,
+    "step": "game-release"
+  },
+  "action": "site-wide online check; docs; retrospective",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-09T23:28:02"
+}

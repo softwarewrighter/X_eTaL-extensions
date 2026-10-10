@@ -1,9 +1,10 @@
 number = 20
 slug = "game-release"
-status = "in-progress"
+status = "completed"
 description = "game step 7: recordings, docs, status, retrospective; verify the site online."
 role = "production"
 context_files = []
 created_at = "2026-10-07T18:26:56"
+completed_at = "2026-10-09T23:28:02"
 task_type = "feature"
-commits = []
+commits = ["a2050ab9eb0c4902e2a18338e2f917901d037a2f"]
