@@ -45,7 +45,7 @@ just demo scene voxels-fly      # fly over it (F: fly or walk; Space up, Shift d
 just demo scene voxels-rubik    # a Rubik's cube of voxels: u d r l f b turn, z undo, Space scramble
 just demo scene voxels-rubik-turn  # one layer of the cube turning a quarter revolution, on three axes
 just demo scene voxels-dig      # dig (click) and build (right-click) in the endless world; 1-7 choose the block
-just demo scene voxels-water    # dig the rim of a lake on a hill and watch it run down the steps
+just demo scene voxels-water    # dig a lake's rim: it drains a layer down one face of the hill; dig deeper for the next
 just demo scene voxels-rubik-buttons  # the cube with buttons: U U' R R' F F', animated, queued, undo
 just demo scene voxels-rubik-solve    # scramble, solve (the Eigencube library), step or play the solution
 just walkthrough                # a fresh clone, built and run, checked against the goldens

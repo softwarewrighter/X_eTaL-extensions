@@ -188,25 +188,25 @@ before the next builds on it. Their shared X_eTaL is the library
     each jump. The hotbar, digging, placing and a frame of play are the
     library `demos/Play.xtl`, shared with voxels-water.
 11. `demos/voxels-water.xtl` (`just demo scene voxels-water`): water
-    that flows. A stepped hill stands by the start, built as edits, with
-    a lake on its top terrace held in by a rim of grass; you start on
-    the rim. Dig into it and the lake runs out and down the steps; dig
-    beside the sea and the hole fills; place water (7) and it runs.
-    Water flows as a cellular automaton on its frontier, the cells it
-    has just reached (`Endless.xtl`): each tick a cell falls into the
-    air below it (level 7 again) or, standing on something solid,
-    spreads one level lower into the air at its sides, until level 1;
-    the lake and the sea are sources that never empty. The cells it
-    reaches are edits like any other, so the water stays where it ran;
-    each column keeps a water mask beside its solid mask, so a whole
-    frontier is looked up at once (`en:l_ook`: air, solid or water).
-    A tick waits for the columns it changed to be drawn again, and at
-    most one runs every 6 frames, about the pace of water in a block
-    game. Water is drawn translucent (scene's alpha), its sides and
-    bottom where it meets air, so the seabed and the lake's floor show
-    through and a run of water down a slope is solid to look at.
-    Recorded as `videos/voxels-water.webm`: the rim dug, then the hill
-    from the air as the lake runs down it.
+    that flows and is conserved. A stepped hill stands by the start,
+    built as edits, with a lake on its top terrace -- 25 cells a layer,
+    two layers deep -- held in by a rim of grass; you start on the rim.
+    Moving water is an amount in each cell (64 units a full block) and
+    the direction it moves, kept apart from the blocks (`en:w_ater`); a
+    tick moves it, never makes or loses any: it falls first, as much as
+    fits below, then spreads only toward less water, never more than
+    half the difference, more the way it is already moving (momentum)
+    and toward an edge with a drop. So dig the rim and the lake's top
+    layer runs out as a thin stream down one face of the hill, its level
+    falling a block for every 25 blocks that leave, until it reaches the
+    breach's bottom; dig the trench one deeper and the layer below
+    drains too. The sea is the one infinite source: a hole dug beside it
+    fills, and water falling into it becomes sea. Placed water (7) is a
+    full block that flows. Water is drawn translucent at its height
+    (scene's alpha). The demo prints the lake's layers each time the
+    water comes to rest. Recorded as `videos/voxels-water.webm`: the rim
+    dug, the top layer running out (watched from the air), then the
+    trench deepened and the layer below running out.
 12. `demos/voxels-rubik-buttons.xtl` (`just demo scene
     voxels-rubik-buttons`): the Rubik's cube with buttons. Six labeled
     buttons under the cube (`sc:o_verlay!` rectangles, `sc:l_abel!`

@@ -33,9 +33,9 @@ pl:help
 ## before any column is made: each ring around the center (r, the
 ## larger of the distances east-west and north-south) one block lower
 ## than the one inside it, down to the ground; the top terrace (r up to
-## 3) at T, five blocks above the highest ground there; a pool on it (r
-## up to 2), two blocks deep, filled with water and held in by the rim
-## (r = 3). Dirt under grass.
+## 3) at T, five blocks above the highest ground there, dirt under
+## grass; on it a lake (r up to 2) two blocks deep, held in by the rim
+## (r = 3): 50 cells of moving water, each a full block, 25 a layer.
 hv := r_avel vx:h_eightsAt 0 0 17
 cell := (r_ange 17 * 32 * 17) - 1
 cx := cell d_iv 32 * 17
@@ -45,30 +45,65 @@ gt := ((1 + cz + 17 * cx) s_elect hv) - 1
 T := 28 m_in 5 + 'm_ax r_/ hv - 1
 r := (a_bs cx - 8) m_ax a_bs cz - 8
 top := T - 0 m_ax r - 3
-fill := (cy > gt) * cy <= top
 pool := (r <= 2) * (cy >= T - 1) * cy <= T
-blk := (pool * 5) + (1 - pool) * fill * 2 + cy = top
-keep := 0 < fill + pool
-n := t_ally w_here keep
-cells := 2 1 t_ranspose (3 c_at n) r_eshape (keep r_eplicate cx) c_at (keep r_eplicate cy) c_at keep r_eplicate cz
-"the terrace's height, and the hill's cells (water, dirt, grass):"
+fill := (1 - pool) * (cy > gt) * cy <= top
+blk := fill * 2 + cy = top
+u:c_ells := { m -> 2 1 t_ranspose (3 c_at '+ r_/ m) r_eshape (m r_eplicate cx) c_at (m r_eplicate cy) c_at m r_eplicate cz }
+"the terrace's height, the hill's blocks (dirt, grass) and the lake's cells:"
 T
-'+ r_/_2 (5 2 3) '= t_able keep r_eplicate blk
+('+ r_/_2 (2 3) '= t_able fill r_eplicate blk) c_at '+ r_/ pool
 
-## the player on the rim, south of the pool, facing it (north)
+## the player on the rim, south of the lake, facing it (north)
 s := w en:n_ewAt 8.5 c_at (f_loat T + 1) c_at 11.5
-s := (cells, keep r_eplicate blk) en:s_etAll s
-"looking up no cells (a tick where no water spreads):"
+s := (u:c_ells fill, fill r_eplicate blk) en:s_etAll s
+lake := u:c_ells pool
+s := (lake c_at_2 ((t_ally lake) c_at 3) r_eshape en:full c_at 0 0) en:p_our s
+"looking up no cells:"
 t_ally (en:w_orld s) en:l_ook 0 3 r_eshape 0
+
+### Measuring
+
+## u:m_easure s: the lake's two layers and all the moving water, in
+## blocks of water, said
+u:m_easure := { s ->
+  W := en:w_ater s
+  x := 1 s_elect_2 W
+  y := 2 s_elect_2 W
+  z := 3 s_elect_2 W
+  inlake := ((a_bs x - 8) m_ax a_bs z - 8) <= 2
+  a := 4 s_elect_2 W
+  t_oBlocks := { u -> f_ormat (f_loat f_loor 0.5 + 100.0 * (f_loat u) / f_loat en:full) / 100.0 }
+  said := p_rint! "lake: top layer " c_at (t_oBlocks '+ r_/ a * inlake * y = T) c_at " of 25 blocks, the layer below " c_at (t_oBlocks '+ r_/ a * inlake * y = T - 1) c_at " of 25; all the moving water " c_at t_oBlocks en:w_aterUnits s
+  s
+}
+u:m_easureIf := { yes sk ->
+  (s, k) := sk
+  yes ? k u:m_easureAt s
+  s
+}
+u:m_easureAt := { k s ->
+  said := p_rint! "after " c_at (f_ormat k) c_at " frames:"
+  u:m_easure s
+}
 
 ### Playing
 
+## The state is (the world and its player, the chosen block, whether the
+## water was asleep, the frames so far); each time the water falls
+## asleep after moving, the lake is measured.
+u:f_rame := { (s, sel, was, k) ->
+  (s, sel) := pl:f_rame (s, sel)
+  now := en:a_sleep s
+  s := (now * 1 - was) u:m_easureIf (s, k + 1)
+  (s, sel, now, k + 1)
+}
+
 hud := w pl:h_ud 1
 s := (3 * (1 + 2 * en:reach) * 1 + 2 * en:reach) 'en:s_tream p_ower s
-last := 100000 'pl:f_rame p_ower (s, 1)
+s := u:m_easure s
+last := 100000 'u:f_rame p_ower (s, 1, 1, 0)
 z := sc:c_lose! w
-(s, _) := last
-"water cells added by the flow, and still flowing:"
-('+ r_/ 5 = 4 s_elect_2 en:e_dits s) - '+ r_/ pool * keep
-en:f_lowingCells s
+(s, _, _, _) := last
+"at the end:"
+s := u:m_easure s
 "bye"

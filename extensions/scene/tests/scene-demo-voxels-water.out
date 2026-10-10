@@ -1,14 +1,22 @@
 keys: click or X dig, right-click or E place, 1-7 choose the block (7 water), W A S D walk, Space jump, F fly, drag or arrows look, H home, q quit
-the terrace's height, and the hill's cells (water, dirt, grass):
+the terrace's height, the hill's blocks (dirt, grass) and the lake's cells:
 22
-50 2640 254
-looking up no cells (a tick where no water spreads):
+2640 254 50
+looking up no cells:
 0
+lake: top layer 25.0 of 25 blocks, the layer below 25.0 of 25; all the moving water 50.0
 dug 9 22 11
-water cells added by the flow, and still flowing:
-526
-24
+after 1405 frames:
+lake: top layer 1.72 of 25 blocks, the layer below 25.0 of 25; all the moving water 26.72
+dug 9 21 12
+after 1550 frames:
+lake: top layer 1.72 of 25 blocks, the layer below 25.0 of 25; all the moving water 26.72
+dug 9 21 11
+after 3133 frames:
+lake: top layer 0.0 of 25 blocks, the layer below 2.11 of 25; all the moving water 2.13
+at the end:
+lake: top layer 0.0 of 25 blocks, the layer below 2.11 of 25; all the moving water 2.13
 bye
 1562978123 26636 work/vt/scene-1-30.png
-3455505385 63795 work/vt/scene-1-250.png
-3465928772 64553 work/vt/scene-1-495.png
+518700411 54939 work/vt/scene-1-1700.png
+4047380057 54434 work/vt/scene-1-3384.png

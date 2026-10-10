@@ -81,7 +81,9 @@ for dir in extensions/${1:-*}/videos; do
     if [ -n "$wav" ]; then audio="$root/target/screens/$ext-$name.wav"; fi
     (cd "extensions/$ext" && XETAL_HEADLESS=1 XETAL_EVENTS="$events" XETAL_FRAMES="$out" XETAL_AUDIO_WAV="$root/target/screens/$ext-$name.wav" \
       "$root/target/release/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > /dev/null)
-    first="$(ls "$out" | head -1)"; prefix="${first%-1.png}"
+    # sed reads the whole listing (head would close the pipe early: a
+    # SIGPIPE, fatal under pipefail, with thousands of frames)
+    first="$(ls "$out" | sed -n 1p)"; prefix="${first%-1.png}"
     sound=()
     case "$audio" in /*) track="$audio" ;; *) track="extensions/$ext/$audio" ;; esac
     [ -n "$audio" ] && sound=(-i "$track" -map 0:v -map 1:a -c:a aac -shortest)

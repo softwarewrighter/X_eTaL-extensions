@@ -19,8 +19,8 @@
 ## column's scene objects are 10 * number + block -- their solid masks
 ## and their water masks, a box each, in the keys' order; the edits, n
 ## by 4, x y z and block, the newest first; the keys of the columns to
-## make again, edited; the flowing water's frontier, n by 4, x y z and
-## level; and the frames until its next tick); the job, the column being
+## make again, edited; the moving water, n by 6, x y z, amount and
+## direction; and the frames until its next tick); the job, the column being
 ## made (its part 0 to 2, its column cx cz, its number, its data:
 ## blocks, then faces); the settings (the window, the next number, the
 ## start x y z, whether it runs). Made by en:n_ew or en:n_ewAt.
@@ -71,7 +71,7 @@ l:n_ew := { w ->
 l:n_ewAt := { w x0 ->
   p := (x0, 0.0 0.0 0.0, 0.0, 0.0, 0.0, 0.0)
   none := 0 r_eshape 0
-  wo := (none, none, 0 r_eshape e_nclose none, 0 r_eshape e_nclose none, 0 4 r_eshape 0, none, 0 4 r_eshape 0, 0)
+  wo := (none, none, 0 r_eshape e_nclose none, 0 r_eshape e_nclose none, 0 4 r_eshape 0, none, 0 6 r_eshape 0, 0)
   (p, wo, (0, 0 0, 0, none), (w, 1, x0, 1))
 }
 
@@ -112,22 +112,19 @@ h:s_endOne := { wnt f ->
 ## away dropped, then a third of making a column -- an edited one again,
 ## or else the nearest missing one: its blocks and solid mask (part 0),
 ## its faces (part 1), or sending them to scene (part 2) -- about 12 ms
-## at most; when no edited column waits, a tick of flowing water
+## at most; or, when it is time, a tick of moving water
 l:s_tream := { s ->
   s := h:t_rim s
   (_, (_, _, _, _, _, rq, fl, fw), (part, _, _, _), _) := s
   part = 1 ? h:f_aces s
   part = 2 ? h:s_end s
-  ((0 = t_ally rq) * (fw <= 0) * 0 < t_ally fl) ? h:f_low s
+  ((fw <= 0) * 0 < t_ally fl) ? h:f_low s
   h:b_locks h:w_ait s
 }
 
 # a frame less to wait for the water's next tick
 h:w_ait := { (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, st) -> (p, (ks, ns, ms, wm, ed, rq, fl, 0 m_ax fw - 1), jb, st) }
 
-## the frames between ticks of flowing water: 10 ticks a second at most,
-## about as fast as water runs in a block game
-l:pace := 6
 
 # part 0: the nearest missing column's blocks and mask; the column is
 # known (collision sees it) from now on, drawn two frames later
@@ -162,7 +159,8 @@ h:r_emake := { (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, st) ->
   b := (ed, c) l:e_dited vx:c_olumnBlocks c
   ms := ((j - 1) t_ake ms) c_at (e_nclose vx:c_olumnMask b) c_at j d_rop ms
   wm := ((j - 1) t_ake wm) c_at (e_nclose vx:c_olumnWater b) c_at j d_rop wm
-  (p, (ks, ns, ms, wm, ed, rest, fl, fw), (1, c, j s_elect ns, r_avel b), st)
+  # the column changed: the water wakes (its masks are new now)
+  (p, (ks, ns, ms, wm, ed, rest, fl, 0), (1, c, j s_elect ns, r_avel b), st)
 }
 
 ## (edits, c) en:e_dited b: the blocks b of column c (18 by 32 by 18,
@@ -266,17 +264,20 @@ l:p_ick := { (ks, _, ms, _, _, _, _, _) e ->
 ## (cell, block) en:s_et s: the block at the cell (x y z) set -- air, 0,
 ## to dig it out -- and remembered (the newest edit first); its column
 ## made again before any new one, and a neighbor too when the cell is on
-## their border (its faces against the cell change). Dug out beside
-## water (at a side or above), the cell fills with water at once and the
-## water starts to flow from it (en:s_tream); water placed flows too.
+## their border (its faces against the cell change). Water (block 5) is
+## not an edit: placed, it is a full block of moving water in the cell; dug
+## out beside the sea (at a side or above), the cell fills from it. A
+## solid block placed in moving water takes its place (that water is
+## gone). Any change wakes the water.
 l:s_et := { (q, t) s ->
-  t = 5 ? (1 4 r_eshape q c_at 7) h:f_lowing ((1 3 r_eshape q), 5) l:s_etAll s
   (_, wo, _, _) := s
+  t = 5 ? (1 6 r_eshape q c_at l:full c_at 0 0) l:p_our s
+  s := (q, t) h:d_isplace s
+  s := ((1 3 r_eshape q), t) l:s_etAll s
   nb := (5 3 r_eshape q) + 5 3 r_eshape 0 1 0  -1 0 0  1 0 0  0 0 -1  0 0 1
-  wet := (t = 0) * 0 < '+ r_/ 2 = wo l:l_ook nb
-  0 = wet ? ((1 3 r_eshape q), t) l:s_etAll s
-  s := ((1 3 r_eshape q), 5) l:s_etAll s
-  (1 4 r_eshape q c_at 7) h:f_lowing s
+  sea := (t = 0) * 0 < '+ r_/ 2 = wo l:l_ook nb
+  0 = sea ? s
+  (1 6 r_eshape q c_at l:full c_at 0 0) l:p_our s
 }
 
 ## (cells, block) en:s_etAll s: the cells (n by 3, x y z) all set to the
@@ -294,15 +295,23 @@ l:s_etAll := { (q, t) s ->
   (p, (ks, ns, ms, wm, ed, near c_at (0 = rq m_ember? near) r_eplicate rq, fl, fw), jb, st)
 }
 
-# f h:f_lowing s: the cells f (n by 4: x y z level) added to the water's
-# frontier
-h:f_lowing := { f (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, st) -> (p, (ks, ns, ms, wm, ed, rq, f c_at fl, fw), jb, st) }
+## f en:p_our s: the cells f (n by 6: x y z, amount 1 to en:full, and the
+## direction it moves, dx dz) added to the moving water, which wakes
+l:p_our := { f (p, (ks, ns, ms, wm, ed, rq, W, fw), jb, st) -> (p, (ks, ns, ms, wm, ed, rq, f c_at W, 0), jb, st) }
 
+# (q, t) h:d_isplace s: moving water at cell q gone when a block (not
+# air) is put there; the water woken either way
+h:d_isplace := { qt (p, (ks, ns, ms, wm, ed, rq, W, fw), jb, st) ->
+  (q, t) := qt
+  keep := (t = 0) + (h:c_ellKey 1 2 3 s_elect_2 W) != f_irst h:c_ellKey 1 3 r_eshape q
+  (p, (ks, ns, ms, wm, ed, rq, (0 < keep) r_eplicate W, 0), jb, st)
+}
 ## wo en:l_ook q: what is at each cell of q (n by 3, x y z) in the world
 ## wo: 0 air, 1 solid, 2 water; below the world, and a column not made
 ## yet, are solid; above it is air
 l:l_ook := { (ks, _, ms, wm, _, _, _, _) q ->
   0 = t_ally q ? 0 r_eshape 0
+  0 = t_ally ms ? (t_ally q) r_eshape 1
   x := 1 s_elect_2 q
   y := 2 s_elect_2 q
   z := 3 s_elect_2 q
@@ -321,52 +330,184 @@ l:l_ook := { (ks, _, ms, wm, _, _, _, _) q ->
   f_loor f_loat hard + 2 * wet
 }
 
-### Flowing water
+### Moving water
 
-## Water flows as a cellular automaton on its frontier, the cells it has
-## just reached (x y z and a level, 7 down to 1). Each tick every
-## frontier cell falls into air below it (level 7 again), or, standing
-## on something solid, spreads into the air at its four sides one level
-## lower, until level 1. The cells reached are water (edits, block 5)
-## and the next frontier; the sea and lakes are sources that never
-## empty. A tick runs only when the columns it changed have been made
-## again, so what is drawn keeps up with the water.
+## Water that moves is an amount in each cell it is in, 1 to 64 units
+## (en:full, a full block), and the direction it was last moving (dx dz), kept as
+## n by 6 Ints (en:w_ater) apart from the blocks; the sea is blocks, a
+## source that never empties. Water is conserved: a tick moves it from
+## cell to cell and never makes or loses any, except that a cell beside
+## the sea (at a side or above) is kept full by it and water falling
+## into the sea becomes the sea. Each tick, in order:
+##
+## - gravity: each cell's water falls into the room below it, as much
+##   as fits (into air, or moving water not yet full);
+## - then four passes, one a direction (west, east, north, south): a
+##   cell that cannot fall (something solid, or full water, below) sends
+##   part of the difference to a neighbor with less water, a share of
+##   4/16, more toward the way it was moving (momentum, 7/16) and toward
+##   an edge with a drop below it (gravity pulling it on, 8/16) -- never
+##   more than half, so neighbors even out instead of trading places --
+##   and at least 1 when the difference is 2 or more; a stream's front
+##   moves on into an empty cell the way it is going, or over an edge,
+##   even by 1. Water one unit (1/64 of a block) above its neighbor
+##   stays put.
+##
+## So a breach in a lake's rim drains the lake: a lake of area A loses
+## one level for each A blocks of water that leave it, and stops at the
+## breach's bottom until the breach is dug deeper; the water that left
+## runs on in the direction it took and pours over edges. After a tick
+## that moved nothing the water sleeps until something changes.
 
-# one tick of the water's frontier
+## the frames between ticks of moving water
+l:pace := 1
+
+## the units of water in a full block: fine enough that a lake can drain
+## to within a sliver of its breach (a difference of one unit stays put)
+l:full := 64
+
+# each cell's key (q n by 3), unique for cells within 100000 of the
+# origin
+h:c_ellKey := { q -> (200000 * (64 * 100000 + 1 s_elect_2 q) + 2 s_elect_2 q) + 100000 + 3 s_elect_2 q }
+
+# the cells q moved by o (x y z)
+h:s_hift := { q o -> q + ((1 s_elect s_hape q) c_at 3) r_eshape o }
+
+# one tick of moving water (or, if it moved nothing, the water asleep)
 h:f_low := { s ->
   (p, wo, jb, st) := s
-  (ks, ns, ms, wm, ed, rq, fl, fw) := wo
-  n := 1 s_elect s_hape fl
-  q := 1 2 3 s_elect_2 fl
-  lv := 4 s_elect_2 fl
-  dn := q - (n c_at 3) r_eshape 0 1 0
-  below := wo l:l_ook dn
-  fall := below = 0
-  sp := (below = 1) * lv > 1
-  sq := sp r_eplicate q
-  m := 1 s_elect s_hape sq
-  sl := (sp r_eplicate lv) - 1
-  sides := (sq - (m c_at 3) r_eshape 1 0 0) c_at (sq + (m c_at 3) r_eshape 1 0 0) c_at (sq - (m c_at 3) r_eshape 0 0 1) c_at sq + (m c_at 3) r_eshape 0 0 1
-  open := 0 = wo l:l_ook sides
-  new := (fall r_eplicate dn) c_at open r_eplicate sides
-  lvl := ((t_ally w_here fall) r_eshape 7) c_at open r_eplicate sl c_at sl c_at sl c_at sl
-  s := (p, (ks, ns, ms, wm, ed, rq, 0 4 r_eshape 0, l:pace), jb, st)
-  0 = t_ally lvl ? s
-  o := g_rade 0 - lvl
-  new := o s_elect new
-  lvl := o s_elect lvl
-  k := (1000000 * 1000000 * 100000 + 1 s_elect_2 new) + (1000000 * 1000 + 2 s_elect_2 new) + 100000 + 3 s_elect_2 new
-  first := (k i_ndexOf k) = r_ange t_ally k
-  new := first r_eplicate new
-  lvl := first r_eplicate lvl
-  s := (new, 5) l:s_etAll s
-  (new c_at_2 ((t_ally lvl) c_at 1) r_eshape lvl) h:f_lowing s
+  (ks, ns, ms, wm, ed, rq, W, fw) := wo
+  (P, A, D) := wo h:r_efill W
+  (P, A, D) := wo h:f_all (P, A, D)
+  (P, A, D) := (wo, -1 0) h:s_pread (P, A, D)
+  (P, A, D) := (wo, 1 0) h:s_pread (P, A, D)
+  (P, A, D) := (wo, 0 -1) h:s_pread (P, A, D)
+  (P, A, D) := (wo, 0 1) h:s_pread (P, A, D)
+  live := A > 0
+  n := '+ r_/ live
+  W2 := (live r_eplicate P) c_at_2 ((n c_at 1) r_eshape live r_eplicate A) c_at_2 live r_eplicate D
+  still := W2 m_atch W
+  z := (wo, W2) h:d_rawWater l:w_indow s
+  (p, (ks, ns, ms, wm, ed, rq, W2, still h:n_ext 0), jb, st)
+}
+# the frames to the next tick: a while when nothing moved (asleep until
+# something changes)
+h:n_ext := { still z ->
+  still ? 1000000000
+  l:pace
 }
 
-## en:f_lowingCells s: how many cells the water is flowing from (0:
-## still)
-l:f_lowingCells := { (_, (_, _, _, _, _, _, fl, _), _, _) -> t_ally fl }
+# wo h:r_efill W: the cells and amounts and directions of W, a cell
+# beside the sea (at a side or above) full
+h:r_efill := { wo W ->
+  P := 1 2 3 s_elect_2 W
+  A := 4 s_elect_2 W
+  D := 5 6 s_elect_2 W
+  sides := (P h:s_hift -1 0 0) c_at (P h:s_hift 1 0 0) c_at (P h:s_hift 0 0 -1) c_at (P h:s_hift 0 0 1) c_at P h:s_hift 0 1 0
+  sea := 0 < '+ r_/_1 (5 c_at t_ally A) r_eshape 2 = wo l:l_ook sides
+  (P, (l:full * sea) + (1 - sea) * A, D)
+}
 
+# wo h:f_all (P, A, D): each cell's water fallen into the room below it;
+# into the sea it is gone (the sea is full)
+h:f_all := { wo (P, A, D) ->
+  n := t_ally A
+  keys := h:c_ellKey P
+  dn := P h:s_hift 0 -1 0
+  kd := wo l:l_ook dn
+  jd := keys i_ndexOf h:c_ellKey dn
+  bd := jd s_elect A c_at 0
+  room := (kd = 0) * l:full - bd
+  f := ((kd = 2) * A) + (kd != 2) * A m_in room
+  ja := keys i_ndexOf h:c_ellKey P h:s_hift 0 1 0
+  A := (A - f) + (ja s_elect f c_at 0) * ja <= n
+  new := (f > 0) * (kd = 0) * jd > n
+  m := '+ r_/ new
+  (P c_at new r_eplicate dn, A c_at new r_eplicate f, D c_at new r_eplicate D)
+}
+
+# (wo, o) h:s_pread (P, A, D): one pass of spreading toward o (dx dz):
+# each cell that cannot fall sends part of the difference to that
+# neighbor when it holds less, and the neighbor takes o as its direction
+h:s_pread := { woo (P, A, D) ->
+  (wo, o) := woo
+  n := t_ally A
+  off := (1 s_elect o) c_at 0 c_at 2 s_elect o
+  keys := h:c_ellKey P
+  side := P h:s_hift off
+  ks := wo l:l_ook side
+  js := keys i_ndexOf h:c_ellKey side
+  bs := js s_elect A c_at 0
+  dn := P h:s_hift 0 -1 0
+  jd := keys i_ndexOf h:c_ellKey dn
+  held := ((wo l:l_ook dn) = 1) + l:full = jd s_elect A c_at 0
+  drop := 0 = wo l:l_ook side h:s_hift 0 -1 0
+  ahead := ((1 s_elect_2 D) = 1 s_elect o) * (2 s_elect_2 D) = 2 s_elect o
+  wt := 4 m_ax (7 * ahead) m_ax 8 * drop
+  go := (ks = 0) * (0 < held) * A > bs
+  # at most half the difference: neighbors even out, never trade places
+  t := go * ((A - bs) * wt) d_iv 16
+  # a stream's front keeps going the way it moves, and over an edge,
+  # even by 1 (only into an empty cell, so water cannot circle)
+  t := t m_ax go * ((A - bs) >= 2) + (bs = 0) * 0 < ahead + drop
+  t := t m_in (l:full - bs) m_in A
+  jf := keys i_ndexOf h:c_ellKey P h:s_hift 0 - off
+  got := (jf s_elect t c_at 0) * jf <= n
+  A := (A - t) + got
+  dx := ((got > 0) * 1 s_elect o) + (got = 0) * 1 s_elect_2 D
+  dz := ((got > 0) * 2 s_elect o) + (got = 0) * 2 s_elect_2 D
+  D := 2 1 t_ranspose (2 c_at n) r_eshape dx c_at dz
+  new := (t > 0) * js > n
+  m := '+ r_/ new
+  (P c_at new r_eplicate side, A c_at new r_eplicate t, D c_at (m c_at 2) r_eshape o)
+}
+
+# (wo, W) h:d_rawWater w: the moving water drawn as one translucent
+# object (9): each cell's top at its amount's height where no water is
+# above it, its sides where air is beside it and its bottom over air
+h:d_rawWater := { woW w ->
+  (wo, W) := woW
+  0 = t_ally W ? w sc:r_emove! 9
+  P := 1 2 3 s_elect_2 W
+  A := 4 s_elect_2 W
+  keys := h:c_ellKey P
+  n := t_ally A
+  x := f_loat 1 s_elect_2 P
+  y := f_loat 2 s_elect_2 P
+  z := f_loat 3 s_elect_2 P
+  ht := y + (f_loat A) / f_loat l:full
+  d_ry := { o -> (0 = wo l:l_ook P h:s_hift o) * n < keys i_ndexOf h:c_ellKey P h:s_hift o }
+  top := (n < keys i_ndexOf h:c_ellKey P h:s_hift 0 1 0) * 2 != wo l:l_ook P h:s_hift 0 1 0
+  q := (top, (x, ht, z), (x + 1.0, ht, z), (x + 1.0, ht, z + 1.0), (x, ht, z + 1.0)) h:q_uads 0
+  q := q c_at (d_ry -1 0 0, (x, y, z), (x, y, z + 1.0), (x, ht, z + 1.0), (x, ht, z)) h:q_uads 0
+  q := q c_at (d_ry 1 0 0, (x + 1.0, y, z), (x + 1.0, y, z + 1.0), (x + 1.0, ht, z + 1.0), (x + 1.0, ht, z)) h:q_uads 0
+  q := q c_at (d_ry 0 0 -1, (x, y, z), (x + 1.0, y, z), (x + 1.0, ht, z), (x, ht, z)) h:q_uads 0
+  q := q c_at (d_ry 0 0 1, (x, y, z + 1.0), (x + 1.0, y, z + 1.0), (x + 1.0, ht, z + 1.0), (x, ht, z + 1.0)) h:q_uads 0
+  q := q c_at (d_ry 0 -1 0, (x, y, z), (x + 1.0, y, z), (x + 1.0, y, z + 1.0), (x, y, z + 1.0)) h:q_uads 0
+  0 = t_ally q ? w sc:r_emove! 9
+  ((f_loat w) c_at 9.0 c_at ((6 s_elect vx:colors) c_at 0.6)) sc:q_uads! q
+}
+
+# (mask, corner1 ... corner4) h:q_uads 0: a quad for each cell in the
+# mask, its corners (each x y z, one value a cell) in order round it;
+# 4m by 3
+h:q_uads := { (m, k1, k2, k3, k4) z ->
+  k := '+ r_/ m
+  0 = k ? 0 3 r_eshape 0.0
+  c_orner := { (a, b, cz) -> 2 1 t_ranspose (3 c_at k) r_eshape (m r_eplicate a) c_at (m r_eplicate b) c_at m r_eplicate cz }
+  ((4 * k) c_at 3) r_eshape 2 1 3 t_ranspose (4 c_at k c_at 3) r_eshape (c_orner k1) c_at (c_orner k2) c_at (c_orner k3) c_at c_orner k4
+}
+
+## en:w_ater s: the moving water, n by 6: x y z, amount (1 to en:full
+## units, a full block) and the direction it moves (dx dz)
+l:w_ater := { (_, (_, _, _, _, _, _, W, _), _, _) -> W }
+
+## en:a_sleep s: whether the water is asleep (a tick moved nothing and
+## nothing has changed since)
+l:a_sleep := { (_, (_, _, _, _, _, _, _, fw), _, _) -> fw > 1000000 }
+
+## en:w_aterUnits s: how much water is moving, in units (en:full a block)
+l:w_aterUnits := { s -> '+ r_/ 4 s_elect_2 l:w_ater s }
 
 ## p en:o_verlaps q: whether the player's box (0.6 wide, 1.75 tall) with
 ## its feet at p (x y z) overlaps the cell q (x y z) -- no block is
