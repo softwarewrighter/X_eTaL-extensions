@@ -396,7 +396,10 @@ Read before working:
 ## Every step ends with
 
 1. `just gate` passes (X_eTaL at XETAL_COMMIT, cargo fmt/clippy/test,
-   facade goldens, markdown).
+   facade goldens, markdown). A commit that changes no code -- a
+   recording, docs, a golden's script -- may use `just check-quick`
+   instead (the goldens, pages, docs and markdown checks; it refuses
+   when code changed).
 2. Docs updated: README (catalog, status), the extension's page,
    `CHANGES.md`, `docs/plan.md`, `docs/xetal-asks.md` as needed.
 3. `.gitignore` covers new build output (`git status` shows nothing

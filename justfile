@@ -129,6 +129,10 @@ check-spelling:
 gate:
     scripts/gate.sh
 
+# A quick gate for commits that change no code (recordings, docs, goldens): about 20 s
+check-quick:
+    scripts/check-quick.sh
+
 # Show the agentrail saga state and the current step
 status:
     agentrail status
