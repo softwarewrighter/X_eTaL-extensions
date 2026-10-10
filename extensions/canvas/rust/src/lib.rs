@@ -326,7 +326,9 @@ fn show(args: &[Value]) -> Result<Value, OwnedError> {
             h.shown += 1;
             h.shown
         };
-        save_png(&f, &dir.join(format!("canvas-{id}-{n}.png"))).map_err(OwnedError::failure)?;
+        if xetal_ext_ui::frame_wanted(u64::try_from(n).unwrap_or(u64::MAX)) {
+            save_png(&f, &dir.join(format!("canvas-{id}-{n}.png"))).map_err(OwnedError::failure)?;
+        }
     }
     let Some(window) = window else {
         return Ok(Value::Int(id));

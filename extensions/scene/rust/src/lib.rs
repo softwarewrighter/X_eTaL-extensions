@@ -20,7 +20,9 @@ use xetal_ext_ui::winit::dpi::LogicalSize;
 use xetal_ext_ui::winit::event::{ElementState, MouseButton, WindowEvent};
 use xetal_ext_ui::winit::keyboard::{Key, NamedKey};
 use xetal_ext_ui::winit::window::{Window, WindowId};
-use xetal_ext_ui::{Events, Surface, frames_dir, headless, on_main, save_png, scripted};
+use xetal_ext_ui::{
+    Events, Surface, frame_wanted, frames_dir, headless, on_main, save_png, scripted,
+};
 
 type Shared = Arc<Mutex<Scene>>;
 
@@ -500,7 +502,8 @@ fn next(args: &[Value]) -> Result<Value, OwnedError> {
         let shown = locked(&h.scene).clone();
         *locked(&h.display) = shown;
         h.shown += 1;
-        let save = frames_dir().map(|d| {
+        let wanted = frame_wanted(u64::try_from(h.shown).unwrap_or(u64::MAX));
+        let save = frames_dir().filter(|_| wanted).map(|d| {
             let (w, ht) = h.size;
             (
                 d.join(format!("scene-{s}-{}.png", h.shown)),

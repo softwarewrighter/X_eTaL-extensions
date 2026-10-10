@@ -520,9 +520,10 @@ demo shown before the next.
 | 14 | rubik-solve | (done; the user and the eigencube session's hand-off: Solve first) X_eTaL-libraries pinned (LIBRARIES_COMMIT a3cbba2, `just libraries`, work/libraries; Eigencube on XETAL_PATH for demos, goldens, recordings and docs); a golden that Rubik.xtl and Eigencube agree (names, each turn, 40 random lists by face colors, each undone; a wrong map fails it); voxels-rubik-solve: Scramble, Solve (hybrid 1: known move sequences in the later stages, said plainly), Back, Step, Play; recorded; the URL sent to the eigencube session |
 | 15 | logo | (done; inserted, the user) the red X_eTaL logo, matching the favicon, as the site's and the README's logo (about 3 lines by 15 columns); the site's heading the logo and "X_eTaL Extensions" in the favicon's red |
 | 16 | water-flow | (done; the user: the water was unrealistic) conserved water, 64 units a block, gravity first, half-difference spreading with momentum and drops, the sea the one source and sink; the user's test passes and is pinned: a lake breached drains its top layer (25 to 1.7 blocks) and stops at the breach's bottom; the trench dug deeper drains the next (25 to 2.1) |
-| 17 | voxels-light | sky light by a column scan; torch light in rounds over frames; brightness per quad in scene |
-| 18 | voxels-game | Gem Hunt |
-| 19 | game-release | recordings, docs, status, retrospective; the site checked online |
+| 17 | water-literate | (inserted, the user) a literate .org document of the water demo, like ../X_eTaL/docs/literate: the rules explained with the code as rendered listings, pictures from the recording, the lake test as its end |
+| 18 | voxels-light | sky light by a column scan; torch light in rounds over frames; brightness per quad in scene |
+| 19 | voxels-game | Gem Hunt |
+| 20 | game-release | recordings, docs, status, retrospective; the site checked online |
 
 ## Saga 12 -- native hook (blocked)
 

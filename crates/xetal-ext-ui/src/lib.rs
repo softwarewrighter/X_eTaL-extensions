@@ -316,6 +316,20 @@ pub fn frames_dir() -> Option<std::path::PathBuf> {
         .map(std::path::PathBuf::from)
 }
 
+/// Whether frame `n` (1, 2, ...) is saved: every frame, unless
+/// `XETAL_FRAMES_ONLY` lists the ones wanted (`30,1500,3456`), so a test
+/// that checks a few frames of a long run saves only those.
+#[must_use]
+pub fn frame_wanted(n: u64) -> bool {
+    match std::env::var("XETAL_FRAMES_ONLY") {
+        Ok(list) if !list.trim().is_empty() => list
+            .split(',')
+            .filter_map(|k| k.trim().parse::<u64>().ok())
+            .any(|k| k == n),
+        _ => true,
+    }
+}
+
 /// Writes `width` by `height` 0RGB pixels as an RGB PNG, making the
 /// directory.
 ///
