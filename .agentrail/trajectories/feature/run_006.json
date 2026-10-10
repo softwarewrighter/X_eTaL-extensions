@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "state": {
+    "number": 16,
+    "step": "water-flow"
+  },
+  "action": "X_eTaL directional-pass CA with conservation; debugged oscillation (half-difference cap), lake gradient stall (64 units, front-only momentum) with an instrumented copy in tmp; reg-rs golden of the lake levels; video",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-09T20:30:35"
+}
