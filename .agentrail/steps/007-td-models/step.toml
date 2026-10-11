@@ -1,0 +1,9 @@
+number = 7
+slug = "td-models"
+status = "pending"
+description = "Saga 15 step 7: the twelve tower-defense pieces of the ask (arrow, cannon, fr..."
+role = "production"
+context_files = []
+created_at = "2026-10-11T15:47:02"
+task_type = "feature"
+commits = []

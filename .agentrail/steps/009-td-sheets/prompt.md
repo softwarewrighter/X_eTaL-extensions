@@ -1,0 +1,1 @@
+Saga 15 step 9 (the ask's fallbacks, after the .glb): PIECE-turn.png (16 turntable frames of 256, 4 by 4, camera 20 degrees up, transparent) and PIECE-map.png (8 frames of 96 in a row, orthographic 35 degrees, one tile 64 px), added to the manifest and published.

@@ -1,0 +1,1 @@
+Saga 15 step 10 (optional in the ask): PIECE-mesh.toml, a low-poly mesh (vertices, faces from 1, a color a face) X_eTaL can read, added to the manifest.

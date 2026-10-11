@@ -4771,6 +4771,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-ext-blender"
+version = "0.1.0"
+dependencies = [
+ "xetal-ext-sdk",
+]
+
+[[package]]
 name = "xetal-ext-bridge"
 version = "0.1.0"
 dependencies = [

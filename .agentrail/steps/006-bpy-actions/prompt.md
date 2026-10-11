@@ -1,0 +1,1 @@
+Saga 15 step 6: named keyframed actions (idle, walk, fire, hit) on parts, exported as named glTF animation clips; checked by reading the .glb's animations back (in Blender, or by its JSON chunk).

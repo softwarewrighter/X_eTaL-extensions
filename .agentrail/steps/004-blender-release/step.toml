@@ -1,6 +1,6 @@
 number = 4
 slug = "blender-release"
-status = "pending"
+status = "in-progress"
 description = "Saga 15 step 4: recordings on the site, the extension's page, README catalog,..."
 role = "production"
 context_files = []

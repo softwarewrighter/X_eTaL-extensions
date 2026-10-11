@@ -593,7 +593,36 @@ extension runs the launcher and reports what happened. Renderer: EEVEE
 | 1 | blender-ext | (done) the extension: write, run (python3 with XETAL_BLENDER, a timeout, the output in a log, exit and the tail back), read, files, blender, version; paths confined; Rust tests with a stand-in; demo hello: X_eTaL, python3, Blender, Python inside, a report back |
 | 2 | bpy-gen | (done) lib/Bpy.xtl: the launcher, the scene's start, cubes as one mesh from X_eTaL arrays (bp:c_ubeMesh), labels, lights, an orbit camera on a looping pivot, EEVEE setup, stills, MP4 video, .glb/.obj/.blend exports, a report; goldens pin the script and run two cubes through Blender end to end |
 | 3 | blender-cubes | (done) demos/cubes.xtl and Sizes.xtl: one, a hundred, a thousand cubes orbited, labeled, outlined (Freestyle), 10 s at 640 by 360; .glb/.obj/.blend; about five minutes; `just ext blender orbit` plays it; recording kind `.film` (a video the demo makes); quick golden end to end |
-| 4 | blender-release | recordings, the extension's page, the catalog, a retrospective, the site checked online |
+| 4 | blender-release | (done) the site checked online (153 files load; the blender videos match their commits); this retrospective; the tower-defense art asked for by X_eTaL-games added as steps 5 to 10 |
+| 5 | bpy-shapes | (the ask from ../X_eTaL-games/docs/extensions-ask.md) more of Bpy.xtl: cylinders, cones, spheres, a torus, an octahedron, a profile turned into a solid, each placed, scaled and turned; a piece's parts grouped as one object; emission |
+| 6 | bpy-actions | named keyframed actions (idle, walk, fire, hit) exported as glTF animation clips; checked by reading the .glb back |
+| 7 | td-models | the twelve tower-defense pieces -- arrow, cannon and frost towers at three levels, the runner, brute and shield creeps -- described in X_eTaL, written as bpy, exported by Blender as PIECE.glb (glTF 2.0, a tile 1 by 1, facing -Y, under 3000 triangles, flat PBR colors, emission) with their clips |
+| 8 | game-assets | the demo (the user: not playable, a recording of the run): `just demo blender game-assets` runs X_eTaL, python3, Blender and Python inside it to make the models, renders them (a lineup and each piece turning), and publishes the .glb files and manifest.toml (each file's SHA-256 by the digest extension, the license, the program and commit) at pages/blender/td/; its recording shows the X_eTaL and the renders; linked both ways with the game |
+| 9 | td-sheets | (after the .glb files, the ask's fallbacks) PIECE-turn.png (16 turntable frames, 4 by 4) and PIECE-map.png (8 isometric frames), transparent |
+| 10 | td-mesh | (optional in the ask) PIECE-mesh.toml: a low-poly mesh as TOML for a renderer in X_eTaL |
+
+### Retrospective, steps 1 to 4 (2026-10-11)
+
+X_eTaL now drives Blender end to end: a program writes the Python (the
+launcher and the bpy script), the extension runs it with a timeout and
+reads back what was made, and Blender renders and exports. The size
+comparison -- one cube, a hundred, a thousand -- is X_eTaL arrays (every
+corner and face) written into the script, rendered as a looping orbit
+with outlines, and exported as glTF, OBJ and .blend.
+
+- The API was probed before it was written for (Blender 5.1 renamed
+  EEVEE back to BLENDER_EEVEE and moved video to media_type), so the
+  generated Python ran first time but for one quoting slip.
+- Every run in a test is real Blender, in a temporary directory; the
+  scripts are pinned as text, the scenes checked by Blender's own
+  report (vertices, faces, objects) and the files it writes.
+- Rendering takes time (about five minutes with outlines), so the site
+  shows Blender's own video (a new recording kind, `.film`), the gate
+  renders four tiny frames, and `just ext blender orbit` plays the
+  video already made.
+- A flaky test found by the gate: two runs at once shared a temporary
+  name.
+
 
 ## Saga 12 -- native hook (blocked)
 

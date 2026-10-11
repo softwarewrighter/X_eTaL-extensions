@@ -1,0 +1,1 @@
+Saga 15 step 5 (X_eTaL-games' ask, ../X_eTaL-games/docs/extensions-ask.md): more of Bpy.xtl -- cylinders, cones, spheres, a torus, an octahedron, a profile turned into a solid (lathe), each placed, scaled and turned; a piece's parts as one object (parented under an empty, or joined); emission materials; goldens pin the Python and run a sample through Blender.

@@ -1,0 +1,9 @@
+number = 5
+slug = "bpy-shapes"
+status = "pending"
+description = "Saga 15 step 5 (X_eTaL-games' ask, ../X_eTaL-games/docs/extensions-ask.md): m..."
+role = "production"
+context_files = []
+created_at = "2026-10-11T15:47:02"
+task_type = "feature"
+commits = []
