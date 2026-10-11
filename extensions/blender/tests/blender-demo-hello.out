@@ -1,7 +1,8 @@
 Blender found:
 1
-the run (its first line):
+the run, and the error lines in Blender's log:
 exit 0
+errors 0
 what Blender wrote:
 objects: Camera Cube Light
 

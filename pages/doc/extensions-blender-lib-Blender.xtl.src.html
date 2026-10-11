@@ -152,10 +152,10 @@
 <li class="item"><a href="#L18"><span class="c-libfunc">ˡw̲rite!</span></a></li>
 <li class="item"><a href="#L21"><span class="c-libfunc">ˡb̲lender</span></a></li>
 <li class="item"><a href="#L23"><span class="c-libfunc">ˡv̲ersion</span></a></li>
-<li class="item"><a href="#L29"><span class="c-libfunc">ˡr̲un!</span></a></li>
-<li class="item"><a href="#L31"><span class="c-libfunc">ˡr̲ead</span></a></li>
-<li class="item"><a href="#L34"><span class="c-libfunc">ˡf̲iles</span></a></li>
-<li class="item"><a href="#L37">ˡpackage</a></li>
+<li class="item"><a href="#L31"><span class="c-libfunc">ˡr̲un!</span></a></li>
+<li class="item"><a href="#L33"><span class="c-libfunc">ˡr̲ead</span></a></li>
+<li class="item"><a href="#L36"><span class="c-libfunc">ˡf̲iles</span></a></li>
+<li class="item"><a href="#L39">ˡpackage</a></li>
 </ul>
 </nav>
 <main>
@@ -203,29 +203,31 @@
 <span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-comment">⍝</span><span class="c-comment"># the working directory, XETAL_BLENDER set to the Blender found, stopped</span></span>
 <span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-comment">⍝</span><span class="c-comment"># after XETAL_BLENDER_TIMEOUT seconds (900 by default); the whole output</span></span>
 <span class="line" id="L27"><a class="ln" href="#L27">27</a><span class="c-comment">⍝</span><span class="c-comment"># goes to the script's .log beside it. &quot;exit N&quot; (or &quot;timeout after S</span></span>
-<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-comment">⍝</span><span class="c-comment"># s&quot;) and the log's last 20 lines.</span></span>
-<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-string">&quot;r_un! : text text -&gt; text&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;blender/run&quot;</span></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-comment">⍝</span><span class="c-comment"># s&quot;), &quot;errors N&quot; -- the log's Python tracebacks and Blender &quot;Error:&quot;</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-comment">⍝</span><span class="c-comment"># lines, since a run can fail inside and still exit 0 -- and the log's</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-comment">⍝</span><span class="c-comment"># last 20 lines.</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-string">&quot;r_un! : text text -&gt; text&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;blender/run&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡr̲un!</span> ← { a b →
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:blender/run?text&quot;</span>
   pb ← b <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:blender/run?text&quot;</span>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:blender/run&quot;</span>
 }</pre></details>
-<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-comment">⍝</span><span class="c-comment"># bl:r_ead path: a file's text (a small one a run wrote: a report).</span></span>
-<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-string">&quot;r_ead : text -&gt; text&quot;</span>           <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;blender/read&quot;</span></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-comment">⍝</span><span class="c-comment"># bl:r_ead path: a file's text (a small one a run wrote: a report).</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-string">&quot;r_ead : text -&gt; text&quot;</span>           <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;blender/read&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡr̲ead</span> ← { a →
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:blender/read?text&quot;</span>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:blender/read&quot;</span>
 }</pre></details>
-<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-comment">⍝</span><span class="c-comment"># bl:f_iles dir: the files under dir, one a line, &quot;bytes path&quot;, sorted</span></span>
-<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-comment">⍝</span><span class="c-comment"># by path.</span></span>
-<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-string">&quot;f_iles : text -&gt; text&quot;</span>          <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;blender/files&quot;</span></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-comment">⍝</span><span class="c-comment"># bl:f_iles dir: the files under dir, one a line, &quot;bytes path&quot;, sorted</span></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a><span class="c-comment">⍝</span><span class="c-comment"># by path.</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a><span class="c-string">&quot;f_iles : text -&gt; text&quot;</span>          <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;blender/files&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡf̲iles</span> ← { a →
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:blender/files?text&quot;</span>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:blender/files&quot;</span>
 }</pre></details>
-<span class="line" id="L35"><a class="ln" href="#L35">35</a></span>
-<span class="line" id="L36"><a class="ln" href="#L36">36</a><span class="c-comment">⍝</span><span class="c-comment"># The native package behind these functions.</span></span>
-<span class="line" id="L37"><a class="ln" href="#L37">37</a>ˡpackage ← <span class="c-string">&quot;blender&quot;</span></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-comment">⍝</span><span class="c-comment"># The native package behind these functions.</span></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a>ˡpackage ← <span class="c-string">&quot;blender&quot;</span></span>
 </div>
 </main>
 </body>

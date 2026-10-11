@@ -131,6 +131,17 @@ fn tempfile_in(dir: &Path) -> Result<PathBuf, OwnedError> {
     Ok(dir.join(name))
 }
 
+/// How many lines of a run's output report an error: a Python traceback
+/// or Blender's own "Error:" -- which a run can print and still exit 0
+/// (a failing line style in a render, say).
+#[must_use]
+pub fn errors(output: &str) -> usize {
+    output
+        .lines()
+        .filter(|l| l.starts_with("Traceback") || l.starts_with("Error"))
+        .count()
+}
+
 /// The last `n` lines of `text`.
 #[must_use]
 pub fn tail(text: &str, n: usize) -> String {
@@ -207,8 +218,9 @@ fn version(_: &[Value]) -> Result<Value, OwnedError> {
 /// script run args: `python3 script args` (args split at spaces) from the
 /// root, with `XETAL_BLENDER` set to the Blender found, stopped after
 /// `XETAL_BLENDER_TIMEOUT` seconds (900 by default). The whole output goes
-/// to `script.log`; the answer is "exit N" (or "timeout after S s") and
-/// the log's last 20 lines.
+/// to `script.log`; the answer is "exit N" (or "timeout after S s"),
+/// "errors N" (the log's error lines: a run can fail inside and still
+/// exit 0) and the log's last 20 lines.
 fn run(args: &[Value]) -> Result<Value, OwnedError> {
     let script = text(&args[0])?;
     let words = text(&args[1])?;
@@ -232,7 +244,11 @@ fn run(args: &[Value]) -> Result<Value, OwnedError> {
         Some(code) => format!("exit {code}"),
         None => format!("timeout after {} s", timeout.as_secs()),
     };
-    Ok(Value::Text(format!("{head}\n{}", tail(&ran.output, TAIL))))
+    Ok(Value::Text(format!(
+        "{head}\nerrors {}\n{}",
+        errors(&ran.output),
+        tail(&ran.output, TAIL)
+    )))
 }
 
 /// files dir: the files under dir, one a line, "bytes path", sorted.
@@ -271,7 +287,7 @@ xetal_ext_sdk::xetal_extension! {
         write: 2, "Char -> Char -> Int", "path write text: the text into the file, made whole; how many bytes.";
         blender: 0, "Unit -> Char", "The Blender program found (BLENDER, the macOS app, PATH), or \"\".";
         version: 0, "Unit -> Char", "Blender's version line, or \"\".";
-        run: 2, "Char -> Char -> Char", "script run args: python3 script args, XETAL_BLENDER set; exit N and the log's last lines.";
+        run: 2, "Char -> Char -> Char", "script run args: python3 script args, XETAL_BLENDER set; exit N, errors N and the log's last lines.";
         read: 1, "Char -> Char", "path read: the file's text.";
         files: 1, "Char -> Char", "files dir: the files written under dir, \"bytes path\" a line.";
     }

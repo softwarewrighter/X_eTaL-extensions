@@ -1,0 +1,18 @@
+the run, and the error lines in Blender's log:
+exit 0
+errors 0
+what Blender made:
+mesh ground: 4 vertices, 1 faces
+mesh sampler box: 8 vertices, 6 faces
+mesh sampler cone: 24 vertices, 14 faces
+mesh sampler crystal: 6 vertices, 8 faces
+mesh sampler cylinder: 24 vertices, 14 faces
+mesh sampler dome: 60 vertices, 48 faces
+mesh sampler sphere: 86 vertices, 96 faces
+mesh sampler torus: 128 vertices, 128 faces
+piece sampler: 7 parts, 628 triangles
+objects: camera ground pivot sampler sampler box sampler cone sampler crystal sampler cylinder sampler dome sampler sphere sampler torus sun
+
+report.txt
+sampler.glb
+still.png

@@ -67,7 +67,20 @@ into the script as numbers, one mesh for them all. Written for Blender
 | `(width, height, fps) bp:s_etup 0` | EEVEE, the picture's size, the frame rate |
 | `bp:s_till file`, `bp:v_ideo file` | a PNG of the frame; every frame as an MP4 (H.264) |
 | `bp:e_xports name` | `.glb` (glTF), `.obj` (with `.mtl`) and `.blend` |
-| `bp:report` | a report: each mesh's vertices and faces, the objects |
+| `bp:p_iece name` | a piece: an empty at its base's middle that the parts after it hang from, so it exports as one |
+| `(name, at, size, turn, rgb, emit) bp:b_ox 0` | a box (size: width depth height) |
+| `... bp:c_ylinder 0` | a 12-sided cylinder (size: radius radius height) |
+| `... bp:c_one 0` | a cone or frustum (size: bottom radius, top radius, height) |
+| `... bp:s_phere 0` | a sphere, 12 segments and 8 rings (size: radii) |
+| `... bp:t_orus 0` | a ring lying flat (size: radius, tube radius) |
+| `... bp:o_ctahedron 0` | an octahedron, a crystal: corners and faces worked out in X_eTaL (`bp:o_ctahedronMesh`) |
+| `(name, at, profile, segments, turn, rgb, emit) bp:l_athe 0` | a profile (points r z) turned round its upright axis -- a dome, a pedestal -- worked out as arrays (`bp:l_atheMesh`) |
+| `bp:e_xportPiece name` | one piece and its parts as `NAME.glb`, its animations with it |
+| `bp:report` | a report: each mesh's vertices and faces, each piece's parts and triangles, the objects |
+
+Every part is placed (`at`), turned (`turn`, degrees about x y z),
+colored (`rgb`) and may glow (`emit`, the strength of its emission; 0
+for none).
 
 ## Demos
 
@@ -88,7 +101,11 @@ into the script as numbers, one mesh for them all. Written for Blender
    `.mtl`) and `sizes.blend`, all in `work/cubes/out/`. The demo renders
    from scratch each time: about five minutes (the outlines take most
    of it). `just ext blender orbit` plays the video already rendered.
-   Its recording is Blender's own render (`videos/cubes.film`).
+   Its recording is Blender's own render (`videos/cubes.film`). (Until
+   2026-10-11 the outlines failed silently -- an empty scene's line set
+   has no line style -- so the first video showed only the gaps between
+   cubes; `bl:r_un!` now counts the error lines in Blender's log, and
+   the tests print that count.)
 
 ## Build and test
 

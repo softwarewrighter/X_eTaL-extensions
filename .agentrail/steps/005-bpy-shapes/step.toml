@@ -1,6 +1,6 @@
 number = 5
 slug = "bpy-shapes"
-status = "pending"
+status = "in-progress"
 description = "Saga 15 step 5 (X_eTaL-games' ask, ../X_eTaL-games/docs/extensions-ask.md): m..."
 role = "production"
 context_files = []

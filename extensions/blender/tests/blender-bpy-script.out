@@ -31,6 +31,45 @@ def link(obj, mat):
     obj.data.materials.append(mat)
     return obj
 
+def piece(name):
+    p = bpy.data.objects.new(name, None)
+    scene.collection.objects.link(p)
+    return p
+
+def made(name):
+    o = bpy.context.active_object
+    o.name = name
+    o.data.name = name
+    return o
+
+def mesh_object(name, verts, faces):
+    m = bpy.data.meshes.new(name)
+    m.from_pydata(verts, [], faces)
+    m.validate()
+    m.update()
+    o = bpy.data.objects.new(name, m)
+    scene.collection.objects.link(o)
+    return o
+
+def attach(obj, owner, mat, at, turn):
+    obj.parent = owner
+    obj.location = at
+    obj.rotation_euler = tuple(math.radians(a) for a in turn)
+    obj.data.materials.clear()
+    obj.data.materials.append(mat)
+    return obj
+
+def export_piece(owner, path):
+    bpy.ops.object.select_all(action="DESELECT")
+    owner.select_set(True)
+    for c in owner.children_recursive:
+        c.select_set(True)
+    bpy.context.view_layer.objects.active = owner
+    bpy.ops.export_scene.gltf(filepath=path, export_format="GLB", use_selection=True, export_animations=True)
+
+def triangles(owner):
+    return sum(sum(len(p.vertices) - 2 for p in c.data.polygons) for c in owner.children_recursive if c.type == "MESH")
+
 mesh = bpy.data.meshes.new("one")
 mesh.from_pydata(nums("""-0.45 -0.45 0.04999999999999999 0.45 -0.45 0.04999999999999999 0.45 0.45 0.04999999999999999 -0.45 0.45 0.04999999999999999 -0.45 -0.45 0.95 0.45 -0.45 0.95 0.45 0.45 0.95 -0.45 0.45 0.95""", 3), [], [tuple(int(i) for i in f) for f in nums("""0 3 2 1 4 5 6 7 0 1 5 4 2 3 7 6 3 0 4 7 1 2 6 5""", 4)])
 mesh.update()
@@ -86,6 +125,12 @@ scene.render.engine = "BLENDER_EEVEE"
 scene.view_settings.view_transform = "Standard"
 scene.render.use_freestyle = True
 scene.render.line_thickness = 0.8
+lines = bpy.context.view_layer.freestyle_settings.linesets
+lineset = lines[0] if len(lines) else lines.new("outlines")
+if lineset.linestyle is None:
+    lineset.linestyle = bpy.data.linestyles.new("outlines")
+lineset.linestyle.color = (0.08, 0.08, 0.1)
+lineset.linestyle.thickness = 1.0
 scene.render.resolution_x = 64
 scene.render.resolution_y = 48
 scene.render.resolution_percentage = 100
@@ -106,5 +151,8 @@ bpy.ops.wm.save_as_mainfile(filepath=os.path.join(out, "one.blend"))
 with open(os.path.join(out, "report.txt"), "w") as f:
     for m in sorted(bpy.data.meshes, key=lambda m: m.name):
         f.write("mesh %s: %d vertices, %d faces\n" % (m.name, len(m.vertices), len(m.polygons)))
+    for o in sorted(scene.objects, key=lambda o: o.name):
+        if o.type == "EMPTY" and any(c.type == "MESH" for c in o.children):
+            f.write("piece %s: %d parts, %d triangles\n" % (o.name, len(o.children_recursive), triangles(o)))
     f.write("objects: " + " ".join(sorted(o.name for o in scene.objects)) + "\n")
 

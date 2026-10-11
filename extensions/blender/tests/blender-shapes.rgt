@@ -1,0 +1,3 @@
+command = "t=$(mktemp -d) && XETAL_BLENDER_ROOT=$t xetal-x --ext .. run tests/shapes.xtl && cd $t && ls work/shapes/out"
+exit_code = 0
+desc = "one piece of every kind of part (box, cylinder, cone, sphere, torus, a glowing octahedron, a lathed dome) through Blender: no errors in its log, the parts and triangles (628), the .glb and a still"

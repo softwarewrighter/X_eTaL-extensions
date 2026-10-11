@@ -1,0 +1,23 @@
+## One piece of every kind of part -- a box, a cylinder, a cone, a
+## sphere, a torus, an octahedron (glowing), a lathed dome -- written as
+## bpy, run by Blender: exported as one glTF file, reported, a still.
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+
+dome := 5 2 r_eshape 0.0 0.0  0.3 0.0  0.28 0.12  0.2 0.24  0.0 0.3
+parts := (("sampler box", -0.8 0.0 0.2, 0.4 0.4 0.4, 0.0 0.0 0.0, 0.55 0.4 0.25, 0.0) bp:b_ox 0) c_at (("sampler cylinder", -0.3 0.0 0.25, 0.15 0.15 0.5, 0.0 0.0 0.0, 0.5 0.5 0.55, 0.0) bp:c_ylinder 0)
+parts := parts c_at (("sampler cone", 0.2 0.0 0.25, 0.2 0.05 0.5, 0.0 0.0 0.0, 0.2 0.2 0.22, 0.0) bp:c_one 0) c_at (("sampler sphere", 0.7 0.0 0.2, 0.2 0.2 0.2, 0.0 0.0 0.0, 0.8 0.3 0.2, 0.0) bp:s_phere 0)
+parts := parts c_at (("sampler torus", -0.3 0.0 0.55, 0.15 0.04, 0.0 0.0 0.0, 0.8 0.7 0.3, 0.0) bp:t_orus 0) c_at (("sampler crystal", 0.2 0.0 0.8, 0.12 0.12 0.3, 0.0 0.0 0.0, 0.6 0.85 1.0, 2.0) bp:o_ctahedron 0)
+parts := parts c_at (("sampler dome", 0.7 0.0 0.4, dome, 12, 0.0 0.0 0.0, 0.35 0.5 0.7, 0.0) bp:l_athe 0)
+script := bp:head c_at (bp:p_iece "sampler") c_at parts c_at ((0.0 0.0 0.0, 20.0, 0.9 0.9 0.88) bp:g_round 0) c_at ((0.55 0.62 0.72, 3.0) bp:l_ights 0)
+script := script c_at ((0.0 0.0 0.3, 3.2, 1.6, 4) bp:o_rbit 0) c_at ((320, 180, 24) bp:s_etup 0) c_at (bp:e_xportPiece "sampler") c_at (bp:s_till "still.png") c_at bp:report
+n := "work/shapes/run.py" bl:w_rite! bp:launcher
+n := "work/shapes/scene.py" bl:w_rite! script
+r := "work/shapes/run.py" bl:r_un! "work/shapes/scene.py work/shapes/out"
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+"what Blender made:"
+bl:r_ead "work/shapes/out/report.txt"

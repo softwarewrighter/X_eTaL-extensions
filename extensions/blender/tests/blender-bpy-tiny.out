@@ -1,5 +1,6 @@
-the run:
+the run, and the error lines in Blender's log:
 exit 0
+errors 0
 what Blender made:
 mesh pair: 16 vertices, 12 faces
 objects: camera label 2 pair pivot sun

@@ -18,9 +18,11 @@ l:launcher := "import os, subprocess, sys\nblender = os.environ.get(\"XETAL_BLEN
 
 ## bp:head: the inner script's start: an empty scene, the output
 ## directory (the first argument after "--", made), keyframes linear (an
-## orbit at an even speed), and nums(text, k), which reads numbers
-## written by X_eTaL k to a row
-l:head := "import bpy, math, os, sys\nargs = sys.argv[sys.argv.index(\"--\") + 1:]\nout = args[0]\nos.makedirs(out, exist_ok=True)\nbpy.ops.wm.read_factory_settings(use_empty=True)\nbpy.context.preferences.edit.keyframe_new_interpolation_type = \"LINEAR\"\nscene = bpy.context.scene\n\ndef nums(text, k):\n    v = [float(t) for t in text.split()]\n    return [tuple(v[i:i + k]) for i in range(0, len(v), k)]\n\ndef material(name, rgb, emit=0.0):\n    m = bpy.data.materials.new(name)\n    m.use_nodes = True\n    p = m.node_tree.nodes[\"Principled BSDF\"]\n    p.inputs[\"Base Color\"].default_value = rgb + (1.0,)\n    p.inputs[\"Emission Color\"].default_value = rgb + (1.0,)\n    p.inputs[\"Emission Strength\"].default_value = emit\n    return m\n\ndef link(obj, mat):\n    scene.collection.objects.link(obj)\n    obj.data.materials.append(mat)\n    return obj\n\n"
+## orbit at an even speed), and helpers: nums(text, k) reads numbers
+## written by X_eTaL k to a row; material, link; piece, made, attach,
+## mesh_object build a piece of parts; export_piece writes one piece as
+## glTF; triangles counts a piece's
+l:head := "import bpy, math, os, sys\nargs = sys.argv[sys.argv.index(\"--\") + 1:]\nout = args[0]\nos.makedirs(out, exist_ok=True)\nbpy.ops.wm.read_factory_settings(use_empty=True)\nbpy.context.preferences.edit.keyframe_new_interpolation_type = \"LINEAR\"\nscene = bpy.context.scene\n\ndef nums(text, k):\n    v = [float(t) for t in text.split()]\n    return [tuple(v[i:i + k]) for i in range(0, len(v), k)]\n\ndef material(name, rgb, emit=0.0):\n    m = bpy.data.materials.new(name)\n    m.use_nodes = True\n    p = m.node_tree.nodes[\"Principled BSDF\"]\n    p.inputs[\"Base Color\"].default_value = rgb + (1.0,)\n    p.inputs[\"Emission Color\"].default_value = rgb + (1.0,)\n    p.inputs[\"Emission Strength\"].default_value = emit\n    return m\n\ndef link(obj, mat):\n    scene.collection.objects.link(obj)\n    obj.data.materials.append(mat)\n    return obj\n\ndef piece(name):\n    p = bpy.data.objects.new(name, None)\n    scene.collection.objects.link(p)\n    return p\n\ndef made(name):\n    o = bpy.context.active_object\n    o.name = name\n    o.data.name = name\n    return o\n\ndef mesh_object(name, verts, faces):\n    m = bpy.data.meshes.new(name)\n    m.from_pydata(verts, [], faces)\n    m.validate()\n    m.update()\n    o = bpy.data.objects.new(name, m)\n    scene.collection.objects.link(o)\n    return o\n\ndef attach(obj, owner, mat, at, turn):\n    obj.parent = owner\n    obj.location = at\n    obj.rotation_euler = tuple(math.radians(a) for a in turn)\n    obj.data.materials.clear()\n    obj.data.materials.append(mat)\n    return obj\n\ndef export_piece(owner, path):\n    bpy.ops.object.select_all(action=\"DESELECT\")\n    owner.select_set(True)\n    for c in owner.children_recursive:\n        c.select_set(True)\n    bpy.context.view_layer.objects.active = owner\n    bpy.ops.export_scene.gltf(filepath=path, export_format=\"GLB\", use_selection=True, export_animations=True)\n\ndef triangles(owner):\n    return sum(sum(len(p.vertices) - 2 for p in c.data.polygons) for c in owner.children_recursive if c.type == \"MESH\")\n\n"
 
 ### Numbers into Python
 
@@ -78,6 +80,109 @@ l:g_round := { (at, size, rgb) z ->
   t c_at "link(bpy.data.objects.new(\"ground\", mesh), material(\"ground\", " c_at (h:t_uple rgb) c_at "))\n\n"
 }
 
+### Pieces of parts
+
+## A piece is an empty at the middle of its base (the tile's middle, z
+## 0), and its parts hang from it, so it moves, turns and exports as one.
+## A part is placed (at, x y z), sized (size: what it means is the
+## part's own), turned (turn, x y z degrees), colored (rgb) and may glow
+## (emit, 0 for none). Low-poly throughout: what a game shows small.
+
+## bp:p_iece name: Python starting a piece: an empty named NAME; the
+## parts after it hang from it (until the next piece)
+l:p_iece := { name -> "pc = piece(" c_at (h:q_uote name) c_at ")\n" }
+
+# the end of every part: hung from the piece, placed, turned, colored
+h:a_ttach := { (name, at, turn, rgb, emit) ->
+  "attach(o, pc, material(" c_at (h:q_uote name) c_at ", " c_at (h:t_uple rgb) c_at ", " c_at (f_ormat emit) c_at "), " c_at (h:t_uple at) c_at ", " c_at (h:t_uple turn) c_at ")\n"
+}
+
+## (name, at, size, turn, rgb, emit) bp:b_ox 0: a box size wide, deep
+## and tall (x y z), its middle at at
+l:b_ox := { (name, at, size, turn, rgb, emit) z ->
+  "bpy.ops.mesh.primitive_cube_add(size=1.0)\no = made(" c_at (h:q_uote name) c_at ")\no.scale = " c_at (h:t_uple size) c_at "\n" c_at h:a_ttach (name, at, turn, rgb, emit)
+}
+
+## (name, at, size, turn, rgb, emit) bp:c_ylinder 0: a 12-sided cylinder,
+## size its radius across x and y and its height (r r h), its middle at
+## at
+l:c_ylinder := { (name, at, size, turn, rgb, emit) z ->
+  "bpy.ops.mesh.primitive_cylinder_add(vertices=12, radius=1.0, depth=1.0)\no = made(" c_at (h:q_uote name) c_at ")\no.scale = " c_at (h:t_uple size) c_at "\n" c_at h:a_ttach (name, at, turn, rgb, emit)
+}
+
+## (name, at, size, turn, rgb, emit) bp:c_one 0: a 12-sided cone (or
+## frustum), size its bottom radius, top radius and height, its middle
+## at at
+l:c_one := { (name, at, size, turn, rgb, emit) z ->
+  "bpy.ops.mesh.primitive_cone_add(vertices=12, radius1=" c_at (f_ormat 1 s_elect size) c_at ", radius2=" c_at (f_ormat 2 s_elect size) c_at ", depth=" c_at (f_ormat 3 s_elect size) c_at ")\no = made(" c_at (h:q_uote name) c_at ")\n" c_at h:a_ttach (name, at, turn, rgb, emit)
+}
+
+## (name, at, size, turn, rgb, emit) bp:s_phere 0: a sphere of 12
+## segments and 8 rings, size its radii along x y z, its middle at at
+l:s_phere := { (name, at, size, turn, rgb, emit) z ->
+  "bpy.ops.mesh.primitive_uv_sphere_add(segments=12, ring_count=8, radius=1.0)\no = made(" c_at (h:q_uote name) c_at ")\no.scale = " c_at (h:t_uple size) c_at "\n" c_at h:a_ttach (name, at, turn, rgb, emit)
+}
+
+## (name, at, size, turn, rgb, emit) bp:t_orus 0: a ring, size its
+## radius and its tube's radius (R r), lying flat, its middle at at
+l:t_orus := { (name, at, size, turn, rgb, emit) z ->
+  "bpy.ops.mesh.primitive_torus_add(major_segments=16, minor_segments=8, major_radius=" c_at (f_ormat 1 s_elect size) c_at ", minor_radius=" c_at (f_ormat 2 s_elect size) c_at ")\no = made(" c_at (h:q_uote name) c_at ")\n" c_at h:a_ttach (name, at, turn, rgb, emit)
+}
+
+## size bp:o_ctahedronMesh 0: the 6 corners (6 by 3) and 8 faces (8 by
+## 3, from 0, counterclockwise from outside) of an octahedron reaching
+## size (x y z) from its middle each way: a crystal
+## >> "bp:" u_se< "Bpy"
+## >> (v, f) := 1.0 1.0 2.0 bp:o_ctahedronMesh 0
+## >> (s_hape v) c_at s_hape f
+## 6 3 8 3
+l:o_ctahedronMesh := { size z ->
+  v := (6 3 r_eshape 1.0 0.0 0.0  -1.0 0.0 0.0  0.0 1.0 0.0  0.0 -1.0 0.0  0.0 0.0 1.0  0.0 0.0 -1.0) * 6 3 r_eshape size
+  f := 8 3 r_eshape 0 2 4  2 1 4  1 3 4  3 0 4  2 0 5  1 2 5  3 1 5  0 3 5
+  (v, f)
+}
+
+## (name, at, size, turn, rgb, emit) bp:o_ctahedron 0: an octahedron (a
+## crystal), its corners worked out in X_eTaL, size its reach each way
+l:o_ctahedron := { (name, at, size, turn, rgb, emit) z ->
+  (v, f) := size l:o_ctahedronMesh 0
+  "o = mesh_object(" c_at (h:q_uote name) c_at ", " c_at (((f_loat v), 3) h:n_ums 0) c_at ", [tuple(int(i) for i in f) for f in " c_at ((f, 3) h:n_ums 0) c_at "])\n" c_at h:a_ttach (name, at, turn, rgb, emit)
+}
+
+## (profile, segments) bp:l_atheMesh 0: a profile turned round the z
+## axis: the profile is points (r z), bottom to top, each a radius and
+## a height; the corners (segments times points, by 3) and the faces
+## (quads, from 0, outward), worked out as arrays
+## >> "bp:" u_se< "Bpy"
+## >> (v, f) := (3 2 r_eshape 0.0 0.0  1.0 0.5  0.0 1.0, 8) bp:l_atheMesh 0
+## >> (s_hape v) c_at s_hape f
+## 24 3 16 4
+l:l_atheMesh := { (prof, seg) z ->
+  r := 1 s_elect_2 prof
+  hz := 2 s_elect_2 prof
+  m := t_ally r
+  a := (2.0 * 3.141592653589793 / f_loat seg) * f_loat (r_ange seg) - 1
+  v := 2 1 t_ranspose (3 c_at seg * m) r_eshape (r_avel (c_os a) '* t_able r) c_at (r_avel (s_in a) '* t_able r) c_at r_avel (seg r_eshape 0.0) '+ t_able hz
+  j := (r_ange seg) - 1
+  i := (r_ange m - 1) - 1
+  a0 := r_avel (m * j) '+ t_able i
+  a1 := r_avel (m * (j + 1) m_od seg) '+ t_able i
+  k := t_ally a0
+  (v, 2 1 t_ranspose (4 c_at k) r_eshape a0 c_at a1 c_at (a1 + 1) c_at a0 + 1)
+}
+
+## (name, at, profile, segments, turn, rgb, emit) bp:l_athe 0: a solid
+## turned from a profile (points r z, bottom to top) round its upright
+## axis, at at: a dome, a pedestal, a barrel
+l:l_athe := { (name, at, prof, seg, turn, rgb, emit) z ->
+  (v, f) := (prof, seg) l:l_atheMesh 0
+  "o = mesh_object(" c_at (h:q_uote name) c_at ", " c_at (((f_loat v), 3) h:n_ums 0) c_at ", [tuple(int(i) for i in f) for f in " c_at ((f, 4) h:n_ums 0) c_at "])\n" c_at h:a_ttach (name, at, turn, rgb, emit)
+}
+
+## bp:e_xportPiece name: Python writing the piece NAME (and its parts) as
+## out/NAME.glb, its animations with it
+l:e_xportPiece := { name -> "export_piece(bpy.data.objects[" c_at (h:q_uote name) c_at "], os.path.join(out, " c_at (h:q_uote name c_at ".glb") c_at "))\n" }
+
 ### Words, light and camera
 
 ## (text, place, size, rgb) bp:l_abel 0: Python making 3D text standing
@@ -111,9 +216,10 @@ l:o_rbit := { (at, radius, height, frames) z ->
 
 ## (width, height, fps) bp:s_etup 0: Python setting EEVEE, the picture's
 ## size and the frame rate, colors as they are (the Standard view, not
-## the film look) and thin dark outlines on every edge (Freestyle), the
+## the film look) and thin dark outlines on every edge (Freestyle: a
+## line set with a line style made, as an empty scene has none), the
 ## look of a drawing
-l:s_etup := { (w, h, fps) z -> "scene.render.engine = \"BLENDER_EEVEE\"\nscene.view_settings.view_transform = \"Standard\"\nscene.render.use_freestyle = True\nscene.render.line_thickness = 0.8\nscene.render.resolution_x = " c_at (f_ormat w) c_at "\nscene.render.resolution_y = " c_at (f_ormat h) c_at "\nscene.render.resolution_percentage = 100\nscene.render.fps = " c_at (f_ormat fps) c_at "\n\n" }
+l:s_etup := { (w, h, fps) z -> "scene.render.engine = \"BLENDER_EEVEE\"\nscene.view_settings.view_transform = \"Standard\"\nscene.render.use_freestyle = True\nscene.render.line_thickness = 0.8\nlines = bpy.context.view_layer.freestyle_settings.linesets\nlineset = lines[0] if len(lines) else lines.new(\"outlines\")\nif lineset.linestyle is None:\n    lineset.linestyle = bpy.data.linestyles.new(\"outlines\")\nlineset.linestyle.color = (0.08, 0.08, 0.1)\nlineset.linestyle.thickness = 1.0\nscene.render.resolution_x = " c_at (f_ormat w) c_at "\nscene.render.resolution_y = " c_at (f_ormat h) c_at "\nscene.render.resolution_percentage = 100\nscene.render.fps = " c_at (f_ormat fps) c_at "\n\n" }
 
 ## bp:s_till file: Python rendering the current frame to out/FILE (PNG)
 l:s_till := { file -> "scene.render.image_settings.media_type = \"IMAGE\"\nscene.render.image_settings.file_format = \"PNG\"\nscene.render.filepath = os.path.join(out, " c_at (h:q_uote file) c_at ")\nbpy.ops.render.render(write_still=True)\n\n" }
@@ -127,5 +233,6 @@ l:v_ideo := { file -> "scene.render.image_settings.media_type = \"VIDEO\"\nscene
 l:e_xports := { name -> "bpy.ops.export_scene.gltf(filepath=os.path.join(out, " c_at (h:q_uote name c_at ".glb") c_at "), export_format=\"GLB\")\nbpy.ops.wm.obj_export(filepath=os.path.join(out, " c_at (h:q_uote name c_at ".obj") c_at "))\nbpy.ops.wm.save_as_mainfile(filepath=os.path.join(out, " c_at (h:q_uote name c_at ".blend") c_at "))\n\n" }
 
 ## bp:report: Python writing out/report.txt: each mesh's vertices and
-## faces and each object, by name -- what a test checks
-l:report := "with open(os.path.join(out, \"report.txt\"), \"w\") as f:\n    for m in sorted(bpy.data.meshes, key=lambda m: m.name):\n        f.write(\"mesh %s: %d vertices, %d faces\\n\" % (m.name, len(m.vertices), len(m.polygons)))\n    f.write(\"objects: \" + \" \".join(sorted(o.name for o in scene.objects)) + \"\\n\")\n"
+## faces, each piece's parts and triangles, and each object, by name --
+## what a test checks
+l:report := "with open(os.path.join(out, \"report.txt\"), \"w\") as f:\n    for m in sorted(bpy.data.meshes, key=lambda m: m.name):\n        f.write(\"mesh %s: %d vertices, %d faces\\n\" % (m.name, len(m.vertices), len(m.polygons)))\n    for o in sorted(scene.objects, key=lambda o: o.name):\n        if o.type == \"EMPTY\" and any(c.type == \"MESH\" for c in o.children):\n            f.write(\"piece %s: %d parts, %d triangles\\n\" % (o.name, len(o.children_recursive), triangles(o)))\n    f.write(\"objects: \" + \" \".join(sorted(o.name for o in scene.objects)) + \"\\n\")\n"

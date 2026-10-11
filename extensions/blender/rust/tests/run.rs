@@ -5,7 +5,7 @@
 
 use std::time::Duration;
 
-use xetal_ext_blender::{confine, run_with, tail};
+use xetal_ext_blender::{confine, errors, run_with, tail};
 
 #[test]
 fn a_run_reports_its_status_and_output() {
@@ -52,4 +52,12 @@ fn paths_stay_under_the_working_directory() {
 fn the_tail_is_the_last_lines() {
     assert_eq!(tail("a\nb\nc\nd", 2), "c\nd");
     assert_eq!(tail("a", 5), "a");
+}
+
+#[test]
+fn error_lines_are_counted() {
+    let log =
+        "Blender 5.1\nTraceback (most recent call last):\n  x\nError: interpretation failed\nSaved";
+    assert_eq!(errors(log), 2);
+    assert_eq!(errors("Saved: still.png"), 0);
 }

@@ -15,8 +15,10 @@ n := "work/cubes/run.py" bl:w_rite! bp:launcher
 n := "work/cubes/scene.py" bl:w_rite! script
 "rendering 240 frames with Blender (EEVEE) ..."
 r := "work/cubes/run.py" bl:r_un! "work/cubes/scene.py work/cubes/out"
-"the run:"
-d_isclose f_irst (n_ot r = f_irst "\n") p_artition r
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
 "what Blender made:"
 bl:r_ead "work/cubes/out/report.txt"
 "the files (bytes, path), the video and the 3D files:"

@@ -227,13 +227,15 @@ application, or blender on the PATH -- or &quot;&quot; when there is none.</p>
 </div>
 <div class="item" id="l.r_un-21">
 <h3><a href="#l.r_un-21"><span class="c-libfunc">ˡr̲un!</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Blender.xtl.src.html#L29">line 29</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Blender.xtl.src.html#L31">line 31</a></div>
 <div class="doc">
 <p>script bl:r_un! args: python3 script args (args split at spaces) from
 the working directory, XETAL_BLENDER set to the Blender found, stopped
 after XETAL_BLENDER_TIMEOUT seconds (900 by default); the whole output
 goes to the script's .log beside it. &quot;exit N&quot; (or &quot;timeout after S
-s&quot;) and the log's last 20 lines.</p>
+s&quot;), &quot;errors N&quot; -- the log's Python tracebacks and Blender &quot;Error:&quot;
+lines, since a run can fail inside and still exit 0 -- and the log's
+last 20 lines.</p>
 </div>
 <pre class="code"><span class="c-string">&quot;r_un! : text text -&gt; text&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;blender/run&quot;</span></pre>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡr̲un!</span> ← { a b →
@@ -245,7 +247,7 @@ s&quot;) and the log's last 20 lines.</p>
 </div>
 <div class="item" id="l.r_ead">
 <h3><a href="#l.r_ead"><span class="c-libfunc">ˡr̲ead</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Blender.xtl.src.html#L31">line 31</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Blender.xtl.src.html#L33">line 33</a></div>
 <div class="doc">
 <p>bl:r_ead path: a file's text (a small one a run wrote: a report).</p>
 </div>
@@ -254,11 +256,11 @@ s&quot;) and the log's last 20 lines.</p>
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:blender/read?text&quot;</span>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:blender/read&quot;</span>
 }</pre></details>
-<div class="uses">Used in: <a href="extensions-blender-demos-cubes.xtl.src.html#L21">extensions/blender/demos/cubes.xtl:21</a>, <a href="extensions-blender-demos-hello.xtl.src.html#L28">extensions/blender/demos/hello.xtl:28</a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-cubes.xtl.src.html#L23">extensions/blender/demos/cubes.xtl:23</a>, <a href="extensions-blender-demos-hello.xtl.src.html#L30">extensions/blender/demos/hello.xtl:30</a></div>
 </div>
 <div class="item" id="l.f_iles">
 <h3><a href="#l.f_iles"><span class="c-libfunc">ˡf̲iles</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Blender.xtl.src.html#L34">line 34</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Blender.xtl.src.html#L36">line 36</a></div>
 <div class="doc">
 <p>bl:f_iles dir: the files under dir, one a line, &quot;bytes path&quot;, sorted
 by path.</p>
@@ -268,11 +270,11 @@ by path.</p>
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:blender/files?text&quot;</span>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:blender/files&quot;</span>
 }</pre></details>
-<div class="uses">Used in: <a href="extensions-blender-demos-cubes.xtl.src.html#L23">extensions/blender/demos/cubes.xtl:23</a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-cubes.xtl.src.html#L25">extensions/blender/demos/cubes.xtl:25</a></div>
 </div>
 <div class="item" id="l.package">
 <h3><a href="#l.package">ˡpackage</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-lib-Blender.xtl.src.html#L37">line 37</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-lib-Blender.xtl.src.html#L39">line 39</a></div>
 <div class="doc">
 <p>The native package behind these functions.</p>
 </div>

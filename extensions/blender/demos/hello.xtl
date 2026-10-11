@@ -22,7 +22,9 @@ inside := "import bpy, sys\nout = sys.argv[sys.argv.index(\"--\") + 1]\nnames = 
 n := "work/hello/run.py" bl:w_rite! launcher
 n := "work/hello/hello.py" bl:w_rite! inside
 r := "work/hello/run.py" bl:r_un! "work/hello/hello.py work/hello/report.txt"
-"the run (its first line):"
-d_isclose f_irst (n_ot r = f_irst "\n") p_artition r
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
 "what Blender wrote:"
 bl:r_ead "work/hello/report.txt"

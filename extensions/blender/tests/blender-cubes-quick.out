@@ -1,5 +1,6 @@
-the run:
+the run, and the error lines in Blender's log:
 exit 0
+errors 0
 what Blender made:
 mesh ground: 4 vertices, 1 faces
 mesh hundred: 800 vertices, 600 faces

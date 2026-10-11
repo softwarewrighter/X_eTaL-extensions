@@ -25,7 +25,9 @@
 ## the working directory, XETAL_BLENDER set to the Blender found, stopped
 ## after XETAL_BLENDER_TIMEOUT seconds (900 by default); the whole output
 ## goes to the script's .log beside it. "exit N" (or "timeout after S
-## s") and the log's last 20 lines.
+## s"), "errors N" -- the log's Python tracebacks and Blender "Error:"
+## lines, since a run can fail inside and still exit 0 -- and the log's
+## last 20 lines.
 "r_un! : text text -> text"      ffi:b_ind< "blender/run"
 ## bl:r_ead path: a file's text (a small one a run wrote: a report).
 "r_ead : text -> text"           ffi:b_ind< "blender/read"
