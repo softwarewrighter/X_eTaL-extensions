@@ -1,9 +1,10 @@
 number = 4
 slug = "blender-release"
-status = "in-progress"
+status = "completed"
 description = "Saga 15 step 4: recordings on the site, the extension's page, README catalog,..."
 role = "production"
 context_files = []
 created_at = "2026-10-11T11:39:42"
+completed_at = "2026-10-11T15:48:54"
 task_type = "docs"
-commits = []
+commits = ["b992f31b4278affff02e43b86085aa7728446cd7"]

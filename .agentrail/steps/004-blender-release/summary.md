@@ -1,0 +1,1 @@
+blender-release: site checked (153 files, videos match), retrospective, X_eTaL-games' tower-defense ask added as steps 5-10 (glb first; a demo here); Cargo.lock entry for the blender crate committed.
