@@ -1,0 +1,37 @@
+## Blender.xtl -- the facade of the blender extension: Blender 3D in
+## batch, driven from X_eTaL. A program writes the Python -- a launcher
+## that runs Blender in the background, and the bpy script Blender runs
+## inside -- with bl:w_rite!, runs the launcher with bl:r_un! (python3,
+## with XETAL_BLENDER set to the Blender found), and lists what it made
+## with bl:f_iles. Paths are under the working directory (or
+## XETAL_BLENDER_ROOT).
+## Import: "bl:" u_se< "Blender"
+## Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+## Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+
+"ffi:" u_se< "Ffi"
+
+## bl:a_bout @: the extension's name and version.
+"a_bout : unit -> text"          ffi:b_ind< "blender/about"
+## path bl:w_rite! text: the text into the file (made whole, or not at
+## all; its directory made); how many bytes.
+"w_rite! : text text -> int"     ffi:b_ind< "blender/write"
+## bl:b_lender @: the Blender program found -- BLENDER, the macOS
+## application, or blender on the PATH -- or "" when there is none.
+"b_lender : unit -> text"        ffi:b_ind< "blender/blender"
+## bl:v_ersion @: that Blender's version line ("Blender 5.1.2"), or "".
+"v_ersion : unit -> text"        ffi:b_ind< "blender/version"
+## script bl:r_un! args: python3 script args (args split at spaces) from
+## the working directory, XETAL_BLENDER set to the Blender found, stopped
+## after XETAL_BLENDER_TIMEOUT seconds (900 by default); the whole output
+## goes to the script's .log beside it. "exit N" (or "timeout after S
+## s") and the log's last 20 lines.
+"r_un! : text text -> text"      ffi:b_ind< "blender/run"
+## bl:r_ead path: a file's text (a small one a run wrote: a report).
+"r_ead : text -> text"           ffi:b_ind< "blender/read"
+## bl:f_iles dir: the files under dir, one a line, "bytes path", sorted
+## by path.
+"f_iles : text -> text"          ffi:b_ind< "blender/files"
+
+## The native package behind these functions.
+l:package := "blender"

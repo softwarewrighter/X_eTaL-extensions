@@ -590,7 +590,7 @@ extension runs the launcher and reports what happened. Renderer: EEVEE
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | blender-ext | the extension: run a launcher with a timeout, Blender found by BLENDER or the default app path, the exit status, the log and the files written back; write the generated scripts |
+| 1 | blender-ext | (done) the extension: write, run (python3 with XETAL_BLENDER, a timeout, the output in a log, exit and the tail back), read, files, blender, version; paths confined; Rust tests with a stand-in; demo hello: X_eTaL, python3, Blender, Python inside, a report back |
 | 2 | bpy-gen | an X_eTaL library writing bpy code from arrays: the scene reset, cubes as one mesh, materials, lights, a camera keyframed on an orbit, EEVEE, video and .glb/.obj/.blend output, the launcher; goldens pin the scripts |
 | 3 | blender-cubes | the demo: one cube, a 10 by 10 slab, a 10 by 10 by 10 block (xkcd-style sizes), labeled, orbited 360 degrees; a video and exports, on the site |
 | 4 | blender-release | recordings, the extension's page, the catalog, a retrospective, the site checked online |

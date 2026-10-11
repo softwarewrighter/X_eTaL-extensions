@@ -13,6 +13,7 @@
   <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
   <ul>
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
+    <li><a href="#blender">blender</a><ul><li><a href="#blender-hello">hello</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
     <li><a href="#clock">clock</a><ul><li><a href="#clock-bridge-cost">bridge-cost</a></li></ul></li>
     <li><a href="#digest">digest</a></li>
@@ -62,6 +63,16 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <p class="note">A synthesizer made of arrays: X_eTaL computes every sample of a little piece -- notes from equal temperament, harmonics, envelopes, chords, stereo (the instruments are in Instruments.xtl, beside this file) -- and the audio extension plays them as they are made.</p>
       <video src="audio/synth.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo audio synth</pre>
+    </section>
+  </div>
+  <h2 id="blender"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/blender/docs/README.md">blender</a> <a class="docs" href="doc/extensions-blender-lib-Blender.xtl.html">facade docs</a></h2>
+  <p class="lede">Blender 3D in batch, driven from X_eTaL. An X_eTaL program writes the Python -- a launcher that runs Blender in the background, and the bpy script Blender runs inside -- runs the launcher, and reads back what it made: rendered pictures and videos, 3D files. The chain is X_eTaL, this extension, python3, Blender, Python inside Blender.</p>
+  <div class="demos">
+    <section class="panel demo" id="blender-hello">
+      <h3>blender / hello <a class="docs" href="doc/extensions-blender-demos-hello.xtl.html">source and docs</a></h3>
+      <p class="note">Blender, 1: X_eTaL runs Blender. The program writes two Python files -- the launcher, which runs Blender in the background (with its factory settings, so the run never depends on yours), and the script Blender runs inside, which writes a report -- then runs the launcher with python3 and reads the report back. The chain: X_eTaL, the extension, python3, Blender, Python inside Blender.</p>
+      <video src="blender/hello.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo blender hello</pre>
     </section>
   </div>
   <h2 id="canvas"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/canvas/docs/README.md">canvas</a> <a class="docs" href="doc/extensions-canvas-lib-Canvas.xtl.html">facade docs</a></h2>
@@ -265,7 +276,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at d42ec75</span>
+  <span>built at 088436f</span>
 </footer>
 </body>
 </html>

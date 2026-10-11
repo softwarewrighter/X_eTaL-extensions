@@ -1,0 +1,28 @@
+## Blender, 1: X_eTaL runs Blender. The program writes two Python files
+## -- the launcher, which runs Blender in the background (with its
+## factory settings, so the run never depends on yours), and the script
+## Blender runs inside, which writes a report -- then runs the launcher
+## with python3 and reads the report back. The chain: X_eTaL, the
+## extension, python3, Blender, Python inside Blender.
+## Run: just demo blender hello
+
+"bl:" u_se< "Blender"
+
+## the launcher: python3 run.py SCRIPT ARGS runs Blender in the
+## background on SCRIPT, passing ARGS after "--"; Blender's exit status
+## is its own (a Python error inside makes it 1)
+launcher := "import os, subprocess, sys\nblender = os.environ.get(\"XETAL_BLENDER\") or sys.exit(\"no Blender found\")\nrun = [blender, \"--background\", \"--factory-startup\", \"--python-exit-code\", \"1\", \"--python\", sys.argv[1], \"--\"] + sys.argv[2:]\nsys.exit(subprocess.run(run).returncode)\n"
+
+## the script Blender runs: the objects of the scene it starts with,
+## written to the file named after "--"
+inside := "import bpy, sys\nout = sys.argv[sys.argv.index(\"--\") + 1]\nnames = sorted(o.name for o in bpy.data.objects)\nopen(out, \"w\").write(\"objects: \" + \" \".join(names) + \"\\n\")\n"
+
+"Blender found:"
+0 < t_ally bl:b_lender @
+n := "work/hello/run.py" bl:w_rite! launcher
+n := "work/hello/hello.py" bl:w_rite! inside
+r := "work/hello/run.py" bl:r_un! "work/hello/hello.py work/hello/report.txt"
+"the run (its first line):"
+d_isclose f_irst (n_ot r = f_irst "\n") p_artition r
+"what Blender wrote:"
+bl:r_ead "work/hello/report.txt"

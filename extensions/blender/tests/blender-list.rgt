@@ -1,0 +1,3 @@
+command = "xetal-x --ext . --ext-list"
+exit_code = 0
+desc = "the blender extension's functions as xetal-x lists them"

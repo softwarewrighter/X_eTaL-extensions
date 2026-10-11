@@ -1,0 +1,8 @@
+blender 0.1.0
+  blender/about : Unit -> Char    # The extension's name and version.
+  blender/write : Char -> Char -> Int    # path write text: the text into the file, made whole; how many bytes.
+  blender/blender : Unit -> Char    # The Blender program found (BLENDER, the macOS app, PATH), or "".
+  blender/version : Unit -> Char    # Blender's version line, or "".
+  blender/run : Char -> Char -> Char    # script run args: python3 script args, XETAL_BLENDER set; exit N and the log's last lines.
+  blender/read : Char -> Char    # path read: the file's text.
+  blender/files : Char -> Char    # files dir: the files written under dir, "bytes path" a line.

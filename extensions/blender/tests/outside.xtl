@@ -1,0 +1,2 @@
+"bl:" u_se< "Blender"
+"../outside.py" bl:w_rite! "print(1)"

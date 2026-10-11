@@ -1,0 +1,3 @@
+command = "xetal-x type lib/Blender.xtl"
+exit_code = 0
+desc = "the Blender facade's types"

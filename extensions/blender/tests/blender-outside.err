@@ -1,0 +1,1 @@
+error[io]: []N_GET: ext:blender/write: "../outside.py": give a path under the working directory (or XETAL_BLENDER_ROOT), no .. at ./lib/Blender.xtl:18:1

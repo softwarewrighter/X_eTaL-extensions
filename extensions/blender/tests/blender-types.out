@@ -1,0 +1,8 @@
+l:a_bout : Unit -> Char
+l:w_rite! : Char -> Char -> Int
+l:b_lender : Unit -> Char
+l:v_ersion : Unit -> Char
+l:r_un! : Char -> Char -> Char
+l:r_ead : Char -> Char
+l:f_iles : Char -> Char
+l:package : Char
