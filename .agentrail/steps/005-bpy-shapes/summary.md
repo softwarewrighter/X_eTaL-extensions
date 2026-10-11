@@ -1,0 +1,1 @@
+bpy-shapes: pieces and parts (box, cylinder, cone, sphere, torus, octahedron, lathe), emission, per-piece glb, triangles; Freestyle fixed (had failed silently); bl:r_un! counts log errors; shapes golden.
