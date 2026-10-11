@@ -1,0 +1,1 @@
+blender-cubes: one/100/1000 cubes orbited (EEVEE, Freestyle outlines, facing labels), 10 s, glb/obj/blend; just ext blender orbit; .film recording kind; quick golden end to end; live on the site.
