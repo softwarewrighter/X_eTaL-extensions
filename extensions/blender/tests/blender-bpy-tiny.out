@@ -1,0 +1,12 @@
+the run:
+exit 0
+what Blender made:
+mesh pair: 16 vertices, 12 faces
+objects: camera label 2 pair pivot sun
+
+pair.blend
+pair.glb
+pair.mtl
+pair.obj
+report.txt
+still.png

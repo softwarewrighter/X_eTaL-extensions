@@ -1,0 +1,17 @@
+## Two cubes and a label, written as bpy by Bpy.xtl, run by Blender:
+## a still, the exports and a report, read back.
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+
+cs := 2 3 r_eshape 0.0 0.0 0.5  2.0 0.0 0.5
+script := bp:head c_at (("pair", cs, 0.9, 0.9 0.3 0.2) bp:c_ubes 0) c_at (("2", 1.0 -1.0 1.2, 0.6, 0.1 0.1 0.1) bp:l_abel 0)
+script := script c_at ((0.6 0.7 0.9, 3.0) bp:l_ights 0) c_at ((1.0 0.0 0.5, 6.0, 3.0, 4) bp:o_rbit 0)
+script := script c_at ((64, 48, 24) bp:s_etup 0) c_at (bp:s_till "still.png") c_at (bp:e_xports "pair") c_at bp:report
+n := "work/tiny/run.py" bl:w_rite! bp:launcher
+n := "work/tiny/scene.py" bl:w_rite! script
+r := "work/tiny/run.py" bl:r_un! "work/tiny/scene.py work/tiny/out"
+"the run:"
+d_isclose f_irst (n_ot r = f_irst "\n") p_artition r
+"what Blender made:"
+bl:r_ead "work/tiny/out/report.txt"

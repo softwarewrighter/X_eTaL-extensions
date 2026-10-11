@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-11
 
+- 13:58 `ext` Bpy.xtl (Saga 15, step 2): X_eTaL writes Blender's Python -- the launcher, the scene's start, cubes as one mesh whose corners and faces are X_eTaL arrays (`bp:c_ubeMesh`), 3D labels, a sun and sky, a camera turning once round on a linear pivot (a loop), EEVEE setup, PNG stills, MP4 video and `.glb`/`.obj`/`.blend` exports, and a report. Written for Blender 5.1 (probed: `BLENDER_EEVEE`, `media_type` VIDEO). Goldens: the script pinned; two cubes and a label run through Blender end to end (16 vertices, 12 faces, the objects, a still and the exports).
+
 - 13:10 `ext` the blender extension (Saga 15, step 1): an X_eTaL program writes the Python (`bl:w_rite!`) -- a launcher that runs Blender in the background, and the bpy script Blender runs inside -- runs the launcher (`bl:r_un!`: python3 with `XETAL_BLENDER` set to the Blender found, a timeout, the whole output in a log, `exit N` and the log's tail back), and reads back what it made (`bl:r_ead`, `bl:f_iles`); `bl:b_lender`, `bl:v_ersion`. Paths confined to the working directory, as http's. Rust tests with a stand-in program; goldens: the list, the types, a path refused, and `just demo blender hello` -- X_eTaL, python3, Blender, Python inside it, a report back (`objects: Camera Cube Light`). Recording (vhs).
 
 - 11:40 `plan` Saga 15, Blender (the user: X_eTaL creating Blender 3D scenes, images and animations, by generating the Python that runs Blender in batch and that Blender runs inside): the voxel-game saga archived; four steps -- the extension, a bpy-writing library, the cubes demo, the release. Generated bpy code and EEVEE, the user's choices.

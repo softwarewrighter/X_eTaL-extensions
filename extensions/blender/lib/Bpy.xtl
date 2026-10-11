@@ -1,0 +1,116 @@
+## Bpy.xtl -- Blender's Python (bpy) written by X_eTaL: each function
+## returns a piece of a script as text, and a program joins the pieces
+## into the script Blender runs inside (written with bl:w_rite!, run by
+## the launcher bp:launcher through bl:r_un!). The geometry is X_eTaL's:
+## a set of cubes is worked out as arrays -- every corner, every face --
+## and written into the script as numbers, one mesh for them all.
+## Written for Blender 5.1 (EEVEE is BLENDER_EEVEE; video output is
+## media_type VIDEO).
+## Import: "bp:" u_se< "Bpy"
+
+### The two scripts
+
+## bp:launcher: the outer script. python3 run.py SCRIPT ARGS runs Blender
+## (XETAL_BLENDER, set by bl:r_un!) in the background with its factory
+## settings on SCRIPT, passing ARGS after "--"; a Python error inside
+## makes the run fail.
+l:launcher := "import os, subprocess, sys\nblender = os.environ.get(\"XETAL_BLENDER\") or sys.exit(\"no Blender found\")\nrun = [blender, \"--background\", \"--factory-startup\", \"--python-exit-code\", \"1\", \"--python\", sys.argv[1], \"--\"] + sys.argv[2:]\nsys.exit(subprocess.run(run).returncode)\n"
+
+## bp:head: the inner script's start: an empty scene, the output
+## directory (the first argument after "--", made), keyframes linear (an
+## orbit at an even speed), and nums(text, k), which reads numbers
+## written by X_eTaL k to a row
+l:head := "import bpy, math, os, sys\nargs = sys.argv[sys.argv.index(\"--\") + 1:]\nout = args[0]\nos.makedirs(out, exist_ok=True)\nbpy.ops.wm.read_factory_settings(use_empty=True)\nbpy.context.preferences.edit.keyframe_new_interpolation_type = \"LINEAR\"\nscene = bpy.context.scene\n\ndef nums(text, k):\n    v = [float(t) for t in text.split()]\n    return [tuple(v[i:i + k]) for i in range(0, len(v), k)]\n\ndef material(name, rgb, emit=0.0):\n    m = bpy.data.materials.new(name)\n    m.use_nodes = True\n    p = m.node_tree.nodes[\"Principled BSDF\"]\n    p.inputs[\"Base Color\"].default_value = rgb + (1.0,)\n    p.inputs[\"Emission Color\"].default_value = rgb + (1.0,)\n    p.inputs[\"Emission Strength\"].default_value = emit\n    return m\n\ndef link(obj, mat):\n    scene.collection.objects.link(obj)\n    obj.data.materials.append(mat)\n    return obj\n\n"
+
+### Numbers into Python
+
+# (values, k) h:n_ums 0: the values as Python reading them k to a row
+h:n_ums := { (v, k) z -> "nums(\"\"\"" c_at (f_ormat r_avel v) c_at "\"\"\", " c_at (f_ormat k) c_at ")" }
+
+# a Python string
+h:q_uote := { t -> "\"" c_at t c_at "\"" }
+
+# a Python tuple of the numbers of v (read by nums)
+h:t_uple := { v -> "nums(\"" c_at (f_ormat r_avel v) c_at "\", " c_at (f_ormat t_ally r_avel v) c_at ")[0]" }
+
+### Cubes
+
+# the 8 corners of a unit cube about its center, -0.5 to 0.5: the bottom
+# four counterclockwise, then the top four
+corners := 8 3 r_eshape -0.5 -0.5 -0.5  0.5 -0.5 -0.5  0.5 0.5 -0.5  -0.5 0.5 -0.5  -0.5 -0.5 0.5  0.5 -0.5 0.5  0.5 0.5 0.5  -0.5 0.5 0.5
+# its 6 faces, the corners of each counterclockwise seen from outside:
+# bottom, top, front (-y), back (+y), left (-x), right (+x)
+sides := 6 4 r_eshape 0 3 2 1  4 5 6 7  0 1 5 4  2 3 7 6  3 0 4 7  1 2 6 5
+
+## (centers, size) bp:c_ubeMesh 0: the corners (8n by 3) and faces (6n
+## by 4, counting corners from 0) of n cubes of that size at the centers
+## (n by 3), as one mesh
+## >> "bp:" u_se< "Bpy"
+## >> (c, f) := (2 3 r_eshape 0.0 0.0 0.0  2.0 0.0 0.0, 1.0) bp:c_ubeMesh 0
+## >> (s_hape c) c_at s_hape f
+## 16 3 12 4
+l:c_ubeMesh := { (cs, size) z ->
+  n := 1 s_elect s_hape cs
+  c_ol := { k -> r_avel (k s_elect_2 cs) '+ t_able size * k s_elect_2 corners }
+  v := 2 1 t_ranspose (3 c_at 8 * n) r_eshape (c_ol 1) c_at (c_ol 2) c_at c_ol 3
+  f := ((6 * n) c_at 4) r_eshape r_avel (8 * (r_ange n) - 1) '+ t_able r_avel sides
+  (v, f)
+}
+
+## (name, centers, size, rgb) bp:c_ubes 0: Python making n cubes of
+## that size at the centers (n by 3, z up) as one mesh object NAME, with
+## a material of that color (red green blue, 0 to 1)
+l:c_ubes := { (name, cs, size, rgb) z ->
+  (v, f) := (cs, size) l:c_ubeMesh 0
+  m := "mesh = bpy.data.meshes.new(" c_at (h:q_uote name) c_at ")\n"
+  m := m c_at "mesh.from_pydata(" c_at (((f_loat v), 3) h:n_ums 0) c_at ", [], [tuple(int(i) for i in f) for f in " c_at ((f, 4) h:n_ums 0) c_at "])\nmesh.update()\n"
+  m c_at "link(bpy.data.objects.new(" c_at (h:q_uote name) c_at ", mesh), material(" c_at (h:q_uote name) c_at ", " c_at (h:t_uple rgb) c_at "))\n\n"
+}
+
+### Words, light and camera
+
+## (text, place, size, rgb) bp:l_abel 0: Python making 3D text standing
+## upright at place (x y z, its middle bottom), facing -y, that tall
+l:l_abel := { (body, at, size, rgb) z ->
+  t := "curve = bpy.data.curves.new(" c_at (h:q_uote "label " c_at body) c_at ", type=\"FONT\")\ncurve.body = " c_at (h:q_uote body) c_at "\ncurve.size = " c_at (f_ormat size) c_at "\ncurve.align_x = \"CENTER\"\n"
+  t c_at "obj = link(bpy.data.objects.new(" c_at (h:q_uote "label " c_at body) c_at ", curve), material(" c_at (h:q_uote "label " c_at body) c_at ", " c_at (h:t_uple rgb) c_at "))\nobj.location = " c_at (h:t_uple at) c_at "\nobj.rotation_euler = (math.pi / 2, 0.0, 0.0)\n\n"
+}
+
+## (sky rgb, sun strength) bp:l_ights 0: Python lighting the scene: the
+## world's color and a sun from above to one side, soft shadows
+l:l_ights := { (sky, strength) z ->
+  t := "world = bpy.data.worlds.new(\"world\")\nworld.use_nodes = True\nworld.node_tree.nodes[\"Background\"].inputs[\"Color\"].default_value = " c_at (h:t_uple sky c_at 1.0) c_at "\nscene.world = world\n"
+  t c_at "sun = bpy.data.objects.new(\"sun\", bpy.data.lights.new(\"sun\", type=\"SUN\"))\nsun.data.energy = " c_at (f_ormat strength) c_at "\nsun.data.angle = 0.2\nsun.rotation_euler = (math.radians(50), 0.0, math.radians(30))\nscene.collection.objects.link(sun)\n\n"
+}
+
+## (center, radius, height, frames) bp:o_rbit 0: Python putting a camera
+## on a circle of that radius about center (x y z), that high above it,
+## looking at it, turned once round in the frames -- a pivot at the
+## center keyed at 0 and a full turn, linear, so the video loops
+l:o_rbit := { (at, radius, height, frames) z ->
+  t := "pivot = bpy.data.objects.new(\"pivot\", None)\npivot.location = " c_at (h:t_uple at) c_at "\nscene.collection.objects.link(pivot)\n"
+  t := t c_at "cam = bpy.data.objects.new(\"camera\", bpy.data.cameras.new(\"camera\"))\ncam.data.lens = 35\ncam.data.clip_end = 1000\ncam.parent = pivot\ncam.location = (0.0, -" c_at (f_ormat radius) c_at ", " c_at (f_ormat height) c_at ")\nscene.collection.objects.link(cam)\nscene.camera = cam\n"
+  t := t c_at "look = cam.constraints.new(\"TRACK_TO\")\nlook.target = pivot\nlook.track_axis = \"TRACK_NEGATIVE_Z\"\nlook.up_axis = \"UP_Y\"\n"
+  t c_at "scene.frame_start = 1\nscene.frame_end = " c_at (f_ormat frames) c_at "\npivot.rotation_euler = (0.0, 0.0, 0.0)\npivot.keyframe_insert(\"rotation_euler\", frame=1)\npivot.rotation_euler = (0.0, 0.0, 2 * math.pi)\npivot.keyframe_insert(\"rotation_euler\", frame=" c_at (f_ormat frames + 1) c_at ")\n\n"
+}
+
+### Rendering and files
+
+## (width, height, fps) bp:s_etup 0: Python setting EEVEE, the picture's
+## size and the frame rate
+l:s_etup := { (w, h, fps) z -> "scene.render.engine = \"BLENDER_EEVEE\"\nscene.render.resolution_x = " c_at (f_ormat w) c_at "\nscene.render.resolution_y = " c_at (f_ormat h) c_at "\nscene.render.resolution_percentage = 100\nscene.render.fps = " c_at (f_ormat fps) c_at "\n\n" }
+
+## bp:s_till file: Python rendering the current frame to out/FILE (PNG)
+l:s_till := { file -> "scene.render.image_settings.media_type = \"IMAGE\"\nscene.render.image_settings.file_format = \"PNG\"\nscene.render.filepath = os.path.join(out, " c_at (h:q_uote file) c_at ")\nbpy.ops.render.render(write_still=True)\n\n" }
+
+## bp:v_ideo file: Python rendering every frame to out/FILE, an MP4
+## (H.264)
+l:v_ideo := { file -> "scene.render.image_settings.media_type = \"VIDEO\"\nscene.render.image_settings.file_format = \"FFMPEG\"\nscene.render.ffmpeg.format = \"MPEG4\"\nscene.render.ffmpeg.codec = \"H264\"\nscene.render.ffmpeg.constant_rate_factor = \"HIGH\"\nscene.render.filepath = os.path.join(out, " c_at (h:q_uote file) c_at ")\nbpy.ops.render.render(animation=True)\n\n" }
+
+## bp:e_xports name: Python writing the scene as out/NAME.glb (glTF,
+## binary), out/NAME.obj (with its .mtl) and out/NAME.blend
+l:e_xports := { name -> "bpy.ops.export_scene.gltf(filepath=os.path.join(out, " c_at (h:q_uote name c_at ".glb") c_at "), export_format=\"GLB\")\nbpy.ops.wm.obj_export(filepath=os.path.join(out, " c_at (h:q_uote name c_at ".obj") c_at "))\nbpy.ops.wm.save_as_mainfile(filepath=os.path.join(out, " c_at (h:q_uote name c_at ".blend") c_at "))\n\n" }
+
+## bp:report: Python writing out/report.txt: each mesh's vertices and
+## faces and each object, by name -- what a test checks
+l:report := "with open(os.path.join(out, \"report.txt\"), \"w\") as f:\n    for m in sorted(bpy.data.meshes, key=lambda m: m.name):\n        f.write(\"mesh %s: %d vertices, %d faces\\n\" % (m.name, len(m.vertices), len(m.polygons)))\n    f.write(\"objects: \" + \" \".join(sorted(o.name for o in scene.objects)) + \"\\n\")\n"

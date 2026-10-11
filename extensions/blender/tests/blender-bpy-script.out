@@ -1,0 +1,100 @@
+the launcher:
+import os, subprocess, sys
+blender = os.environ.get("XETAL_BLENDER") or sys.exit("no Blender found")
+run = [blender, "--background", "--factory-startup", "--python-exit-code", "1", "--python", sys.argv[1], "--"] + sys.argv[2:]
+sys.exit(subprocess.run(run).returncode)
+
+the scene:
+import bpy, math, os, sys
+args = sys.argv[sys.argv.index("--") + 1:]
+out = args[0]
+os.makedirs(out, exist_ok=True)
+bpy.ops.wm.read_factory_settings(use_empty=True)
+bpy.context.preferences.edit.keyframe_new_interpolation_type = "LINEAR"
+scene = bpy.context.scene
+
+def nums(text, k):
+    v = [float(t) for t in text.split()]
+    return [tuple(v[i:i + k]) for i in range(0, len(v), k)]
+
+def material(name, rgb, emit=0.0):
+    m = bpy.data.materials.new(name)
+    m.use_nodes = True
+    p = m.node_tree.nodes["Principled BSDF"]
+    p.inputs["Base Color"].default_value = rgb + (1.0,)
+    p.inputs["Emission Color"].default_value = rgb + (1.0,)
+    p.inputs["Emission Strength"].default_value = emit
+    return m
+
+def link(obj, mat):
+    scene.collection.objects.link(obj)
+    obj.data.materials.append(mat)
+    return obj
+
+mesh = bpy.data.meshes.new("one")
+mesh.from_pydata(nums("""-0.45 -0.45 0.04999999999999999 0.45 -0.45 0.04999999999999999 0.45 0.45 0.04999999999999999 -0.45 0.45 0.04999999999999999 -0.45 -0.45 0.95 0.45 -0.45 0.95 0.45 0.45 0.95 -0.45 0.45 0.95""", 3), [], [tuple(int(i) for i in f) for f in nums("""0 3 2 1 4 5 6 7 0 1 5 4 2 3 7 6 3 0 4 7 1 2 6 5""", 4)])
+mesh.update()
+link(bpy.data.objects.new("one", mesh), material("one", nums("0.9 0.3 0.2", 3)[0]))
+
+curve = bpy.data.curves.new("label 1", type="FONT")
+curve.body = "1"
+curve.size = 0.6
+curve.align_x = "CENTER"
+obj = link(bpy.data.objects.new("label 1", curve), material("label 1", nums("0.1 0.1 0.1", 3)[0]))
+obj.location = nums("0.0 -1.0 1.2", 3)[0]
+obj.rotation_euler = (math.pi / 2, 0.0, 0.0)
+
+world = bpy.data.worlds.new("world")
+world.use_nodes = True
+world.node_tree.nodes["Background"].inputs["Color"].default_value = nums("0.6 0.7 0.9 1.0", 4)[0]
+scene.world = world
+sun = bpy.data.objects.new("sun", bpy.data.lights.new("sun", type="SUN"))
+sun.data.energy = 3.0
+sun.data.angle = 0.2
+sun.rotation_euler = (math.radians(50), 0.0, math.radians(30))
+scene.collection.objects.link(sun)
+
+pivot = bpy.data.objects.new("pivot", None)
+pivot.location = nums("0.0 0.0 0.5", 3)[0]
+scene.collection.objects.link(pivot)
+cam = bpy.data.objects.new("camera", bpy.data.cameras.new("camera"))
+cam.data.lens = 35
+cam.data.clip_end = 1000
+cam.parent = pivot
+cam.location = (0.0, -6.0, 3.0)
+scene.collection.objects.link(cam)
+scene.camera = cam
+look = cam.constraints.new("TRACK_TO")
+look.target = pivot
+look.track_axis = "TRACK_NEGATIVE_Z"
+look.up_axis = "UP_Y"
+scene.frame_start = 1
+scene.frame_end = 4
+pivot.rotation_euler = (0.0, 0.0, 0.0)
+pivot.keyframe_insert("rotation_euler", frame=1)
+pivot.rotation_euler = (0.0, 0.0, 2 * math.pi)
+pivot.keyframe_insert("rotation_euler", frame=5)
+
+scene.render.engine = "BLENDER_EEVEE"
+scene.render.resolution_x = 64
+scene.render.resolution_y = 48
+scene.render.resolution_percentage = 100
+scene.render.fps = 24
+
+scene.render.image_settings.media_type = "VIDEO"
+scene.render.image_settings.file_format = "FFMPEG"
+scene.render.ffmpeg.format = "MPEG4"
+scene.render.ffmpeg.codec = "H264"
+scene.render.ffmpeg.constant_rate_factor = "HIGH"
+scene.render.filepath = os.path.join(out, "orbit.mp4")
+bpy.ops.render.render(animation=True)
+
+bpy.ops.export_scene.gltf(filepath=os.path.join(out, "one.glb"), export_format="GLB")
+bpy.ops.wm.obj_export(filepath=os.path.join(out, "one.obj"))
+bpy.ops.wm.save_as_mainfile(filepath=os.path.join(out, "one.blend"))
+
+with open(os.path.join(out, "report.txt"), "w") as f:
+    for m in sorted(bpy.data.meshes, key=lambda m: m.name):
+        f.write("mesh %s: %d vertices, %d faces\n" % (m.name, len(m.vertices), len(m.polygons)))
+    f.write("objects: " + " ".join(sorted(o.name for o in scene.objects)) + "\n")
+

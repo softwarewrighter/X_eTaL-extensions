@@ -46,6 +46,29 @@ factory settings keep a run from depending on the user's own Blender
 setup, and `--python-exit-code 1` makes a Python error inside Blender
 the run's failure.
 
+## Writing bpy: Bpy.xtl
+
+`lib/Bpy.xtl` (alias `bp:`) writes Blender's Python from X_eTaL: each
+function returns a piece of a script as text, and a program joins the
+pieces into the script Blender runs. The geometry is X_eTaL's -- a set
+of cubes is worked out as arrays, every corner and face, and written
+into the script as numbers, one mesh for them all. Written for Blender
+5.1 (EEVEE is `BLENDER_EEVEE`; video output is `media_type` VIDEO).
+
+| Export | What it writes |
+| ------ | -------------- |
+| `bp:launcher` | the outer script: runs Blender in the background on a script |
+| `bp:head` | the inner script's start: an empty scene, the output directory, helpers |
+| `(centers, size) bp:c_ubeMesh 0` | (not Python) the corners and faces of n cubes, as arrays |
+| `(name, centers, size, rgb) bp:c_ubes 0` | n cubes as one mesh object, colored |
+| `(text, place, size, rgb) bp:l_abel 0` | 3D text standing upright |
+| `(sky, strength) bp:l_ights 0` | the world's color and a sun |
+| `(center, radius, height, frames) bp:o_rbit 0` | a camera turning once round the center, linear, looping |
+| `(width, height, fps) bp:s_etup 0` | EEVEE, the picture's size, the frame rate |
+| `bp:s_till file`, `bp:v_ideo file` | a PNG of the frame; every frame as an MP4 (H.264) |
+| `bp:e_xports name` | `.glb` (glTF), `.obj` (with `.mtl`) and `.blend` |
+| `bp:report` | a report: each mesh's vertices and faces, the objects |
+
 ## Demos
 
 1. `demos/hello.xtl` (`just demo blender hello`): the whole chain once.
@@ -62,5 +85,9 @@ just test       # Rust tests (rust/tests) and reg-rs tests (tests/)
 just list       # the functions as xetal-x sees them
 ```
 
-The Rust tests run a stand-in program in Blender's place; the golden
-`blender-demo-hello` runs Blender itself (in a temporary directory).
+The Rust tests run a stand-in program in Blender's place; the goldens
+`blender-demo-hello` and `blender-bpy-tiny` run Blender itself (in a
+temporary directory): the second writes two cubes and a label as bpy
+and checks what Blender made -- the mesh (16 vertices, 12 faces), the
+objects, a still, `.glb`, `.obj`, `.mtl`, `.blend`. `blender-bpy-script`
+pins the Python the library writes.

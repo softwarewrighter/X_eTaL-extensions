@@ -1,0 +1,3 @@
+command = "xetal-x --ext .. run tests/bpy-script.xtl"
+exit_code = 0
+desc = "the Python Bpy.xtl writes for one cube, a label, lights, an orbit, a video and the exports, pinned"
