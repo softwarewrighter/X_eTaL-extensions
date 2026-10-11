@@ -1,0 +1,9 @@
+number = 2
+slug = "bpy-gen"
+status = "pending"
+description = "Saga 15 step 2: an X_eTaL library (extensions/blender/lib or demos) writing b..."
+role = "production"
+context_files = []
+created_at = "2026-10-11T11:39:42"
+task_type = "feature"
+commits = []

@@ -11,6 +11,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-11
+
+- 11:40 `plan` Saga 15, Blender (the user: X_eTaL creating Blender 3D scenes, images and animations, by generating the Python that runs Blender in batch and that Blender runs inside): the voxel-game saga archived; four steps -- the extension, a bpy-writing library, the cubes demo, the release. Generated bpy code and EEVEE, the user's choices.
+
 ## 2026-10-09
 
 - 23:27 `release` the voxel saga finished: every demo recorded and on the site (http/quakes-live reads the live feed; its saved-feed twin is recorded), the site checked online (141 files load, 27 live videos match their commits), voxels.md and the README's status brought up to date, and a retrospective in docs/plan.md (Saga 14): what held up, what the user caught and what changed, the numbers, what is left.

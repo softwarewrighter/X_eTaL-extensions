@@ -1,0 +1,1 @@
+Saga 15 step 2: an X_eTaL library (extensions/blender/lib or demos) writing bpy code from arrays: reset the scene, cubes as one mesh (from_pydata) at positions and sizes, materials by color, a sun and an area light, a camera keyframed on an orbit, EEVEE settings, a video (FFMPEG) and file exports (.glb, .obj, .blend), and the outer launcher; goldens pin the generated scripts.

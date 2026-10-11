@@ -1,0 +1,1 @@
+Saga 15 step 3: the demo -- one cube on the left, a 10 by 10 slab in the middle, a 10 by 10 by 10 block on the right (xkcd-style size comparison), labeled 1, 100, 1000, orbited 360 degrees: a video and .glb/.obj written by Blender run from X_eTaL; on the site.

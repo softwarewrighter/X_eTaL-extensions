@@ -578,6 +578,23 @@ value on the doc pages); the cube's solver searching known move
 sequences in its later stages (Eigencube's hybrid mode, the only one
 fast enough today).
 
+## Saga 15 -- Blender
+
+Started 2026-10-11 (the user: "use X_eTaL to create Blender3D scenes,
+images, animations, eventually more advanced meshes, effects"). X_eTaL
+writes the Python -- the outer launcher that runs Blender in the
+background and the full bpy script Blender runs inside (the user chose
+generated bpy code over data for a fixed script) -- and the `blender`
+extension runs the launcher and reports what happened. Renderer: EEVEE
+(the user's choice). Short term: animations and exportable 3D files.
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | blender-ext | the extension: run a launcher with a timeout, Blender found by BLENDER or the default app path, the exit status, the log and the files written back; write the generated scripts |
+| 2 | bpy-gen | an X_eTaL library writing bpy code from arrays: the scene reset, cubes as one mesh, materials, lights, a camera keyframed on an orbit, EEVEE, video and .glb/.obj/.blend output, the launcher; goldens pin the scripts |
+| 3 | blender-cubes | the demo: one cube, a 10 by 10 slab, a 10 by 10 by 10 block (xkcd-style sizes), labeled, orbited 360 degrees; a video and exports, on the site |
+| 4 | blender-release | recordings, the extension's page, the catalog, a retrospective, the site checked online |
+
 ## Saga 12 -- native hook (blocked)
 
 Blocked on asks E1 (a native hook in X_eTaL) and E2 (`.xtlm`). Until
