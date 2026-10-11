@@ -592,7 +592,7 @@ extension runs the launcher and reports what happened. Renderer: EEVEE
 | - | --------- | -------- |
 | 1 | blender-ext | (done) the extension: write, run (python3 with XETAL_BLENDER, a timeout, the output in a log, exit and the tail back), read, files, blender, version; paths confined; Rust tests with a stand-in; demo hello: X_eTaL, python3, Blender, Python inside, a report back |
 | 2 | bpy-gen | (done) lib/Bpy.xtl: the launcher, the scene's start, cubes as one mesh from X_eTaL arrays (bp:c_ubeMesh), labels, lights, an orbit camera on a looping pivot, EEVEE setup, stills, MP4 video, .glb/.obj/.blend exports, a report; goldens pin the script and run two cubes through Blender end to end |
-| 3 | blender-cubes | the demo: one cube, a 10 by 10 slab, a 10 by 10 by 10 block (xkcd-style sizes), labeled, orbited 360 degrees; a video and exports, on the site |
+| 3 | blender-cubes | (done) demos/cubes.xtl and Sizes.xtl: one, a hundred, a thousand cubes orbited, labeled, outlined (Freestyle), 10 s at 640 by 360; .glb/.obj/.blend; about five minutes; `just ext blender orbit` plays it; recording kind `.film` (a video the demo makes); quick golden end to end |
 | 4 | blender-release | recordings, the extension's page, the catalog, a retrospective, the site checked online |
 
 ## Saga 12 -- native hook (blocked)

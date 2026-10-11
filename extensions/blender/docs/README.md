@@ -76,6 +76,19 @@ into the script as numbers, one mesh for them all. Written for Blender
    of the objects in Blender's starting scene to a report, runs the
    launcher, and reads the report back: `objects: Camera Cube Light`.
    Recorded as `videos/hello.webm`.
+2. `demos/cubes.xtl` (`just demo blender cubes`): how big is a thousand?
+   One cube, a 10 by 10 slab of a hundred, a 10 by 10 by 10 block of a
+   thousand, side by side and labeled (xkcd style), the camera going
+   once round them in 10 seconds (240 frames, 640 by 360, a seamless
+   loop). Every cube's corners and faces are X_eTaL arrays written into
+   the script (`demos/Sizes.xtl`, `lib/Bpy.xtl`); Blender renders it
+   with EEVEE -- the Standard view, thin outlines on every edge
+   (Freestyle), labels turned to face the camera -- and writes the scene
+   as files to open elsewhere: `sizes.glb` (glTF), `sizes.obj` (with
+   `.mtl`) and `sizes.blend`, all in `work/cubes/out/`. The demo renders
+   from scratch each time: about five minutes (the outlines take most
+   of it). `just ext blender orbit` plays the video already rendered.
+   Its recording is Blender's own render (`videos/cubes.film`).
 
 ## Build and test
 
@@ -86,8 +99,10 @@ just list       # the functions as xetal-x sees them
 ```
 
 The Rust tests run a stand-in program in Blender's place; the goldens
-`blender-demo-hello` and `blender-bpy-tiny` run Blender itself (in a
-temporary directory): the second writes two cubes and a label as bpy
+`blender-demo-hello`, `blender-bpy-tiny` and `blender-cubes-quick` run
+Blender itself (in a temporary directory; the last renders the size
+comparison at 160 by 90, four frames, and checks 8, 800 and 8,000
+vertices and the files). Of them: the second writes two cubes and a label as bpy
 and checks what Blender made -- the mesh (16 vertices, 12 faces), the
 objects, a still, `.glb`, `.obj`, `.mtl`, `.blend`. `blender-bpy-script`
 pins the Python the library writes.

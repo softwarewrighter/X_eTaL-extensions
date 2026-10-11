@@ -1,0 +1,23 @@
+## Blender, 2: how big is a thousand? One cube, a hundred, a thousand,
+## side by side -- xkcd style -- rendered by Blender from a script X_eTaL
+## writes: every cube's corners and faces are X_eTaL arrays, written into
+## the script as numbers (Bpy.xtl, Sizes.xtl). The camera goes once
+## round them; the video loops. Blender also writes the scene as files
+## to open elsewhere: sizes.glb (glTF), sizes.obj and sizes.blend.
+## Run: just demo blender cubes   (about a minute or two: 240 frames)
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"sz:" u_se< "Sizes"
+
+script := ((640, 360, 240) sz:s_cene 0) c_at bp:v_ideo "orbit.mp4"
+n := "work/cubes/run.py" bl:w_rite! bp:launcher
+n := "work/cubes/scene.py" bl:w_rite! script
+"rendering 240 frames with Blender (EEVEE) ..."
+r := "work/cubes/run.py" bl:r_un! "work/cubes/scene.py work/cubes/out"
+"the run:"
+d_isclose f_irst (n_ot r = f_irst "\n") p_artition r
+"what Blender made:"
+bl:r_ead "work/cubes/out/report.txt"
+"the files (bytes, path), the video and the 3D files:"
+bl:f_iles "work/cubes/out"

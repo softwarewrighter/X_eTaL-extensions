@@ -39,3 +39,8 @@ list: build
 # Run a demo: just demo NAME (demos/NAME.xtl; pictures go to work/draw/)
 demo name: build
     {{root}}/target/debug/xetal-x --ext {{root}}/extensions run --draw work/draw "demos/$1.xtl"
+
+# Play the orbit video demos/cubes.xtl rendered (work/cubes/out/orbit.mp4), without rendering it again
+orbit:
+    @[ -f work/cubes/out/orbit.mp4 ] || { echo "no orbit yet: just demo blender cubes renders it (about five minutes)"; exit 1; }
+    open work/cubes/out/orbit.mp4 2>/dev/null || xdg-open work/cubes/out/orbit.mp4

@@ -121,13 +121,12 @@ pub fn run_with(
     Ok(Ran { status, output })
 }
 
-/// A fresh file name in `dir` for a run's output while it runs.
+/// A fresh file name in `dir` for a run's output while it runs: the
+/// process and a count, so runs at the same time never share one.
 fn tempfile_in(dir: &Path) -> Result<PathBuf, OwnedError> {
-    let name = format!(
-        ".blender-run-{}-{}.out",
-        std::process::id(),
-        Instant::now().elapsed().as_nanos()
-    );
+    static COUNT: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+    let k = COUNT.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+    let name = format!(".blender-run-{}-{k}.out", std::process::id());
     std::fs::create_dir_all(dir).map_err(|e| failure(format!("{}: {e}", dir.display())))?;
     Ok(dir.join(name))
 }

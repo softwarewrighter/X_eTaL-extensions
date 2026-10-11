@@ -18,7 +18,10 @@
 #     the shots are the frames;
 #   - NAME.pics: a demo that writes pictures, run as it is, then those
 #     pictures (the spec's `pics`, paths in the extension's directory)
-#     shown in turn, `hold` seconds each.
+#     shown in turn, `hold` seconds each;
+#   - NAME.film: a video the demo makes itself (the spec's `file`, in the
+#     extension's directory: Blender's render), made by running the demo
+#     when it is not there yet, then encoded at the spec's `fps`.
 #   scripts/videos.sh [EXT [NAME]]     (NAME: that one recording only)
 # The demos run on the release build of xetal-x (as `just demo` does).
 set -euo pipefail
@@ -159,6 +162,21 @@ for dir in extensions/${1:-*}/videos; do
     ffmpeg -loglevel error -y -framerate "1/$hold" -i "$out/pic-%d.png" -r 8 \
       -pix_fmt yuv420p "target/screens/$ext-$name.mp4"
     encode "target/screens/$ext-$name.mp4" "$dir/$name" "$scale" 640 2
+  done
+  for spec in "$dir"/*.film; do
+    [ -e "$spec" ] || continue
+    name="$(basename "$spec" .film)"
+    [ -z "$only" ] || [ "$name" = "$only" ] || continue
+    demo=""; seed=1; file=""; scale=640; fps=24
+    # shellcheck disable=SC1090
+    . "$spec"
+    echo "==> film $ext $name"
+    # a video the demo makes itself (Blender's render): made when it is
+    # not there yet (it can take minutes), then encoded for the site
+    if [ ! -f "extensions/$ext/$file" ]; then
+      (cd "extensions/$ext" && "$root/target/release/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > /dev/null)
+    fi
+    encode "extensions/$ext/$file" "$dir/$name" "$scale" "$scale" "$fps"
   done
   for spec in "$dir"/*.sound; do
     [ -e "$spec" ] || continue

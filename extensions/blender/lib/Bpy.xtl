@@ -67,12 +67,23 @@ l:c_ubes := { (name, cs, size, rgb) z ->
   m c_at "link(bpy.data.objects.new(" c_at (h:q_uote name) c_at ", mesh), material(" c_at (h:q_uote name) c_at ", " c_at (h:t_uple rgb) c_at "))\n\n"
 }
 
+## (center, size, rgb) bp:g_round 0: Python making a flat square ground
+## that wide at center (x y z, its top), colored: something for shadows
+## to fall on
+l:g_round := { (at, size, rgb) z ->
+  h := size / 2.0
+  v := 4 3 r_eshape (0.0 - h) c_at (0.0 - h) c_at 0.0 c_at h c_at (0.0 - h) c_at 0.0 c_at h c_at h c_at 0.0 c_at (0.0 - h) c_at h c_at 0.0
+  v := v + 4 3 r_eshape at
+  t := "mesh = bpy.data.meshes.new(\"ground\")\nmesh.from_pydata(" c_at ((v, 3) h:n_ums 0) c_at ", [], [(0, 1, 2, 3)])\nmesh.update()\n"
+  t c_at "link(bpy.data.objects.new(\"ground\", mesh), material(\"ground\", " c_at (h:t_uple rgb) c_at "))\n\n"
+}
+
 ### Words, light and camera
 
 ## (text, place, size, rgb) bp:l_abel 0: Python making 3D text standing
 ## upright at place (x y z, its middle bottom), facing -y, that tall
 l:l_abel := { (body, at, size, rgb) z ->
-  t := "curve = bpy.data.curves.new(" c_at (h:q_uote "label " c_at body) c_at ", type=\"FONT\")\ncurve.body = " c_at (h:q_uote body) c_at "\ncurve.size = " c_at (f_ormat size) c_at "\ncurve.align_x = \"CENTER\"\n"
+  t := "curve = bpy.data.curves.new(" c_at (h:q_uote "label " c_at body) c_at ", type=\"FONT\")\ncurve.body = " c_at (h:q_uote body) c_at "\ncurve.size = " c_at (f_ormat size) c_at "\ncurve.align_x = \"CENTER\"\ncurve.extrude = 0.04\n"
   t c_at "obj = link(bpy.data.objects.new(" c_at (h:q_uote "label " c_at body) c_at ", curve), material(" c_at (h:q_uote "label " c_at body) c_at ", " c_at (h:t_uple rgb) c_at "))\nobj.location = " c_at (h:t_uple at) c_at "\nobj.rotation_euler = (math.pi / 2, 0.0, 0.0)\n\n"
 }
 
@@ -86,19 +97,23 @@ l:l_ights := { (sky, strength) z ->
 ## (center, radius, height, frames) bp:o_rbit 0: Python putting a camera
 ## on a circle of that radius about center (x y z), that high above it,
 ## looking at it, turned once round in the frames -- a pivot at the
-## center keyed at 0 and a full turn, linear, so the video loops
+## center keyed at 0 and a full turn, linear, so the video loops; the
+## labels made before it turn to face the camera, so they always read
 l:o_rbit := { (at, radius, height, frames) z ->
   t := "pivot = bpy.data.objects.new(\"pivot\", None)\npivot.location = " c_at (h:t_uple at) c_at "\nscene.collection.objects.link(pivot)\n"
   t := t c_at "cam = bpy.data.objects.new(\"camera\", bpy.data.cameras.new(\"camera\"))\ncam.data.lens = 35\ncam.data.clip_end = 1000\ncam.parent = pivot\ncam.location = (0.0, -" c_at (f_ormat radius) c_at ", " c_at (f_ormat height) c_at ")\nscene.collection.objects.link(cam)\nscene.camera = cam\n"
   t := t c_at "look = cam.constraints.new(\"TRACK_TO\")\nlook.target = pivot\nlook.track_axis = \"TRACK_NEGATIVE_Z\"\nlook.up_axis = \"UP_Y\"\n"
+  t := t c_at "for o in scene.objects:\n    if o.name.startswith(\"label \"):\n        face = o.constraints.new(\"TRACK_TO\")\n        face.target = cam\n        face.track_axis = \"TRACK_Z\"\n        face.up_axis = \"UP_Y\"\n"
   t c_at "scene.frame_start = 1\nscene.frame_end = " c_at (f_ormat frames) c_at "\npivot.rotation_euler = (0.0, 0.0, 0.0)\npivot.keyframe_insert(\"rotation_euler\", frame=1)\npivot.rotation_euler = (0.0, 0.0, 2 * math.pi)\npivot.keyframe_insert(\"rotation_euler\", frame=" c_at (f_ormat frames + 1) c_at ")\n\n"
 }
 
 ### Rendering and files
 
 ## (width, height, fps) bp:s_etup 0: Python setting EEVEE, the picture's
-## size and the frame rate
-l:s_etup := { (w, h, fps) z -> "scene.render.engine = \"BLENDER_EEVEE\"\nscene.render.resolution_x = " c_at (f_ormat w) c_at "\nscene.render.resolution_y = " c_at (f_ormat h) c_at "\nscene.render.resolution_percentage = 100\nscene.render.fps = " c_at (f_ormat fps) c_at "\n\n" }
+## size and the frame rate, colors as they are (the Standard view, not
+## the film look) and thin dark outlines on every edge (Freestyle), the
+## look of a drawing
+l:s_etup := { (w, h, fps) z -> "scene.render.engine = \"BLENDER_EEVEE\"\nscene.view_settings.view_transform = \"Standard\"\nscene.render.use_freestyle = True\nscene.render.line_thickness = 0.8\nscene.render.resolution_x = " c_at (f_ormat w) c_at "\nscene.render.resolution_y = " c_at (f_ormat h) c_at "\nscene.render.resolution_percentage = 100\nscene.render.fps = " c_at (f_ormat fps) c_at "\n\n" }
 
 ## bp:s_till file: Python rendering the current frame to out/FILE (PNG)
 l:s_till := { file -> "scene.render.image_settings.media_type = \"IMAGE\"\nscene.render.image_settings.file_format = \"PNG\"\nscene.render.filepath = os.path.join(out, " c_at (h:q_uote file) c_at ")\nbpy.ops.render.render(write_still=True)\n\n" }

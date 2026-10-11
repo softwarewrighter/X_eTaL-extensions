@@ -1,0 +1,15 @@
+the run:
+exit 0
+what Blender made:
+mesh ground: 4 vertices, 1 faces
+mesh hundred: 800 vertices, 600 faces
+mesh one: 8 vertices, 6 faces
+mesh thousand: 8000 vertices, 6000 faces
+objects: camera ground hundred label 1 label 100 label 1000 one pivot sun thousand
+
+report.txt
+sizes.blend
+sizes.glb
+sizes.mtl
+sizes.obj
+still.png

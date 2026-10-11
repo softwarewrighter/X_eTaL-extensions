@@ -40,6 +40,7 @@ curve = bpy.data.curves.new("label 1", type="FONT")
 curve.body = "1"
 curve.size = 0.6
 curve.align_x = "CENTER"
+curve.extrude = 0.04
 obj = link(bpy.data.objects.new("label 1", curve), material("label 1", nums("0.1 0.1 0.1", 3)[0]))
 obj.location = nums("0.0 -1.0 1.2", 3)[0]
 obj.rotation_euler = (math.pi / 2, 0.0, 0.0)
@@ -68,6 +69,12 @@ look = cam.constraints.new("TRACK_TO")
 look.target = pivot
 look.track_axis = "TRACK_NEGATIVE_Z"
 look.up_axis = "UP_Y"
+for o in scene.objects:
+    if o.name.startswith("label "):
+        face = o.constraints.new("TRACK_TO")
+        face.target = cam
+        face.track_axis = "TRACK_Z"
+        face.up_axis = "UP_Y"
 scene.frame_start = 1
 scene.frame_end = 4
 pivot.rotation_euler = (0.0, 0.0, 0.0)
@@ -76,6 +83,9 @@ pivot.rotation_euler = (0.0, 0.0, 2 * math.pi)
 pivot.keyframe_insert("rotation_euler", frame=5)
 
 scene.render.engine = "BLENDER_EEVEE"
+scene.view_settings.view_transform = "Standard"
+scene.render.use_freestyle = True
+scene.render.line_thickness = 0.8
 scene.render.resolution_x = 64
 scene.render.resolution_y = 48
 scene.render.resolution_percentage = 100

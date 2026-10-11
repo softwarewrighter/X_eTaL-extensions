@@ -1,0 +1,8 @@
+# extensions/blender/videos/cubes.webm and .webp: Blender's own render of
+# the size comparison -- one cube, a hundred, a thousand, the camera
+# going once round -- made by demos/cubes.xtl (just videos; the render
+# takes about five minutes when the video is not there yet).
+demo=cubes
+file=work/cubes/out/orbit.mp4
+scale=640
+fps=24
