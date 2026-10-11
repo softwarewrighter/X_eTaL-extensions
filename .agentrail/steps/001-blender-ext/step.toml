@@ -1,9 +1,10 @@
 number = 1
 slug = "blender-ext"
-status = "in-progress"
+status = "completed"
 description = "Saga 15 step 1: a blender extension (just new-ext blender bl): run a launcher..."
 role = "production"
 context_files = []
 created_at = "2026-10-11T11:39:42"
+completed_at = "2026-10-11T13:19:21"
 task_type = "feature"
-commits = []
+commits = ["fed14d7d00480c9d44e9cf6f902fb3979c56667a"]

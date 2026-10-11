@@ -1,0 +1,1 @@
+blender-ext: write/run/read/files/blender/version; python3 launcher with XETAL_BLENDER, timeout, log; hello demo end to end (objects: Camera Cube Light); Rust tests, goldens, recording.

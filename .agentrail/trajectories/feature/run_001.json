@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "state": {
+    "number": 1,
+    "step": "blender-ext"
+  },
+  "action": "Rust process runner with timeout; facade; end-to-end golden in a temp root; vhs",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-11T13:19:21"
+}
