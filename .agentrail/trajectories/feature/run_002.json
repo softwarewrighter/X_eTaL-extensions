@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "state": {
+    "number": 2,
+    "step": "bpy-gen"
+  },
+  "action": "probed Blender 5.1 API; X_eTaL text generation; end-to-end golden in a temp root",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-11T14:00:20"
+}

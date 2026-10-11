@@ -1,0 +1,1 @@
+bpy-gen: Bpy.xtl writes bpy (launcher, head, cubes as one mesh from X_eTaL arrays, labels, lights, looping orbit, EEVEE, still, MP4, glb/obj/blend, report); goldens pin the script and run two cubes end to end.
