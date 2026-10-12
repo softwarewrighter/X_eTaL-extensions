@@ -11,6 +11,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-12
+
+- 07:30 `fix` the tower defense recordings show what Blender made, not the terminal (the user: the point is the artifacts): `td-models` is now Blender's close-ups -- each piece alone, framed to its height, turning once round, playing idle then fire, or idle, walk and hit, captioned (`td:c_loseups`) -- and `game-assets` the twelve preview pictures side by side, then the lineup (a `.film` spec's new `sheet=`). The terminal recordings (`videos/td-models.tape`, `videos/game-assets-intro.vhs`) are retired. The show code saves each part's rest and clips once and sets them up fresh for each video. The site's td-models and game-assets cards link the published pieces (blender/td/): a demo's `## Page: PATH TEXT` header line (scripts/build-catalog.py).
+
 ## 2026-10-11
 
 - 19:05 `release` the tower defense pieces published at blender/td/ (`just ext blender publish-td`): twelve .glb files with their clips, twelve previews, the viewer page and manifest.toml, made at f231c88 (every SHA-256 checked against the files), 1.0 MB.

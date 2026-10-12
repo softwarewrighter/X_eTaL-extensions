@@ -151,10 +151,10 @@
 </ul>
 <h2>On this page</h2>
 <ul>
-<li class="item"><a href="#L15">n</a></li>
 <li class="item"><a href="#L16">n</a></li>
-<li class="item"><a href="#L18">r</a></li>
-<li class="item"><a href="#L20">lines</a></li>
+<li class="item"><a href="#L17">n</a></li>
+<li class="item"><a href="#L19">r</a></li>
+<li class="item"><a href="#L21">lines</a></li>
 </ul>
 </nav>
 <main>
@@ -169,24 +169,25 @@
 <span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># written as one bpy script, and exported by Blender as one glTF file a</span></span>
 <span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-comment">⍝</span><span class="c-comment"># piece with its named clips: idle, fire, walk, hit. Each file's clips</span></span>
 <span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-comment">⍝</span><span class="c-comment"># are read back from it.</span></span>
-<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-comment">⍝</span><span class="c-comment"># Run: just demo blender td-models   (about half a minute)</span></span>
-<span class="line" id="L10"><a class="ln" href="#L10">10</a></span>
-<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-libfunc">ᵇˡ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Blender.xtl.html" class="c-string">&quot;Blender&quot;</a></span>
-<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-libfunc">ᵇᵖ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Bpy.xtl.html" class="c-string">&quot;Bpy&quot;</a></span>
-<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-libfunc">ᵗᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-demos-Td.xtl.html" class="c-string">&quot;Td&quot;</a></span>
-<span class="line" id="L14"><a class="ln" href="#L14">14</a></span>
-<span class="line" id="L15"><a class="ln" href="#L15">15</a>n ← <span class="c-string">&quot;work/td/run.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> <a href="extensions-blender-lib-Bpy.xtl.html#l.launcher">ᵇᵖlauncher</a></span>
-<span class="line" id="L16"><a class="ln" href="#L16">16</a>n ← <span class="c-string">&quot;work/td/models.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> <a href="extensions-blender-lib-Bpy.xtl.html#l.head">ᵇᵖhead</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Td.xtl.html#l.all">ᵗᵈall</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-lib-Bpy.xtl.html#l.report">ᵇᵖreport</a></span>
-<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-string">&quot;making the twelve pieces with Blender ...&quot;</span></span>
-<span class="line" id="L18"><a class="ln" href="#L18">18</a>r ← <span class="c-string">&quot;work/td/run.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.r_un-21" class="c-libfunc">ᵇˡr̲un!</a> <span class="c-string">&quot;work/td/models.py work/td/out&quot;</span></span>
-<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-string">&quot;the run, and the error lines in Blender's log:&quot;</span></span>
-<span class="line" id="L20"><a class="ln" href="#L20">20</a>lines ← (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="extensions-blender-demos-td-models.xtl.html#r">r</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-string">&quot;\n&quot;</span>) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> <a href="extensions-blender-demos-td-models.xtl.html#r">r</a></span>
-<span class="line" id="L21"><a class="ln" href="#L21">21</a><a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-td-models.xtl.html#lines">lines</a></span>
-<span class="line" id="L22"><a class="ln" href="#L22">22</a><a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-td-models.xtl.html#lines">lines</a></span>
-<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-string">&quot;each piece's parts and triangles:&quot;</span></span>
-<span class="line" id="L24"><a class="ln" href="#L24">24</a><a href="extensions-blender-lib-Blender.xtl.html#l.r_ead" class="c-libfunc">ᵇˡr̲ead</a> <span class="c-string">&quot;work/td/out/report.txt&quot;</span></span>
-<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-string">&quot;each piece's clips, read back from its .glb:&quot;</span></span>
-<span class="line" id="L26"><a class="ln" href="#L26">26</a><a href="extensions-blender-lib-Blender.xtl.html#l.r_ead" class="c-libfunc">ᵇˡr̲ead</a> <span class="c-string">&quot;work/td/out/clips.txt&quot;</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-comment">⍝</span><span class="c-comment"># Page: blender/td/ the pieces in 3D (published)</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-comment">⍝</span><span class="c-comment"># Run: just demo blender td-models   (about half a minute)</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-libfunc">ᵇˡ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Blender.xtl.html" class="c-string">&quot;Blender&quot;</a></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-libfunc">ᵇᵖ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Bpy.xtl.html" class="c-string">&quot;Bpy&quot;</a></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-libfunc">ᵗᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-demos-Td.xtl.html" class="c-string">&quot;Td&quot;</a></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a>n ← <span class="c-string">&quot;work/td/run.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> <a href="extensions-blender-lib-Bpy.xtl.html#l.launcher">ᵇᵖlauncher</a></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a>n ← <span class="c-string">&quot;work/td/models.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> <a href="extensions-blender-lib-Bpy.xtl.html#l.head">ᵇᵖhead</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Td.xtl.html#l.all">ᵗᵈall</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-lib-Bpy.xtl.html#l.report">ᵇᵖreport</a></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-string">&quot;making the twelve pieces with Blender ...&quot;</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a>r ← <span class="c-string">&quot;work/td/run.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.r_un-21" class="c-libfunc">ᵇˡr̲un!</a> <span class="c-string">&quot;work/td/models.py work/td/out&quot;</span></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-string">&quot;the run, and the error lines in Blender's log:&quot;</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a>lines ← (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="extensions-blender-demos-td-models.xtl.html#r">r</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-string">&quot;\n&quot;</span>) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> <a href="extensions-blender-demos-td-models.xtl.html#r">r</a></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-td-models.xtl.html#lines">lines</a></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-td-models.xtl.html#lines">lines</a></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-string">&quot;each piece's parts and triangles:&quot;</span></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><a href="extensions-blender-lib-Blender.xtl.html#l.r_ead" class="c-libfunc">ᵇˡr̲ead</a> <span class="c-string">&quot;work/td/out/report.txt&quot;</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-string">&quot;each piece's clips, read back from its .glb:&quot;</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a><a href="extensions-blender-lib-Blender.xtl.html#l.r_ead" class="c-libfunc">ᵇˡr̲ead</a> <span class="c-string">&quot;work/td/out/clips.txt&quot;</span></span>
 </div>
 </main>
 </body>

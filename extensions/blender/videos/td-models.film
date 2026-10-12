@@ -1,0 +1,9 @@
+# extensions/blender/videos/td-models.webm and .webp: the twelve tower
+# defense pieces as Blender rendered them, one after another, close,
+# each turning once round and playing its clips -- idle, then fire, or
+# walk and hit -- captioned (made by demos/game-assets.xtl, which
+# renders the pieces td-models.xtl makes; just videos).
+demo=game-assets
+file=work/td/closeups.mp4
+scale=800
+fps=20

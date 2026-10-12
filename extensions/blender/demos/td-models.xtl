@@ -6,6 +6,7 @@
 ## written as one bpy script, and exported by Blender as one glTF file a
 ## piece with its named clips: idle, fire, walk, hit. Each file's clips
 ## are read back from it.
+## Page: blender/td/ the pieces in 3D (published)
 ## Run: just demo blender td-models   (about half a minute)
 
 "bl:" u_se< "Blender"

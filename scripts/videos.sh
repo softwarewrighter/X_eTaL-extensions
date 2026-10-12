@@ -23,7 +23,9 @@
 #     extension's directory: Blender's render), made by running the demo
 #     when it is not there yet, then encoded at the spec's `fps`; with
 #     `intro=FILE.vhs` (a vhs tape in the videos folder, not recorded on
-#     its own) that terminal session first, joined to the video.
+#     its own) that terminal session first, joined to the video; with
+#     `sheet=GLOB` (pictures the demo made, in the extension's
+#     directory) those pictures side by side first, `hold` seconds.
 #   scripts/videos.sh [EXT [NAME]]     (NAME: that one recording only)
 # The demos run on the release build of xetal-x (as `just demo` does).
 set -euo pipefail
@@ -169,7 +171,7 @@ for dir in extensions/${1:-*}/videos; do
     [ -e "$spec" ] || continue
     name="$(basename "$spec" .film)"
     [ -z "$only" ] || [ "$name" = "$only" ] || continue
-    demo=""; seed=1; file=""; scale=640; fps=24; intro=""
+    demo=""; seed=1; file=""; scale=640; fps=24; intro=""; sheet=""; hold=4
     # shellcheck disable=SC1090
     . "$spec"
     echo "==> film $ext $name"
@@ -179,6 +181,26 @@ for dir in extensions/${1:-*}/videos; do
       (cd "extensions/$ext" && "$root/target/release/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > /dev/null)
     fi
     src="extensions/$ext/$file"
+    # sheet=: the demo's pictures side by side, held, before the video
+    if [ -n "$sheet" ]; then
+      echo "==> sheet $ext $name"
+      size="$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 "$src")"
+      # rows of six, each picture with a margin (magick montage would
+      # want a font for labels it does not draw)
+      rows=()
+      # shellcheck disable=SC2086
+      pics=($(cd "extensions/$ext" && ls $sheet))
+      for ((i = 0; i < ${#pics[@]}; i += 6)); do
+        row="target/screens/$ext-$name-row-$i.png"
+        (cd "extensions/$ext" && magick "${pics[@]:i:6}" -bordercolor '#3a7d44' -border 6 -background '#3a7d44' +append "$root/$row")
+        rows+=("$row")
+      done
+      magick "${rows[@]}" -background '#3a7d44' -append -resize "${size/:/x}" -gravity center -extent "${size/:/x}" "target/screens/$ext-$name-sheet.png"
+      ffmpeg -loglevel error -y -loop 1 -framerate 30 -t "$hold" -i "target/screens/$ext-$name-sheet.png" -i "$src" -filter_complex \
+        "[0:v]fps=30,setsar=1,format=yuv420p[a];[1:v]fps=30,setsar=1,format=yuv420p[b];[a][b]concat=n=2:v=1:a=0[v]" \
+        -map "[v]" -pix_fmt yuv420p "target/screens/$ext-$name-with-sheet.mp4"
+      src="target/screens/$ext-$name-with-sheet.mp4"
+    fi
     # intro=: a terminal session (vhs) first, both at the video's size
     if [ -n "$intro" ]; then
       echo "==> vhs $ext $name intro"

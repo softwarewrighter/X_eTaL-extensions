@@ -132,16 +132,18 @@ for none).
    groups and the clips are keyed from each part's rest. The demo reads
    every file's clips back and prints them.
 
-4. `demos/game-assets.xtl` (`just demo blender game-assets`, about two
-   minutes): game assets for
+4. `demos/game-assets.xtl` (`just demo blender game-assets`, about five
+   minutes or more): game assets for
    [X_eTaL-games' tower defense](https://softwarewrighter.github.io/X_eTaL-games/tower-defense/),
    made by X_eTaL -> Python -> Blender -> Python. The program writes the
    launcher and one bpy script; Blender makes the twelve pieces of
    `demos/Td.xtl`, writes each as `NAME.glb` with its clips, renders
    each alone as `NAME.png` (320 by 320, transparent, all at one scale)
-   and renders the twelve lined up -- each turning once round, idle for
-   four seconds, then the towers firing and the creeps walking -- as an
-   8-second video. Then the program hashes every file with the digest
+   and renders two videos: the twelve one after another, close and
+   framed to each, turning once round and playing each clip, captioned
+   (`closeups.mp4`, a minute), and the twelve lined up -- turning, idle,
+   then the towers firing and the creeps walking (`lineup.mp4`, 8
+   seconds). Then the program hashes every file with the digest
    extension into `manifest.toml` (the pieces, files, SHA-256s, clips,
    license, conventions, program and commit) and writes `index.html`,
    a page that shows each piece in a 3D viewer
@@ -149,9 +151,9 @@ for none).
    all in `work/td/site/`. `just ext blender publish-td` copies them to
    the site, stamping the manifest with the commit:
    [blender/td/](https://softwarewrighter.github.io/X_eTaL-extensions/blender/td/).
-   The recording (`videos/game-assets.film`) is the terminal -- the
-   program, a piece in X_eTaL, the twelve made and their clips read back
-   (`videos/game-assets-intro.vhs`) -- joined to Blender's lineup.
+   The recordings show only what Blender made: `videos/game-assets.film`
+   the twelve preview pictures side by side, then the lineup;
+   `videos/td-models.film` (the demo above) the close-ups.
 
    A note on directions: each piece faces -y in Blender, which the glTF
    exporter turns into +z, glTF's own front (y up). In the lineup video
