@@ -1,0 +1,1 @@
+Faster gate after X_eTaL: affected by default (scripts/affected.py, self-tested), --full for everything (100 s), check-busy (Blender/trunk/cargo), step timings, blender goldens parallel, doc-tests full-only; every script forces the uv venv and the blender ext prefers VIRTUAL_ENV python. Empty-change gate: 25 s.
