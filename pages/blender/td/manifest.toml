@@ -3,7 +3,7 @@ title = "Tower defense pieces"
 program = "extensions/blender/demos/game-assets.xtl"
 pieces-library = "extensions/blender/demos/Td.xtl"
 repository = "https://github.com/softwarewrighter/X_eTaL-extensions"
-commit = "f231c88f39598851b3e495ca354ef9fa48f22513"
+commit = "c620482488ba6db4f0c42ea786e393fbbb9c4479"
 license = "MIT"
 blender = "Blender 5.1.2"
 format = "glTF 2.0, binary (.glb)"
@@ -12,13 +12,19 @@ up = "+Y in glTF (+Z in Blender)"
 front = "+Z in glTF, glTF's own front (-Y in Blender)"
 clip-rate = 30
 preview = "PIECE.png: 320 by 320, RGBA, transparent, the piece at rest from the front a little right and above, every preview at one scale"
+turn-sheet = { file = "PIECE-turn.png", frame = 256, frames = 16, columns = 4, order = "row by row", turn = "22.5 degrees counterclockwise seen from above each frame, frame 0 the front", camera = "20 degrees above the horizon", scale = "each piece framed to its size" }
+map-sheet = { file = "PIECE-map.png", frame = 96, frames = 8, columns = 8, facing = ["east", "southeast", "south", "southwest", "west", "northwest", "north", "northeast"], camera = "orthographic, 30 degrees above the horizon (the board's 2:1 tiles; the ask said 35)", tile = "64 by 32 pixels", pixels-per-meter = 45.25, anchor = [48, 82] }
 
 [pieces.arrow-1]
 kind = "tower"
 glb = "arrow-1.glb"
 glb-sha256 = "ed49dc05d3db5e8520ea5b3b6d0b5cfd04594ead703553a10de4a317ec13637c"
 preview = "arrow-1.png"
-preview-sha256 = "96b2190ccd18d1ed4035c855168add283ed01cfeab9f949c844b426d3dd78cbd"
+preview-sha256 = "97292908a0e87f32960f5f3c32b63749322cd279ecdf3093e872ae1bcc544893"
+turn = "arrow-1-turn.png"
+turn-sha256 = "57344c57bee95ff5d135267f3a3a5ed48591e9408ab34d290ce1d36baad90b83"
+map = "arrow-1-map.png"
+map-sha256 = "7324a40f32e4f32dbf06e23b124a2c35438015c25f53f7950607cf36e0464fe8"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.arrow-2]
@@ -26,7 +32,11 @@ kind = "tower"
 glb = "arrow-2.glb"
 glb-sha256 = "2aedc7d5817610a17c25353955b2f51dc9a36d870c1177aa97485c32335dce1c"
 preview = "arrow-2.png"
-preview-sha256 = "bcf544673f1778afcda2f5ac32c1d702075ac0751a6fdfb72f14758c20e4ea70"
+preview-sha256 = "ed11caa54d313274858c81772f11981ca0243bc2733be245e314c2eb77225797"
+turn = "arrow-2-turn.png"
+turn-sha256 = "fd065c41a6378db115cd1c97101547954759a00921b1496a2bc8f1cea9a04b85"
+map = "arrow-2-map.png"
+map-sha256 = "83e843d6f0e17a4cd39085bc3e6dc46a06e9a9ac7296d219108b95b7d9954b7b"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.arrow-3]
@@ -34,7 +44,11 @@ kind = "tower"
 glb = "arrow-3.glb"
 glb-sha256 = "63442d5d0798fee6f5b9245145810c02592e047afc04ca315d9da58825a1b57d"
 preview = "arrow-3.png"
-preview-sha256 = "d96d0014aa4f67491816dd735a66ea276a8595a8de57e914c80b5d1ed95b2d35"
+preview-sha256 = "92f4782823ec5a459c8474cd935ad115d7f357e1b69d5d5f5959ba8b6e05a366"
+turn = "arrow-3-turn.png"
+turn-sha256 = "8c20d31095d0eda569450d0df1db67538cd4f6fd0af10904dd30c764e6e1abcd"
+map = "arrow-3-map.png"
+map-sha256 = "d60c34af3c5132bd64917294fe7c55c540864f2f3b805622a914cce28561d298"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.cannon-1]
@@ -42,7 +56,11 @@ kind = "tower"
 glb = "cannon-1.glb"
 glb-sha256 = "79066db0d0ac05e494005895644af39571dfceb60e857b80bf2200bf2bd6f0e8"
 preview = "cannon-1.png"
-preview-sha256 = "67f2a3b047a1dacd6ed8df1599e436cc1564d20d4862d52e22a27675e44a3e7a"
+preview-sha256 = "c998eb2b00189578987ff93cf803ac7ed5bf6142a915b849fa114eb5982eec48"
+turn = "cannon-1-turn.png"
+turn-sha256 = "71ae035959151a33ef457cb0e05b459a34c14b8976565f83722ba16c248da844"
+map = "cannon-1-map.png"
+map-sha256 = "12b3575b07c0f947870662e9b44b6da13781247168396cc1f56950d648fe7989"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.cannon-2]
@@ -50,15 +68,23 @@ kind = "tower"
 glb = "cannon-2.glb"
 glb-sha256 = "4836f71365cd902a98521bbff7bd88ad6d5c223a7f27792c28dc870b655b501b"
 preview = "cannon-2.png"
-preview-sha256 = "21bb5a29763dc2f11d05040065c687539e53dc7b22f90c0275aef95bdf4364fc"
+preview-sha256 = "c93cba815b0198623e07535634a34c499948f8fbd70ecc03381c4e61df7fee5a"
+turn = "cannon-2-turn.png"
+turn-sha256 = "847dce15767d0b7f66526123c7e09a3a9778530d8b78e6523b8c4b64b59cfcd9"
+map = "cannon-2-map.png"
+map-sha256 = "cbb19bd3293350bf9ba13e1a24f577d53f491ab589b92eb461e13db7f6beacfe"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.cannon-3]
 kind = "tower"
 glb = "cannon-3.glb"
-glb-sha256 = "76f910032c1a894ecb4291006cc99ea4dbdd24e1cbdb3eaaba684839dc918e61"
+glb-sha256 = "82534ac199d959912606cf5e55821772fff01897df5d46da05b2cd0001a73e0d"
 preview = "cannon-3.png"
-preview-sha256 = "4323807f4e18f31db6c63359cb25d1fa23e950f2ebfc9fb5d5481cd8048eb57f"
+preview-sha256 = "5068cb128a7d9142e8120537c336cd021a6cce17732d3feb00ee65967f8d85a8"
+turn = "cannon-3-turn.png"
+turn-sha256 = "03c9c8bf0b96eca6ff3c4332698087f924de0ba48a6ab4a620c2a41e76404333"
+map = "cannon-3-map.png"
+map-sha256 = "6e03059d52128864256f0870eec634286269efbd8c259b72dc106315f8063607"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.frost-1]
@@ -66,7 +92,11 @@ kind = "tower"
 glb = "frost-1.glb"
 glb-sha256 = "6bb1423e1fdf51bf4601261700afacf96e0f4830e59da8ea3693ecb953936806"
 preview = "frost-1.png"
-preview-sha256 = "b9389df0179f67852bba24e953bb1160c2da6c311d8d4ed4fd4133a7a74b28ab"
+preview-sha256 = "3803ec7e1e18b3c19a80dd9e6b3fd700bb7ac6cc9c782a8d9f315521ffef96e2"
+turn = "frost-1-turn.png"
+turn-sha256 = "0eac9c2cd3a97f838c50bad0dc9b313e92d0b01f64925e7d7b35f12b8ebae25e"
+map = "frost-1-map.png"
+map-sha256 = "4e09e484f90c480888ae3ba4fc1b7879d23ca919b169b72c293e025ec3fe68bc"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.frost-2]
@@ -74,7 +104,11 @@ kind = "tower"
 glb = "frost-2.glb"
 glb-sha256 = "29fd408e90a5d2b34e59ac2b39bf4a52b4b939baeb6690ce093939acfb1b0114"
 preview = "frost-2.png"
-preview-sha256 = "9782513c3ee7d334d56114248a95d34c89d59b26af2423211d1892710f32c418"
+preview-sha256 = "a2e1ea07e89e2ae628ad281a3574fff20b4b4dda3e1443add72bc8a449b7c36f"
+turn = "frost-2-turn.png"
+turn-sha256 = "30f89466df6839ced428c4496807a9bda4d83a82cd9c75840444eadc393b0dfa"
+map = "frost-2-map.png"
+map-sha256 = "ea4d24c34c88da5c51325f7b0ca43b4b06b7c84141042e9540a1db8ad62db1d3"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.frost-3]
@@ -82,15 +116,23 @@ kind = "tower"
 glb = "frost-3.glb"
 glb-sha256 = "164c302d03a8977ce8278b8872748bac4e965dc9a9826700f705d00d948d9815"
 preview = "frost-3.png"
-preview-sha256 = "81cbb2dc8c64ee35443ec67e70a94cb108e7645b5709f5f038fab71bce211c9e"
+preview-sha256 = "e7f56a48ac52964cb5f06f66d27966bd5eae4ed4ef73c4257744a62a2169745d"
+turn = "frost-3-turn.png"
+turn-sha256 = "624046d61a3396271c044c8cfde24574510ee15d8df4907c2107dfe86b2963ce"
+map = "frost-3-map.png"
+map-sha256 = "8f6a2eca3a4afd9beebf9ea3556e19c8774ef3d013b04473f98962a5b121fbbc"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.runner]
 kind = "creep"
 glb = "runner.glb"
-glb-sha256 = "b735aa8f472977ff4653afe1c7a6de9481a2104a26aafc38eb562e3bfe405c2d"
+glb-sha256 = "5c18019156e49bcf611e614a3843af8e1483c3ef0de1a892fe1c00de3ce6608a"
 preview = "runner.png"
-preview-sha256 = "91085e8132337679f7659b4925c9548fb328133ffbeb32c43e27e0165925698e"
+preview-sha256 = "1c25cd16861e91978e25a82ca6e70aa199c02eb4e7490cb8543af640f7beb9b5"
+turn = "runner-turn.png"
+turn-sha256 = "a4334f7ed34a0da3966782f6e04761f33917ec02ea3c8cb3402b2f93b013bfa2"
+map = "runner-map.png"
+map-sha256 = "55186db84254c6fefdc110ad6f7a2d9911112a9be99a7426d7d9c879ce4f2ee0"
 clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
 
 [pieces.brute]
@@ -98,13 +140,21 @@ kind = "creep"
 glb = "brute.glb"
 glb-sha256 = "cb8fb94deb142472375ea3ea57eff95fd5e9e4f491dd329e412e439f6fc08a4a"
 preview = "brute.png"
-preview-sha256 = "7a81fca8d05feb2e1851a03cea6c504f4e28088f842085dedc1c526a744d813e"
+preview-sha256 = "a29a93761413763c55623bc597bdc5818f61130b0c576d60ecea54e51f46519f"
+turn = "brute-turn.png"
+turn-sha256 = "c76989c94f72bcb2b3c6da2f6c12ea6b88765d23b31825465a401b363983e8f2"
+map = "brute-map.png"
+map-sha256 = "1d2cf70b0de814508fcbc9ef5e23256f3644d319b3335b98dd78719e66be27ea"
 clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
 
 [pieces.shield]
 kind = "creep"
 glb = "shield.glb"
-glb-sha256 = "a6cd7ba72e66b96ab0a3c562c9b7fe935b86c48a3d60d4aabc66a5d6ed67b7a3"
+glb-sha256 = "e205353d034757b28131d3c62d852ec51313c7dd54dd3f84e80887c81e3c6eca"
 preview = "shield.png"
-preview-sha256 = "463b4f8f802557be29565f07a9d58bb63e08101547f2df122283a539d022bd52"
+preview-sha256 = "bc50a2cae03efc44c366f5af62d908d8de9d832f1b3929fc6206ab1d21ddf06f"
+turn = "shield-turn.png"
+turn-sha256 = "39a3ddf4710d108b1b20df5ac61fe6106d9be99b8a6538cfdd5d83fe897021a3"
+map = "shield-map.png"
+map-sha256 = "a8b0261fceaa51ec2b19febbf212bbb1d24638aa7e0984ce6c92d5500bc782b7"
 clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
