@@ -7,6 +7,12 @@ set positional-arguments
 # repo can run at once): the site preview, trunk, the web extension.
 port := "8470"
 
+# Python is the uv virtual environment's (just venv), never the system's:
+# .venv/bin is first on PATH for every recipe, the scripts it runs and
+# the Blender launcher's python3.
+export PATH := justfile_directory() / ".venv/bin" + ":" + env_var("PATH")
+export VIRTUAL_ENV := justfile_directory() / ".venv"
+
 # List the recipes
 default:
     @just --list
@@ -128,6 +134,10 @@ check-spelling:
 # The full pre-commit gate
 gate:
     scripts/gate.sh
+
+# Make the uv virtual environment (.venv, a uv-managed CPython 3.12) every Python script runs in
+venv:
+    scripts/venv.sh
 
 # Run the literate documents (docs/literate/*.org): draw each block, record its result
 literate *docs:

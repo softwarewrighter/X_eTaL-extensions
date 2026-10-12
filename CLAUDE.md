@@ -392,6 +392,12 @@ Read before working:
     start clean (the goldens `mkdir -p`, never `rm -rf`). Ask before any
     deletion of an existing file or directory, naming exactly what (the
     user, 2026-10-09).
+19. Python is a uv virtual environment, never the system's (the user,
+    2026-10-11): `just venv` (`scripts/venv.sh`) makes `.venv` on a
+    uv-managed CPython 3.12; packages, if a script ever needs one, go
+    in with `uv pip install`. The justfile puts `.venv/bin` first on
+    PATH, and the gate and check-quick refuse any other python3. Never
+    run `/usr/bin/python3` or Homebrew's python directly.
 
 ## Every step ends with
 

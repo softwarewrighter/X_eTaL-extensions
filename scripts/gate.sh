@@ -12,6 +12,8 @@
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$root"
+export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
+"$root/scripts/venv.sh" --check
 "$root/scripts/check-vendor.sh"
 "$root/scripts/check-rust.sh"
 "$root/scripts/check-xetal-x.sh"

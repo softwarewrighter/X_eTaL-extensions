@@ -1,0 +1,23 @@
+## A piece with clips: a body and a head, keyed in two clips -- idle (2
+## s, a loop: the head turns once round, the body breathes) and fire (0.4
+## s: the head recoils) -- written as bpy, run by Blender, exported as one
+## glTF file and its clips read back from it.
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+
+parts := (("toy body", 0.0 0.0 0.3, 0.6 0.6 0.6, 0.0 0.0 0.0, 0.5 0.5 0.55, 0.0) bp:b_ox 0) c_at (("toy head", 0.0 0.0 0.75, 0.2 0.2 0.15, 0.0 0.0 0.0, 0.8 0.3 0.2, 0.0) bp:c_ylinder 0)
+idle := (("toy head", "idle", "rotation", 0.0 1.0 2.0, 3 3 r_eshape 0.0 0.0 0.0  0.0 0.0 180.0  0.0 0.0 360.0) bp:k_eys 0) c_at (("toy body", "idle", "scale", 0.0 1.0 2.0, 3 3 r_eshape 0.6 0.6 0.6  0.6 0.6 0.63  0.6 0.6 0.6) bp:k_eys 0)
+fire := ("toy head", "fire", "location", 0.0 0.1 0.4, 3 3 r_eshape 0.0 0.0 0.75  0.0 0.12 0.75  0.0 0.0 0.75) bp:k_eys 0
+script := bp:head c_at (bp:p_iece "toy") c_at parts c_at idle c_at fire c_at (bp:e_xportPiece "toy") c_at (bp:c_lips "toy") c_at bp:report
+n := "work/clips/run.py" bl:w_rite! bp:launcher
+n := "work/clips/scene.py" bl:w_rite! script
+r := "work/clips/run.py" bl:r_un! "work/clips/scene.py work/clips/out"
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+"the clips read back from toy.glb:"
+bl:r_ead "work/clips/out/toy-clips.txt"
+"what Blender made:"
+bl:r_ead "work/clips/out/report.txt"

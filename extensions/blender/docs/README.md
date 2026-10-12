@@ -75,8 +75,18 @@ into the script as numbers, one mesh for them all. Written for Blender
 | `... bp:t_orus 0` | a ring lying flat (size: radius, tube radius) |
 | `... bp:o_ctahedron 0` | an octahedron, a crystal: corners and faces worked out in X_eTaL (`bp:o_ctahedronMesh`) |
 | `(name, at, profile, segments, turn, rgb, emit) bp:l_athe 0` | a profile (points r z) turned round its upright axis -- a dome, a pedestal -- worked out as arrays (`bp:l_atheMesh`) |
-| `bp:e_xportPiece name` | one piece and its parts as `NAME.glb`, its animations with it |
+| `(part, clip, what, times, values) bp:k_eys 0` | keys a part (or the piece) in a named clip: what is `"location"`, `"rotation"` (degrees) or `"scale"`, times in seconds, a row of x y z per time; the part's rest is kept |
+| `bp:e_xportPiece name` | one piece and its parts as `NAME.glb`, each clip one glTF animation by its name |
+| `bp:c_lips name` | reads `NAME.glb` back and writes `NAME-clips.txt`: each clip, its first and last key, what it moves |
 | `bp:report` | a report: each mesh's vertices and faces, each piece's parts and triangles, the objects |
+
+Clips are what a game plays by name -- idle, walk, fire, hit. Each part
+keyed in a clip gets an action; at export each action becomes a track
+(NLA) named for its clip, and the exporter writes one glTF animation per
+name with every part's keys under it. Keys are linear and land on
+frames, since the exporter samples frames: at 30 frames a second (the
+script's default) a tenth of a second is 3 frames, so 2 s, 1 s, 0.4 s
+and 0.3 s are all exact. Part names must be unique within a script.
 
 Every part is placed (`at`), turned (`turn`, degrees about x y z),
 colored (`rgb`) and may glow (`emit`, the strength of its emission; 0

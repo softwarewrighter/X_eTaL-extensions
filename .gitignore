@@ -34,3 +34,9 @@ work/
 
 # scratch programs beside the demos (never published)
 extensions/*/demos/zz-*
+
+# a blender run's output while it runs (removed after)
+.blender-run-*.out
+
+# the uv virtual environment (just venv)
+.venv/

@@ -18,11 +18,14 @@ l:launcher := "import os, subprocess, sys\nblender = os.environ.get(\"XETAL_BLEN
 
 ## bp:head: the inner script's start: an empty scene, the output
 ## directory (the first argument after "--", made), keyframes linear (an
-## orbit at an even speed), and helpers: nums(text, k) reads numbers
+## orbit at an even speed), 30 frames a second (bp:s_etup may change
+## it), and helpers: nums(text, k) reads numbers
 ## written by X_eTaL k to a row; material, link; piece, made, attach,
-## mesh_object build a piece of parts; export_piece writes one piece as
-## glTF; triangles counts a piece's
-l:head := "import bpy, math, os, sys\nargs = sys.argv[sys.argv.index(\"--\") + 1:]\nout = args[0]\nos.makedirs(out, exist_ok=True)\nbpy.ops.wm.read_factory_settings(use_empty=True)\nbpy.context.preferences.edit.keyframe_new_interpolation_type = \"LINEAR\"\nscene = bpy.context.scene\n\ndef nums(text, k):\n    v = [float(t) for t in text.split()]\n    return [tuple(v[i:i + k]) for i in range(0, len(v), k)]\n\ndef material(name, rgb, emit=0.0):\n    m = bpy.data.materials.new(name)\n    m.use_nodes = True\n    p = m.node_tree.nodes[\"Principled BSDF\"]\n    p.inputs[\"Base Color\"].default_value = rgb + (1.0,)\n    p.inputs[\"Emission Color\"].default_value = rgb + (1.0,)\n    p.inputs[\"Emission Strength\"].default_value = emit\n    return m\n\ndef link(obj, mat):\n    scene.collection.objects.link(obj)\n    obj.data.materials.append(mat)\n    return obj\n\ndef piece(name):\n    p = bpy.data.objects.new(name, None)\n    scene.collection.objects.link(p)\n    return p\n\ndef made(name):\n    o = bpy.context.active_object\n    o.name = name\n    o.data.name = name\n    return o\n\ndef mesh_object(name, verts, faces):\n    m = bpy.data.meshes.new(name)\n    m.from_pydata(verts, [], faces)\n    m.validate()\n    m.update()\n    o = bpy.data.objects.new(name, m)\n    scene.collection.objects.link(o)\n    return o\n\ndef attach(obj, owner, mat, at, turn):\n    obj.parent = owner\n    obj.location = at\n    obj.rotation_euler = tuple(math.radians(a) for a in turn)\n    obj.data.materials.clear()\n    obj.data.materials.append(mat)\n    return obj\n\ndef export_piece(owner, path):\n    bpy.ops.object.select_all(action=\"DESELECT\")\n    owner.select_set(True)\n    for c in owner.children_recursive:\n        c.select_set(True)\n    bpy.context.view_layer.objects.active = owner\n    bpy.ops.export_scene.gltf(filepath=path, export_format=\"GLB\", use_selection=True, export_animations=True)\n\ndef triangles(owner):\n    return sum(sum(len(p.vertices) - 2 for p in c.data.polygons) for c in owner.children_recursive if c.type == \"MESH\")\n\n"
+## mesh_object build a piece of parts; keys keys a part into a named
+## clip, clips makes each clip a track (NLA) so it exports by its name;
+## export_piece writes one piece as glTF, its clips with it; glb_clips
+## reads a .glb's clips back; triangles counts a piece's
+l:head := "import bpy, math, os, sys\nargs = sys.argv[sys.argv.index(\"--\") + 1:]\nout = args[0]\nos.makedirs(out, exist_ok=True)\nbpy.ops.wm.read_factory_settings(use_empty=True)\nbpy.context.preferences.edit.keyframe_new_interpolation_type = \"LINEAR\"\nscene = bpy.context.scene\nscene.render.fps = 30\n\ndef nums(text, k):\n    v = [float(t) for t in text.split()]\n    return [tuple(v[i:i + k]) for i in range(0, len(v), k)]\n\ndef material(name, rgb, emit=0.0):\n    m = bpy.data.materials.new(name)\n    m.use_nodes = True\n    p = m.node_tree.nodes[\"Principled BSDF\"]\n    p.inputs[\"Base Color\"].default_value = rgb + (1.0,)\n    p.inputs[\"Emission Color\"].default_value = rgb + (1.0,)\n    p.inputs[\"Emission Strength\"].default_value = emit\n    return m\n\ndef link(obj, mat):\n    scene.collection.objects.link(obj)\n    obj.data.materials.append(mat)\n    return obj\n\ndef piece(name):\n    p = bpy.data.objects.new(name, None)\n    scene.collection.objects.link(p)\n    return p\n\ndef made(name):\n    o = bpy.context.active_object\n    o.name = name\n    o.data.name = name\n    return o\n\ndef mesh_object(name, verts, faces):\n    m = bpy.data.meshes.new(name)\n    m.from_pydata(verts, [], faces)\n    m.validate()\n    m.update()\n    o = bpy.data.objects.new(name, m)\n    scene.collection.objects.link(o)\n    return o\n\ndef attach(obj, owner, mat, at, turn):\n    obj.parent = owner\n    obj.location = at\n    obj.rotation_euler = tuple(math.radians(a) for a in turn)\n    obj.data.materials.clear()\n    obj.data.materials.append(mat)\n    return obj\n\nactions = {}\n\ndef keys(name, clip, path, times, values):\n    o = bpy.data.objects[name]\n    if o.animation_data is None:\n        o.animation_data_create()\n    act = actions.get((name, clip))\n    if act is None:\n        act = bpy.data.actions.new(name + \" \" + clip)\n        actions[(name, clip)] = act\n    rest = tuple(getattr(o, path))\n    o.animation_data.action = act\n    for t, v in zip(times, values):\n        if path == \"rotation_euler\":\n            v = tuple(math.radians(a) for a in v)\n        setattr(o, path, v)\n        o.keyframe_insert(data_path=path, frame=round(t * scene.render.fps))\n    o.animation_data.action = None\n    setattr(o, path, rest)\n\ndef clips():\n    for (name, clip), act in actions.items():\n        o = bpy.data.objects[name]\n        if not any(t.name == clip for t in o.animation_data.nla_tracks):\n            t = o.animation_data.nla_tracks.new()\n            t.name = clip\n            t.strips.new(clip, 0, act)\n\ndef glb_clips(path):\n    import json, struct\n    data = open(path, \"rb\").read()\n    g = json.loads(data[20:20 + struct.unpack(\"<I\", data[12:16])[0]])\n    found = []\n    for a in g.get(\"animations\", []):\n        times = [g[\"accessors\"][s[\"input\"]] for s in a[\"samplers\"]]\n        what = sorted(\"%s %s\" % (g[\"nodes\"][c[\"target\"][\"node\"]][\"name\"], c[\"target\"][\"path\"]) for c in a[\"channels\"])\n        found.append(\"clip %s %.2f-%.2f s: %s\" % (a[\"name\"], min(t[\"min\"][0] for t in times), max(t[\"max\"][0] for t in times), \", \".join(what)))\n    return found\n\ndef export_piece(owner, path):\n    clips()\n    bpy.ops.object.select_all(action=\"DESELECT\")\n    owner.select_set(True)\n    for c in owner.children_recursive:\n        c.select_set(True)\n    bpy.context.view_layer.objects.active = owner\n    bpy.ops.export_scene.gltf(filepath=path, export_format=\"GLB\", use_selection=True, export_animations=True, export_animation_mode=\"NLA_TRACKS\")\n\ndef triangles(owner):\n    return sum(sum(len(p.vertices) - 2 for p in c.data.polygons) for c in owner.children_recursive if c.type == \"MESH\")\n\n"
 
 ### Numbers into Python
 
@@ -178,6 +181,40 @@ l:l_athe := { (name, at, prof, seg, turn, rgb, emit) z ->
   (v, f) := (prof, seg) l:l_atheMesh 0
   "o = mesh_object(" c_at (h:q_uote name) c_at ", " c_at (((f_loat v), 3) h:n_ums 0) c_at ", [tuple(int(i) for i in f) for f in " c_at ((f, 4) h:n_ums 0) c_at "])\n" c_at h:a_ttach (name, at, turn, rgb, emit)
 }
+
+### Clips
+
+## A clip is a named animation of a piece -- idle, walk, fire, hit --
+## that a game plays by its name. Each part keyed in a clip gets an
+## action of its own; when the piece is exported each action becomes a
+## track named for its clip (NLA), and the glTF file has one animation
+## for each name, made of every part's keys under it. Keys are linear;
+## a loop ends where it starts. Part names must be unique in a script.
+## A key lands on a frame (the exporter samples frames): at 30 a second,
+## the head's, a tenth of a second is 3 frames, so give bp:s_etup a rate
+## that makes the times whole frames, before the keys.
+
+## (part, clip, what, times, values) bp:k_eys 0: Python keying the part
+## (or piece) PART in the clip CLIP: what is "location", "rotation" (x y
+## z degrees) or "scale", times are seconds from the clip's start, values
+## one row of x y z for each time. The part is left as it was: a clip
+## does not move its rest.
+l:k_eys := { (part, clip, what, times, values) z ->
+  path := (what m_atch "rotation") h:p_ath what
+  "keys(" c_at (h:q_uote part) c_at ", " c_at (h:q_uote clip) c_at ", " c_at (h:q_uote path) c_at ", " c_at (h:t_uple times) c_at ", " c_at (((f_loat values), 3) h:n_ums 0) c_at ")\n"
+}
+
+# bpy's name for what is keyed: rotation is rotation_euler
+h:p_ath := { r what ->
+  r ? "rotation_euler"
+  what
+}
+
+## bp:c_lips name: Python reading back out/NAME.glb and writing its clips
+## to out/NAME-clips.txt, a line each: the name, the first and last key
+## in seconds, and what it moves (part and translation, rotation or
+## scale) -- what a test checks
+l:c_lips := { name -> "with open(os.path.join(out, " c_at (h:q_uote name c_at "-clips.txt") c_at "), \"w\") as f:\n    f.write(\"\".join(c + \"\\n\" for c in glb_clips(os.path.join(out, " c_at (h:q_uote name c_at ".glb") c_at "))))\n" }
 
 ## bp:e_xportPiece name: Python writing the piece NAME (and its parts) as
 ## out/NAME.glb, its animations with it

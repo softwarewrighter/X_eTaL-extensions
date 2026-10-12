@@ -10,6 +10,8 @@
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$root"
+export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
+"$root/scripts/venv.sh" --check
 code="$( { git diff --name-only HEAD; git ls-files --others --exclude-standard; } \
   | grep -E '\.rs$|Cargo\.(toml|lock)$|^scripts/|^justfile$|/justfile$|^XETAL_COMMIT$|^LIBRARIES_COMMIT$|^crates/|^web/' \
   | grep -v '^web/shell/Cargo\.lock$' || true)"

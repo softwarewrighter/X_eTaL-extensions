@@ -24,6 +24,7 @@ files -- each used from X_eTaL like any other library.
 ```sh
 git clone https://github.com/softwarewrighter/X_eTaL-extensions
 cd X_eTaL-extensions
+just venv                       # the Python scripts' uv environment (.venv)
 just xetal                      # X_eTaL at its known-good commit (cloned into work/xetal)
 cargo build --workspace
 just demos                      # every demo: EXT NAME and what it shows

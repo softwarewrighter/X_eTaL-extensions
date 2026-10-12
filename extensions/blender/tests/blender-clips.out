@@ -1,0 +1,16 @@
+the run, and the error lines in Blender's log:
+exit 0
+errors 0
+the clips read back from toy.glb:
+clip idle 0.00-2.00 s: toy body scale, toy head rotation
+clip fire 0.00-0.40 s: toy head translation
+
+what Blender made:
+mesh toy body: 8 vertices, 6 faces
+mesh toy head: 24 vertices, 14 faces
+piece toy: 2 parts, 56 triangles
+objects: toy toy body toy head
+
+report.txt
+toy-clips.txt
+toy.glb

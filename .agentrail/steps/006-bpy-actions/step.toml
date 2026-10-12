@@ -1,6 +1,6 @@
 number = 6
 slug = "bpy-actions"
-status = "pending"
+status = "in-progress"
 description = "Saga 15 step 6: named keyframed actions (idle, walk, fire, hit) on parts, exp..."
 role = "production"
 context_files = []
