@@ -1,9 +1,10 @@
 number = 10
 slug = "td-sheets"
-status = "in-progress"
+status = "completed"
 description = "Saga 15 step 9 (the ask's fallbacks, after the .glb): PIECE-turn.png (16 turn..."
 role = "production"
 context_files = []
 created_at = "2026-10-11T15:47:02"
+completed_at = "2026-10-12T14:41:26"
 task_type = "feature"
-commits = []
+commits = ["6db1bc177e01c26d0a92d3ac15d5b846662e7d65"]

@@ -1,0 +1,1 @@
+TD fallback sheets: NAME-turn.png (16x256, 4x4, 20 deg) and NAME-map.png (8x96, E..NE clockwise, ortho 30 deg = game's 2:1 board, anchor 48,82) rendered as one animation each and joined in Blender; manifest + page list them; bp:s_amples for the quick golden; republished at blender/td (made at c620482, 8.3 MB)
