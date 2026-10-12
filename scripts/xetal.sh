@@ -9,6 +9,9 @@
 #   XETAL_SOURCE=../X_eTaL scripts/xetal.sh   # clone from a local checkout
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Python is the uv environment's only, never the system's (CLAUDE.md rule 19)
+export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
+"$root/scripts/venv.sh" --check
 commit="$(tr -d '[:space:]' < "$root/XETAL_COMMIT")"
 source="${XETAL_SOURCE:-https://github.com/softwarewrighter/X_eTaL.git}"
 clone="$root/work/xetal"

@@ -5,6 +5,9 @@
 #   scripts/check-web.sh
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Python is the uv environment's only, never the system's (CLAUDE.md rule 19)
+export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
+"$root/scripts/venv.sh" --check
 # X_eTaL's clone (work/xetal) must exist: this repo's crates build on it
 "$root/scripts/xetal.sh" >/dev/null
 n=0

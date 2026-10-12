@@ -10,6 +10,12 @@
 #   scripts/build-pages.sh   # PAGES_DIR=DIR builds into an empty DIR instead (scripts/check-pages.sh)
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Python is the uv environment's only, never the system's (CLAUDE.md rule 19)
+export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
+"$root/scripts/venv.sh" --check
+# not beside a render or another build (scripts/check-busy.sh); the
+# gate's own check-pages has checked already
+[ -n "${PAGES_DIR:-}" ] || "$root/scripts/check-busy.sh" > /dev/null
 if [ -n "${PAGES_DIR:-}" ]; then
   out="$PAGES_DIR"
 else

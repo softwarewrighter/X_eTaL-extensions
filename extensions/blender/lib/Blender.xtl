@@ -22,7 +22,8 @@
 ## bl:v_ersion @: that Blender's version line ("Blender 5.1.2"), or "".
 "v_ersion : unit -> text"        ffi:b_ind< "blender/version"
 ## script bl:r_un! args: python3 script args (args split at spaces) from
-## the working directory, XETAL_BLENDER set to the Blender found, stopped
+## the working directory -- XETAL_PYTHON, else the active virtual
+## environment's python3 (VIRTUAL_ENV), else python3 on the PATH -- XETAL_BLENDER set to the Blender found, stopped
 ## after XETAL_BLENDER_TIMEOUT seconds (900 by default); the whole output
 ## goes to the script's .log beside it. "exit N" (or "timeout after S
 ## s"), "errors N" -- the log's Python tracebacks and Blender "Error:"

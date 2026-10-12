@@ -11,6 +11,9 @@
 #   DOC_OUT=DIR scripts/doc-site.sh
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Python is the uv environment's only, never the system's (CLAUDE.md rule 19)
+export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
+"$root/scripts/venv.sh" --check
 cd "$root"
 xetal="$("$root/scripts/build-xetal.sh")"
 dest="${DOC_OUT:-pages/doc}"

@@ -61,3 +61,17 @@ fn error_lines_are_counted() {
     assert_eq!(errors(log), 2);
     assert_eq!(errors("Saved: still.png"), 0);
 }
+
+#[test]
+fn python_is_the_virtual_environments_when_one_is_active() {
+    // XETAL_PYTHON wins; otherwise VIRTUAL_ENV's python3 when it exists
+    // (the repository's uv environment), never a guess
+    let p = xetal_ext_blender::python();
+    match (std::env::var("XETAL_PYTHON"), std::env::var("VIRTUAL_ENV")) {
+        (Ok(x), _) if !x.is_empty() => assert_eq!(p, x),
+        (_, Ok(v)) if std::path::Path::new(&v).join("bin/python3").is_file() => {
+            assert_eq!(p, format!("{v}/bin/python3"));
+        }
+        _ => assert_eq!(p, "python3"),
+    }
+}

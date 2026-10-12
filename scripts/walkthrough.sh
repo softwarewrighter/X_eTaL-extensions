@@ -9,6 +9,9 @@
 #   KEEP=1 scripts/walkthrough.sh          # keep the clone to look around
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Python is the uv environment's only, never the system's (CLAUDE.md rule 19)
+export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
+"$root/scripts/venv.sh" --check
 src="${1:-$root}"
 dir="$(mktemp -d)"
 [ -n "${KEEP:-}" ] || trap 'rm -rf "$dir"' EXIT

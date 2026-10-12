@@ -10,6 +10,9 @@
 #   LIBRARIES_SOURCE=../X_eTaL-libraries scripts/libraries.sh   # clone from a local checkout
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Python is the uv environment's only, never the system's (CLAUDE.md rule 19)
+export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
+"$root/scripts/venv.sh" --check
 commit="$(tr -d '[:space:]' < "$root/LIBRARIES_COMMIT")"
 source="${LIBRARIES_SOURCE:-https://github.com/softwarewrighter/X_eTaL-libraries.git}"
 clone="$root/work/libraries"

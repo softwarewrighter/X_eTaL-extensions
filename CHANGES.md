@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-12
 
+- 08:40 `build` a faster gate, after X_eTaL's (Saga 15, step 9; the user: why is the gate slow?): `just gate` checks what the changes since origin/main call for (`scripts/affected.py`, self-tested: the changed Rust packages, the changed extensions' goldens and those of the extensions whose programs use them, everything when shared code changes) and always the cheap checks; `just gate --full` checks everything, doc-tests included. `scripts/check-busy.sh` refuses beside a Blender render, a trunk serve or another cargo (the slow gates had run beside renders; `just stop-serve`). Each step is timed, the slowest three listed (full: 123 s). blender's goldens run side by side. `fix`: every script puts the uv environment first on PATH and checks it, and the blender extension prefers `$VIRTUAL_ENV`'s python3: scripts run directly had reached the system Python (the user: uv's only).
+
 - 07:30 `fix` the tower defense recordings show what Blender made, not the terminal (the user: the point is the artifacts): `td-models` is now Blender's close-ups -- each piece alone, framed to its height, turning once round, playing idle then fire, or idle, walk and hit, captioned (`td:c_loseups`) -- and `game-assets` the twelve preview pictures side by side, then the lineup (a `.film` spec's new `sheet=`). The terminal recordings (`videos/td-models.tape`, `videos/game-assets-intro.vhs`) are retired. The show code saves each part's rest and clips once and sets them up fresh for each video. The site's td-models and game-assets cards link the published pieces (blender/td/): a demo's `## Page: PATH TEXT` header line (scripts/build-catalog.py).
 
 ## 2026-10-11

@@ -132,8 +132,12 @@ check-spelling:
     scripts/check-spelling.py
 
 # The full pre-commit gate
-gate:
-    scripts/gate.sh
+gate *args:
+    scripts/gate.sh "$@"
+
+# Stop a trunk serve left running (it rebuilds on every change and holds the cargo lock)
+stop-serve:
+    scripts/check-busy.sh --stop
 
 # Make the uv virtual environment (.venv, a uv-managed CPython 3.12) every Python script runs in
 venv:

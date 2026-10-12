@@ -9,9 +9,11 @@
 #   scripts/check-quick.sh
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-cd "$root"
+# Python is the uv environment's only, never the system's (CLAUDE.md rule 19)
 export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
 "$root/scripts/venv.sh" --check
+cd "$root"
+"$root/scripts/check-busy.sh"
 code="$( { git diff --name-only HEAD; git ls-files --others --exclude-standard; } \
   | grep -E '\.rs$|Cargo\.(toml|lock)$|^scripts/|^justfile$|/justfile$|^XETAL_COMMIT$|^LIBRARIES_COMMIT$|^crates/|^web/' \
   | grep -v '^web/shell/Cargo\.lock$' || true)"
@@ -20,7 +22,14 @@ if [ -n "$code" ]; then
   echo "$code" | sed 's/^/  /' >&2
   exit 1
 fi
-"$root/scripts/test-exts.sh"
+# the goldens of the extensions the changes touch (scripts/affected.py)
+exts="$("$root/scripts/affected.py" | sed -n 's/^exts: *//p')"
+case "$exts" in
+  all) "$root/scripts/test-exts.sh" ;;
+  "") echo "test-exts: no extension changed" ;;
+  # shellcheck disable=SC2086
+  *) "$root/scripts/test-exts.sh" $exts ;;
+esac
 "$root/scripts/status.py" --check
 "$root/scripts/check-pages.sh"
 "$root/scripts/check-docs.py"

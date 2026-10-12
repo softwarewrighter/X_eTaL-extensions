@@ -10,6 +10,9 @@
 #   scripts/publish-td.sh
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Python is the uv environment's only, never the system's (CLAUDE.md rule 19)
+export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
+"$root/scripts/venv.sh" --check
 src="$root/extensions/blender/work/td/site"
 dest="$root/pages/blender/td"
 [ -f "$src/manifest.toml" ] || { echo "publish-td: nothing made yet: just demo blender game-assets" >&2; exit 1; }

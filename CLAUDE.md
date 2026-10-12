@@ -396,16 +396,27 @@ Read before working:
     2026-10-11): `just venv` (`scripts/venv.sh`) makes `.venv` on a
     uv-managed CPython 3.12; packages, if a script ever needs one, go
     in with `uv pip install`. The justfile puts `.venv/bin` first on
-    PATH, and the gate and check-quick refuse any other python3. Never
-    run `/usr/bin/python3` or Homebrew's python directly.
+    PATH, and every script does the same and refuses to run without
+    the environment (`scripts/venv.sh --check`), so a script run
+    directly -- a demo, a recording, a golden -- never reaches the
+    system's Python; the blender extension prefers `$VIRTUAL_ENV`'s.
+    Never run `/usr/bin/python3` or Homebrew's python directly; ad hoc,
+    use `.venv/bin/python3`.
 
 ## Every step ends with
 
-1. `just gate` passes (X_eTaL at XETAL_COMMIT, cargo fmt/clippy/test,
-   facade goldens, markdown). A commit that changes no code -- a
+1. `just gate` passes. It checks what the changes since origin/main
+   call for (`scripts/affected.py`): the Rust packages and extensions
+   they touch and the extensions that use those, everything when shared
+   code changed (crates, Cargo files, pinned commits, the gate's
+   scripts), and always the cheap checks (X_eTaL at XETAL_COMMIT,
+   formatting, status, pages, docs, spelling, markdown). `just gate
+   --full` checks everything: at a saga's end, after a batch of
+   changes, or when in doubt. A commit that changes no code -- a
    recording, docs, a golden's script -- may use `just check-quick`
-   instead (the goldens, pages, docs and markdown checks; it refuses
-   when code changed).
+   instead (it refuses when code changed). Neither runs beside a
+   Blender render or another cargo (`scripts/check-busy.sh`): wait for
+   it.
 2. Docs updated: README (catalog, status), the extension's page,
    `CHANGES.md`, `docs/plan.md`, `docs/xetal-asks.md` as needed.
 3. `.gitignore` covers new build output (`git status` shows nothing
@@ -419,7 +430,8 @@ Read before working:
 
 ```bash
 just                      # list recipes
-just gate                 # pre-commit gate
+just gate                 # pre-commit gate: what the changes call for
+just gate --full          # every check
 just ext NAME RECIPE      # an extension's own recipe (build, test, reg, list, demo)
 just new-ext NAME AL "W"  # start an extension from templates/extension
 just run-x FILE           # run a program with xetal-x and every extension

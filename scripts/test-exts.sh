@@ -3,10 +3,16 @@
 # and the layout every extension must have (plan A7). The extensions run
 # side by side -- each in its own directory, its work files its own --
 # after one release build; each one's result is printed in order, and a
-# failure shows that extension's differences.
-#   scripts/test-exts.sh
+# failure shows that extension's differences. Every extension's layout
+# is checked; with names, only those extensions' goldens run (the gate's
+# plan, scripts/affected.py).
+#   scripts/test-exts.sh            # every extension
+#   scripts/test-exts.sh NAME ...   # those extensions' goldens
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Python is the uv environment's only, never the system's (CLAUDE.md rule 19)
+export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
+"$root/scripts/venv.sh" --check
 "$root/scripts/xetal.sh" >/dev/null
 (cd "$root" && cargo build -q --release --workspace)
 export REG_EXT_BUILT=1
@@ -15,11 +21,13 @@ export XETAL_LIBS
 logs="$(mktemp -d)"
 trap 'rm -rf "$logs"' EXIT
 names=()
+only=" $* "
 for dir in "$root"/extensions/*/; do
   name="$(basename "$dir")"
   for need in extension.toml justfile rust/Cargo.toml lib tests docs/README.md demos; do
     [ -e "$dir/$need" ] || { echo "test-exts: extensions/$name has no $need" >&2; exit 1; }
   done
+  [ $# = 0 ] || [[ "$only" == *" $name "* ]] || continue
   names+=("$name")
   ( "$root/scripts/reg-ext.sh" "$name" run > "$logs/$name.out" 2>&1; echo $? > "$logs/$name.rc" ) &
 done

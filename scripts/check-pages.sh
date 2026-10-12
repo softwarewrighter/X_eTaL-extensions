@@ -5,6 +5,9 @@
 #   scripts/check-pages.sh
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Python is the uv environment's only, never the system's (CLAUDE.md rule 19)
+export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
+"$root/scripts/venv.sh" --check
 # built in a temporary directory outside the repository (never in work/,
 # which is never erased: CLAUDE.md rule 18)
 tmp="$(mktemp -d)"

@@ -5,6 +5,9 @@
 #   scripts/check-vendor.sh
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Python is the uv environment's only, never the system's (CLAUDE.md rule 19)
+export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
+"$root/scripts/venv.sh" --check
 xetal="$("$root/scripts/build-xetal.sh")"
 commit="$(tr -d '[:space:]' < "$root/XETAL_COMMIT")"
 sha="${commit:0:7}"

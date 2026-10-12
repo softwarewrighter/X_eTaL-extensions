@@ -215,6 +215,22 @@ fn version(_: &[Value]) -> Result<Value, OwnedError> {
     ))
 }
 
+/// The Python that runs a launcher: `XETAL_PYTHON`, else the active
+/// virtual environment's (`VIRTUAL_ENV`), else `python3` on the PATH.
+#[must_use]
+pub fn python() -> String {
+    if let Some(p) = std::env::var_os("XETAL_PYTHON").filter(|p| !p.is_empty()) {
+        return p.to_string_lossy().into_owned();
+    }
+    if let Some(v) = std::env::var_os("VIRTUAL_ENV").filter(|v| !v.is_empty()) {
+        let p = PathBuf::from(v).join("bin/python3");
+        if p.is_file() {
+            return p.display().to_string();
+        }
+    }
+    "python3".into()
+}
+
 /// script run args: `python3 script args` (args split at spaces) from the
 /// root, with `XETAL_BLENDER` set to the Blender found, stopped after
 /// `XETAL_BLENDER_TIMEOUT` seconds (900 by default). The whole output goes
@@ -228,7 +244,7 @@ fn run(args: &[Value]) -> Result<Value, OwnedError> {
     let dir = root()?;
     let mut argv = vec![path.display().to_string()];
     argv.extend(words.split_whitespace().map(String::from));
-    let python = std::env::var("XETAL_PYTHON").unwrap_or_else(|_| "python3".into());
+    let python = python();
     let timeout = std::env::var("XETAL_BLENDER_TIMEOUT")
         .ok()
         .and_then(|t| t.parse().ok())

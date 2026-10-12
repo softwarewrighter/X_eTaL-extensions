@@ -5,6 +5,9 @@
 # (Sqlite.xtl); the crate is xetal-ext-NAME, the library xetal_ext_NAME.
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Python is the uv environment's only, never the system's (CLAUDE.md rule 19)
+export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
+"$root/scripts/venv.sh" --check
 name="${1:?usage: new-ext.sh NAME ALIAS \"what it does\"}"
 alias="${2:?alias, e.g. sq}"
 what="${3:?a one-line description}"
