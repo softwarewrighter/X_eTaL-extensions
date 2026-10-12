@@ -171,7 +171,8 @@
 for X_eTaL-games and everything published with them: it writes the
 Python -- the launcher, and the bpy script describing each piece
 (Td.xtl) -- Python runs Blender, Blender runs the script: each piece
-is written as NAME.glb with its clips, rendered alone as NAME.png,
+is written as NAME.glb with its clips, rendered alone as NAME.png
+and as two sheets of frames (NAME-turn.png, NAME-map.png),
 shown close, one after another, turning and playing each clip, for
 one video, and all twelve lined up for another. Then X_eTaL hashes every file (the digest extension) into
 manifest.toml and writes the page that shows them, index.html, all
@@ -183,9 +184,10 @@ Run: just demo blender game-assets   (about five minutes)</p>
 <p class="meta"><a href="extensions-blender-demos-game-assets.xtl.src.html">source</a> &middot; imports <code><span class="c-error">bl:</span></code> <a href="extensions-blender-lib-Blender.xtl.html">extensions/blender/lib/Blender.xtl</a>; <code><span class="c-error">bp:</span></code> <a href="extensions-blender-lib-Bpy.xtl.html">extensions/blender/lib/Bpy.xtl</a>; <code><span class="c-error">td:</span></code> <a href="extensions-blender-demos-Td.xtl.html">extensions/blender/demos/Td.xtl</a></p>
 <div class="item" id="script">
 <h3><a href="#script">script</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L21">line 21</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L23">line 23</a></div>
 <div class="doc">
-<p>the pieces' Python, then each rendered alone, then two videos (960
+<p>the pieces' Python, then each rendered alone, its fallback sheets (a
+turn and a map), then two videos (960
 by 540): the pieces one after another, close, 5 seconds each, and
 all twelve lined up, 8 seconds</p>
 </div>
@@ -194,44 +196,44 @@ all twelve lined up, 8 seconds</p>
 </div>
 <div class="item" id="script">
 <h3><a href="#script">script</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L22">line 22</a></div>
-<pre class="code">script ← <a href="extensions-blender-demos-game-assets.xtl.html#script">script</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-Td.xtl.html#l.s_tills" class="c-libfunc">ᵗᵈs̲tills</a> <span class="c-number">320</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">30.0</span>, <span class="c-number">0.042</span> <span class="c-number">0.205</span> <span class="c-number">0.058</span>) <a href="extensions-blender-lib-Bpy.xtl.html#l.g_round" class="c-libfunc">ᵇᵖg̲round</a> <span class="c-number">0</span>)</pre>
+<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L24">line 24</a></div>
+<pre class="code">script ← <a href="extensions-blender-demos-game-assets.xtl.html#script">script</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-Td.xtl.html#l.s_tills" class="c-libfunc">ᵗᵈs̲tills</a> <span class="c-number">320</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">256</span>, <span class="c-number">96</span>) <a href="extensions-blender-demos-Td.xtl.html#l.s_heets" class="c-libfunc">ᵗᵈs̲heets</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">30.0</span>, <span class="c-number">0.042</span> <span class="c-number">0.205</span> <span class="c-number">0.058</span>) <a href="extensions-blender-lib-Bpy.xtl.html#l.g_round" class="c-libfunc">ᵇᵖg̲round</a> <span class="c-number">0</span>)</pre>
 </div>
 <div class="item" id="script">
 <h3><a href="#script">script</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L23">line 23</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L25">line 25</a></div>
 <pre class="code">script ← <a href="extensions-blender-demos-game-assets.xtl.html#script">script</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">960</span>, <span class="c-number">540</span>, <span class="c-number">150</span>) <a href="extensions-blender-demos-Td.xtl.html#l.c_loseups" class="c-libfunc">ᵗᵈc̲loseups</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#l.v_ideo" class="c-libfunc">ᵇᵖv̲ideo</a> <span class="c-string">&quot;../closeups.mp4&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">960</span>, <span class="c-number">540</span>, <span class="c-number">240</span>) <a href="extensions-blender-demos-Td.xtl.html#l.f_ilm" class="c-libfunc">ᵗᵈf̲ilm</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-lib-Bpy.xtl.html#l.v_ideo" class="c-libfunc">ᵇᵖv̲ideo</a> <span class="c-string">&quot;../lineup.mp4&quot;</span></pre>
 </div>
 <div class="item" id="n">
 <h3><a href="#n">n</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L24">line 24</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L26">line 26</a></div>
 <pre class="code">n ← <span class="c-string">&quot;work/td/run.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> <a href="extensions-blender-lib-Bpy.xtl.html#l.launcher">ᵇᵖlauncher</a></pre>
 </div>
 <div class="item" id="n">
 <h3><a href="#n">n</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L25">line 25</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L27">line 27</a></div>
 <pre class="code">n ← <span class="c-string">&quot;work/td/assets.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> <a href="extensions-blender-demos-game-assets.xtl.html#script">script</a></pre>
 </div>
 <div class="item" id="r">
 <h3><a href="#r">r</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L27">line 27</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L29">line 29</a></div>
 <pre class="code">r ← <span class="c-string">&quot;work/td/run.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.r_un-21" class="c-libfunc">ᵇˡr̲un!</a> <span class="c-string">&quot;work/td/assets.py work/td/site&quot;</span></pre>
 <div class="uses">Used in: <a href="extensions-blender-demos-game-assets.xtl.html#lines">lines</a></div>
 </div>
 <div class="item" id="lines">
 <h3><a href="#lines">lines</a> <span class="type">: Box Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L29">line 29</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L31">line 31</a></div>
 <pre class="code">lines ← (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="extensions-blender-demos-game-assets.xtl.html#r">r</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-string">&quot;\n&quot;</span>) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> <a href="extensions-blender-demos-game-assets.xtl.html#r">r</a></pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-game-assets.xtl.src.html#L30">extensions/blender/demos/game-assets.xtl:30</a>, <a href="extensions-blender-demos-game-assets.xtl.src.html#L31">extensions/blender/demos/game-assets.xtl:31</a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-game-assets.xtl.src.html#L32">extensions/blender/demos/game-assets.xtl:32</a>, <a href="extensions-blender-demos-game-assets.xtl.src.html#L33">extensions/blender/demos/game-assets.xtl:33</a></div>
 </div>
 <div class="item" id="m">
 <h3><a href="#m">m</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L35">line 35</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L37">line 37</a></div>
 <pre class="code">m ← <span class="c-string">&quot;work/td/site/manifest.toml&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> (<span class="c-string">&quot;work/td/site&quot;</span>, <a href="extensions-blender-lib-Blender.xtl.html#l.v_ersion" class="c-libfunc">ᵇˡv̲ersion</a> @) <a href="extensions-blender-demos-Td.xtl.html#l.m_anifest" class="c-libfunc">ᵗᵈm̲anifest</a> <span class="c-number">0</span></pre>
 </div>
 <div class="item" id="p">
 <h3><a href="#p">p</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L36">line 36</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-game-assets.xtl.src.html#L38">line 38</a></div>
 <pre class="code">p ← <span class="c-string">&quot;work/td/site/index.html&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> <a href="extensions-blender-demos-Td.xtl.html#l.page">ᵗᵈpage</a></pre>
 </div>
 </main>

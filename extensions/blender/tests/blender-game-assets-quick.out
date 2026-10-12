@@ -16,79 +16,105 @@ up = "+Y in glTF (+Z in Blender)"
 front = "+Z in glTF, glTF's own front (-Y in Blender)"
 clip-rate = 30
 preview = "PIECE.png: 320 by 320, RGBA, transparent, the piece at rest from the front a little right and above, every preview at one scale"
+turn-sheet = { file = "PIECE-turn.png", frame = 256, frames = 16, columns = 4, order = "row by row", turn = "22.5 degrees counterclockwise seen from above each frame, frame 0 the front", camera = "20 degrees above the horizon", scale = "each piece framed to its size" }
+map-sheet = { file = "PIECE-map.png", frame = 96, frames = 8, columns = 8, facing = ["east", "southeast", "south", "southwest", "west", "northwest", "north", "northeast"], camera = "orthographic, 30 degrees above the horizon (the board's 2:1 tiles; the ask said 35)", tile = "64 by 32 pixels", pixels-per-meter = 45.25, anchor = [48, 82] }
 
 [pieces.arrow-1]
 kind = "tower"
 glb = "arrow-1.glb"
 preview = "arrow-1.png"
+turn = "arrow-1-turn.png"
+map = "arrow-1-map.png"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.arrow-2]
 kind = "tower"
 glb = "arrow-2.glb"
 preview = "arrow-2.png"
+turn = "arrow-2-turn.png"
+map = "arrow-2-map.png"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.arrow-3]
 kind = "tower"
 glb = "arrow-3.glb"
 preview = "arrow-3.png"
+turn = "arrow-3-turn.png"
+map = "arrow-3-map.png"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.cannon-1]
 kind = "tower"
 glb = "cannon-1.glb"
 preview = "cannon-1.png"
+turn = "cannon-1-turn.png"
+map = "cannon-1-map.png"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.cannon-2]
 kind = "tower"
 glb = "cannon-2.glb"
 preview = "cannon-2.png"
+turn = "cannon-2-turn.png"
+map = "cannon-2-map.png"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.cannon-3]
 kind = "tower"
 glb = "cannon-3.glb"
 preview = "cannon-3.png"
+turn = "cannon-3-turn.png"
+map = "cannon-3-map.png"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.frost-1]
 kind = "tower"
 glb = "frost-1.glb"
 preview = "frost-1.png"
+turn = "frost-1-turn.png"
+map = "frost-1-map.png"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.frost-2]
 kind = "tower"
 glb = "frost-2.glb"
 preview = "frost-2.png"
+turn = "frost-2-turn.png"
+map = "frost-2-map.png"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.frost-3]
 kind = "tower"
 glb = "frost-3.glb"
 preview = "frost-3.png"
+turn = "frost-3-turn.png"
+map = "frost-3-map.png"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.runner]
 kind = "creep"
 glb = "runner.glb"
 preview = "runner.png"
+turn = "runner-turn.png"
+map = "runner-map.png"
 clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
 
 [pieces.brute]
 kind = "creep"
 glb = "brute.glb"
 preview = "brute.png"
+turn = "brute-turn.png"
+map = "brute-map.png"
 clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
 
 [pieces.shield]
 kind = "creep"
 glb = "shield.glb"
 preview = "shield.png"
+turn = "shield-turn.png"
+map = "shield-map.png"
 clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
 
-24
+48
 work/qtd/lineup.mp4
 12

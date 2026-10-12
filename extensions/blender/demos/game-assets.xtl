@@ -2,7 +2,8 @@
 ## for X_eTaL-games and everything published with them: it writes the
 ## Python -- the launcher, and the bpy script describing each piece
 ## (Td.xtl) -- Python runs Blender, Blender runs the script: each piece
-## is written as NAME.glb with its clips, rendered alone as NAME.png,
+## is written as NAME.glb with its clips, rendered alone as NAME.png
+## and as two sheets of frames (NAME-turn.png, NAME-map.png),
 ## shown close, one after another, turning and playing each clip, for
 ## one video, and all twelve lined up for another. Then X_eTaL hashes every file (the digest extension) into
 ## manifest.toml and writes the page that shows them, index.html, all
@@ -15,11 +16,12 @@
 "bp:" u_se< "Bpy"
 "td:" u_se< "Td"
 
-## the pieces' Python, then each rendered alone, then two videos (960
+## the pieces' Python, then each rendered alone, its fallback sheets (a
+## turn and a map), then two videos (960
 ## by 540): the pieces one after another, close, 5 seconds each, and
 ## all twelve lined up, 8 seconds
 script := bp:head c_at td:all c_at bp:report c_at ((0.55 0.62 0.72, 3.0) bp:l_ights 0) c_at td:show
-script := script c_at (td:s_tills 320) c_at ((0.0 0.0 0.0, 30.0, 0.042 0.205 0.058) bp:g_round 0)
+script := script c_at (td:s_tills 320) c_at ((256, 96) td:s_heets 0) c_at ((0.0 0.0 0.0, 30.0, 0.042 0.205 0.058) bp:g_round 0)
 script := script c_at ((960, 540, 150) td:c_loseups 0) c_at (bp:v_ideo "../closeups.mp4") c_at ((960, 540, 240) td:f_ilm 0) c_at bp:v_ideo "../lineup.mp4"
 n := "work/td/run.py" bl:w_rite! bp:launcher
 n := "work/td/assets.py" bl:w_rite! script

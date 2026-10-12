@@ -278,6 +278,11 @@ l:o_rbit := { (at, radius, height, frames) z ->
 ## look of a drawing
 l:s_etup := { (w, h, fps) z -> "scene.render.engine = \"BLENDER_EEVEE\"\nscene.view_settings.view_transform = \"Standard\"\nscene.render.use_freestyle = True\nscene.render.line_thickness = 0.8\nlines = bpy.context.view_layer.freestyle_settings.linesets\nlineset = lines[0] if len(lines) else lines.new(\"outlines\")\nif lineset.linestyle is None:\n    lineset.linestyle = bpy.data.linestyles.new(\"outlines\")\nlineset.linestyle.color = (0.08, 0.08, 0.1)\nlineset.linestyle.thickness = 1.0\nscene.render.resolution_x = " c_at (f_ormat w) c_at "\nscene.render.resolution_y = " c_at (f_ormat h) c_at "\nscene.render.resolution_percentage = 100\nscene.render.fps = " c_at (f_ormat fps) c_at "\n\n" }
 
+## bp:s_amples n: Python setting how many samples EEVEE takes of each
+## pixel (64 by default): fewer render faster and rougher -- a test's
+## tiny frames need one
+l:s_amples := { n -> "scene.eevee.taa_render_samples = " c_at (f_ormat n) c_at "\n" }
+
 ## bp:s_till file: Python rendering the current frame to out/FILE (PNG)
 l:s_till := { file -> "scene.render.image_settings.media_type = \"IMAGE\"\nscene.render.image_settings.file_format = \"PNG\"\nscene.render.filepath = os.path.join(out, " c_at (h:q_uote file) c_at ")\nbpy.ops.render.render(write_still=True)\n\n" }
 

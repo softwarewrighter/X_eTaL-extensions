@@ -65,6 +65,7 @@ into the script as numbers, one mesh for them all. Written for Blender
 | `(sky, strength) bp:l_ights 0` | the world's color and a sun |
 | `(center, radius, height, frames) bp:o_rbit 0` | a camera turning once round the center, linear, looping |
 | `(width, height, fps) bp:s_etup 0` | EEVEE, the picture's size, the frame rate |
+| `bp:s_amples n` | how many samples EEVEE takes of each pixel (64 by default): a test's tiny frames need one |
 | `bp:s_till file`, `bp:v_ideo file` | a PNG of the frame; every frame as an MP4 (H.264) |
 | `bp:e_xports name` | `.glb` (glTF), `.obj` (with `.mtl`) and `.blend` |
 | `bp:p_iece name` | a piece: an empty at its base's middle that the parts after it hang from, so it exports as one |
@@ -139,7 +140,14 @@ for none).
    launcher and one bpy script; Blender makes the twelve pieces of
    `demos/Td.xtl`, writes each as `NAME.glb` with its clips, renders
    each alone as `NAME.png` (320 by 320, transparent, all at one scale)
-   and renders two videos: the twelve one after another, close and
+   and as two sheets for a game without 3D, joined in Blender:
+   `NAME-turn.png` (16 frames of 256 in a 4 by 4 sheet, the piece
+   turned 22.5 degrees counterclockwise each frame from its front, the
+   camera 20 degrees up) and `NAME-map.png` (8 frames of 96 in a row,
+   the piece facing east, then each 45 degrees clockwise on screen, an
+   orthographic camera 30 degrees up as the game's 2:1 board has it: a
+   tile 64 by 32 pixels, its middle at (48, 82) of a frame). It renders
+   two videos: the twelve one after another, close and
    framed to each, turning once round and playing each clip, captioned
    (`closeups.mp4`, a minute), and the twelve lined up -- turning, idle,
    then the towers firing and the creeps walking (`lineup.mp4`, 8

@@ -190,6 +190,7 @@
 <li class="item"><a href="#l.o_rbit"><span class="c-libfunc">ˡo̲rbit</span></a></li>
 <li><a href="#section-7">Rendering and files</a></li>
 <li class="item"><a href="#l.s_etup"><span class="c-libfunc">ˡs̲etup</span></a></li>
+<li class="item"><a href="#l.s_amples"><span class="c-libfunc">ˡs̲amples</span></a></li>
 <li class="item"><a href="#l.s_till"><span class="c-libfunc">ˡs̲till</span></a></li>
 <li class="item"><a href="#l.v_ideo"><span class="c-libfunc">ˡv̲ideo</span></a></li>
 <li class="item"><a href="#l.e_xports"><span class="c-libfunc">ˡe̲xports</span></a></li>
@@ -629,9 +630,19 @@ look of a drawing</p>
 <pre class="code"><span class="c-libfunc">ˡs̲etup</span> ← { (w, h, fps) z → <span class="c-string">&quot;scene.render.engine = \&quot;BLENDER_EEVEE\&quot;\nscene.view_settings.view_transform = \&quot;Standard\&quot;\nscene.render.use_freestyle = True\nscene.render.line_thickness = 0.8\nlines = bpy.context.view_layer.freestyle_settings.linesets\nlineset = lines[0] if len(lines) else lines.new(\&quot;outlines\&quot;)\nif lineset.linestyle is None:\n    lineset.linestyle = bpy.data.linestyles.new(\&quot;outlines\&quot;)\nlineset.linestyle.color = (0.08, 0.08, 0.1)\nlineset.linestyle.thickness = 1.0\nscene.render.resolution_x = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\nscene.render.resolution_y = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> h) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\nscene.render.resolution_percentage = 100\nscene.render.fps = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> fps) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n\n&quot;</span> }</pre>
 <div class="uses">Used in: <a href="extensions-blender-demos-Sizes.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
 </div>
+<div class="item" id="l.s_amples">
+<h3><a href="#l.s_amples"><span class="c-libfunc">ˡs̲amples</span></a> <span class="type">: a -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L284">line 284</a></div>
+<div class="doc">
+<p>bp:s_amples n: Python setting how many samples EEVEE takes of each
+pixel (64 by default): fewer render faster and rougher -- a test's
+tiny frames need one</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲amples</span> ← { n → <span class="c-string">&quot;scene.eevee.taa_render_samples = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> n) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span> }</pre>
+</div>
 <div class="item" id="l.s_till">
 <h3><a href="#l.s_till"><span class="c-libfunc">ˡs̲till</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L282">line 282</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L287">line 287</a></div>
 <div class="doc">
 <p>bp:s_till file: Python rendering the current frame to out/FILE (PNG)</p>
 </div>
@@ -639,7 +650,7 @@ look of a drawing</p>
 </div>
 <div class="item" id="l.v_ideo">
 <h3><a href="#l.v_ideo"><span class="c-libfunc">ˡv̲ideo</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L286">line 286</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L291">line 291</a></div>
 <div class="doc">
 <p>bp:v_ideo file: Python rendering every frame to out/FILE, an MP4
 (H.264)</p>
@@ -649,7 +660,7 @@ look of a drawing</p>
 </div>
 <div class="item" id="l.e_xports">
 <h3><a href="#l.e_xports"><span class="c-libfunc">ˡe̲xports</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L290">line 290</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L295">line 295</a></div>
 <div class="doc">
 <p>bp:e_xports name: Python writing the scene as out/NAME.glb (glTF,
 binary), out/NAME.obj (with its .mtl) and out/NAME.blend</p>
@@ -659,7 +670,7 @@ binary), out/NAME.obj (with its .mtl) and out/NAME.blend</p>
 </div>
 <div class="item" id="l.report">
 <h3><a href="#l.report">ˡreport</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L295">line 295</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L300">line 300</a></div>
 <div class="doc">
 <p>bp:report: Python writing out/report.txt: each mesh's vertices and
 faces, each piece's parts and triangles, and each object, by name --
