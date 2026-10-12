@@ -54,6 +54,25 @@ def page_link(demo):
     return ""
 
 
+def cover(ext, demo):
+    """A demo's cover picture, if any: its header's `## Cover: FILE ALT`
+    line (FILE in the extension's directory), copied beside the
+    recordings and shown at a medium size on the demo's card."""
+    for line in demo.read_text().splitlines():
+        if not line.startswith("#"):
+            break
+        t = line.lstrip("# ").rstrip()
+        if t.startswith("Cover: "):
+            path, _, alt = t[len("Cover: "):].partition(" ")
+            src = root / "extensions" / ext / path
+            (pages / ext).mkdir(parents=True, exist_ok=True)
+            name = f"{demo.stem}-cover{src.suffix}"
+            shutil.copy(src, pages / ext / name)
+            return (f'<img src="{ext}/{name}" alt="{html.escape(alt)}" '
+                    'style="float: right; width: min(240px, 40%); margin: 0 0 8px 12px; border-radius: 6px;" />')
+    return ""
+
+
 def first_para(name):
     text = (root / "extensions" / name / "docs" / "README.md").read_text()
     paras = [p.strip() for p in text.split("\n\n")]
@@ -69,7 +88,7 @@ def what(demo):
         t = line.lstrip("# ").rstrip()
         if t.startswith("Run:") or not t:
             break
-        if t.startswith("Page: "):
+        if t.startswith(("Page: ", "Cover: ")):
             continue
         lines.append(t)
     return " ".join(lines)
@@ -96,7 +115,7 @@ for ext_dir in sorted(p.parent for p in root.glob("extensions/*/extension.toml")
             player = '<p class="note">(no recording yet)</p>'
         demos.append(f"""    <section class="panel demo" id="{ext}-{name}">
       <h3>{html.escape(ext)} / {html.escape(name)} <a class="docs" href="doc/extensions-{ext}-demos-{name}.xtl.html">source and docs</a>{lit_link(ext, name)}{page_link(demo)}</h3>
-      <p class="note">{html.escape(what(demo))}</p>
+      {cover(ext, demo)}<p class="note">{html.escape(what(demo))}</p>
       {player}
       <pre class="source">just demo {ext} {name}</pre>
     </section>""")

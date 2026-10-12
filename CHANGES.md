@@ -13,6 +13,8 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-12
 
+- 14:50 `docs` the Eigencube cover on the site's voxels-rubik-solve card, at a medium size beside the description (the user's artwork, 480 pixels; for all ages, no formal rating claimed): a demo header's `## Cover: FILE ALT` line (scripts/build-catalog.py).
+
 - 13:10 `release` the tower defense pieces republished at blender/td/ with their sheets, made at c620482: 12 .glb, 12 previews, 12 turn and 12 map sheets, the page and manifest.toml (all 48 SHA-256s checked), 8.3 MB.
 
 - 12:30 `ext` the tower defense fallback sheets (Saga 15, step 10): `td:s_heets` has Blender render each piece as `NAME-turn.png` (16 frames of 256, 4 by 4, turned 22.5 degrees counterclockwise a frame, the camera 20 degrees up) and `NAME-map.png` (8 frames of 96 in a row, facing east then each 45 degrees clockwise on screen, orthographic at 30 degrees: the game's 2:1 board, a tile 64 by 32 pixels; the ask said 35), each sheet one short animation render joined in Blender; the manifest lists them with their SHA-256s, frame sizes and counts; the page links them. `bp:s_amples` (EEVEE's samples a pixel): the quick golden renders at one and stays at 21 s.

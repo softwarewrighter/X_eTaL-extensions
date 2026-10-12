@@ -9,6 +9,7 @@
 ## solution a turn at a time, Back to undo one, or Play it through, every
 ## turn animated on the voxel cube. The two models are checked to agree
 ## (tests/rubik-eigencube.xtl).
+## Cover: videos/voxels-rubik-solve-cover.jpg Eigencube cover art: a learning game for all ages
 ## Run: just demo scene voxels-rubik-solve
 ##   the buttons, or keys: u r f turn (Shift for '), Space scramble,
 ##   Enter solve, n step, b back, p play or pause, 0 solved again, drag
