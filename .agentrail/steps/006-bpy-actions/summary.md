@@ -1,0 +1,1 @@
+Bpy.xtl clips: bp:k_eys keys parts in named clips (seconds; rest kept), NLA tracks per clip so bp:e_xportPiece writes one glTF animation per name; bp:c_lips reads a .glb back; 30 fps so 2/1/0.4/0.3 s are exact frames; golden blender-clips. Also: Python from a uv venv only (just venv, gate refuses others).

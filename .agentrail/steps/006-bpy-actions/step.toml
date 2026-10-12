@@ -1,9 +1,10 @@
 number = 6
 slug = "bpy-actions"
-status = "in-progress"
+status = "completed"
 description = "Saga 15 step 6: named keyframed actions (idle, walk, fire, hit) on parts, exp..."
 role = "production"
 context_files = []
 created_at = "2026-10-11T15:47:02"
+completed_at = "2026-10-11T17:30:30"
 task_type = "feature"
-commits = []
+commits = ["733b9ff32d63e59578f74cee68b5a9d120061b56"]
