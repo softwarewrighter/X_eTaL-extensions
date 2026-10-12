@@ -68,12 +68,15 @@ into the script as numbers, one mesh for them all. Written for Blender
 | `bp:s_till file`, `bp:v_ideo file` | a PNG of the frame; every frame as an MP4 (H.264) |
 | `bp:e_xports name` | `.glb` (glTF), `.obj` (with `.mtl`) and `.blend` |
 | `bp:p_iece name` | a piece: an empty at its base's middle that the parts after it hang from, so it exports as one |
+| `(name, at, turn) bp:g_roup 0` | a group in the piece: an empty the parts after it hang from (placed from its middle) until `bp:ungroup` -- what moves in a clip (a crossbow, a banner, a turret) turns about its own pivot |
+| `bp:ungroup` | the parts after it hang from the piece again |
 | `(name, at, size, turn, rgb, emit) bp:b_ox 0` | a box (size: width depth height) |
 | `... bp:c_ylinder 0` | a 12-sided cylinder (size: radius radius height) |
 | `... bp:c_one 0` | a cone or frustum (size: bottom radius, top radius, height) |
 | `... bp:s_phere 0` | a sphere, 12 segments and 8 rings (size: radii) |
 | `... bp:t_orus 0` | a ring lying flat (size: radius, tube radius) |
 | `... bp:o_ctahedron 0` | an octahedron, a crystal: corners and faces worked out in X_eTaL (`bp:o_ctahedronMesh`) |
+| `(name, at, corners, faces, turn, rgb, emit) bp:m_esh 0` | a part of any shape from X_eTaL arrays (corners n by 3, faces rows of corner numbers), made to face outward: a wedge |
 | `(name, at, profile, segments, turn, rgb, emit) bp:l_athe 0` | a profile (points r z) turned round its upright axis -- a dome, a pedestal -- worked out as arrays (`bp:l_atheMesh`) |
 | `(part, clip, what, times, values) bp:k_eys 0` | keys a part (or the piece) in a named clip: what is `"location"`, `"rotation"` (degrees) or `"scale"`, times in seconds, a row of x y z per time; the part's rest is kept |
 | `bp:e_xportPiece name` | one piece and its parts as `NAME.glb`, each clip one glTF animation by its name |
@@ -116,6 +119,18 @@ for none).
    has no line style -- so the first video showed only the gaps between
    cubes; `bl:r_un!` now counts the error lines in Blender's log, and
    the tests print that count.)
+3. `demos/td-models.xtl` (`just demo blender td-models`): the twelve
+   tower defense pieces of X_eTaL-games -- arrow, cannon and frost towers
+   at three levels, runner, brute and shield creeps -- described in
+   X_eTaL (`demos/Td.xtl`) and written by Blender as
+   `work/td/out/NAME.glb`, about two seconds for all twelve. Each stands
+   on a 1 by 1 tile at z 0, facing -y (-z in glTF), a tower about 0.8
+   wide and a creep about 0.5, in flat colors, the frost crystals
+   glowing; the largest has 1228 triangles. Each has its named clips:
+   `idle` (2 s, a loop) for all, `fire` (0.4 s) for towers, `walk` (1
+   s, a loop) and `hit` (0.3 s) for creeps. The parts that move hang in
+   groups and the clips are keyed from each part's rest. The demo reads
+   every file's clips back and prints them.
 
 ## Build and test
 
@@ -132,4 +147,7 @@ comparison at 160 by 90, four frames, and checks 8, 800 and 8,000
 vertices and the files). Of them: the second writes two cubes and a label as bpy
 and checks what Blender made -- the mesh (16 vertices, 12 faces), the
 objects, a still, `.glb`, `.obj`, `.mtl`, `.blend`. `blender-bpy-script`
-pins the Python the library writes.
+pins the Python the library writes. `blender-shapes` makes one piece of
+every kind of part, `blender-clips` a piece with two clips read back
+from its `.glb`, and `blender-td-models` the twelve pieces (their
+triangles, their clips, the files).

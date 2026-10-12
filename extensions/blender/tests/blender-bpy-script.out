@@ -5,7 +5,7 @@ run = [blender, "--background", "--factory-startup", "--python-exit-code", "1", 
 sys.exit(subprocess.run(run).returncode)
 
 the scene:
-import bpy, math, os, sys
+import bmesh, bpy, math, os, sys
 args = sys.argv[sys.argv.index("--") + 1:]
 out = args[0]
 os.makedirs(out, exist_ok=True)
@@ -47,10 +47,23 @@ def mesh_object(name, verts, faces):
     m = bpy.data.meshes.new(name)
     m.from_pydata(verts, [], faces)
     m.validate()
+    bm = bmesh.new()
+    bm.from_mesh(m)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    bm.to_mesh(m)
+    bm.free()
     m.update()
     o = bpy.data.objects.new(name, m)
     scene.collection.objects.link(o)
     return o
+
+def group(name, owner, at, turn):
+    g = bpy.data.objects.new(name, None)
+    scene.collection.objects.link(g)
+    g.parent = owner
+    g.location = at
+    g.rotation_euler = tuple(math.radians(a) for a in turn)
+    return g
 
 def attach(obj, owner, mat, at, turn):
     obj.parent = owner
@@ -193,7 +206,7 @@ with open(os.path.join(out, "report.txt"), "w") as f:
     for m in sorted(bpy.data.meshes, key=lambda m: m.name):
         f.write("mesh %s: %d vertices, %d faces\n" % (m.name, len(m.vertices), len(m.polygons)))
     for o in sorted(scene.objects, key=lambda o: o.name):
-        if o.type == "EMPTY" and any(c.type == "MESH" for c in o.children):
-            f.write("piece %s: %d parts, %d triangles\n" % (o.name, len(o.children_recursive), triangles(o)))
+        if o.type == "EMPTY" and o.parent is None and any(c.type == "MESH" for c in o.children_recursive):
+            f.write("piece %s: %d parts, %d triangles\n" % (o.name, sum(c.type == "MESH" for c in o.children_recursive), triangles(o)))
     f.write("objects: " + " ".join(sorted(o.name for o in scene.objects)) + "\n")
 

@@ -1,0 +1,26 @@
+## Blender, 3: game pieces. The twelve tower defense pieces X_eTaL-games
+## asked for -- arrow, cannon and frost towers at three levels, runner,
+## brute and shield creeps -- described in X_eTaL (Td.xtl: boxes,
+## cylinders, cones, spheres, rings, crystals and turned profiles, the
+## parts that move in groups, the clips keyed from each part's rest),
+## written as one bpy script, and exported by Blender as one glTF file a
+## piece with its named clips: idle, fire, walk, hit. Each file's clips
+## are read back from it.
+## Run: just demo blender td-models   (about half a minute)
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"td:" u_se< "Td"
+
+n := "work/td/run.py" bl:w_rite! bp:launcher
+n := "work/td/models.py" bl:w_rite! bp:head c_at td:all c_at bp:report
+"making the twelve pieces with Blender ..."
+r := "work/td/run.py" bl:r_un! "work/td/models.py work/td/out"
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+"each piece's parts and triangles:"
+bl:r_ead "work/td/out/report.txt"
+"each piece's clips, read back from its .glb:"
+bl:r_ead "work/td/out/clips.txt"

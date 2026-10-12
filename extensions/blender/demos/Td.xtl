@@ -1,0 +1,264 @@
+## Td.xtl -- the tower defense pieces of X_eTaL-games, described in
+## X_eTaL as Blender parts (Bpy.xtl): three towers at three levels --
+## arrow, cannon, frost -- and three creeps -- runner, brute, shield.
+## Each piece stands on a 1 by 1 tile at z 0, its front (and the part
+## that aims) toward -y, a tower's base about 0.8 wide, a creep's about
+## 0.5; flat colors, the frost crystals glowing. Each has its clips: idle
+## (2 s, a loop) for all, fire (0.4 s) for towers, walk (1 s, a loop)
+## and hit (0.3 s) for creeps. A part that moves in a clip hangs in a
+## group (bp:g_roup), so it turns about its own pivot.
+## Import: "td:" u_se< "Td"
+
+"bp:" u_se< "Bpy"
+
+### Colors and keys
+
+wood := 0.55 0.36 0.2
+darkwood := 0.33 0.21 0.12
+stone := 0.62 0.62 0.64
+darkstone := 0.42 0.42 0.45
+iron := 0.25 0.25 0.28
+black := 0.1 0.1 0.11
+red := 0.8 0.12 0.1
+brass := 0.85 0.66 0.25
+ice := 0.7 0.88 1.0
+silver := 0.82 0.84 0.88
+green := 0.35 0.85 0.25
+darkgreen := 0.18 0.48 0.14
+brown := 0.55 0.25 0.15
+darkbrown := 0.3 0.15 0.1
+bone := 0.9 0.85 0.7
+amber := 1.0 0.8 0.2
+steel := 0.35 0.5 0.72
+darksteel := 0.22 0.3 0.42
+cyan := 0.4 0.9 1.0
+white := 0.95 0.95 0.95
+flat := 0.0 0.0 0.0
+one := 1.0 1.0 1.0
+
+# the clips' times and how far along each key is: idle swings out and
+# back each way (sway) or breathes once (breathe) or turns (turn) in 2
+# s; fire and hit kick out and back; walk lifts one pair of feet, then
+# the other
+idle := 0.0 0.5 1.0 1.5 2.0
+sway := 0.0 1.0 0.0 -1.0 0.0
+slow := 0.0 1.0 2.0
+breathe := 0.0 1.0 0.0
+turn := 0.0 1.0 2.0
+fire := 0.0 0.08 0.4
+hit := 0.0 0.1 0.3
+kick := 0.0 1.0 0.0
+walk := 0.0 0.25 0.5 0.75 1.0
+stepa := 0.0 1.0 0.0 0.0 0.0
+stepb := 0.0 0.0 0.0 1.0 0.0
+bob := 0.0 1.0 0.0 1.0 0.0
+
+# keys from a part's rest: each key is rest + k * delta, for the k of
+# each time
+h:k_ey := { (part, clip, what, rest, delta, times, ks) z ->
+  n := t_ally ks
+  (part, clip, what, times, ((n c_at 3) r_eshape rest) + ks '* t_able delta) bp:k_eys 0
+}
+
+### Arrow towers
+
+# a crossbow in a group, about its pivot: stock, limbs, a bolt
+h:c_rossbow := { (p, x, len) z ->
+  t := ((p c_at " stock", x c_at -0.04 0.06, 0.07 c_at len c_at 0.07, flat, darkwood, 0.0) bp:b_ox 0)
+  t := t c_at ((p c_at " limbs", x c_at (-0.02 - len / 2.0) c_at 0.07, 0.44 0.05 0.04 * (len / 0.44) c_at 1.0 1.0, flat, wood, 0.0) bp:b_ox 0)
+  t c_at ((p c_at " bolt", x c_at (0.02 - len / 2.0) c_at 0.11, 0.015 0.015 c_at len * 0.8, 90.0 0.0 0.0, iron, 0.0) bp:c_ylinder 0)
+}
+
+# idle sways the aim, fire kicks it back
+h:a_imKeys := { (p, at, deg, back) z ->
+  ((p c_at " aim", "idle", "rotation", flat, 0.0 0.0 c_at deg, idle, sway) h:k_ey 0) c_at ((p c_at " aim", "fire", "location", at, 0.0 c_at back c_at 0.0, fire, kick) h:k_ey 0)
+}
+
+# the four merlons on a top at z, half a width w apart
+h:m_erlons := { (p, w, z, rgb) z0 ->
+  m_k := { (n, x, y) z1 -> (p c_at " merlon " c_at n, x c_at y c_at z, 0.14 0.14 0.12, flat, rgb, 0.0) bp:b_ox 0 }
+  (("1", w, w) m_k 0) c_at (("2", 0.0 - w, w) m_k 0) c_at (("3", w, 0.0 - w) m_k 0) c_at ("4", 0.0 - w, 0.0 - w) m_k 0
+}
+
+h:a_rrow1 := { z ->
+  t := (bp:p_iece "arrow-1") c_at (("arrow-1 base", 0.0 0.0 0.04, 0.8 0.8 0.08, flat, darkwood, 0.0) bp:b_ox 0)
+  t := t c_at (("arrow-1 post", 0.0 0.0 0.36, 0.5 0.5 0.56, flat, wood, 0.0) bp:b_ox 0) c_at (("arrow-1 deck", 0.0 0.0 0.68, 0.66 0.66 0.08, flat, darkwood, 0.0) bp:b_ox 0)
+  t := t c_at (("arrow-1 aim", 0.0 0.0 0.72, flat) bp:g_roup 0) c_at (("arrow-1", 0.0, 0.44) h:c_rossbow 0) c_at bp:ungroup
+  t c_at ("arrow-1", 0.0 0.0 0.72, 12.0, 0.08) h:a_imKeys 0
+}
+
+h:a_rrow2 := { z ->
+  t := (bp:p_iece "arrow-2") c_at (("arrow-2 base", 0.0 0.0 0.05, 0.8 0.8 0.1, flat, darkstone, 0.0) bp:b_ox 0)
+  t := t c_at (("arrow-2 tower", 0.0 0.0 0.5, 0.6 0.6 0.8, flat, stone, 0.0) bp:b_ox 0) c_at ("arrow-2", 0.23, 0.96, stone) h:m_erlons 0
+  t := t c_at (("arrow-2 aim", 0.0 0.0 0.92, flat) bp:g_roup 0) c_at (("arrow-2 left", -0.12, 0.36) h:c_rossbow 0) c_at (("arrow-2 right", 0.12, 0.36) h:c_rossbow 0) c_at bp:ungroup
+  t c_at ("arrow-2", 0.0 0.0 0.92, 12.0, 0.08) h:a_imKeys 0
+}
+
+h:a_rrow3 := { z ->
+  t := (bp:p_iece "arrow-3") c_at (("arrow-3 base", 0.0 0.0 0.05, 0.8 0.8 0.1, flat, darkstone, 0.0) bp:b_ox 0)
+  t := t c_at (("arrow-3 tower", 0.0 0.0 0.65, 0.56 0.56 1.1, flat, stone, 0.0) bp:b_ox 0) c_at (("arrow-3 ledge", 0.0 0.0 1.2, 0.66 0.66 0.06, flat, darkstone, 0.0) bp:b_ox 0)
+  t := t c_at ("arrow-3", 0.26, 1.29, stone) h:m_erlons 0
+  t := t c_at (("arrow-3 aim", 0.0 0.0 1.26, flat) bp:g_roup 0) c_at (("arrow-3 frame", 0.0 -0.02 0.07, 0.16 0.5 0.1, flat, darkwood, 0.0) bp:b_ox 0)
+  t := t c_at (("arrow-3 limbs", 0.0 -0.24 0.1, 0.62 0.06 0.05, flat, wood, 0.0) bp:b_ox 0) c_at (("arrow-3 drum", 0.0 0.12 0.16, 0.08 0.08 0.16, 0.0 90.0 0.0, iron, 0.0) bp:c_ylinder 0)
+  b_olt := { (n, x) z1 -> ("arrow-3 bolt " c_at n, x c_at -0.12 0.15, 0.015 0.015 0.4, 90.0 0.0 0.0, iron, 0.0) bp:c_ylinder 0 }
+  t := t c_at (("1", -0.05) b_olt 0) c_at (("2", 0.0) b_olt 0) c_at (("3", 0.05) b_olt 0) c_at bp:ungroup
+  t := t c_at (("arrow-3 banner", -0.26 0.26 1.35, flat) bp:g_roup 0) c_at (("arrow-3 pole", 0.0 0.0 0.25, 0.015 0.015 0.5, flat, iron, 0.0) bp:c_ylinder 0)
+  t := t c_at (("arrow-3 flag", 0.13 0.0 0.4, 0.24 0.02 0.16, flat, red, 0.0) bp:b_ox 0) c_at bp:ungroup
+  t := t c_at ("arrow-3", 0.0 0.0 1.26, 10.0, 0.1) h:a_imKeys 0
+  t c_at ("arrow-3 banner", "idle", "rotation", flat, 0.0 0.0 25.0, idle, sway) h:k_ey 0
+}
+
+### Cannon towers
+
+h:c_annon1 := { z ->
+  t := (bp:p_iece "cannon-1") c_at (("cannon-1 base", 0.0 0.0 0.14, 0.34 0.34 0.28, flat, stone, 0.0) bp:c_ylinder 0)
+  t := t c_at (("cannon-1 rim", 0.0 0.0 0.28, 0.32 0.03, flat, darkstone, 0.0) bp:t_orus 0)
+  t := t c_at (("cannon-1 aim", 0.0 0.0 0.28, flat) bp:g_roup 0) c_at (("cannon-1 mount", 0.0 0.0 0.07, 0.22 0.22 0.14, flat, darkwood, 0.0) bp:b_ox 0)
+  t := t c_at (("cannon-1 barrel", 0.0 -0.16 0.12, 0.07 0.07 0.34, 90.0 0.0 0.0, black, 0.0) bp:c_ylinder 0) c_at (("cannon-1 muzzle", 0.0 -0.33 0.12, 0.07 0.02, 90.0 0.0 0.0, black, 0.0) bp:t_orus 0)
+  t c_at bp:ungroup c_at ("cannon-1", 0.0 0.0 0.28, 8.0, 0.1) h:a_imKeys 0
+}
+
+h:c_annon2 := { z ->
+  t := (bp:p_iece "cannon-2") c_at (("cannon-2 base", 0.0 0.0 0.17, 0.4 0.4 0.34, flat, stone, 0.0) bp:c_ylinder 0)
+  t := t c_at (("cannon-2 rim", 0.0 0.0 0.34, 0.38 0.035, flat, darkstone, 0.0) bp:t_orus 0)
+  t := t c_at (("cannon-2 aim", 0.0 0.0 0.34, flat) bp:g_roup 0) c_at (("cannon-2 mount", 0.0 0.02 0.08, 0.28 0.26 0.16, flat, darkwood, 0.0) bp:b_ox 0)
+  t := t c_at (("cannon-2 barrel", 0.0 -0.22 0.15, 0.08 0.08 0.52, 90.0 0.0 0.0, black, 0.0) bp:c_ylinder 0)
+  t := t c_at (("cannon-2 band 1", 0.0 -0.1 0.15, 0.085 0.022, 90.0 0.0 0.0, iron, 0.0) bp:t_orus 0) c_at (("cannon-2 band 2", 0.0 -0.42 0.15, 0.085 0.022, 90.0 0.0 0.0, iron, 0.0) bp:t_orus 0)
+  t c_at bp:ungroup c_at ("cannon-2", 0.0 0.0 0.34, 8.0, 0.12) h:a_imKeys 0
+}
+
+h:c_annon3 := { z ->
+  base := 6 2 r_eshape 0.0 0.0  0.4 0.0  0.4 0.1  0.33 0.16  0.31 0.36  0.0 0.36
+  t := (bp:p_iece "cannon-3") c_at (("cannon-3 base", 0.0 0.0 0.0, base, 16, flat, stone, 0.0) bp:l_athe 0)
+  t := t c_at (("cannon-3 ring", 0.0 0.0 0.38, 0.3 0.04, flat, brass, 0.0) bp:t_orus 0)
+  t := t c_at (("cannon-3 aim", 0.0 0.0 0.4, flat) bp:g_roup 0) c_at (("cannon-3 dome", 0.0 0.0 0.04, 0.26 0.26 0.18, flat, darkstone, 0.0) bp:s_phere 0)
+  b_arrel := { (n, x) z1 ->
+    a := (("cannon-3 barrel " c_at n, x c_at -0.26 0.1, 0.06 0.06 0.5, 90.0 0.0 0.0, black, 0.0) bp:c_ylinder 0)
+    a c_at (("cannon-3 trim " c_at n, x c_at -0.5 0.1, 0.065 0.02, 90.0 0.0 0.0, brass, 0.0) bp:t_orus 0)
+  }
+  t := t c_at (("1", -0.1) b_arrel 0) c_at (("2", 0.1) b_arrel 0) c_at (("cannon-3 hatch", 0.0 0.05 0.2, 0.08 0.08 0.03, flat, brass, 0.0) bp:c_ylinder 0)
+  t c_at bp:ungroup c_at ("cannon-3", 0.0 0.0 0.4, 15.0, 0.1) h:a_imKeys 0
+}
+
+### Frost towers
+
+# the crystal turns once round in idle and swells in fire
+h:c_rystalKeys := { (g, at, swell) z ->
+  ((g, "idle", "rotation", flat, 0.0 0.0 180.0, slow, turn) h:k_ey 0) c_at ((g, "fire", "scale", one, swell c_at swell c_at swell, fire, kick) h:k_ey 0)
+}
+
+h:f_rost1 := { z ->
+  ped := 7 2 r_eshape 0.0 0.0  0.3 0.0  0.3 0.08  0.17 0.14  0.13 0.38  0.2 0.44  0.0 0.44
+  t := (bp:p_iece "frost-1") c_at (("frost-1 pedestal", 0.0 0.0 0.0, ped, 12, flat, stone, 0.0) bp:l_athe 0)
+  t := t c_at (("frost-1 aim", 0.0 0.0 0.66, flat) bp:g_roup 0) c_at (("frost-1 crystal", 0.0 0.0 0.0, 0.1 0.1 0.22, flat, ice, 0.4) bp:o_ctahedron 0)
+  t c_at bp:ungroup c_at ("frost-1 aim", 0.0 0.0 0.66, 0.35) h:c_rystalKeys 0
+}
+
+h:f_rost2 := { z ->
+  ped := 7 2 r_eshape 0.0 0.0  0.34 0.0  0.34 0.1  0.2 0.16  0.15 0.55  0.22 0.62  0.0 0.62
+  t := (bp:p_iece "frost-2") c_at (("frost-2 pedestal", 0.0 0.0 0.0, ped, 12, flat, stone, 0.0) bp:l_athe 0)
+  t := t c_at (("frost-2 ring", 0.0 0.0 0.72, 0.2 0.022, flat, silver, 0.0) bp:t_orus 0)
+  t := t c_at (("frost-2 aim", 0.0 0.0 0.86, flat) bp:g_roup 0) c_at (("frost-2 crystal", 0.0 0.0 0.0, 0.1 0.1 0.24, flat, ice, 0.6) bp:o_ctahedron 0)
+  t := t c_at (("frost-2 shard 1", -0.1 0.0 -0.06, 0.06 0.06 0.15, 0.0 -25.0 0.0, ice, 0.6) bp:o_ctahedron 0) c_at (("frost-2 shard 2", 0.1 0.0 -0.06, 0.06 0.06 0.15, 0.0 25.0 0.0, ice, 0.6) bp:o_ctahedron 0)
+  t := t c_at (("frost-2 shard 3", 0.0 0.09 -0.08, 0.05 0.05 0.12, 25.0 0.0 0.0, ice, 0.6) bp:o_ctahedron 0)
+  t c_at bp:ungroup c_at ("frost-2 aim", 0.0 0.0 0.86, 0.3) h:c_rystalKeys 0
+}
+
+h:f_rost3 := { z ->
+  ped := 7 2 r_eshape 0.0 0.0  0.38 0.0  0.38 0.1  0.24 0.18  0.17 0.6  0.26 0.68  0.0 0.68
+  t := (bp:p_iece "frost-3") c_at (("frost-3 pedestal", 0.0 0.0 0.0, ped, 12, flat, stone, 0.0) bp:l_athe 0)
+  t := t c_at (("frost-3 aim", 0.0 0.0 1.0, flat) bp:g_roup 0) c_at (("frost-3 crystal", 0.0 0.0 0.0, 0.13 0.13 0.3, flat, ice, 2.5) bp:o_ctahedron 0) c_at bp:ungroup
+  s_hard := { (n, x, y) z1 -> ("frost-3 shard " c_at n, x c_at y c_at 0.0, 0.04 0.04 0.09, flat, ice, 1.5) bp:o_ctahedron 0 }
+  t := t c_at (("frost-3 shards", 0.0 0.0 0.96, flat) bp:g_roup 0) c_at (("1", 0.26, 0.0) s_hard 0) c_at (("2", -0.26, 0.0) s_hard 0) c_at (("3", 0.0, 0.26) s_hard 0) c_at (("4", 0.0, -0.26) s_hard 0) c_at bp:ungroup
+  t := t c_at ("frost-3 aim", 0.0 0.0 1.0, 0.4) h:c_rystalKeys 0
+  t := t c_at ("frost-3 aim", "idle", "location", 0.0 0.0 1.0, 0.0 0.0 0.05, slow, breathe) h:k_ey 0
+  t := t c_at ("frost-3 shards", "idle", "rotation", flat, 0.0 0.0 -90.0, slow, turn) h:k_ey 0
+  t c_at ("frost-3 shards", "fire", "scale", one, 0.6 0.6 0.6, fire, kick) h:k_ey 0
+}
+
+### Creeps
+
+# idle breathes the body; walk bobs it; hit throws it back and squashes
+# it
+h:b_odyKeys := { (p, at) z ->
+  b := p c_at " body"
+  t := ((b, "idle", "scale", one, 0.0 0.0 0.06, slow, breathe) h:k_ey 0) c_at ((b, "walk", "location", at, 0.0 0.0 0.02, walk, bob) h:k_ey 0)
+  t c_at ((b, "hit", "rotation", flat, -20.0 0.0 0.0, hit, kick) h:k_ey 0) c_at ((b, "hit", "scale", one, 0.08 0.08 -0.12, hit, kick) h:k_ey 0)
+}
+
+# a foot lifted in walk when its pair is (stepa or stepb)
+h:f_oot := { (name, at, ks) z -> (name, "walk", "location", at, 0.0 0.0 0.05, walk, ks) h:k_ey 0 }
+
+h:r_unner := { z ->
+  v := 8 3 r_eshape -0.2 -0.25 0.0  0.2 -0.25 0.0  0.2 0.25 0.0  -0.2 0.25 0.0  -0.2 0.25 0.24  0.2 0.25 0.24  -0.2 -0.25 0.06  0.2 -0.25 0.06
+  f := 6 4 r_eshape 0 1 2 3  3 2 5 4  7 6 4 5  0 1 7 6  0 6 4 3  1 2 5 7
+  t := (bp:p_iece "runner") c_at (("runner body", 0.0 0.0 0.12, flat) bp:g_roup 0) c_at (("runner shell", 0.0 0.0 0.0, v, f, flat, green, 0.0) bp:m_esh 0)
+  e_ye := { (n, x) z1 -> (("runner eye " c_at n, x c_at -0.16 0.12, 0.055 0.055 0.055, flat, white, 0.0) bp:s_phere 0) c_at (("runner pupil " c_at n, x c_at -0.205 0.125, 0.025 0.025 0.025, flat, black, 0.0) bp:s_phere 0) }
+  t := t c_at (("1", -0.09) e_ye 0) c_at (("2", 0.09) e_ye 0) c_at bp:ungroup
+  l_eg := { (n, at) z1 -> ("runner foot " c_at n, at, 0.07 0.07 0.14, flat, darkgreen, 0.0) bp:b_ox 0 }
+  t := t c_at (("1", -0.14 -0.16 0.07) l_eg 0) c_at (("2", 0.14 -0.16 0.07) l_eg 0) c_at (("3", -0.14 0.16 0.07) l_eg 0) c_at (("4", 0.14 0.16 0.07) l_eg 0)
+  t := t c_at ("runner", 0.0 0.0 0.12) h:b_odyKeys 0
+  t := t c_at (("runner foot 1", -0.14 -0.16 0.07, stepa) h:f_oot 0) c_at (("runner foot 4", 0.14 0.16 0.07, stepa) h:f_oot 0)
+  t c_at (("runner foot 2", 0.14 -0.16 0.07, stepb) h:f_oot 0) c_at ("runner foot 3", -0.14 0.16 0.07, stepb) h:f_oot 0
+}
+
+h:b_rute := { z ->
+  t := (bp:p_iece "brute") c_at (("brute body", 0.0 0.0 0.2, flat) bp:g_roup 0) c_at (("brute torso", 0.0 0.02 0.18, 0.5 0.42 0.36, flat, brown, 0.0) bp:b_ox 0)
+  t := t c_at (("brute head", 0.0 -0.26 0.22, 0.3 0.2 0.22, flat, darkbrown + 0.15, 0.0) bp:b_ox 0)
+  t := t c_at (("brute horn 1", -0.12 -0.3 0.4, 0.05 0.0 0.2, 0.0 -25.0 0.0, bone, 0.0) bp:c_one 0) c_at (("brute horn 2", 0.12 -0.3 0.4, 0.05 0.0 0.2, 0.0 25.0 0.0, bone, 0.0) bp:c_one 0)
+  t := t c_at (("brute eye 1", -0.07 -0.365 0.25, 0.03 0.03 0.03, flat, amber, 0.3) bp:s_phere 0) c_at (("brute eye 2", 0.07 -0.365 0.25, 0.03 0.03 0.03, flat, amber, 0.3) bp:s_phere 0) c_at bp:ungroup
+  t := t c_at (("brute foot 1", -0.15 0.0 0.1, 0.16 0.22 0.2, flat, darkbrown, 0.0) bp:b_ox 0) c_at (("brute foot 2", 0.15 0.0 0.1, 0.16 0.22 0.2, flat, darkbrown, 0.0) bp:b_ox 0)
+  t := t c_at ("brute", 0.0 0.0 0.2) h:b_odyKeys 0
+  t := t c_at ("brute body", "walk", "rotation", flat, 0.0 4.0 0.0, walk, sway) h:k_ey 0
+  t c_at (("brute foot 1", -0.15 0.0 0.1, stepa) h:f_oot 0) c_at ("brute foot 2", 0.15 0.0 0.1, stepb) h:f_oot 0
+}
+
+h:s_hield := { z ->
+  dome := 7 2 r_eshape 0.0 0.0  0.27 0.0  0.26 0.08  0.235 0.14  0.19 0.2  0.12 0.245  0.0 0.26
+  t := (bp:p_iece "shield") c_at (("shield body", 0.0 0.0 0.06, flat) bp:g_roup 0) c_at (("shield shell", 0.0 0.0 0.0, dome, 16, flat, steel, 0.0) bp:l_athe 0)
+  p_late := { (n, at, deg) z1 -> ("shield plate " c_at n, at, 0.2 0.04 0.1, 0.0 0.0 c_at deg, darksteel, 0.0) bp:b_ox 0 }
+  t := t c_at (("1", 0.0 -0.255 0.06, 0.0) p_late 0) c_at (("2", 0.0 0.255 0.06, 0.0) p_late 0) c_at (("3", -0.255 0.0 0.06, 90.0) p_late 0) c_at (("4", 0.255 0.0 0.06, 90.0) p_late 0)
+  t := t c_at (("shield eye 1", -0.06 -0.215 0.15, 0.03 0.03 0.03, flat, cyan, 0.5) bp:s_phere 0) c_at (("shield eye 2", 0.06 -0.215 0.15, 0.03 0.03 0.03, flat, cyan, 0.5) bp:s_phere 0) c_at bp:ungroup
+  f_t := { (n, at) z1 -> ("shield foot " c_at n, at, 0.05 0.05 0.06, flat, darksteel, 0.0) bp:c_ylinder 0 }
+  t := t c_at (("1", -0.15 -0.15 0.03) f_t 0) c_at (("2", 0.15 -0.15 0.03) f_t 0) c_at (("3", -0.15 0.15 0.03) f_t 0) c_at (("4", 0.15 0.15 0.03) f_t 0)
+  t := t c_at ("shield", 0.0 0.0 0.06) h:b_odyKeys 0
+  t := t c_at (("shield foot 1", -0.15 -0.15 0.03, stepa) h:f_oot 0) c_at (("shield foot 4", 0.15 0.15 0.03, stepa) h:f_oot 0)
+  t c_at (("shield foot 2", 0.15 -0.15 0.03, stepb) h:f_oot 0) c_at ("shield foot 3", -0.15 0.15 0.03, stepb) h:f_oot 0
+}
+
+### The pieces
+
+## the twelve pieces' names, as X_eTaL-games asked for them, a space
+## between: the files are NAME.glb
+l:names := "arrow-1 arrow-2 arrow-3 cannon-1 cannon-2 cannon-3 frost-1 frost-2 frost-3 runner brute shield"
+
+## td:m_odel name: Python making the piece NAME (one of td:names) and
+## keying its clips; "" for another name
+l:m_odel := { name ->
+  name m_atch "arrow-1" ? h:a_rrow1 0
+  name m_atch "arrow-2" ? h:a_rrow2 0
+  name m_atch "arrow-3" ? h:a_rrow3 0
+  name m_atch "cannon-1" ? h:c_annon1 0
+  name m_atch "cannon-2" ? h:c_annon2 0
+  name m_atch "cannon-3" ? h:c_annon3 0
+  name m_atch "frost-1" ? h:f_rost1 0
+  name m_atch "frost-2" ? h:f_rost2 0
+  name m_atch "frost-3" ? h:f_rost3 0
+  name m_atch "runner" ? h:r_unner 0
+  name m_atch "brute" ? h:b_rute 0
+  name m_atch "shield" ? h:s_hield 0
+  ""
+}
+
+## td:e_xport name: Python making the piece NAME, writing it as
+## out/NAME.glb with its clips, and reading its clips back into
+## out/NAME-clips.txt
+l:e_xport := { name -> (l:m_odel name) c_at (bp:e_xportPiece name) c_at bp:c_lips name }
+
+## td:clips: Python joining the pieces' clip files into out/clips.txt,
+## each piece's name, then its clips
+l:clips := "with open(os.path.join(out, \"clips.txt\"), \"w\") as f:\n    for n in \"" c_at l:names c_at "\".split():\n        f.write(n + \"\\n\" + open(os.path.join(out, n + \"-clips.txt\")).read())\n"
+
+## td:all: Python making every piece and writing its .glb (td:e_xport),
+## then out/clips.txt
+l:all := (l:e_xport "arrow-1") c_at (l:e_xport "arrow-2") c_at (l:e_xport "arrow-3") c_at (l:e_xport "cannon-1") c_at (l:e_xport "cannon-2") c_at (l:e_xport "cannon-3") c_at (l:e_xport "frost-1") c_at (l:e_xport "frost-2") c_at (l:e_xport "frost-3") c_at (l:e_xport "runner") c_at (l:e_xport "brute") c_at (l:e_xport "shield") c_at l:clips

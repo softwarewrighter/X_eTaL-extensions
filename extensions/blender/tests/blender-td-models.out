@@ -1,0 +1,155 @@
+making the twelve pieces with Blender ...
+the run, and the error lines in Blender's log:
+exit 0
+errors 0
+each piece's parts and triangles:
+mesh arrow-1 base: 8 vertices, 6 faces
+mesh arrow-1 bolt: 24 vertices, 14 faces
+mesh arrow-1 deck: 8 vertices, 6 faces
+mesh arrow-1 limbs: 8 vertices, 6 faces
+mesh arrow-1 post: 8 vertices, 6 faces
+mesh arrow-1 stock: 8 vertices, 6 faces
+mesh arrow-2 base: 8 vertices, 6 faces
+mesh arrow-2 left bolt: 24 vertices, 14 faces
+mesh arrow-2 left limbs: 8 vertices, 6 faces
+mesh arrow-2 left stock: 8 vertices, 6 faces
+mesh arrow-2 merlon 1: 8 vertices, 6 faces
+mesh arrow-2 merlon 2: 8 vertices, 6 faces
+mesh arrow-2 merlon 3: 8 vertices, 6 faces
+mesh arrow-2 merlon 4: 8 vertices, 6 faces
+mesh arrow-2 right bolt: 24 vertices, 14 faces
+mesh arrow-2 right limbs: 8 vertices, 6 faces
+mesh arrow-2 right stock: 8 vertices, 6 faces
+mesh arrow-2 tower: 8 vertices, 6 faces
+mesh arrow-3 base: 8 vertices, 6 faces
+mesh arrow-3 bolt 1: 24 vertices, 14 faces
+mesh arrow-3 bolt 2: 24 vertices, 14 faces
+mesh arrow-3 bolt 3: 24 vertices, 14 faces
+mesh arrow-3 drum: 24 vertices, 14 faces
+mesh arrow-3 flag: 8 vertices, 6 faces
+mesh arrow-3 frame: 8 vertices, 6 faces
+mesh arrow-3 ledge: 8 vertices, 6 faces
+mesh arrow-3 limbs: 8 vertices, 6 faces
+mesh arrow-3 merlon 1: 8 vertices, 6 faces
+mesh arrow-3 merlon 2: 8 vertices, 6 faces
+mesh arrow-3 merlon 3: 8 vertices, 6 faces
+mesh arrow-3 merlon 4: 8 vertices, 6 faces
+mesh arrow-3 pole: 24 vertices, 14 faces
+mesh arrow-3 tower: 8 vertices, 6 faces
+mesh brute eye 1: 86 vertices, 96 faces
+mesh brute eye 2: 86 vertices, 96 faces
+mesh brute foot 1: 8 vertices, 6 faces
+mesh brute foot 2: 8 vertices, 6 faces
+mesh brute head: 8 vertices, 6 faces
+mesh brute horn 1: 13 vertices, 13 faces
+mesh brute horn 2: 13 vertices, 13 faces
+mesh brute torso: 8 vertices, 6 faces
+mesh cannon-1 barrel: 24 vertices, 14 faces
+mesh cannon-1 base: 24 vertices, 14 faces
+mesh cannon-1 mount: 8 vertices, 6 faces
+mesh cannon-1 muzzle: 128 vertices, 128 faces
+mesh cannon-1 rim: 128 vertices, 128 faces
+mesh cannon-2 band 1: 128 vertices, 128 faces
+mesh cannon-2 band 2: 128 vertices, 128 faces
+mesh cannon-2 barrel: 24 vertices, 14 faces
+mesh cannon-2 base: 24 vertices, 14 faces
+mesh cannon-2 mount: 8 vertices, 6 faces
+mesh cannon-2 rim: 128 vertices, 128 faces
+mesh cannon-3 barrel 1: 24 vertices, 14 faces
+mesh cannon-3 barrel 2: 24 vertices, 14 faces
+mesh cannon-3 base: 96 vertices, 80 faces
+mesh cannon-3 dome: 86 vertices, 96 faces
+mesh cannon-3 hatch: 24 vertices, 14 faces
+mesh cannon-3 ring: 128 vertices, 128 faces
+mesh cannon-3 trim 1: 128 vertices, 128 faces
+mesh cannon-3 trim 2: 128 vertices, 128 faces
+mesh frost-1 crystal: 6 vertices, 8 faces
+mesh frost-1 pedestal: 84 vertices, 72 faces
+mesh frost-2 crystal: 6 vertices, 8 faces
+mesh frost-2 pedestal: 84 vertices, 72 faces
+mesh frost-2 ring: 128 vertices, 128 faces
+mesh frost-2 shard 1: 6 vertices, 8 faces
+mesh frost-2 shard 2: 6 vertices, 8 faces
+mesh frost-2 shard 3: 6 vertices, 8 faces
+mesh frost-3 crystal: 6 vertices, 8 faces
+mesh frost-3 pedestal: 84 vertices, 72 faces
+mesh frost-3 shard 1: 6 vertices, 8 faces
+mesh frost-3 shard 2: 6 vertices, 8 faces
+mesh frost-3 shard 3: 6 vertices, 8 faces
+mesh frost-3 shard 4: 6 vertices, 8 faces
+mesh runner eye 1: 86 vertices, 96 faces
+mesh runner eye 2: 86 vertices, 96 faces
+mesh runner foot 1: 8 vertices, 6 faces
+mesh runner foot 2: 8 vertices, 6 faces
+mesh runner foot 3: 8 vertices, 6 faces
+mesh runner foot 4: 8 vertices, 6 faces
+mesh runner pupil 1: 86 vertices, 96 faces
+mesh runner pupil 2: 86 vertices, 96 faces
+mesh runner shell: 8 vertices, 6 faces
+mesh shield eye 1: 86 vertices, 96 faces
+mesh shield eye 2: 86 vertices, 96 faces
+mesh shield foot 1: 24 vertices, 14 faces
+mesh shield foot 2: 24 vertices, 14 faces
+mesh shield foot 3: 24 vertices, 14 faces
+mesh shield foot 4: 24 vertices, 14 faces
+mesh shield plate 1: 8 vertices, 6 faces
+mesh shield plate 2: 8 vertices, 6 faces
+mesh shield plate 3: 8 vertices, 6 faces
+mesh shield plate 4: 8 vertices, 6 faces
+mesh shield shell: 112 vertices, 96 faces
+piece arrow-1: 6 parts, 104 triangles
+piece arrow-2: 12 parts, 208 triangles
+piece arrow-3: 15 parts, 340 triangles
+piece brute: 8 parts, 428 triangles
+piece cannon-1: 5 parts, 612 triangles
+piece cannon-2: 6 parts, 868 triangles
+piece cannon-3: 8 parts, 1228 triangles
+piece frost-1: 2 parts, 152 triangles
+piece frost-2: 6 parts, 432 triangles
+piece frost-3: 6 parts, 184 triangles
+piece runner: 9 parts, 732 triangles
+piece shield: 11 parts, 752 triangles
+objects: arrow-1 arrow-1 aim arrow-1 base arrow-1 bolt arrow-1 deck arrow-1 limbs arrow-1 post arrow-1 stock arrow-2 arrow-2 aim arrow-2 base arrow-2 left bolt arrow-2 left limbs arrow-2 left stock arrow-2 merlon 1 arrow-2 merlon 2 arrow-2 merlon 3 arrow-2 merlon 4 arrow-2 right bolt arrow-2 right limbs arrow-2 right stock arrow-2 tower arrow-3 arrow-3 aim arrow-3 banner arrow-3 base arrow-3 bolt 1 arrow-3 bolt 2 arrow-3 bolt 3 arrow-3 drum arrow-3 flag arrow-3 frame arrow-3 ledge arrow-3 limbs arrow-3 merlon 1 arrow-3 merlon 2 arrow-3 merlon 3 arrow-3 merlon 4 arrow-3 pole arrow-3 tower brute brute body brute eye 1 brute eye 2 brute foot 1 brute foot 2 brute head brute horn 1 brute horn 2 brute torso cannon-1 cannon-1 aim cannon-1 barrel cannon-1 base cannon-1 mount cannon-1 muzzle cannon-1 rim cannon-2 cannon-2 aim cannon-2 band 1 cannon-2 band 2 cannon-2 barrel cannon-2 base cannon-2 mount cannon-2 rim cannon-3 cannon-3 aim cannon-3 barrel 1 cannon-3 barrel 2 cannon-3 base cannon-3 dome cannon-3 hatch cannon-3 ring cannon-3 trim 1 cannon-3 trim 2 frost-1 frost-1 aim frost-1 crystal frost-1 pedestal frost-2 frost-2 aim frost-2 crystal frost-2 pedestal frost-2 ring frost-2 shard 1 frost-2 shard 2 frost-2 shard 3 frost-3 frost-3 aim frost-3 crystal frost-3 pedestal frost-3 shard 1 frost-3 shard 2 frost-3 shard 3 frost-3 shard 4 frost-3 shards runner runner body runner eye 1 runner eye 2 runner foot 1 runner foot 2 runner foot 3 runner foot 4 runner pupil 1 runner pupil 2 runner shell shield shield body shield eye 1 shield eye 2 shield foot 1 shield foot 2 shield foot 3 shield foot 4 shield plate 1 shield plate 2 shield plate 3 shield plate 4 shield shell
+
+each piece's clips, read back from its .glb:
+arrow-1
+clip idle 0.00-2.00 s: arrow-1 aim rotation
+clip fire 0.00-0.40 s: arrow-1 aim translation
+arrow-2
+clip idle 0.00-2.00 s: arrow-2 aim rotation
+clip fire 0.00-0.40 s: arrow-2 aim translation
+arrow-3
+clip idle 0.00-2.00 s: arrow-3 aim rotation, arrow-3 banner rotation
+clip fire 0.00-0.40 s: arrow-3 aim translation
+cannon-1
+clip idle 0.00-2.00 s: cannon-1 aim rotation
+clip fire 0.00-0.40 s: cannon-1 aim translation
+cannon-2
+clip idle 0.00-2.00 s: cannon-2 aim rotation
+clip fire 0.00-0.40 s: cannon-2 aim translation
+cannon-3
+clip idle 0.00-2.00 s: cannon-3 aim rotation
+clip fire 0.00-0.40 s: cannon-3 aim translation
+frost-1
+clip idle 0.00-2.00 s: frost-1 aim rotation
+clip fire 0.00-0.40 s: frost-1 aim scale
+frost-2
+clip idle 0.00-2.00 s: frost-2 aim rotation
+clip fire 0.00-0.40 s: frost-2 aim scale
+frost-3
+clip idle 0.00-2.00 s: frost-3 aim rotation, frost-3 aim translation, frost-3 shards rotation
+clip fire 0.00-0.40 s: frost-3 aim scale, frost-3 shards scale
+runner
+clip idle 0.00-2.00 s: runner body scale
+clip walk 0.00-1.00 s: runner body translation, runner foot 1 translation, runner foot 2 translation, runner foot 3 translation, runner foot 4 translation
+clip hit 0.00-0.30 s: runner body rotation, runner body scale
+brute
+clip idle 0.00-2.00 s: brute body scale
+clip walk 0.00-1.00 s: brute body rotation, brute body translation, brute foot 1 translation, brute foot 2 translation
+clip hit 0.00-0.30 s: brute body rotation, brute body scale
+shield
+clip idle 0.00-2.00 s: shield body scale
+clip walk 0.00-1.00 s: shield body translation, shield foot 1 translation, shield foot 2 translation, shield foot 3 translation, shield foot 4 translation
+clip hit 0.00-0.30 s: shield body rotation, shield body scale
+
+12

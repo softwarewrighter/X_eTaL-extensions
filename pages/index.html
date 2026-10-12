@@ -13,7 +13,7 @@
   <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
   <ul>
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
-    <li><a href="#blender">blender</a><ul><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-hello">hello</a></li></ul></li>
+    <li><a href="#blender">blender</a><ul><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
     <li><a href="#clock">clock</a><ul><li><a href="#clock-bridge-cost">bridge-cost</a></li></ul></li>
     <li><a href="#digest">digest</a></li>
@@ -79,6 +79,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <p class="note">Blender, 1: X_eTaL runs Blender. The program writes two Python files -- the launcher, which runs Blender in the background (with its factory settings, so the run never depends on yours), and the script Blender runs inside, which writes a report -- then runs the launcher with python3 and reads the report back. The chain: X_eTaL, the extension, python3, Blender, Python inside Blender.</p>
       <video src="blender/hello.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo blender hello</pre>
+    </section>
+    <section class="panel demo" id="blender-td-models">
+      <h3>blender / td-models <a class="docs" href="doc/extensions-blender-demos-td-models.xtl.html">source and docs</a></h3>
+      <p class="note">Blender, 3: game pieces. The twelve tower defense pieces X_eTaL-games asked for -- arrow, cannon and frost towers at three levels, runner, brute and shield creeps -- described in X_eTaL (Td.xtl: boxes, cylinders, cones, spheres, rings, crystals and turned profiles, the parts that move in groups, the clips keyed from each part&#x27;s rest), written as one bpy script, and exported by Blender as one glTF file a piece with its named clips: idle, fire, walk, hit. Each file&#x27;s clips are read back from it.</p>
+      <p class="note">(no recording yet)</p>
+      <pre class="source">just demo blender td-models</pre>
     </section>
   </div>
   <h2 id="canvas"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/canvas/docs/README.md">canvas</a> <a class="docs" href="doc/extensions-canvas-lib-Canvas.xtl.html">facade docs</a></h2>
@@ -282,7 +288,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at 4245c6a</span>
+  <span>built at 47e3bc7</span>
 </footer>
 </body>
 </html>

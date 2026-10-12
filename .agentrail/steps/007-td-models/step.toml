@@ -1,6 +1,6 @@
 number = 7
 slug = "td-models"
-status = "pending"
+status = "in-progress"
 description = "Saga 15 step 7: the twelve tower-defense pieces of the ask (arrow, cannon, fr..."
 role = "production"
 context_files = []
