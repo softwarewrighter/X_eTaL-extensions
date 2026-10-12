@@ -1,0 +1,1 @@
+Twelve TD pieces (demos/Td.xtl) exported as work/td/out/NAME.glb with clips idle/fire/walk/hit, read back exactly; 104-1228 triangles; Bpy groups and bp:m_esh; golden blender-td-models. Files are local (work/), published in step 8.
