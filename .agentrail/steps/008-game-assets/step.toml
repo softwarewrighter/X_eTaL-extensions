@@ -1,9 +1,10 @@
 number = 8
 slug = "game-assets"
-status = "in-progress"
+status = "completed"
 description = "Saga 15 step 8 (the user: a demo here, not playable, a recording of running X..."
 role = "production"
 context_files = []
 created_at = "2026-10-11T15:47:02"
+completed_at = "2026-10-11T18:54:29"
 task_type = "feature"
-commits = []
+commits = ["3a14f1e3b09245ca2ec8801f8d9fda3e184b01b2"]

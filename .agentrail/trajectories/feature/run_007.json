@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "state": {
+    "number": 8,
+    "step": "game-assets"
+  },
+  "action": "Td.xtl show/manifest/page; publish-td.sh; videos.sh intro= for .film; headless frame checks; NLA rest-track fix for the film; gate",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-11T18:54:29"
+}

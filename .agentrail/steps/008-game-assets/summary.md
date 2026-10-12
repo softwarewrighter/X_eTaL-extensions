@@ -1,0 +1,1 @@
+game-assets demo (X_eTaL->python->Blender->python): 12 .glb + previews + lineup video + manifest (digest SHA-256) + model-viewer page; published at pages/blender/td (made at f231c88); recording joins a vhs intro to Blender's lineup; td-models recording; golden blender-game-assets-quick
