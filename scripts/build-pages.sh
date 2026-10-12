@@ -25,6 +25,12 @@ PAGES_DIR="$out" "$root/scripts/build-catalog.py"
 DOC_OUT="$out/doc" "$root/scripts/doc-site.sh" > /dev/null
 # the literate documents (docs/literate/*.org), as X_eTaL exports its own
 "$root/scripts/literate-html.sh" "$out/literate"
+# the tower defense pieces: a demo makes them and scripts/publish-td.sh
+# puts them in pages/blender/td, so the build keeps that folder as it is
+if [ -d "$root/pages/blender/td" ]; then
+  mkdir -p "$out/blender/td"
+  cp -R "$root/pages/blender/td/." "$out/blender/td/"
+fi
 [ -n "${PAGES_DIR:-}" ] && exit 0
 "$root/scripts/sync-pages.py" "$out" "$root/pages"
 echo "pages/ built; commit it (git add pages/) and push to publish."

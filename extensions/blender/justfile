@@ -40,6 +40,10 @@ list: build
 demo name: build
     {{root}}/target/debug/xetal-x --ext {{root}}/extensions run --draw work/draw "demos/$1.xtl"
 
+# Publish the tower defense pieces demos/game-assets.xtl made on the site (pages/blender/td)
+publish-td:
+    {{root}}/scripts/publish-td.sh
+
 # Play the orbit video demos/cubes.xtl rendered (work/cubes/out/orbit.mp4), without rendering it again
 orbit:
     @[ -f work/cubes/out/orbit.mp4 ] || { echo "no orbit yet: just demo blender cubes renders it (about five minutes)"; exit 1; }

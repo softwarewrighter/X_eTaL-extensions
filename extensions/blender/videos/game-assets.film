@@ -1,0 +1,12 @@
+# extensions/blender/videos/game-assets.webm and .webp: X_eTaL making
+# game assets with Blender -- first the terminal (the program, a piece
+# described in X_eTaL, the twelve made in two seconds and their clips
+# read back: game-assets-intro.vhs), then Blender's render of the twelve
+# lined up, turning, playing idle, then fire and walk -- made by
+# demos/game-assets.xtl (just videos; about two minutes when the video
+# is not there yet).
+demo=game-assets
+file=work/td/lineup.mp4
+intro=game-assets-intro.vhs
+scale=800
+fps=15

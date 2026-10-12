@@ -50,9 +50,14 @@
 <ul>
 <li><a href="extensions-blender-demos-cubes.xtl.html">cubes.xtl</a></li>
 <li><a href="extensions-blender-demos-Sizes.xtl.html">Sizes.xtl</a></li>
+<li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
+<li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
 <li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
 <li><a href="extensions-blender-demos-td-models.xtl.html">td-models.xtl</a></li>
-<li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
+</ul>
+<h3>extensions/digest/lib/</h3>
+<ul>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
 </ul>
 <h3>extensions/canvas/demos/</h3>
 <ul>
@@ -69,10 +74,6 @@
 <h3>extensions/hello/lib/</h3>
 <ul>
 <li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
-</ul>
-<h3>extensions/digest/lib/</h3>
-<ul>
-<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
 </ul>
 <h3>extensions/hello/demos/</h3>
 <ul>
@@ -222,7 +223,7 @@ settings on SCRIPT, passing ARGS after &quot;--&quot;; a Python error inside
 makes the run fail.</p>
 </div>
 <pre class="code">ˡlauncher ← <span class="c-string">&quot;import os, subprocess, sys\nblender = os.environ.get(\&quot;XETAL_BLENDER\&quot;) or sys.exit(\&quot;no Blender found\&quot;)\nrun = [blender, \&quot;--background\&quot;, \&quot;--factory-startup\&quot;, \&quot;--python-exit-code\&quot;, \&quot;1\&quot;, \&quot;--python\&quot;, sys.argv[1], \&quot;--\&quot;] + sys.argv[2:]\nsys.exit(subprocess.run(run).returncode)\n&quot;</span></pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-cubes.xtl.html#n">n</a>, <a href="extensions-blender-demos-td-models.xtl.html#n">n</a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-cubes.xtl.html#n">n</a>, <a href="extensions-blender-demos-game-assets.xtl.html#n">n</a>, <a href="extensions-blender-demos-td-models.xtl.html#n">n</a></div>
 </div>
 <div class="item" id="l.head">
 <h3><a href="#l.head">ˡhead</a> <span class="type">: Char</span></h3>
@@ -239,7 +240,7 @@ export_piece writes one piece as glTF, its clips with it; glb_clips
 reads a .glb's clips back; triangles counts a piece's</p>
 </div>
 <pre class="code">ˡhead ← <span class="c-string">&quot;import bmesh, bpy, math, os, sys\nargs = sys.argv[sys.argv.index(\&quot;--\&quot;) + 1:]\nout = args[0]\nos.makedirs(out, exist_ok=True)\nbpy.ops.wm.read_factory_settings(use_empty=True)\nbpy.context.preferences.edit.keyframe_new_interpolation_type = \&quot;LINEAR\&quot;\nscene = bpy.context.scene\nscene.render.fps = 30\n\ndef nums(text, k):\n    v = [float(t) for t in text.split()]\n    return [tuple(v[i:i + k]) for i in range(0, len(v), k)]\n\ndef material(name, rgb, emit=0.0):\n    m = bpy.data.materials.new(name)\n    m.use_nodes = True\n    p = m.node_tree.nodes[\&quot;Principled BSDF\&quot;]\n    p.inputs[\&quot;Base Color\&quot;].default_value = rgb + (1.0,)\n    p.inputs[\&quot;Emission Color\&quot;].default_value = rgb + (1.0,)\n    p.inputs[\&quot;Emission Strength\&quot;].default_value = emit\n    return m\n\ndef link(obj, mat):\n    scene.collection.objects.link(obj)\n    obj.data.materials.append(mat)\n    return obj\n\ndef piece(name):\n    p = bpy.data.objects.new(name, None)\n    scene.collection.objects.link(p)\n    return p\n\ndef made(name):\n    o = bpy.context.active_object\n    o.name = name\n    o.data.name = name\n    return o\n\ndef mesh_object(name, verts, faces):\n    m = bpy.data.meshes.new(name)\n    m.from_pydata(verts, [], faces)\n    m.validate()\n    bm = bmesh.new()\n    bm.from_mesh(m)\n    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)\n    bm.to_mesh(m)\n    bm.free()\n    m.update()\n    o = bpy.data.objects.new(name, m)\n    scene.collection.objects.link(o)\n    return o\n\ndef group(name, owner, at, turn):\n    g = bpy.data.objects.new(name, None)\n    scene.collection.objects.link(g)\n    g.parent = owner\n    g.location = at\n    g.rotation_euler = tuple(math.radians(a) for a in turn)\n    return g\n\ndef attach(obj, owner, mat, at, turn):\n    obj.parent = owner\n    obj.location = at\n    obj.rotation_euler = tuple(math.radians(a) for a in turn)\n    obj.data.materials.clear()\n    obj.data.materials.append(mat)\n    return obj\n\nactions = {}\n\ndef keys(name, clip, path, times, values):\n    o = bpy.data.objects[name]\n    if o.animation_data is None:\n        o.animation_data_create()\n    act = actions.get((name, clip))\n    if act is None:\n        act = bpy.data.actions.new(name + \&quot; \&quot; + clip)\n        actions[(name, clip)] = act\n    rest = tuple(getattr(o, path))\n    o.animation_data.action = act\n    for t, v in zip(times, values):\n        if path == \&quot;rotation_euler\&quot;:\n            v = tuple(math.radians(a) for a in v)\n        setattr(o, path, v)\n        o.keyframe_insert(data_path=path, frame=round(t * scene.render.fps))\n    o.animation_data.action = None\n    setattr(o, path, rest)\n\ndef clips():\n    for (name, clip), act in actions.items():\n        o = bpy.data.objects[name]\n        if not any(t.name == clip for t in o.animation_data.nla_tracks):\n            t = o.animation_data.nla_tracks.new()\n            t.name = clip\n            t.strips.new(clip, 0, act)\n\ndef glb_clips(path):\n    import json, struct\n    data = open(path, \&quot;rb\&quot;).read()\n    g = json.loads(data[20:20 + struct.unpack(\&quot;&lt;I\&quot;, data[12:16])[0]])\n    found = []\n    for a in g.get(\&quot;animations\&quot;, []):\n        times = [g[\&quot;accessors\&quot;][s[\&quot;input\&quot;]] for s in a[\&quot;samplers\&quot;]]\n        what = sorted(\&quot;%s %s\&quot; % (g[\&quot;nodes\&quot;][c[\&quot;target\&quot;][\&quot;node\&quot;]][\&quot;name\&quot;], c[\&quot;target\&quot;][\&quot;path\&quot;]) for c in a[\&quot;channels\&quot;])\n        found.append(\&quot;clip %s %.2f-%.2f s: %s\&quot; % (a[\&quot;name\&quot;], min(t[\&quot;min\&quot;][0] for t in times), max(t[\&quot;max\&quot;][0] for t in times), \&quot;, \&quot;.join(what)))\n    return found\n\ndef export_piece(owner, path):\n    clips()\n    bpy.ops.object.select_all(action=\&quot;DESELECT\&quot;)\n    owner.select_set(True)\n    for c in owner.children_recursive:\n        c.select_set(True)\n    bpy.context.view_layer.objects.active = owner\n    bpy.ops.export_scene.gltf(filepath=path, export_format=\&quot;GLB\&quot;, use_selection=True, export_animations=True, export_animation_mode=\&quot;NLA_TRACKS\&quot;)\n\ndef triangles(owner):\n    return sum(sum(len(p.vertices) - 2 for p in c.data.polygons) for c in owner.children_recursive if c.type == \&quot;MESH\&quot;)\n\n&quot;</span></pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-Sizes.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-td-models.xtl.html#n">n</a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-Sizes.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-game-assets.xtl.html#script">script</a>, <a href="extensions-blender-demos-td-models.xtl.html#n">n</a></div>
 </div>
 <h2 class="section" id="section-2">Numbers into Python</h2>
 <div class="item" id="h.n_ums">
@@ -325,7 +326,7 @@ to fall on</p>
   t ← <span class="c-string">&quot;mesh = bpy.data.meshes.new(\&quot;ground\&quot;)\nmesh.from_pydata(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((v, <span class="c-number">3</span>) <a href="extensions-blender-lib-Bpy.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, [], [(0, 1, 2, 3)])\nmesh.update()\n&quot;</span>
   t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;link(bpy.data.objects.new(\&quot;ground\&quot;, mesh), material(\&quot;ground\&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#h.t_uple" class="c-libfunc">ʰt̲uple</a> rgb) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;))\n\n&quot;</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-Sizes.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-Sizes.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-game-assets.xtl.html#script">script</a></div>
 </div>
 <h2 class="section" id="section-4">Pieces of parts</h2>
 <div class="item" id="l.p_iece">
@@ -593,7 +594,7 @@ world's color and a sun from above to one side, soft shadows</p>
   t ← <span class="c-string">&quot;world = bpy.data.worlds.new(\&quot;world\&quot;)\nworld.use_nodes = True\nworld.node_tree.nodes[\&quot;Background\&quot;].inputs[\&quot;Color\&quot;].default_value = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#h.t_uple" class="c-libfunc">ʰt̲uple</a> sky <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\nscene.world = world\n&quot;</span>
   t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;sun = bpy.data.objects.new(\&quot;sun\&quot;, bpy.data.lights.new(\&quot;sun\&quot;, type=\&quot;SUN\&quot;))\nsun.data.energy = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> strength) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\nsun.data.angle = 0.2\nsun.rotation_euler = (math.radians(50), 0.0, math.radians(30))\nscene.collection.objects.link(sun)\n\n&quot;</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-Sizes.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-Sizes.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-game-assets.xtl.html#script">script</a></div>
 </div>
 <div class="item" id="l.o_rbit">
 <h3><a href="#l.o_rbit"><span class="c-libfunc">ˡo̲rbit</span></a> <span class="type">: (Num d, Any e) =&gt; (a, b, c, d) -&gt; e -&gt; Char</span></h3>
@@ -644,7 +645,7 @@ look of a drawing</p>
 (H.264)</p>
 </div>
 <pre class="code"><span class="c-libfunc">ˡv̲ideo</span> ← { file → <span class="c-string">&quot;scene.render.image_settings.media_type = \&quot;VIDEO\&quot;\nscene.render.image_settings.file_format = \&quot;FFMPEG\&quot;\nscene.render.ffmpeg.format = \&quot;MPEG4\&quot;\nscene.render.ffmpeg.codec = \&quot;H264\&quot;\nscene.render.ffmpeg.constant_rate_factor = \&quot;HIGH\&quot;\nscene.render.filepath = os.path.join(out, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> file) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\nbpy.ops.render.render(animation=True)\n\n&quot;</span> }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-cubes.xtl.html#script">script</a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-cubes.xtl.html#script">script</a>, <a href="extensions-blender-demos-game-assets.xtl.html#script">script</a></div>
 </div>
 <div class="item" id="l.e_xports">
 <h3><a href="#l.e_xports"><span class="c-libfunc">ˡe̲xports</span></a> <span class="type">: Char -&gt; Char</span></h3>
@@ -665,7 +666,7 @@ faces, each piece's parts and triangles, and each object, by name --
 what a test checks</p>
 </div>
 <pre class="code">ˡreport ← <span class="c-string">&quot;with open(os.path.join(out, \&quot;report.txt\&quot;), \&quot;w\&quot;) as f:\n    for m in sorted(bpy.data.meshes, key=lambda m: m.name):\n        f.write(\&quot;mesh %s: %d vertices, %d faces\\n\&quot; % (m.name, len(m.vertices), len(m.polygons)))\n    for o in sorted(scene.objects, key=lambda o: o.name):\n        if o.type == \&quot;EMPTY\&quot; and o.parent is None and any(c.type == \&quot;MESH\&quot; for c in o.children_recursive):\n            f.write(\&quot;piece %s: %d parts, %d triangles\\n\&quot; % (o.name, sum(c.type == \&quot;MESH\&quot; for c in o.children_recursive), triangles(o)))\n    f.write(\&quot;objects: \&quot; + \&quot; \&quot;.join(sorted(o.name for o in scene.objects)) + \&quot;\\n\&quot;)\n&quot;</span></pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-Sizes.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-td-models.xtl.html#n">n</a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-Sizes.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-game-assets.xtl.html#script">script</a>, <a href="extensions-blender-demos-td-models.xtl.html#n">n</a></div>
 </div>
 </main>
 </body>

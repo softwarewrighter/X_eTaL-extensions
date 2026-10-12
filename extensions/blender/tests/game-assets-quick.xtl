@@ -1,0 +1,21 @@
+## demos/game-assets.xtl small and quick: the twelve pieces, each
+## rendered alone at 32 pixels, the lineup at 160 by 90 for four frames,
+## then the manifest (every file hashed) and the page.
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"td:" u_se< "Td"
+
+script := bp:head c_at td:all c_at ((0.55 0.62 0.72, 3.0) bp:l_ights 0) c_at td:show
+script := script c_at (td:s_tills 32) c_at ((0.0 0.0 0.0, 30.0, 0.042 0.205 0.058) bp:g_round 0) c_at ((160, 90, 4) td:f_ilm 0) c_at bp:v_ideo "../lineup.mp4"
+n := "work/qtd/run.py" bl:w_rite! bp:launcher
+n := "work/qtd/assets.py" bl:w_rite! script
+r := "work/qtd/run.py" bl:r_un! "work/qtd/assets.py work/qtd/site"
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+m := "work/qtd/site/manifest.toml" bl:w_rite! ("work/qtd/site", "Blender") td:m_anifest 0
+p := "work/qtd/site/index.html" bl:w_rite! td:page
+"the manifest:"
+bl:r_ead "work/qtd/site/manifest.toml"

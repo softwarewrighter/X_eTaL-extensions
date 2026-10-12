@@ -50,9 +50,14 @@
 <ul>
 <li><a href="extensions-blender-demos-cubes.xtl.html">cubes.xtl</a></li>
 <li><a href="extensions-blender-demos-Sizes.xtl.html">Sizes.xtl</a></li>
+<li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
+<li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
 <li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
 <li><a href="extensions-blender-demos-td-models.xtl.html">td-models.xtl</a></li>
-<li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
+</ul>
+<h3>extensions/digest/lib/</h3>
+<ul>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
 </ul>
 <h3>extensions/canvas/demos/</h3>
 <ul>
@@ -69,10 +74,6 @@
 <h3>extensions/hello/lib/</h3>
 <ul>
 <li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
-</ul>
-<h3>extensions/digest/lib/</h3>
-<ul>
-<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
 </ul>
 <h3>extensions/hello/demos/</h3>
 <ul>
@@ -271,7 +272,7 @@ each block's color) and a crosshair at the center</p>
 </div>
 <h2 class="section" id="section-2">Digging and building</h2>
 <div class="item" id="l.d_ig">
-<h3><a href="#l.d_ig"><span class="c-libfunc">ˡd̲ig</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e) =&gt; ((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), d, e) -&gt; ((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), d, e)</span></h3>
+<h3><a href="#l.d_ig"><span class="c-libfunc">ˡd̲ig</span></a> <span class="type">: (Any a, Any b, Any c, Num d, Any e, Any f) =&gt; ((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, d), e, f) -&gt; ((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, d), e, f)</span></h3>
 <div class="meta">function &middot; <a href="extensions-scene-demos-Play.xtl.src.html#L62">line 62</a></div>
 <div class="doc">
 <p>pl:d_ig s: the block looked at dug out (air; water when it is beside
@@ -287,7 +288,7 @@ water, which then flows), if there is one; said</p>
 <div class="uses">Used in: <a href="extensions-scene-demos-Play.xtl.html#h.w_hen"><span class="c-libfunc">ʰw̲hen</span></a></div>
 </div>
 <div class="item" id="l.p_lace">
-<h3><a href="#l.p_lace"><span class="c-libfunc">ˡp̲lace</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g, Any h, Num i) =&gt; (((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), d, (e, f, g, h, i)), Int) -&gt; (((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), d, (e, f, g, h, i)), Int)</span></h3>
+<h3><a href="#l.p_lace"><span class="c-libfunc">ˡp̲lace</span></a> <span class="type">: (Any a, Any b, Any c, Num d, Any e, Any f, Any g, Any h, Any i, Num j) =&gt; (((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, d), e, (f, g, h, i, j)), Int) -&gt; (((Float, a, Float, Float, b, c), (Int, Int, Box Int, Box Int, Int, Int, Int, d), e, (f, g, h, i, j)), Int)</span></h3>
 <div class="meta">function &middot; <a href="extensions-scene-demos-Play.xtl.src.html#L73">line 73</a></div>
 <div class="doc">
 <p>pl:p_lace (s, sel): a block of the chosen kind placed in the empty
@@ -346,7 +347,7 @@ above the world's top; said</p>
 <div class="uses">Used in: <a href="extensions-scene-demos-Play.xtl.html#l.f_rameV"><span class="c-libfunc">ˡf̲rameV</span></a></div>
 </div>
 <div class="item" id="h.w_hen">
-<h3><a href="#h.w_hen"><span class="c-libfunc">ʰw̲hen</span></a> <span class="type">: (Truthy a, Any b, Any c, Any d, Any e, Any f) =&gt; a -&gt; ((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), e, f) -&gt; ((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), e, f)</span></h3>
+<h3><a href="#h.w_hen"><span class="c-libfunc">ʰw̲hen</span></a> <span class="type">: (Truthy a, Any b, Any c, Any d, Num e, Any f, Any g) =&gt; a -&gt; ((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, e), f, g) -&gt; ((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, e), f, g)</span></h3>
 <div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Play.xtl.src.html#L105">line 105</a></div>
 <pre class="code"><span class="c-libfunc">ʰw̲hen</span> ← { yes s →
   yes ? <a href="extensions-scene-demos-Play.xtl.html#l.d_ig" class="c-libfunc">ˡd̲ig</a> s
@@ -355,7 +356,7 @@ above the world's top; said</p>
 <div class="uses">Used in: <a href="extensions-scene-demos-Play.xtl.html#l.f_rameV"><span class="c-libfunc">ˡf̲rameV</span></a></div>
 </div>
 <div class="item" id="h.p_laceIf">
-<h3><a href="#h.p_laceIf"><span class="c-libfunc">ʰp̲laceIf</span></a> <span class="type">: (Truthy a, Any b, Any c, Any d, Any e, Any f, Any g, Any h, Any i, Num j) =&gt; a -&gt; (((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), e, (f, g, h, i, j)), Int) -&gt; (((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), e, (f, g, h, i, j)), Int)</span></h3>
+<h3><a href="#h.p_laceIf"><span class="c-libfunc">ʰp̲laceIf</span></a> <span class="type">: (Truthy a, Any b, Any c, Any d, Num e, Any f, Any g, Any h, Any i, Any j, Num k) =&gt; a -&gt; (((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, e), f, (g, h, i, j, k)), Int) -&gt; (((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, e), f, (g, h, i, j, k)), Int)</span></h3>
 <div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-scene-demos-Play.xtl.src.html#L109">line 109</a></div>
 <pre class="code"><span class="c-libfunc">ʰp̲laceIf</span> ← { yes st →
   yes ? <a href="extensions-scene-demos-Play.xtl.html#l.p_lace" class="c-libfunc">ˡp̲lace</a> st

@@ -51,6 +51,7 @@ just demo scene voxels-light    # sunlight and lamps (8 on the hotbar); N for ni
 just demo scene voxels-game     # Gem Hunt: ten buried gems, three minutes; the first is four blocks down
 just demo blender hello         # X_eTaL runs Blender in the background, which runs Python and reports back
 just demo blender cubes         # 1, 100, 1000 cubes orbited: a video and .glb/.obj/.blend (about 5 minutes); just ext blender orbit plays it
+just demo blender game-assets  # twelve tower defense pieces as .glb with clips, previews, a lineup video, a manifest
 just demo scene voxels-rubik-buttons  # the cube with buttons: U U' R R' F F', animated, queued, undo
 just demo scene voxels-rubik-solve    # scramble, solve (the Eigencube library), step or play the solution
 just walkthrough                # a fresh clone, built and run, checked against the goldens
@@ -155,7 +156,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | [image](extensions/image/docs/README.md) | `Image` | PNG and JPEG to and from Float arrays; resize | image | done: facade, round-trip tests, the photo lab |
 | [linalg](extensions/linalg/docs/README.md) | `Linalg` | solve, inverse, determinant, least squares, eigenvalues, SVD | nalgebra | done: facade, cross-checked in pure X_eTaL |
 | [http](extensions/http/docs/README.md) | `Http` | bounded GET (size, time, redirects); downloads | ureq | done: facade, loopback tests, the earthquake report |
-| [blender](extensions/blender/docs/README.md) | `Blender` | Blender 3D in batch: X_eTaL writes the launcher and the bpy script, runs them, reads back what was made | none (python3 and Blender) | started: the chain, a report back; the size comparison orbited, a video and 3D files |
+| [blender](extensions/blender/docs/README.md) | `Blender` | Blender 3D in batch: X_eTaL writes the launcher and the bpy script, runs them, reads back what was made | none (python3 and Blender) | started: the chain, a report back; the size comparison orbited, a video and 3D files; game pieces with clips for X_eTaL-games ([published](https://softwarewrighter.github.io/X_eTaL-extensions/blender/td/)) |
 | [digest](extensions/digest/docs/README.md) | `Digest` | SHA-256 and CRC-32 of text and files | sha2, crc32fast | done: facade, vectors, tests |
 
 Each extension is a self-contained directory, `extensions/NAME/`: its

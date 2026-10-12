@@ -21,7 +21,9 @@
 #     shown in turn, `hold` seconds each;
 #   - NAME.film: a video the demo makes itself (the spec's `file`, in the
 #     extension's directory: Blender's render), made by running the demo
-#     when it is not there yet, then encoded at the spec's `fps`.
+#     when it is not there yet, then encoded at the spec's `fps`; with
+#     `intro=FILE.vhs` (a vhs tape in the videos folder, not recorded on
+#     its own) that terminal session first, joined to the video.
 #   scripts/videos.sh [EXT [NAME]]     (NAME: that one recording only)
 # The demos run on the release build of xetal-x (as `just demo` does).
 set -euo pipefail
@@ -167,7 +169,7 @@ for dir in extensions/${1:-*}/videos; do
     [ -e "$spec" ] || continue
     name="$(basename "$spec" .film)"
     [ -z "$only" ] || [ "$name" = "$only" ] || continue
-    demo=""; seed=1; file=""; scale=640; fps=24
+    demo=""; seed=1; file=""; scale=640; fps=24; intro=""
     # shellcheck disable=SC1090
     . "$spec"
     echo "==> film $ext $name"
@@ -176,7 +178,18 @@ for dir in extensions/${1:-*}/videos; do
     if [ ! -f "extensions/$ext/$file" ]; then
       (cd "extensions/$ext" && "$root/target/release/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > /dev/null)
     fi
-    encode "extensions/$ext/$file" "$dir/$name" "$scale" "$scale" "$fps"
+    src="extensions/$ext/$file"
+    # intro=: a terminal session (vhs) first, both at the video's size
+    if [ -n "$intro" ]; then
+      echo "==> vhs $ext $name intro"
+      vhs "$dir/$intro" > /dev/null
+      size="$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 "$src" | tr x :)"
+      ffmpeg -loglevel error -y -i "target/screens/$ext-$name-intro.mp4" -i "$src" -filter_complex \
+        "[0:v]scale=$size,fps=30,setsar=1[a];[1:v]scale=$size,fps=30,setsar=1[b];[a][b]concat=n=2:v=1:a=0[v]" \
+        -map "[v]" -pix_fmt yuv420p "target/screens/$ext-$name.mp4"
+      src="target/screens/$ext-$name.mp4"
+    fi
+    encode "$src" "$dir/$name" "$scale" "$scale" "$fps"
   done
   for spec in "$dir"/*.sound; do
     [ -e "$spec" ] || continue

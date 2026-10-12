@@ -1,0 +1,94 @@
+the run, and the error lines in Blender's log:
+exit 0
+errors 0
+the manifest:
+# Tower defense pieces for X_eTaL-games, made by X_eTaL driving Blender.
+title = "Tower defense pieces"
+program = "extensions/blender/demos/game-assets.xtl"
+pieces-library = "extensions/blender/demos/Td.xtl"
+repository = "https://github.com/softwarewrighter/X_eTaL-extensions"
+commit = "unpublished"
+license = "MIT"
+blender = "Blender"
+format = "glTF 2.0, binary (.glb)"
+units = "meters: one tile is 1 by 1; the origin at the middle of the base, on the ground"
+up = "+Y in glTF (+Z in Blender)"
+front = "+Z in glTF, glTF's own front (-Y in Blender)"
+clip-rate = 30
+preview = "PIECE.png: 320 by 320, RGBA, transparent, the piece at rest from the front a little right and above, every preview at one scale"
+
+[pieces.arrow-1]
+kind = "tower"
+glb = "arrow-1.glb"
+preview = "arrow-1.png"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.arrow-2]
+kind = "tower"
+glb = "arrow-2.glb"
+preview = "arrow-2.png"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.arrow-3]
+kind = "tower"
+glb = "arrow-3.glb"
+preview = "arrow-3.png"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.cannon-1]
+kind = "tower"
+glb = "cannon-1.glb"
+preview = "cannon-1.png"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.cannon-2]
+kind = "tower"
+glb = "cannon-2.glb"
+preview = "cannon-2.png"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.cannon-3]
+kind = "tower"
+glb = "cannon-3.glb"
+preview = "cannon-3.png"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.frost-1]
+kind = "tower"
+glb = "frost-1.glb"
+preview = "frost-1.png"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.frost-2]
+kind = "tower"
+glb = "frost-2.glb"
+preview = "frost-2.png"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.frost-3]
+kind = "tower"
+glb = "frost-3.glb"
+preview = "frost-3.png"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.runner]
+kind = "creep"
+glb = "runner.glb"
+preview = "runner.png"
+clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
+
+[pieces.brute]
+kind = "creep"
+glb = "brute.glb"
+preview = "brute.png"
+clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
+
+[pieces.shield]
+kind = "creep"
+glb = "shield.glb"
+preview = "shield.png"
+clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
+
+24
+work/qtd/lineup.mp4
+12

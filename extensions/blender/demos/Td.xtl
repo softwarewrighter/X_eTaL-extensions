@@ -10,6 +10,7 @@
 ## Import: "td:" u_se< "Td"
 
 "bp:" u_se< "Bpy"
+"dg:" u_se< "Digest"
 
 ### Colors and keys
 
@@ -262,3 +263,89 @@ l:clips := "with open(os.path.join(out, \"clips.txt\"), \"w\") as f:\n    for n 
 ## td:all: Python making every piece and writing its .glb (td:e_xport),
 ## then out/clips.txt
 l:all := (l:e_xport "arrow-1") c_at (l:e_xport "arrow-2") c_at (l:e_xport "arrow-3") c_at (l:e_xport "cannon-1") c_at (l:e_xport "cannon-2") c_at (l:e_xport "cannon-3") c_at (l:e_xport "frost-1") c_at (l:e_xport "frost-2") c_at (l:e_xport "frost-3") c_at (l:e_xport "runner") c_at (l:e_xport "brute") c_at (l:e_xport "shield") c_at l:clips
+
+### Showing them
+
+## td:show: Python helpers for showing the pieces: td_stills renders
+## each alone, td_film lines them up (towers by kind and level, the
+## creeps in a fourth column), each turning once round, playing idle,
+## then fire or walk
+l:show := "td_names = \"" c_at l:names c_at "\".split()\ntd_creeps = [\"runner\", \"brute\", \"shield\"]\n\ndef td_hide(o, h):\n    o.hide_render = h\n    for c in o.children_recursive:\n        c.hide_render = h\n\ndef td_camera(at, scale, dist, up, side):\n    aim = bpy.data.objects.new(\"aim\", None)\n    aim.location = at\n    scene.collection.objects.link(aim)\n    cam = bpy.data.objects.new(\"camera\", bpy.data.cameras.new(\"camera\"))\n    cam.data.type = \"ORTHO\"\n    cam.data.ortho_scale = scale\n    cam.data.clip_end = 1000\n    a, e = math.radians(side), math.radians(up)\n    cam.location = (at[0] + dist * math.sin(a) * math.cos(e), at[1] - dist * math.cos(a) * math.cos(e), at[2] + dist * math.sin(e))\n    look = cam.constraints.new(\"TRACK_TO\")\n    look.target = aim\n    look.track_axis = \"TRACK_NEGATIVE_Z\"\n    look.up_axis = \"UP_Y\"\n    scene.collection.objects.link(cam)\n    scene.camera = cam\n    return cam\n\ndef td_render_settings():\n    scene.render.engine = \"BLENDER_EEVEE\"\n    scene.view_settings.view_transform = \"Standard\"\n    scene.render.use_freestyle = False\n    scene.render.resolution_percentage = 100\n\ndef td_stills(size):\n    td_render_settings()\n    scene.render.film_transparent = True\n    scene.render.resolution_x = scene.render.resolution_y = size\n    td_camera((0.0, 0.0, 0.85), 2.3, 8.0, 25, 25)\n    scene.render.image_settings.media_type = \"IMAGE\"\n    scene.render.image_settings.file_format = \"PNG\"\n    scene.render.image_settings.color_mode = \"RGBA\"\n    scene.frame_set(0)\n    for n in td_names:\n        for m in td_names:\n            td_hide(bpy.data.objects[m], m != n)\n        scene.render.filepath = os.path.join(out, n + \".png\")\n        bpy.ops.render.render(write_still=True)\n    for m in td_names:\n        td_hide(bpy.data.objects[m], False)\n    scene.render.film_transparent = False\n\ndef td_place(n):\n    if n in td_creeps:\n        return 3, td_creeps.index(n)\n    return [\"arrow\", \"cannon\", \"frost\"].index(n.split(\"-\")[0]), int(n[-1]) - 1\n\ndef td_film(w, h, frames):\n    td_render_settings()\n    scene.render.resolution_x = w\n    scene.render.resolution_y = h\n    scene.frame_start = 1\n    scene.frame_end = frames\n    half = frames // 2\n    for n in td_names:\n        o = bpy.data.objects[n]\n        col, row = td_place(n)\n        o.location = ((col - 1.5) * 1.9, (row - 1) * 2.5, 0.0)\n        o.rotation_euler = (0.0, 0.0, 0.0)\n        o.keyframe_insert(\"rotation_euler\", index=2, frame=1)\n        o.rotation_euler = (0.0, 0.0, 2 * math.pi)\n        o.keyframe_insert(\"rotation_euler\", index=2, frame=frames + 1)\n        c = bpy.data.curves.new(\"label \" + n, type=\"FONT\")\n        c.body = n\n        c.size = 0.22\n        c.align_x = \"CENTER\"\n        t = bpy.data.objects.new(\"label \" + n, c)\n        scene.collection.objects.link(t)\n        t.data.materials.append(material(\"label \" + n, (0.9, 0.9, 0.85)))\n        t.location = (o.location[0], o.location[1] - 0.72, 0.01)\n        for p in list(o.children_recursive):\n            ad = p.animation_data\n            if ad is None or len(ad.nla_tracks) == 0:\n                continue\n            clips = [(tr.name, tr.strips[0].action) for tr in ad.nla_tracks if len(tr.strips)]\n            while len(ad.nla_tracks):\n                ad.nla_tracks.remove(ad.nla_tracks[0])\n            rest = bpy.data.actions.new(p.name + \" rest\")\n            ad.action = rest\n            for path in (\"location\", \"rotation_euler\", \"scale\"):\n                p.keyframe_insert(data_path=path, frame=1)\n            ad.action = None\n            base = ad.nla_tracks.new()\n            base.name = \"rest\"\n            base.strips.new(\"rest\", 1, rest).extrapolation = \"HOLD\"\n            for name, act in clips:\n                tr = ad.nla_tracks.new()\n                tr.name = name\n                length = int(act.frame_range[1] - act.frame_range[0])\n                if tr.name == \"idle\":\n                    starts = range(1, half - length + 2, length)\n                elif tr.name == \"fire\":\n                    starts = range(half + 1, frames - length + 1, scene.render.fps)\n                elif tr.name == \"walk\":\n                    starts = range(half + 1, frames - length + 2, length)\n                else:\n                    starts = []\n                for s0 in starts:\n                    s = tr.strips.new(tr.name + \" \" + str(s0), s0, act)\n                    s.extrapolation = \"NOTHING\"\n    td_camera((0.0, 0.3, 0.5), 10.0, 20.0, 40, 0)\n\n"
+
+## td:s_tills size: Python rendering each piece alone as out/NAME.png,
+## size pixels square on a transparent ground, from the front a little
+## to the right and above (all at one scale, so their sizes compare)
+l:s_tills := { size -> "td_stills(" c_at (f_ormat size) c_at ")\n" }
+
+## (width, height, frames) td:f_ilm 0: Python lining the pieces up on
+## the ground for a video of that size and length (at 30 frames a
+## second, the clips' rate): each turns once round, idle in the first
+## half, then the towers fire each second and the creeps walk; a label
+## in front of each. bp:v_ideo renders it.
+l:f_ilm := { (w, h, frames) z -> "td_film(" c_at (f_ormat w) c_at ", " c_at (f_ormat h) c_at ", " c_at (f_ormat frames) c_at ")\n" }
+
+### Publishing them
+
+# 1 for a creep, 0 for a tower
+h:c_reep := { name -> (name m_atch "runner") + (name m_atch "brute") + (name m_atch "shield") * 1 }
+
+# what kind a piece is, and its clips as TOML
+h:k_ind := { c -> c ? "creep"
+  "tower"
+}
+h:c_lipsOf := { c -> c ? "{ idle = 2.0, walk = 1.0, hit = 0.3 }"
+  "{ idle = 2.0, fire = 0.4 }"
+}
+
+# a piece's table in the manifest: its kind, files and their SHA-256s,
+# its clips
+h:e_ntry := { (dir, name) z ->
+  c := h:c_reep name
+  t := "\n[pieces." c_at name c_at "]\nkind = \"" c_at (h:k_ind c) c_at "\"\nglb = \"" c_at name c_at ".glb\"\nglb-sha256 = \"" c_at (dg:s_ha256File dir c_at "/" c_at name c_at ".glb") c_at "\"\n"
+  t c_at "preview = \"" c_at name c_at ".png\"\npreview-sha256 = \"" c_at (dg:s_ha256File dir c_at "/" c_at name c_at ".png") c_at "\"\nclips = " c_at (h:c_lipsOf c) c_at "\n"
+}
+
+## (dir, blender) td:m_anifest 0: manifest.toml for the pieces in dir
+## (their .glb and .png files, hashed by the digest extension): what
+## made them (the program, the commit -- "unpublished" until the files
+## are published -- and Blender, its version line), the license, the
+## conventions (units, up, front, the clips' rate), then each piece: its
+## kind, files, SHA-256s and clips with their lengths in seconds
+l:m_anifest := { (dir, blender) z ->
+  t := "# Tower defense pieces for X_eTaL-games, made by X_eTaL driving Blender.\ntitle = \"Tower defense pieces\"\nprogram = \"extensions/blender/demos/game-assets.xtl\"\npieces-library = \"extensions/blender/demos/Td.xtl\"\n"
+  t := t c_at "repository = \"https://github.com/softwarewrighter/X_eTaL-extensions\"\ncommit = \"unpublished\"\nlicense = \"MIT\"\nblender = \"" c_at blender c_at "\"\n"
+  t := t c_at "format = \"glTF 2.0, binary (.glb)\"\nunits = \"meters: one tile is 1 by 1; the origin at the middle of the base, on the ground\"\nup = \"+Y in glTF (+Z in Blender)\"\nfront = \"+Z in glTF, glTF's own front (-Y in Blender)\"\nclip-rate = 30\n"
+  t := t c_at "preview = \"PIECE.png: 320 by 320, RGBA, transparent, the piece at rest from the front a little right and above, every preview at one scale\"\n"
+  e_nt := { name -> (dir, name) h:e_ntry 0 }
+  t c_at (e_nt "arrow-1") c_at (e_nt "arrow-2") c_at (e_nt "arrow-3") c_at (e_nt "cannon-1") c_at (e_nt "cannon-2") c_at (e_nt "cannon-3") c_at (e_nt "frost-1") c_at (e_nt "frost-2") c_at (e_nt "frost-3") c_at (e_nt "runner") c_at (e_nt "brute") c_at e_nt "shield"
+}
+
+# a piece's card on the page: the model turning in a viewer (its
+# preview until it loads), its name, a button for each clip, its file
+h:c_ard := { name ->
+  c := h:c_reep name
+  t := "<div class='card'><model-viewer src='" c_at name c_at ".glb' poster='" c_at name c_at ".png' alt='the " c_at name c_at " piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'></model-viewer>"
+  t c_at "<h2>" c_at name c_at "</h2><p>" c_at (h:b_uttons c) c_at " <a href='" c_at name c_at ".glb'>.glb</a> <a href='" c_at name c_at ".png'>.png</a></p></div>\n"
+}
+h:b_uttons := { c -> c ? "<button data-clip='idle'>idle</button><button data-clip='walk'>walk</button><button data-clip='hit'>hit</button>"
+  "<button data-clip='idle'>idle</button><button data-clip='fire'>fire</button>"
+}
+
+h:p_ageHead := { z ->
+  t := "<!doctype html>\n<html lang='en'>\n<head>\n<meta charset='utf-8'>\n<meta name='viewport' content='width=device-width, initial-scale=1'>\n<title>Tower defense pieces -- X_eTaL Extensions</title>\n<link rel='icon' href='../../favicon.ico'>\n"
+  t := t c_at "<script type='module' src='https://cdn.jsdelivr.net/npm/@google/model-viewer@4/dist/model-viewer.min.js'></script>\n"
+  t := t c_at "<style>\nbody { margin: 0 auto; max-width: 1100px; padding: 16px; background: #14161a; color: #e4e4e4; font: 16px/1.5 system-ui, sans-serif; }\na { color: #8cc8ff; }\nheader a { display: flex; align-items: center; gap: 12px; text-decoration: none; }\nheader span { color: #ff3b30; font-size: 28px; font-weight: 700; }\n"
+  t := t c_at ".grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }\n.card { background: #1d2026; border-radius: 8px; padding: 8px; }\nmodel-viewer { width: 100%; height: 240px; background: #3a7d44; border-radius: 6px; }\n"
+  t := t c_at "h2 { margin: 6px 0 0; font-size: 18px; }\n.card p { margin: 4px 0; }\nbutton { margin: 0 4px 4px 0; background: #2b3038; color: #e4e4e4; border: 1px solid #444b55; border-radius: 4px; padding: 2px 10px; cursor: pointer; }\n</style>\n</head>\n<body>\n"
+  t := t c_at "<header><a href='../../'><img src='../../xetal-logo-red.png' alt='X_eTaL' height='48'><span>X_eTaL Extensions</span></a></header>\n<h1>Tower defense pieces</h1>\n"
+  t := t c_at "<p>The twelve pieces <a href='https://softwarewrighter.github.io/X_eTaL-games/tower-defense/'>X_eTaL-games' tower defense</a> asked for, each made by an X_eTaL program driving Blender (<a href='https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/blender/demos/game-assets.xtl'>game-assets.xtl</a>, the pieces in <a href='https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/blender/demos/Td.xtl'>Td.xtl</a>). "
+  t c_at "Drag a piece to turn it; the buttons play its clips. Each is a .glb (glTF 2.0) with its clips and a preview .png; <a href='manifest.toml'>manifest.toml</a> lists them with their SHA-256s, the license (MIT) and the commit that made them.</p>\n<main class='grid'>\n"
+}
+
+h:p_ageEnd := { z -> "</main>\n<script>\ndocument.querySelectorAll('button[data-clip]').forEach(function (b) {\n  b.onclick = function () {\n    var mv = b.closest('.card').querySelector('model-viewer');\n    var loop = b.dataset.clip === 'idle' || b.dataset.clip === 'walk';\n    mv.animationName = b.dataset.clip;\n    mv.currentTime = 0;\n    mv.play({repetitions: loop ? Infinity : 1});\n  };\n});\ndocument.querySelectorAll('model-viewer').forEach(function (mv) {\n  mv.addEventListener('finished', function () { mv.animationName = 'idle'; mv.play(); });\n});\n</script>\n</body>\n</html>\n" }
+
+## td:page: the pieces' page (index.html beside the files): each piece
+## in a 3D viewer (model-viewer, from a CDN) to turn with the mouse,
+## its clips on buttons, its files; links to the manifest, the program
+## and the game
+l:page := (h:p_ageHead 0) c_at (h:c_ard "arrow-1") c_at (h:c_ard "arrow-2") c_at (h:c_ard "arrow-3") c_at (h:c_ard "cannon-1") c_at (h:c_ard "cannon-2") c_at (h:c_ard "cannon-3") c_at (h:c_ard "frost-1") c_at (h:c_ard "frost-2") c_at (h:c_ard "frost-3") c_at (h:c_ard "runner") c_at (h:c_ard "brute") c_at (h:c_ard "shield") c_at h:p_ageEnd 0
