@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>Tower defense pieces -- X_eTaL Extensions</title>
+<link rel='icon' href='../../favicon.ico'>
+<script type='module' src='https://cdn.jsdelivr.net/npm/@google/model-viewer@4/dist/model-viewer.min.js'></script>
+<style>
+body { margin: 0 auto; max-width: 1100px; padding: 16px; background: #14161a; color: #e4e4e4; font: 16px/1.5 system-ui, sans-serif; }
+a { color: #8cc8ff; }
+header a { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+header span { color: #ff3b30; font-size: 28px; font-weight: 700; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+.card { background: #1d2026; border-radius: 8px; padding: 8px; }
+model-viewer { width: 100%; height: 240px; background: #3a7d44; border-radius: 6px; }
+h2 { margin: 6px 0 0; font-size: 18px; }
+.card p { margin: 4px 0; }
+button { margin: 0 4px 4px 0; background: #2b3038; color: #e4e4e4; border: 1px solid #444b55; border-radius: 4px; padding: 2px 10px; cursor: pointer; }
+</style>
+</head>
+<body>
+<header><a href='../../'><img src='../../xetal-logo-red.png' alt='X_eTaL' height='48'><span>X_eTaL Extensions</span></a></header>
+<h1>Tower defense pieces</h1>
+<p>The twelve pieces <a href='https://softwarewrighter.github.io/X_eTaL-games/tower-defense/'>X_eTaL-games' tower defense</a> asked for, each made by an X_eTaL program driving Blender (<a href='https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/blender/demos/game-assets.xtl'>game-assets.xtl</a>, the pieces in <a href='https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/blender/demos/Td.xtl'>Td.xtl</a>). Drag a piece to turn it; the buttons play its clips. Each is a .glb (glTF 2.0) with its clips and a preview .png; <a href='manifest.toml'>manifest.toml</a> lists them with their SHA-256s, the license (MIT) and the commit that made them.</p>
+<main class='grid'>
+<div class='card'><model-viewer src='arrow-1.glb' poster='arrow-1.png' alt='the arrow-1 piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'></model-viewer><h2>arrow-1</h2><p><button data-clip='idle'>idle</button><button data-clip='fire'>fire</button> <a href='arrow-1.glb'>.glb</a> <a href='arrow-1.png'>.png</a></p></div>
+<div class='card'><model-viewer src='arrow-2.glb' poster='arrow-2.png' alt='the arrow-2 piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'></model-viewer><h2>arrow-2</h2><p><button data-clip='idle'>idle</button><button data-clip='fire'>fire</button> <a href='arrow-2.glb'>.glb</a> <a href='arrow-2.png'>.png</a></p></div>
+<div class='card'><model-viewer src='arrow-3.glb' poster='arrow-3.png' alt='the arrow-3 piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'></model-viewer><h2>arrow-3</h2><p><button data-clip='idle'>idle</button><button data-clip='fire'>fire</button> <a href='arrow-3.glb'>.glb</a> <a href='arrow-3.png'>.png</a></p></div>
+<div class='card'><model-viewer src='cannon-1.glb' poster='cannon-1.png' alt='the cannon-1 piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'></model-viewer><h2>cannon-1</h2><p><button data-clip='idle'>idle</button><button data-clip='fire'>fire</button> <a href='cannon-1.glb'>.glb</a> <a href='cannon-1.png'>.png</a></p></div>
+<div class='card'><model-viewer src='cannon-2.glb' poster='cannon-2.png' alt='the cannon-2 piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'></model-viewer><h2>cannon-2</h2><p><button data-clip='idle'>idle</button><button data-clip='fire'>fire</button> <a href='cannon-2.glb'>.glb</a> <a href='cannon-2.png'>.png</a></p></div>
+<div class='card'><model-viewer src='cannon-3.glb' poster='cannon-3.png' alt='the cannon-3 piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'></model-viewer><h2>cannon-3</h2><p><button data-clip='idle'>idle</button><button data-clip='fire'>fire</button> <a href='cannon-3.glb'>.glb</a> <a href='cannon-3.png'>.png</a></p></div>
+<div class='card'><model-viewer src='frost-1.glb' poster='frost-1.png' alt='the frost-1 piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'></model-viewer><h2>frost-1</h2><p><button data-clip='idle'>idle</button><button data-clip='fire'>fire</button> <a href='frost-1.glb'>.glb</a> <a href='frost-1.png'>.png</a></p></div>
+<div class='card'><model-viewer src='frost-2.glb' poster='frost-2.png' alt='the frost-2 piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'></model-viewer><h2>frost-2</h2><p><button data-clip='idle'>idle</button><button data-clip='fire'>fire</button> <a href='frost-2.glb'>.glb</a> <a href='frost-2.png'>.png</a></p></div>
+<div class='card'><model-viewer src='frost-3.glb' poster='frost-3.png' alt='the frost-3 piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'></model-viewer><h2>frost-3</h2><p><button data-clip='idle'>idle</button><button data-clip='fire'>fire</button> <a href='frost-3.glb'>.glb</a> <a href='frost-3.png'>.png</a></p></div>
+<div class='card'><model-viewer src='runner.glb' poster='runner.png' alt='the runner piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'></model-viewer><h2>runner</h2><p><button data-clip='idle'>idle</button><button data-clip='walk'>walk</button><button data-clip='hit'>hit</button> <a href='runner.glb'>.glb</a> <a href='runner.png'>.png</a></p></div>
+<div class='card'><model-viewer src='brute.glb' poster='brute.png' alt='the brute piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'></model-viewer><h2>brute</h2><p><button data-clip='idle'>idle</button><button data-clip='walk'>walk</button><button data-clip='hit'>hit</button> <a href='brute.glb'>.glb</a> <a href='brute.png'>.png</a></p></div>
+<div class='card'><model-viewer src='shield.glb' poster='shield.png' alt='the shield piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'></model-viewer><h2>shield</h2><p><button data-clip='idle'>idle</button><button data-clip='walk'>walk</button><button data-clip='hit'>hit</button> <a href='shield.glb'>.glb</a> <a href='shield.png'>.png</a></p></div>
+</main>
+<script>
+document.querySelectorAll('button[data-clip]').forEach(function (b) {
+  b.onclick = function () {
+    var mv = b.closest('.card').querySelector('model-viewer');
+    var loop = b.dataset.clip === 'idle' || b.dataset.clip === 'walk';
+    mv.animationName = b.dataset.clip;
+    mv.currentTime = 0;
+    mv.play({repetitions: loop ? Infinity : 1});
+  };
+});
+document.querySelectorAll('model-viewer').forEach(function (mv) {
+  mv.addEventListener('finished', function () { mv.animationName = 'idle'; mv.play(); });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+# Tower defense pieces for X_eTaL-games, made by X_eTaL driving Blender.
+title = "Tower defense pieces"
+program = "extensions/blender/demos/game-assets.xtl"
+pieces-library = "extensions/blender/demos/Td.xtl"
+repository = "https://github.com/softwarewrighter/X_eTaL-extensions"
+commit = "f231c88f39598851b3e495ca354ef9fa48f22513"
+license = "MIT"
+blender = "Blender 5.1.2"
+format = "glTF 2.0, binary (.glb)"
+units = "meters: one tile is 1 by 1; the origin at the middle of the base, on the ground"
+up = "+Y in glTF (+Z in Blender)"
+front = "+Z in glTF, glTF's own front (-Y in Blender)"
+clip-rate = 30
+preview = "PIECE.png: 320 by 320, RGBA, transparent, the piece at rest from the front a little right and above, every preview at one scale"
+
+[pieces.arrow-1]
+kind = "tower"
+glb = "arrow-1.glb"
+glb-sha256 = "ed49dc05d3db5e8520ea5b3b6d0b5cfd04594ead703553a10de4a317ec13637c"
+preview = "arrow-1.png"
+preview-sha256 = "96b2190ccd18d1ed4035c855168add283ed01cfeab9f949c844b426d3dd78cbd"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.arrow-2]
+kind = "tower"
+glb = "arrow-2.glb"
+glb-sha256 = "2aedc7d5817610a17c25353955b2f51dc9a36d870c1177aa97485c32335dce1c"
+preview = "arrow-2.png"
+preview-sha256 = "bcf544673f1778afcda2f5ac32c1d702075ac0751a6fdfb72f14758c20e4ea70"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.arrow-3]
+kind = "tower"
+glb = "arrow-3.glb"
+glb-sha256 = "63442d5d0798fee6f5b9245145810c02592e047afc04ca315d9da58825a1b57d"
+preview = "arrow-3.png"
+preview-sha256 = "d96d0014aa4f67491816dd735a66ea276a8595a8de57e914c80b5d1ed95b2d35"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.cannon-1]
+kind = "tower"
+glb = "cannon-1.glb"
+glb-sha256 = "79066db0d0ac05e494005895644af39571dfceb60e857b80bf2200bf2bd6f0e8"
+preview = "cannon-1.png"
+preview-sha256 = "67f2a3b047a1dacd6ed8df1599e436cc1564d20d4862d52e22a27675e44a3e7a"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.cannon-2]
+kind = "tower"
+glb = "cannon-2.glb"
+glb-sha256 = "4836f71365cd902a98521bbff7bd88ad6d5c223a7f27792c28dc870b655b501b"
+preview = "cannon-2.png"
+preview-sha256 = "21bb5a29763dc2f11d05040065c687539e53dc7b22f90c0275aef95bdf4364fc"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.cannon-3]
+kind = "tower"
+glb = "cannon-3.glb"
+glb-sha256 = "76f910032c1a894ecb4291006cc99ea4dbdd24e1cbdb3eaaba684839dc918e61"
+preview = "cannon-3.png"
+preview-sha256 = "4323807f4e18f31db6c63359cb25d1fa23e950f2ebfc9fb5d5481cd8048eb57f"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.frost-1]
+kind = "tower"
+glb = "frost-1.glb"
+glb-sha256 = "6bb1423e1fdf51bf4601261700afacf96e0f4830e59da8ea3693ecb953936806"
+preview = "frost-1.png"
+preview-sha256 = "b9389df0179f67852bba24e953bb1160c2da6c311d8d4ed4fd4133a7a74b28ab"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.frost-2]
+kind = "tower"
+glb = "frost-2.glb"
+glb-sha256 = "29fd408e90a5d2b34e59ac2b39bf4a52b4b939baeb6690ce093939acfb1b0114"
+preview = "frost-2.png"
+preview-sha256 = "9782513c3ee7d334d56114248a95d34c89d59b26af2423211d1892710f32c418"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.frost-3]
+kind = "tower"
+glb = "frost-3.glb"
+glb-sha256 = "164c302d03a8977ce8278b8872748bac4e965dc9a9826700f705d00d948d9815"
+preview = "frost-3.png"
+preview-sha256 = "81cbb2dc8c64ee35443ec67e70a94cb108e7645b5709f5f038fab71bce211c9e"
+clips = { idle = 2.0, fire = 0.4 }
+
+[pieces.runner]
+kind = "creep"
+glb = "runner.glb"
+glb-sha256 = "b735aa8f472977ff4653afe1c7a6de9481a2104a26aafc38eb562e3bfe405c2d"
+preview = "runner.png"
+preview-sha256 = "91085e8132337679f7659b4925c9548fb328133ffbeb32c43e27e0165925698e"
+clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
+
+[pieces.brute]
+kind = "creep"
+glb = "brute.glb"
+glb-sha256 = "cb8fb94deb142472375ea3ea57eff95fd5e9e4f491dd329e412e439f6fc08a4a"
+preview = "brute.png"
+preview-sha256 = "7a81fca8d05feb2e1851a03cea6c504f4e28088f842085dedc1c526a744d813e"
+clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
+
+[pieces.shield]
+kind = "creep"
+glb = "shield.glb"
+glb-sha256 = "a6cd7ba72e66b96ab0a3c562c9b7fe935b86c48a3d60d4aabc66a5d6ed67b7a3"
+preview = "shield.png"
+preview-sha256 = "463b4f8f802557be29565f07a9d58bb63e08101547f2df122283a539d022bd52"
+clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
