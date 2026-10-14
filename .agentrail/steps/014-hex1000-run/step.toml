@@ -1,4 +1,4 @@
-number = 13
+number = 14
 slug = "hex1000-run"
 status = "pending"
 description = "Saga 15 step 13: the HEX1000 execution video, driven by the simulation's VCD ..."

@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-14
 
+- `plan` Saga 15 step 11, blender-pipeline (inserted): a video of the extension's own process, X_eTaL to Python to Blender to models, renders and animations, for a blog post; the release step names the goal, X_eTaL driving a GPU, an FPGA and Blender.
 - `plan` Saga 15 steps 12 to 17: explainer videos for YouTube, the process and the execution of X_eTaL on an FPGA (HEX1000) and on Apple and NVIDIA GPUs, driven by those repositories' real data.
 
 ## 2026-10-12

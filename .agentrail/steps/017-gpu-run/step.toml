@@ -1,4 +1,4 @@
-number = 16
+number = 17
 slug = "gpu-run"
 status = "pending"
 description = "Saga 15 step 16: the GPU execution video: binding and upload (PCIe vs unified..."
