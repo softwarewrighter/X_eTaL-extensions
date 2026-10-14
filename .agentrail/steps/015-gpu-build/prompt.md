@@ -1,0 +1,1 @@
+Saga 15 step 15: the GPU process video: .xtl lowered to Core and XIR, the fused OpenCL kernel (real source), schedules for the M1 Max and RTX 5060 Ti. docs/plan.md Saga 15 row 15.

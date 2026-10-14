@@ -1,0 +1,1 @@
+Saga 15 step 13: the HEX1000 execution video, driven by the simulation's VCD and the Hex1000.xtl trace (UART bits in, key matrix, PC hopping through the ROM page, A/RAM/ALU/status, digits to a 3D calculator); the render fails unless the final display equals the evaluator's; the browser calculator beside it. docs/plan.md Saga 15 row 13.

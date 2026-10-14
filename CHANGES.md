@@ -11,6 +11,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-14
+
+- `plan` Saga 15 steps 12 to 17: explainer videos for YouTube, the process and the execution of X_eTaL on an FPGA (HEX1000) and on Apple and NVIDIA GPUs, driven by those repositories' real data.
+
 ## 2026-10-12
 
 - 14:50 `docs` the Eigencube cover on the site's voxels-rubik-solve card, at a medium size beside the description (the user's artwork, 480 pixels; for all ages, no formal rating claimed): a demo header's `## Cover: FILE ALT` line (scripts/build-catalog.py).

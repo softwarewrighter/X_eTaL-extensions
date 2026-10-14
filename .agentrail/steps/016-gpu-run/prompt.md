@@ -1,0 +1,1 @@
+Saga 15 step 16: the GPU execution video: binding and upload (PCIe vs unified memory), work-groups, a local-memory reduction, readback checked against the evaluator; timed by OpenCL profiling events and measured transfers on their true scale. docs/plan.md Saga 15 row 16.

@@ -1,0 +1,8 @@
+number = 15
+slug = "gpu-build"
+status = "pending"
+description = "Saga 15 step 15: the GPU process video: .xtl lowered to Core and XIR, the fus..."
+role = "production"
+context_files = []
+created_at = "2026-10-14T14:53:34"
+commits = []

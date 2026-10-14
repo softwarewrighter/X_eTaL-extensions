@@ -1,0 +1,1 @@
+Saga 15 step 14: the HEX1000 process video: Hex1000.xtl, emitted hex1000.v, the Yosys netlist, LUTs and flip-flops to their nextpnr places on the Gowin die, routes, bitstream into a modeled Tang Nano 9K. docs/plan.md Saga 15 row 14.

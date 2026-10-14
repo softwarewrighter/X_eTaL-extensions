@@ -1,0 +1,8 @@
+number = 16
+slug = "gpu-run"
+status = "pending"
+description = "Saga 15 step 16: the GPU execution video: binding and upload (PCIe vs unified..."
+role = "production"
+context_files = []
+created_at = "2026-10-14T14:53:34"
+commits = []
