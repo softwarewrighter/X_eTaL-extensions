@@ -2,6 +2,7 @@
 #+SUBTITLE: a lake on a voxel hill, emptied a layer at a time, by moving cups of water
 #+AUTHOR: Michael A Wright
 #+DEMO: scene voxels-water
+#+CATEGORY: Voxels
 #+OPTIONS: toc:2 num:nil ^:{}
 #+PROPERTY: header-args:xetal :session water :seed 1 :results output :exports both
 

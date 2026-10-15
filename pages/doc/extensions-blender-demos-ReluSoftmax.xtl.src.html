@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/blender/demos/ReluSoftmax.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>lib/</h3>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+</ul>
+<h3>extensions/audio/lib/</h3>
+<ul>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+</ul>
+<h3>extensions/audio/demos/</h3>
+<ul>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+</ul>
+<h3>extensions/canvas/lib/</h3>
+<ul>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+</ul>
+<h3>extensions/scene/lib/</h3>
+<ul>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+</ul>
+<h3>extensions/blender/lib/</h3>
+<ul>
+<li><a href="extensions-blender-lib-Blender.xtl.html">Blender.xtl</a></li>
+<li><a href="extensions-blender-lib-Bpy.xtl.html">Bpy.xtl</a></li>
+<li><a href="extensions-blender-lib-Video.xtl.html">Video.xtl</a></li>
+</ul>
+<h3>extensions/blender/demos/</h3>
+<ul>
+<li><a href="extensions-blender-demos-cubes.xtl.html">cubes.xtl</a></li>
+<li><a href="extensions-blender-demos-Sizes.xtl.html">Sizes.xtl</a></li>
+<li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
+<li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
+<li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
+<li><a href="extensions-blender-demos-matmul-fly.xtl.html">matmul-fly.xtl</a></li>
+<li><a href="extensions-blender-demos-MatmulFly.xtl.html">MatmulFly.xtl</a></li>
+<li><a href="extensions-blender-demos-matmul-steps.xtl.html">matmul-steps.xtl</a></li>
+<li><a href="extensions-blender-demos-Matmul.xtl.html">Matmul.xtl</a></li>
+<li><a href="extensions-blender-demos-relu-softmax.xtl.html">relu-softmax.xtl</a></li>
+<li><a href="extensions-blender-demos-ReluSoftmax.xtl.html">ReluSoftmax.xtl</a></li>
+<li><a href="extensions-blender-demos-td-models.xtl.html">td-models.xtl</a></li>
+</ul>
+<h3>extensions/digest/lib/</h3>
+<ul>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>/Users/mike/github/softwarewrighter/X_eTaL-extensions/work/gpu/libs/Accel/src/</h3>
+<ul>
+<li><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-gpu-libs-Accel-src-Accel.xtl.html">Accel.xtl</a></li>
+</ul>
+<h3>extensions/canvas/demos/</h3>
+<ul>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+</ul>
+<h3>extensions/clock/lib/</h3>
+<ul>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+</ul>
+<h3>extensions/clock/demos/</h3>
+<ul>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+</ul>
+<h3>extensions/hello/lib/</h3>
+<ul>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+</ul>
+<h3>extensions/hello/demos/</h3>
+<ul>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+</ul>
+<h3>extensions/http/lib/</h3>
+<ul>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+</ul>
+<h3>extensions/http/demos/</h3>
+<ul>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+</ul>
+<h3>extensions/sqlite/lib/</h3>
+<ul>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+</ul>
+<h3>extensions/image/lib/</h3>
+<ul>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+</ul>
+<h3>extensions/image/demos/</h3>
+<ul>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+</ul>
+<h3>extensions/linalg/lib/</h3>
+<ul>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+</ul>
+<h3>extensions/scene/demos/</h3>
+<ul>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-Endless.xtl.html">Endless.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-Play.xtl.html">Play.xtl</a></li>
+<li><a href="extensions-scene-demos-Rubik.xtl.html">Rubik.xtl</a></li>
+<li><a href="extensions-scene-demos-RubikPlay.xtl.html">RubikPlay.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-dig.xtl.html">voxels-dig.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-game.xtl.html">voxels-game.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-light.xtl.html">voxels-light.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">voxels-rubik-solve.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik.xtl.html">voxels-rubik.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-water.xtl.html">voxels-water.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+</ul>
+<h3>/Users/mike/github/softwarewrighter/X_eTaL-extensions/work/libraries/libs/Eigencube/src/</h3>
+<ul>
+<li><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html">Eigencube.xtl</a></li>
+</ul>
+<h3>extensions/sqlite/demos/</h3>
+<ul>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+</ul>
+<h3>extensions/web/lib/</h3>
+<ul>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+</ul>
+<h3>extensions/web/demos/</h3>
+<ul>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L21">ˡx</a></li>
+<li class="item"><a href="#L26">ˡw1</a></li>
+<li class="item"><a href="#L30">ˡw2</a></li>
+<li class="item"><a href="#L36">ˡz1</a></li>
+<li class="item"><a href="#L39">ˡh</a></li>
+<li class="item"><a href="#L42">ˡz2</a></li>
+<li class="item"><a href="#L50">ˡp</a></li>
+<li class="item"><a href="#L53"><span class="c-libfunc">ʰa̲long</span></a></li>
+<li class="item"><a href="#L58"><span class="c-libfunc">ˡs̲hifted</span></a></li>
+<li class="item"><a href="#L61"><span class="c-libfunc">ˡe̲xps</span></a></li>
+<li class="item"><a href="#L64"><span class="c-libfunc">ˡs̲ums</span></a></li>
+<li class="item"><a href="#L70">ˡshares</a></li>
+<li class="item"><a href="#L75">ˡorange</a></li>
+<li class="item"><a href="#L77">ˡblue</a></li>
+<li class="item"><a href="#L79">ˡred</a></li>
+<li class="item"><a href="#L81">ˡcyan</a></li>
+<li class="item"><a href="#L83">ˡwhite</a></li>
+<li class="item"><a href="#L85">ˡyellow</a></li>
+<li class="item"><a href="#L87">ˡpink</a></li>
+<li class="item"><a href="#L89">ˡgray</a></li>
+<li class="item"><a href="#L91">ˡglassColor</a></li>
+<li class="item"><a href="#L93">ˡsky</a></li>
+<li class="item"><a href="#L96"><span class="c-libfunc">ʰp̲ick</span></a></li>
+<li class="item"><a href="#L107"><span class="c-libfunc">ˡb̲ars</span></a></li>
+<li class="item"><a href="#L114"><span class="c-libfunc">ˡt̲able</span></a></li>
+<li class="item"><a href="#L119"><span class="c-libfunc">ˡk̲eyed</span></a></li>
+<li class="item"><a href="#L126"><span class="c-libfunc">ʰl̲abelAt</span></a></li>
+<li class="item"><a href="#L134">hs</a></li>
+<li class="item"><a href="#L135">gap</a></li>
+<li class="item"><a href="#L136">ox</a></li>
+<li class="item"><a href="#L139">ˡcellX</a></li>
+<li class="item"><a href="#L141">ˡcellY</a></li>
+<li class="item"><a href="#L146"><span class="c-libfunc">ˡr̲eluScript</span></a></li>
+<li class="item"><a href="#L179">ˡsteps</a></li>
+<li class="item"><a href="#L181">ˡends</a></li>
+<li class="item"><a href="#L184">eh</a></li>
+<li class="item"><a href="#L185">gw</a></li>
+<li class="item"><a href="#L186">ph</a></li>
+<li class="item"><a href="#L189">ˡgroupX</a></li>
+<li class="item"><a href="#L192">ˡbarX</a></li>
+<li class="item"><a href="#L195"><span class="c-libfunc">ʰa̲t</span></a></li>
+<li class="item"><a href="#L200"><span class="c-libfunc">ˡs̲oftmaxScript</span></a></li>
+<li class="item"><a href="#L247"><span class="c-libfunc">ʰv̲alues</span></a></li>
+<li class="item"><a href="#L256"><span class="c-libfunc">ʰs̲hape</span></a></li>
+<li class="item"><a href="#L260">ˡcaptionTexts</a></li>
+<li class="item"><a href="#L268"><span class="c-libfunc">ˡc̲aptionTable</span></a></li>
+<li class="item"><a href="#L279"><span class="c-libfunc">ˡc̲ameraKeys</span></a></li>
+<li class="item"><a href="#L294"><span class="c-libfunc">ˡs̲cene</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="extensions-blender-demos-ReluSoftmax.xtl.html">extensions/blender/demos/ReluSoftmax.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment"># ReluSoftmax.xtl -- ReLU and softmax on a tiny network's arrays, as a</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># video (Video.xtl). The network is X_eTaL-gpu's tiny-net</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># (libs/Accel/demos/tiny-net.xtl), run with the same library the GPU</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># runs, Accel (X_eTaL-gpu at GPU_COMMIT, on XETAL_PATH by</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># scripts/libraries.sh): its dense layers, ReLU, row maximum, row sums</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># and softmax. What is new here is only how they are shown: every</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-comment">⍝</span><span class="c-comment"># bar's place, size, color and timing, every label and the camera's</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-comment">⍝</span><span class="c-comment"># path, worked out from those arrays, and Video.xtl writes them into the</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-comment">⍝</span><span class="c-comment"># script Blender runs. Shared by the demo (demos/relu-softmax.xtl: the</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-comment">⍝</span><span class="c-comment"># video), its test (a few small frames) and the literate document</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-comment">⍝</span><span class="c-comment"># (docs/literate/relu-softmax.org).</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-comment">⍝</span><span class="c-comment"># Import: &quot;rs:&quot; u_se&lt; &quot;ReluSoftmax&quot;</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-libfunc">ᵛᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-comment">⍝</span><span class="c-comment">## The network's arrays (Accel)</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-comment">⍝</span><span class="c-comment"># x: tiny-net's input, a batch of four examples of three features (4</span></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-comment">⍝</span><span class="c-comment"># by 3)</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a>ˡx ← <span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.5</span> <span class="c-number">-1.0</span> <span class="c-number">0.25</span>  <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">-0.5</span>  <span class="c-number">-0.75</span> <span class="c-number">0.5</span> <span class="c-number">1.0</span>  <span class="c-number">0.2</span> <span class="c-number">0.4</span> <span class="c-number">-0.6</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-comment">⍝</span><span class="c-comment"># w1: the first layer's weights, a row per input and a column per</span></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-comment">⍝</span><span class="c-comment"># output, its bias the last row (4 by 5: 3 inputs and a bias, 5</span></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-comment">⍝</span><span class="c-comment"># outputs): the numbers of X_eTaL-gpu's libs/Accel/data/w1.txt</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a>ˡw1 ← <span class="c-number">4</span> <span class="c-number">5</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.5</span> <span class="c-number">-0.25</span> <span class="c-number">0.75</span> <span class="c-number">0.1</span> <span class="c-number">-0.6</span>  <span class="c-number">-0.3</span> <span class="c-number">0.8</span> <span class="c-number">0.2</span> <span class="c-number">-0.5</span> <span class="c-number">0.4</span>  <span class="c-number">0.6</span> <span class="c-number">0.1</span> <span class="c-number">-0.7</span> <span class="c-number">0.3</span> <span class="c-number">0.2</span>  <span class="c-number">0.05</span> <span class="c-number">-0.1</span> <span class="c-number">0.2</span> <span class="c-number">0.0</span> <span class="c-number">0.1</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-comment">⍝</span><span class="c-comment"># w2: the second layer's (6 by 2: 5 inputs and a bias, 2 outputs):</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-comment">⍝</span><span class="c-comment"># libs/Accel/data/w2.txt</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a>ˡw2 ← <span class="c-number">6</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.7</span> <span class="c-number">-0.4</span>  <span class="c-number">-0.2</span> <span class="c-number">0.9</span>  <span class="c-number">0.5</span> <span class="c-number">0.3</span>  <span class="c-number">-0.6</span> <span class="c-number">0.2</span>  <span class="c-number">0.3</span> <span class="c-number">-0.8</span>  <span class="c-number">0.1</span> <span class="c-number">-0.1</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-comment">⍝</span><span class="c-comment"># z1: the first layer's output, ac:d_ense (4 by 5), some of it negative</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rs:&quot; u_se&lt; &quot;ReluSoftmax&quot;</span></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; s_hape rs:z1</span></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a><span class="c-comment">⍝</span><span class="c-comment"># 4 5</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a>ˡz1 ← <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.x">ˡx</a> <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-gpu-libs-Accel-src-Accel.xtl.html#l.d_ense" class="c-libfunc">ᵃᶜd̲ense</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.w1">ˡw1</a></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-comment">⍝</span><span class="c-comment"># h: z1 through ac:r_elu (4 by 5)</span></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a>ˡh ← <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-gpu-libs-Accel-src-Accel.xtl.html#l.r_elu" class="c-libfunc">ᵃᶜr̲elu</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z1">ˡz1</a></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-comment">⍝</span><span class="c-comment"># z2: the second layer's output (4 by 2): two scores for each example</span></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a>ˡz2 ← <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.h">ˡh</a> <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-gpu-libs-Accel-src-Accel.xtl.html#l.d_ense" class="c-libfunc">ᵃᶜd̲ense</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.w2">ˡw2</a></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a></span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a><span class="c-comment">⍝</span><span class="c-comment"># p: the network's answer, ac:s_oftmax: each row two shares of 1 (4 by</span></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a><span class="c-comment">⍝</span><span class="c-comment"># 2)</span></span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rs:&quot; u_se&lt; &quot;ReluSoftmax&quot;</span></span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;ac:&quot; u_se&lt; &quot;Accel&quot;</span></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; 0.000000001 &gt; a_bs 1.0 - ac:r_owSums rs:p</span></span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a><span class="c-comment">⍝</span><span class="c-comment"># 1 1 1 1</span></span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a>ˡp ← <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-gpu-libs-Accel-src-Accel.xtl.html#l.s_oftmax" class="c-libfunc">ᵃᶜs̲oftmax</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z2">ˡz2</a></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a></span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a><span class="c-comment">⍝</span><span class="c-comment"> a value for each row spread along it (as ac:s_oftmax spreads them)</span></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a><span class="c-libfunc">ʰa̲long</span> ← { v m → v <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> m }</span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a><span class="c-comment">⍝</span><span class="c-comment"># Softmax's steps, to show them one at a time (ac:s_oftmax does them in</span></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-comment">⍝</span><span class="c-comment"># one expression): rs:s_hifted m, each row less its ac:r_owMax (the</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a><span class="c-comment">⍝</span><span class="c-comment"># largest becomes 0)</span></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a><span class="c-libfunc">ˡs̲hifted</span> ← { m → m <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-gpu-libs-Accel-src-Accel.xtl.html#l.r_owMax" class="c-libfunc">ᵃᶜr̲owMax</a> m) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_long" class="c-libfunc">ʰa̲long</a> m }</span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a><span class="c-comment">⍝</span><span class="c-comment"># rs:e_xps m: e to each of the shifted rows: all positive, the largest 1</span></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a><span class="c-libfunc">ˡe̲xps</span> ← { m → <a href="builtins.html#e_xp" class="c-builtin">e̲xp</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_hifted" class="c-libfunc">ˡs̲hifted</a> m }</span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a><span class="c-comment">⍝</span><span class="c-comment"># rs:s_ums m: each row's e's added up, ac:r_owSums</span></span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a><span class="c-libfunc">ˡs̲ums</span> ← { m → <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-gpu-libs-Accel-src-Accel.xtl.html#l.r_owSums" class="c-libfunc">ᵃᶜr̲owSums</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.e_xps" class="c-libfunc">ˡe̲xps</a> m }</span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a></span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a><span class="c-comment">⍝</span><span class="c-comment"># each row's e's divided by their sum are ac:s_oftmax's shares</span></span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rs:&quot; u_se&lt; &quot;ReluSoftmax&quot;</span></span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; '+ r_/ r_avel a_bs rs:p - (rs:e_xps rs:z2) / (rs:s_ums rs:z2) 'l_eft t_able 1 2</span></span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a><span class="c-comment">⍝</span><span class="c-comment"># 0.0</span></span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a>ˡshares ← (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.e_xps" class="c-libfunc">ˡe̲xps</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z2">ˡz2</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_ums" class="c-libfunc">ˡs̲ums</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z2">ˡz2</a>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_long" class="c-libfunc">ʰa̲long</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z2">ˡz2</a></span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a></span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a><span class="c-comment">⍝</span><span class="c-comment">## Colors (0 to 255)</span></span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a></span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a><span class="c-comment">⍝</span><span class="c-comment"># orange: a positive value, and the first of a row's two shares</span></span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a>ˡorange ← <span class="c-number">255</span> <span class="c-number">179</span> <span class="c-number">71</span></span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a><span class="c-comment">⍝</span><span class="c-comment"># blue: a negative value</span></span>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a>ˡblue ← <span class="c-number">79</span> <span class="c-number">168</span> <span class="c-number">255</span></span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a><span class="c-comment">⍝</span><span class="c-comment"># red: a value ReLU removes</span></span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a>ˡred ← <span class="c-number">255</span> <span class="c-number">74</span> <span class="c-number">61</span></span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a><span class="c-comment">⍝</span><span class="c-comment"># cyan: the second of a row's two shares</span></span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a>ˡcyan ← <span class="c-number">79</span> <span class="c-number">214</span> <span class="c-number">255</span></span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a><span class="c-comment">⍝</span><span class="c-comment"># white: a sum, and the labels</span></span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a>ˡwhite ← <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span></span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a><span class="c-comment">⍝</span><span class="c-comment"># yellow: a kept value's label after ReLU, a sum's, a step's caption</span></span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a>ˡyellow ← <span class="c-number">255</span> <span class="c-number">216</span> <span class="c-number">77</span></span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a><span class="c-comment">⍝</span><span class="c-comment"># pink: a removed value's label, and ReLU's caption</span></span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a>ˡpink ← <span class="c-number">255</span> <span class="c-number">138</span> <span class="c-number">128</span></span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a><span class="c-comment">⍝</span><span class="c-comment"># gray: the rows' names</span></span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a>ˡgray ← <span class="c-number">197</span> <span class="c-number">204</span> <span class="c-number">214</span></span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a><span class="c-comment">⍝</span><span class="c-comment"># the glass floors</span></span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a>ˡglassColor ← <span class="c-number">143</span> <span class="c-number">211</span> <span class="c-number">255</span></span>
+<span class="line" id="L92"><a class="ln" href="#L92">92</a><span class="c-comment">⍝</span><span class="c-comment"># the sky, near black</span></span>
+<span class="line" id="L93"><a class="ln" href="#L93">93</a>ˡsky ← <span class="c-number">7</span> <span class="c-number">8</span> <span class="c-number">10</span></span>
+<span class="line" id="L94"><a class="ln" href="#L94">94</a></span>
+<span class="line" id="L95"><a class="ln" href="#L95">95</a><span class="c-comment">⍝</span><span class="c-comment"> a color for each of the mask's values: a where 1, b where 0 (n by 3)</span></span>
+<span class="line" id="L96"><a class="ln" href="#L96">96</a><span class="c-libfunc">ʰp̲ick</span> ← { m (a, b) → ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> m) <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> m) <span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> b }</span>
+<span class="line" id="L97"><a class="ln" href="#L97">97</a></span>
+<span class="line" id="L98"><a class="ln" href="#L98">98</a><span class="c-comment">⍝</span><span class="c-comment">## Bars, keys and labels as tables</span></span>
+<span class="line" id="L99"><a class="ln" href="#L99">99</a></span>
+<span class="line" id="L100"><a class="ln" href="#L100">100</a><span class="c-comment">⍝</span><span class="c-comment"># (x, y, heights, width) rs:b_ars 0: places for bars (n by 6: x y z w</span></span>
+<span class="line" id="L101"><a class="ln" href="#L101">101</a><span class="c-comment">⍝</span><span class="c-comment"># d h), each standing on the floor (z 0) or hanging below it as its</span></span>
+<span class="line" id="L102"><a class="ln" href="#L102">102</a><span class="c-comment">⍝</span><span class="c-comment"># height is positive or negative, never thinner than 0.004</span></span>
+<span class="line" id="L103"><a class="ln" href="#L103">103</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;rs:&quot; u_se&lt; &quot;ReluSoftmax&quot;</span></span>
+<span class="line" id="L104"><a class="ln" href="#L104">104</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; (0.0 1.0, 0.0 0.0, 2.0 -1.0, 0.5) rs:b_ars 0</span></span>
+<span class="line" id="L105"><a class="ln" href="#L105">105</a><span class="c-comment">⍝</span><span class="c-comment"># 0.0 0.0  1.0 0.5 0.5 2.0</span></span>
+<span class="line" id="L106"><a class="ln" href="#L106">106</a><span class="c-comment">⍝</span><span class="c-comment"># 1.0 0.0 -0.5 0.5 0.5 1.0</span></span>
+<span class="line" id="L107"><a class="ln" href="#L107">107</a><span class="c-libfunc">ˡb̲ars</span> ← { (bx, by, hh, w) z →</span>
+<span class="line" id="L108"><a class="ln" href="#L108">108</a>  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> hh</span>
+<span class="line" id="L109"><a class="ln" href="#L109">109</a>  <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">6</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> bx <a href="builtins.html#c_at" class="c-builtin">c̲at</a> by <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (hh <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.004</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> hh</span>
+<span class="line" id="L110"><a class="ln" href="#L110">110</a>}</span>
+<span class="line" id="L111"><a class="ln" href="#L111">111</a></span>
+<span class="line" id="L112"><a class="ln" href="#L112">112</a><span class="c-comment">⍝</span><span class="c-comment"># (places, colors, glow) rs:t_able 0: the rows vd:b_oxes takes -- each</span></span>
+<span class="line" id="L113"><a class="ln" href="#L113">113</a><span class="c-comment">⍝</span><span class="c-comment"># place, then its color, then how strongly it glows</span></span>
+<span class="line" id="L114"><a class="ln" href="#L114">114</a><span class="c-libfunc">ˡt̲able</span> ← { (pl, c, g) z → pl <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> pl) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> g }</span>
+<span class="line" id="L115"><a class="ln" href="#L115">115</a></span>
+<span class="line" id="L116"><a class="ln" href="#L116">116</a><span class="c-comment">⍝</span><span class="c-comment"># a list of n by 6 (or n by 3) tables, one a key, as n by k by 6 (or 3):</span></span>
+<span class="line" id="L117"><a class="ln" href="#L117">117</a><span class="c-comment">⍝</span><span class="c-comment"># what vd:m_oves (vd:t_ints) takes. keys is k, and the tables are</span></span>
+<span class="line" id="L118"><a class="ln" href="#L118">118</a><span class="c-comment">⍝</span><span class="c-comment"># joined one under another</span></span>
+<span class="line" id="L119"><a class="ln" href="#L119">119</a><span class="c-libfunc">ˡk̲eyed</span> ← { k tabs →</span>
+<span class="line" id="L120"><a class="ln" href="#L120">120</a>  s ← <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> tabs</span>
+<span class="line" id="L121"><a class="ln" href="#L121">121</a>  n ← (<a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> s) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> k</span>
+<span class="line" id="L122"><a class="ln" href="#L122">122</a>  <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-number">3</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (k <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> tabs</span>
+<span class="line" id="L123"><a class="ln" href="#L123">123</a>}</span>
+<span class="line" id="L124"><a class="ln" href="#L124">124</a></span>
+<span class="line" id="L125"><a class="ln" href="#L125">125</a><span class="c-comment">⍝</span><span class="c-comment"> label places (n by 7: x y z, height, color) for words at x y z</span></span>
+<span class="line" id="L126"><a class="ln" href="#L126">126</a><span class="c-libfunc">ʰl̲abelAt</span> ← { (bx, by, bz, size, c) z →</span>
+<span class="line" id="L127"><a class="ln" href="#L127">127</a>  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> bx</span>
+<span class="line" id="L128"><a class="ln" href="#L128">128</a>  (<span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> bx <a href="builtins.html#c_at" class="c-builtin">c̲at</a> by <a href="builtins.html#c_at" class="c-builtin">c̲at</a> bz) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> size) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> c)</span>
+<span class="line" id="L129"><a class="ln" href="#L129">129</a>}</span>
+<span class="line" id="L130"><a class="ln" href="#L130">130</a></span>
+<span class="line" id="L131"><a class="ln" href="#L131">131</a><span class="c-comment">⍝</span><span class="c-comment">## ReLU, 0 to 11 s</span></span>
+<span class="line" id="L132"><a class="ln" href="#L132">132</a></span>
+<span class="line" id="L133"><a class="ln" href="#L133">133</a><span class="c-comment">⍝</span><span class="c-comment"> meters a unit of value; a cell's spacing; where the stage sits</span></span>
+<span class="line" id="L134"><a class="ln" href="#L134">134</a>hs ← <span class="c-number">2.2</span></span>
+<span class="line" id="L135"><a class="ln" href="#L135">135</a>gap ← <span class="c-number">1.4</span></span>
+<span class="line" id="L136"><a class="ln" href="#L136">136</a>ox ← <span class="c-number">-12.0</span></span>
+<span class="line" id="L137"><a class="ln" href="#L137">137</a></span>
+<span class="line" id="L138"><a class="ln" href="#L138">138</a><span class="c-comment">⍝</span><span class="c-comment"># where each cell of z1 stands: x (4 by 5), 1.4 apart, about x -12</span></span>
+<span class="line" id="L139"><a class="ln" href="#L139">139</a>ˡcellX ← <span class="c-number">4</span> <span class="c-number">5</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#ox">ox</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#gap">gap</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">5</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">3.0</span></span>
+<span class="line" id="L140"><a class="ln" href="#L140">140</a><span class="c-comment">⍝</span><span class="c-comment"># y (4 by 5), a row of z1 a row of the floor</span></span>
+<span class="line" id="L141"><a class="ln" href="#L141">141</a>ˡcellY ← (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#gap">gap</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">4</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">5</span></span>
+<span class="line" id="L142"><a class="ln" href="#L142">142</a></span>
+<span class="line" id="L143"><a class="ln" href="#L143">143</a><span class="c-comment">⍝</span><span class="c-comment"># the ReLU part of the script: z1 as bars on a glass floor, labeled;</span></span>
+<span class="line" id="L144"><a class="ln" href="#L144">144</a><span class="c-comment">⍝</span><span class="c-comment"># the negatives turn red and shrink to 0, outlines left where they</span></span>
+<span class="line" id="L145"><a class="ln" href="#L145">145</a><span class="c-comment">⍝</span><span class="c-comment"># were; then h's values</span></span>
+<span class="line" id="L146"><a class="ln" href="#L146">146</a><span class="c-libfunc">ˡr̲eluScript</span> ← { z →</span>
+<span class="line" id="L147"><a class="ln" href="#L147">147</a>  v ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z1">ˡz1</a></span>
+<span class="line" id="L148"><a class="ln" href="#L148">148</a>  bx ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.cellX">ˡcellX</a></span>
+<span class="line" id="L149"><a class="ln" href="#L149">149</a>  by ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.cellY">ˡcellY</a></span>
+<span class="line" id="L150"><a class="ln" href="#L150">150</a>  neg ← v <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">0.0</span></span>
+<span class="line" id="L151"><a class="ln" href="#L151">151</a>  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v</span>
+<span class="line" id="L152"><a class="ln" href="#L152">152</a>  k ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> neg</span>
+<span class="line" id="L153"><a class="ln" href="#L153">153</a>  p0 ← (bx, by, v <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#hs">hs</a>, <span class="c-number">0.62</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.b_ars" class="c-libfunc">ˡb̲ars</a> <span class="c-number">0</span></span>
+<span class="line" id="L154"><a class="ln" href="#L154">154</a>  p1 ← (bx, by, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#hs">hs</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-gpu-libs-Accel-src-Accel.xtl.html#l.r_elu" class="c-libfunc">ᵃᶜr̲elu</a> v, <span class="c-number">0.62</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.b_ars" class="c-libfunc">ˡb̲ars</a> <span class="c-number">0</span></span>
+<span class="line" id="L155"><a class="ln" href="#L155">155</a>  c0 ← neg <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.p_ick" class="c-libfunc">ʰp̲ick</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.blue">ˡblue</a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.orange">ˡorange</a>)</span>
+<span class="line" id="L156"><a class="ln" href="#L156">156</a>  c1 ← neg <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.p_ick" class="c-libfunc">ʰp̲ick</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.red">ˡred</a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.orange">ˡorange</a>)</span>
+<span class="line" id="L157"><a class="ln" href="#L157">157</a>  t ← (<span class="c-string">&quot;floor&quot;</span>, (<span class="c-number">1</span> <span class="c-number">6</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#ox">ox</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2.1</span> <span class="c-number">0.0</span> <span class="c-number">7.4</span> <span class="c-number">6.0</span> <span class="c-number">0.02</span>, <span class="c-number">1</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.glassColor">ˡglassColor</a>, <span class="c-number">0.6</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.t_able" class="c-libfunc">ˡt̲able</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.g_lass" class="c-libfunc">ᵛᵈg̲lass</a> <span class="c-number">0</span></span>
+<span class="line" id="L158"><a class="ln" href="#L158">158</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;floor&quot;</span>, <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">11.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L159"><a class="ln" href="#L159">159</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;z1&quot;</span>, (p0, c0, <span class="c-number">1.2</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.t_able" class="c-libfunc">ˡt̲able</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span></span>
+<span class="line" id="L160"><a class="ln" href="#L160">160</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;z1&quot;</span>, <span class="c-number">0.0</span> <span class="c-number">4.0</span> <span class="c-number">5.6</span>, <span class="c-number">3</span> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.k_eyed" class="c-libfunc">ˡk̲eyed</a> p0 <a href="builtins.html#c_at" class="c-builtin">c̲at</a> p0 <a href="builtins.html#c_at" class="c-builtin">c̲at</a> p1) <a href="extensions-blender-lib-Video.xtl.html#l.m_oves" class="c-libfunc">ᵛᵈm̲oves</a> <span class="c-number">0</span></span>
+<span class="line" id="L161"><a class="ln" href="#L161">161</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;z1&quot;</span>, <span class="c-number">0.0</span> <span class="c-number">3.0</span> <span class="c-number">3.6</span>, <span class="c-number">3</span> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.k_eyed" class="c-libfunc">ˡk̲eyed</a> c0 <a href="builtins.html#c_at" class="c-builtin">c̲at</a> c0 <a href="builtins.html#c_at" class="c-builtin">c̲at</a> c1) <a href="extensions-blender-lib-Video.xtl.html#l.t_ints" class="c-libfunc">ᵛᵈt̲ints</a> <span class="c-number">0</span></span>
+<span class="line" id="L162"><a class="ln" href="#L162">162</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;z1&quot;</span>, (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">11.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L163"><a class="ln" href="#L163">163</a>  gv ← neg <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> v</span>
+<span class="line" id="L164"><a class="ln" href="#L164">164</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;gone&quot;</span>, ((neg <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> bx, neg <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> by, gv <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#hs">hs</a>, <span class="c-number">0.62</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.b_ars" class="c-libfunc">ˡb̲ars</a> <span class="c-number">0</span>, (k <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.red">ˡred</a>, <span class="c-number">1.5</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.t_able" class="c-libfunc">ˡt̲able</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.o_utlines" class="c-libfunc">ᵛᵈo̲utlines</a> <span class="c-number">0</span></span>
+<span class="line" id="L165"><a class="ln" href="#L165">165</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;gone&quot;</span>, (k <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">5.6</span> <span class="c-number">11.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L166"><a class="ln" href="#L166">166</a>  top ← <span class="c-number">0.45</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#hs">hs</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-gpu-libs-Accel-src-Accel.xtl.html#l.r_elu" class="c-libfunc">ᵃᶜr̲elu</a> v</span>
+<span class="line" id="L167"><a class="ln" href="#L167">167</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;z1 values&quot;</span>, <span class="c-number">2</span> <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed" class="c-libfunc">ᵛᵈf̲ixed</a> v, (bx, by <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.6</span>, top, <span class="c-number">0.46</span>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.white">ˡwhite</a>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.l_abelAt" class="c-libfunc">ʰl̲abelAt</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span></span>
+<span class="line" id="L168"><a class="ln" href="#L168">168</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;z1 values&quot;</span>, (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.5</span> <span class="c-number">5.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L169"><a class="ln" href="#L169">169</a>  hl ← ((bx, by <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.6</span>, top, <span class="c-number">0.46</span>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.white">ˡwhite</a>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.l_abelAt" class="c-libfunc">ʰl̲abelAt</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">0.0</span></span>
+<span class="line" id="L170"><a class="ln" href="#L170">170</a>  hl ← (<span class="c-number">4</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> hl) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> neg <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.p_ick" class="c-libfunc">ʰp̲ick</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.pink">ˡpink</a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.yellow">ˡyellow</a>)</span>
+<span class="line" id="L171"><a class="ln" href="#L171">171</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;h values&quot;</span>, <span class="c-number">2</span> <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed" class="c-libfunc">ᵛᵈf̲ixed</a> <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-gpu-libs-Accel-src-Accel.xtl.html#l.r_elu" class="c-libfunc">ᵃᶜr̲elu</a> v, hl) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span></span>
+<span class="line" id="L172"><a class="ln" href="#L172">172</a>  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;h values&quot;</span>, (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">6.0</span> <span class="c-number">11.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L173"><a class="ln" href="#L173">173</a>}</span>
+<span class="line" id="L174"><a class="ln" href="#L174">174</a></span>
+<span class="line" id="L175"><a class="ln" href="#L175">175</a><span class="c-comment">⍝</span><span class="c-comment">## Softmax, 11.5 to 30 s</span></span>
+<span class="line" id="L176"><a class="ln" href="#L176">176</a></span>
+<span class="line" id="L177"><a class="ln" href="#L177">177</a><span class="c-comment">⍝</span><span class="c-comment"># when each step of softmax starts: the scores, less the largest, e to</span></span>
+<span class="line" id="L178"><a class="ln" href="#L178">178</a><span class="c-comment">⍝</span><span class="c-comment"># them, the sums, divided, the shares; the video ends at 30</span></span>
+<span class="line" id="L179"><a class="ln" href="#L179">179</a>ˡsteps ← <span class="c-number">11.5</span> <span class="c-number">15.0</span> <span class="c-number">18.0</span> <span class="c-number">21.0</span> <span class="c-number">23.5</span> <span class="c-number">26.0</span></span>
+<span class="line" id="L180"><a class="ln" href="#L180">180</a><span class="c-comment">⍝</span><span class="c-comment"># the video's length, 30 seconds</span></span>
+<span class="line" id="L181"><a class="ln" href="#L181">181</a>ˡends ← <span class="c-number">30.0</span></span>
+<span class="line" id="L182"><a class="ln" href="#L182">182</a></span>
+<span class="line" id="L183"><a class="ln" href="#L183">183</a><span class="c-comment">⍝</span><span class="c-comment"> meters a unit of value; each row's group's width; the result's height</span></span>
+<span class="line" id="L184"><a class="ln" href="#L184">184</a>eh ← <span class="c-number">2.0</span></span>
+<span class="line" id="L185"><a class="ln" href="#L185">185</a>gw ← <span class="c-number">4.4</span></span>
+<span class="line" id="L186"><a class="ln" href="#L186">186</a>ph ← <span class="c-number">3.2</span></span>
+<span class="line" id="L187"><a class="ln" href="#L187">187</a></span>
+<span class="line" id="L188"><a class="ln" href="#L188">188</a><span class="c-comment">⍝</span><span class="c-comment"># the middle of each row's group, left to right (4), 4.4 apart</span></span>
+<span class="line" id="L189"><a class="ln" href="#L189">189</a>ˡgroupX ← <a href="extensions-blender-demos-ReluSoftmax.xtl.html#gw">gw</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">4</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2.5</span></span>
+<span class="line" id="L190"><a class="ln" href="#L190">190</a><span class="c-comment">⍝</span><span class="c-comment"># where each score's bar stands (4 by 2): its group's middle less 0.9,</span></span>
+<span class="line" id="L191"><a class="ln" href="#L191">191</a><span class="c-comment">⍝</span><span class="c-comment"># then 1.2 to the right</span></span>
+<span class="line" id="L192"><a class="ln" href="#L192">192</a>ˡbarX ← (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.groupX">ˡgroupX</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.9</span>) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">0.0</span> <span class="c-number">1.2</span></span>
+<span class="line" id="L193"><a class="ln" href="#L193">193</a></span>
+<span class="line" id="L194"><a class="ln" href="#L194">194</a><span class="c-comment">⍝</span><span class="c-comment"> a step's start</span></span>
+<span class="line" id="L195"><a class="ln" href="#L195">195</a><span class="c-libfunc">ʰa̲t</span> ← { i → i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.steps">ˡsteps</a> }</span>
+<span class="line" id="L196"><a class="ln" href="#L196">196</a></span>
+<span class="line" id="L197"><a class="ln" href="#L197">197</a><span class="c-comment">⍝</span><span class="c-comment"># the softmax part of the script: each row's two bars become the</span></span>
+<span class="line" id="L198"><a class="ln" href="#L198">198</a><span class="c-comment">⍝</span><span class="c-comment"># shifted scores, the e's, the shares; each row's sum stands beside</span></span>
+<span class="line" id="L199"><a class="ln" href="#L199">199</a><span class="c-comment">⍝</span><span class="c-comment"># them; each row's result is a column of its two shares, 1 tall</span></span>
+<span class="line" id="L200"><a class="ln" href="#L200">200</a><span class="c-libfunc">ˡs̲oftmaxScript</span> ← { z →</span>
+<span class="line" id="L201"><a class="ln" href="#L201">201</a>  sc ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z2">ˡz2</a></span>
+<span class="line" id="L202"><a class="ln" href="#L202">202</a>  sh ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_hifted" class="c-libfunc">ˡs̲hifted</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z2">ˡz2</a></span>
+<span class="line" id="L203"><a class="ln" href="#L203">203</a>  e ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.e_xps" class="c-libfunc">ˡe̲xps</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z2">ˡz2</a></span>
+<span class="line" id="L204"><a class="ln" href="#L204">204</a>  sm ← <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_ums" class="c-libfunc">ˡs̲ums</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z2">ˡz2</a></span>
+<span class="line" id="L205"><a class="ln" href="#L205">205</a>  pp ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.p">ˡp</a></span>
+<span class="line" id="L206"><a class="ln" href="#L206">206</a>  bx ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.barX">ˡbarX</a></span>
+<span class="line" id="L207"><a class="ln" href="#L207">207</a>  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> bx</span>
+<span class="line" id="L208"><a class="ln" href="#L208">208</a>  by ← n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span></span>
+<span class="line" id="L209"><a class="ln" href="#L209">209</a>  ks ← (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">2</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">2</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">3</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">3</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">5</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">5</span></span>
+<span class="line" id="L210"><a class="ln" href="#L210">210</a>  hh ← sc <a href="builtins.html#c_at" class="c-builtin">c̲at</a> sc <a href="builtins.html#c_at" class="c-builtin">c̲at</a> sh <a href="builtins.html#c_at" class="c-builtin">c̲at</a> sh <a href="builtins.html#c_at" class="c-builtin">c̲at</a> e <a href="builtins.html#c_at" class="c-builtin">c̲at</a> e <a href="builtins.html#c_at" class="c-builtin">c̲at</a> pp</span>
+<span class="line" id="L211"><a class="ln" href="#L211">211</a>  pl ← ((<span class="c-number">7</span> <a href="builtins.html#-2a" class="c-symbol">×</a> n) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">6</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">7</span> <a href="builtins.html#-2a" class="c-symbol">×</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> bx, (<span class="c-number">7</span> <a href="builtins.html#-2a" class="c-symbol">×</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> by, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#eh">eh</a> <a href="builtins.html#-2a" class="c-symbol">×</a> hh, <span class="c-number">0.8</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.b_ars" class="c-libfunc">ˡb̲ars</a> <span class="c-number">0</span></span>
+<span class="line" id="L212"><a class="ln" href="#L212">212</a>  first ← n <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> pl</span>
+<span class="line" id="L213"><a class="ln" href="#L213">213</a>  share ← (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">4</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <span class="c-number">0</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.p_ick" class="c-libfunc">ʰp̲ick</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.orange">ˡorange</a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.cyan">ˡcyan</a>)</span>
+<span class="line" id="L214"><a class="ln" href="#L214">214</a>  cz ← (sc <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">0.0</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.p_ick" class="c-libfunc">ʰp̲ick</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.orange">ˡorange</a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.blue">ˡblue</a>)</span>
+<span class="line" id="L215"><a class="ln" href="#L215">215</a>  t ← (<span class="c-string">&quot;floor2&quot;</span>, (<span class="c-number">1</span> <span class="c-number">6</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.6</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">18.2</span> <span class="c-number">1.8</span> <span class="c-number">0.02</span>, <span class="c-number">1</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.glassColor">ˡglassColor</a>, <span class="c-number">0.6</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.t_able" class="c-libfunc">ˡt̲able</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.g_lass" class="c-libfunc">ᵛᵈg̲lass</a> <span class="c-number">0</span></span>
+<span class="line" id="L216"><a class="ln" href="#L216">216</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;floor2&quot;</span>, <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.ends">ˡends</a>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L217"><a class="ln" href="#L217">217</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;scores&quot;</span>, (first, cz, <span class="c-number">1.2</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.t_able" class="c-libfunc">ˡt̲able</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span></span>
+<span class="line" id="L218"><a class="ln" href="#L218">218</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;scores&quot;</span>, ks, <span class="c-number">7</span> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.k_eyed" class="c-libfunc">ˡk̲eyed</a> pl) <a href="extensions-blender-lib-Video.xtl.html#l.m_oves" class="c-libfunc">ᵛᵈm̲oves</a> <span class="c-number">0</span></span>
+<span class="line" id="L219"><a class="ln" href="#L219">219</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;scores&quot;</span>, (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">3</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.6</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">3</span>, <span class="c-number">3</span> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.k_eyed" class="c-libfunc">ˡk̲eyed</a> cz <a href="builtins.html#c_at" class="c-builtin">c̲at</a> cz <a href="builtins.html#c_at" class="c-builtin">c̲at</a> share) <a href="extensions-blender-lib-Video.xtl.html#l.t_ints" class="c-libfunc">ᵛᵈt̲ints</a> <span class="c-number">0</span></span>
+<span class="line" id="L220"><a class="ln" href="#L220">220</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;scores&quot;</span>, (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">6</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L221"><a class="ln" href="#L221">221</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;scores&quot;</span>, sc, <span class="c-number">1</span>, <span class="c-number">2</span>, <span class="c-number">-0.4</span>, bx) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.v_alues" class="c-libfunc">ʰv̲alues</a> <span class="c-number">0</span>)</span>
+<span class="line" id="L222"><a class="ln" href="#L222">222</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;shifted&quot;</span>, sh, <span class="c-number">2</span>, <span class="c-number">3</span>, <span class="c-number">-0.4</span>, bx) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.v_alues" class="c-libfunc">ʰv̲alues</a> <span class="c-number">0</span>)</span>
+<span class="line" id="L223"><a class="ln" href="#L223">223</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;e&quot;</span>, e, <span class="c-number">3</span>, <span class="c-number">5</span>, <span class="c-number">-0.4</span>, bx) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.v_alues" class="c-libfunc">ʰv̲alues</a> <span class="c-number">0</span>)</span>
+<span class="line" id="L224"><a class="ln" href="#L224">224</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;shares&quot;</span>, pp, <span class="c-number">5</span>, <span class="c-number">6</span>, <span class="c-number">0.0</span>, bx) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.v_alues" class="c-libfunc">ʰv̲alues</a> <span class="c-number">0</span>)</span>
+<span class="line" id="L225"><a class="ln" href="#L225">225</a>  sx ← <span class="c-number">1.2</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.barX">ˡbarX</a></span>
+<span class="line" id="L226"><a class="ln" href="#L226">226</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;sums&quot;</span>, ((sx, <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#eh">eh</a> <a href="builtins.html#-2a" class="c-symbol">×</a> sm, <span class="c-number">0.8</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.b_ars" class="c-libfunc">ˡb̲ars</a> <span class="c-number">0</span>, <span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.white">ˡwhite</a>, <span class="c-number">1.2</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.t_able" class="c-libfunc">ˡt̲able</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span></span>
+<span class="line" id="L227"><a class="ln" href="#L227">227</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;sums&quot;</span>, <span class="c-number">4</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">4</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.8</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">5</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L228"><a class="ln" href="#L228">228</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;sum values&quot;</span>, <span class="c-number">2</span> <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed" class="c-libfunc">ᵛᵈf̲ixed</a> sm, (sx, <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-0.7</span>, <span class="c-number">0.4</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#eh">eh</a> <a href="builtins.html#-2a" class="c-symbol">×</a> sm, <span class="c-number">0.46</span>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.yellow">ˡyellow</a>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.l_abelAt" class="c-libfunc">ʰl̲abelAt</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span></span>
+<span class="line" id="L229"><a class="ln" href="#L229">229</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;sum values&quot;</span>, <span class="c-number">4</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">0.3</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">4</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.8</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">5</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L230"><a class="ln" href="#L230">230</a>  cx ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">2</span> <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <span class="c-number">0.3</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.groupX">ˡgroupX</a></span>
+<span class="line" id="L231"><a class="ln" href="#L231">231</a>  below ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<span class="c-number">4</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.p">ˡp</a></span>
+<span class="line" id="L232"><a class="ln" href="#L232">232</a>  mid ← <a href="extensions-blender-demos-ReluSoftmax.xtl.html#ph">ph</a> <a href="builtins.html#-2a" class="c-symbol">×</a> below <a href="builtins.html#-2b" class="c-symbol">+</a> pp <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span></span>
+<span class="line" id="L233"><a class="ln" href="#L233">233</a>  segs ← <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">6</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> cx <a href="builtins.html#c_at" class="c-builtin">c̲at</a> by <a href="builtins.html#c_at" class="c-builtin">c̲at</a> mid <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.6</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.9</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#ph">ph</a> <a href="builtins.html#-2a" class="c-symbol">×</a> pp) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.04</span></span>
+<span class="line" id="L234"><a class="ln" href="#L234">234</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;result&quot;</span>, (segs, share, <span class="c-number">1.3</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.t_able" class="c-libfunc">ˡt̲able</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span></span>
+<span class="line" id="L235"><a class="ln" href="#L235">235</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;result&quot;</span>, (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">6</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.ends">ˡends</a>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L236"><a class="ln" href="#L236">236</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;result values&quot;</span>, <span class="c-number">3</span> <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed" class="c-libfunc">ᵛᵈf̲ixed</a> pp, (cx, n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-0.6</span>, mid, <span class="c-number">0.46</span>, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.l_abelAt" class="c-libfunc">ʰl̲abelAt</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span></span>
+<span class="line" id="L237"><a class="ln" href="#L237">237</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;result values&quot;</span>, (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">0.3</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">6</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.ends">ˡends</a>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L238"><a class="ln" href="#L238">238</a>  gx ← <span class="c-number">0.3</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.groupX">ˡgroupX</a></span>
+<span class="line" id="L239"><a class="ln" href="#L239">239</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;ones&quot;</span>, <span class="c-string">&quot;1|1|1|1&quot;</span>, (gx, <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-0.6</span>, <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#ph">ph</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.45</span>, <span class="c-number">0.5</span>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.yellow">ˡyellow</a>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.l_abelAt" class="c-libfunc">ʰl̲abelAt</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span></span>
+<span class="line" id="L240"><a class="ln" href="#L240">240</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;ones&quot;</span>, <span class="c-number">4</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">0.6</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">6</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.ends">ˡends</a>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L241"><a class="ln" href="#L241">241</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;rows&quot;</span>, <span class="c-string">&quot;row 1|row 2|row 3|row 4&quot;</span>, (gx, <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-1.3</span>, <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-0.1</span>, <span class="c-number">0.42</span>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.gray">ˡgray</a>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.l_abelAt" class="c-libfunc">ʰl̲abelAt</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span></span>
+<span class="line" id="L242"><a class="ln" href="#L242">242</a>  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;rows&quot;</span>, <span class="c-number">4</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.ends">ˡends</a>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L243"><a class="ln" href="#L243">243</a>}</span>
+<span class="line" id="L244"><a class="ln" href="#L244">244</a></span>
+<span class="line" id="L245"><a class="ln" href="#L245">245</a><span class="c-comment">⍝</span><span class="c-comment"> a step's values over its bars, white, shown from step i to step j</span></span>
+<span class="line" id="L246"><a class="ln" href="#L246">246</a><span class="c-comment">⍝</span><span class="c-comment"> (less a margin), lifted above the bars</span></span>
+<span class="line" id="L247"><a class="ln" href="#L247">247</a><span class="c-libfunc">ʰv̲alues</span> ← { (name, v, i, j, less, bx) z →</span>
+<span class="line" id="L248"><a class="ln" href="#L248">248</a>  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v</span>
+<span class="line" id="L249"><a class="ln" href="#L249">249</a>  t ← ((name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; values&quot;</span>), <span class="c-number">2</span> <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed" class="c-libfunc">ᵛᵈf̲ixed</a> v, (bx, n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-0.7</span>, <span class="c-number">0.4</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#eh">eh</a> <a href="builtins.html#-2a" class="c-symbol">×</a> v <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">0.0</span>, <span class="c-number">0.46</span>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.white">ˡwhite</a>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.l_abelAt" class="c-libfunc">ʰl̲abelAt</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span></span>
+<span class="line" id="L250"><a class="ln" href="#L250">250</a>  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; values&quot;</span>), (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">0.3</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> i) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> less <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> j) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L251"><a class="ln" href="#L251">251</a>}</span>
+<span class="line" id="L252"><a class="ln" href="#L252">252</a></span>
+<span class="line" id="L253"><a class="ln" href="#L253">253</a><span class="c-comment">⍝</span><span class="c-comment">## The captions and the camera</span></span>
+<span class="line" id="L254"><a class="ln" href="#L254">254</a></span>
+<span class="line" id="L255"><a class="ln" href="#L255">255</a><span class="c-comment">⍝</span><span class="c-comment"> an array's name and shape, as [4 5]</span></span>
+<span class="line" id="L256"><a class="ln" href="#L256">256</a><span class="c-libfunc">ʰs̲hape</span> ← { name a → name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; [&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> a) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;]&quot;</span> }</span>
+<span class="line" id="L257"><a class="ln" href="#L257">257</a></span>
+<span class="line" id="L258"><a class="ln" href="#L258">258</a><span class="c-comment">⍝</span><span class="c-comment"># the captions: what each part shows, | between them; the shapes and</span></span>
+<span class="line" id="L259"><a class="ln" href="#L259">259</a><span class="c-comment">⍝</span><span class="c-comment"># the count of negatives are the arrays'</span></span>
+<span class="line" id="L260"><a class="ln" href="#L260">260</a>ˡcaptionTexts ← ((<span class="c-string">&quot;z1&quot;</span> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.s_hape" class="c-libfunc">ʰs̲hape</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z1">ˡz1</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z1">ˡz1</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; values, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z1">ˡz1</a>) <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; of them negative|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a></span>
+<span class="line" id="L261"><a class="ln" href="#L261">261</a>  <span class="c-string">&quot;relu: every negative becomes 0|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a></span>
+<span class="line" id="L262"><a class="ln" href="#L262">262</a>  (<span class="c-string">&quot;h&quot;</span> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.s_hape" class="c-libfunc">ʰs̲hape</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.h">ˡh</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;: the negatives are gone; the rest unchanged|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a></span>
+<span class="line" id="L263"><a class="ln" href="#L263">263</a>  (<span class="c-string">&quot;z2&quot;</span> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.s_hape" class="c-libfunc">ʰs̲hape</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z2">ˡz2</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;: two scores in each row|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a></span>
+<span class="line" id="L264"><a class="ln" href="#L264">264</a>  <span class="c-string">&quot;1. subtract each row's largest|2. exp: every value positive, the largest 1|3. add up each row|4. divide by the sum|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a></span>
+<span class="line" id="L265"><a class="ln" href="#L265">265</a>  (<span class="c-string">&quot;p&quot;</span> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.s_hape" class="c-libfunc">ʰs̲hape</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.p">ˡp</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;: each row shares out 1&quot;</span>)</span>
+<span class="line" id="L266"><a class="ln" href="#L266">266</a></span>
+<span class="line" id="L267"><a class="ln" href="#L267">267</a><span class="c-comment">⍝</span><span class="c-comment"># when each caption shows (from, to) and its color</span></span>
+<span class="line" id="L268"><a class="ln" href="#L268">268</a><span class="c-libfunc">ˡc̲aptionTable</span> ← { z →</span>
+<span class="line" id="L269"><a class="ln" href="#L269">269</a>  s ← <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.steps">ˡsteps</a></span>
+<span class="line" id="L270"><a class="ln" href="#L270">270</a>  from ← <span class="c-number">0.3</span> <span class="c-number">3.1</span> <span class="c-number">7.1</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.3</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s</span>
+<span class="line" id="L271"><a class="ln" href="#L271">271</a>  to ← <span class="c-number">3.0</span> <span class="c-number">7.0</span> <span class="c-number">11.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> s) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.2</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.ends">ˡends</a></span>
+<span class="line" id="L272"><a class="ln" href="#L272">272</a>  c ← <span class="c-number">9</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.white">ˡwhite</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.pink">ˡpink</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.yellow">ˡyellow</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.white">ˡwhite</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.yellow">ˡyellow</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.yellow">ˡyellow</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.yellow">ˡyellow</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.yellow">ˡyellow</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.white">ˡwhite</a></span>
+<span class="line" id="L273"><a class="ln" href="#L273">273</a>  (<span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> <span class="c-number">2</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> from <a href="builtins.html#c_at" class="c-builtin">c̲at</a> to) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> c</span>
+<span class="line" id="L274"><a class="ln" href="#L274">274</a>}</span>
+<span class="line" id="L275"><a class="ln" href="#L275">275</a></span>
+<span class="line" id="L276"><a class="ln" href="#L276">276</a><span class="c-comment">⍝</span><span class="c-comment"># the camera: over the ReLU part, then gliding back to see the four</span></span>
+<span class="line" id="L277"><a class="ln" href="#L277">277</a><span class="c-comment">⍝</span><span class="c-comment"># rows of softmax side by side: at 0, 10.5, 12 and 30 s, each eye</span></span>
+<span class="line" id="L278"><a class="ln" href="#L278">278</a><span class="c-comment">⍝</span><span class="c-comment"># looking at its aim</span></span>
+<span class="line" id="L279"><a class="ln" href="#L279">279</a><span class="c-libfunc">ˡc̲ameraKeys</span> ← { z →</span>
+<span class="line" id="L280"><a class="ln" href="#L280">280</a>  rc ← <a href="extensions-blender-demos-ReluSoftmax.xtl.html#ox">ox</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2.1</span> <span class="c-number">0.6</span></span>
+<span class="line" id="L281"><a class="ln" href="#L281">281</a>  sc ← <span class="c-number">0.3</span> <span class="c-number">0.0</span> <span class="c-number">1.4</span></span>
+<span class="line" id="L282"><a class="ln" href="#L282">282</a>  ts ← <span class="c-number">0.0</span> <span class="c-number">10.5</span> <span class="c-number">12.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.ends">ˡends</a></span>
+<span class="line" id="L283"><a class="ln" href="#L283">283</a>  eyes ← <span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (rc <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">-1.5</span> <span class="c-number">-10.5</span> <span class="c-number">11.5</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (rc <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span> <span class="c-number">-11.0</span> <span class="c-number">11.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (sc <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">-1.0</span> <span class="c-number">-20.5</span> <span class="c-number">7.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> sc <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.0</span> <span class="c-number">-20.5</span> <span class="c-number">6.5</span></span>
+<span class="line" id="L284"><a class="ln" href="#L284">284</a>  aims ← <span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> rc <a href="builtins.html#c_at" class="c-builtin">c̲at</a> rc <a href="builtins.html#c_at" class="c-builtin">c̲at</a> sc <a href="builtins.html#c_at" class="c-builtin">c̲at</a> sc</span>
+<span class="line" id="L285"><a class="ln" href="#L285">285</a>  (ts, eyes, aims)</span>
+<span class="line" id="L286"><a class="ln" href="#L286">286</a>}</span>
+<span class="line" id="L287"><a class="ln" href="#L287">287</a></span>
+<span class="line" id="L288"><a class="ln" href="#L288">288</a><span class="c-comment">⍝</span><span class="c-comment">## The scene</span></span>
+<span class="line" id="L289"><a class="ln" href="#L289">289</a></span>
+<span class="line" id="L290"><a class="ln" href="#L290">290</a><span class="c-comment">⍝</span><span class="c-comment"># (width, height) rs:s_cene 0: the whole script Blender runs, but its</span></span>
+<span class="line" id="L291"><a class="ln" href="#L291">291</a><span class="c-comment">⍝</span><span class="c-comment"># output: the stage (30 frames a second, 30 seconds, the sky), the</span></span>
+<span class="line" id="L292"><a class="ln" href="#L292">292</a><span class="c-comment">⍝</span><span class="c-comment"># ReLU part, the softmax part, the captions and the camera, and the</span></span>
+<span class="line" id="L293"><a class="ln" href="#L293">293</a><span class="c-comment">⍝</span><span class="c-comment"># report. The caller adds vd:r_ender or vd:s_tills.</span></span>
+<span class="line" id="L294"><a class="ln" href="#L294">294</a><span class="c-libfunc">ˡs̲cene</span> ← { (w, h) z →</span>
+<span class="line" id="L295"><a class="ln" href="#L295">295</a>  t ← <a href="extensions-blender-lib-Video.xtl.html#l.head">ᵛᵈhead</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((w, h, <span class="c-number">30</span>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.ends">ˡends</a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.sky">ˡsky</a>, <span class="c-number">38</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_tage" class="c-libfunc">ᵛᵈs̲tage</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.r_eluScript" class="c-libfunc">ˡr̲eluScript</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_oftmaxScript" class="c-libfunc">ˡs̲oftmaxScript</a> <span class="c-number">0</span></span>
+<span class="line" id="L296"><a class="ln" href="#L296">296</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.captionTexts">ˡcaptionTexts</a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.c_aptionTable" class="c-libfunc">ˡc̲aptionTable</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.c_aptions" class="c-libfunc">ᵛᵈc̲aptions</a> <span class="c-number">0</span></span>
+<span class="line" id="L297"><a class="ln" href="#L297">297</a>  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.c_ameraKeys" class="c-libfunc">ˡc̲ameraKeys</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.c_amera" class="c-libfunc">ᵛᵈc̲amera</a> <span class="c-number">0</span></span>
+<span class="line" id="L298"><a class="ln" href="#L298">298</a>}</span>
+</div>
+</main>
+</body>
+</html>

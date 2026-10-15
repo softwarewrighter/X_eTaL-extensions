@@ -1,0 +1,34 @@
+## The three explainer videos, small and quick, through Blender end to
+## end: ReLU and softmax, the matrix product a step at a time, and the
+## fly-through at 32 by 32 (not 512), each at 160 by 90, two stills and
+## no video; Blender's report of each.
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"rs:" u_se< "ReluSoftmax"
+"mm:" u_se< "Matmul"
+"mf:" u_se< "MatmulFly"
+
+n := "work/quick/run.py" bl:w_rite! bp:launcher
+n := "work/quick/rs.py" bl:w_rite! ((160, 90) rs:s_cene 0) c_at ((5.0 28.0, "rs") vd:s_tills 0) c_at vd:report
+r := "work/quick/run.py" bl:r_un! "work/quick/rs.py work/quick/rs"
+"relu-softmax: the run, the error lines, what Blender made"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/quick/rs/report.txt"
+n := "work/quick/ms.py" bl:w_rite! ((160, 90) mm:s_teps 0) c_at ((2.6 13.0, "ms") vd:s_tills 0) c_at vd:report
+r := "work/quick/run.py" bl:r_un! "work/quick/ms.py work/quick/ms"
+"matmul-steps: the run, the error lines, what Blender made"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/quick/ms/report.txt"
+n := "work/quick/mf.py" bl:w_rite! ((160, 90, 32) mf:s_cene 0) c_at ((1.0 16.5, "mf") vd:s_tills 0) c_at vd:report
+r := "work/quick/run.py" bl:r_un! "work/quick/mf.py work/quick/mf"
+"matmul-fly at 32: the run, the error lines, what Blender made"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/quick/mf/report.txt"

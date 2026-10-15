@@ -1,0 +1,298 @@
+## ReluSoftmax.xtl -- ReLU and softmax on a tiny network's arrays, as a
+## video (Video.xtl). The network is X_eTaL-gpu's tiny-net
+## (libs/Accel/demos/tiny-net.xtl), run with the same library the GPU
+## runs, Accel (X_eTaL-gpu at GPU_COMMIT, on XETAL_PATH by
+## scripts/libraries.sh): its dense layers, ReLU, row maximum, row sums
+## and softmax. What is new here is only how they are shown: every
+## bar's place, size, color and timing, every label and the camera's
+## path, worked out from those arrays, and Video.xtl writes them into the
+## script Blender runs. Shared by the demo (demos/relu-softmax.xtl: the
+## video), its test (a few small frames) and the literate document
+## (docs/literate/relu-softmax.org).
+## Import: "rs:" u_se< "ReluSoftmax"
+
+"ac:" u_se< "Accel"
+"vd:" u_se< "Video"
+
+### The network's arrays (Accel)
+
+## x: tiny-net's input, a batch of four examples of three features (4
+## by 3)
+l:x := 4 3 r_eshape 0.5 -1.0 0.25  1.0 0.0 -0.5  -0.75 0.5 1.0  0.2 0.4 -0.6
+
+## w1: the first layer's weights, a row per input and a column per
+## output, its bias the last row (4 by 5: 3 inputs and a bias, 5
+## outputs): the numbers of X_eTaL-gpu's libs/Accel/data/w1.txt
+l:w1 := 4 5 r_eshape 0.5 -0.25 0.75 0.1 -0.6  -0.3 0.8 0.2 -0.5 0.4  0.6 0.1 -0.7 0.3 0.2  0.05 -0.1 0.2 0.0 0.1
+
+## w2: the second layer's (6 by 2: 5 inputs and a bias, 2 outputs):
+## libs/Accel/data/w2.txt
+l:w2 := 6 2 r_eshape 0.7 -0.4  -0.2 0.9  0.5 0.3  -0.6 0.2  0.3 -0.8  0.1 -0.1
+
+## z1: the first layer's output, ac:d_ense (4 by 5), some of it negative
+## >> "rs:" u_se< "ReluSoftmax"
+## >> s_hape rs:z1
+## 4 5
+l:z1 := l:x ac:d_ense l:w1
+
+## h: z1 through ac:r_elu (4 by 5)
+l:h := ac:r_elu l:z1
+
+## z2: the second layer's output (4 by 2): two scores for each example
+l:z2 := l:h ac:d_ense l:w2
+
+## p: the network's answer, ac:s_oftmax: each row two shares of 1 (4 by
+## 2)
+## >> "rs:" u_se< "ReluSoftmax"
+## >> "ac:" u_se< "Accel"
+## >> 0.000000001 > a_bs 1.0 - ac:r_owSums rs:p
+## 1 1 1 1
+l:p := ac:s_oftmax l:z2
+
+# a value for each row spread along it (as ac:s_oftmax spreads them)
+h:a_long := { v m -> v 'l_eft t_able o_ffsets f_irst -1 t_ake s_hape m }
+
+## Softmax's steps, to show them one at a time (ac:s_oftmax does them in
+## one expression): rs:s_hifted m, each row less its ac:r_owMax (the
+## largest becomes 0)
+l:s_hifted := { m -> m - (ac:r_owMax m) h:a_long m }
+
+## rs:e_xps m: e to each of the shifted rows: all positive, the largest 1
+l:e_xps := { m -> e_xp l:s_hifted m }
+
+## rs:s_ums m: each row's e's added up, ac:r_owSums
+l:s_ums := { m -> ac:r_owSums l:e_xps m }
+
+## each row's e's divided by their sum are ac:s_oftmax's shares
+## >> "rs:" u_se< "ReluSoftmax"
+## >> '+ r_/ r_avel a_bs rs:p - (rs:e_xps rs:z2) / (rs:s_ums rs:z2) 'l_eft t_able 1 2
+## 0.0
+l:shares := (l:e_xps l:z2) / (l:s_ums l:z2) h:a_long l:z2
+
+### Colors (0 to 255)
+
+## orange: a positive value, and the first of a row's two shares
+l:orange := 255 179 71
+## blue: a negative value
+l:blue := 79 168 255
+## red: a value ReLU removes
+l:red := 255 74 61
+## cyan: the second of a row's two shares
+l:cyan := 79 214 255
+## white: a sum, and the labels
+l:white := 255 255 255
+## yellow: a kept value's label after ReLU, a sum's, a step's caption
+l:yellow := 255 216 77
+## pink: a removed value's label, and ReLU's caption
+l:pink := 255 138 128
+## gray: the rows' names
+l:gray := 197 204 214
+## the glass floors
+l:glassColor := 143 211 255
+## the sky, near black
+l:sky := 7 8 10
+
+# a color for each of the mask's values: a where 1, b where 0 (n by 3)
+h:p_ick := { m (a, b) -> ((f_loat m) '* t_able f_loat a) + (1.0 - f_loat m) '* t_able f_loat b }
+
+### Bars, keys and labels as tables
+
+## (x, y, heights, width) rs:b_ars 0: places for bars (n by 6: x y z w
+## d h), each standing on the floor (z 0) or hanging below it as its
+## height is positive or negative, never thinner than 0.004
+## >> "rs:" u_se< "ReluSoftmax"
+## >> (0.0 1.0, 0.0 0.0, 2.0 -1.0, 0.5) rs:b_ars 0
+## 0.0 0.0  1.0 0.5 0.5 2.0
+## 1.0 0.0 -0.5 0.5 0.5 1.0
+l:b_ars := { (bx, by, hh, w) z ->
+  n := t_ally hh
+  2 1 t_ranspose (6 c_at n) r_eshape bx c_at by c_at (hh / 2.0) c_at (n r_eshape w) c_at (n r_eshape w) c_at 0.004 m_ax a_bs hh
+}
+
+## (places, colors, glow) rs:t_able 0: the rows vd:b_oxes takes -- each
+## place, then its color, then how strongly it glows
+l:t_able := { (pl, c, g) z -> pl c_at_2 (f_loat c) c_at_2 (t_ally pl) r_eshape g }
+
+## a list of n by 6 (or n by 3) tables, one a key, as n by k by 6 (or 3):
+## what vd:m_oves (vd:t_ints) takes. keys is k, and the tables are
+## joined one under another
+l:k_eyed := { k tabs ->
+  s := s_hape tabs
+  n := (f_irst s) d_iv k
+  2 1 3 t_ranspose (k c_at n c_at 2 s_elect s) r_eshape tabs
+}
+
+# label places (n by 7: x y z, height, color) for words at x y z
+h:l_abelAt := { (bx, by, bz, size, c) z ->
+  n := t_ally bx
+  (2 1 t_ranspose (3 c_at n) r_eshape bx c_at by c_at bz) c_at_2 (n r_eshape size) c_at_2 ((n c_at 3) r_eshape f_loat c)
+}
+
+### ReLU, 0 to 11 s
+
+# meters a unit of value; a cell's spacing; where the stage sits
+hs := 2.2
+gap := 1.4
+ox := -12.0
+
+## where each cell of z1 stands: x (4 by 5), 1.4 apart, about x -12
+l:cellX := 4 5 r_eshape ox + gap * (f_loat r_ange 5) - 3.0
+## y (4 by 5), a row of z1 a row of the floor
+l:cellY := (gap * f_loat (r_ange 4) - 1) 'l_eft t_able r_ange 5
+
+## the ReLU part of the script: z1 as bars on a glass floor, labeled;
+## the negatives turn red and shrink to 0, outlines left where they
+## were; then h's values
+l:r_eluScript := { z ->
+  v := r_avel l:z1
+  bx := r_avel l:cellX
+  by := r_avel l:cellY
+  neg := v < 0.0
+  n := t_ally v
+  k := '+ r_/ neg
+  p0 := (bx, by, v * hs, 0.62) l:b_ars 0
+  p1 := (bx, by, hs * ac:r_elu v, 0.62) l:b_ars 0
+  c0 := neg h:p_ick (l:blue, l:orange)
+  c1 := neg h:p_ick (l:red, l:orange)
+  t := ("floor", (1 6 r_eshape ox c_at 2.1 0.0 7.4 6.0 0.02, 1 3 r_eshape l:glassColor, 0.6) l:t_able 0) vd:g_lass 0
+  t := t c_at ("floor", 1 2 r_eshape 0.0 11.0) vd:s_hown 0
+  t := t c_at ("z1", (p0, c0, 1.2) l:t_able 0) vd:b_oxes 0
+  t := t c_at ("z1", 0.0 4.0 5.6, 3 l:k_eyed p0 c_at p0 c_at p1) vd:m_oves 0
+  t := t c_at ("z1", 0.0 3.0 3.6, 3 l:k_eyed c0 c_at c0 c_at c1) vd:t_ints 0
+  t := t c_at ("z1", (n c_at 2) r_eshape 0.0 11.0) vd:s_hown 0
+  gv := neg r_eplicate v
+  t := t c_at ("gone", ((neg r_eplicate bx, neg r_eplicate by, gv * hs, 0.62) l:b_ars 0, (k c_at 3) r_eshape l:red, 1.5) l:t_able 0) vd:o_utlines 0
+  t := t c_at ("gone", (k c_at 2) r_eshape 5.6 11.0) vd:s_hown 0
+  top := 0.45 + hs * ac:r_elu v
+  t := t c_at ("z1 values", 2 vd:f_ixed v, (bx, by - 0.6, top, 0.46, l:white) h:l_abelAt 0) vd:l_abels 0
+  t := t c_at ("z1 values", (n c_at 2) r_eshape 0.5 5.0) vd:s_hown 0
+  hl := ((bx, by - 0.6, top, 0.46, l:white) h:l_abelAt 0) c_at_2 0.0
+  hl := (4 t_ake_2 hl) c_at_2 neg h:p_ick (l:pink, l:yellow)
+  t := t c_at ("h values", 2 vd:f_ixed ac:r_elu v, hl) vd:l_abels 0
+  t c_at ("h values", (n c_at 2) r_eshape 6.0 11.0) vd:s_hown 0
+}
+
+### Softmax, 11.5 to 30 s
+
+## when each step of softmax starts: the scores, less the largest, e to
+## them, the sums, divided, the shares; the video ends at 30
+l:steps := 11.5 15.0 18.0 21.0 23.5 26.0
+## the video's length, 30 seconds
+l:ends := 30.0
+
+# meters a unit of value; each row's group's width; the result's height
+eh := 2.0
+gw := 4.4
+ph := 3.2
+
+## the middle of each row's group, left to right (4), 4.4 apart
+l:groupX := gw * (f_loat r_ange 4) - 2.5
+## where each score's bar stands (4 by 2): its group's middle less 0.9,
+## then 1.2 to the right
+l:barX := (l:groupX - 0.9) '+ t_able 0.0 1.2
+
+# a step's start
+h:a_t := { i -> i s_elect l:steps }
+
+## the softmax part of the script: each row's two bars become the
+## shifted scores, the e's, the shares; each row's sum stands beside
+## them; each row's result is a column of its two shares, 1 tall
+l:s_oftmaxScript := { z ->
+  sc := r_avel l:z2
+  sh := r_avel l:s_hifted l:z2
+  e := r_avel l:e_xps l:z2
+  sm := l:s_ums l:z2
+  pp := r_avel l:p
+  bx := r_avel l:barX
+  n := t_ally bx
+  by := n r_eshape 0.0
+  ks := (h:a_t 1) c_at ((h:a_t 2) - 1.0) c_at (h:a_t 2) c_at ((h:a_t 3) - 1.0) c_at (h:a_t 3) c_at ((h:a_t 5) - 1.0) c_at h:a_t 5
+  hh := sc c_at sc c_at sh c_at sh c_at e c_at e c_at pp
+  pl := ((7 * n) c_at 6) r_eshape (r_avel (7 * n) r_eshape bx, (7 * n) r_eshape by, eh * hh, 0.8) l:b_ars 0
+  first := n t_ake pl
+  share := (r_avel 4 2 r_eshape 1 0) h:p_ick (l:orange, l:cyan)
+  cz := (sc >= 0.0) h:p_ick (l:orange, l:blue)
+  t := ("floor2", (1 6 r_eshape 0.6 0.0 0.0 18.2 1.8 0.02, 1 3 r_eshape l:glassColor, 0.6) l:t_able 0) vd:g_lass 0
+  t := t c_at ("floor2", 1 2 r_eshape (h:a_t 1) c_at l:ends) vd:s_hown 0
+  t := t c_at ("scores", (first, cz, 1.2) l:t_able 0) vd:b_oxes 0
+  t := t c_at ("scores", ks, 7 l:k_eyed pl) vd:m_oves 0
+  t := t c_at ("scores", (h:a_t 1) c_at ((h:a_t 3) - 0.6) c_at h:a_t 3, 3 l:k_eyed cz c_at cz c_at share) vd:t_ints 0
+  t := t c_at ("scores", (n c_at 2) r_eshape (h:a_t 1) c_at h:a_t 6) vd:s_hown 0
+  t := t c_at (("scores", sc, 1, 2, -0.4, bx) h:v_alues 0)
+  t := t c_at (("shifted", sh, 2, 3, -0.4, bx) h:v_alues 0)
+  t := t c_at (("e", e, 3, 5, -0.4, bx) h:v_alues 0)
+  t := t c_at (("shares", pp, 5, 6, 0.0, bx) h:v_alues 0)
+  sx := 1.2 + r_avel 2 s_elect_2 l:barX
+  t := t c_at ("sums", ((sx, 4 r_eshape 0.0, eh * sm, 0.8) l:b_ars 0, 4 3 r_eshape l:white, 1.2) l:t_able 0) vd:b_oxes 0
+  t := t c_at ("sums", 4 2 r_eshape (h:a_t 4) c_at 0.8 + h:a_t 5) vd:s_hown 0
+  t := t c_at ("sum values", 2 vd:f_ixed sm, (sx, 4 r_eshape -0.7, 0.4 + eh * sm, 0.46, l:yellow) h:l_abelAt 0) vd:l_abels 0
+  t := t c_at ("sum values", 4 2 r_eshape (0.3 + h:a_t 4) c_at 0.8 + h:a_t 5) vd:s_hown 0
+  cx := r_avel 2 r_eplicate 0.3 + l:groupX
+  below := r_avel (4 1 r_eshape 0.0) c_at_2 1 t_ake_2 l:p
+  mid := ph * below + pp / 2.0
+  segs := 2 1 t_ranspose (6 c_at n) r_eshape cx c_at by c_at mid c_at (n r_eshape 1.6) c_at (n r_eshape 0.9) c_at (ph * pp) - 0.04
+  t := t c_at ("result", (segs, share, 1.3) l:t_able 0) vd:b_oxes 0
+  t := t c_at ("result", (n c_at 2) r_eshape (h:a_t 6) c_at l:ends) vd:s_hown 0
+  t := t c_at ("result values", 3 vd:f_ixed pp, (cx, n r_eshape -0.6, mid, 0.46, 0 0 0) h:l_abelAt 0) vd:l_abels 0
+  t := t c_at ("result values", (n c_at 2) r_eshape (0.3 + h:a_t 6) c_at l:ends) vd:s_hown 0
+  gx := 0.3 + l:groupX
+  t := t c_at ("ones", "1|1|1|1", (gx, 4 r_eshape -0.6, 4 r_eshape ph + 0.45, 0.5, l:yellow) h:l_abelAt 0) vd:l_abels 0
+  t := t c_at ("ones", 4 2 r_eshape (0.6 + h:a_t 6) c_at l:ends) vd:s_hown 0
+  t := t c_at ("rows", "row 1|row 2|row 3|row 4", (gx, 4 r_eshape -1.3, 4 r_eshape -0.1, 0.42, l:gray) h:l_abelAt 0) vd:l_abels 0
+  t c_at ("rows", 4 2 r_eshape (h:a_t 1) c_at l:ends) vd:s_hown 0
+}
+
+# a step's values over its bars, white, shown from step i to step j
+# (less a margin), lifted above the bars
+h:v_alues := { (name, v, i, j, less, bx) z ->
+  n := t_ally v
+  t := ((name c_at " values"), 2 vd:f_ixed v, (bx, n r_eshape -0.7, 0.4 + eh * v m_ax 0.0, 0.46, l:white) h:l_abelAt 0) vd:l_abels 0
+  t c_at ((name c_at " values"), (n c_at 2) r_eshape (0.3 + h:a_t i) c_at less + h:a_t j) vd:s_hown 0
+}
+
+### The captions and the camera
+
+# an array's name and shape, as [4 5]
+h:s_hape := { name a -> name c_at " [" c_at (f_ormat s_hape a) c_at "]" }
+
+## the captions: what each part shows, | between them; the shapes and
+## the count of negatives are the arrays'
+l:captionTexts := (("z1" h:s_hape l:z1) c_at ": " c_at (f_ormat t_ally r_avel l:z1) c_at " values, " c_at (f_ormat '+ r_/ (r_avel l:z1) < 0.0) c_at " of them negative|" c_at
+  "relu: every negative becomes 0|" c_at
+  ("h" h:s_hape l:h) c_at ": the negatives are gone; the rest unchanged|" c_at
+  ("z2" h:s_hape l:z2) c_at ": two scores in each row|" c_at
+  "1. subtract each row's largest|2. exp: every value positive, the largest 1|3. add up each row|4. divide by the sum|" c_at
+  ("p" h:s_hape l:p) c_at ": each row shares out 1")
+
+## when each caption shows (from, to) and its color
+l:c_aptionTable := { z ->
+  s := l:steps
+  from := 0.3 3.1 7.1 c_at (0.3 + h:a_t 1) c_at 1 d_rop s
+  to := 3.0 7.0 11.0 c_at ((1 d_rop s) - 0.2) c_at l:ends
+  c := 9 3 r_eshape l:white c_at l:pink c_at l:yellow c_at l:white c_at l:yellow c_at l:yellow c_at l:yellow c_at l:yellow c_at l:white
+  (2 1 t_ranspose 2 9 r_eshape from c_at to) c_at_2 f_loat c
+}
+
+## the camera: over the ReLU part, then gliding back to see the four
+## rows of softmax side by side: at 0, 10.5, 12 and 30 s, each eye
+## looking at its aim
+l:c_ameraKeys := { z ->
+  rc := ox c_at 2.1 0.6
+  sc := 0.3 0.0 1.4
+  ts := 0.0 10.5 12.0 c_at l:ends
+  eyes := 4 3 r_eshape (rc + -1.5 -10.5 11.5) c_at (rc + 1.0 -11.0 11.0) c_at (sc + -1.0 -20.5 7.0) c_at sc + 1.0 -20.5 6.5
+  aims := 4 3 r_eshape rc c_at rc c_at sc c_at sc
+  (ts, eyes, aims)
+}
+
+### The scene
+
+## (width, height) rs:s_cene 0: the whole script Blender runs, but its
+## output: the stage (30 frames a second, 30 seconds, the sky), the
+## ReLU part, the softmax part, the captions and the camera, and the
+## report. The caller adds vd:r_ender or vd:s_tills.
+l:s_cene := { (w, h) z ->
+  t := vd:head c_at ((w, h, 30, l:ends, l:sky, 38) vd:s_tage 0) c_at (l:r_eluScript 0) c_at l:s_oftmaxScript 0
+  t := t c_at (l:captionTexts, l:c_aptionTable 0) vd:c_aptions 0
+  t c_at (l:c_ameraKeys 0) vd:c_amera 0
+}

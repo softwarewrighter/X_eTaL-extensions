@@ -1,0 +1,549 @@
+## Video.xtl -- arrays to video: an animated Blender scene described by
+## X_eTaL arrays. Every object's place, size, color, the seconds it is
+## shown, every key it moves to, the camera's path and the captions are
+## arrays a program works out; each function here writes them into
+## Blender's Python as numbers, one call of the player for a whole
+## group. The player (vd:head) is fixed Python, the same for every
+## video: it reads the numbers and makes the objects and keys, and
+## decides nothing. A video is vd:head, then vd:s_tage, the groups, their
+## spans, keys and tints, the camera, the captions, then vd:r_ender (or
+## vd:s_tills), written with bl:w_rite! and run by bp:launcher through
+## bl:r_un!.
+##
+## The look: flat colors that glow (emission only), on a near-black
+## sky, the Standard view (colors as given); text in JuliaMono Black
+## (work/fonts, `just font`), facing the camera; captions on a dark
+## plate near the bottom of the picture. Places are meters, z up;
+## times are seconds; colors are 0 to 255 (sRGB), made linear here.
+## Written for Blender 5.1.
+## Import: "vd:" u_se< "Video"
+
+### The player
+
+# the player, in parts (one expression nests too deep): the start, nums,
+# frame, the font, glow
+h:playBase := ("import bpy, math, os, sys\n" c_at
+  "args = sys.argv[sys.argv.index('--') + 1:]\n" c_at
+  "out = args[0]\n" c_at
+  "os.makedirs(out, exist_ok=True)\n" c_at
+  "bpy.ops.wm.read_factory_settings(use_empty=True)\n" c_at
+  "bpy.context.preferences.edit.keyframe_new_interpolation_type = 'BEZIER'\n" c_at
+  "scene = bpy.context.scene\n" c_at
+  "scene.render.fps = 30\n" c_at
+  "groups = {}\n" c_at
+  "rig = {}\n" c_at
+  "\n" c_at
+  "def nums(text, k):\n" c_at
+  "    v = [float(t) for t in text.split()]\n" c_at
+  "    return [tuple(v[i:i + k]) for i in range(0, len(v), k)]\n" c_at
+  "\n" c_at
+  "def frame(t):\n" c_at
+  "    return 1 + round(t * scene.render.fps)\n" c_at
+  "\n" c_at
+  "def font():\n" c_at
+  "    d = os.getcwd()\n" c_at
+  "    while True:\n" c_at
+  "        p = os.path.join(d, 'work', 'fonts', 'JuliaMono-Black.ttf')\n" c_at
+  "        if os.path.exists(p):\n" c_at
+  "            return bpy.data.fonts.load(p, check_existing=True)\n" c_at
+  "        if os.path.dirname(d) == d:\n" c_at
+  "            return None\n" c_at
+  "        d = os.path.dirname(d)\n" c_at
+  "\n" c_at
+  "FONT = font()\n" c_at
+  "\n" c_at
+  "def glow(name, rgb, strength=1.0, alpha=1.0):\n" c_at
+  "    m = bpy.data.materials.new(name)\n" c_at
+  "    m.use_nodes = True\n" c_at
+  "    nt = m.node_tree\n" c_at
+  "    for n in list(nt.nodes):\n" c_at
+  "        nt.nodes.remove(n)\n" c_at
+  "    e = nt.nodes.new('ShaderNodeEmission')\n" c_at
+  "    e.name = 'glow'\n" c_at
+  "    e.inputs['Color'].default_value = tuple(rgb) + (1.0,)\n" c_at
+  "    e.inputs['Strength'].default_value = strength\n" c_at
+  "    o = nt.nodes.new('ShaderNodeOutputMaterial')\n" c_at
+  "    if alpha < 1.0:\n" c_at
+  "        tr = nt.nodes.new('ShaderNodeBsdfTransparent')\n" c_at
+  "        mx = nt.nodes.new('ShaderNodeMixShader')\n" c_at
+  "        mx.inputs[0].default_value = alpha\n" c_at
+  "        nt.links.new(tr.outputs[0], mx.inputs[1])\n" c_at
+  "        nt.links.new(e.outputs[0], mx.inputs[2])\n" c_at
+  "        nt.links.new(mx.outputs[0], o.inputs[0])\n" c_at
+  "        m.surface_render_method = 'BLENDED'\n" c_at
+  "    else:\n" c_at
+  "        nt.links.new(e.outputs[0], o.inputs[0])\n" c_at
+  "    return m\n" c_at
+  "\n")
+
+# the player, continued: stage and after
+h:playStage := ("def stage(w, h, fps, seconds, sky, lens):\n" c_at
+  "    scene.render.engine = 'BLENDER_EEVEE'\n" c_at
+  "    scene.eevee.taa_render_samples = 16\n" c_at
+  "    scene.view_settings.view_transform = 'Standard'\n" c_at
+  "    scene.render.resolution_x, scene.render.resolution_y = int(w), int(h)\n" c_at
+  "    scene.render.resolution_percentage = 100\n" c_at
+  "    scene.render.fps = int(fps)\n" c_at
+  "    scene.frame_start, scene.frame_end = 1, frame(seconds)\n" c_at
+  "    world = bpy.data.worlds.new('sky')\n" c_at
+  "    world.use_nodes = True\n" c_at
+  "    world.node_tree.nodes['Background'].inputs['Color'].default_value = tuple(sky) + (1.0,)\n" c_at
+  "    scene.world = world\n" c_at
+  "    cam = bpy.data.objects.new('camera', bpy.data.cameras.new('camera'))\n" c_at
+  "    cam.data.lens = lens\n" c_at
+  "    cam.data.clip_start = 0.001\n" c_at
+  "    cam.data.clip_end = 5000.0\n" c_at
+  "    scene.collection.objects.link(cam)\n" c_at
+  "    scene.camera = cam\n" c_at
+  "    aim = bpy.data.objects.new('aim', None)\n" c_at
+  "    scene.collection.objects.link(aim)\n" c_at
+  "    look = cam.constraints.new('TRACK_TO')\n" c_at
+  "    look.target = aim\n" c_at
+  "    look.track_axis = 'TRACK_NEGATIVE_Z'\n" c_at
+  "    look.up_axis = 'UP_Y'\n" c_at
+  "    rig['camera'], rig['aim'] = cam, aim\n" c_at
+  "\n" c_at
+  "def cube_mesh():\n" c_at
+  "    v = [(x, y, z) for z in (-0.5, 0.5) for y in (-0.5, 0.5) for x in (-0.5, 0.5)]\n" c_at
+  "    f = [(0, 2, 3, 1), (4, 5, 7, 6), (0, 1, 5, 4), (2, 6, 7, 3), (0, 4, 6, 2), (1, 3, 7, 5)]\n" c_at
+  "    m = bpy.data.meshes.new('cube')\n" c_at
+  "    m.from_pydata(v, [], f)\n" c_at
+  "    m.update()\n" c_at
+  "    return m\n" c_at
+  "\n" c_at
+  "def boxes(name, rows, style):\n" c_at
+  "    base = cube_mesh()\n" c_at
+  "    made = []\n" c_at
+  "    for i, r in enumerate(rows):\n" c_at
+  "        n = '%s %d' % (name, i + 1)\n" c_at
+  "        o = bpy.data.objects.new(n, base.copy())\n" c_at
+  "        scene.collection.objects.link(o)\n" c_at
+  "        o.location = r[0:3]\n" c_at
+  "        o.scale = r[3:6]\n" c_at
+  "        o.data.materials.append(glow(n, r[6:9], r[9], 0.18 if style == 'glass' else 1.0))\n" c_at
+  "        if style == 'wire':\n" c_at
+  "            w = o.modifiers.new('wire', 'WIREFRAME')\n" c_at
+  "            w.thickness = 0.03 / max(r[3:6])\n" c_at
+  "            w.use_relative_offset = False\n" c_at
+  "        made.append(o)\n" c_at
+  "    groups[name] = made\n" c_at
+  "\n")
+
+# the player, continued: lines
+h:playLines := ("def lines(name, rows):\n" c_at
+  "    made = []\n" c_at
+  "    for i, r in enumerate(rows):\n" c_at
+  "        n = '%s %d' % (name, i + 1)\n" c_at
+  "        cu = bpy.data.curves.new(n, type='CURVE')\n" c_at
+  "        cu.dimensions = '3D'\n" c_at
+  "        cu.bevel_depth = r[9]\n" c_at
+  "        sp = cu.splines.new('POLY')\n" c_at
+  "        sp.points.add(1)\n" c_at
+  "        sp.points[0].co = tuple(r[0:3]) + (1.0,)\n" c_at
+  "        sp.points[1].co = tuple(r[3:6]) + (1.0,)\n" c_at
+  "        o = bpy.data.objects.new(n, cu)\n" c_at
+  "        scene.collection.objects.link(o)\n" c_at
+  "        o.data.materials.append(glow(n, r[6:9], 2.0))\n" c_at
+  "        made.append(o)\n" c_at
+  "    groups[name] = made\n" c_at
+  "\n")
+
+# the player, continued: text and after
+h:playText := ("def text(n, body, size, rgb):\n" c_at
+  "    c = bpy.data.curves.new(n, type='FONT')\n" c_at
+  "    c.body = body\n" c_at
+  "    c.size = size\n" c_at
+  "    c.align_x = 'CENTER'\n" c_at
+  "    c.align_y = 'CENTER'\n" c_at
+  "    if FONT:\n" c_at
+  "        c.font = FONT\n" c_at
+  "    o = bpy.data.objects.new(n, c)\n" c_at
+  "    scene.collection.objects.link(o)\n" c_at
+  "    o.data.materials.append(glow(n, rgb))\n" c_at
+  "    return o\n" c_at
+  "\n" c_at
+  "def labels(name, bodies, rows):\n" c_at
+  "    made = []\n" c_at
+  "    for i, (body, r) in enumerate(zip(bodies.split('|'), rows)):\n" c_at
+  "        o = text('%s %d' % (name, i + 1), body, r[3], r[4:7])\n" c_at
+  "        o.location = r[0:3]\n" c_at
+  "        t = o.constraints.new('TRACK_TO')\n" c_at
+  "        t.target = rig['camera']\n" c_at
+  "        t.track_axis = 'TRACK_Z'\n" c_at
+  "        t.up_axis = 'UP_Y'\n" c_at
+  "        made.append(o)\n" c_at
+  "    groups[name] = made\n" c_at
+  "\n" c_at
+  "def captions(bodies, rows):\n" c_at
+  "    d = 0.05\n" c_at
+  "    size = 0.042\n" c_at
+  "    cam = rig['camera']\n" c_at
+  "    for i, (body, r) in enumerate(zip(bodies.split('|'), rows)):\n" c_at
+  "        o = text('caption %d' % (i + 1), body, size * d, r[2:5])\n" c_at
+  "        o.data.align_y = 'TOP_BASELINE'\n" c_at
+  "        o.parent = cam\n" c_at
+  "        o.location = (0.0, -0.235 * d, -d)\n" c_at
+  "        p = bpy.data.objects.new('plate %d' % (i + 1), cube_mesh())\n" c_at
+  "        scene.collection.objects.link(p)\n" c_at
+  "        p.parent = cam\n" c_at
+  "        p.location = (0.0, (-0.235 + 0.35 * size) * d, -d * 1.002)\n" c_at
+  "        p.scale = ((0.6 * size * len(body) + 0.04) * d, size * 1.6 * d, 0.0001)\n" c_at
+  "        p.data.materials.append(glow('plate %d' % (i + 1), (0.0, 0.0, 0.0), 1.0, 0.72))\n" c_at
+  "        for x in (o, p):\n" c_at
+  "            span(x, r[0], r[1])\n" c_at
+  "\n")
+
+# the player, continued: span and after
+h:playKeys := ("def span(o, a, b):\n" c_at
+  "    keys = {1: True, frame(a): False, frame(b) + 1: True} if a > 0 else {1: False, frame(b) + 1: True}\n" c_at
+  "    for f in sorted(keys):\n" c_at
+  "        o.hide_render = keys[f]\n" c_at
+  "        o.keyframe_insert('hide_render', frame=f)\n" c_at
+  "\n" c_at
+  "def shown(name, rows):\n" c_at
+  "    for o, r in zip(groups[name], rows):\n" c_at
+  "        span(o, r[0], r[1])\n" c_at
+  "\n" c_at
+  "def moves(name, times, rows):\n" c_at
+  "    for o, r in zip(groups[name], rows):\n" c_at
+  "        for j, t in enumerate(times):\n" c_at
+  "            o.location = r[6 * j:6 * j + 3]\n" c_at
+  "            o.scale = r[6 * j + 3:6 * j + 6]\n" c_at
+  "            o.keyframe_insert('location', frame=frame(t))\n" c_at
+  "            o.keyframe_insert('scale', frame=frame(t))\n" c_at
+  "\n" c_at
+  "def moves_each(name, times, rows):\n" c_at
+  "    for o, ts, r in zip(groups[name], times, rows):\n" c_at
+  "        for j, t in enumerate(ts):\n" c_at
+  "            o.location = r[6 * j:6 * j + 3]\n" c_at
+  "            o.scale = r[6 * j + 3:6 * j + 6]\n" c_at
+  "            o.keyframe_insert('location', frame=frame(t))\n" c_at
+  "            o.keyframe_insert('scale', frame=frame(t))\n" c_at
+  "\n" c_at
+  "def tints(name, times, rows):\n" c_at
+  "    for o, r in zip(groups[name], rows):\n" c_at
+  "        s = o.data.materials[0].node_tree.nodes['glow'].inputs['Color']\n" c_at
+  "        for j, t in enumerate(times):\n" c_at
+  "            s.default_value = tuple(r[3 * j:3 * j + 3]) + (1.0,)\n" c_at
+  "            s.keyframe_insert('default_value', frame=frame(t))\n" c_at
+  "\n" c_at
+  "def camera(times, eyes, aims):\n" c_at
+  "    for t, e, a in zip(times, eyes, aims):\n" c_at
+  "        rig['camera'].location = e\n" c_at
+  "        rig['camera'].keyframe_insert('location', frame=frame(t))\n" c_at
+  "        rig['aim'].location = a\n" c_at
+  "        rig['aim'].keyframe_insert('location', frame=frame(t))\n" c_at
+  "\n")
+
+# the player, continued: grid and after
+h:playGrid := ("def grid(name, origin, u, v, shape, colors, order, gap):\n" c_at
+  "    n, m = int(shape[0]), int(shape[1])\n" c_at
+  "    k = n * m\n" c_at
+  "    corners = ((gap, gap), (1 - gap, gap), (1 - gap, 1 - gap), (gap, 1 - gap))\n" c_at
+  "    co = []\n" c_at
+  "    for i in range(n):\n" c_at
+  "        for j in range(m):\n" c_at
+  "            for a, b in corners:\n" c_at
+  "                co.extend(origin[c] + (i + a) * u[c] + (j + b) * v[c] for c in range(3))\n" c_at
+  "    me = bpy.data.meshes.new(name)\n" c_at
+  "    me.vertices.add(4 * k)\n" c_at
+  "    me.vertices.foreach_set('co', co)\n" c_at
+  "    me.loops.add(4 * k)\n" c_at
+  "    me.loops.foreach_set('vertex_index', list(range(4 * k)))\n" c_at
+  "    me.polygons.add(k)\n" c_at
+  "    me.polygons.foreach_set('loop_start', list(range(0, 4 * k, 4)))\n" c_at
+  "    me.update()\n" c_at
+  "    col = me.color_attributes.new('rgb', 'FLOAT_COLOR', 'CORNER')\n" c_at
+  "    rgba = []\n" c_at
+  "    for c in colors:\n" c_at
+  "        rgba.extend((tuple((x / 255.0) ** 2.2 for x in c) + (1.0,)) * 4)\n" c_at
+  "    col.data.foreach_set('color', rgba)\n" c_at
+  "    when = me.attributes.new('order', 'FLOAT', 'CORNER')\n" c_at
+  "    when.data.foreach_set('value', [t[0] / 1000.0 - 0.001 for t in order for _ in range(4)])\n" c_at
+  "    o = bpy.data.objects.new(name, me)\n" c_at
+  "    scene.collection.objects.link(o)\n" c_at
+  "    m = bpy.data.materials.new(name)\n" c_at
+  "    m.use_nodes = True\n" c_at
+  "    nt = m.node_tree\n" c_at
+  "    for x in list(nt.nodes):\n" c_at
+  "        nt.nodes.remove(x)\n" c_at
+  "    a = nt.nodes.new('ShaderNodeAttribute')\n" c_at
+  "    a.attribute_name = 'rgb'\n" c_at
+  "    w = nt.nodes.new('ShaderNodeAttribute')\n" c_at
+  "    w.attribute_name = 'order'\n" c_at
+  "    now = nt.nodes.new('ShaderNodeValue')\n" c_at
+  "    now.name = 'now'\n" c_at
+  "    lt = nt.nodes.new('ShaderNodeMath')\n" c_at
+  "    lt.operation = 'LESS_THAN'\n" c_at
+  "    e = nt.nodes.new('ShaderNodeEmission')\n" c_at
+  "    tr = nt.nodes.new('ShaderNodeBsdfTransparent')\n" c_at
+  "    mx = nt.nodes.new('ShaderNodeMixShader')\n" c_at
+  "    out_ = nt.nodes.new('ShaderNodeOutputMaterial')\n" c_at
+  "    nt.links.new(a.outputs['Color'], e.inputs['Color'])\n" c_at
+  "    nt.links.new(w.outputs['Fac'], lt.inputs[0])\n" c_at
+  "    nt.links.new(now.outputs[0], lt.inputs[1])\n" c_at
+  "    nt.links.new(lt.outputs[0], mx.inputs[0])\n" c_at
+  "    nt.links.new(tr.outputs[0], mx.inputs[1])\n" c_at
+  "    nt.links.new(e.outputs[0], mx.inputs[2])\n" c_at
+  "    nt.links.new(mx.outputs[0], out_.inputs[0])\n" c_at
+  "    m.surface_render_method = 'BLENDED'\n" c_at
+  "    me.materials.append(m)\n" c_at
+  "    s = now.outputs[0]\n" c_at
+  "    bpy.context.preferences.edit.keyframe_new_interpolation_type = 'LINEAR'\n" c_at
+  "    for f in (scene.frame_start, scene.frame_end):\n" c_at
+  "        s.default_value = (f - 1) / scene.render.fps\n" c_at
+  "        s.keyframe_insert('default_value', frame=f)\n" c_at
+  "    bpy.context.preferences.edit.keyframe_new_interpolation_type = 'BEZIER'\n" c_at
+  "    groups[name] = [o]\n" c_at
+  "\n")
+
+# the player, continued: stills and after
+h:playOutput := ("def stills(times, prefix):\n" c_at
+  "    scene.render.image_settings.media_type = 'IMAGE'\n" c_at
+  "    scene.render.image_settings.file_format = 'PNG'\n" c_at
+  "    for i, t in enumerate(times):\n" c_at
+  "        scene.frame_set(frame(t))\n" c_at
+  "        scene.render.filepath = os.path.join(out, '%s-%d.png' % (prefix, i + 1))\n" c_at
+  "        bpy.ops.render.render(write_still=True)\n" c_at
+  "\n" c_at
+  "def video(file):\n" c_at
+  "    scene.render.image_settings.media_type = 'VIDEO'\n" c_at
+  "    scene.render.image_settings.file_format = 'FFMPEG'\n" c_at
+  "    scene.render.ffmpeg.format = 'MPEG4'\n" c_at
+  "    scene.render.ffmpeg.codec = 'H264'\n" c_at
+  "    scene.render.ffmpeg.constant_rate_factor = 'HIGH'\n" c_at
+  "    scene.render.filepath = os.path.join(out, file)\n" c_at
+  "    bpy.ops.render.render(animation=True)\n" c_at
+  "\n" c_at
+  "def report():\n" c_at
+  "    with open(os.path.join(out, 'report.txt'), 'w') as f:\n" c_at
+  "        f.write('frames %d to %d at %d a second\\n' % (scene.frame_start, scene.frame_end, scene.render.fps))\n" c_at
+  "        for name in sorted(groups):\n" c_at
+  "            os_ = groups[name]\n" c_at
+  "            keyed = sum(1 for o in os_ if o.animation_data and o.animation_data.action)\n" c_at
+  "            f.write('%s: %d objects, %d keyed\\n' % (name, len(os_), keyed))\n" c_at
+  "\n")
+
+## vd:head: the inner script's start, the player: an empty scene, the
+## output directory (the first argument after "--"), keys eased in and
+## out (Bezier), and the functions the calls below use -- stage, boxes,
+## labels, captions, shown, moves, tints, camera, grid, stills, video,
+## report. Fixed text: what a video shows is all in the numbers after it.
+l:head := h:playBase c_at h:playStage c_at h:playLines c_at h:playText c_at h:playKeys c_at h:playGrid c_at h:playOutput
+
+### Numbers and text into Python
+
+# (values, k) h:n_ums 0: the values as Python reading them k to a row
+h:n_ums := { (v, k) z -> "nums('" c_at (f_ormat r_avel v) c_at "', " c_at (f_ormat k) c_at ")" }
+
+# a Python string: the text in single quotes, each quote and backslash
+# in it written with a backslash before it (ASCII text)
+h:q_uote := { t ->
+  c := []U_CS t
+  e := (c = 39) | c = 92
+  k := (1 + e) r_eplicate r_ange t_ally c
+  m := ((1 + e) r_eplicate e) & k != 0 c_at -1 d_rop k
+  "'" c_at ([]U_CHAR (92 * m) + (1 - m) * (1 + e) r_eplicate c) c_at "'"
+}
+
+# one value as text with d digits after the point, rounded
+h:o_ne := { d x ->
+  k := 10 ^ d
+  n := f_loor 0.5 + (f_loat k) * a_bs x
+  s := (x < 0.0) & n > 0
+  (s t_ake "-") c_at (f_ormat n d_iv k) c_at ((d > 0) t_ake ".") c_at 1 d_rop f_ormat k + n m_od k
+}
+
+# two boxed texts joined by |
+h:j_oin := { a b -> e_nclose (d_isclose a) c_at "|" c_at d_isclose b }
+
+## d vd:f_ixed values: the values as text, each with d digits after the
+## point (none and no point for 0), rounded, separated by | -- the labels of vd:l_abels
+## >> "vd:" u_se< "Video"
+## >> 2 vd:f_ixed 0.75 -1.0 0.125 -0.004
+## 0.75|-1.00|0.13|0.00
+## >> 0 vd:f_ixed 1.0 -1.0 44.0
+## 1|-1|44
+l:f_ixed := { d v -> d_isclose 'h:j_oin r_/ '{ x -> d h:o_ne x } m_ap r_avel v }
+
+### Colors
+
+## vd:l_inear rgb: colors written 0 to 255 (sRGB, a row of red green blue
+## each, any number of rows) as Blender's linear 0 to 1
+## >> "vd:" u_se< "Video"
+## >> vd:l_inear 255 128 0
+## 1.0 0.2195197180748679 0.0
+l:l_inear := { c -> ((f_loat c) / 255.0) ^ 2.2 }
+
+# a channel's share of the light (sRGB to linear, WCAG's way)
+h:c_hannel := { c ->
+  s := (f_loat c) / 255.0
+  m := f_loat s <= 0.04045
+  (m * s / 12.92) + (1.0 - m) * ((s + 0.055) / 1.055) ^ 2.4
+}
+
+## vd:l_uminance rgb: how bright a color (0 to 255, sRGB) is, 0 to 1
+## (WCAG's relative luminance)
+l:l_uminance := { c -> '+ r_/ 0.2126 0.7152 0.0722 * h:c_hannel c }
+
+## a vd:c_ontrast b: the contrast of two colors (0 to 255, sRGB), 1 to
+## 21 (WCAG): text should be 7 or more on its background
+## >> "vd:" u_se< "Video"
+## >> f_loor 255 255 255 vd:c_ontrast 0 0 0
+## 21
+l:c_ontrast := { a b ->
+  la := l:l_uminance a
+  lb := l:l_uminance b
+  ((la m_ax lb) + 0.05) / (la m_in lb) + 0.05
+}
+
+## the stops of vd:t_one, low to high: deep blue, cyan, yellow, orange
+## (0 to 255)
+l:stops := 4 3 r_eshape 43 74 154  47 183 214  255 216 77  255 122 61
+
+## (values, low, high) vd:t_one 0: a color for each value (n by 3, 0 to
+## 255): low is deep blue, high orange, through cyan and yellow, mixed
+## between the stops; values outside are the ends' colors -- how big a
+## number is, at a glance
+## >> "vd:" u_se< "Video"
+## >> (0.0 0.5 1.0, 0.0, 1.0) vd:t_one 0
+##  43.0  74.0 154.0
+## 151.0 199.5 145.5
+## 255.0 122.0  61.0
+l:t_one := { (v, lo, hi) z ->
+  t := 0.0 m_ax 1.0 m_in ((f_loat r_avel v) - lo) / 0.000000001 m_ax hi - lo
+  x := 3.0 * t
+  i := 2 m_in f_loor x
+  u := x - f_loat i
+  a := (i + 1) s_elect f_loat l:stops
+  b := (i + 2) s_elect f_loat l:stops
+  (a * (1.0 - u) 'l_eft t_able 1 2 3) + b * u 'l_eft t_able 1 2 3
+}
+
+### The calls
+
+## (width, height, fps, seconds, sky, lens) vd:s_tage 0: Python setting
+## the picture's size, the frame rate and the video's length, EEVEE and
+## the Standard view, the sky's color (0 to 255), and the camera (a lens
+## of that many mm) looking at an aim; both start at the origin until
+## vd:c_amera keys them. First, before any group.
+l:s_tage := { (w, h, fps, secs, sky, lens) z ->
+  "stage(" c_at (f_ormat w) c_at ", " c_at (f_ormat h) c_at ", " c_at (f_ormat fps) c_at ", " c_at (f_ormat secs) c_at ", " c_at ((l:l_inear sky, 3) h:n_ums 0) c_at "[0], " c_at (f_ormat lens) c_at ")\n"
+}
+
+# the Python for a group of boxes in a style
+h:b_oxes := { style (name, t) ->
+  "boxes(" c_at (h:q_uote name) c_at ", " c_at (((h:p_aint t), 10) h:n_ums 0) c_at ", " c_at (h:q_uote style) c_at ")\n"
+}
+
+# a table's rows x y z w d h r g b strength with the colors made linear
+h:p_aint := { t ->
+  (6 t_ake_2 f_loat t) c_at_2 (l:l_inear 3 t_ake_2 6 d_rop_2 t) c_at_2 10 s_elect_2 f_loat t
+}
+
+## (name, table) vd:b_oxes 0: Python making a group of solid boxes,
+## objects NAME 1 to NAME n, one a row of the table: x y z (its middle),
+## w d h (its size), r g b (0 to 255) and how strongly it glows (1 is
+## its color as given). A bar of height h standing on the floor has its
+## middle at h / 2; one hanging below it at -h / 2.
+## >> "vd:" u_se< "Video"
+## >> ("bar", 1 10 r_eshape 0 0 1 1 1 2 255 255 255 1) vd:b_oxes 0
+## boxes('bar', nums('0.0 0.0 1.0 1.0 1.0 2.0 1.0 1.0 1.0 1.0', 10), 'solid')
+l:b_oxes := { (name, t) z -> "solid" h:b_oxes (name, t) }
+
+## (name, table) vd:o_utlines 0: Python making a group of boxes drawn as
+## their edges only (a wireframe), rows as vd:b_oxes: what a value was
+## before it went
+l:o_utlines := { (name, t) z -> "wire" h:b_oxes (name, t) }
+
+## (name, table) vd:g_lass 0: Python making a group of see-through
+## boxes, rows as vd:b_oxes: a floor at zero that bars stand on and
+## hang below
+l:g_lass := { (name, t) z -> "glass" h:b_oxes (name, t) }
+
+## (name, table) vd:l_ines 0: Python making a group of straight lines
+## that glow, one a row of the table: from x y z, to x y z, r g b (0 to
+## 255) and the line's radius -- a guide from one thing to another
+l:l_ines := { (name, t) z ->
+  p := (6 t_ake_2 f_loat t) c_at_2 (l:l_inear 3 t_ake_2 6 d_rop_2 t) c_at_2 10 s_elect_2 f_loat t
+  "lines(" c_at (h:q_uote name) c_at ", " c_at ((p, 10) h:n_ums 0) c_at ")\n"
+}
+
+## (name, texts, table) vd:l_abels 0: Python making a group of words,
+## one a row of the table -- x y z (its middle), its height, r g b (0
+## to 255) -- each turned to face the camera; texts are the words, | between
+## them (vd:f_ixed writes numbers so)
+l:l_abels := { (name, texts, t) z ->
+  p := (4 t_ake_2 f_loat t) c_at_2 l:l_inear 3 t_ake_2 4 d_rop_2 t
+  "labels(" c_at (h:q_uote name) c_at ", " c_at (h:q_uote texts) c_at ", " c_at ((p, 7) h:n_ums 0) c_at ")\n"
+}
+
+## (texts, table) vd:c_aptions 0: Python putting captions near the bottom
+## of the picture, on a dark plate, one a row of the table: from and to
+## (seconds), r g b (0 to 255); texts as vd:l_abels
+l:c_aptions := { (texts, t) z ->
+  p := (2 t_ake_2 f_loat t) c_at_2 l:l_inear 2 d_rop_2 t
+  "captions(" c_at (h:q_uote texts) c_at ", " c_at ((p, 5) h:n_ums 0) c_at ")\n"
+}
+
+## (name, spans) vd:s_hown 0: Python showing each object of the group
+## only from one second to another, a row of spans each (n by 2); a span
+## from 0 shows it from the start
+l:s_hown := { (name, s) z -> "shown(" c_at (h:q_uote name) c_at ", " c_at ((f_loat s, 2) h:n_ums 0) c_at ")\n" }
+
+## (name, times, places) vd:m_oves 0: Python keying each object of the
+## group to its place and size at the times (k seconds): places is n by
+## k by 6, x y z w d h; between keys they ease from one to the next
+l:m_oves := { (name, ts, p) z ->
+  k := 6 * t_ally ts
+  "moves(" c_at (h:q_uote name) c_at ", " c_at ((f_loat ts, t_ally ts) h:n_ums 0) c_at "[0], " c_at ((f_loat p, k) h:n_ums 0) c_at ")\n"
+}
+
+## (name, times, places) vd:m_ovesEach 0: as vd:m_oves, but each object
+## keyed at times of its own: times is n by k, a row an object -- things
+## that move one after another
+l:m_ovesEach := { (name, ts, p) z ->
+  k := 2 s_elect s_hape ts
+  "moves_each(" c_at (h:q_uote name) c_at ", " c_at ((f_loat ts, k) h:n_ums 0) c_at ", " c_at ((f_loat p, 6 * k) h:n_ums 0) c_at ")\n"
+}
+
+## (name, times, colors) vd:t_ints 0: Python keying each object's color
+## at the times (k seconds): colors is n by k by 3, 0 to 255
+l:t_ints := { (name, ts, c) z ->
+  k := 3 * t_ally ts
+  "tints(" c_at (h:q_uote name) c_at ", " c_at ((f_loat ts, t_ally ts) h:n_ums 0) c_at "[0], " c_at ((l:l_inear c, k) h:n_ums 0) c_at ")\n"
+}
+
+## (times, eyes, aims) vd:c_amera 0: Python keying the camera: at each
+## time (k seconds) it is at an eye (k by 3) looking at an aim (k by 3)
+l:c_amera := { (ts, e, a) z ->
+  "camera(" c_at ((f_loat ts, t_ally ts) h:n_ums 0) c_at "[0], " c_at ((f_loat e, 3) h:n_ums 0) c_at ", " c_at ((f_loat a, 3) h:n_ums 0) c_at ")\n"
+}
+
+## (name, origin, u, v, colors, order, gap) vd:g_rid 0: Python making a
+## grid of n by m flat cells as one mesh: cell (i, j) spans origin +
+## i u to origin + (i + 1) u along one side and j v along the other,
+## less gap (a fraction) at each edge; colors is n by m by 3 (0 to 255)
+## and order n by m, the second each cell appears (0: from the start) --
+## a wall of a matrix, filled in as it is worked out. Written compactly
+## for big grids (a 512 by 512 wall is 262,144 cells): the colors as
+## whole numbers, made linear by the player, the seconds as whole
+## milliseconds.
+l:g_rid := { (name, at, u, v, c, w, g) z ->
+  s := 2 t_ake s_hape c
+  cs := f_loor 0.5 + f_loat c
+  ms := f_loor 0.5 + 1000.0 * f_loat w
+  "grid(" c_at (h:q_uote name) c_at ", " c_at ((f_loat at, 3) h:n_ums 0) c_at "[0], " c_at ((f_loat u, 3) h:n_ums 0) c_at "[0], " c_at ((f_loat v, 3) h:n_ums 0) c_at "[0], " c_at ((f_loat s, 2) h:n_ums 0) c_at "[0], " c_at ((cs, 3) h:n_ums 0) c_at ", " c_at ((ms, 1) h:n_ums 0) c_at ", " c_at (f_ormat g) c_at ")\n"
+}
+
+## (times, name) vd:s_tills 0: Python rendering the frames at the times
+## (seconds) as out/NAME-1.png, NAME-2.png, ...
+l:s_tills := { (ts, name) z -> "stills(" c_at ((f_loat ts, t_ally ts) h:n_ums 0) c_at "[0], " c_at (h:q_uote name) c_at ")\n" }
+
+## vd:r_ender file: Python rendering every frame to out/FILE, an MP4
+## (H.264)
+l:r_ender := { file -> "video(" c_at (h:q_uote file) c_at ")\n" }
+
+## vd:report: Python writing out/report.txt: the frames, and each group,
+## how many objects and how many of them keyed -- what a test checks
+l:report := "report()\n"

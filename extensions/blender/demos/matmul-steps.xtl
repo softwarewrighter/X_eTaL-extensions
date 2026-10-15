@@ -1,0 +1,28 @@
+## Blender, 6: a matrix product a step at a time, arrays to video. C = A
+## x B for X_eTaL-gpu's matmul demo ([3 4] x [4 2], by its Accel
+## library): A on the left wall, B on the ceiling, C on the back wall.
+## Item by item, a row of A and a column of B light up, their four
+## products appear in the cube between them and fly into C's item,
+## which shows their sum; then all six at once, as a GPU works them out,
+## one work-item each. Every place, color and time is an array worked
+## out in X_eTaL (demos/Matmul.xtl); Video.xtl writes them into the script
+## Blender runs. Explained step by step in docs/literate/matmul.org.
+## Run: just demo blender matmul-steps   (a few minutes: 466 frames)
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"mm:" u_se< "Matmul"
+
+# five stills (the document's pictures), then every frame as the video
+script := ((1920, 1080) mm:s_teps 0) c_at ((0.8 2.6 3.9 8.5 13.0, "matmul-steps") vd:s_tills 0) c_at (vd:r_ender "matmul-steps.mp4") c_at vd:report
+n := "work/explain/run.py" bl:w_rite! bp:launcher
+n := "work/explain/matmul-steps.py" bl:w_rite! script
+"rendering five stills and 15.5 seconds (466 frames) with Blender (EEVEE) ..."
+r := "work/explain/run.py" bl:r_un! "work/explain/matmul-steps.py work/explain/out"
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+"what Blender made:"
+bl:r_ead "work/explain/out/report.txt"

@@ -11,6 +11,12 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-15
+
+- `ext` arrays to video (Saga 15, step 11, blender-pipeline): `lib/Video.xtl` (alias `vd:`) turns X_eTaL arrays into an animated Blender scene -- groups of glowing boxes, outlines, glass, lines, words facing the camera and n by m grids (a 512 by 512 wall as one mesh), each with spans, keys (shared or each object's own), tints; the camera's keys; captions on a dark plate -- each table one call of a fixed player (`vd:head`), so no Python is written for a video and the same arrays give the same script; `vd:t_one` (a color scale), `vd:c_ontrast` (WCAG), `vd:f_ixed` (labels). Three videos, every array worked out in X_eTaL from X_eTaL-gpu's Accel (the functions its GPU runs): `relu-softmax` (tiny-net: z1's nine negatives removed, z2's rows through softmax a step at a time), `matmul-steps` ([3 4] x [4 2], product by product, then all six as work-items) and `matmul-fly` (512 by 512: the cube, one work-group, one work-item's 512 products and running sum, C filling in a work-group at a time); recorded for the site. Goldens: `blender-video-script` (the Python pinned) and `blender-explain-quick` (all three through Blender, small).
+- `docs` two literate documents, `docs/literate/relu-softmax.org` (ReLU and softmax, arrays to video) and `matmul.org` (Matrix multiply, arrays to video): purpose, the chain, the arrays, the animation at a high level and in detail, the Python each table becomes, the player, the render; every listing checked against the code. The literate index groups documents by `#+CATEGORY:` (Blender: arrays to video; Voxels) and links X_eTaL's own; a document may explain several demos (`#+DEMO: EXT NAME...`); the README links the documents prominently.
+- `build` X_eTaL-gpu pinned at `GPU_COMMIT` (work/gpu, `scripts/libraries.sh`): its Accel library on `XETAL_PATH` for demos, goldens, recordings and the literate documents; JuliaMono pinned and installed into work/fonts (`just font`, `scripts/font.sh`, SHA-256 checked).
+
 ## 2026-10-14
 
 - `plan` Saga 15 step 11, blender-pipeline (inserted): a video of the extension's own process, X_eTaL to Python to Blender to models, renders and animations, for a blog post; the release step names the goal, X_eTaL driving a GPU, an FPGA and Blender.

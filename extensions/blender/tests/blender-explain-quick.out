@@ -1,0 +1,73 @@
+relu-softmax: the run, the error lines, what Blender made
+exit 0
+errors 0
+frames 1 to 901 at 30 a second
+e values: 8 objects, 8 keyed
+floor: 1 objects, 1 keyed
+floor2: 1 objects, 1 keyed
+gone: 9 objects, 9 keyed
+h values: 20 objects, 20 keyed
+ones: 4 objects, 4 keyed
+result: 8 objects, 8 keyed
+result values: 8 objects, 8 keyed
+rows: 4 objects, 4 keyed
+scores: 8 objects, 8 keyed
+scores values: 8 objects, 8 keyed
+shares values: 8 objects, 8 keyed
+shifted values: 8 objects, 8 keyed
+sum values: 4 objects, 4 keyed
+sums: 4 objects, 4 keyed
+z1: 20 objects, 20 keyed
+z1 values: 20 objects, 20 keyed
+
+matmul-steps: the run, the error lines, what Blender made
+exit 0
+errors 0
+frames 1 to 466 at 30 a second
+A: 12 objects, 0 keyed
+A values: 12 objects, 0 keyed
+B: 8 objects, 0 keyed
+B values: 8 objects, 0 keyed
+C: 6 objects, 6 keyed
+C empty: 6 objects, 0 keyed
+C values: 6 objects, 6 keyed
+columns: 6 objects, 6 keyed
+cube: 1 objects, 0 keyed
+guides: 48 objects, 48 keyed
+names: 3 objects, 0 keyed
+product values: 24 objects, 24 keyed
+products: 24 objects, 24 keyed
+rows: 6 objects, 6 keyed
+targets: 6 objects, 6 keyed
+together: 6 objects, 6 keyed
+
+matmul-fly at 32: the run, the error lines, what Blender made
+exit 0
+errors 0
+frames 1 to 541 at 30 a second
+A: 1 objects, 0 keyed
+B: 1 objects, 0 keyed
+C: 1 objects, 0 keyed
+C empty: 1 objects, 0 keyed
+names: 3 objects, 0 keyed
+products: 32 objects, 32 keyed
+result: 1 objects, 1 keyed
+sum: 1 objects, 1 keyed
+volume: 1 objects, 0 keyed
+work-group: 4 objects, 0 keyed
+work-item: 4 objects, 0 keyed
+
+work/quick/mf:
+mf-1.png
+mf-2.png
+report.txt
+
+work/quick/ms:
+ms-1.png
+ms-2.png
+report.txt
+
+work/quick/rs:
+report.txt
+rs-1.png
+rs-2.png

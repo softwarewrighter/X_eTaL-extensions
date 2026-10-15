@@ -21,6 +21,11 @@ emacs="${EMACS:-}"
 [ -n "$emacs" ] || [ ! -x /Applications/Emacs.app/Contents/MacOS/Emacs ] || emacs=/Applications/Emacs.app/Contents/MacOS/Emacs
 if [ -z "$emacs" ]; then echo "literate-html: no Emacs; skipped"; exit 0; fi
 export XETAL_BIN="$root/bin/xetal"
+# the libraries the documents use: the shared ones (scripts/libraries.sh:
+# Accel, Eigencube) and the blender extension's pure X_eTaL libraries
+# (Bpy, Video, and the demos' shared ReluSoftmax and Matmul)
+XETAL_PATH="$("$root/scripts/libraries.sh"):$root/extensions/blender/lib:$root/extensions/blender/demos"
+export XETAL_PATH
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 mkdir -p "$tmp/docs/literate" "$out/images"
@@ -38,17 +43,28 @@ for image in $(grep -oh 'images/[A-Za-z0-9_.-]*' docs/literate/*.org | sort -u);
   cp "$image" "$out/images/"
 done
 cp "$clone/docs/literate/style.css" "$out/style.css"
+# the index: the documents grouped by their #+CATEGORY: line, in the
+# order the groups first appear (Blender before Voxels: blender-*.org,
+# relu-softmax.org, then water.org), and the other X_eTaL repositories'
 {
   echo '<!DOCTYPE html>'
   echo '<html lang="en"><head><meta charset="utf-8"/><title>Literate documents -- X_eTaL Extensions</title>'
   echo '<link rel="stylesheet" href="style.css"/></head><body><div id="content">'
   echo '<h1 class="title">Literate documents</h1>'
-  echo '<p>The extensions explained with their code, drawn as X_eTaL draws it, and the results it gives.</p><ul>'
-  for doc in docs/literate/*.org; do
-    name="$(basename "$doc" .org)"
-    title="$(sed -n 's/^#+TITLE: //p' "$doc")"
-    sub="$(sed -n 's/^#+SUBTITLE: //p' "$doc")"
-    echo "<li><a href=\"$name.html\">$title</a> -- $sub</li>"
+  echo '<p>The extensions explained with their code, drawn as X_eTaL draws it, and the results it gives.</p>'
+  for cat in $(for doc in docs/literate/*.org; do sed -n 's/^#+CATEGORY: //p' "$doc"; done | awk '!seen[$0]++' | tr ' ' '~'); do
+    cat="${cat//\~/ }"
+    echo "<h2>$cat</h2><ul>"
+    for doc in docs/literate/*.org; do
+      [ "$(sed -n 's/^#+CATEGORY: //p' "$doc")" = "$cat" ] || continue
+      name="$(basename "$doc" .org)"
+      title="$(sed -n 's/^#+TITLE: //p' "$doc")"
+      sub="$(sed -n 's/^#+SUBTITLE: //p' "$doc")"
+      echo "<li><a href=\"$name.html\">$title</a> -- $sub</li>"
+    done
+    echo '</ul>'
   done
+  echo '<h2>Elsewhere</h2><ul>'
+  echo '<li><a href="https://softwarewrighter.github.io/X_eTaL/literate/">X_eTaL&#39;s literate documents</a> -- the language itself: a beginner&#39;s start, a tour, libraries, classics</li>'
   echo '</ul><p><a href="../">The demos</a></p></div></body></html>'
 } > "$out/index.html"

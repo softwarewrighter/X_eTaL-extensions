@@ -1,0 +1,8 @@
+# extensions/blender/videos/matmul-fly.webm and .webp: a 512 by 512
+# matrix product flown through, Blender's own render, made by
+# demos/matmul-fly.xtl from X_eTaL arrays (MatmulFly.xtl, Video.xtl; just
+# videos; about ten minutes when the video is not there yet).
+demo=matmul-fly
+file=work/explain/out/matmul-fly.mp4
+scale=1280
+fps=30

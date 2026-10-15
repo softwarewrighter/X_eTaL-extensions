@@ -96,6 +96,45 @@ Every part is placed (`at`), turned (`turn`, degrees about x y z),
 colored (`rgb`) and may glow (`emit`, the strength of its emission; 0
 for none).
 
+## Arrays to video: Video.xtl
+
+`lib/Video.xtl` (alias `vd:`) turns X_eTaL arrays into an animated
+scene and a video. A program works out every object's place, size and
+color, the seconds it is shown, its keys, the camera's path and the
+captions as arrays; each function writes one table into the script as
+one call of the player -- `vd:head`, fixed Python at the top of every
+script that reads the numbers, makes the objects and keys, and decides
+nothing. No Python is written for a video: the same arrays always give
+the same script. The look: flat colors that glow on a near-black sky,
+the Standard view, JuliaMono Black (`just font`) for words, captions on
+a dark plate.
+
+| Export | What it writes |
+| ------ | -------------- |
+| `vd:head` | the player: an empty scene, the output directory, the functions below |
+| `(w, h, fps, seconds, sky, lens) vd:s_tage 0` | EEVEE, the picture's size, the frame rate, the length, the sky, a camera that looks at an aim |
+| `(name, table) vd:b_oxes 0` | a group of glowing boxes, a row each: middle, size, color, glow |
+| `vd:o_utlines`, `vd:g_lass` | the same as edges only, or see-through |
+| `(name, table) vd:l_ines 0` | a group of glowing lines: from, to, color, radius |
+| `(name, texts, table) vd:l_abels 0` | a group of words facing the camera (texts joined by `\|`; `vd:f_ixed` writes numbers so) |
+| `(texts, table) vd:c_aptions 0` | captions on a dark plate, each with its span and color |
+| `(name, spans) vd:s_hown 0` | when each object of a group is shown |
+| `(name, times, places) vd:m_oves 0` | each object keyed to a place and size at the times (n by k by 6) |
+| `(name, times, places) vd:m_ovesEach 0` | the same, each object at times of its own (n by k) |
+| `(name, times, colors) vd:t_ints 0` | each object's color keyed at the times |
+| `(times, eyes, aims) vd:c_amera 0` | the camera's keys |
+| `(name, origin, u, v, colors, order, gap) vd:g_rid 0` | an n by m grid of cells as one mesh, each appearing at its second: a matrix as a wall (262,144 cells for 512 by 512) |
+| `(values, low, high) vd:t_one 0` | a color for each value, deep blue to orange (not Python) |
+| `vd:l_inear`, `vd:c_ontrast`, `vd:f_ixed` | colors made linear; WCAG contrast (7 or more for words); numbers as labels (not Python) |
+| `(times, name) vd:s_tills 0`, `vd:r_ender file`, `vd:report` | stills, the video (MP4, H.264), a report of the groups |
+
+The videos' arrays come from X_eTaL-gpu's Accel library (the functions
+its GPU runs), pinned at `GPU_COMMIT` and put on `XETAL_PATH` by
+`scripts/libraries.sh`. Each video is explained block by block, from
+the arrays to the MP4, in a literate document:
+[ReLU and softmax](https://softwarewrighter.github.io/X_eTaL-extensions/literate/relu-softmax.html)
+and [matrix multiply](https://softwarewrighter.github.io/X_eTaL-extensions/literate/matmul.html).
+
 ## Demos
 
 1. `demos/hello.xtl` (`just demo blender hello`): the whole chain once.
@@ -168,6 +207,27 @@ for none).
    (not in the files) each part's rest pose sits on a track under the
    clips: Blender's NLA puts a property no playing strip keys at zero,
    not at its rest.
+
+5. `demos/relu-softmax.xtl` (`just demo blender relu-softmax`, a few
+   minutes): ReLU and softmax on X_eTaL-gpu's tiny network, 30 seconds.
+   z1's twenty values stand as bars on a glass floor; the nine negatives
+   turn red and shrink to 0, leaving outlines. z2's four rows of two
+   scores go through softmax a step at a time -- less the row's
+   largest, e to each, the row's sum, divided -- and each row ends as
+   a column of two shares, 1 tall (`demos/ReluSoftmax.xtl`;
+   `work/explain/out/relu-softmax.mp4` and five stills).
+6. `demos/matmul-steps.xtl` (`just demo blender matmul-steps`, a few
+   minutes): C = A x B for X_eTaL-gpu's matmul demo ([3 4] x [4 2]), 15.5
+   seconds: A on the left wall, B on the ceiling, C on the back wall;
+   item by item the row and column light up, their four products appear
+   in the cube with guide lines, fly into C and become its item; then
+   all six at once, a work-item each (`demos/Matmul.xtl`).
+7. `demos/matmul-fly.xtl` (`just demo blender matmul-fly`, about ten
+   minutes, most of it X_eTaL working out the walls): the same for 512
+   by 512 matrices as a fly-through, 18 seconds: the whole cube, one
+   work-group's 16 by 16 tile, one work-item's 512 products and their
+   running sum, then C filling in a work-group at a time
+   (`demos/MatmulFly.xtl`).
 
 ## Build and test
 

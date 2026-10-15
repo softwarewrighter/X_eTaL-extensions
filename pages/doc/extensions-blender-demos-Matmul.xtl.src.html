@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/blender/demos/Matmul.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>lib/</h3>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+</ul>
+<h3>extensions/audio/lib/</h3>
+<ul>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+</ul>
+<h3>extensions/audio/demos/</h3>
+<ul>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+</ul>
+<h3>extensions/canvas/lib/</h3>
+<ul>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+</ul>
+<h3>extensions/scene/lib/</h3>
+<ul>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+</ul>
+<h3>extensions/blender/lib/</h3>
+<ul>
+<li><a href="extensions-blender-lib-Blender.xtl.html">Blender.xtl</a></li>
+<li><a href="extensions-blender-lib-Bpy.xtl.html">Bpy.xtl</a></li>
+<li><a href="extensions-blender-lib-Video.xtl.html">Video.xtl</a></li>
+</ul>
+<h3>extensions/blender/demos/</h3>
+<ul>
+<li><a href="extensions-blender-demos-cubes.xtl.html">cubes.xtl</a></li>
+<li><a href="extensions-blender-demos-Sizes.xtl.html">Sizes.xtl</a></li>
+<li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
+<li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
+<li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
+<li><a href="extensions-blender-demos-matmul-fly.xtl.html">matmul-fly.xtl</a></li>
+<li><a href="extensions-blender-demos-MatmulFly.xtl.html">MatmulFly.xtl</a></li>
+<li><a href="extensions-blender-demos-matmul-steps.xtl.html">matmul-steps.xtl</a></li>
+<li><a href="extensions-blender-demos-Matmul.xtl.html">Matmul.xtl</a></li>
+<li><a href="extensions-blender-demos-relu-softmax.xtl.html">relu-softmax.xtl</a></li>
+<li><a href="extensions-blender-demos-ReluSoftmax.xtl.html">ReluSoftmax.xtl</a></li>
+<li><a href="extensions-blender-demos-td-models.xtl.html">td-models.xtl</a></li>
+</ul>
+<h3>extensions/digest/lib/</h3>
+<ul>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>/Users/mike/github/softwarewrighter/X_eTaL-extensions/work/gpu/libs/Accel/src/</h3>
+<ul>
+<li><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-gpu-libs-Accel-src-Accel.xtl.html">Accel.xtl</a></li>
+</ul>
+<h3>extensions/canvas/demos/</h3>
+<ul>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+</ul>
+<h3>extensions/clock/lib/</h3>
+<ul>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+</ul>
+<h3>extensions/clock/demos/</h3>
+<ul>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+</ul>
+<h3>extensions/hello/lib/</h3>
+<ul>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+</ul>
+<h3>extensions/hello/demos/</h3>
+<ul>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+</ul>
+<h3>extensions/http/lib/</h3>
+<ul>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+</ul>
+<h3>extensions/http/demos/</h3>
+<ul>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+</ul>
+<h3>extensions/sqlite/lib/</h3>
+<ul>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+</ul>
+<h3>extensions/image/lib/</h3>
+<ul>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+</ul>
+<h3>extensions/image/demos/</h3>
+<ul>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+</ul>
+<h3>extensions/linalg/lib/</h3>
+<ul>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+</ul>
+<h3>extensions/scene/demos/</h3>
+<ul>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-Endless.xtl.html">Endless.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-Play.xtl.html">Play.xtl</a></li>
+<li><a href="extensions-scene-demos-Rubik.xtl.html">Rubik.xtl</a></li>
+<li><a href="extensions-scene-demos-RubikPlay.xtl.html">RubikPlay.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-dig.xtl.html">voxels-dig.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-game.xtl.html">voxels-game.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-light.xtl.html">voxels-light.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">voxels-rubik-solve.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik.xtl.html">voxels-rubik.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-water.xtl.html">voxels-water.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+</ul>
+<h3>/Users/mike/github/softwarewrighter/X_eTaL-extensions/work/libraries/libs/Eigencube/src/</h3>
+<ul>
+<li><a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-libraries-libs-Eigencube-src-Eigencube.xtl.html">Eigencube.xtl</a></li>
+</ul>
+<h3>extensions/sqlite/demos/</h3>
+<ul>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+</ul>
+<h3>extensions/web/lib/</h3>
+<ul>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+</ul>
+<h3>extensions/web/demos/</h3>
+<ul>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L18">ˡa</a></li>
+<li class="item"><a href="#L21">ˡb</a></li>
+<li class="item"><a href="#L30">ˡc</a></li>
+<li class="item"><a href="#L36">ˡitemI</a></li>
+<li class="item"><a href="#L38">ˡitemJ</a></li>
+<li class="item"><a href="#L42">ˡprodQ</a></li>
+<li class="item"><a href="#L44">ˡprodI</a></li>
+<li class="item"><a href="#L46">ˡprodJ</a></li>
+<li class="item"><a href="#L48">ˡprodK</a></li>
+<li class="item"><a href="#L54">ˡproducts</a></li>
+<li class="item"><a href="#L60">ˡsums</a></li>
+<li class="item"><a href="#L65">g</a></li>
+<li class="item"><a href="#L66">d</a></li>
+<li class="item"><a href="#L69"><span class="c-libfunc">ʰx̲yz</span></a></li>
+<li class="item"><a href="#L78"><span class="c-libfunc">ˡa̲t</span></a></li>
+<li class="item"><a href="#L80"><span class="c-libfunc">ˡb̲t</span></a></li>
+<li class="item"><a href="#L82"><span class="c-libfunc">ˡc̲t</span></a></li>
+<li class="item"><a href="#L84"><span class="c-libfunc">ˡp̲t</span></a></li>
+<li class="item"><a href="#L87"><span class="c-libfunc">ʰs̲ized</span></a></li>
+<li class="item"><a href="#L90"><span class="c-libfunc">ʰo̲f</span></a></li>
+<li class="item"><a href="#L95">ˡdurations</a></li>
+<li class="item"><a href="#L97">ˡstarts</a></li>
+<li class="item"><a href="#L99">ˡlast</a></li>
+<li class="item"><a href="#L101">ˡtogether</a></li>
+<li class="item"><a href="#L103">ˡlength</a></li>
+<li class="item"><a href="#L107">ˡappear</a></li>
+<li class="item"><a href="#L109">ˡflies</a></li>
+<li class="item"><a href="#L111">ˡlands</a></li>
+<li class="item"><a href="#L116">white</a></li>
+<li class="item"><a href="#L117">yellow</a></li>
+<li class="item"><a href="#L118">empty</a></li>
+<li class="item"><a href="#L119">edge</a></li>
+<li class="item"><a href="#L121">ˡsky</a></li>
+<li class="item"><a href="#L124"><span class="c-libfunc">ʰg̲roup</span></a></li>
+<li class="item"><a href="#L127"><span class="c-libfunc">ʰo̲utlined</span></a></li>
+<li class="item"><a href="#L130"><span class="c-libfunc">ʰw̲ords</span></a></li>
+<li class="item"><a href="#L133"><span class="c-libfunc">ʰs̲pans</span></a></li>
+<li class="item"><a href="#L138"><span class="c-libfunc">ˡw̲alls</span></a></li>
+<li class="item"><a href="#L154"><span class="c-libfunc">ʰs̲hape</span></a></li>
+<li class="item"><a href="#L160"><span class="c-libfunc">ˡi̲tems</span></a></li>
+<li class="item"><a href="#L197">ˡstepTexts</a></li>
+<li class="item"><a href="#L204"><span class="c-libfunc">ˡs̲tepCaptions</span></a></li>
+<li class="item"><a href="#L214"><span class="c-libfunc">ˡs̲tepCamera</span></a></li>
+<li class="item"><a href="#L223"><span class="c-libfunc">ˡs̲teps</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="extensions-blender-demos-Matmul.xtl.html">extensions/blender/demos/Matmul.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment"># Matmul.xtl -- a matrix product, as two videos (Video.xtl): a small one</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># a step at a time, C = A x B for X_eTaL-gpu's matmul demo ([3 4] x</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># [4 2]), and a large one as a fly-through, 512 x 512 x 512. The</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># products and sums are X_eTaL-gpu's Accel library (ac:m_atmul, the</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># inner product its GPU runs); what is new here is only how they are</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># shown: every cell's place, color and timing, every label and the</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-comment">⍝</span><span class="c-comment"># camera's path, worked out from those arrays. Shared by the demos</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-comment">⍝</span><span class="c-comment"># (demos/matmul-steps.xtl, demos/matmul-fly.xtl), their tests and the</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-comment">⍝</span><span class="c-comment"># literate document (docs/literate/matmul.org).</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-comment">⍝</span><span class="c-comment"># Import: &quot;mm:&quot; u_se&lt; &quot;Matmul&quot;</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-libfunc">ᵛᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-comment">⍝</span><span class="c-comment">## The arrays (Accel)</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-comment">⍝</span><span class="c-comment"># a: X_eTaL-gpu's matmul demo's left matrix, 1 to 12 (3 by 4)</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a>ˡa ← <span class="c-number">3</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">12</span></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-comment">⍝</span><span class="c-comment"># b: its right matrix (4 by 2)</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a>ˡb ← <span class="c-number">4</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">-1</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-comment">⍝</span><span class="c-comment"># c: their product, ac:m_atmul (3 by 2): each item the sum of a row of a</span></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-comment">⍝</span><span class="c-comment"># times a column of b</span></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;mm:&quot; u_se&lt; &quot;Matmul&quot;</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; mm:c</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a><span class="c-comment">⍝</span><span class="c-comment"># 12 1</span></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-comment">⍝</span><span class="c-comment"># 28 5</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-comment">⍝</span><span class="c-comment"># 44 9</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a>ˡc ← <a href="extensions-blender-demos-Matmul.xtl.html#l.a">ˡa</a> <a href="Users-mike-github-softwarewrighter-X_eTaL-extensions-work-gpu-libs-Accel-src-Accel.xtl.html#l.m_atmul" class="c-libfunc">ᵃᶜm̲atmul</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.b">ˡb</a></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-comment">⍝</span><span class="c-comment">## Every product, one at a time</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-comment">⍝</span><span class="c-comment"># the items of c in the order they are worked out, row by row: i and j</span></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a><span class="c-comment">⍝</span><span class="c-comment"># from 0 (6 each)</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a>ˡitemI ← ((<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">6</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a><span class="c-comment">⍝</span><span class="c-comment"># j</span></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a>ˡitemJ ← ((<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">6</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a><span class="c-comment">⍝</span><span class="c-comment"># for each of the 24 products, item by item, k from 0 to 3 within each:</span></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-comment">⍝</span><span class="c-comment"># its item (from 0), i, j and k</span></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a>ˡprodQ ← ((<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">24</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">4</span></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a><span class="c-comment">⍝</span><span class="c-comment"># i</span></span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a>ˡprodI ← (<a href="extensions-blender-demos-Matmul.xtl.html#l.prodQ">ˡprodQ</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.itemI">ˡitemI</a></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a><span class="c-comment">⍝</span><span class="c-comment"># j</span></span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a>ˡprodJ ← (<a href="extensions-blender-demos-Matmul.xtl.html#l.prodQ">ˡprodQ</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.itemJ">ˡitemJ</a></span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a><span class="c-comment">⍝</span><span class="c-comment"># k</span></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a>ˡprodK ← ((<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">24</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">4</span></span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a></span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a><span class="c-comment">⍝</span><span class="c-comment"># the products: a[i;k] times b[k;j], each (24)</span></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;mm:&quot; u_se&lt; &quot;Matmul&quot;</span></span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; 4 t_ake mm:products</span></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a><span class="c-comment">⍝</span><span class="c-comment"># 1 0 3 8</span></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a>ˡproducts ← ((<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.prodK">ˡprodK</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.prodI">ˡprodI</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.a">ˡa</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.prodJ">ˡprodJ</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.prodK">ˡprodK</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.b">ˡb</a></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-comment">⍝</span><span class="c-comment"># the products added up, four at a time, are c, item by item</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; &quot;mm:&quot; u_se&lt; &quot;Matmul&quot;</span></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a><span class="c-comment">⍝</span><span class="c-comment"># &gt;&gt; (r_avel mm:c) = '+ r_/_2 6 4 r_eshape mm:products</span></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a><span class="c-comment">⍝</span><span class="c-comment"># 1 1 1 1 1 1</span></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a>ˡsums ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <span class="c-number">6</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.products">ˡproducts</a></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a><span class="c-comment">⍝</span><span class="c-comment">## Where things stand</span></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a></span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a><span class="c-comment">⍝</span><span class="c-comment"> the walls' distance from the cube; a cell's size</span></span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a>g ← <span class="c-number">1.3</span></span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a>d ← <span class="c-number">0.86</span></span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a></span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a><span class="c-comment">⍝</span><span class="c-comment"> a row of x y z for each of the vectors (or numbers) x, y and z</span></span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a><span class="c-libfunc">ʰx̲yz</span> ← { (x, y, zz) q →</span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a>  n ← (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> x) <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> y) <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> zz</span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a>  <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> y) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> zz</span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a>}</span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a></span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a><span class="c-comment">⍝</span><span class="c-comment"># The cube: x is j (across, b's and c's columns), y is k (into the</span></span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a><span class="c-comment">⍝</span><span class="c-comment"># picture, the sum's index), z is -i (down, a's and c's rows). a stands</span></span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a><span class="c-comment">⍝</span><span class="c-comment"># on the left wall, b on the ceiling, c on the back wall, and the</span></span>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a><span class="c-comment">⍝</span><span class="c-comment"># products fill the cube between them. (i, k) mm:a_t 0: a's cells</span></span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a><span class="c-libfunc">ˡa̲t</span> ← { (i, k) z → (<span class="c-number">0.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-blender-demos-Matmul.xtl.html#g">g</a>, (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>, <span class="c-number">0.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> i) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.x_yz" class="c-libfunc">ʰx̲yz</a> <span class="c-number">0</span> }</span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a><span class="c-comment">⍝</span><span class="c-comment"># (k, j) mm:b_t 0: b's cells</span></span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a><span class="c-libfunc">ˡb̲t</span> ← { (k, j) z → ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> j) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>, (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>, <a href="extensions-blender-demos-Matmul.xtl.html#g">g</a>) <a href="extensions-blender-demos-Matmul.xtl.html#h.x_yz" class="c-libfunc">ʰx̲yz</a> <span class="c-number">0</span> }</span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a><span class="c-comment">⍝</span><span class="c-comment"># (i, j) mm:c_t 0: c's cells</span></span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a><span class="c-libfunc">ˡc̲t</span> ← { (i, j) z → ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> j) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>, <span class="c-number">4.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-Matmul.xtl.html#g">g</a>, <span class="c-number">0.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> i) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.x_yz" class="c-libfunc">ʰx̲yz</a> <span class="c-number">0</span> }</span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a><span class="c-comment">⍝</span><span class="c-comment"># (i, j, k) mm:p_t 0: a product's place in the cube</span></span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a><span class="c-libfunc">ˡp̲t</span> ← { (i, j, k) z → ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> j) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>, (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>, <span class="c-number">0.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> i) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.x_yz" class="c-libfunc">ʰx̲yz</a> <span class="c-number">0</span> }</span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a></span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a><span class="c-comment">⍝</span><span class="c-comment"> rows x y z w d h for places (n by 3) of one size</span></span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a><span class="c-libfunc">ʰs̲ized</span> ← { (at, size) z → at <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> at) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> size }</span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a></span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a><span class="c-comment">⍝</span><span class="c-comment"> n by 3 rows of one color</span></span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a><span class="c-libfunc">ʰo̲f</span> ← { n c → (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> c }</span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a></span>
+<span class="line" id="L92"><a class="ln" href="#L92">92</a><span class="c-comment">⍝</span><span class="c-comment">## When</span></span>
+<span class="line" id="L93"><a class="ln" href="#L93">93</a></span>
+<span class="line" id="L94"><a class="ln" href="#L94">94</a><span class="c-comment">⍝</span><span class="c-comment"># each item's time: slow at first, then quicker (seconds, 6)</span></span>
+<span class="line" id="L95"><a class="ln" href="#L95">95</a>ˡdurations ← <span class="c-number">3.0</span> <span class="c-number">2.2</span> <span class="c-number">1.6</span> <span class="c-number">1.3</span> <span class="c-number">1.1</span> <span class="c-number">1.0</span></span>
+<span class="line" id="L96"><a class="ln" href="#L96">96</a><span class="c-comment">⍝</span><span class="c-comment"># when each item starts: 1.5 s, then one after another</span></span>
+<span class="line" id="L97"><a class="ln" href="#L97">97</a>ˡstarts ← <span class="c-number">1.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#s_-5c" class="c-builtin">s̲\</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.durations">ˡdurations</a></span>
+<span class="line" id="L98"><a class="ln" href="#L98">98</a><span class="c-comment">⍝</span><span class="c-comment"># when the last item ends</span></span>
+<span class="line" id="L99"><a class="ln" href="#L99">99</a>ˡlast ← <span class="c-number">6</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.starts">ˡstarts</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.durations">ˡdurations</a></span>
+<span class="line" id="L100"><a class="ln" href="#L100">100</a><span class="c-comment">⍝</span><span class="c-comment"># all six worked out at once: from 0.3 s after the last, for 2.5 s</span></span>
+<span class="line" id="L101"><a class="ln" href="#L101">101</a>ˡtogether ← (<span class="c-number">0.3</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.last">ˡlast</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2.8</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.last">ˡlast</a></span>
+<span class="line" id="L102"><a class="ln" href="#L102">102</a><span class="c-comment">⍝</span><span class="c-comment"># the video's length: a second after that</span></span>
+<span class="line" id="L103"><a class="ln" href="#L103">103</a>ˡlength ← <span class="c-number">3.8</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.last">ˡlast</a></span>
+<span class="line" id="L104"><a class="ln" href="#L104">104</a></span>
+<span class="line" id="L105"><a class="ln" href="#L105">105</a><span class="c-comment">⍝</span><span class="c-comment"># for each product: when it appears (one after another in the first</span></span>
+<span class="line" id="L106"><a class="ln" href="#L106">106</a><span class="c-comment">⍝</span><span class="c-comment"># half of its item's time), when it flies to c, when it lands (24 each)</span></span>
+<span class="line" id="L107"><a class="ln" href="#L107">107</a>ˡappear ← ((<a href="extensions-blender-demos-Matmul.xtl.html#l.prodQ">ˡprodQ</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.starts">ˡstarts</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> ((<a href="extensions-blender-demos-Matmul.xtl.html#l.prodQ">ˡprodQ</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.durations">ˡdurations</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0.12</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.45</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.prodK">ˡprodK</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">4.0</span></span>
+<span class="line" id="L108"><a class="ln" href="#L108">108</a><span class="c-comment">⍝</span><span class="c-comment"># when it flies</span></span>
+<span class="line" id="L109"><a class="ln" href="#L109">109</a>ˡflies ← ((<a href="extensions-blender-demos-Matmul.xtl.html#l.prodQ">ˡprodQ</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.starts">ˡstarts</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.68</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-Matmul.xtl.html#l.prodQ">ˡprodQ</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.durations">ˡdurations</a></span>
+<span class="line" id="L110"><a class="ln" href="#L110">110</a><span class="c-comment">⍝</span><span class="c-comment"># when it lands, and its item of c is shown</span></span>
+<span class="line" id="L111"><a class="ln" href="#L111">111</a>ˡlands ← ((<a href="extensions-blender-demos-Matmul.xtl.html#l.prodQ">ˡprodQ</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.starts">ˡstarts</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.88</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-Matmul.xtl.html#l.prodQ">ˡprodQ</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.durations">ˡdurations</a></span>
+<span class="line" id="L112"><a class="ln" href="#L112">112</a></span>
+<span class="line" id="L113"><a class="ln" href="#L113">113</a><span class="c-comment">⍝</span><span class="c-comment">## The steps video</span></span>
+<span class="line" id="L114"><a class="ln" href="#L114">114</a></span>
+<span class="line" id="L115"><a class="ln" href="#L115">115</a><span class="c-comment">⍝</span><span class="c-comment"> colors (0 to 255): white, yellow, an empty cell, the cube's edges, the sky</span></span>
+<span class="line" id="L116"><a class="ln" href="#L116">116</a>white ← <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span></span>
+<span class="line" id="L117"><a class="ln" href="#L117">117</a>yellow ← <span class="c-number">255</span> <span class="c-number">216</span> <span class="c-number">77</span></span>
+<span class="line" id="L118"><a class="ln" href="#L118">118</a>empty ← <span class="c-number">42</span> <span class="c-number">46</span> <span class="c-number">54</span></span>
+<span class="line" id="L119"><a class="ln" href="#L119">119</a>edge ← <span class="c-number">138</span> <span class="c-number">147</span> <span class="c-number">163</span></span>
+<span class="line" id="L120"><a class="ln" href="#L120">120</a><span class="c-comment">⍝</span><span class="c-comment"># the sky (0 to 255)</span></span>
+<span class="line" id="L121"><a class="ln" href="#L121">121</a>ˡsky ← <span class="c-number">7</span> <span class="c-number">8</span> <span class="c-number">10</span></span>
+<span class="line" id="L122"><a class="ln" href="#L122">122</a></span>
+<span class="line" id="L123"><a class="ln" href="#L123">123</a><span class="c-comment">⍝</span><span class="c-comment"> a group of boxes: places (n by 3), one size, colors (n by 3), glow</span></span>
+<span class="line" id="L124"><a class="ln" href="#L124">124</a><span class="c-libfunc">ʰg̲roup</span> ← { (name, at, size, c, gl) z → (name, ((at, size) <a href="extensions-blender-demos-Matmul.xtl.html#h.s_ized" class="c-libfunc">ʰs̲ized</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> at) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> gl) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span> }</span>
+<span class="line" id="L125"><a class="ln" href="#L125">125</a></span>
+<span class="line" id="L126"><a class="ln" href="#L126">126</a><span class="c-comment">⍝</span><span class="c-comment"> a group of outlines, the same rows</span></span>
+<span class="line" id="L127"><a class="ln" href="#L127">127</a><span class="c-libfunc">ʰo̲utlined</span> ← { (name, at, size, c, gl) z → (name, ((at, size) <a href="extensions-blender-demos-Matmul.xtl.html#h.s_ized" class="c-libfunc">ʰs̲ized</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> at) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> gl) <a href="extensions-blender-lib-Video.xtl.html#l.o_utlines" class="c-libfunc">ᵛᵈo̲utlines</a> <span class="c-number">0</span> }</span>
+<span class="line" id="L128"><a class="ln" href="#L128">128</a></span>
+<span class="line" id="L129"><a class="ln" href="#L129">129</a><span class="c-comment">⍝</span><span class="c-comment"> a group of words at places, one height, one color</span></span>
+<span class="line" id="L130"><a class="ln" href="#L130">130</a><span class="c-libfunc">ʰw̲ords</span> ← { (name, texts, at, size, c) z → (name, texts, at <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> at) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> size) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> at) <a href="extensions-blender-demos-Matmul.xtl.html#h.o_f" class="c-libfunc">ʰo̲f</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> c) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span> }</span>
+<span class="line" id="L131"><a class="ln" href="#L131">131</a></span>
+<span class="line" id="L132"><a class="ln" href="#L132">132</a><span class="c-comment">⍝</span><span class="c-comment"> spans for every object of a group: from and to (vectors or numbers)</span></span>
+<span class="line" id="L133"><a class="ln" href="#L133">133</a><span class="c-libfunc">ʰs̲pans</span> ← { (name, a, b, n) z → (name, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> a) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> b) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span> }</span>
+<span class="line" id="L134"><a class="ln" href="#L134">134</a></span>
+<span class="line" id="L135"><a class="ln" href="#L135">135</a><span class="c-comment">⍝</span><span class="c-comment"># the walls: a, b and c's cells colored by their values, labeled, and</span></span>
+<span class="line" id="L136"><a class="ln" href="#L136">136</a><span class="c-comment">⍝</span><span class="c-comment"># the cube's edges; c's cells start empty; each wall's name and shape</span></span>
+<span class="line" id="L137"><a class="ln" href="#L137">137</a><span class="c-comment">⍝</span><span class="c-comment"># by it (A's and B's above, C's to its right)</span></span>
+<span class="line" id="L138"><a class="ln" href="#L138">138</a><span class="c-libfunc">ˡw̲alls</span> ← { z →</span>
+<span class="line" id="L139"><a class="ln" href="#L139">139</a>  ai ← ((<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">12</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">4</span></span>
+<span class="line" id="L140"><a class="ln" href="#L140">140</a>  ak ← ((<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">12</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">4</span></span>
+<span class="line" id="L141"><a class="ln" href="#L141">141</a>  bk ← ((<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span></span>
+<span class="line" id="L142"><a class="ln" href="#L142">142</a>  bj ← ((<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span></span>
+<span class="line" id="L143"><a class="ln" href="#L143">143</a>  t ← (<span class="c-string">&quot;A&quot;</span>, (ai, ak) <a href="extensions-blender-demos-Matmul.xtl.html#l.a_t" class="c-libfunc">ˡa̲t</a> <span class="c-number">0</span>, <span class="c-number">0.12</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#d">d</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#d">d</a>, (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.a">ˡa</a>, <span class="c-number">0.0</span>, <span class="c-number">12.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.t_one" class="c-libfunc">ᵛᵈt̲one</a> <span class="c-number">0</span>, <span class="c-number">0.9</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.g_roup" class="c-libfunc">ʰg̲roup</a> <span class="c-number">0</span></span>
+<span class="line" id="L144"><a class="ln" href="#L144">144</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;A values&quot;</span>, <span class="c-number">0</span> <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed" class="c-libfunc">ᵛᵈf̲ixed</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.a">ˡa</a>, ((ai, ak) <a href="extensions-blender-demos-Matmul.xtl.html#l.a_t" class="c-libfunc">ˡa̲t</a> <span class="c-number">0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">12</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.o_f" class="c-libfunc">ʰo̲f</a> <span class="c-number">-0.14</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">0.42</span>, <a href="extensions-blender-demos-Matmul.xtl.html#white">white</a>) <a href="extensions-blender-demos-Matmul.xtl.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> <span class="c-number">0</span></span>
+<span class="line" id="L145"><a class="ln" href="#L145">145</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;B&quot;</span>, (bk, bj) <a href="extensions-blender-demos-Matmul.xtl.html#l.b_t" class="c-libfunc">ˡb̲t</a> <span class="c-number">0</span>, <a href="extensions-blender-demos-Matmul.xtl.html#d">d</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#d">d</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.12</span>, (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.b">ˡb</a>, <span class="c-number">-1.0</span>, <span class="c-number">2.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.t_one" class="c-libfunc">ᵛᵈt̲one</a> <span class="c-number">0</span>, <span class="c-number">0.9</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.g_roup" class="c-libfunc">ʰg̲roup</a> <span class="c-number">0</span></span>
+<span class="line" id="L146"><a class="ln" href="#L146">146</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;B values&quot;</span>, <span class="c-number">0</span> <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed" class="c-libfunc">ᵛᵈf̲ixed</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.b">ˡb</a>, ((bk, bj) <a href="extensions-blender-demos-Matmul.xtl.html#l.b_t" class="c-libfunc">ˡb̲t</a> <span class="c-number">0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">8</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.o_f" class="c-libfunc">ʰo̲f</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.14</span>, <span class="c-number">0.42</span>, <a href="extensions-blender-demos-Matmul.xtl.html#white">white</a>) <a href="extensions-blender-demos-Matmul.xtl.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> <span class="c-number">0</span></span>
+<span class="line" id="L147"><a class="ln" href="#L147">147</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;C empty&quot;</span>, (<a href="extensions-blender-demos-Matmul.xtl.html#l.itemI">ˡitemI</a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.itemJ">ˡitemJ</a>) <a href="extensions-blender-demos-Matmul.xtl.html#l.c_t" class="c-libfunc">ˡc̲t</a> <span class="c-number">0</span>, <a href="extensions-blender-demos-Matmul.xtl.html#d">d</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.12</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#d">d</a>, <span class="c-number">6</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.o_f" class="c-libfunc">ʰo̲f</a> <a href="extensions-blender-demos-Matmul.xtl.html#empty">empty</a>, <span class="c-number">1.0</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.g_roup" class="c-libfunc">ʰg̲roup</a> <span class="c-number">0</span></span>
+<span class="line" id="L148"><a class="ln" href="#L148">148</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;cube&quot;</span>, <span class="c-number">1</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">-1.5</span>, <span class="c-number">2.0</span> <span class="c-number">4.0</span> <span class="c-number">3.0</span>, <span class="c-number">1</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.o_f" class="c-libfunc">ʰo̲f</a> <a href="extensions-blender-demos-Matmul.xtl.html#edge">edge</a>, <span class="c-number">1.0</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.o_utlined" class="c-libfunc">ʰo̲utlined</a> <span class="c-number">0</span></span>
+<span class="line" id="L149"><a class="ln" href="#L149">149</a>  names ← (<span class="c-string">&quot;A&quot;</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.s_hape" class="c-libfunc">ʰs̲hape</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.a">ˡa</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;B&quot;</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.s_hape" class="c-libfunc">ʰs̲hape</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.b">ˡb</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;C&quot;</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.s_hape" class="c-libfunc">ʰs̲hape</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.c">ˡc</a></span>
+<span class="line" id="L150"><a class="ln" href="#L150">150</a>  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;names&quot;</span>, names, <span class="c-number">3</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">0.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-blender-demos-Matmul.xtl.html#g">g</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2.0</span> <span class="c-number">0.7</span> <span class="c-number">1.0</span> <span class="c-number">4.6</span> <span class="c-number">1.5</span> <span class="c-number">3.6</span> <span class="c-number">5.3</span> <span class="c-number">-1.5</span>, <span class="c-number">0.5</span>, <a href="extensions-blender-demos-Matmul.xtl.html#yellow">yellow</a>) <a href="extensions-blender-demos-Matmul.xtl.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> <span class="c-number">0</span></span>
+<span class="line" id="L151"><a class="ln" href="#L151">151</a>}</span>
+<span class="line" id="L152"><a class="ln" href="#L152">152</a></span>
+<span class="line" id="L153"><a class="ln" href="#L153">153</a><span class="c-comment">⍝</span><span class="c-comment"> an array's name and shape, as [3 4]</span></span>
+<span class="line" id="L154"><a class="ln" href="#L154">154</a><span class="c-libfunc">ʰs̲hape</span> ← { name x → name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> name) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-string">&quot; &quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;[&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> x) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;]&quot;</span> }</span>
+<span class="line" id="L155"><a class="ln" href="#L155">155</a></span>
+<span class="line" id="L156"><a class="ln" href="#L156">156</a><span class="c-comment">⍝</span><span class="c-comment"># one item at a time: its row of a, its column of b and its cell of c</span></span>
+<span class="line" id="L157"><a class="ln" href="#L157">157</a><span class="c-comment">⍝</span><span class="c-comment"># outlined; its four products appear in the cube, each with guide lines</span></span>
+<span class="line" id="L158"><a class="ln" href="#L158">158</a><span class="c-comment">⍝</span><span class="c-comment"># from its two factors, fly into c's cell and shrink there; then c's</span></span>
+<span class="line" id="L159"><a class="ln" href="#L159">159</a><span class="c-comment">⍝</span><span class="c-comment"># cell shows its sum</span></span>
+<span class="line" id="L160"><a class="ln" href="#L160">160</a><span class="c-libfunc">ˡi̲tems</span> ← { z →</span>
+<span class="line" id="L161"><a class="ln" href="#L161">161</a>  i ← <a href="extensions-blender-demos-Matmul.xtl.html#l.itemI">ˡitemI</a></span>
+<span class="line" id="L162"><a class="ln" href="#L162">162</a>  j ← <a href="extensions-blender-demos-Matmul.xtl.html#l.itemJ">ˡitemJ</a></span>
+<span class="line" id="L163"><a class="ln" href="#L163">163</a>  ends ← <a href="extensions-blender-demos-Matmul.xtl.html#l.starts">ˡstarts</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.durations">ˡdurations</a></span>
+<span class="line" id="L164"><a class="ln" href="#L164">164</a>  t ← (<span class="c-string">&quot;rows&quot;</span>, (<span class="c-number">0.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-blender-demos-Matmul.xtl.html#g">g</a>, <span class="c-number">2.0</span>, <span class="c-number">0.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> i) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.x_yz" class="c-libfunc">ʰx̲yz</a> <span class="c-number">0</span>, <span class="c-number">0.2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">4.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#d">d</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.08</span>, <span class="c-number">6</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.o_f" class="c-libfunc">ʰo̲f</a> <a href="extensions-blender-demos-Matmul.xtl.html#white">white</a>, <span class="c-number">3.0</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.o_utlined" class="c-libfunc">ʰo̲utlined</a> <span class="c-number">0</span></span>
+<span class="line" id="L165"><a class="ln" href="#L165">165</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;rows&quot;</span>, <a href="extensions-blender-demos-Matmul.xtl.html#l.starts">ˡstarts</a>, ends, <span class="c-number">6</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.s_pans" class="c-libfunc">ʰs̲pans</a> <span class="c-number">0</span></span>
+<span class="line" id="L166"><a class="ln" href="#L166">166</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;columns&quot;</span>, ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> j) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span>, <span class="c-number">2.0</span>, <a href="extensions-blender-demos-Matmul.xtl.html#g">g</a>) <a href="extensions-blender-demos-Matmul.xtl.html#h.x_yz" class="c-libfunc">ʰx̲yz</a> <span class="c-number">0</span>, (<a href="extensions-blender-demos-Matmul.xtl.html#d">d</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.08</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">4.0</span> <span class="c-number">0.2</span>, <span class="c-number">6</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.o_f" class="c-libfunc">ʰo̲f</a> <a href="extensions-blender-demos-Matmul.xtl.html#white">white</a>, <span class="c-number">3.0</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.o_utlined" class="c-libfunc">ʰo̲utlined</a> <span class="c-number">0</span></span>
+<span class="line" id="L167"><a class="ln" href="#L167">167</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;columns&quot;</span>, <a href="extensions-blender-demos-Matmul.xtl.html#l.starts">ˡstarts</a>, ends, <span class="c-number">6</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.s_pans" class="c-libfunc">ʰs̲pans</a> <span class="c-number">0</span></span>
+<span class="line" id="L168"><a class="ln" href="#L168">168</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;targets&quot;</span>, (i, j) <a href="extensions-blender-demos-Matmul.xtl.html#l.c_t" class="c-libfunc">ˡc̲t</a> <span class="c-number">0</span>, (<a href="extensions-blender-demos-Matmul.xtl.html#d">d</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.22</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#d">d</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span>, <span class="c-number">6</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.o_f" class="c-libfunc">ʰo̲f</a> <a href="extensions-blender-demos-Matmul.xtl.html#white">white</a>, <span class="c-number">3.0</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.o_utlined" class="c-libfunc">ʰo̲utlined</a> <span class="c-number">0</span></span>
+<span class="line" id="L169"><a class="ln" href="#L169">169</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;targets&quot;</span>, <a href="extensions-blender-demos-Matmul.xtl.html#l.starts">ˡstarts</a>, ends, <span class="c-number">6</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.s_pans" class="c-libfunc">ʰs̲pans</a> <span class="c-number">0</span></span>
+<span class="line" id="L170"><a class="ln" href="#L170">170</a>  pi ← <a href="extensions-blender-demos-Matmul.xtl.html#l.prodI">ˡprodI</a></span>
+<span class="line" id="L171"><a class="ln" href="#L171">171</a>  pj ← <a href="extensions-blender-demos-Matmul.xtl.html#l.prodJ">ˡprodJ</a></span>
+<span class="line" id="L172"><a class="ln" href="#L172">172</a>  pk ← <a href="extensions-blender-demos-Matmul.xtl.html#l.prodK">ˡprodK</a></span>
+<span class="line" id="L173"><a class="ln" href="#L173">173</a>  at ← (pi, pj, pk) <a href="extensions-blender-demos-Matmul.xtl.html#l.p_t" class="c-libfunc">ˡp̲t</a> <span class="c-number">0</span></span>
+<span class="line" id="L174"><a class="ln" href="#L174">174</a>  into ← (pi, pj) <a href="extensions-blender-demos-Matmul.xtl.html#l.c_t" class="c-libfunc">ˡc̲t</a> <span class="c-number">0</span></span>
+<span class="line" id="L175"><a class="ln" href="#L175">175</a>  colors ← (<a href="extensions-blender-demos-Matmul.xtl.html#l.products">ˡproducts</a>, <span class="c-number">-4.0</span>, <span class="c-number">12.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.t_one" class="c-libfunc">ᵛᵈt̲one</a> <span class="c-number">0</span></span>
+<span class="line" id="L176"><a class="ln" href="#L176">176</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;products&quot;</span>, ((at, <span class="c-number">0.5</span> <span class="c-number">0.5</span> <span class="c-number">0.5</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.s_ized" class="c-libfunc">ʰs̲ized</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> colors <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">24</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.6</span>) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span></span>
+<span class="line" id="L177"><a class="ln" href="#L177">177</a>  keys ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-number">3</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> <span class="c-number">2</span> <span class="c-number">24</span> <span class="c-number">6</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ((at, <span class="c-number">0.5</span> <span class="c-number">0.5</span> <span class="c-number">0.5</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.s_ized" class="c-libfunc">ʰs̲ized</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (into, <span class="c-number">0.05</span> <span class="c-number">0.05</span> <span class="c-number">0.05</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.s_ized" class="c-libfunc">ʰs̲ized</a> <span class="c-number">0</span></span>
+<span class="line" id="L178"><a class="ln" href="#L178">178</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;products&quot;</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> <span class="c-number">2</span> <span class="c-number">24</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.flies">ˡflies</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.lands">ˡlands</a>, keys) <a href="extensions-blender-lib-Video.xtl.html#l.m_ovesEach" class="c-libfunc">ᵛᵈm̲ovesEach</a> <span class="c-number">0</span></span>
+<span class="line" id="L179"><a class="ln" href="#L179">179</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;products&quot;</span>, <a href="extensions-blender-demos-Matmul.xtl.html#l.appear">ˡappear</a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.lands">ˡlands</a>, <span class="c-number">24</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.s_pans" class="c-libfunc">ʰs̲pans</a> <span class="c-number">0</span></span>
+<span class="line" id="L180"><a class="ln" href="#L180">180</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;product values&quot;</span>, <span class="c-number">0</span> <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed" class="c-libfunc">ᵛᵈf̲ixed</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.products">ˡproducts</a>, at <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">24</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.o_f" class="c-libfunc">ʰo̲f</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.55</span>, <span class="c-number">0.36</span>, <a href="extensions-blender-demos-Matmul.xtl.html#white">white</a>) <a href="extensions-blender-demos-Matmul.xtl.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> <span class="c-number">0</span></span>
+<span class="line" id="L181"><a class="ln" href="#L181">181</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;product values&quot;</span>, <a href="extensions-blender-demos-Matmul.xtl.html#l.appear">ˡappear</a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.flies">ˡflies</a>, <span class="c-number">24</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.s_pans" class="c-libfunc">ʰs̲pans</a> <span class="c-number">0</span></span>
+<span class="line" id="L182"><a class="ln" href="#L182">182</a>  fa ← (pi, pk) <a href="extensions-blender-demos-Matmul.xtl.html#l.a_t" class="c-libfunc">ˡa̲t</a> <span class="c-number">0</span></span>
+<span class="line" id="L183"><a class="ln" href="#L183">183</a>  fb ← (pk, pj) <a href="extensions-blender-demos-Matmul.xtl.html#l.b_t" class="c-libfunc">ˡb̲t</a> <span class="c-number">0</span></span>
+<span class="line" id="L184"><a class="ln" href="#L184">184</a>  guides ← ((fa <a href="builtins.html#c_at" class="c-builtin">c̲at</a> fb) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> at <a href="builtins.html#c_at" class="c-builtin">c̲at</a> at) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<span class="c-number">48</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.o_f" class="c-libfunc">ʰo̲f</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-Matmul.xtl.html#yellow">yellow</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">48</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.015</span></span>
+<span class="line" id="L185"><a class="ln" href="#L185">185</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;guides&quot;</span>, guides) <a href="extensions-blender-lib-Video.xtl.html#l.l_ines" class="c-libfunc">ᵛᵈl̲ines</a> <span class="c-number">0</span></span>
+<span class="line" id="L186"><a class="ln" href="#L186">186</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;guides&quot;</span>, <a href="extensions-blender-demos-Matmul.xtl.html#l.appear">ˡappear</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.appear">ˡappear</a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.flies">ˡflies</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.flies">ˡflies</a>, <span class="c-number">48</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.s_pans" class="c-libfunc">ʰs̲pans</a> <span class="c-number">0</span></span>
+<span class="line" id="L187"><a class="ln" href="#L187">187</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;C&quot;</span>, (i, j) <a href="extensions-blender-demos-Matmul.xtl.html#l.c_t" class="c-libfunc">ˡc̲t</a> <span class="c-number">0</span>, (<a href="extensions-blender-demos-Matmul.xtl.html#d">d</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.001</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.14</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#d">d</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.001</span>, (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.c">ˡc</a>, <span class="c-number">0.0</span>, <span class="c-number">44.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.t_one" class="c-libfunc">ᵛᵈt̲one</a> <span class="c-number">0</span>, <span class="c-number">1.0</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.g_roup" class="c-libfunc">ʰg̲roup</a> <span class="c-number">0</span></span>
+<span class="line" id="L188"><a class="ln" href="#L188">188</a>  done ← (<span class="c-number">4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">6</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.lands">ˡlands</a></span>
+<span class="line" id="L189"><a class="ln" href="#L189">189</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;C&quot;</span>, done, <a href="extensions-blender-demos-Matmul.xtl.html#l.length">ˡlength</a>, <span class="c-number">6</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.s_pans" class="c-libfunc">ʰs̲pans</a> <span class="c-number">0</span></span>
+<span class="line" id="L190"><a class="ln" href="#L190">190</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;C values&quot;</span>, <span class="c-number">0</span> <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed" class="c-libfunc">ᵛᵈf̲ixed</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.c">ˡc</a>, ((i, j) <a href="extensions-blender-demos-Matmul.xtl.html#l.c_t" class="c-libfunc">ˡc̲t</a> <span class="c-number">0</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">6</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.o_f" class="c-libfunc">ʰo̲f</a> <span class="c-number">0.0</span> <span class="c-number">-0.14</span> <span class="c-number">0.0</span>, <span class="c-number">0.42</span>, <a href="extensions-blender-demos-Matmul.xtl.html#white">white</a>) <a href="extensions-blender-demos-Matmul.xtl.html#h.w_ords" class="c-libfunc">ʰw̲ords</a> <span class="c-number">0</span></span>
+<span class="line" id="L191"><a class="ln" href="#L191">191</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;C values&quot;</span>, done, <a href="extensions-blender-demos-Matmul.xtl.html#l.length">ˡlength</a>, <span class="c-number">6</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.s_pans" class="c-libfunc">ʰs̲pans</a> <span class="c-number">0</span></span>
+<span class="line" id="L192"><a class="ln" href="#L192">192</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;together&quot;</span>, (i, j) <a href="extensions-blender-demos-Matmul.xtl.html#l.c_t" class="c-libfunc">ˡc̲t</a> <span class="c-number">0</span>, (<a href="extensions-blender-demos-Matmul.xtl.html#d">d</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.22</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#d">d</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.1</span>, <span class="c-number">6</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.o_f" class="c-libfunc">ʰo̲f</a> <a href="extensions-blender-demos-Matmul.xtl.html#yellow">yellow</a>, <span class="c-number">3.0</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.o_utlined" class="c-libfunc">ʰo̲utlined</a> <span class="c-number">0</span></span>
+<span class="line" id="L193"><a class="ln" href="#L193">193</a>  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;together&quot;</span>, <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.together">ˡtogether</a>, <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.together">ˡtogether</a>, <span class="c-number">6</span>) <a href="extensions-blender-demos-Matmul.xtl.html#h.s_pans" class="c-libfunc">ʰs̲pans</a> <span class="c-number">0</span></span>
+<span class="line" id="L194"><a class="ln" href="#L194">194</a>}</span>
+<span class="line" id="L195"><a class="ln" href="#L195">195</a></span>
+<span class="line" id="L196"><a class="ln" href="#L196">196</a><span class="c-comment">⍝</span><span class="c-comment"># the captions, | between them, their shapes the arrays'</span></span>
+<span class="line" id="L197"><a class="ln" href="#L197">197</a>ˡstepTexts ← (<span class="c-string">&quot;C = A x B:  &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;&quot;</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.s_hape" class="c-libfunc">ʰs̲hape</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.a">ˡa</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; x &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;&quot;</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.s_hape" class="c-libfunc">ʰs̲hape</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.b">ˡb</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; -&gt; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;&quot;</span> <a href="extensions-blender-demos-Matmul.xtl.html#h.s_hape" class="c-libfunc">ʰs̲hape</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.c">ˡc</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a></span>
+<span class="line" id="L198"><a class="ln" href="#L198">198</a>  <span class="c-string">&quot;one item of C: a row of A times a column of B|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a></span>
+<span class="line" id="L199"><a class="ln" href="#L199">199</a>  (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.a">ˡa</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; products, added: one item of C|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a></span>
+<span class="line" id="L200"><a class="ln" href="#L200">200</a>  <span class="c-string">&quot;then the next item, and the next|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a></span>
+<span class="line" id="L201"><a class="ln" href="#L201">201</a>  <span class="c-string">&quot;on the GPU: all &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.c">ˡc</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; at once, one work-item each&quot;</span>)</span>
+<span class="line" id="L202"><a class="ln" href="#L202">202</a></span>
+<span class="line" id="L203"><a class="ln" href="#L203">203</a><span class="c-comment">⍝</span><span class="c-comment"># when each caption shows (from, to) and its color</span></span>
+<span class="line" id="L204"><a class="ln" href="#L204">204</a><span class="c-libfunc">ˡs̲tepCaptions</span> ← { z →</span>
+<span class="line" id="L205"><a class="ln" href="#L205">205</a>  s ← <a href="extensions-blender-demos-Matmul.xtl.html#l.starts">ˡstarts</a></span>
+<span class="line" id="L206"><a class="ln" href="#L206">206</a>  e ← <a href="extensions-blender-demos-Matmul.xtl.html#l.starts">ˡstarts</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.durations">ˡdurations</a></span>
+<span class="line" id="L207"><a class="ln" href="#L207">207</a>  from ← <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">4</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.together">ˡtogether</a></span>
+<span class="line" id="L208"><a class="ln" href="#L208">208</a>  to ← ((<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.05</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">6</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.length">ˡlength</a></span>
+<span class="line" id="L209"><a class="ln" href="#L209">209</a>  (<span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> <span class="c-number">2</span> <span class="c-number">5</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> from <a href="builtins.html#c_at" class="c-builtin">c̲at</a> to) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">5</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-Matmul.xtl.html#white">white</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#yellow">yellow</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#white">white</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#white">white</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#yellow">yellow</a></span>
+<span class="line" id="L210"><a class="ln" href="#L210">210</a>}</span>
+<span class="line" id="L211"><a class="ln" href="#L211">211</a></span>
+<span class="line" id="L212"><a class="ln" href="#L212">212</a><span class="c-comment">⍝</span><span class="c-comment"># the camera: three keys about the cube, from the left and in front,</span></span>
+<span class="line" id="L213"><a class="ln" href="#L213">213</a><span class="c-comment">⍝</span><span class="c-comment"># drifting</span></span>
+<span class="line" id="L214"><a class="ln" href="#L214">214</a><span class="c-libfunc">ˡs̲tepCamera</span> ← { z →</span>
+<span class="line" id="L215"><a class="ln" href="#L215">215</a>  center ← <span class="c-number">0.35</span> <span class="c-number">2.6</span> <span class="c-number">-1.3</span></span>
+<span class="line" id="L216"><a class="ln" href="#L216">216</a>  ts ← <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-Matmul.xtl.html#l.length">ˡlength</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.length">ˡlength</a></span>
+<span class="line" id="L217"><a class="ln" href="#L217">217</a>  (ts, <span class="c-number">3</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (center <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">-7.5</span> <span class="c-number">-11.5</span> <span class="c-number">6.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (center <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">-5.5</span> <span class="c-number">-12.5</span> <span class="c-number">5.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> center <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">-8.0</span> <span class="c-number">-11.0</span> <span class="c-number">6.5</span>, <span class="c-number">3</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> center)</span>
+<span class="line" id="L218"><a class="ln" href="#L218">218</a>}</span>
+<span class="line" id="L219"><a class="ln" href="#L219">219</a></span>
+<span class="line" id="L220"><a class="ln" href="#L220">220</a><span class="c-comment">⍝</span><span class="c-comment"># (width, height) mm:s_teps 0: the whole steps script but its output:</span></span>
+<span class="line" id="L221"><a class="ln" href="#L221">221</a><span class="c-comment">⍝</span><span class="c-comment"># the stage (a 40 mm lens), the walls, the items, the captions, the</span></span>
+<span class="line" id="L222"><a class="ln" href="#L222">222</a><span class="c-comment">⍝</span><span class="c-comment"># camera</span></span>
+<span class="line" id="L223"><a class="ln" href="#L223">223</a><span class="c-libfunc">ˡs̲teps</span> ← { (w, h) z →</span>
+<span class="line" id="L224"><a class="ln" href="#L224">224</a>  t ← <a href="extensions-blender-lib-Video.xtl.html#l.head">ᵛᵈhead</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((w, h, <span class="c-number">30</span>, <a href="extensions-blender-demos-Matmul.xtl.html#l.length">ˡlength</a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.sky">ˡsky</a>, <span class="c-number">40</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_tage" class="c-libfunc">ᵛᵈs̲tage</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-Matmul.xtl.html#l.w_alls" class="c-libfunc">ˡw̲alls</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.i_tems" class="c-libfunc">ˡi̲tems</a> <span class="c-number">0</span></span>
+<span class="line" id="L225"><a class="ln" href="#L225">225</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-Matmul.xtl.html#l.stepTexts">ˡstepTexts</a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.s_tepCaptions" class="c-libfunc">ˡs̲tepCaptions</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.c_aptions" class="c-libfunc">ᵛᵈc̲aptions</a> <span class="c-number">0</span></span>
+<span class="line" id="L226"><a class="ln" href="#L226">226</a>  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-Matmul.xtl.html#l.s_tepCamera" class="c-libfunc">ˡs̲tepCamera</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.c_amera" class="c-libfunc">ᵛᵈc̲amera</a> <span class="c-number">0</span></span>
+<span class="line" id="L227"><a class="ln" href="#L227">227</a>}</span>
+</div>
+</main>
+</body>
+</html>

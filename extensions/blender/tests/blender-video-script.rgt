@@ -1,0 +1,3 @@
+command = "xetal-x --ext .. run tests/video-script.xtl"
+exit_code = 0
+desc = "the Python Video.xtl writes for a tiny video with one of every call, after the player, pinned: the same arrays always give the same script"

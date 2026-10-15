@@ -1,0 +1,8 @@
+# extensions/blender/videos/relu-softmax.webm and .webp: ReLU and
+# softmax on a tiny network's arrays, Blender's own render, made by
+# demos/relu-softmax.xtl from X_eTaL arrays (ReluSoftmax.xtl, Video.xtl;
+# just videos; a few minutes when the video is not there yet).
+demo=relu-softmax
+file=work/explain/out/relu-softmax.mp4
+scale=1280
+fps=30

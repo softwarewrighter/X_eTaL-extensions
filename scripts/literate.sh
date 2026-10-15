@@ -24,6 +24,11 @@ emacs="${EMACS:-}"
 [ -n "$emacs" ] || [ ! -x /Applications/Emacs.app/Contents/MacOS/Emacs ] || emacs=/Applications/Emacs.app/Contents/MacOS/Emacs
 if [ -z "$emacs" ]; then echo "literate: no Emacs; skipped"; exit 0; fi
 export XETAL_BIN="$root/bin/xetal"
+# the libraries the documents use: the shared ones (scripts/libraries.sh:
+# Accel, Eigencube) and the blender extension's pure X_eTaL libraries
+# (Bpy, Video, and the demos' shared ReluSoftmax and Matmul)
+XETAL_PATH="$("$root/scripts/libraries.sh"):$root/extensions/blender/lib:$root/extensions/blender/demos"
+export XETAL_PATH
 check=""
 if [ "${1:-}" = "--check" ]; then check="--check"; shift; fi
 docs=("$@")

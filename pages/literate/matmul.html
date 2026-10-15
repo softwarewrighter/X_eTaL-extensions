@@ -1,0 +1,861 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Matrix multiply, arrays to video</title>
+<meta name="author" content="Michael A Wright" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Matrix multiply, arrays to video
+<br />
+<span class="subtitle">one product a step at a time, then 134 million of them as a fly-through, from X_eTaL arrays to Python to Blender to an MP4</span>
+</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org8553754">Purpose: what the videos show, and why</a></li>
+<li><a href="#org35c599d">The chain: X_eTaL, Python, Blender, video</a></li>
+<li><a href="#org69dcd29">1. The arrays, by Accel</a></li>
+<li><a href="#org6339fc6">2. Every product, one at a time</a></li>
+<li><a href="#org7d97e53">3. Animation, at a high level</a></li>
+<li><a href="#org6381f9d">4. Animation, in detail: the steps video</a></li>
+<li><a href="#orgf42a87f">5. At scale: the fly-through</a></li>
+<li><a href="#org3f173cc">6. From tables to Python, and rendering</a></li>
+</ul>
+</div>
+</div>
+<p>
+A matrix product is the work a GPU does most: in a neural network's
+layers, in attention, in graphics. C = A x B takes a row of A and a
+column of B, multiplies them item by item and adds the products up &#x2013;
+one item of C &#x2013; for every row and every column. This document shows
+two videos of it, made from X_eTaL arrays: a small product a step at a
+time, and a large one as a 3D construct the camera flies through, and
+how every part of both comes from X_eTaL.
+</p>
+
+<video src="../blender/matmul-steps.webm" controls loop muted playsinline style="width:100%"></video>
+
+
+<div id="org9950ca4" class="figure">
+<p><img src="images/matmul-steps-2.jpg" alt="matmul-steps-2.jpg" />
+</p>
+</div>
+<div id="outline-container-org8553754" class="outline-2">
+<h2 id="org8553754">Purpose: what the videos show, and why</h2>
+<div class="outline-text-2" id="text-org8553754">
+<p>
+X_eTaL-gpu compiles X_eTaL to run on Apple and NVIDIA GPUs; its Accel
+library's <code>ac:m_atmul</code> is X_eTaL's inner product, <code>'+ '* i_nner</code>, and
+a GPU runs it as one work-item per item of C, in work-groups of 16 by
+</p>
+<ol class="org-ol">
+<li>The videos show what that means:</li>
+
+<li><b>A step at a time</b> (15.5 s): X_eTaL-gpu's matmul demo, A [3 4]
+times B [4 2]. A stands on the left wall, B on the ceiling, C on the
+back wall, and the cube between them is every product. Item by item
+a row of A and a column of B light up, their four products appear in
+the cube with lines from their two factors, fly into C's item and
+become its sum. The first item is slow, the next quicker; then all
+six light at once &#x2013; on a GPU every item is a work-item of its own.</li>
+<li><b>At scale</b> (18 s): the same construct for 512 by 512 matrices: 262,144
+cells a wall, 134 million multiply-adds in the cube. The camera starts
+far out to show the scale, flies to one work-group's 16 by 16 tile of
+C and the rows and columns it reads, then to one work-item: its 512
+products stand as bars along a beam through the cube, and a running
+sum moves from the far end to the near, where it becomes one item of
+C. Then C fills in, a work-group at a time.</li>
+</ol>
+
+<p>
+The point is the shape of the work: which items each result needs, how
+much there is, and how a GPU divides it up.
+</p>
+</div>
+</div>
+<div id="outline-container-org35c599d" class="outline-2">
+<h2 id="org35c599d">The chain: X_eTaL, Python, Blender, video</h2>
+<div class="outline-text-2" id="text-org35c599d">
+<p>
+As in <a href="relu-softmax.html">ReLU and softmax, arrays to video</a>, nothing in the chain is
+written by hand for these videos:
+</p>
+
+<ol class="org-ol">
+<li><b>X_eTaL works out the arrays</b>: A, B, and C by X_eTaL-gpu's Accel
+<code>ac:m_atmul</code> (pinned at <code>GPU_COMMIT</code>).</li>
+<li><b>X_eTaL works out the videos</b>: <code>extensions/blender/demos/Matmul.xtl</code>
+and <code>MatmulFly.xtl</code> turn them into places, colors, keys, spans, the
+camera's path and the captions &#x2013; the only part made for these
+videos.</li>
+<li><b>X_eTaL writes the Python</b>: the blender extension's <code>Video.xtl</code> turns
+each table into one call of its player, every number written out.</li>
+<li><b>Blender runs it</b>: <code>bl:r_un!</code> runs Blender in the background; the
+player makes the objects and keys and EEVEE renders the MP4.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org69dcd29" class="outline-2">
+<h2 id="org69dcd29">1. The arrays, by Accel</h2>
+<div class="outline-text-2" id="text-org69dcd29">
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ᵐᵐ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Matmul&quot;</span>
+<span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Accel&quot;</span>
+<span class="c-libfunc">ᵛᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Video&quot;</span>
+ᵐᵐa
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   "mm:" u_se&lt; "Matmul"</span>
+<span class="c-comment typed">⍝   "ac:" u_se&lt; "Accel"</span>
+<span class="c-comment typed">⍝   "vd:" u_se&lt; "Video"</span>
+<span class="c-comment typed">⍝   mm:a</span></pre>
+</div>
+
+<pre class="example">
+1  2  3  4
+5  6  7  8
+9 10 11 12
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡa ← <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-builtin">r̲eshape</span> <span class="c-builtin">r̲ange</span> <span class="c-number">12</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:a := 3 4 r_eshape r_ange 12</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡb ← <span class="c-number">4</span> <span class="c-number">2</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">-1</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:b := 4 2 r_eshape 1 0 0 1 1 1 2 -1</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡc ← ˡa <span class="c-libfunc">ᵃᶜm̲atmul</span> ˡb
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:c := l:a ac:m_atmul l:b</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ᵐᵐb
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   mm:b</span></pre>
+</div>
+
+<pre class="example">
+1  0
+0  1
+1  1
+2 -1
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-xetal">ᵐᵐc
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   mm:c</span></pre>
+</div>
+
+<pre class="example">
+12 1
+28 5
+44 9
+</pre>
+</div>
+</div>
+<div id="outline-container-org6339fc6" class="outline-2">
+<h2 id="org6339fc6">2. Every product, one at a time</h2>
+<div class="outline-text-2" id="text-org6339fc6">
+<p>
+C's six items are worked out in order, row by row; each needs four
+products, so the video has 24. For each product the library works out
+which item it belongs to and its i, j and k, as arrays:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡitemI ← ((<span class="c-builtin">r̲ange</span> <span class="c-number">6</span>) <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-builtin">d̲iv</span> <span class="c-number">2</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:itemI := ((r_ange 6) - 1) d_iv 2</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡitemJ ← ((<span class="c-builtin">r̲ange</span> <span class="c-number">6</span>) <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-builtin">m̲od</span> <span class="c-number">2</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:itemJ := ((r_ange 6) - 1) m_od 2</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡprodQ ← ((<span class="c-builtin">r̲ange</span> <span class="c-number">24</span>) <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-builtin">d̲iv</span> <span class="c-number">4</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:prodQ := ((r_ange 24) - 1) d_iv 4</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡprodI ← (ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡitemI
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:prodI := (l:prodQ + 1) s_elect l:itemI</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡprodJ ← (ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡitemJ
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:prodJ := (l:prodQ + 1) s_elect l:itemJ</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡprodK ← ((<span class="c-builtin">r̲ange</span> <span class="c-number">24</span>) <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-builtin">m̲od</span> <span class="c-number">4</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:prodK := ((r_ange 24) - 1) m_od 4</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ᵐᵐprodI
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   mm:prodI</span></pre>
+</div>
+
+<pre class="example">
+0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-xetal">ᵐᵐprodK
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   mm:prodK</span></pre>
+</div>
+
+<pre class="example">
+0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3
+</pre>
+
+
+<p>
+Each product is a[i;k] times b[k;j], picked out of the raveled
+matrices by index; four at a time they add up to C, which the library
+checks against Accel:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡproducts ← ((<span class="c-number">1</span> <span class="c-symbol">+</span> ˡprodK <span class="c-symbol">+</span> <span class="c-number">4</span> <span class="c-symbol">×</span> ˡprodI) <span class="c-builtin">s̲elect</span> <span class="c-builtin">r̲avel</span> ˡa) <span class="c-symbol">×</span> (<span class="c-number">1</span> <span class="c-symbol">+</span> ˡprodJ <span class="c-symbol">+</span> <span class="c-number">2</span> <span class="c-symbol">×</span> ˡprodK) <span class="c-builtin">s̲elect</span> <span class="c-builtin">r̲avel</span> ˡb
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:products := ((1 + l:prodK + 4 * l:prodI) s_elect r_avel l:a) * (1 + l:prodJ + 2 * l:prodK) s_elect r_avel l:b</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡsums ← <span class="c-symbol">'+</span> <span class="c-builtin">r̲/₂</span> <span class="c-number">6</span> <span class="c-number">4</span> <span class="c-builtin">r̲eshape</span> ˡproducts
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:sums := '+ r_/_2 6 4 r_eshape l:products</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ᵐᵐproducts
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   mm:products</span></pre>
+</div>
+
+<pre class="example">
+1 0 3 8 0 2 3 -4 5 0 7 16 0 6 7 -8 9 0 11 24 0 10 11 -12
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-xetal">(<span class="c-builtin">r̲avel</span> ᵐᵐc) <span class="c-symbol">=</span> ᵐᵐsums
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   (r_avel mm:c) = mm:sums</span></pre>
+</div>
+
+<pre class="example">
+1 1 1 1 1 1
+</pre>
+</div>
+</div>
+<div id="outline-container-org7d97e53" class="outline-2">
+<h2 id="org7d97e53">3. Animation, at a high level</h2>
+<div class="outline-text-2" id="text-org7d97e53">
+<p>
+As in every video made with <code>Video.xtl</code>, the animation is a timeline of
+groups of objects, each group given by tables: what each object is at
+the start, when it is shown, where it is at each key, its color at
+each key; then the camera's keys and the captions. Blender only eases
+between the keys.
+</p>
+
+<p>
+What is new here is that things move one after another: each product
+has keys of its own &#x2013; it appears, waits, flies to C and lands at its
+own seconds &#x2013; so its group is keyed with <code>vd:m_ovesEach</code>, a row of
+times for each object, rather than one row for the group.
+</p>
+
+<p>
+The timing is arrays. Each item takes a little less time than the one
+before, and starts when it ends:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡdurations ← <span class="c-number">3.0</span> <span class="c-number">2.2</span> <span class="c-number">1.6</span> <span class="c-number">1.3</span> <span class="c-number">1.1</span> <span class="c-number">1.0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:durations := 3.0 2.2 1.6 1.3 1.1 1.0</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡstarts ← <span class="c-number">1.5</span> <span class="c-symbol">+</span> <span class="c-number">0.0</span> <span class="c-builtin">c̲at</span> <span class="c-symbol">'+</span> <span class="c-builtin">s̲\</span> <span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> ˡdurations
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:starts := 1.5 + 0.0 c_at '+ s_\ -1 d_rop l:durations</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡlast ← <span class="c-number">6</span> <span class="c-builtin">s̲elect</span> ˡstarts <span class="c-symbol">+</span> ˡdurations
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:last := 6 s_elect l:starts + l:durations</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡtogether ← (<span class="c-number">0.3</span> <span class="c-symbol">+</span> ˡlast) <span class="c-builtin">c̲at</span> <span class="c-number">2.8</span> <span class="c-symbol">+</span> ˡlast
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:together := (0.3 + l:last) c_at 2.8 + l:last</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡlength ← <span class="c-number">3.8</span> <span class="c-symbol">+</span> ˡlast
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:length := 3.8 + l:last</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ᵐᵐstarts
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   mm:starts</span></pre>
+</div>
+
+<pre class="example">
+1.5 4.5 6.7 8.3 9.600000000000001 10.7
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-xetal">ᵐᵐlength
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   mm:length</span></pre>
+</div>
+
+<pre class="example">
+15.5
+</pre>
+
+
+<p>
+Within its item's time, each of the four products appears a little
+after the last (over the first half), flies to C at 68% of the time and
+lands at 88%:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡappear ← ((ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡstarts) <span class="c-symbol">+</span> ((ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡdurations) <span class="c-symbol">×</span> <span class="c-number">0.12</span> <span class="c-symbol">+</span> <span class="c-number">0.45</span> <span class="c-symbol">×</span> (<span class="c-builtin">f̲loat</span> ˡprodK) <span class="c-symbol">÷</span> <span class="c-number">4.0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:appear := ((l:prodQ + 1) s_elect l:starts) + ((l:prodQ + 1) s_elect l:durations) * 0.12 + 0.45 * (f_loat l:prodK) / 4.0</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡflies ← ((ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡstarts) <span class="c-symbol">+</span> <span class="c-number">0.68</span> <span class="c-symbol">×</span> (ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡdurations
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:flies := ((l:prodQ + 1) s_elect l:starts) + 0.68 * (l:prodQ + 1) s_elect l:durations</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡlands ← ((ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡstarts) <span class="c-symbol">+</span> <span class="c-number">0.88</span> <span class="c-symbol">×</span> (ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡdurations
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:lands := ((l:prodQ + 1) s_elect l:starts) + 0.88 * (l:prodQ + 1) s_elect l:durations</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-number">8</span> <span class="c-builtin">t̲ake</span> ᵐᵐappear
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   8 t_ake mm:appear</span></pre>
+</div>
+
+<pre class="example">
+1.8599999999999999 2.1975 2.535 2.8725 4.764 5.0115 5.259 5.5065
+</pre>
+</div>
+</div>
+<div id="outline-container-org6381f9d" class="outline-2">
+<h2 id="org6381f9d">4. Animation, in detail: the steps video</h2>
+<div class="outline-text-2" id="text-org6381f9d">
+<p>
+The cube's axes are the product's: x is j (B's and C's columns), y is
+k (the index the sum runs over, into the picture), z is -i (A's and
+C's rows, down). Each matrix stands on a wall where its two indices
+are, so each product sits where its row of A and its column of B meet:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡa̲t</span> ← { (i, k) z → (<span class="c-number">0.0</span> <span class="c-symbol">−</span> g, (<span class="c-builtin">f̲loat</span> k) <span class="c-symbol">+</span> <span class="c-number">0.5</span>, <span class="c-number">0.0</span> <span class="c-symbol">−</span> (<span class="c-builtin">f̲loat</span> i) <span class="c-symbol">+</span> <span class="c-number">0.5</span>) <span class="c-libfunc">ʰx̲yz</span> <span class="c-number">0</span> }
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:a_t := { (i, k) z -&gt; (0.0 - g, (f_loat k) + 0.5, 0.0 - (f_loat i) + 0.5) h:x_yz 0 }</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡb̲t</span> ← { (k, j) z → ((<span class="c-builtin">f̲loat</span> j) <span class="c-symbol">+</span> <span class="c-number">0.5</span>, (<span class="c-builtin">f̲loat</span> k) <span class="c-symbol">+</span> <span class="c-number">0.5</span>, g) <span class="c-libfunc">ʰx̲yz</span> <span class="c-number">0</span> }
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:b_t := { (k, j) z -&gt; ((f_loat j) + 0.5, (f_loat k) + 0.5, g) h:x_yz 0 }</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡc̲t</span> ← { (i, j) z → ((<span class="c-builtin">f̲loat</span> j) <span class="c-symbol">+</span> <span class="c-number">0.5</span>, <span class="c-number">4.0</span> <span class="c-symbol">+</span> g, <span class="c-number">0.0</span> <span class="c-symbol">−</span> (<span class="c-builtin">f̲loat</span> i) <span class="c-symbol">+</span> <span class="c-number">0.5</span>) <span class="c-libfunc">ʰx̲yz</span> <span class="c-number">0</span> }
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:c_t := { (i, j) z -&gt; ((f_loat j) + 0.5, 4.0 + g, 0.0 - (f_loat i) + 0.5) h:x_yz 0 }</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡp̲t</span> ← { (i, j, k) z → ((<span class="c-builtin">f̲loat</span> j) <span class="c-symbol">+</span> <span class="c-number">0.5</span>, (<span class="c-builtin">f̲loat</span> k) <span class="c-symbol">+</span> <span class="c-number">0.5</span>, <span class="c-number">0.0</span> <span class="c-symbol">−</span> (<span class="c-builtin">f̲loat</span> i) <span class="c-symbol">+</span> <span class="c-number">0.5</span>) <span class="c-libfunc">ʰx̲yz</span> <span class="c-number">0</span> }
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:p_t := { (i, j, k) z -&gt; ((f_loat j) + 0.5, (f_loat k) + 0.5, 0.0 - (f_loat i) + 0.5) h:x_yz 0 }</span></pre>
+</div>
+
+<p>
+The 24 products' places, and the places in C they fly to:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">at ← (ᵐᵐprodI, ᵐᵐprodJ, ᵐᵐprodK) <span class="c-libfunc">ᵐᵐp̲t</span> <span class="c-number">0</span>
+<span class="c-number">4</span> <span class="c-builtin">t̲ake</span> at
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   at := (mm:prodI, mm:prodJ, mm:prodK) mm:p_t 0</span>
+<span class="c-comment typed">⍝   4 t_ake at</span></pre>
+</div>
+
+<pre class="example">
+0.5 0.5 -0.5
+0.5 1.5 -0.5
+0.5 2.5 -0.5
+0.5 3.5 -0.5
+</pre>
+
+
+<p>
+Each product's color comes from its value through <code>vd:t_one</code>, a scale
+from deep blue through cyan and yellow to orange:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡstops ← <span class="c-number">4</span> <span class="c-number">3</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">43</span> <span class="c-number">74</span> <span class="c-number">154</span>  <span class="c-number">47</span> <span class="c-number">183</span> <span class="c-number">214</span>  <span class="c-number">255</span> <span class="c-number">216</span> <span class="c-number">77</span>  <span class="c-number">255</span> <span class="c-number">122</span> <span class="c-number">61</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:stops := 4 3 r_eshape 43 74 154  47 183 214  255 216 77  255 122 61</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡt̲one</span> ← { (v, lo, hi) z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:t_one := { (v, lo, hi) z -&gt;</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-number">4</span> <span class="c-builtin">t̲ake</span> (ᵐᵐproducts, <span class="c-number">-4.0</span>, <span class="c-number">12.0</span>) <span class="c-libfunc">ᵛᵈt̲one</span> <span class="c-number">0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   4 t_ake (mm:products, -4.0, 12.0) vd:t_one 0</span></pre>
+</div>
+
+<pre class="example">
+46.75 176.1875   210.25
+ 46.0   155.75    199.0
+112.0 193.3125 171.1875
+255.0    192.5     73.0
+</pre>
+
+
+<p>
+The walls &#x2013; A, B, C's empty cells, the cube's edges, each matrix's
+name and shape:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡw̲alls</span> ← { z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:w_alls := { z -&gt;</span></pre>
+</div>
+
+<p>
+And the items, one after another: the row, column and target outlined
+for the item's time; the products, their values and their guide lines;
+C's item and its value from when its last product lands; and all six
+outlined together at the end:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡi̲tems</span> ← { z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:i_tems := { z -&gt;</span></pre>
+</div>
+
+
+<div id="orge817e21" class="figure">
+<p><img src="images/matmul-steps-3.jpg" alt="matmul-steps-3.jpg" />
+</p>
+</div>
+
+
+<div id="orgc631db4" class="figure">
+<p><img src="images/matmul-steps-5.jpg" alt="matmul-steps-5.jpg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf42a87f" class="outline-2">
+<h2 id="orgf42a87f">5. At scale: the fly-through</h2>
+<div class="outline-text-2" id="text-orgf42a87f">
+<p>
+The large video is <code>demos/MatmulFly.xtl</code>, every function taking the
+matrices' size n (512 in the video; a document shows smaller ones, as
+512 takes X_eTaL a few minutes). A and B are smooth waves with a ripple,
+so each wall shows a pattern at every distance:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡl̲eft</span> ← { n z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:l_eft := { n z -&gt;</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡr̲ight</span> ← { n z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:r_ight := { n z -&gt;</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ᵐᶠ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;MatmulFly&quot;</span>
+<span class="c-builtin">s̲hape</span> <span class="c-number">64</span> <span class="c-libfunc">ᵐᶠl̲eft</span> <span class="c-number">0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   "mf:" u_se&lt; "MatmulFly"</span>
+<span class="c-comment typed">⍝   s_hape 64 mf:l_eft 0</span></pre>
+</div>
+
+<pre class="example">
+64 64
+</pre>
+
+
+<p>
+A wall of n by n cells is one mesh, <code>vd:g_rid</code>: its corner, the two
+directions its rows and columns run, a color and a time for every
+cell. For 512 that is 262,144 cells; written compactly &#x2013; whole numbers
+for colors, milliseconds for times &#x2013; the whole script is about 11.6
+million characters:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡg̲rid</span> ← { (name, at, u, v, c, w, g) z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:g_rid := { (name, at, u, v, c, w, g) z -&gt;</span></pre>
+</div>
+
+<p>
+A GPU works C out a work-group at a time, 16 by 16 items each, so C's
+cells appear in that order: each cell's time is its work-group's place
+in the queue:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡf̲ill</span> ← { n z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:f_ill := { n z -&gt;</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">f ← <span class="c-number">64</span> <span class="c-libfunc">ᵐᶠf̲ill</span> <span class="c-number">0</span>
+(<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> f) <span class="c-builtin">c̲at</span> (<span class="c-number">17</span> <span class="c-builtin">s̲elect</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> f) <span class="c-builtin">c̲at</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> <span class="c-number">17</span> <span class="c-builtin">s̲elect</span> f
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   f := 64 mf:f_ill 0</span>
+<span class="c-comment typed">⍝   (1 s_elect 1 s_elect f) c_at (17 s_elect 1 s_elect f) c_at 1 s_elect 17 s_elect f</span></pre>
+</div>
+
+<pre class="example">
+15.193124999999998 15.339374999999999 15.778125
+</pre>
+
+
+<p>
+The work-group and work-item the camera visits:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡw̲orkGroup</span> ← { n z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:w_orkGroup := { n z -&gt;</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡw̲orkItem</span> ← { n z → (n <span class="c-libfunc">ˡw̲orkGroup</span> <span class="c-number">0</span>) <span class="c-symbol">+</span> <span class="c-number">5</span> <span class="c-number">9</span> }
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:w_orkItem := { n z -&gt; (n l:w_orkGroup 0) + 5 9 }</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-number">512</span> <span class="c-libfunc">ᵐᶠw̲orkItem</span> <span class="c-number">0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   512 mf:w_orkItem 0</span></pre>
+</div>
+
+<pre class="example">
+325 217
+</pre>
+
+
+<p>
+The work-item's products are a row of A times a column of B, item by
+item; the running sum adds them from the far end, so it ends, at the
+near end, as the item of C (to within rounding: a billionth):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">a ← <span class="c-number">64</span> <span class="c-libfunc">ᵐᶠl̲eft</span> <span class="c-number">0</span>
+b ← <span class="c-number">64</span> <span class="c-libfunc">ᵐᶠr̲ight</span> <span class="c-number">0</span>
+w ← <span class="c-number">64</span> <span class="c-libfunc">ᵐᶠw̲orkItem</span> <span class="c-number">0</span>
+p ← ((<span class="c-number">1</span> <span class="c-symbol">+</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> w) <span class="c-builtin">s̲elect</span> a) <span class="c-symbol">×</span> (<span class="c-number">1</span> <span class="c-symbol">+</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> w) <span class="c-builtin">s̲elect₂</span> b
+partial ← <span class="c-builtin">r̲ev</span> <span class="c-symbol">'+</span> <span class="c-builtin">s̲\</span> <span class="c-builtin">r̲ev</span> p
+<span class="c-number">0.000000001</span> <span class="c-symbol">&gt;</span> <span class="c-builtin">a̲bs</span> (<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> partial) <span class="c-symbol">−</span> (<span class="c-number">1</span> <span class="c-symbol">+</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> w) <span class="c-builtin">s̲elect</span> (<span class="c-number">1</span> <span class="c-symbol">+</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> w) <span class="c-builtin">s̲elect</span> a <span class="c-libfunc">ᵃᶜm̲atmul</span> b
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   a := 64 mf:l_eft 0</span>
+<span class="c-comment typed">⍝   b := 64 mf:r_ight 0</span>
+<span class="c-comment typed">⍝   w := 64 mf:w_orkItem 0</span>
+<span class="c-comment typed">⍝   p := ((1 + 1 s_elect w) s_elect a) * (1 + 2 s_elect w) s_elect_2 b</span>
+<span class="c-comment typed">⍝   partial := r_ev '+ s_\ r_ev p</span>
+<span class="c-comment typed">⍝   0.000000001 &gt; a_bs (1 s_elect partial) - (1 + 2 s_elect w) s_elect (1 + 1 s_elect w) s_elect a ac:m_atmul b</span></pre>
+</div>
+
+<pre class="example">
+1
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡw̲ork</span> ← { n z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:w_ork := { n z -&gt;</span></pre>
+</div>
+
+<p>
+The camera's path is eight keys, from far out, to the tile, to the
+cell, along the beam, and back:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡc̲ameraKeys</span> ← { n z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:c_ameraKeys := { n z -&gt;</span></pre>
+</div>
+
+<p>
+The captions' numbers are the arrays':
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-number">512</span> <span class="c-libfunc">ᵐᶠc̲aptionTexts</span> <span class="c-number">0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   512 mf:c_aptionTexts 0</span></pre>
+</div>
+
+<pre class="example">
+C = A x B|512 x 512 x 512 = 134217728 multiply-adds|one work-group: a 16 x 16 tile of C|one work-item: a row of A times a column of B|512 products, added one at a time from the far end|the sum is one item of C|every item of C: 262144 sums, a work-group at a time
+</pre>
+
+
+<video src="../blender/matmul-fly.webm" controls loop muted playsinline style="width:100%"></video>
+
+
+<div id="org85db3ad" class="figure">
+<p><img src="images/matmul-fly-1.jpg" alt="matmul-fly-1.jpg" />
+</p>
+</div>
+
+
+<div id="org0fb2eaa" class="figure">
+<p><img src="images/matmul-fly-4.jpg" alt="matmul-fly-4.jpg" />
+</p>
+</div>
+
+
+<div id="org37b297c" class="figure">
+<p><img src="images/matmul-fly-5.jpg" alt="matmul-fly-5.jpg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org3f173cc" class="outline-2">
+<h2 id="org3f173cc">6. From tables to Python, and rendering</h2>
+<div class="outline-text-2" id="text-org3f173cc">
+<p>
+Each scene is the stage, the parts, the captions and the camera:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡs̲teps</span> ← { (w, h) z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:s_teps := { (w, h) z -&gt;</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡs̲cene</span> ← { (w, h, n) z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:s_cene := { (w, h, n) z -&gt;</span></pre>
+</div>
+
+<p>
+The products' keys, each at its own times, as the steps script has
+them (the first 160 characters):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">keys ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-number">3</span> <span class="c-builtin">t̲ranspose</span> <span class="c-number">2</span> <span class="c-number">24</span> <span class="c-number">6</span> <span class="c-builtin">r̲eshape</span> (at <span class="c-builtin">c̲at₂</span> <span class="c-number">24</span> <span class="c-number">3</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.5</span>) <span class="c-builtin">c̲at</span> ((ᵐᵐprodI, ᵐᵐprodJ) <span class="c-libfunc">ᵐᵐc̲t</span> <span class="c-number">0</span>) <span class="c-builtin">c̲at₂</span> <span class="c-number">24</span> <span class="c-number">3</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.05</span>
+<span class="c-number">160</span> <span class="c-builtin">t̲ake</span> (<span class="c-string">&quot;products&quot;</span>, <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> <span class="c-number">2</span> <span class="c-number">24</span> <span class="c-builtin">r̲eshape</span> ᵐᵐflies <span class="c-builtin">c̲at</span> ᵐᵐlands, keys) <span class="c-libfunc">ᵛᵈm̲ovesEach</span> <span class="c-number">0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   keys := 2 1 3 t_ranspose 2 24 6 r_eshape (at c_at_2 24 3 r_eshape 0.5) c_at ((mm:prodI, mm:prodJ) mm:c_t 0) c_at_2 24 3 r_eshape 0.05</span>
+<span class="c-comment typed">⍝   160 t_ake ("products", 2 1 t_ranspose 2 24 r_eshape mm:flies c_at mm:lands, keys) vd:m_ovesEach 0</span></pre>
+</div>
+
+<pre class="example">
+moves_each('products', nums('3.54 4.140000000000001 3.54 4.140000000000001 3.54 4.140000000000001 3.54 4.140000000000001 5.996 6.436 5.996 6.436 5.996 6.436 5.9
+</pre>
+
+
+<p>
+The whole steps script, the same every time:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-builtin">t̲ally</span> (<span class="c-number">1920</span>, <span class="c-number">1080</span>) <span class="c-libfunc">ᵐᵐs̲teps</span> <span class="c-number">0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   t_ally (1920, 1080) mm:s_teps 0</span></pre>
+</div>
+
+<pre class="example">
+28302
+</pre>
+
+
+<p>
+The demos write the launcher and the script and run Blender through
+the extension: five stills, then the video, then Blender's report.
+<code>just demo blender matmul-steps</code> (a few minutes) prints:
+</p>
+
+<pre class="example" id="org74aa2b7">
+the run, and the error lines in Blender's log:
+exit 0
+errors 0
+what Blender made:
+frames 1 to 466 at 30 a second
+A: 12 objects, 0 keyed
+A values: 12 objects, 0 keyed
+B: 8 objects, 0 keyed
+B values: 8 objects, 0 keyed
+C: 6 objects, 6 keyed
+C empty: 6 objects, 0 keyed
+C values: 6 objects, 6 keyed
+columns: 6 objects, 6 keyed
+cube: 1 objects, 0 keyed
+guides: 48 objects, 48 keyed
+names: 3 objects, 0 keyed
+product values: 24 objects, 24 keyed
+products: 24 objects, 24 keyed
+rows: 6 objects, 6 keyed
+targets: 6 objects, 6 keyed
+together: 6 objects, 6 keyed
+</pre>
+
+<p>
+<code>just demo blender matmul-fly</code> (about ten minutes, most of it X_eTaL
+working out the 512 by 512 walls) prints:
+</p>
+
+<pre class="example" id="org0eae916">
+the run, and the error lines in Blender's log:
+exit 0
+errors 0
+what Blender made:
+frames 1 to 541 at 30 a second
+A: 1 objects, 0 keyed
+B: 1 objects, 0 keyed
+C: 1 objects, 0 keyed
+C empty: 1 objects, 0 keyed
+names: 3 objects, 0 keyed
+products: 512 objects, 512 keyed
+result: 1 objects, 1 keyed
+sum: 1 objects, 1 keyed
+volume: 1 objects, 0 keyed
+work-group: 4 objects, 0 keyed
+work-item: 4 objects, 0 keyed
+</pre>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p><a href="index.html">Literate documents</a> &middot; <a href="../">The demos</a> &middot; <a href="https://github.com/softwarewrighter/X_eTaL-extensions">Repository</a></p>
+</div>
+</body>
+</html>

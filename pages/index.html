@@ -13,7 +13,7 @@
   <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
   <ul>
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
-    <li><a href="#blender">blender</a><ul><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
+    <li><a href="#blender">blender</a><ul><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
     <li><a href="#clock">clock</a><ul><li><a href="#clock-bridge-cost">bridge-cost</a></li></ul></li>
     <li><a href="#digest">digest</a></li>
@@ -85,6 +85,24 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <p class="note">Blender, 1: X_eTaL runs Blender. The program writes two Python files -- the launcher, which runs Blender in the background (with its factory settings, so the run never depends on yours), and the script Blender runs inside, which writes a report -- then runs the launcher with python3 and reads the report back. The chain: X_eTaL, the extension, python3, Blender, Python inside Blender.</p>
       <video src="blender/hello.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo blender hello</pre>
+    </section>
+    <section class="panel demo" id="blender-matmul-fly">
+      <h3>blender / matmul-fly <a class="docs" href="doc/extensions-blender-demos-matmul-fly.xtl.html">source and docs</a> <a class="docs" href="literate/matmul.html" title="Matrix multiply, arrays to video">literate document</a></h3>
+      <p class="note">Blender, 7: a 512 x 512 matrix product as a 3D construct, a fly-through, arrays to video. A on the left wall, B on the ceiling, C on the front wall, every item a cell colored by its value; the camera starts far out (the whole cube: 134 million multiply-adds), flies to one work-group&#x27;s 16 by 16 tile, then one work-item -- a row of A times a column of B, 512 products added into one item of C -- and back out while C fills in, a work-group at a time. The product is X_eTaL-gpu&#x27;s Accel ac:m_atmul; every place, color and time is an array worked out in X_eTaL (demos/MatmulFly.xtl); Video.xtl writes them into the script Blender runs. Explained in docs/literate/matmul.org.</p>
+      <video src="blender/matmul-fly.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo blender matmul-fly</pre>
+    </section>
+    <section class="panel demo" id="blender-matmul-steps">
+      <h3>blender / matmul-steps <a class="docs" href="doc/extensions-blender-demos-matmul-steps.xtl.html">source and docs</a> <a class="docs" href="literate/matmul.html" title="Matrix multiply, arrays to video">literate document</a></h3>
+      <p class="note">Blender, 6: a matrix product a step at a time, arrays to video. C = A x B for X_eTaL-gpu&#x27;s matmul demo ([3 4] x [4 2], by its Accel library): A on the left wall, B on the ceiling, C on the back wall. Item by item, a row of A and a column of B light up, their four products appear in the cube between them and fly into C&#x27;s item, which shows their sum; then all six at once, as a GPU works them out, one work-item each. Every place, color and time is an array worked out in X_eTaL (demos/Matmul.xtl); Video.xtl writes them into the script Blender runs. Explained step by step in docs/literate/matmul.org.</p>
+      <video src="blender/matmul-steps.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo blender matmul-steps</pre>
+    </section>
+    <section class="panel demo" id="blender-relu-softmax">
+      <h3>blender / relu-softmax <a class="docs" href="doc/extensions-blender-demos-relu-softmax.xtl.html">source and docs</a> <a class="docs" href="literate/relu-softmax.html" title="ReLU and softmax, arrays to video">literate document</a></h3>
+      <p class="note">Blender, 5: ReLU and softmax, arrays to video. A tiny network&#x27;s layers, run by X_eTaL-gpu&#x27;s Accel library (the functions its GPU runs), shown as bars: ReLU turns z1&#x27;s negatives to 0, softmax turns each row of z2 into two shares of 1, a step at a time. Every bar&#x27;s place, size, color and timing, every label and the camera&#x27;s path are arrays worked out in X_eTaL (demos/ReluSoftmax.xtl); Video.xtl writes them into the script Blender runs. Explained step by step in docs/literate/relu-softmax.org.</p>
+      <video src="blender/relu-softmax.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo blender relu-softmax</pre>
     </section>
     <section class="panel demo" id="blender-td-models">
       <h3>blender / td-models <a class="docs" href="doc/extensions-blender-demos-td-models.xtl.html">source and docs</a> <a class="docs" href="blender/td/">the pieces in 3D (published)</a></h3>
@@ -294,7 +312,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at b7d1bfa</span>
+  <span>built at 257639a</span>
 </footer>
 </body>
 </html>

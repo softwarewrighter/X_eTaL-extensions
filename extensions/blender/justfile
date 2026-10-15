@@ -36,9 +36,9 @@ rebase test:
 list: build
     {{root}}/target/debug/xetal-x --ext . --ext-list
 
-# Run a demo: just demo NAME (demos/NAME.xtl; pictures go to work/draw/)
+# Run a demo: just demo NAME (demos/NAME.xtl; pictures go to work/draw/; the shared libraries on XETAL_PATH)
 demo name: build
-    {{root}}/target/debug/xetal-x --ext {{root}}/extensions run --draw work/draw "demos/$1.xtl"
+    XETAL_PATH="$({{root}}/scripts/libraries.sh)" {{root}}/target/debug/xetal-x --ext {{root}}/extensions run --draw work/draw "demos/$1.xtl"
 
 # Publish the tower defense pieces demos/game-assets.xtl made on the site (pages/blender/td)
 publish-td:

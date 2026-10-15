@@ -1,0 +1,227 @@
+## Matmul.xtl -- a matrix product, as two videos (Video.xtl): a small one
+## a step at a time, C = A x B for X_eTaL-gpu's matmul demo ([3 4] x
+## [4 2]), and a large one as a fly-through, 512 x 512 x 512. The
+## products and sums are X_eTaL-gpu's Accel library (ac:m_atmul, the
+## inner product its GPU runs); what is new here is only how they are
+## shown: every cell's place, color and timing, every label and the
+## camera's path, worked out from those arrays. Shared by the demos
+## (demos/matmul-steps.xtl, demos/matmul-fly.xtl), their tests and the
+## literate document (docs/literate/matmul.org).
+## Import: "mm:" u_se< "Matmul"
+
+"ac:" u_se< "Accel"
+"vd:" u_se< "Video"
+
+### The arrays (Accel)
+
+## a: X_eTaL-gpu's matmul demo's left matrix, 1 to 12 (3 by 4)
+l:a := 3 4 r_eshape r_ange 12
+
+## b: its right matrix (4 by 2)
+l:b := 4 2 r_eshape 1 0 0 1 1 1 2 -1
+
+## c: their product, ac:m_atmul (3 by 2): each item the sum of a row of a
+## times a column of b
+## >> "mm:" u_se< "Matmul"
+## >> mm:c
+## 12 1
+## 28 5
+## 44 9
+l:c := l:a ac:m_atmul l:b
+
+### Every product, one at a time
+
+## the items of c in the order they are worked out, row by row: i and j
+## from 0 (6 each)
+l:itemI := ((r_ange 6) - 1) d_iv 2
+## j
+l:itemJ := ((r_ange 6) - 1) m_od 2
+
+## for each of the 24 products, item by item, k from 0 to 3 within each:
+## its item (from 0), i, j and k
+l:prodQ := ((r_ange 24) - 1) d_iv 4
+## i
+l:prodI := (l:prodQ + 1) s_elect l:itemI
+## j
+l:prodJ := (l:prodQ + 1) s_elect l:itemJ
+## k
+l:prodK := ((r_ange 24) - 1) m_od 4
+
+## the products: a[i;k] times b[k;j], each (24)
+## >> "mm:" u_se< "Matmul"
+## >> 4 t_ake mm:products
+## 1 0 3 8
+l:products := ((1 + l:prodK + 4 * l:prodI) s_elect r_avel l:a) * (1 + l:prodJ + 2 * l:prodK) s_elect r_avel l:b
+
+## the products added up, four at a time, are c, item by item
+## >> "mm:" u_se< "Matmul"
+## >> (r_avel mm:c) = '+ r_/_2 6 4 r_eshape mm:products
+## 1 1 1 1 1 1
+l:sums := '+ r_/_2 6 4 r_eshape l:products
+
+### Where things stand
+
+# the walls' distance from the cube; a cell's size
+g := 1.3
+d := 0.86
+
+# a row of x y z for each of the vectors (or numbers) x, y and z
+h:x_yz := { (x, y, zz) q ->
+  n := (t_ally x) m_ax (t_ally y) m_ax t_ally zz
+  2 1 t_ranspose (3 c_at n) r_eshape (n r_eshape f_loat x) c_at (n r_eshape f_loat y) c_at n r_eshape f_loat zz
+}
+
+## The cube: x is j (across, b's and c's columns), y is k (into the
+## picture, the sum's index), z is -i (down, a's and c's rows). a stands
+## on the left wall, b on the ceiling, c on the back wall, and the
+## products fill the cube between them. (i, k) mm:a_t 0: a's cells
+l:a_t := { (i, k) z -> (0.0 - g, (f_loat k) + 0.5, 0.0 - (f_loat i) + 0.5) h:x_yz 0 }
+## (k, j) mm:b_t 0: b's cells
+l:b_t := { (k, j) z -> ((f_loat j) + 0.5, (f_loat k) + 0.5, g) h:x_yz 0 }
+## (i, j) mm:c_t 0: c's cells
+l:c_t := { (i, j) z -> ((f_loat j) + 0.5, 4.0 + g, 0.0 - (f_loat i) + 0.5) h:x_yz 0 }
+## (i, j, k) mm:p_t 0: a product's place in the cube
+l:p_t := { (i, j, k) z -> ((f_loat j) + 0.5, (f_loat k) + 0.5, 0.0 - (f_loat i) + 0.5) h:x_yz 0 }
+
+# rows x y z w d h for places (n by 3) of one size
+h:s_ized := { (at, size) z -> at c_at_2 ((t_ally at) c_at 3) r_eshape size }
+
+# n by 3 rows of one color
+h:o_f := { n c -> (n c_at 3) r_eshape c }
+
+### When
+
+## each item's time: slow at first, then quicker (seconds, 6)
+l:durations := 3.0 2.2 1.6 1.3 1.1 1.0
+## when each item starts: 1.5 s, then one after another
+l:starts := 1.5 + 0.0 c_at '+ s_\ -1 d_rop l:durations
+## when the last item ends
+l:last := 6 s_elect l:starts + l:durations
+## all six worked out at once: from 0.3 s after the last, for 2.5 s
+l:together := (0.3 + l:last) c_at 2.8 + l:last
+## the video's length: a second after that
+l:length := 3.8 + l:last
+
+## for each product: when it appears (one after another in the first
+## half of its item's time), when it flies to c, when it lands (24 each)
+l:appear := ((l:prodQ + 1) s_elect l:starts) + ((l:prodQ + 1) s_elect l:durations) * 0.12 + 0.45 * (f_loat l:prodK) / 4.0
+## when it flies
+l:flies := ((l:prodQ + 1) s_elect l:starts) + 0.68 * (l:prodQ + 1) s_elect l:durations
+## when it lands, and its item of c is shown
+l:lands := ((l:prodQ + 1) s_elect l:starts) + 0.88 * (l:prodQ + 1) s_elect l:durations
+
+### The steps video
+
+# colors (0 to 255): white, yellow, an empty cell, the cube's edges, the sky
+white := 255 255 255
+yellow := 255 216 77
+empty := 42 46 54
+edge := 138 147 163
+## the sky (0 to 255)
+l:sky := 7 8 10
+
+# a group of boxes: places (n by 3), one size, colors (n by 3), glow
+h:g_roup := { (name, at, size, c, gl) z -> (name, ((at, size) h:s_ized 0) c_at_2 (f_loat c) c_at_2 (t_ally at) r_eshape gl) vd:b_oxes 0 }
+
+# a group of outlines, the same rows
+h:o_utlined := { (name, at, size, c, gl) z -> (name, ((at, size) h:s_ized 0) c_at_2 (f_loat c) c_at_2 (t_ally at) r_eshape gl) vd:o_utlines 0 }
+
+# a group of words at places, one height, one color
+h:w_ords := { (name, texts, at, size, c) z -> (name, texts, at c_at_2 ((t_ally at) r_eshape size) c_at_2 (t_ally at) h:o_f f_loat c) vd:l_abels 0 }
+
+# spans for every object of a group: from and to (vectors or numbers)
+h:s_pans := { (name, a, b, n) z -> (name, 2 1 t_ranspose (2 c_at n) r_eshape (n r_eshape a) c_at n r_eshape b) vd:s_hown 0 }
+
+## the walls: a, b and c's cells colored by their values, labeled, and
+## the cube's edges; c's cells start empty; each wall's name and shape
+## by it (A's and B's above, C's to its right)
+l:w_alls := { z ->
+  ai := ((r_ange 12) - 1) d_iv 4
+  ak := ((r_ange 12) - 1) m_od 4
+  bk := ((r_ange 8) - 1) d_iv 2
+  bj := ((r_ange 8) - 1) m_od 2
+  t := ("A", (ai, ak) l:a_t 0, 0.12 c_at d c_at d, (r_avel l:a, 0.0, 12.0) vd:t_one 0, 0.9) h:g_roup 0
+  t := t c_at ("A values", 0 vd:f_ixed f_loat l:a, ((ai, ak) l:a_t 0) + 12 h:o_f -0.14 0.0 0.0, 0.42, white) h:w_ords 0
+  t := t c_at ("B", (bk, bj) l:b_t 0, d c_at d c_at 0.12, (r_avel l:b, -1.0, 2.0) vd:t_one 0, 0.9) h:g_roup 0
+  t := t c_at ("B values", 0 vd:f_ixed f_loat l:b, ((bk, bj) l:b_t 0) + 8 h:o_f 0.0 0.0 0.14, 0.42, white) h:w_ords 0
+  t := t c_at ("C empty", (l:itemI, l:itemJ) l:c_t 0, d c_at 0.12 c_at d, 6 h:o_f empty, 1.0) h:g_roup 0
+  t := t c_at ("cube", 1 3 r_eshape 1.0 2.0 -1.5, 2.0 4.0 3.0, 1 h:o_f edge, 1.0) h:o_utlined 0
+  names := ("A" h:s_hape l:a) c_at "|" c_at ("B" h:s_hape l:b) c_at "|" c_at "C" h:s_hape l:c
+  t c_at ("names", names, 3 3 r_eshape (0.0 - g) c_at 2.0 0.7 1.0 4.6 1.5 3.6 5.3 -1.5, 0.5, yellow) h:w_ords 0
+}
+
+# an array's name and shape, as [3 4]
+h:s_hape := { name x -> name c_at ((0 < t_ally name) t_ake " ") c_at "[" c_at (f_ormat s_hape x) c_at "]" }
+
+## one item at a time: its row of a, its column of b and its cell of c
+## outlined; its four products appear in the cube, each with guide lines
+## from its two factors, fly into c's cell and shrink there; then c's
+## cell shows its sum
+l:i_tems := { z ->
+  i := l:itemI
+  j := l:itemJ
+  ends := l:starts + l:durations
+  t := ("rows", (0.0 - g, 2.0, 0.0 - (f_loat i) + 0.5) h:x_yz 0, 0.2 c_at 4.0 c_at d + 0.08, 6 h:o_f white, 3.0) h:o_utlined 0
+  t := t c_at ("rows", l:starts, ends, 6) h:s_pans 0
+  t := t c_at ("columns", ((f_loat j) + 0.5, 2.0, g) h:x_yz 0, (d + 0.08) c_at 4.0 0.2, 6 h:o_f white, 3.0) h:o_utlined 0
+  t := t c_at ("columns", l:starts, ends, 6) h:s_pans 0
+  t := t c_at ("targets", (i, j) l:c_t 0, (d + 0.1) c_at 0.22 c_at d + 0.1, 6 h:o_f white, 3.0) h:o_utlined 0
+  t := t c_at ("targets", l:starts, ends, 6) h:s_pans 0
+  pi := l:prodI
+  pj := l:prodJ
+  pk := l:prodK
+  at := (pi, pj, pk) l:p_t 0
+  into := (pi, pj) l:c_t 0
+  colors := (l:products, -4.0, 12.0) vd:t_one 0
+  t := t c_at ("products", ((at, 0.5 0.5 0.5) h:s_ized 0) c_at_2 colors c_at_2 24 r_eshape 1.6) vd:b_oxes 0
+  keys := 2 1 3 t_ranspose 2 24 6 r_eshape ((at, 0.5 0.5 0.5) h:s_ized 0) c_at (into, 0.05 0.05 0.05) h:s_ized 0
+  t := t c_at ("products", 2 1 t_ranspose 2 24 r_eshape l:flies c_at l:lands, keys) vd:m_ovesEach 0
+  t := t c_at ("products", l:appear, l:lands, 24) h:s_pans 0
+  t := t c_at ("product values", 0 vd:f_ixed f_loat l:products, at + 24 h:o_f 0.0 0.0 0.55, 0.36, white) h:w_ords 0
+  t := t c_at ("product values", l:appear, l:flies, 24) h:s_pans 0
+  fa := (pi, pk) l:a_t 0
+  fb := (pk, pj) l:b_t 0
+  guides := ((fa c_at fb) c_at_2 at c_at at) c_at_2 (48 h:o_f f_loat yellow) c_at_2 48 r_eshape 0.015
+  t := t c_at ("guides", guides) vd:l_ines 0
+  t := t c_at ("guides", l:appear c_at l:appear, l:flies c_at l:flies, 48) h:s_pans 0
+  t := t c_at ("C", (i, j) l:c_t 0, (d * 1.001) c_at 0.14 c_at d * 1.001, (r_avel l:c, 0.0, 44.0) vd:t_one 0, 1.0) h:g_roup 0
+  done := (4 * r_ange 6) s_elect l:lands
+  t := t c_at ("C", done, l:length, 6) h:s_pans 0
+  t := t c_at ("C values", 0 vd:f_ixed f_loat l:c, ((i, j) l:c_t 0) + 6 h:o_f 0.0 -0.14 0.0, 0.42, white) h:w_ords 0
+  t := t c_at ("C values", done, l:length, 6) h:s_pans 0
+  t := t c_at ("together", (i, j) l:c_t 0, (d + 0.1) c_at 0.22 c_at d + 0.1, 6 h:o_f yellow, 3.0) h:o_utlined 0
+  t c_at ("together", 1 s_elect l:together, 2 s_elect l:together, 6) h:s_pans 0
+}
+
+## the captions, | between them, their shapes the arrays'
+l:stepTexts := ("C = A x B:  " c_at ("" h:s_hape l:a) c_at " x " c_at ("" h:s_hape l:b) c_at " -> " c_at ("" h:s_hape l:c) c_at "|" c_at
+  "one item of C: a row of A times a column of B|" c_at
+  (f_ormat 2 s_elect s_hape l:a) c_at " products, added: one item of C|" c_at
+  "then the next item, and the next|" c_at
+  "on the GPU: all " c_at (f_ormat t_ally r_avel l:c) c_at " at once, one work-item each")
+
+## when each caption shows (from, to) and its color
+l:s_tepCaptions := { z ->
+  s := l:starts
+  e := l:starts + l:durations
+  from := 0.0 c_at (1 s_elect s) c_at (2 s_elect s) c_at (4 s_elect s) c_at 1 s_elect l:together
+  to := ((1 s_elect s) - 0.05) c_at (1 s_elect e) c_at (3 s_elect e) c_at (6 s_elect e) c_at l:length
+  (2 1 t_ranspose 2 5 r_eshape from c_at to) c_at_2 f_loat 5 3 r_eshape white c_at yellow c_at white c_at white c_at yellow
+}
+
+## the camera: three keys about the cube, from the left and in front,
+## drifting
+l:s_tepCamera := { z ->
+  center := 0.35 2.6 -1.3
+  ts := 0.0 c_at (l:length / 2.0) c_at l:length
+  (ts, 3 3 r_eshape (center + -7.5 -11.5 6.0) c_at (center + -5.5 -12.5 5.0) c_at center + -8.0 -11.0 6.5, 3 3 r_eshape center)
+}
+
+## (width, height) mm:s_teps 0: the whole steps script but its output:
+## the stage (a 40 mm lens), the walls, the items, the captions, the
+## camera
+l:s_teps := { (w, h) z ->
+  t := vd:head c_at ((w, h, 30, l:length, l:sky, 40) vd:s_tage 0) c_at (l:w_alls 0) c_at l:i_tems 0
+  t := t c_at (l:stepTexts, l:s_tepCaptions 0) vd:c_aptions 0
+  t c_at (l:s_tepCamera 0) vd:c_amera 0
+}

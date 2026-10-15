@@ -1,36 +1,40 @@
 #!/usr/bin/env bash
-# Get X_eTaL-libraries: clone it into work/libraries (gitignored) and check
-# out the known-good commit in LIBRARIES_COMMIT, as scripts/xetal.sh does
-# for X_eTaL. Prints the directories to put on XETAL_PATH (the src/
-# directories of the libraries used here, colon-separated): the demos
-# that use a shared library (the Rubik's cube solver, Eigencube) reach it
-# there. Never edit the
-# clone; move to a newer commit by changing LIBRARIES_COMMIT.
+# Get the shared X_eTaL libraries used here: clone X_eTaL-libraries into
+# work/libraries and X_eTaL-gpu into work/gpu (both gitignored) and check
+# out the known-good commits in LIBRARIES_COMMIT and GPU_COMMIT, as
+# scripts/xetal.sh does for X_eTaL. Prints the directories to put on
+# XETAL_PATH (the src/ directories of the libraries used here,
+# colon-separated): the demos that use a shared library reach it there --
+# the Rubik's cube solver (Eigencube, X_eTaL-libraries), the explainer
+# videos (Accel, X_eTaL-gpu's acceleratable subset: the layers the GPU
+# runs). Never edit a clone; move to a newer commit by changing its file.
 #   scripts/libraries.sh
-#   LIBRARIES_SOURCE=../X_eTaL-libraries scripts/libraries.sh   # clone from a local checkout
+#   LIBRARIES_SOURCE=../X_eTaL-libraries GPU_SOURCE=../X_eTaL-gpu scripts/libraries.sh   # clone from local checkouts
 set -euo pipefail
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # Python is the uv environment's only, never the system's (CLAUDE.md rule 19)
 export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
 "$root/scripts/venv.sh" --check
-commit="$(tr -d '[:space:]' < "$root/LIBRARIES_COMMIT")"
-source="${LIBRARIES_SOURCE:-https://github.com/softwarewrighter/X_eTaL-libraries.git}"
-clone="$root/work/libraries"
-
-if [ ! -d "$clone/.git" ]; then
-    mkdir -p "$root/work"
-    git clone --quiet "$source" "$clone" >&2
-fi
-if ! git -C "$clone" cat-file -e "$commit^{commit}" 2>/dev/null; then
-    git -C "$clone" fetch --quiet origin >&2
-fi
-if [ "$(git -C "$clone" rev-parse HEAD)" != "$commit" ]; then
-    git -C "$clone" checkout --quiet --detach "$commit" >&2
-fi
-if [ -n "$(git -C "$clone" status --porcelain)" ]; then
-    echo "libraries: work/libraries has local changes; never edit the clone" >&2
-    exit 1
-fi
+# clone REPO-URL DIR COMMIT-FILE: DIR at the commit, unedited
+pin() {
+    local source="$1" clone="$2" commit
+    commit="$(tr -d '[:space:]' < "$3")"
+    if [ ! -d "$clone/.git" ]; then
+        mkdir -p "$root/work"
+        git clone --quiet "$source" "$clone" >&2
+    fi
+    if ! git -C "$clone" cat-file -e "$commit^{commit}" 2>/dev/null; then
+        git -C "$clone" fetch --quiet origin >&2
+    fi
+    if [ "$(git -C "$clone" rev-parse HEAD)" != "$commit" ]; then
+        git -C "$clone" checkout --quiet --detach "$commit" >&2
+    fi
+    if [ -n "$(git -C "$clone" status --porcelain)" ]; then
+        echo "libraries: ${clone#"$root"/} has local changes; never edit the clone" >&2
+        exit 1
+    fi
+}
+pin "${LIBRARIES_SOURCE:-https://github.com/softwarewrighter/X_eTaL-libraries.git}" "$root/work/libraries" "$root/LIBRARIES_COMMIT"
+pin "${GPU_SOURCE:-https://github.com/softwarewrighter/X_eTaL-gpu.git}" "$root/work/gpu" "$root/GPU_COMMIT"
 # the libraries used here (only these, so no other can shadow a name)
-used=(Eigencube)
-for l in "${used[@]}"; do echo "$clone/libs/$l/src"; done | paste -sd: -
+{ echo "$root/work/libraries/libs/Eigencube/src"; echo "$root/work/gpu/libs/Accel/src"; } | paste -sd: -

@@ -18,15 +18,16 @@ pages = pathlib.Path(os.environ.get("PAGES_DIR", root / "pages"))
 
 
 def literate():
-    """The literate documents (docs/literate/*.org) by the demo each
-    explains (its `#+DEMO: EXT NAME` line): {(ext, name): (page, title)}."""
+    """The literate documents (docs/literate/*.org) by the demos each
+    explains (its `#+DEMO: EXT NAME...` line, one extension and one or
+    more of its demos): {(ext, name): (page, title)}."""
     docs = {}
     for org in sorted((root / "docs/literate").glob("*.org")):
         text = org.read_text()
-        demo = next((l.split()[1:3] for l in text.splitlines() if l.startswith("#+DEMO: ")), None)
+        demo = next((l.split()[1:] for l in text.splitlines() if l.startswith("#+DEMO: ")), None)
         title = next((l[len("#+TITLE: "):] for l in text.splitlines() if l.startswith("#+TITLE: ")), org.stem)
-        if demo and len(demo) == 2:
-            docs[tuple(demo)] = (f"literate/{org.stem}.html", title)
+        for name in (demo or [])[1:]:
+            docs[(demo[0], name)] = (f"literate/{org.stem}.html", title)
     return docs
 
 

@@ -1,0 +1,24 @@
+## The Python Video.xtl writes, pinned: a tiny video with one of every
+## call -- the stage, boxes, outlines, glass, lines, words, captions,
+## spans, keys (shared and each object's own), tints, the camera, a 2 by
+## 2 grid, stills, the video, the report -- after the player.
+
+"vd:" u_se< "Video"
+"the player:"
+vd:head
+"the calls:"
+t := (64, 36, 30, 2.0, 7 8 10, 40) vd:s_tage 0
+t := t c_at ("bars", 2 10 r_eshape 0.0 0.0 0.5 0.6 0.6 1.0 255 179 71 1.2  1.0 0.0 -0.25 0.6 0.6 0.5 79 168 255 1.2) vd:b_oxes 0
+t := t c_at ("gone", 1 10 r_eshape 1.0 0.0 -0.25 0.6 0.6 0.5 255 74 61 1.5) vd:o_utlines 0
+t := t c_at ("floor", 1 10 r_eshape 0.5 0.0 0.0 2.0 1.0 0.02 143 211 255 0.6) vd:g_lass 0
+t := t c_at ("guide", 1 10 r_eshape 0.0 0.0 0.0 1.0 1.0 1.0 255 216 77 0.015) vd:l_ines 0
+t := t c_at ("values", 2 vd:f_ixed 1.0 -0.5, 2 7 r_eshape 0.0 -0.6 1.4 0.4 255 255 255  1.0 -0.6 0.4 0.4 255 255 255) vd:l_abels 0
+t := t c_at ("a caption's 'quotes'|and a second", 2 5 r_eshape 0.0 1.0 255 255 255 1.0 2.0 255 216 77) vd:c_aptions 0
+t := t c_at ("values", 2 2 r_eshape 0.0 1.0 0.5 2.0) vd:s_hown 0
+t := t c_at ("bars", 0.0 1.0, 2 2 6 r_eshape 0.0 0.0 0.5 0.6 0.6 1.0  0.0 0.0 0.002 0.6 0.6 0.004  1.0 0.0 -0.25 0.6 0.6 0.5  1.0 0.0 0.002 0.6 0.6 0.004) vd:m_oves 0
+t := t c_at ("gone", 1 2 r_eshape 0.5 1.5, 1 2 6 r_eshape 1.0 0.0 -0.25 0.6 0.6 0.5  1.0 0.0 0.0 0.1 0.1 0.1) vd:m_ovesEach 0
+t := t c_at ("bars", 0.0 1.0, 2 2 3 r_eshape 255 179 71 255 179 71 79 168 255 255 74 61) vd:t_ints 0
+t := t c_at (0.0 2.0, 2 3 r_eshape 0.5 -6.0 3.0 1.0 -6.0 2.5, 2 3 r_eshape 0.5 0.0 0.0 0.5 0.0 0.0) vd:c_amera 0
+t := t c_at ("wall", 0.0 2.0 0.0, 0.0 0.0 -0.5, 0.5 0.0 0.0, 2 2 3 r_eshape (0.0 0.5 1.0 1.5, 0.0, 1.5) vd:t_one 0, 2 2 r_eshape 0.0 0.5 1.0 1.25, 0.08) vd:g_rid 0
+t := t c_at (0.5 1.5, "frame") vd:s_tills 0
+t c_at (vd:r_ender "tiny.mp4") c_at vd:report

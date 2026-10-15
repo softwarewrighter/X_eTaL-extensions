@@ -143,6 +143,10 @@ stop-serve:
 venv:
     scripts/venv.sh
 
+# Install the videos' font, JuliaMono (APL and math symbols), pinned, in work/fonts
+font:
+    scripts/font.sh
+
 # Run the literate documents (docs/literate/*.org): draw each block, record its result
 literate *docs:
     scripts/literate.sh "$@"

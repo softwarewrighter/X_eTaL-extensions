@@ -1,0 +1,30 @@
+## Blender, 7: a 512 x 512 matrix product as a 3D construct, a
+## fly-through, arrays to video. A on the left wall, B on the ceiling,
+## C on the front wall, every item a cell colored by its value; the
+## camera starts far out (the whole cube: 134 million multiply-adds),
+## flies to one work-group's 16 by 16 tile, then one work-item -- a row
+## of A times a column of B, 512 products added into one item of C --
+## and back out while C fills in, a work-group at a time. The product is
+## X_eTaL-gpu's Accel ac:m_atmul; every place, color and time is an
+## array worked out in X_eTaL (demos/MatmulFly.xtl); Video.xtl writes
+## them into the script Blender runs. Explained in
+## docs/literate/matmul.org.
+## Run: just demo blender matmul-fly   (several minutes: 541 frames)
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"mf:" u_se< "MatmulFly"
+
+# five stills (the document's pictures), then every frame as the video
+script := ((1920, 1080, 512) mf:s_cene 0) c_at ((1.0 6.0 8.5 11.5 16.5, "matmul-fly") vd:s_tills 0) c_at (vd:r_ender "matmul-fly.mp4") c_at vd:report
+n := "work/explain/run.py" bl:w_rite! bp:launcher
+n := "work/explain/matmul-fly.py" bl:w_rite! script
+"rendering five stills and 18 seconds (541 frames) with Blender (EEVEE) ..."
+r := "work/explain/run.py" bl:r_un! "work/explain/matmul-fly.py work/explain/out"
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+"what Blender made:"
+bl:r_ead "work/explain/out/report.txt"

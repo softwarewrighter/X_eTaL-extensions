@@ -1,0 +1,27 @@
+## Blender, 5: ReLU and softmax, arrays to video. A tiny network's
+## layers, run by X_eTaL-gpu's Accel library (the functions its GPU
+## runs), shown as bars: ReLU turns z1's negatives to 0, softmax turns
+## each row of z2 into two shares of 1, a step at a time. Every bar's
+## place, size, color and timing, every label and the camera's path
+## are arrays worked out in X_eTaL (demos/ReluSoftmax.xtl); Video.xtl
+## writes them into the script Blender runs. Explained step by step in
+## docs/literate/relu-softmax.org.
+## Run: just demo blender relu-softmax   (a few minutes: 901 frames)
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"rs:" u_se< "ReluSoftmax"
+
+# five stills (the documents' pictures), then every frame as the video
+script := ((1920, 1080) rs:s_cene 0) c_at ((2.0 8.0 14.0 23.0 28.0, "relu-softmax") vd:s_tills 0) c_at (vd:r_ender "relu-softmax.mp4") c_at vd:report
+n := "work/explain/run.py" bl:w_rite! bp:launcher
+n := "work/explain/relu-softmax.py" bl:w_rite! script
+"rendering five stills and 30 seconds (901 frames) with Blender (EEVEE) ..."
+r := "work/explain/run.py" bl:r_un! "work/explain/relu-softmax.py work/explain/out"
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+"what Blender made:"
+bl:r_ead "work/explain/out/report.txt"

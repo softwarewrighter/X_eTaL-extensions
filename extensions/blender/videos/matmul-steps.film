@@ -1,0 +1,8 @@
+# extensions/blender/videos/matmul-steps.webm and .webp: a matrix
+# product a step at a time, Blender's own render, made by
+# demos/matmul-steps.xtl from X_eTaL arrays (Matmul.xtl, Video.xtl; just
+# videos; a few minutes when the video is not there yet).
+demo=matmul-steps
+file=work/explain/out/matmul-steps.mp4
+scale=1280
+fps=30

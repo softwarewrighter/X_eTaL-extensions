@@ -1,0 +1,1037 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ReLU and softmax, arrays to video</title>
+<meta name="author" content="Michael A Wright" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">ReLU and softmax, arrays to video
+<br />
+<span class="subtitle">a tiny network's last steps, from X_eTaL arrays to Python to Blender to an MP4, with no hand-written Python</span>
+</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org57f6488">Purpose: what the video shows, and why</a></li>
+<li><a href="#orgf9fc0b4">The chain: X_eTaL, Python, Blender, video</a></li>
+<li><a href="#orgf4f6819">1. The arrays, by Accel</a></li>
+<li><a href="#org7267e04">2. Softmax a step at a time</a></li>
+<li><a href="#org3b127e4">3. Animation, at a high level</a></li>
+<li><a href="#org26226b9">4. Animation, in detail: ReLU</a></li>
+<li><a href="#org86c65d1">5. Animation, in detail: softmax</a></li>
+<li><a href="#org0977849">6. Captions and the camera</a></li>
+<li><a href="#org6ded14b">7. From tables to Python</a></li>
+<li><a href="#orge0e65a4">8. The player: what Blender runs</a></li>
+<li><a href="#org81ef8b9">9. Rendering</a></li>
+</ul>
+</div>
+</div>
+<p>
+A neural network's layers are array operations: multiply by weights,
+add a bias, then a function applied to every value. Two of those
+functions turn up everywhere. ReLU keeps positive values and makes every
+negative one 0. Softmax turns a row of scores into shares that add up
+to 1 &#x2013; how sure the network is of each answer. This document shows a
+30-second video of both, made from a real network's arrays, and how
+every part of the video comes from X_eTaL.
+</p>
+
+<video src="../blender/relu-softmax.webm" controls loop muted playsinline style="width:100%"></video>
+
+
+<div id="org028a566" class="figure">
+<p><img src="images/relu-softmax-1.jpg" alt="relu-softmax-1.jpg" />
+</p>
+</div>
+<div id="outline-container-org57f6488" class="outline-2">
+<h2 id="org57f6488">Purpose: what the video shows, and why</h2>
+<div class="outline-text-2" id="text-org57f6488">
+<p>
+The network is X_eTaL-gpu's tiny-net: four examples of three inputs,
+a dense layer of five with ReLU, a dense layer of two with softmax.
+X_eTaL-gpu compiles the same X_eTaL functions &#x2013; its Accel library &#x2013; to
+run on Apple and NVIDIA GPUs and checks the GPU's answers against the
+X_eTaL evaluator. Here the evaluator runs them, and the arrays it gives
+are drawn:
+</p>
+
+<ul class="org-ul">
+<li>0 to 11 s, ReLU. The first layer's output z1 (4 by 5) stands as bars
+on a glass floor: positive values orange and up, negative ones blue
+and hanging below. The negatives turn red and shrink to 0, leaving
+their outlines; what is left is h, ReLU's output.</li>
+<li>11.5 to 30 s, softmax. The second layer's output z2 (4 by 2), a row
+of two scores for each example, stands as four groups of two bars.
+Softmax's four steps happen to all of them at once: subtract each
+row's largest, raise e to each value, add up each row (a white bar),
+divide by the sum. Each row ends as one column of its two shares,
+every column 1 tall.</li>
+</ul>
+
+<p>
+The point for a reader is the shape of the computation &#x2013; which values
+change, which do not, and why softmax's results add up to 1 &#x2013; told by
+the arrays themselves rather than by a listing.
+</p>
+</div>
+</div>
+<div id="outline-container-orgf9fc0b4" class="outline-2">
+<h2 id="orgf9fc0b4">The chain: X_eTaL, Python, Blender, video</h2>
+<div class="outline-text-2" id="text-orgf9fc0b4">
+<p>
+Nothing in the chain is written by hand for this video:
+</p>
+
+<ol class="org-ol">
+<li><b>X_eTaL works out the arrays.</b> The network's layers are X_eTaL-gpu's
+Accel library (<code>ac:d_ense</code>, <code>ac:r_elu</code>, <code>ac:s_oftmax</code>, <code>ac:r_owMax</code>,
+<code>ac:r_owSums</code>), pinned at a known commit (<code>GPU_COMMIT</code>).</li>
+<li><b>X_eTaL works out the video.</b> <code>extensions/blender/demos/ReluSoftmax.xtl</code>
+turns those arrays into more arrays: every bar's place and size at
+every key, every color, the seconds each thing is shown, the camera's
+path, the captions' words. This is the only part made for this video.</li>
+<li><b>X_eTaL writes the Python.</b> The blender extension's <code>Video.xtl</code> (alias
+<code>vd:</code>) turns each table into one line of Python: a call such as
+<code>moves('z1', times, rows)</code> with every number written out. Its
+player, the Python those calls run, is fixed text in the library, the
+same for every video, tested on its own; it decides nothing.</li>
+<li><b>Blender runs it.</b> The blender extension's <code>bl:r_un!</code> runs Blender in
+the background on the script; the player makes the objects and keys,
+and Blender's EEVEE renders 901 frames as an MP4.</li>
+</ol>
+
+<p>
+The same arrays always give the same script, byte for byte.
+</p>
+</div>
+</div>
+<div id="outline-container-orgf4f6819" class="outline-2">
+<h2 id="orgf4f6819">1. The arrays, by Accel</h2>
+<div class="outline-text-2" id="text-orgf4f6819">
+<p>
+The library imports Accel and the Video library; this document
+imports the library:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ʳˢ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;ReluSoftmax&quot;</span>
+<span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Accel&quot;</span>
+<span class="c-libfunc">ᵛᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Video&quot;</span>
+<span class="c-builtin">s̲hape</span> ʳˢx
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   "rs:" u_se&lt; "ReluSoftmax"</span>
+<span class="c-comment typed">⍝   "ac:" u_se&lt; "Accel"</span>
+<span class="c-comment typed">⍝   "vd:" u_se&lt; "Video"</span>
+<span class="c-comment typed">⍝   s_hape rs:x</span></pre>
+</div>
+
+<pre class="example">
+4 3
+</pre>
+
+
+<p>
+The input x is four examples of three features. The weights are
+X_eTaL-gpu's data files, a row per input and the bias as the last row:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡx ← <span class="c-number">4</span> <span class="c-number">3</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.5</span> <span class="c-number">-1.0</span> <span class="c-number">0.25</span>  <span class="c-number">1.0</span> <span class="c-number">0.0</span> <span class="c-number">-0.5</span>  <span class="c-number">-0.75</span> <span class="c-number">0.5</span> <span class="c-number">1.0</span>  <span class="c-number">0.2</span> <span class="c-number">0.4</span> <span class="c-number">-0.6</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:x := 4 3 r_eshape 0.5 -1.0 0.25  1.0 0.0 -0.5  -0.75 0.5 1.0  0.2 0.4 -0.6</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡw1 ← <span class="c-number">4</span> <span class="c-number">5</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.5</span> <span class="c-number">-0.25</span> <span class="c-number">0.75</span> <span class="c-number">0.1</span> <span class="c-number">-0.6</span>  <span class="c-number">-0.3</span> <span class="c-number">0.8</span> <span class="c-number">0.2</span> <span class="c-number">-0.5</span> <span class="c-number">0.4</span>  <span class="c-number">0.6</span> <span class="c-number">0.1</span> <span class="c-number">-0.7</span> <span class="c-number">0.3</span> <span class="c-number">0.2</span>  <span class="c-number">0.05</span> <span class="c-number">-0.1</span> <span class="c-number">0.2</span> <span class="c-number">0.0</span> <span class="c-number">0.1</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:w1 := 4 5 r_eshape 0.5 -0.25 0.75 0.1 -0.6  -0.3 0.8 0.2 -0.5 0.4  0.6 0.1 -0.7 0.3 0.2  0.05 -0.1 0.2 0.0 0.1</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡw2 ← <span class="c-number">6</span> <span class="c-number">2</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.7</span> <span class="c-number">-0.4</span>  <span class="c-number">-0.2</span> <span class="c-number">0.9</span>  <span class="c-number">0.5</span> <span class="c-number">0.3</span>  <span class="c-number">-0.6</span> <span class="c-number">0.2</span>  <span class="c-number">0.3</span> <span class="c-number">-0.8</span>  <span class="c-number">0.1</span> <span class="c-number">-0.1</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:w2 := 6 2 r_eshape 0.7 -0.4  -0.2 0.9  0.5 0.3  -0.6 0.2  0.3 -0.8  0.1 -0.1</span></pre>
+</div>
+
+<p>
+The first layer is <code>ac:d_ense</code> &#x2013; x times the weights, plus the bias row
+spread down the batch &#x2013; and ReLU follows it:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡz1 ← ˡx <span class="c-libfunc">ᵃᶜd̲ense</span> ˡw1
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:z1 := l:x ac:d_ense l:w1</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡh ← <span class="c-libfunc">ᵃᶜr̲elu</span> ˡz1
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:h := ac:r_elu l:z1</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ʳˢz1
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   rs:z1</span></pre>
+</div>
+
+<pre class="example">
+               0.75                -1.0                 0.2                 0.625                -0.55
+               0.25                -0.4                 1.3  -0.04999999999999999                 -0.6
+0.12499999999999996              0.5875 -0.9625000000000001 -0.025000000000000022                 0.95
+              -0.33 0.11000000000000007  0.8500000000000001                 -0.36 0.020000000000000046
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-xetal">ʳˢh
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   rs:h</span></pre>
+</div>
+
+<pre class="example">
+               0.75                 0.0                0.2 0.625                  0.0
+               0.25                 0.0                1.3   0.0                  0.0
+0.12499999999999996              0.5875                0.0   0.0                 0.95
+                0.0 0.11000000000000007 0.8500000000000001   0.0 0.020000000000000046
+</pre>
+
+
+<p>
+ReLU changed only the negatives. How many there are, and that the rest
+are untouched:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> (<span class="c-builtin">r̲avel</span> ʳˢz1) <span class="c-symbol">&lt;</span> <span class="c-number">0.0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   '+ r_/ (r_avel rs:z1) &lt; 0.0</span></pre>
+</div>
+
+<pre class="example">
+9
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> <span class="c-builtin">r̲avel</span> <span class="c-builtin">a̲bs</span> (ʳˢz1 <span class="c-symbol">−</span> ʳˢh) <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> ʳˢz1 <span class="c-symbol">≥</span> <span class="c-number">0.0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   '+ r_/ r_avel a_bs (rs:z1 - rs:h) * f_loat rs:z1 &gt;= 0.0</span></pre>
+</div>
+
+<pre class="example">
+0.0
+</pre>
+
+
+<p>
+The second layer gives two scores for each example, and softmax turns
+each row into shares of 1:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡz2 ← ˡh <span class="c-libfunc">ᵃᶜd̲ense</span> ˡw2
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:z2 := l:h ac:d_ense l:w2</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡp ← <span class="c-libfunc">ᵃᶜs̲oftmax</span> ˡz2
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:p := ac:s_oftmax l:z2</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ʳˢz2
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   rs:z2</span></pre>
+</div>
+
+<pre class="example">
+0.34999999999999987 -0.21500000000000005
+ 0.9249999999999999  0.19000000000000003
+              0.355             -0.38125
+              0.509  0.23800000000000002
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-xetal">ʳˢp
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   rs:p</span></pre>
+</div>
+
+<pre class="example">
+ 0.637608652621925   0.362391347378075
+0.6759015277259407 0.32409847227405936
+0.6761752908117927  0.3238247091882072
+0.5673383870169968  0.4326616129830031
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ᵃᶜr̲owSums</span> ʳˢp
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   ac:r_owSums rs:p</span></pre>
+</div>
+
+<pre class="example">
+1.0 1.0 1.0 0.9999999999999999
+</pre>
+</div>
+</div>
+<div id="outline-container-org7267e04" class="outline-2">
+<h2 id="org7267e04">2. Softmax a step at a time</h2>
+<div class="outline-text-2" id="text-org7267e04">
+<p>
+<code>ac:s_oftmax</code> is one expression. To show its steps the library writes
+them out with Accel's own pieces &#x2013; <code>ac:r_owMax</code>, <code>ac:r_owSums</code> &#x2013; and
+checks that they give <code>ac:s_oftmax</code>'s answer:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ʰa̲long</span> ← { v m → v <span class="c-builtin">'l̲eft</span> <span class="c-builtin">t̲able</span> <span class="c-builtin">o̲ffsets</span> <span class="c-builtin">f̲irst</span> <span class="c-number">-1</span> <span class="c-builtin">t̲ake</span> <span class="c-builtin">s̲hape</span> m }
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   h:a_long := { v m -&gt; v 'l_eft t_able o_ffsets f_irst -1 t_ake s_hape m }</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡs̲hifted</span> ← { m → m <span class="c-symbol">−</span> (<span class="c-libfunc">ᵃᶜr̲owMax</span> m) <span class="c-libfunc">ʰa̲long</span> m }
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:s_hifted := { m -&gt; m - (ac:r_owMax m) h:a_long m }</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡe̲xps</span> ← { m → <span class="c-builtin">e̲xp</span> <span class="c-libfunc">ˡs̲hifted</span> m }
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:e_xps := { m -&gt; e_xp l:s_hifted m }</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡs̲ums</span> ← { m → <span class="c-libfunc">ᵃᶜr̲owSums</span> <span class="c-libfunc">ˡe̲xps</span> m }
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:s_ums := { m -&gt; ac:r_owSums l:e_xps m }</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡshares ← (<span class="c-libfunc">ˡe̲xps</span> ˡz2) <span class="c-symbol">÷</span> (<span class="c-libfunc">ˡs̲ums</span> ˡz2) <span class="c-libfunc">ʰa̲long</span> ˡz2
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:shares := (l:e_xps l:z2) / (l:s_ums l:z2) h:a_long l:z2</span></pre>
+</div>
+
+<p>
+Each row less its largest: the largest becomes 0, the other negative.
+This changes nothing in the answer (e to a difference is a ratio) and
+keeps e from overflowing:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ʳˢs̲hifted</span> ʳˢz2
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   rs:s_hifted rs:z2</span></pre>
+</div>
+
+<pre class="example">
+0.0              -0.565
+0.0 -0.7349999999999999
+0.0            -0.73625
+0.0              -0.271
+</pre>
+
+
+<p>
+e to each: every value positive, each row's largest exactly 1:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ʳˢe̲xps</span> ʳˢz2
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   rs:e_xps rs:z2</span></pre>
+</div>
+
+<pre class="example">
+1.0  0.5683601467575405
+1.0 0.47950545897489416
+1.0 0.47890645160877504
+1.0  0.7626164964050653
+</pre>
+
+
+<p>
+Each row's sum, and each value divided by it:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ʳˢs̲ums</span> ʳˢz2
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   rs:s_ums rs:z2</span></pre>
+</div>
+
+<pre class="example">
+1.5683601467575405 1.4795054589748942 1.478906451608775 1.7626164964050655
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> <span class="c-builtin">r̲avel</span> <span class="c-builtin">a̲bs</span> ʳˢshares <span class="c-symbol">−</span> ʳˢp
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   '+ r_/ r_avel a_bs rs:shares - rs:p</span></pre>
+</div>
+
+<pre class="example">
+0.0
+</pre>
+
+
+
+<div id="orgb719911" class="figure">
+<p><img src="images/relu-softmax-4.jpg" alt="relu-softmax-4.jpg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org3b127e4" class="outline-2">
+<h2 id="org3b127e4">3. Animation, at a high level</h2>
+<div class="outline-text-2" id="text-org3b127e4">
+<p>
+A video here is a timeline of groups of objects. Every object is a box
+or a word; a group is one kind of thing &#x2013; z1's twenty bars, their
+twenty labels, the outlines of the nine removed values. For each group
+the program gives tables, one row an object:
+</p>
+
+<ul class="org-ul">
+<li>what it is at the start: a box's middle and size and color, a word's
+place, height and color;</li>
+<li>when it is shown: a span, from one second to another;</li>
+<li>its keys: at each of a few times, its place and size; between keys
+Blender eases from one to the next (Bezier), so a bar shrinks
+smoothly;</li>
+<li>its tints: at each of a few times, its color;</li>
+<li>and, for the whole video, the camera's keys &#x2013; where it is and what it
+looks at &#x2013; and the captions, each with its span.</li>
+</ul>
+
+<p>
+That is all an animation is here: no physics, no simulation, nothing
+Blender decides. Everything moves because a table says where it is at
+which second.
+</p>
+
+<p>
+The timing is an array too. ReLU runs from 0 to 11 s; softmax's steps
+start at these seconds, and the video ends at 30:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡsteps ← <span class="c-number">11.5</span> <span class="c-number">15.0</span> <span class="c-number">18.0</span> <span class="c-number">21.0</span> <span class="c-number">23.5</span> <span class="c-number">26.0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:steps := 11.5 15.0 18.0 21.0 23.5 26.0</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡends ← <span class="c-number">30.0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:ends := 30.0</span></pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org26226b9" class="outline-2">
+<h2 id="org26226b9">4. Animation, in detail: ReLU</h2>
+<div class="outline-text-2" id="text-org26226b9">
+<p>
+The cells of z1 stand 1.4 m apart on the floor, a row of z1 a row of
+the floor, the whole stage about x -12 (softmax's is about x 0, so the
+camera can glide from one to the other):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡcellX ← <span class="c-number">4</span> <span class="c-number">5</span> <span class="c-builtin">r̲eshape</span> ox <span class="c-symbol">+</span> gap <span class="c-symbol">×</span> (<span class="c-builtin">f̲loat</span> <span class="c-builtin">r̲ange</span> <span class="c-number">5</span>) <span class="c-symbol">−</span> <span class="c-number">3.0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:cellX := 4 5 r_eshape ox + gap * (f_loat r_ange 5) - 3.0</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡcellY ← (gap <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> (<span class="c-builtin">r̲ange</span> <span class="c-number">4</span>) <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-builtin">'l̲eft</span> <span class="c-builtin">t̲able</span> <span class="c-builtin">r̲ange</span> <span class="c-number">5</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:cellY := (gap * f_loat (r_ange 4) - 1) 'l_eft t_able r_ange 5</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ʳˢcellX
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   rs:cellX</span></pre>
+</div>
+
+<pre class="example">
+-14.8 -13.4 -12.0 -10.6 -9.2
+-14.8 -13.4 -12.0 -10.6 -9.2
+-14.8 -13.4 -12.0 -10.6 -9.2
+-14.8 -13.4 -12.0 -10.6 -9.2
+</pre>
+
+
+<p>
+A bar is a box: its middle (x y z) and its size (w d h). A bar of
+value v is v times 2.2 m tall; standing on the floor its middle is at
+half its height, and a negative height puts it below the floor. The
+library works out every bar at once, a row of six numbers each:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡb̲ars</span> ← { (bx, by, hh, w) z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:b_ars := { (bx, by, hh, w) z -&gt;</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">(<span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">2.0</span> <span class="c-number">-1.0</span>, <span class="c-number">0.5</span>) <span class="c-libfunc">ʳˢb̲ars</span> <span class="c-number">0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   (0.0 1.0, 0.0 0.0, 2.0 -1.0, 0.5) rs:b_ars 0</span></pre>
+</div>
+
+<pre class="example">
+0.0 0.0  1.0 0.5 0.5 2.0
+1.0 0.0 -0.5 0.5 0.5 1.0
+</pre>
+
+
+<p>
+ReLU is three keys for each bar: at 0 s and 4 s the bar is z1's value,
+at 5.6 s it is ReLU's &#x2013; 0 for a negative, the same for the rest. The
+three tables, one under another, become one array of 20 bars by 3 keys
+by 6 numbers:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡk̲eyed</span> ← { k tabs →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:k_eyed := { k tabs -&gt;</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">p0 ← (<span class="c-builtin">r̲avel</span> ʳˢcellX, <span class="c-builtin">r̲avel</span> ʳˢcellY, <span class="c-number">2.2</span> <span class="c-symbol">×</span> <span class="c-builtin">r̲avel</span> ʳˢz1, <span class="c-number">0.62</span>) <span class="c-libfunc">ʳˢb̲ars</span> <span class="c-number">0</span>
+p1 ← (<span class="c-builtin">r̲avel</span> ʳˢcellX, <span class="c-builtin">r̲avel</span> ʳˢcellY, <span class="c-number">2.2</span> <span class="c-symbol">×</span> <span class="c-libfunc">ᵃᶜr̲elu</span> <span class="c-builtin">r̲avel</span> ʳˢz1, <span class="c-number">0.62</span>) <span class="c-libfunc">ʳˢb̲ars</span> <span class="c-number">0</span>
+keys ← <span class="c-number">3</span> <span class="c-libfunc">ʳˢk̲eyed</span> p0 <span class="c-builtin">c̲at</span> p0 <span class="c-builtin">c̲at</span> p1
+<span class="c-builtin">s̲hape</span> keys
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   p0 := (r_avel rs:cellX, r_avel rs:cellY, 2.2 * r_avel rs:z1, 0.62) rs:b_ars 0</span>
+<span class="c-comment typed">⍝   p1 := (r_avel rs:cellX, r_avel rs:cellY, 2.2 * ac:r_elu r_avel rs:z1, 0.62) rs:b_ars 0</span>
+<span class="c-comment typed">⍝   keys := 3 rs:k_eyed p0 c_at p0 c_at p1</span>
+<span class="c-comment typed">⍝   s_hape keys</span></pre>
+</div>
+
+<pre class="example">
+20 3 6
+</pre>
+
+
+<p>
+The second bar is z1's -1.0: below the floor until 4 s, then a sliver
+(0.004 m) at 5.6 s:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-number">2</span> <span class="c-builtin">s̲elect</span> keys
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   2 s_elect keys</span></pre>
+</div>
+
+<pre class="example">
+-13.4 0.0 -1.1 0.62 0.62   2.2
+-13.4 0.0 -1.1 0.62 0.62   2.2
+-13.4 0.0  0.0 0.62 0.62 0.004
+</pre>
+
+
+<p>
+Its color is keyed the same way: blue until 3 s, red by 3.6 s, so the
+eye goes to the values about to go. Colors are picked from a mask &#x2013;
+one where the value is negative &#x2013; as arrays:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">neg ← (<span class="c-builtin">r̲avel</span> ʳˢz1) <span class="c-symbol">&lt;</span> <span class="c-number">0.0</span>
+<span class="c-number">3</span> <span class="c-builtin">t̲ake</span> ((<span class="c-builtin">f̲loat</span> neg) <span class="c-symbol">'×</span> <span class="c-builtin">t̲able</span> <span class="c-builtin">f̲loat</span> ʳˢred) <span class="c-symbol">+</span> (<span class="c-number">1.0</span> <span class="c-symbol">−</span> <span class="c-builtin">f̲loat</span> neg) <span class="c-symbol">'×</span> <span class="c-builtin">t̲able</span> <span class="c-builtin">f̲loat</span> ʳˢorange
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   neg := (r_avel rs:z1) &lt; 0.0</span>
+<span class="c-comment typed">⍝   3 t_ake ((f_loat neg) '* t_able f_loat rs:red) + (1.0 - f_loat neg) '* t_able f_loat rs:orange</span></pre>
+</div>
+
+<pre class="example">
+255.0 179.0 71.0
+255.0  74.0 61.0
+255.0 179.0 71.0
+</pre>
+
+
+<p>
+The whole ReLU part is one function: a glass floor, the bars with
+their keys, tints and span, red outlines where the negatives were
+(shown from 5.6 s), z1's values over the bars (0.5 to 5 s) and h's
+after (6 to 11 s):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡr̲eluScript</span> ← { z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:r_eluScript := { z -&gt;</span></pre>
+</div>
+
+
+<div id="org11141c5" class="figure">
+<p><img src="images/relu-softmax-2.jpg" alt="relu-softmax-2.jpg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org86c65d1" class="outline-2">
+<h2 id="org86c65d1">5. Animation, in detail: softmax</h2>
+<div class="outline-text-2" id="text-org86c65d1">
+<p>
+Each row's two bars stand side by side in their own group, 4.4 m
+apart, so no bar hides another:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡgroupX ← gw <span class="c-symbol">×</span> (<span class="c-builtin">f̲loat</span> <span class="c-builtin">r̲ange</span> <span class="c-number">4</span>) <span class="c-symbol">−</span> <span class="c-number">2.5</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:groupX := gw * (f_loat r_ange 4) - 2.5</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡbarX ← (ˡgroupX <span class="c-symbol">−</span> <span class="c-number">0.9</span>) <span class="c-symbol">'+</span> <span class="c-builtin">t̲able</span> <span class="c-number">0.0</span> <span class="c-number">1.2</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:barX := (l:groupX - 0.9) '+ t_able 0.0 1.2</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ʳˢbarX
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   rs:barX</span></pre>
+</div>
+
+<pre class="example">
+-7.500000000000001  -6.300000000000001
+              -3.1 -1.9000000000000001
+1.3000000000000003                 2.5
+               5.7                 6.9
+</pre>
+
+
+<p>
+A score's bar has seven keys: the score, held until the shift, the
+shifted score, held until the e's, the e, held until the division, the
+share. Holding a value (two keys with the same value a second apart)
+is what makes each step a pause, then a move. Each row's sum is a
+white bar beside its two, shown from the sum's step to just after the
+division. The result is a column per row: its two shares stacked, the
+first on the floor, the second on top of it, so every column stands
+3.2 m &#x2013; 1 &#x2013; tall:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡs̲oftmaxScript</span> ← { z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:s_oftmaxScript := { z -&gt;</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ʰv̲alues</span> ← { (name, v, i, j, less, bx) z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   h:v_alues := { (name, v, i, j, less, bx) z -&gt;</span></pre>
+</div>
+
+
+<div id="org5240ca5" class="figure">
+<p><img src="images/relu-softmax-3.jpg" alt="relu-softmax-3.jpg" />
+</p>
+</div>
+
+
+<div id="org840442c" class="figure">
+<p><img src="images/relu-softmax-5.jpg" alt="relu-softmax-5.jpg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org0977849" class="outline-2">
+<h2 id="org0977849">6. Captions and the camera</h2>
+<div class="outline-text-2" id="text-org0977849">
+<p>
+The captions are words with spans and colors. Their numbers &#x2013; the
+shapes, how many values are negative &#x2013; are the arrays', so a caption
+cannot disagree with what it shows:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ʰs̲hape</span> ← { name a → name <span class="c-builtin">c̲at</span> <span class="c-string">&quot; [&quot;</span> <span class="c-builtin">c̲at</span> (<span class="c-builtin">f̲ormat</span> <span class="c-builtin">s̲hape</span> a) <span class="c-builtin">c̲at</span> <span class="c-string">&quot;]&quot;</span> }
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   h:s_hape := { name a -&gt; name c_at " [" c_at (f_ormat s_hape a) c_at "]" }</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ˡcaptionTexts ← ((<span class="c-string">&quot;z1&quot;</span> <span class="c-libfunc">ʰs̲hape</span> ˡz1) <span class="c-builtin">c̲at</span> <span class="c-string">&quot;: &quot;</span> <span class="c-builtin">c̲at</span> (<span class="c-builtin">f̲ormat</span> <span class="c-builtin">t̲ally</span> <span class="c-builtin">r̲avel</span> ˡz1) <span class="c-builtin">c̲at</span> <span class="c-string">&quot; values, &quot;</span> <span class="c-builtin">c̲at</span> (<span class="c-builtin">f̲ormat</span> <span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> (<span class="c-builtin">r̲avel</span> ˡz1) <span class="c-symbol">&lt;</span> <span class="c-number">0.0</span>) <span class="c-builtin">c̲at</span> <span class="c-string">&quot; of them negative|&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;relu: every negative becomes 0|&quot;</span> <span class="c-builtin">c̲at</span>
+  (<span class="c-string">&quot;h&quot;</span> <span class="c-libfunc">ʰs̲hape</span> ˡh) <span class="c-builtin">c̲at</span> <span class="c-string">&quot;: the negatives are gone; the rest unchanged|&quot;</span> <span class="c-builtin">c̲at</span>
+  (<span class="c-string">&quot;z2&quot;</span> <span class="c-libfunc">ʰs̲hape</span> ˡz2) <span class="c-builtin">c̲at</span> <span class="c-string">&quot;: two scores in each row|&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;1. subtract each row's largest|2. exp: every value positive, the largest 1|3. add up each row|4. divide by the sum|&quot;</span> <span class="c-builtin">c̲at</span>
+  (<span class="c-string">&quot;p&quot;</span> <span class="c-libfunc">ʰs̲hape</span> ˡp) <span class="c-builtin">c̲at</span> <span class="c-string">&quot;: each row shares out 1&quot;</span>)
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:captionTexts := (("z1" h:s_hape l:z1) c_at ": " c_at (f_ormat t_ally r_avel l:z1) c_at " values, " c_at (f_ormat '+ r_/ (r_avel l:z1) &lt; 0.0) c_at " of them negative|" c_at</span>
+<span class="c-comment typed">⍝     "relu: every negative becomes 0|" c_at</span>
+<span class="c-comment typed">⍝     ("h" h:s_hape l:h) c_at ": the negatives are gone; the rest unchanged|" c_at</span>
+<span class="c-comment typed">⍝     ("z2" h:s_hape l:z2) c_at ": two scores in each row|" c_at</span>
+<span class="c-comment typed">⍝     "1. subtract each row's largest|2. exp: every value positive, the largest 1|3. add up each row|4. divide by the sum|" c_at</span>
+<span class="c-comment typed">⍝     ("p" h:s_hape l:p) c_at ": each row shares out 1")</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡc̲aptionTable</span> ← { z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:c_aptionTable := { z -&gt;</span></pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ʳˢcaptionTexts
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   rs:captionTexts</span></pre>
+</div>
+
+<pre class="example">
+z1 [4 5]: 20 values, 9 of them negative|relu: every negative becomes 0|h [4 5]: the negatives are gone; the rest unchanged|z2 [4 2]: two scores in each row|1. subtract each row's largest|2. exp: every value positive, the largest 1|3. add up each row|4. divide by the sum|p [4 2]: each row shares out 1
+</pre>
+
+
+<p>
+The camera has four keys: above the ReLU stage at the start, the same
+a little moved at 10.5 s, back from the softmax stage by 12 s (wide
+enough for its four groups), and drifting until 30 s:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡc̲ameraKeys</span> ← { z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:c_ameraKeys := { z -&gt;</span></pre>
+</div>
+
+<p>
+Every color is checked against the near-black sky for contrast (WCAG:
+7 or more reads easily). The gray of the row names, the dimmest, is 12.3
+(written ten times over here, to keep a whole number):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-builtin">f̲loor</span> <span class="c-number">10.0</span> <span class="c-symbol">×</span> ʳˢgray <span class="c-libfunc">ᵛᵈc̲ontrast</span> ʳˢsky
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   f_loor 10.0 * rs:gray vd:c_ontrast rs:sky</span></pre>
+</div>
+
+<pre class="example">
+123
+</pre>
+</div>
+</div>
+<div id="outline-container-org6ded14b" class="outline-2">
+<h2 id="org6ded14b">7. From tables to Python</h2>
+<div class="outline-text-2" id="text-org6ded14b">
+<p>
+The scene is the stage, the two parts, the captions and the camera:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡs̲cene</span> ← { (w, h) z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:s_cene := { (w, h) z -&gt;</span></pre>
+</div>
+
+<p>
+Each part is a string of Python calls. <code>vd:m_oves</code> is one of the
+functions that write them: the times and the n by k by 6 array, every
+number written out:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-libfunc">ˡm̲oves</span> ← { (name, ts, p) z →
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   l:m_oves := { (name, ts, p) z -&gt;</span></pre>
+</div>
+
+<p>
+The ReLU bars' keys, as the script has them (the first 160 characters):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-number">160</span> <span class="c-builtin">t̲ake</span> (<span class="c-string">&quot;z1&quot;</span>, <span class="c-number">0.0</span> <span class="c-number">4.0</span> <span class="c-number">5.6</span>, keys) <span class="c-libfunc">ᵛᵈm̲oves</span> <span class="c-number">0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   160 t_ake ("z1", 0.0 4.0 5.6, keys) vd:m_oves 0</span></pre>
+</div>
+
+<pre class="example">
+moves('z1', nums('0.0 4.0 5.6', 3)[0], nums('-14.8 0.0 0.8250000000000001 0.62 0.62 1.6500000000000001 -14.8 0.0 0.8250000000000001 0.62 0.62 1.6500000000000001
+</pre>
+
+
+<p>
+And the whole script, the player and then the calls, its length in
+characters and in lines, the same every time:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-builtin">t̲ally</span> (<span class="c-number">1920</span>, <span class="c-number">1080</span>) <span class="c-libfunc">ʳˢs̲cene</span> <span class="c-number">0</span>
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   t_ally (1920, 1080) rs:s_cene 0</span></pre>
+</div>
+
+<pre class="example">
+34744
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-xetal">lines ← (<span class="c-builtin">n̲ot</span> ((<span class="c-number">1920</span>, <span class="c-number">1080</span>) <span class="c-libfunc">ʳˢs̲cene</span> <span class="c-number">0</span>) <span class="c-symbol">=</span> <span class="c-builtin">f̲irst</span> <span class="c-string">&quot;\n&quot;</span>) <span class="c-builtin">p̲artition</span> (<span class="c-number">1920</span>, <span class="c-number">1080</span>) <span class="c-libfunc">ʳˢs̲cene</span> <span class="c-number">0</span>
+<span class="c-builtin">t̲ally</span> lines
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   lines := (n_ot ((1920, 1080) rs:s_cene 0) = f_irst "\n") p_artition (1920, 1080) rs:s_cene 0</span>
+<span class="c-comment typed">⍝   t_ally lines</span></pre>
+</div>
+
+<pre class="example">
+307
+</pre>
+</div>
+</div>
+<div id="outline-container-orge0e65a4" class="outline-2">
+<h2 id="orge0e65a4">8. The player: what Blender runs</h2>
+<div class="outline-text-2" id="text-orge0e65a4">
+<p>
+The player is the Python at the top of every script, <code>vd:head</code>: fixed
+text in the library. Each call reads its numbers and does exactly what
+they say. <code>moves</code> sets each object's place and size and keys them at
+each time's frame; <code>tints</code> keys a material's color; <code>shown</code> keys
+<code>hide_render</code> off at a span's start and on after its end; <code>camera</code> keys
+the camera and the point it looks at:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal">ʰplayKeys ← (<span class="c-string">&quot;def span(o, a, b):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;    keys = {1: True, frame(a): False, frame(b) + 1: True} if a &gt; 0 else {1: False, frame(b) + 1: True}\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;    for f in sorted(keys):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;        o.hide_render = keys[f]\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;        o.keyframe_insert('hide_render', frame=f)\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;def shown(name, rows):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;    for o, r in zip(groups[name], rows):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;        span(o, r[0], r[1])\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;def moves(name, times, rows):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;    for o, r in zip(groups[name], rows):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;        for j, t in enumerate(times):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;            o.location = r[6 * j:6 * j + 3]\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;            o.scale = r[6 * j + 3:6 * j + 6]\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;            o.keyframe_insert('location', frame=frame(t))\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;            o.keyframe_insert('scale', frame=frame(t))\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;def moves_each(name, times, rows):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;    for o, ts, r in zip(groups[name], times, rows):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;        for j, t in enumerate(ts):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;            o.location = r[6 * j:6 * j + 3]\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;            o.scale = r[6 * j + 3:6 * j + 6]\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;            o.keyframe_insert('location', frame=frame(t))\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;            o.keyframe_insert('scale', frame=frame(t))\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;def tints(name, times, rows):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;    for o, r in zip(groups[name], rows):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;        s = o.data.materials[0].node_tree.nodes['glow'].inputs['Color']\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;        for j, t in enumerate(times):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;            s.default_value = tuple(r[3 * j:3 * j + 3]) + (1.0,)\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;            s.keyframe_insert('default_value', frame=frame(t))\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;def camera(times, eyes, aims):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;    for t, e, a in zip(times, eyes, aims):\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;        rig['camera'].location = e\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;        rig['camera'].keyframe_insert('location', frame=frame(t))\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;        rig['aim'].location = a\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;        rig['aim'].keyframe_insert('location', frame=frame(t))\n&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-string">&quot;\n&quot;</span>)
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   h:playKeys := ("def span(o, a, b):\n" c_at</span>
+<span class="c-comment typed">⍝     "    keys = {1: True, frame(a): False, frame(b) + 1: True} if a &gt; 0 else {1: False, frame(b) + 1: True}\n" c_at</span>
+<span class="c-comment typed">⍝     "    for f in sorted(keys):\n" c_at</span>
+<span class="c-comment typed">⍝     "        o.hide_render = keys[f]\n" c_at</span>
+<span class="c-comment typed">⍝     "        o.keyframe_insert('hide_render', frame=f)\n" c_at</span>
+<span class="c-comment typed">⍝     "\n" c_at</span>
+<span class="c-comment typed">⍝     "def shown(name, rows):\n" c_at</span>
+<span class="c-comment typed">⍝     "    for o, r in zip(groups[name], rows):\n" c_at</span>
+<span class="c-comment typed">⍝     "        span(o, r[0], r[1])\n" c_at</span>
+<span class="c-comment typed">⍝     "\n" c_at</span>
+<span class="c-comment typed">⍝     "def moves(name, times, rows):\n" c_at</span>
+<span class="c-comment typed">⍝     "    for o, r in zip(groups[name], rows):\n" c_at</span>
+<span class="c-comment typed">⍝     "        for j, t in enumerate(times):\n" c_at</span>
+<span class="c-comment typed">⍝     "            o.location = r[6 * j:6 * j + 3]\n" c_at</span>
+<span class="c-comment typed">⍝     "            o.scale = r[6 * j + 3:6 * j + 6]\n" c_at</span>
+<span class="c-comment typed">⍝     "            o.keyframe_insert('location', frame=frame(t))\n" c_at</span>
+<span class="c-comment typed">⍝     "            o.keyframe_insert('scale', frame=frame(t))\n" c_at</span>
+<span class="c-comment typed">⍝     "\n" c_at</span>
+<span class="c-comment typed">⍝     "def moves_each(name, times, rows):\n" c_at</span>
+<span class="c-comment typed">⍝     "    for o, ts, r in zip(groups[name], times, rows):\n" c_at</span>
+<span class="c-comment typed">⍝     "        for j, t in enumerate(ts):\n" c_at</span>
+<span class="c-comment typed">⍝     "            o.location = r[6 * j:6 * j + 3]\n" c_at</span>
+<span class="c-comment typed">⍝     "            o.scale = r[6 * j + 3:6 * j + 6]\n" c_at</span>
+<span class="c-comment typed">⍝     "            o.keyframe_insert('location', frame=frame(t))\n" c_at</span>
+<span class="c-comment typed">⍝     "            o.keyframe_insert('scale', frame=frame(t))\n" c_at</span>
+<span class="c-comment typed">⍝     "\n" c_at</span>
+<span class="c-comment typed">⍝     "def tints(name, times, rows):\n" c_at</span>
+<span class="c-comment typed">⍝     "    for o, r in zip(groups[name], rows):\n" c_at</span>
+<span class="c-comment typed">⍝     "        s = o.data.materials[0].node_tree.nodes['glow'].inputs['Color']\n" c_at</span>
+<span class="c-comment typed">⍝     "        for j, t in enumerate(times):\n" c_at</span>
+<span class="c-comment typed">⍝     "            s.default_value = tuple(r[3 * j:3 * j + 3]) + (1.0,)\n" c_at</span>
+<span class="c-comment typed">⍝     "            s.keyframe_insert('default_value', frame=frame(t))\n" c_at</span>
+<span class="c-comment typed">⍝     "\n" c_at</span>
+<span class="c-comment typed">⍝     "def camera(times, eyes, aims):\n" c_at</span>
+<span class="c-comment typed">⍝     "    for t, e, a in zip(times, eyes, aims):\n" c_at</span>
+<span class="c-comment typed">⍝     "        rig['camera'].location = e\n" c_at</span>
+<span class="c-comment typed">⍝     "        rig['camera'].keyframe_insert('location', frame=frame(t))\n" c_at</span>
+<span class="c-comment typed">⍝     "        rig['aim'].location = a\n" c_at</span>
+<span class="c-comment typed">⍝     "        rig['aim'].keyframe_insert('location', frame=frame(t))\n" c_at</span>
+<span class="c-comment typed">⍝     "\n")</span></pre>
+</div>
+
+<p>
+The others make things: <code>stage</code> sets EEVEE, the Standard view (colors
+as given), 1920 by 1080 at 30 frames a second, a near-black sky and a
+camera that tracks an aim; <code>boxes</code> makes a group of boxes that glow
+their color (solid, wireframe or glass); <code>labels</code> makes words in
+JuliaMono that turn to face the camera; <code>captions</code> hangs words on a
+dark plate just in front of the camera's lens; <code>stills</code> and <code>video</code>
+render.
+</p>
+</div>
+</div>
+<div id="outline-container-org81ef8b9" class="outline-2">
+<h2 id="org81ef8b9">9. Rendering</h2>
+<div class="outline-text-2" id="text-org81ef8b9">
+<p>
+The demo writes the launcher (<code>bp:launcher</code>) and the script, and runs
+Blender through the extension. Five stills come first &#x2013; the pictures
+in this document &#x2013; then the video, and Blender's report of what it
+made:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xetal"><span class="c-comment">⍝ five stills (the documents' pictures), then every frame as the video</span>
+script ← ((<span class="c-number">1920</span>, <span class="c-number">1080</span>) <span class="c-libfunc">ʳˢs̲cene</span> <span class="c-number">0</span>) <span class="c-builtin">c̲at</span> ((<span class="c-number">2.0</span> <span class="c-number">8.0</span> <span class="c-number">14.0</span> <span class="c-number">23.0</span> <span class="c-number">28.0</span>, <span class="c-string">&quot;relu-softmax&quot;</span>) <span class="c-libfunc">ᵛᵈs̲tills</span> <span class="c-number">0</span>) <span class="c-builtin">c̲at</span> (<span class="c-libfunc">ᵛᵈr̲ender</span> <span class="c-string">&quot;relu-softmax.mp4&quot;</span>) <span class="c-builtin">c̲at</span> ᵛᵈreport
+n ← <span class="c-string">&quot;work/explain/run.py&quot;</span> <span class="c-libfunc">ᵇˡw̲rite!</span> ᵇᵖlauncher
+n ← <span class="c-string">&quot;work/explain/relu-softmax.py&quot;</span> <span class="c-libfunc">ᵇˡw̲rite!</span> script
+
+<span class="c-comment typed">⍝ typed:</span>
+<span class="c-comment typed">⍝   script := ((1920, 1080) rs:s_cene 0) c_at ((2.0 8.0 14.0 23.0 28.0, "relu-softmax") vd:s_tills 0) c_at (vd:r_ender "relu-softmax.mp4") c_at vd:report</span>
+<span class="c-comment typed">⍝   n := "work/explain/run.py" bl:w_rite! bp:launcher</span>
+<span class="c-comment typed">⍝   n := "work/explain/relu-softmax.py" bl:w_rite! script</span></pre>
+</div>
+
+<p>
+Run it with <code>just demo blender relu-softmax</code> (a few minutes). It
+prints:
+</p>
+
+<pre class="example" id="orgaa54e2a">
+the run, and the error lines in Blender's log:
+exit 0
+errors 0
+what Blender made:
+frames 1 to 901 at 30 a second
+e values: 8 objects, 8 keyed
+floor: 1 objects, 1 keyed
+floor2: 1 objects, 1 keyed
+gone: 9 objects, 9 keyed
+h values: 20 objects, 20 keyed
+ones: 4 objects, 4 keyed
+result: 8 objects, 8 keyed
+result values: 8 objects, 8 keyed
+rows: 4 objects, 4 keyed
+scores: 8 objects, 8 keyed
+scores values: 8 objects, 8 keyed
+shares values: 8 objects, 8 keyed
+shifted values: 8 objects, 8 keyed
+sum values: 4 objects, 4 keyed
+sums: 4 objects, 4 keyed
+z1: 20 objects, 20 keyed
+z1 values: 20 objects, 20 keyed
+</pre>
+
+<p>
+<code>extensions/blender/work/explain/out/relu-softmax.mp4</code>: 1920 by 1080,
+901 frames, 30 seconds. The site's recording is that file, made
+smaller.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p><a href="index.html">Literate documents</a> &middot; <a href="../">The demos</a> &middot; <a href="https://github.com/softwarewrighter/X_eTaL-extensions">Repository</a></p>
+</div>
+</body>
+</html>

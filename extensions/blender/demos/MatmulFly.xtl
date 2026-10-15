@@ -1,0 +1,220 @@
+## MatmulFly.xtl -- a large matrix product as a 3D construct, a
+## fly-through video (Video.xtl): C = A x B for n by n matrices (512 in
+## the demo), by X_eTaL-gpu's Accel library (ac:m_atmul). A stands on
+## the left wall, B on the ceiling, C on the front wall, every item a
+## cell colored by its value; the n x n x n multiply-adds fill the cube
+## between them. The camera starts far out, flies to one work-group (a
+## 16 by 16 tile of C, as a GPU schedules it), then to one work-item (a
+## row of A times a column of B): its n products stand as bars, added
+## one at a time from the far end into one item of C; then C fills in,
+## a work-group at a time. Every array here is worked out in X_eTaL;
+## Video.xtl writes them into the script Blender runs. Shared by the
+## demo (demos/matmul-fly.xtl), its test and the literate document
+## (docs/literate/matmul.org).
+## Import: "mf:" u_se< "MatmulFly"
+
+"ac:" u_se< "Accel"
+"vd:" u_se< "Video"
+
+### The arrays
+
+## n mf:l_eft 0: the left matrix A (n by n), smooth waves
+## with a ripple, so its wall shows a pattern at every scale
+## >> "mf:" u_se< "MatmulFly"
+## >> s_hape 8 mf:l_eft 0
+## 8 8
+l:l_eft := { n z ->
+  i := f_loat (r_ange n) - 1
+  ((s_in 0.031 * i) '+ t_able 0.7 * c_os 0.017 * i) + (f_loat ((7 * (r_ange n) - 1) '+ t_able 3 * (r_ange n) - 1) m_od 23) / 40.0
+}
+
+## n mf:r_ight 0: the right matrix B (n by n), waves of its own
+l:r_ight := { n z ->
+  i := f_loat (r_ange n) - 1
+  ((0.8 * c_os 0.023 * i) '+ t_able s_in 0.041 * i) + (f_loat ((5 * (r_ange n) - 1) '+ t_able 11 * (r_ange n) - 1) m_od 19) / 40.0
+}
+
+### Places
+
+# a work-group's side, the walls' distance from the cube, the cube's side
+tile := 16
+gap := 1.6
+side := 10.0
+
+## n mf:w_orkGroup 0: the work-group the camera visits, its first row
+## and column (from 0): 5/8 of the way down C's tiles, 13/32 across --
+## for 512, tile 20 13, rows 320 to 335, columns 208 to 223
+## >> "mf:" u_se< "MatmulFly"
+## >> 512 mf:w_orkGroup 0
+## 320 208
+l:w_orkGroup := { n z ->
+  t := n d_iv tile
+  tile * ((5 * t) d_iv 8) c_at (13 * t) d_iv 32
+}
+
+## n mf:w_orkItem 0: the work-item the camera visits: row 5 and column 9
+## of its work-group
+l:w_orkItem := { n z -> (n l:w_orkGroup 0) + 5 9 }
+
+# a box from its low corner to its high (x y z each): its middle and size
+h:b_ox := { lo hi -> (0.5 * lo + hi) c_at a_bs hi - lo }
+
+# rows for vd:b_oxes: boxes (each a middle and size), one color, a glow
+h:b_oxes := { (bs, c, g) z -> bs c_at_2 ((1 s_elect s_hape bs) c_at 4) r_eshape (f_loat c) c_at g }
+
+### When (seconds; the video is 18)
+
+## the video's length
+l:length := 18.0
+# a fraction of the video, in seconds
+h:a_t := { f -> l:length * f }
+
+## the n products appear, the running sum goes from the far end to the
+## near (0.56 to 0.78 of the video), C fills in (0.84 to 0.97)
+l:sumTimes := h:a_t 0.56 0.78
+## C fills in
+l:fillTimes := h:a_t 0.84 0.97
+
+## n mf:f_ill 0: the second each item of C appears, a work-group at a
+## time, row by row of work-groups (n by n)
+l:f_ill := { n z ->
+  t := n d_iv tile
+  g := ((((r_ange n) - 1) d_iv tile) * t) '+ t_able ((r_ange n) - 1) d_iv tile
+  f := l:fillTimes
+  (1 s_elect f) + ((2 s_elect f) - 1 s_elect f) * ((f_loat g) + 0.5) / f_loat t * t
+}
+
+### The scene
+
+# colors (0 to 255)
+white := 255 255 255
+yellow := 255 216 77
+orange := 255 122 61
+edge := 138 147 163
+## the sky
+l:sky := 7 8 10
+## a positive product's color, and a negative one's
+l:plus := 255 179 71
+## a negative one's
+l:minus := 79 168 255
+
+## n mf:w_alls 0: A, B and C as walls of cells colored by value (C
+## appearing a work-group at a time, on a pane of glass until then), the
+## cube's edges, and each wall's name
+l:w_alls := { n z ->
+  u := side / f_loat n
+  a := n l:l_eft 0
+  b := n l:r_ight 0
+  c := a ac:m_atmul b
+  zero := (n c_at n) r_eshape 0.0
+  t := ("A", (0.0 - gap) c_at 0.0 0.0, 0.0 0.0 c_at 0.0 - u, 0.0 c_at u c_at 0.0, (n c_at n c_at 3) r_eshape (a, 'm_in r_/ 'm_in r_/ a, 'm_ax r_/ 'm_ax r_/ a) vd:t_one 0, zero, 0.08) vd:g_rid 0
+  t := t c_at ("B", 0.0 0.0 c_at gap, 0.0 c_at u c_at 0.0, u c_at 0.0 0.0, (n c_at n c_at 3) r_eshape (b, 'm_in r_/ 'm_in r_/ b, 'm_ax r_/ 'm_ax r_/ b) vd:t_one 0, zero, 0.08) vd:g_rid 0
+  t := t c_at ("C", 0.0 c_at (0.0 - gap) c_at 0.0, 0.0 0.0 c_at 0.0 - u, u c_at 0.0 0.0, (n c_at n c_at 3) r_eshape (c, 'm_in r_/ 'm_in r_/ c, 'm_ax r_/ 'm_ax r_/ c) vd:t_one 0, n l:f_ill 0, 0.08) vd:g_rid 0
+  t := t c_at ("C empty", (1 6 r_eshape (0.5 * side) c_at ((0.0 - gap) + 0.01) c_at (-0.5 * side) c_at side c_at 0.005 c_at side, 40 48 60, 1.0) h:b_oxes 0) vd:g_lass 0
+  t := t c_at ("volume", (1 6 r_eshape (0.5 * side) c_at (0.5 * side) c_at (-0.5 * side) c_at side c_at side c_at side, edge, 1.0) h:b_oxes 0) vd:o_utlines 0
+  sh := "[" c_at (f_ormat n c_at n) c_at "]"
+  names := "A " c_at sh c_at "|B " c_at sh c_at "|C " c_at sh
+  at := 3 3 r_eshape ((0.0 - gap) - 0.05) c_at (0.5 * side) c_at 0.6 c_at (0.5 * side) c_at (side + 0.4) c_at (gap + 0.5) c_at (0.5 * side) c_at ((0.0 - gap) - 0.05) c_at 0.6
+  t c_at ("names", names, at c_at_2 (3 4 r_eshape 1.3 c_at f_loat white)) vd:l_abels 0
+}
+
+## n mf:w_ork 0: one work-group and one work-item. The work-group: its
+## tile of C outlined, the rows of A and columns of B it reads, the slab
+## of the cube it covers. The work-item: a beam through the cube along
+## its row of A and column of B, its n products as bars along the beam
+## (orange positive, blue negative), the running sum -- the products
+## added from the far end -- as one white bar moving to the near end,
+## and its item of C, lit
+l:w_ork := { n z ->
+  u := side / f_loat n
+  a := n l:l_eft 0
+  b := n l:r_ight 0
+  c := a ac:m_atmul b
+  (i0, j0) := (1 s_elect n l:w_orkGroup 0, 2 s_elect n l:w_orkGroup 0)
+  (wi, wj) := (1 s_elect n l:w_orkItem 0, 2 s_elect n l:w_orkItem 0)
+  x0 := u * f_loat j0
+  x1 := u * f_loat j0 + tile
+  z0 := 0.0 - u * f_loat i0 + tile
+  z1 := 0.0 - u * f_loat i0
+  bands := 4 6 r_eshape ((x0 c_at ((0.0 - gap) - 0.03) c_at z0) h:b_ox x1 c_at ((0.0 - gap) - 0.01) c_at z1) c_at ((((0.0 - gap) - 0.03) c_at 0.0 c_at z0) h:b_ox ((0.0 - gap) - 0.01) c_at side c_at z1) c_at ((x0 c_at 0.0 c_at gap + 0.01) h:b_ox x1 c_at side c_at gap + 0.03) c_at (x0 c_at 0.0 c_at z0) h:b_ox x1 c_at side c_at z1
+  t := ("work-group", bands c_at_2 4 4 r_eshape 255.0 255.0 255.0 3.0 255.0 216.0 77.0 2.0 255.0 216.0 77.0 2.0 255.0 216.0 77.0 2.0) vd:o_utlines 0
+  bx := u * 0.5 + f_loat wj
+  bz := 0.0 - u * 0.5 + f_loat wi
+  wx0 := u * f_loat wj
+  wx1 := u * f_loat wj + 1
+  wz0 := 0.0 - u * f_loat wi + 1
+  wz1 := 0.0 - u * f_loat wi
+  item := 4 6 r_eshape ((wx0 c_at 0.0 c_at wz0) h:b_ox wx1 c_at side c_at wz1) c_at ((((0.0 - gap) - 0.03) c_at 0.0 c_at wz0) h:b_ox ((0.0 - gap) - 0.02) c_at side c_at wz1) c_at ((wx0 c_at 0.0 c_at gap + 0.02) h:b_ox wx1 c_at side c_at gap + 0.03) c_at (wx0 c_at ((0.0 - gap) - 0.04) c_at wz0) h:b_ox wx1 c_at ((0.0 - gap) - 0.02) c_at wz1
+  t := t c_at ("work-item", item c_at_2 4 4 r_eshape 255.0 122.0 61.0 4.0 255.0 122.0 61.0 4.0 255.0 122.0 61.0 4.0 255.0 255.0 255.0 6.0) vd:b_oxes 0
+  p := ((wi + 1) s_elect a) * (wj + 1) s_elect_2 b
+  ky := u * 0.5 + f_loat (r_ange n) - 1
+  h := 0.06 * p
+  bars := 2 1 t_ranspose (6 c_at n) r_eshape (n r_eshape bx) c_at ky c_at (bz + h / 2.0) c_at (n r_eshape 0.7 * u) c_at (n r_eshape 0.7 * u) c_at 0.002 m_ax a_bs h
+  sign := f_loat p >= 0.0
+  colors := (sign '* t_able f_loat l:plus) + (1.0 - sign) '* t_able f_loat l:minus
+  t := t c_at ("products", bars c_at_2 colors c_at_2 n r_eshape 1.5) vd:b_oxes 0
+  t := t c_at ("products", (n c_at 2) r_eshape ((1 s_elect l:sumTimes) - 0.72) c_at l:length) vd:s_hown 0
+  partial := r_ev '+ s_\ r_ev p
+  ks := ((n - 1) - 8 * (r_ange n d_iv 8) - 1) c_at 0
+  m := t_ally ks
+  hs := 0.5 / 'm_ax r_/ a_bs partial
+  ph := hs * (ks + 1) s_elect partial
+  kk := 2 1 t_ranspose (6 c_at m) r_eshape (m r_eshape bx) c_at (u * 0.5 + f_loat ks) c_at (bz + ph / 2.0) c_at (m r_eshape 1.4 * u) c_at (m r_eshape 1.4 * u) c_at 0.002 m_ax a_bs ph
+  st := l:sumTimes
+  ts := (1 s_elect st) + ((2 s_elect st) - 1 s_elect st) * (f_loat (r_ange m) - 1) / f_loat m - 1
+  t := t c_at ("sum", (1 6 r_eshape 1 s_elect kk, white, 4.0) h:b_oxes 0) vd:b_oxes 0
+  t := t c_at ("sum", ts, (1 c_at m c_at 6) r_eshape kk) vd:m_oves 0
+  t := t c_at ("sum", 1 2 r_eshape st) vd:s_hown 0
+  v := (wj + 1) s_elect (wi + 1) s_elect c
+  rc := (v c_at ('m_in r_/ 'm_in r_/ c) c_at 'm_ax r_/ 'm_ax r_/ c, 'm_in r_/ 'm_in r_/ c, 'm_ax r_/ 'm_ax r_/ c) vd:t_one 0
+  cell := (bx c_at ((0.0 - gap) - 0.03) c_at bz) c_at u c_at (0.028) c_at u
+  t := t c_at ("result", (1 6 r_eshape cell, 1 s_elect rc, 3.0) h:b_oxes 0) vd:b_oxes 0
+  t c_at ("result", 1 2 r_eshape (2 s_elect st) c_at l:length) vd:s_hown 0
+}
+
+## n mf:c_ameraKeys 0: the camera's path, eight keys (seconds, eyes,
+## aims): far out to see the whole cube, closer, at the work-group's
+## tile, at the work-item's cell, beside its beam looking along it
+## (while the sum runs), back at the cell, then far out again while C
+## fills in
+l:c_ameraKeys := { n z ->
+  u := side / f_loat n
+  (i0, j0) := (1 s_elect n l:w_orkGroup 0, 2 s_elect n l:w_orkGroup 0)
+  (wi, wj) := (1 s_elect n l:w_orkItem 0, 2 s_elect n l:w_orkItem 0)
+  center := (0.5 * side) c_at (0.5 * side) c_at -0.5 * side
+  tc := (u * (f_loat j0) + 0.5 * f_loat tile) c_at (0.0 - gap) c_at 0.0 - u * (f_loat i0) + 0.5 * f_loat tile
+  cc := (u * 0.5 + f_loat wj) c_at (0.0 - gap) c_at 0.0 - u * 0.5 + f_loat wi
+  sd := (1 s_elect cc) c_at 0.0 c_at 3 s_elect cc
+  ts := h:a_t 0.0 0.16 0.32 0.44 0.54 0.70 0.80 1.0
+  eyes := 8 3 r_eshape (center + -17.0 -27.0 13.0) c_at (center + -9.0 -24.0 9.0) c_at (tc + -0.9 -2.6 0.8) c_at (cc + -0.12 -0.55 0.12) c_at (sd + -0.75 -0.9 0.45) c_at (sd + -0.6 -0.7 0.35) c_at (cc + -0.35 -1.1 0.3) c_at center + -5.0 -27.0 5.0
+  aims := 8 3 r_eshape center c_at center c_at tc c_at cc c_at (sd + 0.0 2.2 0.0) c_at (sd + 0.0 1.2 0.0) c_at cc c_at center + 0.0 c_at (0.0 - gap) c_at 0.0
+  (ts, eyes, aims)
+}
+
+## n mf:c_aptionTexts 0: the captions, | between them, their numbers
+## the arrays'
+l:c_aptionTexts := { n z ->
+  ns := f_ormat n
+  ("C = A x B|" c_at ns c_at " x " c_at ns c_at " x " c_at ns c_at " = " c_at (f_ormat n * n * n) c_at " multiply-adds|" c_at
+   "one work-group: a " c_at (f_ormat tile) c_at " x " c_at (f_ormat tile) c_at " tile of C|" c_at
+   "one work-item: a row of A times a column of B|" c_at
+   ns c_at " products, added one at a time from the far end|" c_at
+   "the sum is one item of C|" c_at
+   "every item of C: " c_at (f_ormat n * n) c_at " sums, a work-group at a time")
+}
+
+## the captions' spans (fractions of the video) and colors
+l:c_aptionTable := { z ->
+  from := h:a_t 0.0 0.08 0.29 0.43 0.56 0.79 0.86
+  to := h:a_t 0.07 0.27 0.42 0.55 0.78 0.85 1.0
+  (2 1 t_ranspose 2 7 r_eshape from c_at to) c_at_2 f_loat 7 3 r_eshape white c_at yellow c_at yellow c_at 255 154 106 c_at white c_at white c_at yellow
+}
+
+## (width, height, n) mf:s_cene 0: the whole fly-through script but its
+## output: the stage (a 35 mm lens), the walls, the work-group and
+## work-item, the captions, the camera
+l:s_cene := { (w, h, n) z ->
+  t := vd:head c_at ((w, h, 30, l:length, l:sky, 35) vd:s_tage 0) c_at (n l:w_alls 0) c_at n l:w_ork 0
+  t := t c_at (n l:c_aptionTexts 0, l:c_aptionTable 0) vd:c_aptions 0
+  t c_at (n l:c_ameraKeys 0) vd:c_amera 0
+}
