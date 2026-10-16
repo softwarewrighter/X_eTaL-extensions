@@ -23,8 +23,11 @@ out="$tmp/doc"
 # facades and the shared demo libraries are found by name
 path="lib"
 for d in extensions/*/lib extensions/*/demos; do path="$path:$d"; done
-# and the shared libraries used here (X_eTaL-libraries at LIBRARIES_COMMIT)
-path="$path:$("$root/scripts/libraries.sh")"
+# and the shared libraries used here (X_eTaL-libraries at LIBRARIES_COMMIT,
+# X_eTaL-gpu at GPU_COMMIT), relative to the repository: xetal doc names a
+# page after its file's path, and an absolute one would put this
+# machine's directories in the published names (and differ on any other)
+path="$path:$("$root/scripts/libraries.sh" | sed "s#$root/##g")"
 # the binding macro, then each extension's facade followed by its demos
 # (the sidebar groups files by directory, in this order)
 files=(lib/*.xtlm)
