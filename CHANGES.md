@@ -11,6 +11,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-16
+
+- `docs` the README links the two blog posts on this repository: X_eTaL extensions (2026-10-10) and X_eTaL and Blender, arrays to video (2026-10-15).
+
 ## 2026-10-15
 
 - `fix` the doc site's pages for the shared libraries (Eigencube, Accel) are named for their paths in the repository, `work-gpu-libs-Accel-src-Accel.xtl.html`, not this machine's absolute paths (`scripts/doc-site.sh`): the published names showed a home directory and differed from any other clone's; the four old pages removed.

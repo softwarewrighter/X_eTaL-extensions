@@ -18,6 +18,14 @@
 </p>
 
 <p align="center">
+  <b>Blog posts</b>:
+  <a href="https://blog.softwarewrighter.com/2026/10/10/array-languages-xetal-extensions/">X_eTaL extensions</a>
+  (2026-10-10),
+  <a href="https://blog.softwarewrighter.com/2026/10/15/array-languages-xetal-blender/">X_eTaL and Blender: arrays to video</a>
+  (2026-10-15)
+</p>
+
+<p align="center">
   <img src="extensions/sqlite/videos/notebook.webp" alt="The data notebook running at the command line" width="760">
 </p>
 
@@ -278,6 +286,11 @@ updated, a commit to `main` and a push.
 ## Links
 
 - Blog: [Software Wrighter Lab](https://software-wrighter-lab.github.io/)
+- Blog posts on this repository:
+  [X_eTaL extensions](https://blog.softwarewrighter.com/2026/10/10/array-languages-xetal-extensions/)
+  (2026-10-10),
+  [X_eTaL and Blender: arrays to video](https://blog.softwarewrighter.com/2026/10/15/array-languages-xetal-blender/)
+  (2026-10-15)
 - Discord: [Join the community](https://discord.com/invite/Ctzk5uHggZ)
 - YouTube: [Software Wrighter](https://www.youtube.com/@SoftwareWrighter)
 
