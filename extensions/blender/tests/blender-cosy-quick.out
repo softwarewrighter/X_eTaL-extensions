@@ -1,0 +1,10 @@
+the run, and the error lines in Blender's log:
+exit 0
+errors 0
+what Blender made:
+mesh CoSy: 9946 vertices, 9952 faces
+piece pivot: 1 parts, 19904 triangles
+objects: CoSy camera fill key pivot rim
+
+report.txt
+still.png

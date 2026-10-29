@@ -1,0 +1,18 @@
+## The CoSy logo, small and quick: the same scene at 160 by 90 in
+## coarse voxels and few samples, a still of the first frame; Blender's
+## report and the files.
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"cy:" u_se< "CosyLogo"
+
+script := ((160, 90, 4, 0.05, 4) cy:s_cene 0) c_at bp:s_till "still.png"
+n := "work/quick/run.py" bl:w_rite! bp:launcher
+n := "work/quick/scene.py" bl:w_rite! script
+r := "work/quick/run.py" bl:r_un! "work/quick/scene.py work/quick/out"
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+"what Blender made:"
+bl:r_ead "work/quick/out/report.txt"

@@ -11,6 +11,12 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-28
+
+- `ext` the CoSy logo in 3D (Saga 15, step 12, cosy-logo): `demos/cosy.xtl` and `demos/CosyLogo.xtl` (alias `cy:`) -- C, o, S and y as round magenta tubes, toothpaste style, melted together where they touch, glossy on yellow, turned once round in 4 seconds, looping. Each letter's center line is an X_eTaL array traced from the logo and placed in meters (`cy:p_lace`); Blender bevels each line round with a sphere on each end, joins them, remeshes the union in voxels, smooths the seams and renders with Cycles (Metal kernels unoptimized: Blender 5.1.2 crashed optimizing them in the background partway through a render). Recorded for the site (`videos/cosy.film`); golden `blender-cosy-quick` (the logo at 160 by 90, coarse voxels, end to end).
+- `build` the site's demo cards link pages elsewhere: a demo header's `## Link: URL TEXT` lines (`scripts/build-catalog.py`); the CoSy demo links [CoSy](https://cosy.com) and [reva-fork](https://github.com/softwarewrighter/reva-fork).
+- `plan` Saga 15 step 12, cosy-logo (inserted, the user); td-mesh and the explainer steps move to 13 to 19.
+
 ## 2026-10-16
 
 - `docs` the README links the two blog posts on this repository: X_eTaL extensions (2026-10-10) and X_eTaL and Blender, arrays to video (2026-10-15).

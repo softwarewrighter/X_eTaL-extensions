@@ -13,7 +13,7 @@
   <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
   <ul>
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
-    <li><a href="#blender">blender</a><ul><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
+    <li><a href="#blender">blender</a><ul><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
     <li><a href="#clock">clock</a><ul><li><a href="#clock-bridge-cost">bridge-cost</a></li></ul></li>
     <li><a href="#digest">digest</a></li>
@@ -68,6 +68,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <h2 id="blender"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/blender/docs/README.md">blender</a> <a class="docs" href="doc/extensions-blender-lib-Blender.xtl.html">facade docs</a></h2>
   <p class="lede">Blender 3D in batch, driven from X_eTaL. An X_eTaL program writes the Python -- a launcher that runs Blender in the background, and the bpy script Blender runs inside -- runs the launcher, and reads back what it made: rendered pictures and videos, 3D files. The chain is X_eTaL, this extension, python3, Blender, Python inside Blender.</p>
   <div class="demos">
+    <section class="panel demo" id="blender-cosy">
+      <h3>blender / cosy <a class="docs" href="doc/extensions-blender-demos-cosy.xtl.html">source and docs</a> <a class="docs" href="https://cosy.com">CoSy</a> <a class="docs" href="https://github.com/softwarewrighter/reva-fork">reva-fork</a></h3>
+      <p class="note">Blender, 6: the CoSy logo in 3D. C, o, S and y are round tubes, toothpaste style, melted together where they touch, glossy magenta on yellow, turned once round; the video loops. Each letter is its center line, an array of points traced from the logo and placed in meters by X_eTaL (CosyLogo.xtl); Blender gives each line a round tube and round ends, fuses them into one mesh and renders it with Cycles.</p>
+      <video src="blender/cosy.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo blender cosy</pre>
+    </section>
     <section class="panel demo" id="blender-cubes">
       <h3>blender / cubes <a class="docs" href="doc/extensions-blender-demos-cubes.xtl.html">source and docs</a></h3>
       <p class="note">Blender, 2: how big is a thousand? One cube, a hundred, a thousand, side by side -- xkcd style -- rendered by Blender from a script X_eTaL writes: every cube&#x27;s corners and faces are X_eTaL arrays, written into the script as numbers (Bpy.xtl, Sizes.xtl). The camera goes once round them; the video loops. Blender also writes the scene as files to open elsewhere: sizes.glb (glTF), sizes.obj and sizes.blend.</p>
@@ -312,7 +318,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at 257639a</span>
+  <span>built at f63b8f3</span>
 </footer>
 </body>
 </html>

@@ -1,0 +1,8 @@
+# extensions/blender/videos/cosy.webm and .webp: the CoSy logo as
+# fused magenta tubes turning once round, Blender's own render (Cycles),
+# made by demos/cosy.xtl from the letters' center lines (CosyLogo.xtl;
+# just videos; several minutes when the video is not there yet).
+demo=cosy
+file=work/cosy/out/cosy.mp4
+scale=1280
+fps=30

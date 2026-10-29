@@ -228,6 +228,20 @@ and [matrix multiply](https://softwarewrighter.github.io/X_eTaL-extensions/liter
    work-group's 16 by 16 tile, one work-item's 512 products and their
    running sum, then C filling in a work-group at a time
    (`demos/MatmulFly.xtl`).
+8. `demos/cosy.xtl` (`just demo blender cosy`, several minutes: 120
+   frames in Cycles): the CoSy logo in 3D, 4 seconds turning once
+   round, looping. C, o, S and y are round magenta tubes, toothpaste
+   style, melted together where they touch, on yellow. Each letter is
+   its center line, an array of points traced from the logo and placed
+   in meters by X_eTaL (`demos/CosyLogo.xtl`); Blender gives each line a
+   round tube (a curve beveled round) and a sphere on each end, joins
+   them, remeshes the union in voxels and smooths the seams, then
+   renders glossy plastic with Cycles (`work/cosy/out/cosy.mp4`). On
+   the site the demo links [CoSy](https://cosy.com) and
+   [reva-fork](https://github.com/softwarewrighter/reva-fork). Cycles
+   runs on the GPU with Metal when there is one, its kernels
+   unoptimized: Blender 5.1.2 crashed optimizing them in the background
+   partway through a render.
 
 ## Build and test
 
@@ -238,10 +252,12 @@ just list       # the functions as xetal-x sees them
 ```
 
 The Rust tests run a stand-in program in Blender's place; the goldens
-`blender-demo-hello`, `blender-bpy-tiny` and `blender-cubes-quick` run
-Blender itself (in a temporary directory; the last renders the size
-comparison at 160 by 90, four frames, and checks 8, 800 and 8,000
-vertices and the files). Of them: the second writes two cubes and a label as bpy
+`blender-demo-hello`, `blender-bpy-tiny`, `blender-cubes-quick` and
+`blender-cosy-quick` run Blender itself (in a temporary directory;
+`blender-cubes-quick` renders the size comparison at 160 by 90, four
+frames, and checks 8, 800 and 8,000 vertices and the files;
+`blender-cosy-quick` fuses the CoSy logo in coarse voxels and checks
+the one mesh left, its pivot, camera and lights, and a still). Of them: the second writes two cubes and a label as bpy
 and checks what Blender made -- the mesh (16 vertices, 12 faces), the
 objects, a still, `.glb`, `.obj`, `.mtl`, `.blend`. `blender-bpy-script`
 pins the Python the library writes. `blender-shapes` makes one piece of

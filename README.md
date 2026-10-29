@@ -71,6 +71,7 @@ just demo blender game-assets  # twelve tower defense pieces as .glb with clips,
 just demo blender relu-softmax # ReLU and softmax on a tiny network's arrays: a video from X_eTaL arrays (a few minutes)
 just demo blender matmul-steps # a matrix product a step at a time: a video from X_eTaL arrays (a few minutes)
 just demo blender matmul-fly   # a 512 x 512 matrix product flown through: a video from X_eTaL arrays (about ten minutes)
+just demo blender cosy         # the CoSy logo as fused magenta tubes turning once round, rendered with Cycles (several minutes)
 just demo scene voxels-rubik-buttons  # the cube with buttons: U U' R R' F F', animated, queued, undo
 just demo scene voxels-rubik-solve    # scramble, solve (the Eigencube library), step or play the solution
 just walkthrough                # a fresh clone, built and run, checked against the goldens
@@ -175,7 +176,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | [image](extensions/image/docs/README.md) | `Image` | PNG and JPEG to and from Float arrays; resize | image | done: facade, round-trip tests, the photo lab |
 | [linalg](extensions/linalg/docs/README.md) | `Linalg` | solve, inverse, determinant, least squares, eigenvalues, SVD | nalgebra | done: facade, cross-checked in pure X_eTaL |
 | [http](extensions/http/docs/README.md) | `Http` | bounded GET (size, time, redirects); downloads | ureq | done: facade, loopback tests, the earthquake report |
-| [blender](extensions/blender/docs/README.md) | `Blender` | Blender 3D in batch: X_eTaL writes the launcher and the bpy script, runs them, reads back what was made | none (python3 and Blender) | started: the chain, a report back; the size comparison orbited, a video and 3D files; game pieces with clips for X_eTaL-games ([published](https://softwarewrighter.github.io/X_eTaL-extensions/blender/td/)); arrays to video (`Video.xtl`): ReLU, softmax and matrix products as videos, explained in [literate documents](https://softwarewrighter.github.io/X_eTaL-extensions/literate/) |
+| [blender](extensions/blender/docs/README.md) | `Blender` | Blender 3D in batch: X_eTaL writes the launcher and the bpy script, runs them, reads back what was made | none (python3 and Blender) | started: the chain, a report back; the size comparison orbited, a video and 3D files; game pieces with clips for X_eTaL-games ([published](https://softwarewrighter.github.io/X_eTaL-extensions/blender/td/)); arrays to video (`Video.xtl`): ReLU, softmax and matrix products as videos, explained in [literate documents](https://softwarewrighter.github.io/X_eTaL-extensions/literate/); the CoSy logo as fused tubes, turning |
 | [digest](extensions/digest/docs/README.md) | `Digest` | SHA-256 and CRC-32 of text and files | sha2, crc32fast | done: facade, vectors, tests |
 
 Each extension is a self-contained directory, `extensions/NAME/`: its

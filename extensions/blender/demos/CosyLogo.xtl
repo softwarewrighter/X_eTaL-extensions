@@ -1,0 +1,145 @@
+## CosyLogo.xtl -- the CoSy logo as a Blender scene: the letters C, o,
+## S, y as round tubes, toothpaste style, fused where they touch, glossy
+## magenta on yellow, turned once round. Each letter is its center line,
+## an array of points traced from the logo (pixels, y down); X_eTaL
+## places them in meters, and Blender gives each line a round tube and
+## round ends, then melts the tubes into one mesh. Shared by the demo
+## (demos/cosy.xtl: the video) and its test (a tiny still).
+## Import: "cy:" u_se< "CosyLogo"
+
+"bp:" u_se< "Bpy"
+
+### The letters
+
+## the C: a big arc open to the right, top end to bottom end (pixels, x
+## right, y down)
+l:letterC := 10 2 r_eshape 1045 160  950 108  820 100  705 140  652 250  665 385  745 480  880 515  1000 492  1062 440
+## the S: top curl to bottom curl
+l:letterS := 11 2 r_eshape 1285 190  1250 120  1185 105  1125 140  1118 220  1180 285  1245 340  1265 430  1220 505  1150 505  1105 445
+## the y's arm: down from the left and up into the stem
+l:yArm := 6 2 r_eshape 1312 235  1330 330  1370 410  1430 425  1485 360  1508 215
+## the y's stem: down from the top right, below the line and back left
+l:yStem := 6 2 r_eshape 1512 215  1505 380  1475 520  1420 585  1360 560  1330 470
+
+# the o's eight angles
+h:ringAngles := (3.141592653589793 / 4.0) * f_loat (r_ange 8) - 1
+
+## the o: a ring of eight points about (912, 355), 75 pixels out (a
+## closed line)
+## >> "cy:" u_se< "CosyLogo"
+## >> s_hape cy:letterO
+## 8 2
+l:letterO := 2 1 t_ranspose (2 c_at 8) r_eshape (912.0 + 75.0 * c_os h:ringAngles) c_at 355.0 + 75.0 * s_in h:ringAngles
+## the tubes' radius: 52 pixels, in meters
+l:radius := 0.004 * 52.0
+
+## cy:p_lace points: pixels (n by 2) to meters (n by 3, z up, the
+## letters upright in x z, facing -y): 250 pixels a meter, the logo's
+## middle (1100, 340) at the origin
+## >> "cy:" u_se< "CosyLogo"
+## >> cy:p_lace 2 2 r_eshape 1100 340  1350 90
+## 0.0 0.0 0.0
+## 1.0 0.0 1.0
+l:p_lace := { p ->
+  n := 1 s_elect s_hape p
+  x := 0.004 * (f_loat 1 s_elect_2 p) - 1100.0
+  z := 0.004 * 340.0 - f_loat 2 s_elect_2 p
+  2 1 t_ranspose (3 c_at n) r_eshape x c_at (n r_eshape 0.0) c_at z
+}
+
+### The scene
+
+# numbers into the script: the points, k to a row
+h:n_ums := { (v, k) z -> "nums('" c_at (f_ormat r_avel v) c_at "', " c_at (f_ormat k) c_at ")" }
+
+# the scene's Python, fixed: tube makes a line's round tube (a curve,
+# beveled round) and, when open, a sphere on each end; fuse joins them
+# all, remeshes the union in voxels, smooths the seams and drops the parts
+h:player := ("parts = []\n" c_at
+  "\n" c_at
+  "def tube(name, pts, r, closed):\n" c_at
+  "    cu = bpy.data.curves.new(name, 'CURVE')\n" c_at
+  "    cu.dimensions = '3D'\n" c_at
+  "    cu.bevel_mode = 'ROUND'\n" c_at
+  "    cu.bevel_depth = r\n" c_at
+  "    cu.bevel_resolution = 8\n" c_at
+  "    cu.resolution_u = 24\n" c_at
+  "    cu.use_fill_caps = True\n" c_at
+  "    sp = cu.splines.new('BEZIER')\n" c_at
+  "    sp.bezier_points.add(len(pts) - 1)\n" c_at
+  "    for b, p in zip(sp.bezier_points, pts):\n" c_at
+  "        b.co = p\n" c_at
+  "        b.handle_left_type = b.handle_right_type = 'AUTO'\n" c_at
+  "    sp.use_cyclic_u = closed\n" c_at
+  "    o = bpy.data.objects.new(name, cu)\n" c_at
+  "    scene.collection.objects.link(o)\n" c_at
+  "    parts.append(o)\n" c_at
+  "    if not closed:\n" c_at
+  "        for e in (pts[0], pts[-1]):\n" c_at
+  "            bpy.ops.mesh.primitive_uv_sphere_add(radius=r, location=e, segments=48, ring_count=24)\n" c_at
+  "            parts.append(bpy.context.active_object)\n" c_at
+  "\n" c_at
+  "def fuse(name, voxel):\n" c_at
+  "    bpy.ops.object.select_all(action='DESELECT')\n" c_at
+  "    for o in parts:\n" c_at
+  "        o.select_set(True)\n" c_at
+  "    bpy.context.view_layer.objects.active = parts[0]\n" c_at
+  "    bpy.ops.object.convert(target='MESH')\n" c_at
+  "    bpy.ops.object.join()\n" c_at
+  "    o = bpy.context.active_object\n" c_at
+  "    o.name = o.data.name = name\n" c_at
+  "    bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='BOUNDS')\n" c_at
+  "    o.location = (0.0, 0.0, 0.0)\n" c_at
+  "    m = o.modifiers.new('remesh', 'REMESH')\n" c_at
+  "    m.mode = 'VOXEL'\n" c_at
+  "    m.voxel_size = voxel\n" c_at
+  "    m = o.modifiers.new('smooth', 'LAPLACIANSMOOTH')\n" c_at
+  "    m.iterations = 8\n" c_at
+  "    m.lambda_factor = 0.6\n" c_at
+  "    m.use_volume_preserve = True\n" c_at
+  "    bpy.ops.object.modifier_apply(modifier='remesh')\n" c_at
+  "    bpy.ops.object.modifier_apply(modifier='smooth')\n" c_at
+  "    bpy.ops.object.shade_smooth()\n" c_at
+  "    bpy.data.orphans_purge(do_recursive=True)\n" c_at
+  "    return o\n" c_at
+  "\n")
+
+# Python making a tube along the points (pixels), closed or not
+h:t_ube := { (name, p, closed) z -> "tube('" c_at name c_at "', " c_at ((l:p_lace p, 3) h:n_ums 0) c_at ", " c_at (f_ormat l:radius) c_at ", " c_at closed c_at ")\n" }
+
+# Python: glossy plastic (a clear coat over it), the logo's magenta
+h:plastic := "mat = bpy.data.materials.new('magenta plastic')\nmat.use_nodes = True\np = mat.node_tree.nodes['Principled BSDF']\np.inputs['Base Color'].default_value = (0.85, 0.0, 0.85, 1.0)\np.inputs['Roughness'].default_value = 0.28\np.inputs['Coat Weight'].default_value = 0.6\np.inputs['Coat Roughness'].default_value = 0.05\nlogo.data.materials.append(mat)\n\n"
+
+# Python: the logo on a pivot turned once round its upright axis in the
+# frames (keyed at 0 and a full turn, linear: the video loops)
+h:t_urntable := { frames -> "pivot = bpy.data.objects.new('pivot', None)\nscene.collection.objects.link(pivot)\nlogo.parent = pivot\nscene.frame_start = 1\nscene.frame_end = " c_at (f_ormat frames) c_at "\npivot.rotation_euler = (0.0, 0.0, 0.0)\npivot.keyframe_insert('rotation_euler', index=2, frame=1)\npivot.rotation_euler = (0.0, 0.0, 2 * math.pi)\npivot.keyframe_insert('rotation_euler', index=2, frame=" c_at (f_ormat frames + 1) c_at ")\n\n" }
+
+# Python: a camera in front, three soft lights (key, fill, rim), a
+# yellow world
+h:studio := ("cam = bpy.data.objects.new('camera', bpy.data.cameras.new('camera'))\ncam.data.lens = 50\ncam.location = (0.0, -9.5, 0.6)\ncam.rotation_euler = (math.radians(86.4), 0.0, 0.0)\nscene.collection.objects.link(cam)\nscene.camera = cam\n" c_at
+  "for name, energy, size, at, turn in (('key', 900, 4, (-4, -5, 5), (50, 0, -35)), ('fill', 250, 6, (5, -4, -1), (95, 0, 50)), ('rim', 400, 4, (0, 5, 4), (-50, 0, 180))):\n" c_at
+  "    light = bpy.data.objects.new(name, bpy.data.lights.new(name, 'AREA'))\n" c_at
+  "    light.data.energy = energy\n" c_at
+  "    light.data.size = size\n" c_at
+  "    light.location = at\n" c_at
+  "    light.rotation_euler = tuple(math.radians(a) for a in turn)\n" c_at
+  "    scene.collection.objects.link(light)\n" c_at
+  "world = bpy.data.worlds.new('yellow')\nworld.use_nodes = True\nworld.node_tree.nodes['Background'].inputs['Color'].default_value = (1.0, 0.92, 0.0, 1.0)\nscene.world = world\n\n")
+
+# Python: Cycles on the GPU (Metal, when there is one) at that size and
+# samples, denoised, colors as they are; the Metal kernels unoptimized
+# (Blender 5.1.2 crashes optimizing them in the background mid-render)
+h:c_ycles := { (w, h, samples) z -> "scene.render.engine = 'CYCLES'\nprefs = bpy.context.preferences.addons['cycles'].preferences\nif 'METAL' in [t[0] for t in prefs.get_device_types(bpy.context)]:\n    prefs.compute_device_type = 'METAL'\n    prefs.kernel_optimization_level = 'OFF'\n    prefs.get_devices()\n    for d in prefs.devices:\n        d.use = True\n    scene.cycles.device = 'GPU'\nscene.cycles.samples = " c_at (f_ormat samples) c_at "\nscene.cycles.use_denoising = True\nscene.view_settings.view_transform = 'Standard'\nscene.render.resolution_x = " c_at (f_ormat w) c_at "\nscene.render.resolution_y = " c_at (f_ormat h) c_at "\nscene.render.resolution_percentage = 100\n\n" }
+
+## (width, height, frames, voxel, samples) cy:s_cene 0: the whole
+## script Blender runs: the five lines as tubes, fused into one mesh,
+## CoSy (remeshed in voxels that size: smaller is smoother and slower),
+## the plastic, the turntable in the frames, the studio, Cycles at that
+## size and samples; then the report. The video is left to the caller
+## (bp:v_ideo or bp:s_till), added after.
+l:s_cene := { (w, h, frames, voxel, samples) z ->
+  t := bp:head c_at h:player c_at (("C", l:letterC, "False") h:t_ube 0) c_at (("o", l:letterO, "True") h:t_ube 0)
+  t := t c_at (("S", l:letterS, "False") h:t_ube 0) c_at (("y arm", l:yArm, "False") h:t_ube 0) c_at (("y stem", l:yStem, "False") h:t_ube 0)
+  t := t c_at "logo = fuse('CoSy', " c_at (f_ormat voxel) c_at ")\n\n" c_at h:plastic c_at (h:t_urntable frames) c_at h:studio
+  t c_at ((w, h, samples) h:c_ycles 0) c_at bp:report
+}

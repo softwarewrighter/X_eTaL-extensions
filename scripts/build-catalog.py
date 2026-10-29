@@ -55,6 +55,20 @@ def page_link(demo):
     return ""
 
 
+def link_lines(demo):
+    """A demo's links to pages elsewhere, if any: its header's
+    `## Link: URL TEXT` lines, one link each, in order."""
+    found = []
+    for line in demo.read_text().splitlines():
+        if not line.startswith("#"):
+            break
+        t = line.lstrip("# ").rstrip()
+        if t.startswith("Link: "):
+            url, _, text = t[len("Link: "):].partition(" ")
+            found.append(f' <a class="docs" href="{html.escape(url)}">{html.escape(text or url)}</a>')
+    return "".join(found)
+
+
 def cover(ext, demo):
     """A demo's cover picture, if any: its header's `## Cover: FILE ALT`
     line (FILE in the extension's directory), copied beside the
@@ -89,7 +103,7 @@ def what(demo):
         t = line.lstrip("# ").rstrip()
         if t.startswith("Run:") or not t:
             break
-        if t.startswith(("Page: ", "Cover: ")):
+        if t.startswith(("Page: ", "Cover: ", "Link: ")):
             continue
         lines.append(t)
     return " ".join(lines)
@@ -115,7 +129,7 @@ for ext_dir in sorted(p.parent for p in root.glob("extensions/*/extension.toml")
         else:
             player = '<p class="note">(no recording yet)</p>'
         demos.append(f"""    <section class="panel demo" id="{ext}-{name}">
-      <h3>{html.escape(ext)} / {html.escape(name)} <a class="docs" href="doc/extensions-{ext}-demos-{name}.xtl.html">source and docs</a>{lit_link(ext, name)}{page_link(demo)}</h3>
+      <h3>{html.escape(ext)} / {html.escape(name)} <a class="docs" href="doc/extensions-{ext}-demos-{name}.xtl.html">source and docs</a>{lit_link(ext, name)}{page_link(demo)}{link_lines(demo)}</h3>
       {cover(ext, demo)}<p class="note">{html.escape(what(demo))}</p>
       {player}
       <pre class="source">just demo {ext} {name}</pre>
