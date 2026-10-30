@@ -1,0 +1,11 @@
+{
+  "task_type": "feature",
+  "state": {
+    "number": 13,
+    "step": "td-mesh"
+  },
+  "action": "read the ask and X_eTaL's []L_IST; Python helper in bp:head via Bpy.xtl; iterative Decimate; X_eTaL reader test; flat-shaded visual check in scratch Blender; rebased two goldens; full demo; publish-td after a clean commit; gate",
+  "result": "success",
+  "reward": 1,
+  "timestamp": "2026-10-29T18:57:52"
+}
