@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-10-29
 
+- `ext` the tower defense pieces republished at blender/td with their meshes (`pages/blender/td`, stamped with effa216): twelve `NAME-mesh.toml`, the manifest with `mesh-format` and the meshes' SHA-256s, the page's mesh links; the renders differ by a bit, so every file's hash changed.
 - `ext` the tower defense pieces' low-poly meshes (Saga 15, step 13, td-mesh; the ask's optional `PIECE-mesh.toml`): `bp:m_eshToml` writes a piece at rest (its clips muted) as top-level lists of strings X_eTaL reads with `[]L_IST` -- `vertices` ("x y z", meters, Z up, front -y), `faces` (three vertex numbers from 1), `colors` (a face's `#rrggbb`, sRGB, its part's color) -- with its name and triangles; a piece over the limit is decimated (collapse), repeated until it fits. `td:e_xport` writes one per piece at most 500 triangles (`td:meshMost`; the cannons, 612 to 1228, come to 492 to 494); the manifest gains `mesh-format` and each piece's `mesh` and SHA-256; the pieces' page links each; `publish-td` copies them. Golden `blender-game-assets-quick` reads four back in X_eTaL (`tests/mesh-read.xtl`: shapes, face numbers from 1 to the vertex count, a color a face); `blender-bpy-script` pins the new helper.
 
 ## 2026-10-28
