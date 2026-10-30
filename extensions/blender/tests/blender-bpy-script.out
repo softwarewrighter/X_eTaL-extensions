@@ -124,6 +124,60 @@ def export_piece(owner, path):
 def triangles(owner):
     return sum(sum(len(p.vertices) - 2 for p in c.data.polygons) for c in owner.children_recursive if c.type == "MESH")
 
+def srgb(x):
+    return 12.92 * x if x <= 0.0031308 else 1.055 * x ** (1 / 2.4) - 0.055
+
+def mesh_toml(owner, path, most):
+    parts = sorted((c for c in owner.children_recursive if c.type == "MESH"), key=lambda c: c.name)
+    tracks = [t for o in [owner] + list(owner.children_recursive) if o.animation_data for t in o.animation_data.nla_tracks if not t.mute]
+    for t in tracks:
+        t.mute = True
+    total = triangles(owner)
+    ratio = min(1.0, most / total) if total else 1.0
+    if ratio < 1.0:
+        for c in parts:
+            d = c.modifiers.new("low", "DECIMATE")
+            d.use_collapse_triangulate = True
+    while True:
+        for c in parts:
+            if ratio < 1.0:
+                c.modifiers["low"].ratio = ratio
+        bpy.context.view_layer.update()
+        deps = bpy.context.evaluated_depsgraph_get()
+        n = sum(len(c.evaluated_get(deps).data.loop_triangles) for c in parts)
+        if n <= most or ratio < 0.05:
+            break
+        ratio *= 0.97 * most / n
+    back = owner.matrix_world.inverted()
+    verts, faces, colors = [], [], []
+    for c in parts:
+        e = c.evaluated_get(deps)
+        bm = bmesh.new()
+        bm.from_mesh(e.to_mesh())
+        bmesh.ops.triangulate(bm, faces=bm.faces)
+        bm.verts.index_update()
+        at = back @ c.matrix_world
+        first = len(verts)
+        verts += [at @ v.co for v in bm.verts]
+        for f in bm.faces:
+            faces.append(tuple(first + v.index + 1 for v in f.verts))
+            m = c.data.materials[f.material_index]
+            rgb = m.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value[:3]
+            colors.append("#" + "".join("%02x" % round(255 * min(1.0, max(0.0, srgb(x)))) for x in rgb))
+        bm.free()
+        e.to_mesh_clear()
+        if ratio < 1.0:
+            c.modifiers.remove(c.modifiers["low"])
+    for t in tracks:
+        t.mute = False
+    with open(path, "w") as f:
+        f.write("# %s at rest, low-poly: meters, Z up, its front -Y, the origin at the middle of its base\n" % owner.name)
+        f.write("name = \"%s\"\ntriangles = %d\n" % (owner.name, len(faces)))
+        f.write("vertices = [\n" + "".join("  \"%.4f %.4f %.4f\",\n" % tuple(v) for v in verts) + "]\n")
+        f.write("faces = [\n" + "".join("  \"%d %d %d\",\n" % t for t in faces) + "]\n")
+        f.write("colors = [\n" + "".join("  \"%s\",\n" % c for c in colors) + "]\n")
+    return len(faces)
+
 mesh = bpy.data.meshes.new("one")
 mesh.from_pydata(nums("""-0.45 -0.45 0.04999999999999999 0.45 -0.45 0.04999999999999999 0.45 0.45 0.04999999999999999 -0.45 0.45 0.04999999999999999 -0.45 -0.45 0.95 0.45 -0.45 0.95 0.45 0.45 0.95 -0.45 0.45 0.95""", 3), [], [tuple(int(i) for i in f) for f in nums("""0 3 2 1 4 5 6 7 0 1 5 4 2 3 7 6 3 0 4 7 1 2 6 5""", 4)])
 mesh.update()

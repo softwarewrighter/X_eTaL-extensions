@@ -11,6 +11,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-10-29
+
+- `ext` the tower defense pieces' low-poly meshes (Saga 15, step 13, td-mesh; the ask's optional `PIECE-mesh.toml`): `bp:m_eshToml` writes a piece at rest (its clips muted) as top-level lists of strings X_eTaL reads with `[]L_IST` -- `vertices` ("x y z", meters, Z up, front -y), `faces` (three vertex numbers from 1), `colors` (a face's `#rrggbb`, sRGB, its part's color) -- with its name and triangles; a piece over the limit is decimated (collapse), repeated until it fits. `td:e_xport` writes one per piece at most 500 triangles (`td:meshMost`; the cannons, 612 to 1228, come to 492 to 494); the manifest gains `mesh-format` and each piece's `mesh` and SHA-256; the pieces' page links each; `publish-td` copies them. Golden `blender-game-assets-quick` reads four back in X_eTaL (`tests/mesh-read.xtl`: shapes, face numbers from 1 to the vertex count, a color a face); `blender-bpy-script` pins the new helper.
+
 ## 2026-10-28
 
 - `ext` the CoSy logo in 3D (Saga 15, step 12, cosy-logo): `demos/cosy.xtl` and `demos/CosyLogo.xtl` (alias `cy:`) -- C, o, S and y as round magenta tubes, toothpaste style, melted together where they touch, glossy on yellow, turned once round in 4 seconds, looping. Each letter's center line is an X_eTaL array traced from the logo and placed in meters (`cy:p_lace`); Blender bevels each line round with a sphere on each end, joins them, remeshes the union in voxels, smooths the seams and renders with Cycles (Metal kernels unoptimized: Blender 5.1.2 crashed optimizing them in the background partway through a render). Recorded for the site (`videos/cosy.film`); golden `blender-cosy-quick` (the logo at 160 by 90, coarse voxels, end to end).

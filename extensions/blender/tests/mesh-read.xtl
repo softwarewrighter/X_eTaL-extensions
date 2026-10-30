@@ -1,0 +1,31 @@
+## The low-poly meshes Blender wrote (NAME-mesh.toml), read back by
+## X_eTaL the way a renderer written in it would: each top-level list of
+## strings with []L_IST, each string's numbers with n_umbers. Run in the
+## directory game-assets-quick.xtl wrote to (work/qtd/site under it).
+
+# column k of rows of numbers written as strings
+h:c_ol := { (k, rows) z -> '{ k s_elect n_umbers d_isclose _r } e_ach rows }
+
+# a mesh's vertices (n by 3), how many numbers each face has (least,
+# most), its face numbers (least, most), how many colors and their
+# lengths (least, most), its height (the vertices' least and most z)
+h:r_ead := { name ->
+  f := "work/qtd/site/" c_at name c_at "-mesh.toml"
+  vs := f []L_IST "vertices"
+  fs := f []L_IST "faces"
+  cs := f []L_IST "colors"
+  n := t_ally vs
+  v := 2 1 t_ranspose (3 c_at n) r_eshape ((1, vs) h:c_ol 0) c_at ((2, vs) h:c_ol 0) c_at (3, vs) h:c_ol 0
+  k := '{ t_ally n_umbers d_isclose _r } e_ach fs
+  i := '{ 'm_in r_/ n_umbers d_isclose _r } e_ach fs
+  j := '{ 'm_ax r_/ n_umbers d_isclose _r } e_ach fs
+  c := '{ t_ally d_isclose _r } e_ach cs
+  z := 3 s_elect_2 v
+  p_rint! name c_at ": " c_at (f_ormat s_hape v) c_at " vertices, " c_at (f_ormat t_ally fs) c_at " faces of " c_at (f_ormat ('m_in r_/ k) c_at 'm_ax r_/ k) c_at " numbers, from " c_at (f_ormat ('m_in r_/ i) c_at 'm_ax r_/ j) c_at ", " c_at (f_ormat t_ally cs) c_at " colors of " c_at (f_ormat ('m_in r_/ c) c_at 'm_ax r_/ c) c_at " characters, z from " c_at f_ormat ('m_in r_/ z) c_at 'm_ax r_/ z
+}
+
+"each piece's mesh, as X_eTaL reads it:"
+n := h:r_ead "arrow-1"
+n := h:r_ead "cannon-3"
+n := h:r_ead "frost-3"
+n := h:r_ead "runner"

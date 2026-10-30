@@ -18,6 +18,7 @@ clip-rate = 30
 preview = "PIECE.png: 320 by 320, RGBA, transparent, the piece at rest from the front a little right and above, every preview at one scale"
 turn-sheet = { file = "PIECE-turn.png", frame = 256, frames = 16, columns = 4, order = "row by row", turn = "22.5 degrees counterclockwise seen from above each frame, frame 0 the front", camera = "20 degrees above the horizon", scale = "each piece framed to its size" }
 map-sheet = { file = "PIECE-map.png", frame = 96, frames = 8, columns = 8, facing = ["east", "southeast", "south", "southwest", "west", "northwest", "north", "northeast"], camera = "orthographic, 30 degrees above the horizon (the board's 2:1 tiles; the ask said 35)", tile = "64 by 32 pixels", pixels-per-meter = 45.25, anchor = [48, 82] }
+mesh-format = { file = "PIECE-mesh.toml", pose = "at rest", vertices = "x y z per string, meters, Z up, front -Y, the origin at the middle of the base", faces = "three vertex numbers per string, from 1", colors = "#rrggbb per face, sRGB", most-triangles = 500 }
 
 [pieces.arrow-1]
 kind = "tower"
@@ -25,6 +26,7 @@ glb = "arrow-1.glb"
 preview = "arrow-1.png"
 turn = "arrow-1-turn.png"
 map = "arrow-1-map.png"
+mesh = "arrow-1-mesh.toml"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.arrow-2]
@@ -33,6 +35,7 @@ glb = "arrow-2.glb"
 preview = "arrow-2.png"
 turn = "arrow-2-turn.png"
 map = "arrow-2-map.png"
+mesh = "arrow-2-mesh.toml"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.arrow-3]
@@ -41,6 +44,7 @@ glb = "arrow-3.glb"
 preview = "arrow-3.png"
 turn = "arrow-3-turn.png"
 map = "arrow-3-map.png"
+mesh = "arrow-3-mesh.toml"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.cannon-1]
@@ -49,6 +53,7 @@ glb = "cannon-1.glb"
 preview = "cannon-1.png"
 turn = "cannon-1-turn.png"
 map = "cannon-1-map.png"
+mesh = "cannon-1-mesh.toml"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.cannon-2]
@@ -57,6 +62,7 @@ glb = "cannon-2.glb"
 preview = "cannon-2.png"
 turn = "cannon-2-turn.png"
 map = "cannon-2-map.png"
+mesh = "cannon-2-mesh.toml"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.cannon-3]
@@ -65,6 +71,7 @@ glb = "cannon-3.glb"
 preview = "cannon-3.png"
 turn = "cannon-3-turn.png"
 map = "cannon-3-map.png"
+mesh = "cannon-3-mesh.toml"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.frost-1]
@@ -73,6 +80,7 @@ glb = "frost-1.glb"
 preview = "frost-1.png"
 turn = "frost-1-turn.png"
 map = "frost-1-map.png"
+mesh = "frost-1-mesh.toml"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.frost-2]
@@ -81,6 +89,7 @@ glb = "frost-2.glb"
 preview = "frost-2.png"
 turn = "frost-2-turn.png"
 map = "frost-2-map.png"
+mesh = "frost-2-mesh.toml"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.frost-3]
@@ -89,6 +98,7 @@ glb = "frost-3.glb"
 preview = "frost-3.png"
 turn = "frost-3-turn.png"
 map = "frost-3-map.png"
+mesh = "frost-3-mesh.toml"
 clips = { idle = 2.0, fire = 0.4 }
 
 [pieces.runner]
@@ -97,6 +107,7 @@ glb = "runner.glb"
 preview = "runner.png"
 turn = "runner-turn.png"
 map = "runner-map.png"
+mesh = "runner-mesh.toml"
 clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
 
 [pieces.brute]
@@ -105,6 +116,7 @@ glb = "brute.glb"
 preview = "brute.png"
 turn = "brute-turn.png"
 map = "brute-map.png"
+mesh = "brute-mesh.toml"
 clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
 
 [pieces.shield]
@@ -113,8 +125,14 @@ glb = "shield.glb"
 preview = "shield.png"
 turn = "shield-turn.png"
 map = "shield-map.png"
+mesh = "shield-mesh.toml"
 clips = { idle = 2.0, walk = 1.0, hit = 0.3 }
 
 48
 work/qtd/lineup.mp4
 12
+each piece's mesh, as X_eTaL reads it:
+arrow-1: 64 3 vertices, 104 faces of 3 3 numbers, from 1.0 64.0, 104 colors of 7 7 characters, z from 0.0 0.845
+cannon-3: 271 3 vertices, 494 faces of 3 3 numbers, from 1.0 271.0, 494 colors of 7 7 characters, z from 0.0 0.6197
+frost-3: 114 3 vertices, 184 faces of 3 3 numbers, from 1.0 114.0, 184 colors of 7 7 characters, z from 0.0 1.3602
+runner: 266 3 vertices, 496 faces of 3 3 numbers, from 1.0 266.0, 496 colors of 7 7 characters, z from 0.0 0.3294

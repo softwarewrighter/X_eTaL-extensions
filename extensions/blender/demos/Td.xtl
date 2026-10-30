@@ -251,10 +251,15 @@ l:m_odel := { name ->
   ""
 }
 
+## the most triangles a piece's low-poly mesh (NAME-mesh.toml) has: the
+## ask's "a few hundred"; the cannons, over it, are decimated
+l:meshMost := 500
+
 ## td:e_xport name: Python making the piece NAME, writing it as
-## out/NAME.glb with its clips, and reading its clips back into
-## out/NAME-clips.txt
-l:e_xport := { name -> (l:m_odel name) c_at (bp:e_xportPiece name) c_at bp:c_lips name }
+## out/NAME.glb with its clips, reading its clips back into
+## out/NAME-clips.txt, and writing its low-poly mesh at rest as
+## out/NAME-mesh.toml (bp:m_eshToml)
+l:e_xport := { name -> (l:m_odel name) c_at (bp:e_xportPiece name) c_at (bp:c_lips name) c_at (name, l:meshMost) bp:m_eshToml 0 }
 
 ## td:clips: Python joining the pieces' clip files into out/clips.txt,
 ## each piece's name, then its clips
@@ -328,6 +333,7 @@ h:e_ntry := { (dir, name) z ->
   t := t c_at "preview = \"" c_at name c_at ".png\"\npreview-sha256 = \"" c_at (dg:s_ha256File dir c_at "/" c_at name c_at ".png") c_at "\"\n"
   t := t c_at "turn = \"" c_at name c_at "-turn.png\"\nturn-sha256 = \"" c_at (dg:s_ha256File dir c_at "/" c_at name c_at "-turn.png") c_at "\"\n"
   t := t c_at "map = \"" c_at name c_at "-map.png\"\nmap-sha256 = \"" c_at (dg:s_ha256File dir c_at "/" c_at name c_at "-map.png") c_at "\"\n"
+  t := t c_at "mesh = \"" c_at name c_at "-mesh.toml\"\nmesh-sha256 = \"" c_at (dg:s_ha256File dir c_at "/" c_at name c_at "-mesh.toml") c_at "\"\n"
   t c_at "clips = " c_at (h:c_lipsOf c) c_at "\n"
 }
 
@@ -335,8 +341,10 @@ h:e_ntry := { (dir, name) z ->
 ## (their .glb and .png files, hashed by the digest extension): what
 ## made them (the program, the commit -- "unpublished" until the files
 ## are published -- and Blender, its version line), the license, the
-## conventions (units, up, front, the clips' rate), then each piece: its
-## kind, files, SHA-256s and clips with their lengths in seconds
+## conventions (units, up, front, the clips' rate, the sheets, the
+## low-poly mesh's format), then each piece: its kind, files (.glb,
+## preview, sheets, mesh), SHA-256s and clips with their lengths in
+## seconds
 l:m_anifest := { (dir, blender) z ->
   t := "# Tower defense pieces for X_eTaL-games, made by X_eTaL driving Blender.\ntitle = \"Tower defense pieces\"\nprogram = \"extensions/blender/demos/game-assets.xtl\"\npieces-library = \"extensions/blender/demos/Td.xtl\"\n"
   t := t c_at "repository = \"https://github.com/softwarewrighter/X_eTaL-extensions\"\ncommit = \"unpublished\"\nlicense = \"MIT\"\nblender = \"" c_at blender c_at "\"\n"
@@ -344,6 +352,7 @@ l:m_anifest := { (dir, blender) z ->
   t := t c_at "preview = \"PIECE.png: 320 by 320, RGBA, transparent, the piece at rest from the front a little right and above, every preview at one scale\"\n"
   t := t c_at "turn-sheet = { file = \"PIECE-turn.png\", frame = 256, frames = 16, columns = 4, order = \"row by row\", turn = \"22.5 degrees counterclockwise seen from above each frame, frame 0 the front\", camera = \"20 degrees above the horizon\", scale = \"each piece framed to its size\" }\n"
   t := t c_at "map-sheet = { file = \"PIECE-map.png\", frame = 96, frames = 8, columns = 8, facing = [\"east\", \"southeast\", \"south\", \"southwest\", \"west\", \"northwest\", \"north\", \"northeast\"], camera = \"orthographic, 30 degrees above the horizon (the board's 2:1 tiles; the ask said 35)\", tile = \"64 by 32 pixels\", pixels-per-meter = 45.25, anchor = [48, 82] }\n"
+  t := t c_at "mesh-format = { file = \"PIECE-mesh.toml\", pose = \"at rest\", vertices = \"x y z per string, meters, Z up, front -Y, the origin at the middle of the base\", faces = \"three vertex numbers per string, from 1\", colors = \"#rrggbb per face, sRGB\", most-triangles = " c_at (f_ormat l:meshMost) c_at " }\n"
   e_nt := { name -> (dir, name) h:e_ntry 0 }
   t c_at (e_nt "arrow-1") c_at (e_nt "arrow-2") c_at (e_nt "arrow-3") c_at (e_nt "cannon-1") c_at (e_nt "cannon-2") c_at (e_nt "cannon-3") c_at (e_nt "frost-1") c_at (e_nt "frost-2") c_at (e_nt "frost-3") c_at (e_nt "runner") c_at (e_nt "brute") c_at e_nt "shield"
 }
@@ -353,7 +362,7 @@ l:m_anifest := { (dir, blender) z ->
 h:c_ard := { name ->
   c := h:c_reep name
   t := "<div class='card'><model-viewer src='" c_at name c_at ".glb' poster='" c_at name c_at ".png' alt='the " c_at name c_at " piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'></model-viewer>"
-  t c_at "<h2>" c_at name c_at "</h2><p>" c_at (h:b_uttons c) c_at " <a href='" c_at name c_at ".glb'>.glb</a> <a href='" c_at name c_at ".png'>.png</a> <a href='" c_at name c_at "-turn.png'>turn</a> <a href='" c_at name c_at "-map.png'>map</a></p></div>\n"
+  t c_at "<h2>" c_at name c_at "</h2><p>" c_at (h:b_uttons c) c_at " <a href='" c_at name c_at ".glb'>.glb</a> <a href='" c_at name c_at ".png'>.png</a> <a href='" c_at name c_at "-turn.png'>turn</a> <a href='" c_at name c_at "-map.png'>map</a> <a href='" c_at name c_at "-mesh.toml'>mesh</a></p></div>\n"
 }
 h:b_uttons := { c -> c ? "<button data-clip='idle'>idle</button><button data-clip='walk'>walk</button><button data-clip='hit'>hit</button>"
   "<button data-clip='idle'>idle</button><button data-clip='fire'>fire</button>"
@@ -367,7 +376,7 @@ h:p_ageHead := { z ->
   t := t c_at "h2 { margin: 6px 0 0; font-size: 18px; }\n.card p { margin: 4px 0; }\nbutton { margin: 0 4px 4px 0; background: #2b3038; color: #e4e4e4; border: 1px solid #444b55; border-radius: 4px; padding: 2px 10px; cursor: pointer; }\n</style>\n</head>\n<body>\n"
   t := t c_at "<header><a href='../../'><img src='../../xetal-logo-red.png' alt='X_eTaL' height='48'><span>X_eTaL Extensions</span></a></header>\n<h1>Tower defense pieces</h1>\n"
   t := t c_at "<p>The twelve pieces <a href='https://softwarewrighter.github.io/X_eTaL-games/tower-defense/'>X_eTaL-games' tower defense</a> asked for, each made by an X_eTaL program driving Blender (<a href='https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/blender/demos/game-assets.xtl'>game-assets.xtl</a>, the pieces in <a href='https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/blender/demos/Td.xtl'>Td.xtl</a>). "
-  t c_at "Drag a piece to turn it; the buttons play its clips. Each is a .glb (glTF 2.0) with its clips, a preview .png and two sheets for a game without 3D (turn: 16 views; map: 8 facings on the isometric board); <a href='manifest.toml'>manifest.toml</a> lists them with their SHA-256s, the license (MIT) and the commit that made them.</p>\n<main class='grid'>\n"
+  t c_at "Drag a piece to turn it; the buttons play its clips. Each is a .glb (glTF 2.0) with its clips, a preview .png and two sheets for a game without 3D (turn: 16 views; map: 8 facings on the isometric board) and a low-poly mesh in TOML for a renderer written in X_eTaL; <a href='manifest.toml'>manifest.toml</a> lists them with their SHA-256s, the license (MIT) and the commit that made them.</p>\n<main class='grid'>\n"
 }
 
 h:p_ageEnd := { z -> "</main>\n<script>\ndocument.querySelectorAll('button[data-clip]').forEach(function (b) {\n  b.onclick = function () {\n    var mv = b.closest('.card').querySelector('model-viewer');\n    var loop = b.dataset.clip === 'idle' || b.dataset.clip === 'walk';\n    mv.animationName = b.dataset.clip;\n    mv.currentTime = 0;\n    mv.play({repetitions: loop ? Infinity : 1});\n  };\n});\ndocument.querySelectorAll('model-viewer').forEach(function (mv) {\n  mv.addEventListener('finished', function () { mv.animationName = 'idle'; mv.play(); });\n});\n</script>\n</body>\n</html>\n" }

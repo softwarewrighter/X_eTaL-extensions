@@ -1,6 +1,6 @@
 number = 13
 slug = "td-mesh"
-status = "pending"
+status = "in-progress"
 description = "Saga 15 step 10 (optional in the ask): PIECE-mesh.toml, a low-poly mesh (vert..."
 role = "production"
 context_files = []

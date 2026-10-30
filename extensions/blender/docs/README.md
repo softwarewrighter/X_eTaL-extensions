@@ -185,13 +185,20 @@ and [matrix multiply](https://softwarewrighter.github.io/X_eTaL-extensions/liter
    camera 20 degrees up) and `NAME-map.png` (8 frames of 96 in a row,
    the piece facing east, then each 45 degrees clockwise on screen, an
    orthographic camera 30 degrees up as the game's 2:1 board has it: a
-   tile 64 by 32 pixels, its middle at (48, 82) of a frame). It renders
+   tile 64 by 32 pixels, its middle at (48, 82) of a frame). Each piece
+   is also written at rest as `NAME-mesh.toml`, a low-poly mesh for a
+   renderer written in X_eTaL, which reads TOML (`bp:m_eshToml`):
+   top-level lists of strings, `vertices` ("x y z", meters, Z up, front
+   -y), `faces` (three vertex numbers, from 1) and `colors` (each
+   face's `#rrggbb`, sRGB), at most 500 triangles -- the cannons, over
+   that, are decimated (collapsed) until they fit. X_eTaL reads one
+   back with `[]L_IST` and `n_umbers` (`tests/mesh-read.xtl`). It renders
    two videos: the twelve one after another, close and
    framed to each, turning once round and playing each clip, captioned
    (`closeups.mp4`, a minute), and the twelve lined up -- turning, idle,
    then the towers firing and the creeps walking (`lineup.mp4`, 8
    seconds). Then the program hashes every file with the digest
-   extension into `manifest.toml` (the pieces, files, SHA-256s, clips,
+   extension into `manifest.toml` (the pieces, files, meshes, SHA-256s, clips,
    license, conventions, program and commit) and writes `index.html`,
    a page that shows each piece in a 3D viewer
    ([model-viewer](https://modelviewer.dev/)) with its clips on buttons,

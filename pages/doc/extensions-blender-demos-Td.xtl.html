@@ -225,6 +225,7 @@
 <li><a href="#section-6">The pieces</a></li>
 <li class="item"><a href="#l.names">ˡnames</a></li>
 <li class="item"><a href="#l.m_odel"><span class="c-libfunc">ˡm̲odel</span></a></li>
+<li class="item"><a href="#l.meshMost">ˡmeshMost</a></li>
 <li class="item"><a href="#l.e_xport"><span class="c-libfunc">ˡe̲xport</span></a></li>
 <li class="item"><a href="#l.clips">ˡclips</a></li>
 <li class="item"><a href="#l.all">ˡall</a></li>
@@ -740,20 +741,31 @@ keying its clips; &quot;&quot; for another name</p>
 }</pre>
 <div class="uses">Used in: <a href="extensions-blender-demos-Td.xtl.html#l.e_xport"><span class="c-libfunc">ˡe̲xport</span></a></div>
 </div>
+<div class="item" id="l.meshMost">
+<h3><a href="#l.meshMost">ˡmeshMost</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L256">line 256</a></div>
+<div class="doc">
+<p>the most triangles a piece's low-poly mesh (NAME-mesh.toml) has: the
+ask's &quot;a few hundred&quot;; the cannons, over it, are decimated</p>
+</div>
+<pre class="code">ˡmeshMost ← <span class="c-number">500</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-Td.xtl.html#l.e_xport"><span class="c-libfunc">ˡe̲xport</span></a>, <a href="extensions-blender-demos-Td.xtl.html#l.m_anifest"><span class="c-libfunc">ˡm̲anifest</span></a></div>
+</div>
 <div class="item" id="l.e_xport">
 <h3><a href="#l.e_xport"><span class="c-libfunc">ˡe̲xport</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L257">line 257</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L262">line 262</a></div>
 <div class="doc">
 <p>td:e_xport name: Python making the piece NAME, writing it as
-out/NAME.glb with its clips, and reading its clips back into
-out/NAME-clips.txt</p>
+out/NAME.glb with its clips, reading its clips back into
+out/NAME-clips.txt, and writing its low-poly mesh at rest as
+out/NAME-mesh.toml (bp:m_eshToml)</p>
 </div>
-<pre class="code"><span class="c-libfunc">ˡe̲xport</span> ← { name → (<a href="extensions-blender-demos-Td.xtl.html#l.m_odel" class="c-libfunc">ˡm̲odel</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#l.e_xportPiece" class="c-libfunc">ᵇᵖe̲xportPiece</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-lib-Bpy.xtl.html#l.c_lips" class="c-libfunc">ᵇᵖc̲lips</a> name }</pre>
+<pre class="code"><span class="c-libfunc">ˡe̲xport</span> ← { name → (<a href="extensions-blender-demos-Td.xtl.html#l.m_odel" class="c-libfunc">ˡm̲odel</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#l.e_xportPiece" class="c-libfunc">ᵇᵖe̲xportPiece</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#l.c_lips" class="c-libfunc">ᵇᵖc̲lips</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (name, <a href="extensions-blender-demos-Td.xtl.html#l.meshMost">ˡmeshMost</a>) <a href="extensions-blender-lib-Bpy.xtl.html#l.m_eshToml" class="c-libfunc">ᵇᵖm̲eshToml</a> <span class="c-number">0</span> }</pre>
 <div class="uses">Used in: <a href="extensions-blender-demos-Td.xtl.html#l.all">ˡall</a></div>
 </div>
 <div class="item" id="l.clips">
 <h3><a href="#l.clips">ˡclips</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L261">line 261</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L266">line 266</a></div>
 <div class="doc">
 <p>td:clips: Python joining the pieces' clip files into out/clips.txt,
 each piece's name, then its clips</p>
@@ -763,7 +775,7 @@ each piece's name, then its clips</p>
 </div>
 <div class="item" id="l.all">
 <h3><a href="#l.all">ˡall</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L265">line 265</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L270">line 270</a></div>
 <div class="doc">
 <p>td:all: Python making every piece and writing its .glb (td:e_xport),
 then out/clips.txt</p>
@@ -774,7 +786,7 @@ then out/clips.txt</p>
 <h2 class="section" id="section-7">Showing them</h2>
 <div class="item" id="l.show">
 <h3><a href="#l.show">ˡshow</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L276">line 276</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L281">line 281</a></div>
 <div class="doc">
 <p>td:show: Python helpers for showing the pieces: td_stills renders
 each alone; td_closeups shows them one after another, close, each
@@ -789,7 +801,7 @@ a property no playing strip keys at zero, not at its rest).</p>
 </div>
 <div class="item" id="l.s_tills">
 <h3><a href="#l.s_tills"><span class="c-libfunc">ˡs̲tills</span></a> <span class="type">: a -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L281">line 281</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L286">line 286</a></div>
 <div class="doc">
 <p>td:s_tills size: Python rendering each piece alone as out/NAME.png,
 size pixels square on a transparent ground, from the front a little
@@ -800,7 +812,7 @@ to the right and above (all at one scale, so their sizes compare)</p>
 </div>
 <div class="item" id="l.s_heets">
 <h3><a href="#l.s_heets"><span class="c-libfunc">ˡs̲heets</span></a> <span class="type">: Any c =&gt; (a, b) -&gt; c -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L294">line 294</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L299">line 299</a></div>
 <div class="doc">
 <p>(turn, map) td:s_heets 0: Python rendering each piece's fallback
 sheets for a game without 3D, joined in Blender (transparent PNGs):
@@ -819,7 +831,7 @@ pixels wide and 32 high in a 96-pixel frame -- the tile's middle at
 </div>
 <div class="item" id="l.c_loseups">
 <h3><a href="#l.c_loseups"><span class="c-libfunc">ˡc̲loseups</span></a> <span class="type">: Any d =&gt; (a, b, c) -&gt; d -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L301">line 301</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L306">line 306</a></div>
 <div class="doc">
 <p>(width, height, frames) td:c_loseups 0: Python showing the pieces
 one after another for a video of that size, frames for each (at 30
@@ -832,7 +844,7 @@ naming the piece and the clip. bp:v_ideo renders it.</p>
 </div>
 <div class="item" id="l.f_ilm">
 <h3><a href="#l.f_ilm"><span class="c-libfunc">ˡf̲ilm</span></a> <span class="type">: Any d =&gt; (a, b, c) -&gt; d -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L308">line 308</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L313">line 313</a></div>
 <div class="doc">
 <p>(width, height, frames) td:f_ilm 0: Python lining the pieces up on
 the ground for a video of that size and length (at 30 frames a
@@ -846,13 +858,13 @@ in front of each. bp:v_ideo renders it.</p>
 <h2 class="section" id="section-8">Publishing them</h2>
 <div class="item" id="h.c_reep">
 <h3><a href="#h.c_reep"><span class="c-libfunc">ʰc̲reep</span></a> <span class="type">: (Num a, Truthy a) =&gt; Char -&gt; a</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L313">line 313</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L318">line 318</a></div>
 <pre class="code"><span class="c-libfunc">ʰc̲reep</span> ← { name → (name <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;runner&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (name <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;brute&quot;</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> (name <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-string">&quot;shield&quot;</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span> }</pre>
 <div class="uses">Used in: <a href="extensions-blender-demos-Td.xtl.html#h.e_ntry"><span class="c-libfunc">ʰe̲ntry</span></a>, <a href="extensions-blender-demos-Td.xtl.html#h.c_ard"><span class="c-libfunc">ʰc̲ard</span></a></div>
 </div>
 <div class="item" id="h.k_ind">
 <h3><a href="#h.k_ind"><span class="c-libfunc">ʰk̲ind</span></a> <span class="type">: Truthy a =&gt; a -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L316">line 316</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L321">line 321</a></div>
 <pre class="code"><span class="c-libfunc">ʰk̲ind</span> ← { c → c ? <span class="c-string">&quot;creep&quot;</span>
   <span class="c-string">&quot;tower&quot;</span>
 }</pre>
@@ -860,7 +872,7 @@ in front of each. bp:v_ideo renders it.</p>
 </div>
 <div class="item" id="h.c_lipsOf">
 <h3><a href="#h.c_lipsOf"><span class="c-libfunc">ʰc̲lipsOf</span></a> <span class="type">: Truthy a =&gt; a -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L319">line 319</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L324">line 324</a></div>
 <pre class="code"><span class="c-libfunc">ʰc̲lipsOf</span> ← { c → c ? <span class="c-string">&quot;{ idle = 2.0, walk = 1.0, hit = 0.3 }&quot;</span>
   <span class="c-string">&quot;{ idle = 2.0, fire = 0.4 }&quot;</span>
 }</pre>
@@ -868,27 +880,30 @@ in front of each. bp:v_ideo renders it.</p>
 </div>
 <div class="item" id="h.e_ntry">
 <h3><a href="#h.e_ntry"><span class="c-libfunc">ʰe̲ntry</span></a> <span class="type">: Any a =&gt; (Char, Char) -&gt; a -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L325">line 325</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L330">line 330</a></div>
 <pre class="code"><span class="c-libfunc">ʰe̲ntry</span> ← { (dir, name) z →
   c ← <a href="extensions-blender-demos-Td.xtl.html#h.c_reep" class="c-libfunc">ʰc̲reep</a> name
   t ← <span class="c-string">&quot;\n[pieces.&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;]\nkind = \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-Td.xtl.html#h.k_ind" class="c-libfunc">ʰk̲ind</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;\nglb = \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.glb\&quot;\nglb-sha256 = \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-digest-lib-Digest.xtl.html#l.s_ha256File" class="c-libfunc">ᵈᵍs̲ha256File</a> dir <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;/&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.glb&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;\n&quot;</span>
   t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;preview = \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.png\&quot;\npreview-sha256 = \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-digest-lib-Digest.xtl.html#l.s_ha256File" class="c-libfunc">ᵈᵍs̲ha256File</a> dir <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;/&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.png&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;\n&quot;</span>
   t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;turn = \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;-turn.png\&quot;\nturn-sha256 = \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-digest-lib-Digest.xtl.html#l.s_ha256File" class="c-libfunc">ᵈᵍs̲ha256File</a> dir <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;/&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;-turn.png&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;\n&quot;</span>
   t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;map = \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;-map.png\&quot;\nmap-sha256 = \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-digest-lib-Digest.xtl.html#l.s_ha256File" class="c-libfunc">ᵈᵍs̲ha256File</a> dir <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;/&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;-map.png&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;\n&quot;</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;mesh = \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;-mesh.toml\&quot;\nmesh-sha256 = \&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-digest-lib-Digest.xtl.html#l.s_ha256File" class="c-libfunc">ᵈᵍs̲ha256File</a> dir <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;/&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;-mesh.toml&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;\n&quot;</span>
   t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;clips = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-Td.xtl.html#h.c_lipsOf" class="c-libfunc">ʰc̲lipsOf</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span>
 }</pre>
 <div class="uses">Used in: <a href="extensions-blender-demos-Td.xtl.html#l.m_anifest"><span class="c-libfunc">ˡm̲anifest</span></a></div>
 </div>
 <div class="item" id="l.m_anifest">
 <h3><a href="#l.m_anifest"><span class="c-libfunc">ˡm̲anifest</span></a> <span class="type">: Any a =&gt; (Char, Char) -&gt; a -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L340">line 340</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L348">line 348</a></div>
 <div class="doc">
 <p>(dir, blender) td:m_anifest 0: manifest.toml for the pieces in dir
 (their .glb and .png files, hashed by the digest extension): what
 made them (the program, the commit -- &quot;unpublished&quot; until the files
 are published -- and Blender, its version line), the license, the
-conventions (units, up, front, the clips' rate), then each piece: its
-kind, files, SHA-256s and clips with their lengths in seconds</p>
+conventions (units, up, front, the clips' rate, the sheets, the
+low-poly mesh's format), then each piece: its kind, files (.glb,
+preview, sheets, mesh), SHA-256s and clips with their lengths in
+seconds</p>
 </div>
 <pre class="code"><span class="c-libfunc">ˡm̲anifest</span> ← { (dir, blender) z →
   t ← <span class="c-string">&quot;# Tower defense pieces for X_eTaL-games, made by X_eTaL driving Blender.\ntitle = \&quot;Tower defense pieces\&quot;\nprogram = \&quot;extensions/blender/demos/game-assets.xtl\&quot;\npieces-library = \&quot;extensions/blender/demos/Td.xtl\&quot;\n&quot;</span>
@@ -897,6 +912,7 @@ kind, files, SHA-256s and clips with their lengths in seconds</p>
   t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;preview = \&quot;PIECE.png: 320 by 320, RGBA, transparent, the piece at rest from the front a little right and above, every preview at one scale\&quot;\n&quot;</span>
   t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;turn-sheet = { file = \&quot;PIECE-turn.png\&quot;, frame = 256, frames = 16, columns = 4, order = \&quot;row by row\&quot;, turn = \&quot;22.5 degrees counterclockwise seen from above each frame, frame 0 the front\&quot;, camera = \&quot;20 degrees above the horizon\&quot;, scale = \&quot;each piece framed to its size\&quot; }\n&quot;</span>
   t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;map-sheet = { file = \&quot;PIECE-map.png\&quot;, frame = 96, frames = 8, columns = 8, facing = [\&quot;east\&quot;, \&quot;southeast\&quot;, \&quot;south\&quot;, \&quot;southwest\&quot;, \&quot;west\&quot;, \&quot;northwest\&quot;, \&quot;north\&quot;, \&quot;northeast\&quot;], camera = \&quot;orthographic, 30 degrees above the horizon (the board's 2:1 tiles; the ask said 35)\&quot;, tile = \&quot;64 by 32 pixels\&quot;, pixels-per-meter = 45.25, anchor = [48, 82] }\n&quot;</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;mesh-format = { file = \&quot;PIECE-mesh.toml\&quot;, pose = \&quot;at rest\&quot;, vertices = \&quot;x y z per string, meters, Z up, front -Y, the origin at the middle of the base\&quot;, faces = \&quot;three vertex numbers per string, from 1\&quot;, colors = \&quot;#rrggbb per face, sRGB\&quot;, most-triangles = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="extensions-blender-demos-Td.xtl.html#l.meshMost">ˡmeshMost</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; }\n&quot;</span>
   <span class="c-builtin">e̲nt</span> ← { name → (dir, name) <a href="extensions-blender-demos-Td.xtl.html#h.e_ntry" class="c-libfunc">ʰe̲ntry</a> <span class="c-number">0</span> }
   t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-builtin">e̲nt</span> <span class="c-string">&quot;arrow-1&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-builtin">e̲nt</span> <span class="c-string">&quot;arrow-2&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-builtin">e̲nt</span> <span class="c-string">&quot;arrow-3&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-builtin">e̲nt</span> <span class="c-string">&quot;cannon-1&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-builtin">e̲nt</span> <span class="c-string">&quot;cannon-2&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-builtin">e̲nt</span> <span class="c-string">&quot;cannon-3&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-builtin">e̲nt</span> <span class="c-string">&quot;frost-1&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-builtin">e̲nt</span> <span class="c-string">&quot;frost-2&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-builtin">e̲nt</span> <span class="c-string">&quot;frost-3&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-builtin">e̲nt</span> <span class="c-string">&quot;runner&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-builtin">e̲nt</span> <span class="c-string">&quot;brute&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-builtin">e̲nt</span> <span class="c-string">&quot;shield&quot;</span>
 }</pre>
@@ -904,17 +920,17 @@ kind, files, SHA-256s and clips with their lengths in seconds</p>
 </div>
 <div class="item" id="h.c_ard">
 <h3><a href="#h.c_ard"><span class="c-libfunc">ʰc̲ard</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L353">line 353</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L362">line 362</a></div>
 <pre class="code"><span class="c-libfunc">ʰc̲ard</span> ← { name →
   c ← <a href="extensions-blender-demos-Td.xtl.html#h.c_reep" class="c-libfunc">ʰc̲reep</a> name
   t ← <span class="c-string">&quot;&lt;div class='card'&gt;&lt;model-viewer src='&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.glb' poster='&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.png' alt='the &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; piece' camera-controls autoplay animation-name='idle' camera-orbit='25deg 70deg auto' shadow-intensity='1' interaction-prompt='none'&gt;&lt;/model-viewer&gt;&quot;</span>
-  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&lt;h2&gt;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&lt;/h2&gt;&lt;p&gt;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-Td.xtl.html#h.b_uttons" class="c-libfunc">ʰb̲uttons</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &lt;a href='&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.glb'&gt;.glb&lt;/a&gt; &lt;a href='&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.png'&gt;.png&lt;/a&gt; &lt;a href='&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;-turn.png'&gt;turn&lt;/a&gt; &lt;a href='&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;-map.png'&gt;map&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;\n&quot;</span>
+  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&lt;h2&gt;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&lt;/h2&gt;&lt;p&gt;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-Td.xtl.html#h.b_uttons" class="c-libfunc">ʰb̲uttons</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; &lt;a href='&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.glb'&gt;.glb&lt;/a&gt; &lt;a href='&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.png'&gt;.png&lt;/a&gt; &lt;a href='&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;-turn.png'&gt;turn&lt;/a&gt; &lt;a href='&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;-map.png'&gt;map&lt;/a&gt; &lt;a href='&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;-mesh.toml'&gt;mesh&lt;/a&gt;&lt;/p&gt;&lt;/div&gt;\n&quot;</span>
 }</pre>
 <div class="uses">Used in: <a href="extensions-blender-demos-Td.xtl.html#l.page">ˡpage</a></div>
 </div>
 <div class="item" id="h.b_uttons">
 <h3><a href="#h.b_uttons"><span class="c-libfunc">ʰb̲uttons</span></a> <span class="type">: (Num a, Truthy a) =&gt; a -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L358">line 358</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L367">line 367</a></div>
 <pre class="code"><span class="c-libfunc">ʰb̲uttons</span> ← { c → c ? <span class="c-string">&quot;&lt;button data-clip='idle'&gt;idle&lt;/button&gt;&lt;button data-clip='walk'&gt;walk&lt;/button&gt;&lt;button data-clip='hit'&gt;hit&lt;/button&gt;&quot;</span>
   <span class="c-string">&quot;&lt;button data-clip='idle'&gt;idle&lt;/button&gt;&lt;button data-clip='fire'&gt;fire&lt;/button&gt;&quot;</span>
 }</pre>
@@ -922,7 +938,7 @@ kind, files, SHA-256s and clips with their lengths in seconds</p>
 </div>
 <div class="item" id="h.p_ageHead">
 <h3><a href="#h.p_ageHead"><span class="c-libfunc">ʰp̲ageHead</span></a> <span class="type">: Any a =&gt; a -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L362">line 362</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L371">line 371</a></div>
 <pre class="code"><span class="c-libfunc">ʰp̲ageHead</span> ← { z →
   t ← <span class="c-string">&quot;&lt;!doctype html&gt;\n&lt;html lang='en'&gt;\n&lt;head&gt;\n&lt;meta charset='utf-8'&gt;\n&lt;meta name='viewport' content='width=device-width, initial-scale=1'&gt;\n&lt;title&gt;Tower defense pieces -- X_eTaL Extensions&lt;/title&gt;\n&lt;link rel='icon' href='../../favicon.ico'&gt;\n&quot;</span>
   t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&lt;script type='module' src='https://cdn.jsdelivr.net/npm/@google/model-viewer@4/dist/model-viewer.min.js'&gt;&lt;/script&gt;\n&quot;</span>
@@ -931,19 +947,19 @@ kind, files, SHA-256s and clips with their lengths in seconds</p>
   t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;h2 { margin: 6px 0 0; font-size: 18px; }\n.card p { margin: 4px 0; }\nbutton { margin: 0 4px 4px 0; background: #2b3038; color: #e4e4e4; border: 1px solid #444b55; border-radius: 4px; padding: 2px 10px; cursor: pointer; }\n&lt;/style&gt;\n&lt;/head&gt;\n&lt;body&gt;\n&quot;</span>
   t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&lt;header&gt;&lt;a href='../../'&gt;&lt;img src='../../xetal-logo-red.png' alt='X_eTaL' height='48'&gt;&lt;span&gt;X_eTaL Extensions&lt;/span&gt;&lt;/a&gt;&lt;/header&gt;\n&lt;h1&gt;Tower defense pieces&lt;/h1&gt;\n&quot;</span>
   t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;&lt;p&gt;The twelve pieces &lt;a href='https://softwarewrighter.github.io/X_eTaL-games/tower-defense/'&gt;X_eTaL-games' tower defense&lt;/a&gt; asked for, each made by an X_eTaL program driving Blender (&lt;a href='https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/blender/demos/game-assets.xtl'&gt;game-assets.xtl&lt;/a&gt;, the pieces in &lt;a href='https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/blender/demos/Td.xtl'&gt;Td.xtl&lt;/a&gt;). &quot;</span>
-  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;Drag a piece to turn it; the buttons play its clips. Each is a .glb (glTF 2.0) with its clips, a preview .png and two sheets for a game without 3D (turn: 16 views; map: 8 facings on the isometric board); &lt;a href='manifest.toml'&gt;manifest.toml&lt;/a&gt; lists them with their SHA-256s, the license (MIT) and the commit that made them.&lt;/p&gt;\n&lt;main class='grid'&gt;\n&quot;</span>
+  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;Drag a piece to turn it; the buttons play its clips. Each is a .glb (glTF 2.0) with its clips, a preview .png and two sheets for a game without 3D (turn: 16 views; map: 8 facings on the isometric board) and a low-poly mesh in TOML for a renderer written in X_eTaL; &lt;a href='manifest.toml'&gt;manifest.toml&lt;/a&gt; lists them with their SHA-256s, the license (MIT) and the commit that made them.&lt;/p&gt;\n&lt;main class='grid'&gt;\n&quot;</span>
 }</pre>
 <div class="uses">Used in: <a href="extensions-blender-demos-Td.xtl.html#l.page">ˡpage</a></div>
 </div>
 <div class="item" id="h.p_ageEnd">
 <h3><a href="#h.p_ageEnd"><span class="c-libfunc">ʰp̲ageEnd</span></a> <span class="type">: Any a =&gt; a -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L373">line 373</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L382">line 382</a></div>
 <pre class="code"><span class="c-libfunc">ʰp̲ageEnd</span> ← { z → <span class="c-string">&quot;&lt;/main&gt;\n&lt;script&gt;\ndocument.querySelectorAll('button[data-clip]').forEach(function (b) {\n  b.onclick = function () {\n    var mv = b.closest('.card').querySelector('model-viewer');\n    var loop = b.dataset.clip === 'idle' || b.dataset.clip === 'walk';\n    mv.animationName = b.dataset.clip;\n    mv.currentTime = 0;\n    mv.play({repetitions: loop ? Infinity : 1});\n  };\n});\ndocument.querySelectorAll('model-viewer').forEach(function (mv) {\n  mv.addEventListener('finished', function () { mv.animationName = 'idle'; mv.play(); });\n});\n&lt;/script&gt;\n&lt;/body&gt;\n&lt;/html&gt;\n&quot;</span> }</pre>
 <div class="uses">Used in: <a href="extensions-blender-demos-Td.xtl.html#l.page">ˡpage</a></div>
 </div>
 <div class="item" id="l.page">
 <h3><a href="#l.page">ˡpage</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L379">line 379</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-Td.xtl.src.html#L388">line 388</a></div>
 <div class="doc">
 <p>td:page: the pieces' page (index.html beside the files): each piece
 in a 3D viewer (model-viewer, from a CDN) to turn with the mouse,

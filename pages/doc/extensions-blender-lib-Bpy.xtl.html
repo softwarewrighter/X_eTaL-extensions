@@ -197,6 +197,7 @@
 <li class="item"><a href="#h.p_ath"><span class="c-libfunc">ʰp̲ath</span></a></li>
 <li class="item"><a href="#l.c_lips"><span class="c-libfunc">ˡc̲lips</span></a></li>
 <li class="item"><a href="#l.e_xportPiece"><span class="c-libfunc">ˡe̲xportPiece</span></a></li>
+<li class="item"><a href="#l.m_eshToml"><span class="c-libfunc">ˡm̲eshToml</span></a></li>
 <li><a href="#section-6">Words, light and camera</a></li>
 <li class="item"><a href="#l.l_abel"><span class="c-libfunc">ˡl̲abel</span></a></li>
 <li class="item"><a href="#l.l_ights"><span class="c-libfunc">ˡl̲ights</span></a></li>
@@ -241,7 +242,7 @@ makes the run fail.</p>
 </div>
 <div class="item" id="l.head">
 <h3><a href="#l.head">ˡhead</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L28">line 28</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L29">line 29</a></div>
 <div class="doc">
 <p>bp:head: the inner script's start: an empty scene, the output
 directory (the first argument after &quot;--&quot;, made), keyframes linear (an
@@ -251,46 +252,47 @@ written by X_eTaL k to a row; material, link; piece, made, attach,
 mesh_object (outward normals) and group build a piece of parts; keys keys a part into a named
 clip, clips makes each clip a track (NLA) so it exports by its name;
 export_piece writes one piece as glTF, its clips with it; glb_clips
-reads a .glb's clips back; triangles counts a piece's</p>
+reads a .glb's clips back; mesh_toml writes a piece as a low-poly
+mesh in TOML (bp:m_eshToml); triangles counts a piece's triangles</p>
 </div>
-<pre class="code">ˡhead ← <span class="c-string">&quot;import bmesh, bpy, math, os, sys\nargs = sys.argv[sys.argv.index(\&quot;--\&quot;) + 1:]\nout = args[0]\nos.makedirs(out, exist_ok=True)\nbpy.ops.wm.read_factory_settings(use_empty=True)\nbpy.context.preferences.edit.keyframe_new_interpolation_type = \&quot;LINEAR\&quot;\nscene = bpy.context.scene\nscene.render.fps = 30\n\ndef nums(text, k):\n    v = [float(t) for t in text.split()]\n    return [tuple(v[i:i + k]) for i in range(0, len(v), k)]\n\ndef material(name, rgb, emit=0.0):\n    m = bpy.data.materials.new(name)\n    m.use_nodes = True\n    p = m.node_tree.nodes[\&quot;Principled BSDF\&quot;]\n    p.inputs[\&quot;Base Color\&quot;].default_value = rgb + (1.0,)\n    p.inputs[\&quot;Emission Color\&quot;].default_value = rgb + (1.0,)\n    p.inputs[\&quot;Emission Strength\&quot;].default_value = emit\n    return m\n\ndef link(obj, mat):\n    scene.collection.objects.link(obj)\n    obj.data.materials.append(mat)\n    return obj\n\ndef piece(name):\n    p = bpy.data.objects.new(name, None)\n    scene.collection.objects.link(p)\n    return p\n\ndef made(name):\n    o = bpy.context.active_object\n    o.name = name\n    o.data.name = name\n    return o\n\ndef mesh_object(name, verts, faces):\n    m = bpy.data.meshes.new(name)\n    m.from_pydata(verts, [], faces)\n    m.validate()\n    bm = bmesh.new()\n    bm.from_mesh(m)\n    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)\n    bm.to_mesh(m)\n    bm.free()\n    m.update()\n    o = bpy.data.objects.new(name, m)\n    scene.collection.objects.link(o)\n    return o\n\ndef group(name, owner, at, turn):\n    g = bpy.data.objects.new(name, None)\n    scene.collection.objects.link(g)\n    g.parent = owner\n    g.location = at\n    g.rotation_euler = tuple(math.radians(a) for a in turn)\n    return g\n\ndef attach(obj, owner, mat, at, turn):\n    obj.parent = owner\n    obj.location = at\n    obj.rotation_euler = tuple(math.radians(a) for a in turn)\n    obj.data.materials.clear()\n    obj.data.materials.append(mat)\n    return obj\n\nactions = {}\n\ndef keys(name, clip, path, times, values):\n    o = bpy.data.objects[name]\n    if o.animation_data is None:\n        o.animation_data_create()\n    act = actions.get((name, clip))\n    if act is None:\n        act = bpy.data.actions.new(name + \&quot; \&quot; + clip)\n        actions[(name, clip)] = act\n    rest = tuple(getattr(o, path))\n    o.animation_data.action = act\n    for t, v in zip(times, values):\n        if path == \&quot;rotation_euler\&quot;:\n            v = tuple(math.radians(a) for a in v)\n        setattr(o, path, v)\n        o.keyframe_insert(data_path=path, frame=round(t * scene.render.fps))\n    o.animation_data.action = None\n    setattr(o, path, rest)\n\ndef clips():\n    for (name, clip), act in actions.items():\n        o = bpy.data.objects[name]\n        if not any(t.name == clip for t in o.animation_data.nla_tracks):\n            t = o.animation_data.nla_tracks.new()\n            t.name = clip\n            t.strips.new(clip, 0, act)\n\ndef glb_clips(path):\n    import json, struct\n    data = open(path, \&quot;rb\&quot;).read()\n    g = json.loads(data[20:20 + struct.unpack(\&quot;&lt;I\&quot;, data[12:16])[0]])\n    found = []\n    for a in g.get(\&quot;animations\&quot;, []):\n        times = [g[\&quot;accessors\&quot;][s[\&quot;input\&quot;]] for s in a[\&quot;samplers\&quot;]]\n        what = sorted(\&quot;%s %s\&quot; % (g[\&quot;nodes\&quot;][c[\&quot;target\&quot;][\&quot;node\&quot;]][\&quot;name\&quot;], c[\&quot;target\&quot;][\&quot;path\&quot;]) for c in a[\&quot;channels\&quot;])\n        found.append(\&quot;clip %s %.2f-%.2f s: %s\&quot; % (a[\&quot;name\&quot;], min(t[\&quot;min\&quot;][0] for t in times), max(t[\&quot;max\&quot;][0] for t in times), \&quot;, \&quot;.join(what)))\n    return found\n\ndef export_piece(owner, path):\n    clips()\n    bpy.ops.object.select_all(action=\&quot;DESELECT\&quot;)\n    owner.select_set(True)\n    for c in owner.children_recursive:\n        c.select_set(True)\n    bpy.context.view_layer.objects.active = owner\n    bpy.ops.export_scene.gltf(filepath=path, export_format=\&quot;GLB\&quot;, use_selection=True, export_animations=True, export_animation_mode=\&quot;NLA_TRACKS\&quot;)\n\ndef triangles(owner):\n    return sum(sum(len(p.vertices) - 2 for p in c.data.polygons) for c in owner.children_recursive if c.type == \&quot;MESH\&quot;)\n\n&quot;</span></pre>
+<pre class="code">ˡhead ← <span class="c-string">&quot;import bmesh, bpy, math, os, sys\nargs = sys.argv[sys.argv.index(\&quot;--\&quot;) + 1:]\nout = args[0]\nos.makedirs(out, exist_ok=True)\nbpy.ops.wm.read_factory_settings(use_empty=True)\nbpy.context.preferences.edit.keyframe_new_interpolation_type = \&quot;LINEAR\&quot;\nscene = bpy.context.scene\nscene.render.fps = 30\n\ndef nums(text, k):\n    v = [float(t) for t in text.split()]\n    return [tuple(v[i:i + k]) for i in range(0, len(v), k)]\n\ndef material(name, rgb, emit=0.0):\n    m = bpy.data.materials.new(name)\n    m.use_nodes = True\n    p = m.node_tree.nodes[\&quot;Principled BSDF\&quot;]\n    p.inputs[\&quot;Base Color\&quot;].default_value = rgb + (1.0,)\n    p.inputs[\&quot;Emission Color\&quot;].default_value = rgb + (1.0,)\n    p.inputs[\&quot;Emission Strength\&quot;].default_value = emit\n    return m\n\ndef link(obj, mat):\n    scene.collection.objects.link(obj)\n    obj.data.materials.append(mat)\n    return obj\n\ndef piece(name):\n    p = bpy.data.objects.new(name, None)\n    scene.collection.objects.link(p)\n    return p\n\ndef made(name):\n    o = bpy.context.active_object\n    o.name = name\n    o.data.name = name\n    return o\n\ndef mesh_object(name, verts, faces):\n    m = bpy.data.meshes.new(name)\n    m.from_pydata(verts, [], faces)\n    m.validate()\n    bm = bmesh.new()\n    bm.from_mesh(m)\n    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)\n    bm.to_mesh(m)\n    bm.free()\n    m.update()\n    o = bpy.data.objects.new(name, m)\n    scene.collection.objects.link(o)\n    return o\n\ndef group(name, owner, at, turn):\n    g = bpy.data.objects.new(name, None)\n    scene.collection.objects.link(g)\n    g.parent = owner\n    g.location = at\n    g.rotation_euler = tuple(math.radians(a) for a in turn)\n    return g\n\ndef attach(obj, owner, mat, at, turn):\n    obj.parent = owner\n    obj.location = at\n    obj.rotation_euler = tuple(math.radians(a) for a in turn)\n    obj.data.materials.clear()\n    obj.data.materials.append(mat)\n    return obj\n\nactions = {}\n\ndef keys(name, clip, path, times, values):\n    o = bpy.data.objects[name]\n    if o.animation_data is None:\n        o.animation_data_create()\n    act = actions.get((name, clip))\n    if act is None:\n        act = bpy.data.actions.new(name + \&quot; \&quot; + clip)\n        actions[(name, clip)] = act\n    rest = tuple(getattr(o, path))\n    o.animation_data.action = act\n    for t, v in zip(times, values):\n        if path == \&quot;rotation_euler\&quot;:\n            v = tuple(math.radians(a) for a in v)\n        setattr(o, path, v)\n        o.keyframe_insert(data_path=path, frame=round(t * scene.render.fps))\n    o.animation_data.action = None\n    setattr(o, path, rest)\n\ndef clips():\n    for (name, clip), act in actions.items():\n        o = bpy.data.objects[name]\n        if not any(t.name == clip for t in o.animation_data.nla_tracks):\n            t = o.animation_data.nla_tracks.new()\n            t.name = clip\n            t.strips.new(clip, 0, act)\n\ndef glb_clips(path):\n    import json, struct\n    data = open(path, \&quot;rb\&quot;).read()\n    g = json.loads(data[20:20 + struct.unpack(\&quot;&lt;I\&quot;, data[12:16])[0]])\n    found = []\n    for a in g.get(\&quot;animations\&quot;, []):\n        times = [g[\&quot;accessors\&quot;][s[\&quot;input\&quot;]] for s in a[\&quot;samplers\&quot;]]\n        what = sorted(\&quot;%s %s\&quot; % (g[\&quot;nodes\&quot;][c[\&quot;target\&quot;][\&quot;node\&quot;]][\&quot;name\&quot;], c[\&quot;target\&quot;][\&quot;path\&quot;]) for c in a[\&quot;channels\&quot;])\n        found.append(\&quot;clip %s %.2f-%.2f s: %s\&quot; % (a[\&quot;name\&quot;], min(t[\&quot;min\&quot;][0] for t in times), max(t[\&quot;max\&quot;][0] for t in times), \&quot;, \&quot;.join(what)))\n    return found\n\ndef export_piece(owner, path):\n    clips()\n    bpy.ops.object.select_all(action=\&quot;DESELECT\&quot;)\n    owner.select_set(True)\n    for c in owner.children_recursive:\n        c.select_set(True)\n    bpy.context.view_layer.objects.active = owner\n    bpy.ops.export_scene.gltf(filepath=path, export_format=\&quot;GLB\&quot;, use_selection=True, export_animations=True, export_animation_mode=\&quot;NLA_TRACKS\&quot;)\n\ndef triangles(owner):\n    return sum(sum(len(p.vertices) - 2 for p in c.data.polygons) for c in owner.children_recursive if c.type == \&quot;MESH\&quot;)\n\ndef srgb(x):\n    return 12.92 * x if x &lt;= 0.0031308 else 1.055 * x ** (1 / 2.4) - 0.055\n\ndef mesh_toml(owner, path, most):\n    parts = sorted((c for c in owner.children_recursive if c.type == \&quot;MESH\&quot;), key=lambda c: c.name)\n    tracks = [t for o in [owner] + list(owner.children_recursive) if o.animation_data for t in o.animation_data.nla_tracks if not t.mute]\n    for t in tracks:\n        t.mute = True\n    total = triangles(owner)\n    ratio = min(1.0, most / total) if total else 1.0\n    if ratio &lt; 1.0:\n        for c in parts:\n            d = c.modifiers.new(\&quot;low\&quot;, \&quot;DECIMATE\&quot;)\n            d.use_collapse_triangulate = True\n    while True:\n        for c in parts:\n            if ratio &lt; 1.0:\n                c.modifiers[\&quot;low\&quot;].ratio = ratio\n        bpy.context.view_layer.update()\n        deps = bpy.context.evaluated_depsgraph_get()\n        n = sum(len(c.evaluated_get(deps).data.loop_triangles) for c in parts)\n        if n &lt;= most or ratio &lt; 0.05:\n            break\n        ratio *= 0.97 * most / n\n    back = owner.matrix_world.inverted()\n    verts, faces, colors = [], [], []\n    for c in parts:\n        e = c.evaluated_get(deps)\n        bm = bmesh.new()\n        bm.from_mesh(e.to_mesh())\n        bmesh.ops.triangulate(bm, faces=bm.faces)\n        bm.verts.index_update()\n        at = back @ c.matrix_world\n        first = len(verts)\n        verts += [at @ v.co for v in bm.verts]\n        for f in bm.faces:\n            faces.append(tuple(first + v.index + 1 for v in f.verts))\n            m = c.data.materials[f.material_index]\n            rgb = m.node_tree.nodes[\&quot;Principled BSDF\&quot;].inputs[\&quot;Base Color\&quot;].default_value[:3]\n            colors.append(\&quot;#\&quot; + \&quot;\&quot;.join(\&quot;%02x\&quot; % round(255 * min(1.0, max(0.0, srgb(x)))) for x in rgb))\n        bm.free()\n        e.to_mesh_clear()\n        if ratio &lt; 1.0:\n            c.modifiers.remove(c.modifiers[\&quot;low\&quot;])\n    for t in tracks:\n        t.mute = False\n    with open(path, \&quot;w\&quot;) as f:\n        f.write(\&quot;# %s at rest, low-poly: meters, Z up, its front -Y, the origin at the middle of its base\\n\&quot; % owner.name)\n        f.write(\&quot;name = \\\&quot;%s\\\&quot;\\ntriangles = %d\\n\&quot; % (owner.name, len(faces)))\n        f.write(\&quot;vertices = [\\n\&quot; + \&quot;\&quot;.join(\&quot;  \\\&quot;%.4f %.4f %.4f\\\&quot;,\\n\&quot; % tuple(v) for v in verts) + \&quot;]\\n\&quot;)\n        f.write(\&quot;faces = [\\n\&quot; + \&quot;\&quot;.join(\&quot;  \\\&quot;%d %d %d\\\&quot;,\\n\&quot; % t for t in faces) + \&quot;]\\n\&quot;)\n        f.write(\&quot;colors = [\\n\&quot; + \&quot;\&quot;.join(\&quot;  \\\&quot;%s\\\&quot;,\\n\&quot; % c for c in colors) + \&quot;]\\n\&quot;)\n    return len(faces)\n\n&quot;</span></pre>
 <div class="uses">Used in: <a href="extensions-blender-demos-CosyLogo.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-Sizes.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-game-assets.xtl.html#script">script</a>, <a href="extensions-blender-demos-td-models.xtl.html#n">n</a></div>
 </div>
 <h2 class="section" id="section-2">Numbers into Python</h2>
 <div class="item" id="h.n_ums">
 <h3><a href="#h.n_ums"><span class="c-libfunc">ʰn̲ums</span></a> <span class="type">: Any c =&gt; (a, b) -&gt; c -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L33">line 33</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L34">line 34</a></div>
 <pre class="code"><span class="c-libfunc">ʰn̲ums</span> ← { (v, k) z → <span class="c-string">&quot;nums(\&quot;\&quot;\&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;\&quot;\&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span> }</pre>
 <div class="uses">Used in: <a href="extensions-blender-lib-Bpy.xtl.html#l.c_ubes"><span class="c-libfunc">ˡc̲ubes</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.g_round"><span class="c-libfunc">ˡg̲round</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.o_ctahedron"><span class="c-libfunc">ˡo̲ctahedron</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.m_esh"><span class="c-libfunc">ˡm̲esh</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.l_athe"><span class="c-libfunc">ˡl̲athe</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.k_eys"><span class="c-libfunc">ˡk̲eys</span></a></div>
 </div>
 <div class="item" id="h.q_uote">
 <h3><a href="#h.q_uote"><span class="c-libfunc">ʰq̲uote</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L36">line 36</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L37">line 37</a></div>
 <pre class="code"><span class="c-libfunc">ʰq̲uote</span> ← { t → <span class="c-string">&quot;\&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;&quot;</span> }</pre>
-<div class="uses">Used in: <a href="extensions-blender-lib-Bpy.xtl.html#l.c_ubes"><span class="c-libfunc">ˡc̲ubes</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.p_iece"><span class="c-libfunc">ˡp̲iece</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.g_roup"><span class="c-libfunc">ˡg̲roup</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#h.a_ttach"><span class="c-libfunc">ʰa̲ttach</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.b_ox"><span class="c-libfunc">ˡb̲ox</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.c_ylinder"><span class="c-libfunc">ˡc̲ylinder</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.c_one"><span class="c-libfunc">ˡc̲one</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.s_phere"><span class="c-libfunc">ˡs̲phere</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.t_orus"><span class="c-libfunc">ˡt̲orus</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.o_ctahedron"><span class="c-libfunc">ˡo̲ctahedron</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.m_esh"><span class="c-libfunc">ˡm̲esh</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.l_athe"><span class="c-libfunc">ˡl̲athe</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.k_eys"><span class="c-libfunc">ˡk̲eys</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.c_lips"><span class="c-libfunc">ˡc̲lips</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.e_xportPiece"><span class="c-libfunc">ˡe̲xportPiece</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.l_abel"><span class="c-libfunc">ˡl̲abel</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.s_till"><span class="c-libfunc">ˡs̲till</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.v_ideo"><span class="c-libfunc">ˡv̲ideo</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.e_xports"><span class="c-libfunc">ˡe̲xports</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-lib-Bpy.xtl.html#l.c_ubes"><span class="c-libfunc">ˡc̲ubes</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.p_iece"><span class="c-libfunc">ˡp̲iece</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.g_roup"><span class="c-libfunc">ˡg̲roup</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#h.a_ttach"><span class="c-libfunc">ʰa̲ttach</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.b_ox"><span class="c-libfunc">ˡb̲ox</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.c_ylinder"><span class="c-libfunc">ˡc̲ylinder</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.c_one"><span class="c-libfunc">ˡc̲one</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.s_phere"><span class="c-libfunc">ˡs̲phere</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.t_orus"><span class="c-libfunc">ˡt̲orus</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.o_ctahedron"><span class="c-libfunc">ˡo̲ctahedron</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.m_esh"><span class="c-libfunc">ˡm̲esh</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.l_athe"><span class="c-libfunc">ˡl̲athe</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.k_eys"><span class="c-libfunc">ˡk̲eys</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.c_lips"><span class="c-libfunc">ˡc̲lips</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.e_xportPiece"><span class="c-libfunc">ˡe̲xportPiece</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.m_eshToml"><span class="c-libfunc">ˡm̲eshToml</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.l_abel"><span class="c-libfunc">ˡl̲abel</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.s_till"><span class="c-libfunc">ˡs̲till</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.v_ideo"><span class="c-libfunc">ˡv̲ideo</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.e_xports"><span class="c-libfunc">ˡe̲xports</span></a></div>
 </div>
 <div class="item" id="h.t_uple">
 <h3><a href="#h.t_uple"><span class="c-libfunc">ʰt̲uple</span></a> <span class="type">: a -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L39">line 39</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L40">line 40</a></div>
 <pre class="code"><span class="c-libfunc">ʰt̲uple</span> ← { v → <span class="c-string">&quot;nums(\&quot;&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)[0]&quot;</span> }</pre>
 <div class="uses">Used in: <a href="extensions-blender-lib-Bpy.xtl.html#l.c_ubes"><span class="c-libfunc">ˡc̲ubes</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.g_round"><span class="c-libfunc">ˡg̲round</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.g_roup"><span class="c-libfunc">ˡg̲roup</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#h.a_ttach"><span class="c-libfunc">ʰa̲ttach</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.b_ox"><span class="c-libfunc">ˡb̲ox</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.c_ylinder"><span class="c-libfunc">ˡc̲ylinder</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.s_phere"><span class="c-libfunc">ˡs̲phere</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.k_eys"><span class="c-libfunc">ˡk̲eys</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.l_abel"><span class="c-libfunc">ˡl̲abel</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.l_ights"><span class="c-libfunc">ˡl̲ights</span></a>, <a href="extensions-blender-lib-Bpy.xtl.html#l.o_rbit"><span class="c-libfunc">ˡo̲rbit</span></a></div>
 </div>
 <h2 class="section" id="section-3">Cubes</h2>
 <div class="item" id="corners">
 <h3><a href="#corners">corners</a> <span class="type">: Float</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L45">line 45</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L46">line 46</a></div>
 <pre class="code">corners ← <span class="c-number">8</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-0.5</span> <span class="c-number">-0.5</span> <span class="c-number">-0.5</span>  <span class="c-number">0.5</span> <span class="c-number">-0.5</span> <span class="c-number">-0.5</span>  <span class="c-number">0.5</span> <span class="c-number">0.5</span> <span class="c-number">-0.5</span>  <span class="c-number">-0.5</span> <span class="c-number">0.5</span> <span class="c-number">-0.5</span>  <span class="c-number">-0.5</span> <span class="c-number">-0.5</span> <span class="c-number">0.5</span>  <span class="c-number">0.5</span> <span class="c-number">-0.5</span> <span class="c-number">0.5</span>  <span class="c-number">0.5</span> <span class="c-number">0.5</span> <span class="c-number">0.5</span>  <span class="c-number">-0.5</span> <span class="c-number">0.5</span> <span class="c-number">0.5</span></pre>
 <div class="uses">Used in: <a href="extensions-blender-lib-Bpy.xtl.html#l.c_ubeMesh"><span class="c-libfunc">ˡc̲ubeMesh</span></a></div>
 </div>
 <div class="item" id="sides">
 <h3><a href="#sides">sides</a> <span class="type">: Int</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L48">line 48</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L49">line 49</a></div>
 <pre class="code">sides ← <span class="c-number">6</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <span class="c-number">3</span> <span class="c-number">2</span> <span class="c-number">1</span>  <span class="c-number">4</span> <span class="c-number">5</span> <span class="c-number">6</span> <span class="c-number">7</span>  <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">5</span> <span class="c-number">4</span>  <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">7</span> <span class="c-number">6</span>  <span class="c-number">3</span> <span class="c-number">0</span> <span class="c-number">4</span> <span class="c-number">7</span>  <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">6</span> <span class="c-number">5</span></pre>
 <div class="uses">Used in: <a href="extensions-blender-lib-Bpy.xtl.html#l.c_ubeMesh"><span class="c-libfunc">ˡc̲ubeMesh</span></a></div>
 </div>
 <div class="item" id="l.c_ubeMesh">
 <h3><a href="#l.c_ubeMesh"><span class="c-libfunc">ˡc̲ubeMesh</span></a> <span class="type">: Any a =&gt; (Float, Float) -&gt; a -&gt; (Float, Int)</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L57">line 57</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L58">line 58</a></div>
 <div class="doc">
 <p>(centers, size) bp:c_ubeMesh 0: the corners (8n by 3) and faces (6n
 by 4, counting corners from 0) of n cubes of that size at the centers
@@ -311,7 +313,7 @@ by 4, counting corners from 0) of n cubes of that size at the centers
 </div>
 <div class="item" id="l.c_ubes">
 <h3><a href="#l.c_ubes"><span class="c-libfunc">ˡc̲ubes</span></a> <span class="type">: Any b =&gt; (Char, Float, Float, a) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L68">line 68</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L69">line 69</a></div>
 <div class="doc">
 <p>(name, centers, size, rgb) bp:c_ubes 0: Python making n cubes of
 that size at the centers (n by 3, z up) as one mesh object NAME, with
@@ -327,7 +329,7 @@ a material of that color (red green blue, 0 to 1)</p>
 </div>
 <div class="item" id="l.g_round">
 <h3><a href="#l.g_round"><span class="c-libfunc">ˡg̲round</span></a> <span class="type">: Any b =&gt; (Float, Float, a) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L78">line 78</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L79">line 79</a></div>
 <div class="doc">
 <p>(center, size, rgb) bp:g_round 0: Python making a flat square ground
 that wide at center (x y z, its top), colored: something for shadows
@@ -345,7 +347,7 @@ to fall on</p>
 <h2 class="section" id="section-4">Pieces of parts</h2>
 <div class="item" id="l.p_iece">
 <h3><a href="#l.p_iece"><span class="c-libfunc">ˡp̲iece</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L96">line 96</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L97">line 97</a></div>
 <div class="doc">
 <p>bp:p_iece name: Python starting a piece: an empty named NAME; the
 parts after it hang from it (until the next piece)</p>
@@ -355,7 +357,7 @@ parts after it hang from it (until the next piece)</p>
 </div>
 <div class="item" id="l.g_roup">
 <h3><a href="#l.g_roup"><span class="c-libfunc">ˡg̲roup</span></a> <span class="type">: Any c =&gt; (Char, a, b) -&gt; c -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L103">line 103</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L104">line 104</a></div>
 <div class="doc">
 <p>(name, at, turn) bp:g_roup 0: Python starting a group in the piece
 (or the group before it): an empty named NAME at at (x y z), turned
@@ -368,7 +370,7 @@ one in a clip: a crossbow about its own pivot, a banner, a turret.</p>
 </div>
 <div class="item" id="l.ungroup">
 <h3><a href="#l.ungroup">ˡungroup</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L107">line 107</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L108">line 108</a></div>
 <div class="doc">
 <p>bp:ungroup: Python ending the groups: the parts after it hang from
 the piece again</p>
@@ -378,7 +380,7 @@ the piece again</p>
 </div>
 <div class="item" id="h.a_ttach">
 <h3><a href="#h.a_ttach"><span class="c-libfunc">ʰa̲ttach</span></a> <span class="type">: (Char, a, b, c, d) -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L110">line 110</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L111">line 111</a></div>
 <pre class="code"><span class="c-libfunc">ʰa̲ttach</span> ← { (name, at, turn, rgb, emit) →
   <span class="c-string">&quot;attach(o, pc, material(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#h.t_uple" class="c-libfunc">ʰt̲uple</a> rgb) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> emit) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;), &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#h.t_uple" class="c-libfunc">ʰt̲uple</a> at) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#h.t_uple" class="c-libfunc">ʰt̲uple</a> turn) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 }</pre>
@@ -386,7 +388,7 @@ the piece again</p>
 </div>
 <div class="item" id="l.b_ox">
 <h3><a href="#l.b_ox"><span class="c-libfunc">ˡb̲ox</span></a> <span class="type">: Any f =&gt; (Char, a, b, c, d, e) -&gt; f -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L116">line 116</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L117">line 117</a></div>
 <div class="doc">
 <p>(name, at, size, turn, rgb, emit) bp:b_ox 0: a box size wide, deep
 and tall (x y z), its middle at at</p>
@@ -398,7 +400,7 @@ and tall (x y z), its middle at at</p>
 </div>
 <div class="item" id="l.c_ylinder">
 <h3><a href="#l.c_ylinder"><span class="c-libfunc">ˡc̲ylinder</span></a> <span class="type">: Any f =&gt; (Char, a, b, c, d, e) -&gt; f -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L123">line 123</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L124">line 124</a></div>
 <div class="doc">
 <p>(name, at, size, turn, rgb, emit) bp:c_ylinder 0: a 12-sided cylinder,
 size its radius across x and y and its height (r r h), its middle at
@@ -411,7 +413,7 @@ at</p>
 </div>
 <div class="item" id="l.c_one">
 <h3><a href="#l.c_one"><span class="c-libfunc">ˡc̲one</span></a> <span class="type">: Any f =&gt; (Char, a, b, c, d, e) -&gt; f -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L130">line 130</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L131">line 131</a></div>
 <div class="doc">
 <p>(name, at, size, turn, rgb, emit) bp:c_one 0: a 12-sided cone (or
 frustum), size its bottom radius, top radius and height, its middle
@@ -424,7 +426,7 @@ at at</p>
 </div>
 <div class="item" id="l.s_phere">
 <h3><a href="#l.s_phere"><span class="c-libfunc">ˡs̲phere</span></a> <span class="type">: Any f =&gt; (Char, a, b, c, d, e) -&gt; f -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L136">line 136</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L137">line 137</a></div>
 <div class="doc">
 <p>(name, at, size, turn, rgb, emit) bp:s_phere 0: a sphere of 12
 segments and 8 rings, size its radii along x y z, its middle at at</p>
@@ -436,7 +438,7 @@ segments and 8 rings, size its radii along x y z, its middle at at</p>
 </div>
 <div class="item" id="l.t_orus">
 <h3><a href="#l.t_orus"><span class="c-libfunc">ˡt̲orus</span></a> <span class="type">: Any f =&gt; (Char, a, b, c, d, e) -&gt; f -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L142">line 142</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L143">line 143</a></div>
 <div class="doc">
 <p>(name, at, size, turn, rgb, emit) bp:t_orus 0: a ring, size its
 radius and its tube's radius (R r), lying flat, its middle at at</p>
@@ -448,7 +450,7 @@ radius and its tube's radius (R r), lying flat, its middle at at</p>
 </div>
 <div class="item" id="l.o_ctahedronMesh">
 <h3><a href="#l.o_ctahedronMesh"><span class="c-libfunc">ˡo̲ctahedronMesh</span></a> <span class="type">: (Any a, Num b) =&gt; Float -&gt; a -&gt; (Float, b)</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L153">line 153</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L154">line 154</a></div>
 <div class="doc">
 <p>size bp:o_ctahedronMesh 0: the 6 corners (6 by 3) and 8 faces (8 by
 3, from 0, counterclockwise from outside) of an octahedron reaching
@@ -467,7 +469,7 @@ size (x y z) from its middle each way: a crystal</p>
 </div>
 <div class="item" id="l.o_ctahedron">
 <h3><a href="#l.o_ctahedron"><span class="c-libfunc">ˡo̲ctahedron</span></a> <span class="type">: Any e =&gt; (Char, a, Float, b, c, d) -&gt; e -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L161">line 161</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L162">line 162</a></div>
 <div class="doc">
 <p>(name, at, size, turn, rgb, emit) bp:o_ctahedron 0: an octahedron (a
 crystal), its corners worked out in X_eTaL, size its reach each way</p>
@@ -480,7 +482,7 @@ crystal), its corners worked out in X_eTaL, size its reach each way</p>
 </div>
 <div class="item" id="l.m_esh">
 <h3><a href="#l.m_esh"><span class="c-libfunc">ˡm̲esh</span></a> <span class="type">: (Num b, Any g) =&gt; (Char, a, b, c, d, e, f) -&gt; g -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L170">line 170</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L171">line 171</a></div>
 <div class="doc">
 <p>(name, at, corners, faces, turn, rgb, emit) bp:m_esh 0: a part of
 any shape: the corners (n by 3, about its middle) and faces (each a
@@ -495,7 +497,7 @@ outward -- a wedge, a plate</p>
 </div>
 <div class="item" id="l.l_atheMesh">
 <h3><a href="#l.l_atheMesh"><span class="c-libfunc">ˡl̲atheMesh</span></a> <span class="type">: Any a =&gt; (Float, Int) -&gt; a -&gt; (Float, Int)</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L183">line 183</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L184">line 184</a></div>
 <div class="doc">
 <p>(profile, segments) bp:l_atheMesh 0: a profile turned round the z
 axis: the profile is points (r z), bottom to top, each a radius and
@@ -523,7 +525,7 @@ a height; the corners (segments times points, by 3) and the faces
 </div>
 <div class="item" id="l.l_athe">
 <h3><a href="#l.l_athe"><span class="c-libfunc">ˡl̲athe</span></a> <span class="type">: Any e =&gt; (Char, a, Float, Int, b, c, d) -&gt; e -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L200">line 200</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L201">line 201</a></div>
 <div class="doc">
 <p>(name, at, profile, segments, turn, rgb, emit) bp:l_athe 0: a solid
 turned from a profile (points r z, bottom to top) round its upright
@@ -538,7 +540,7 @@ axis, at at: a dome, a pedestal, a barrel</p>
 <h2 class="section" id="section-5">Clips</h2>
 <div class="item" id="l.k_eys">
 <h3><a href="#l.k_eys"><span class="c-libfunc">ˡk̲eys</span></a> <span class="type">: (Num b, Any c) =&gt; (Char, Char, Char, a, b) -&gt; c -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L222">line 222</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L223">line 223</a></div>
 <div class="doc">
 <p>(part, clip, what, times, values) bp:k_eys 0: Python keying the part
 (or piece) PART in the clip CLIP: what is &quot;location&quot;, &quot;rotation&quot; (x y
@@ -554,7 +556,7 @@ does not move its rest.</p>
 </div>
 <div class="item" id="h.p_ath">
 <h3><a href="#h.p_ath"><span class="c-libfunc">ʰp̲ath</span></a> <span class="type">: Truthy a =&gt; a -&gt; Char -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L228">line 228</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L229">line 229</a></div>
 <pre class="code"><span class="c-libfunc">ʰp̲ath</span> ← { r what →
   r ? <span class="c-string">&quot;rotation_euler&quot;</span>
   what
@@ -563,7 +565,7 @@ does not move its rest.</p>
 </div>
 <div class="item" id="l.c_lips">
 <h3><a href="#l.c_lips"><span class="c-libfunc">ˡc̲lips</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L237">line 237</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L238">line 238</a></div>
 <div class="doc">
 <p>bp:c_lips name: Python reading back out/NAME.glb and writing its clips
 to out/NAME-clips.txt, a line each: the name, the first and last key
@@ -575,7 +577,7 @@ scale) -- what a test checks</p>
 </div>
 <div class="item" id="l.e_xportPiece">
 <h3><a href="#l.e_xportPiece"><span class="c-libfunc">ˡe̲xportPiece</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L241">line 241</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L242">line 242</a></div>
 <div class="doc">
 <p>bp:e_xportPiece name: Python writing the piece NAME (and its parts) as
 out/NAME.glb, its animations with it</p>
@@ -583,10 +585,28 @@ out/NAME.glb, its animations with it</p>
 <pre class="code"><span class="c-libfunc">ˡe̲xportPiece</span> ← { name → <span class="c-string">&quot;export_piece(bpy.data.objects[&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;], os.path.join(out, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;.glb&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;))\n&quot;</span> }</pre>
 <div class="uses">Used in: <a href="extensions-blender-demos-Td.xtl.html#l.e_xport"><span class="c-libfunc">ˡe̲xport</span></a></div>
 </div>
+<div class="item" id="l.m_eshToml">
+<h3><a href="#l.m_eshToml"><span class="c-libfunc">ˡm̲eshToml</span></a> <span class="type">: Any b =&gt; (Char, a) -&gt; b -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L254">line 254</a></div>
+<div class="doc">
+<p>(name, most) bp:m_eshToml 0: Python writing the piece NAME at rest
+(its clips muted) as out/NAME-mesh.toml, a low-poly mesh for a
+renderer that reads TOML: top-level lists of strings -- vertices
+(&quot;x y z&quot; in meters, Z up, about the piece's origin), faces (three
+vertex numbers, from 1) and colors (a face's &quot;#rrggbb&quot;, sRGB, its
+part's color) -- and its name and triangles; a piece of more than
+MOST triangles is decimated (collapsed) to about that many first</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵇᵖ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Bpy.xtl.html" class="c-string">&quot;Bpy&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-string">&quot;tower&quot;</span>, <span class="c-number">500</span>) <a href="extensions-blender-lib-Bpy.xtl.html#l.m_eshToml" class="c-libfunc">ᵇᵖm̲eshToml</a> <span class="c-number">0</span>
+mesh_toml(bpy.data.objects[&quot;tower&quot;], os.path.join(out, &quot;tower-mesh.toml&quot;), 500)</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡm̲eshToml</span> ← { (name, most) z → <span class="c-string">&quot;mesh_toml(bpy.data.objects[&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;], os.path.join(out, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Bpy.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> name <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;-mesh.toml&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;), &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> most) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span> }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-Td.xtl.html#l.e_xport"><span class="c-libfunc">ˡe̲xport</span></a></div>
+</div>
 <h2 class="section" id="section-6">Words, light and camera</h2>
 <div class="item" id="l.l_abel">
 <h3><a href="#l.l_abel"><span class="c-libfunc">ˡl̲abel</span></a> <span class="type">: Any d =&gt; (Char, a, b, c) -&gt; d -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L247">line 247</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L260">line 260</a></div>
 <div class="doc">
 <p>(text, place, size, rgb) bp:l_abel 0: Python making 3D text standing
 upright at place (x y z, its middle bottom), facing -y, that tall</p>
@@ -599,7 +619,7 @@ upright at place (x y z, its middle bottom), facing -y, that tall</p>
 </div>
 <div class="item" id="l.l_ights">
 <h3><a href="#l.l_ights"><span class="c-libfunc">ˡl̲ights</span></a> <span class="type">: Any b =&gt; (Float, a) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L254">line 254</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L267">line 267</a></div>
 <div class="doc">
 <p>(sky rgb, sun strength) bp:l_ights 0: Python lighting the scene: the
 world's color and a sun from above to one side, soft shadows</p>
@@ -612,7 +632,7 @@ world's color and a sun from above to one side, soft shadows</p>
 </div>
 <div class="item" id="l.o_rbit">
 <h3><a href="#l.o_rbit"><span class="c-libfunc">ˡo̲rbit</span></a> <span class="type">: (Num d, Any e) =&gt; (a, b, c, d) -&gt; e -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L264">line 264</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L277">line 277</a></div>
 <div class="doc">
 <p>(center, radius, height, frames) bp:o_rbit 0: Python putting a camera
 on a circle of that radius about center (x y z), that high above it,
@@ -632,7 +652,7 @@ labels made before it turn to face the camera, so they always read</p>
 <h2 class="section" id="section-7">Rendering and files</h2>
 <div class="item" id="l.s_etup">
 <h3><a href="#l.s_etup"><span class="c-libfunc">ˡs̲etup</span></a> <span class="type">: Any d =&gt; (a, b, c) -&gt; d -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L279">line 279</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L292">line 292</a></div>
 <div class="doc">
 <p>(width, height, fps) bp:s_etup 0: Python setting EEVEE, the picture's
 size and the frame rate, colors as they are (the Standard view, not
@@ -645,7 +665,7 @@ look of a drawing</p>
 </div>
 <div class="item" id="l.s_amples">
 <h3><a href="#l.s_amples"><span class="c-libfunc">ˡs̲amples</span></a> <span class="type">: a -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L284">line 284</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L297">line 297</a></div>
 <div class="doc">
 <p>bp:s_amples n: Python setting how many samples EEVEE takes of each
 pixel (64 by default): fewer render faster and rougher -- a test's
@@ -655,7 +675,7 @@ tiny frames need one</p>
 </div>
 <div class="item" id="l.s_till">
 <h3><a href="#l.s_till"><span class="c-libfunc">ˡs̲till</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L287">line 287</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L300">line 300</a></div>
 <div class="doc">
 <p>bp:s_till file: Python rendering the current frame to out/FILE (PNG)</p>
 </div>
@@ -663,7 +683,7 @@ tiny frames need one</p>
 </div>
 <div class="item" id="l.v_ideo">
 <h3><a href="#l.v_ideo"><span class="c-libfunc">ˡv̲ideo</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L291">line 291</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L304">line 304</a></div>
 <div class="doc">
 <p>bp:v_ideo file: Python rendering every frame to out/FILE, an MP4
 (H.264)</p>
@@ -673,7 +693,7 @@ tiny frames need one</p>
 </div>
 <div class="item" id="l.e_xports">
 <h3><a href="#l.e_xports"><span class="c-libfunc">ˡe̲xports</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L295">line 295</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L308">line 308</a></div>
 <div class="doc">
 <p>bp:e_xports name: Python writing the scene as out/NAME.glb (glTF,
 binary), out/NAME.obj (with its .mtl) and out/NAME.blend</p>
@@ -683,7 +703,7 @@ binary), out/NAME.obj (with its .mtl) and out/NAME.blend</p>
 </div>
 <div class="item" id="l.report">
 <h3><a href="#l.report">ˡreport</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L300">line 300</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-lib-Bpy.xtl.src.html#L313">line 313</a></div>
 <div class="doc">
 <p>bp:report: Python writing out/report.txt: each mesh's vertices and
 faces, each piece's parts and triangles, and each object, by name --

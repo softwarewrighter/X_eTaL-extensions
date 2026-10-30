@@ -19,6 +19,6 @@ dest="$root/pages/blender/td"
 commit="$(git -C "$root" rev-parse HEAD)"
 if [ -n "$(git -C "$root" status --porcelain -- extensions/blender)" ]; then commit="$commit+changes"; fi
 mkdir -p "$dest"
-cp "$src"/*.glb "$src"/*.png "$src/index.html" "$dest/"
+cp "$src"/*.glb "$src"/*.png "$src"/*-mesh.toml "$src/index.html" "$dest/"
 sed "s/^commit = .*/commit = \"$commit\"/" "$src/manifest.toml" > "$dest/manifest.toml"
 echo "publish-td: $(ls "$dest" | wc -l | tr -d ' ') files in pages/blender/td (commit $commit); commit pages/ and push to publish"
