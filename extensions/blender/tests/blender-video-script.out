@@ -1,5 +1,5 @@
 the player:
-import bpy, math, os, sys
+import bpy, math, os, sys, textwrap
 args = sys.argv[sys.argv.index('--') + 1:]
 out = args[0]
 os.makedirs(out, exist_ok=True)
@@ -28,6 +28,7 @@ def font():
         d = os.path.dirname(d)
 
 FONT = font()
+ADVANCE = 0.33
 
 def glow(name, rgb, strength=1.0, alpha=1.0):
     m = bpy.data.materials.new(name)
@@ -145,23 +146,59 @@ def labels(name, bodies, rows):
         made.append(o)
     groups[name] = made
 
+def view(d):
+    f = rig['camera'].data.view_frame(scene=scene)
+    k = d / -f[0].z
+    return max(abs(v.x) for v in f) * k, max(abs(v.y) for v in f) * k
+
+def wrap(body, size, width):
+    return textwrap.fill(body, max(1, int(width / (ADVANCE * size))), break_on_hyphens=False)
+
 def captions(bodies, rows):
     d = 0.05
-    size = 0.042
+    hw, hh = view(d)
+    size = 0.16 * min(hw, hh)
+    line = size
     cam = rig['camera']
     for i, (body, r) in enumerate(zip(bodies.split('|'), rows)):
-        o = text('caption %d' % (i + 1), body, size * d, r[2:5])
+        body = wrap(body, size, 1.7 * hw)
+        n = body.count('\n')
+        o = text('caption %d' % (i + 1), body, size, r[2:5])
         o.data.align_y = 'TOP_BASELINE'
         o.parent = cam
-        o.location = (0.0, -0.235 * d, -d)
+        o.location = (0.0, -0.86 * hh + n * line, -d)
         p = bpy.data.objects.new('plate %d' % (i + 1), cube_mesh())
         scene.collection.objects.link(p)
         p.parent = cam
-        p.location = (0.0, (-0.235 + 0.35 * size) * d, -d * 1.002)
-        p.scale = ((0.6 * size * len(body) + 0.04) * d, size * 1.6 * d, 0.0001)
+        p.location = (0.0, -0.86 * hh + 0.35 * size + 0.5 * n * line, -d * 1.002)
+        p.scale = (ADVANCE * size * max(len(x) for x in body.split('\n')) + 1.4 * size, 1.6 * size + n * line, 0.0001)
         p.data.materials.append(glow('plate %d' % (i + 1), (0.0, 0.0, 0.0), 1.0, 0.72))
         for x in (o, p):
             span(x, r[0], r[1])
+
+def cards(titles, subs, rows):
+    d = 0.05
+    hw, hh = view(d)
+    u = min(hw, hh)
+    cam = rig['camera']
+    made = []
+    for i, (title, sub, r) in enumerate(zip(titles.split('|'), subs.split('|'), rows)):
+        p = bpy.data.objects.new('card %d' % (i + 1), cube_mesh())
+        scene.collection.objects.link(p)
+        p.location = (0.0, 0.0, -d * 1.004)
+        p.scale = (2.2 * hw, 2.2 * hh, 0.0001)
+        p.data.materials.append(glow('card %d' % (i + 1), r[5:8]))
+        parts = [p]
+        for j, (body, size, y) in enumerate(((title, 0.34 * u, 0.15 * u), (sub, 0.15 * u, -0.3 * u))):
+            if body:
+                o = text('card %d %s' % (i + 1, 'title' if j == 0 else 'subtitle'), wrap(body, size, 1.8 * hw), size, r[2:5])
+                o.location = (0.0, y, -d)
+                parts.append(o)
+        for x in parts:
+            x.parent = cam
+            span(x, r[0], r[1])
+        made.append(p)
+    groups['cards'] = made
 
 def span(o, a, b):
     keys = {1: True, frame(a): False, frame(b) + 1: True} if a > 0 else {1: False, frame(b) + 1: True}
@@ -194,6 +231,13 @@ def tints(name, times, rows):
         s = o.data.materials[0].node_tree.nodes['glow'].inputs['Color']
         for j, t in enumerate(times):
             s.default_value = tuple(r[3 * j:3 * j + 3]) + (1.0,)
+            s.keyframe_insert('default_value', frame=frame(t))
+
+def glows(name, times, rows):
+    for o, ts, r in zip(groups[name], times, rows):
+        s = o.data.materials[0].node_tree.nodes['glow'].inputs['Strength']
+        for t, g in zip(ts, r):
+            s.default_value = g
             s.keyframe_insert('default_value', frame=frame(t))
 
 def camera(times, eyes, aims):
@@ -280,12 +324,15 @@ def video(file):
     scene.render.filepath = os.path.join(out, file)
     bpy.ops.render.render(animation=True)
 
+def animated(x):
+    return bool(x and x.animation_data and x.animation_data.action)
+
 def report():
     with open(os.path.join(out, 'report.txt'), 'w') as f:
         f.write('frames %d to %d at %d a second\n' % (scene.frame_start, scene.frame_end, scene.render.fps))
         for name in sorted(groups):
             os_ = groups[name]
-            keyed = sum(1 for o in os_ if o.animation_data and o.animation_data.action)
+            keyed = sum(1 for o in os_ if animated(o) or any(m and animated(m.node_tree) for m in getattr(o.data, 'materials', [])))
             f.write('%s: %d objects, %d keyed\n' % (name, len(os_), keyed))
 
 

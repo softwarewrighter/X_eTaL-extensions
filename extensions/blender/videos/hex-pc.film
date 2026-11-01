@@ -1,0 +1,11 @@
+# extensions/blender/videos/hex-pc.webm and .webp: HEX1000's program
+# counter visiting a ROM page's 64 addresses in shift-register order,
+# Blender's own render (EEVEE), made by demos/hex-pc.xtl from
+# X_eTaL-fpga's Hex1000 (PcWalk.xtl, Video.xtl's explainer kit: a title
+# card, slow motion, a time-lapse; just videos; a few minutes when the
+# video is not there yet). The demo's Short (1080 by 1920) and cue
+# sheet stay in work/.
+demo=hex-pc
+file=work/hexpc/out/hex-pc.mp4
+scale=1280
+fps=30

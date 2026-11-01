@@ -741,7 +741,7 @@ t_ally (1920, 1080) mm:s_teps 0
 #+end_src
 
 #+RESULTS:
-: 28302
+: 30159
 
 The demos write the launcher and the script and run Blender through
 the extension: five stills, then the video, then Blender's report.

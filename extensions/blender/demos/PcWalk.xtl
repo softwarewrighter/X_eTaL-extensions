@@ -1,0 +1,135 @@
+## PcWalk.xtl -- HEX1000's program counter, a video made with the
+## explainer kit (Video.xtl): the 64 addresses of a ROM page as cells in
+## reading order, and the program counter visiting them in the order
+## its shift register steps -- 0 1 3 7 15 31 63 62 ..., never +1 -- each
+## cell lit as it is reached, colored by when, the path drawn behind it.
+## The order is X_eTaL-fpga's Hex1000 library (hx:Order, pinned at
+## FPGA_COMMIT); the first hops are in slow motion and the rest a
+## time-lapse (vd:r_etime), behind a title card, with captions, a cue
+## sheet and subtitles; the same scene fits a YouTube video (1920 by
+## 1080) or a Short (1080 by 1920). Shared by the demo (demos/hex-pc.xtl)
+## and its test.
+## Import: "pw:" u_se< "PcWalk"
+
+"hx:" u_se< "Hex1000"
+"vd:" u_se< "Video"
+
+### The data
+
+## order: the addresses the program counter visits from 0, in turn
+## (X_eTaL-fpga's hx:Order); after the last it is back at 0
+## >> "pw:" u_se< "PcWalk"
+## >> 8 t_ake pw:order
+## 0 1 3 7 15 31 63 62
+l:order := hx:Order
+
+## n: how many (64, a ROM page)
+l:n := t_ally l:order
+
+### Time
+
+## the scene's own seconds: hop k (from 1) at second k - 1, back to 0 at
+## second n. map: the scene's seconds to the video's -- a title card
+## first, the first six hops a second each (slow motion), the other 57
+## in 5.7 seconds (a time-lapse), the hop back to 0 slower
+l:map := 4 2 r_eshape 0.0 3.5  6.0 9.5  63.0 15.2  64.0 16.2
+
+## length: the video's seconds
+l:length := 19.5
+
+## at: the video second of each hop (n), then of the hop back to 0
+## >> "pw:" u_se< "PcWalk"
+## >> 7 t_ake pw:at
+## 3.5 4.5 5.5 6.5 7.5 8.5 9.5
+l:at := (l:map, (r_ange l:n + 1) - 1) vd:r_etime 0
+
+### Where things are
+
+## (address, y) pw:p_lace 0: x y z of addresses (n by 3), in reading
+## order: 8 a row, 0 at the top left, 1.2 m apart, at depth y
+## >> "pw:" u_se< "PcWalk"
+## >> (0 9 63, 0.0) pw:p_lace 0
+## -4.2 0.0  4.2
+## -3.0 0.0  3.0
+##  4.2 0.0 -4.2
+l:p_lace := { (a, y) z ->
+  k := t_ally a
+  x := 1.2 * (f_loat a m_od 8) - 3.5
+  zz := 1.2 * 3.5 - f_loat a d_iv 8
+  2 1 t_ranspose (3 c_at k) r_eshape x c_at (k r_eshape y) c_at zz
+}
+
+## colors: a color for each hop, by when (deep blue first, orange last:
+## vd:t_one)
+l:colors := ((r_ange l:n) - 1, 0.0, f_loat l:n - 1) vd:t_one 0
+
+# cells: a box per hop at its address, its color, dark (n by 10)
+h:cells := ((l:order, 0.0) l:p_lace 0) c_at_2 ((l:n c_at 3) r_eshape 1.0 0.25 1.0) c_at_2 l:colors c_at_2 (l:n c_at 1) r_eshape 0.0
+
+# the page: every address's place, outlined in gray from the start
+h:page := ((l:order, 0.0) l:p_lace 0) c_at_2 (l:n c_at 7) r_eshape 1.04 0.3 1.04 70 76 96 1.0
+
+# the cells' glow, each at times of its own: dark until it is reached,
+# a flash, then lit (n by 4 each)
+h:glowTimes := 2 1 t_ranspose (4 c_at l:n) r_eshape (l:n r_eshape 0.0) c_at (l:n t_ake l:at - 1.0 / 30.0) c_at (l:n t_ake l:at) c_at l:n t_ake l:at + 0.35
+h:glowAmounts := (l:n c_at 4) r_eshape 0.0 0.0 3.0 1.0
+
+# the marker: where the counter is at each hop, a frame round the cell
+h:markerAt := (1 c_at (l:n + 1) c_at 6) r_eshape ((l:order c_at 0, -0.2) l:p_lace 0) c_at_2 ((l:n + 1) c_at 3) r_eshape 1.3 0.4 1.3
+
+# the path: a line from each address to the next, in front of the cells
+h:path := ((l:order, -0.3) l:p_lace 0) c_at_2 (((1 d_rop l:order) c_at 0, -0.3) l:p_lace 0) c_at_2 l:colors c_at_2 (l:n c_at 1) r_eshape 0.05
+
+# each line from the hop it starts to the end
+h:pathShown := 2 1 t_ranspose (2 c_at l:n) r_eshape (l:n t_ake l:at) c_at l:n r_eshape l:length
+
+### Words
+
+## the title card's title and subtitle
+l:title := "HEX1000"
+## the subtitle
+l:subtitle := "its program counter, one hop at a time"
+
+## captionTexts: the captions, | between them -- the first hops and
+## their count from the data
+l:captionTexts := "slow motion: PC goes " c_at (f_ormat 7 t_ake l:order) c_at "|time-lapse: all " c_at (f_ormat l:n) c_at " addresses, each once|then back to 0: a ROM page in shift-register order"
+
+## captionTable: each caption's from and to (video seconds), white
+l:captionTable := 3 5 r_eshape 3.6 9.4 255 255 255  9.7 15.1 255 255 255  15.4 19.5 255 255 255
+
+# the card: from, to, the words' color, the card's
+h:cardTable := 1 8 r_eshape 0.0 3.2 255 255 255 18 22 44
+
+## the cues: the title card's and the captions' texts and their times
+## (for vd:c_ues and vd:s_rt)
+l:cueTexts := l:title c_at ": " c_at l:subtitle c_at "|" c_at l:captionTexts
+## their from and to (video seconds)
+l:cueTable := (2 t_ake_2 h:cardTable) c_at 2 t_ake_2 l:captionTable
+
+### The scene
+
+# the sky: near black
+h:sky := 8 10 18
+
+# the camera's keys in the scene's seconds (retimed), eyes from the aim
+h:camTimes := -3.5 6.0 63.0 66.0
+h:camFrom := 4 3 r_eshape -2.0 -1.12 1.5  -1.0 -1.02 0.5  1.5 -1.02 -0.5  2.0 -1.06 0.0
+
+## pw:s_cene size: the whole script Blender runs, before its stills or
+## video: the stage at that size (width height: vd:landscape or
+## vd:shorts), the page, the cells, the marker and the path keyed by
+## the data, the camera far enough back for the grid and the captions
+## to fit (vd:f_it), the title card, the captions
+l:s_cene := { size ->
+  w := 1 s_elect size
+  h := 2 s_elect size
+  d := (w, h, 35, 11.0, 15.0) vd:f_it 0
+  aim := 0.0 0.0 -1.6
+  eyes := (4 3 r_eshape aim) + h:camFrom * 4 3 r_eshape 1.0 c_at d c_at 1.0
+  t := vd:head c_at ((w, h, 30, l:length, h:sky, 35) vd:s_tage 0)
+  t := t c_at (("page", h:page) vd:o_utlines 0) c_at (("cells", h:cells) vd:b_oxes 0) c_at ("cells", h:glowTimes, h:glowAmounts) vd:g_lows 0
+  t := t c_at (("pc", 1 10 r_eshape (6 t_ake r_avel h:markerAt) c_at 255 255 255 2.0) vd:o_utlines 0) c_at ("pc", l:at, h:markerAt) vd:m_oves 0
+  t := t c_at (("path", h:path) vd:l_ines 0) c_at ("path", h:pathShown) vd:s_hown 0
+  t := t c_at ((l:map, h:camTimes) vd:r_etime 0, eyes, 4 3 r_eshape aim) vd:c_amera 0
+  t c_at ((l:title, l:subtitle, h:cardTable) vd:c_ards 0) c_at (l:captionTexts, l:captionTable) vd:c_aptions 0
+}

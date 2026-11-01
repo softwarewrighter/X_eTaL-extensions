@@ -752,7 +752,7 @@ t_ally (1920, 1080) rs:s_cene 0
 #+end_src
 
 #+RESULTS:
-: 34744
+: 36601
 
 # drawn by xetal render (scripts/literate-draw.py); edit the block below
 #+begin_example
@@ -765,7 +765,7 @@ t_ally lines
 #+end_src
 
 #+RESULTS:
-: 307
+: 349
 
 * 8. The player: what Blender runs
 

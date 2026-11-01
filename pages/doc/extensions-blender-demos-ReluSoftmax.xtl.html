@@ -40,6 +40,7 @@
 <h3>std/</h3>
 <ul>
 <li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
 </ul>
 <h3>extensions/blender/lib/</h3>
 <ul>
@@ -56,6 +57,8 @@
 <li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
 <li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
 <li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-pc.xtl.html">hex-pc.xtl</a></li>
+<li><a href="extensions-blender-demos-PcWalk.xtl.html">PcWalk.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-fly.xtl.html">matmul-fly.xtl</a></li>
 <li><a href="extensions-blender-demos-MatmulFly.xtl.html">MatmulFly.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-steps.xtl.html">matmul-steps.xtl</a></li>
@@ -67,6 +70,18 @@
 <h3>extensions/digest/lib/</h3>
 <ul>
 <li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Hex1000/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html">Hex1000.xtl</a></li>
+</ul>
+<h3>work/libraries/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libraries-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Radix/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Radix-src-Radix.xtl.html">Radix.xtl</a></li>
 </ul>
 <h3>work/gpu/libs/Accel/src/</h3>
 <ul>
@@ -277,7 +292,7 @@ libs/Accel/data/w2.txt</p>
 <div class="meta">value &middot; <a href="extensions-blender-demos-ReluSoftmax.xtl.src.html#L36">line 36</a></div>
 <div class="doc">
 <p>z1: the first layer's output, ac:d_ense (4 by 5), some of it negative</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ʳˢ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-demos-ReluSoftmax.xtl.html" class="c-string">&quot;ReluSoftmax&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ʳˢ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html" class="c-string">&quot;ReluSoftmax&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z1">ʳˢz1</a>
 4 5</pre>
 </div>
@@ -308,8 +323,8 @@ libs/Accel/data/w2.txt</p>
 <div class="doc">
 <p>p: the network's answer, ac:s_oftmax: each row two shares of 1 (4 by
 2)</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ʳˢ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-demos-ReluSoftmax.xtl.html" class="c-string">&quot;ReluSoftmax&quot;</a></pre>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ʳˢ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html" class="c-string">&quot;ReluSoftmax&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><span class="c-number">0.000000001</span> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.r_owSums" class="c-libfunc">ᵃᶜr̲owSums</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.p">ʳˢp</a>
 1 1 1 1</pre>
 </div>
@@ -356,7 +371,7 @@ largest becomes 0)</p>
 <div class="meta">value &middot; <a href="extensions-blender-demos-ReluSoftmax.xtl.src.html#L70">line 70</a></div>
 <div class="doc">
 <p>each row's e's divided by their sum are ac:s_oftmax's shares</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ʳˢ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-demos-ReluSoftmax.xtl.html" class="c-string">&quot;ReluSoftmax&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ʳˢ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html" class="c-string">&quot;ReluSoftmax&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.p">ʳˢp</a> <a href="builtins.html#-2d" class="c-symbol">−</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.e_xps" class="c-libfunc">ʳˢe̲xps</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z2">ʳˢz2</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> (<a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_ums" class="c-libfunc">ʳˢs̲ums</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.z2">ʳˢz2</a>) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">1</span> <span class="c-number">2</span>
 0.0</pre>
 </div>
@@ -467,7 +482,7 @@ largest becomes 0)</p>
 <p>(x, y, heights, width) rs:b_ars 0: places for bars (n by 6: x y z w
 d h), each standing on the floor (z 0) or hanging below it as its
 height is positive or negative, never thinner than 0.004</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ʳˢ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-demos-ReluSoftmax.xtl.html" class="c-string">&quot;ReluSoftmax&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ʳˢ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html" class="c-string">&quot;ReluSoftmax&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(<span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">2.0</span> <span class="c-number">-1.0</span>, <span class="c-number">0.5</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.b_ars" class="c-libfunc">ʳˢb̲ars</a> <span class="c-number">0</span>
 0.0 0.0  1.0 0.5 0.5 2.0
 1.0 0.0 -0.5 0.5 0.5 1.0</pre>

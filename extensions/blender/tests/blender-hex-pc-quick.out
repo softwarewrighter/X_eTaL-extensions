@@ -1,0 +1,73 @@
+the cue sheet:
+[[cue]]
+n = 1
+start = 0.000
+end = 3.200
+caption = "HEX1000: its program counter, one hop at a time"
+
+[[cue]]
+n = 2
+start = 3.600
+end = 9.400
+caption = "slow motion: PC goes 0 1 3 7 15 31 63"
+
+[[cue]]
+n = 3
+start = 9.700
+end = 15.100
+caption = "time-lapse: all 64 addresses, each once"
+
+[[cue]]
+n = 4
+start = 15.400
+end = 19.500
+caption = "then back to 0: a ROM page in shift-register order"
+
+
+the subtitles (.srt):
+1
+00:00:00,000 --> 00:00:03,200
+HEX1000: its program counter, one hop at a time
+
+2
+00:00:03,600 --> 00:00:09,400
+slow motion: PC goes 0 1 3 7 15 31 63
+
+3
+00:00:09,700 --> 00:00:15,100
+time-lapse: all 64 addresses, each once
+
+4
+00:00:15,400 --> 00:00:19,500
+then back to 0: a ROM page in shift-register order
+
+
+160 by 90: the run, the error lines, what Blender made
+exit 0
+errors 0
+frames 1 to 586 at 30 a second
+cards: 1 objects, 1 keyed
+cells: 64 objects, 64 keyed
+page: 64 objects, 0 keyed
+path: 64 objects, 64 keyed
+pc: 1 objects, 1 keyed
+
+90 by 160: the run, the error lines, what Blender made
+exit 0
+errors 0
+frames 1 to 586 at 30 a second
+cards: 1 objects, 1 keyed
+cells: 64 objects, 64 keyed
+page: 64 objects, 0 keyed
+path: 64 objects, 64 keyed
+pc: 1 objects, 1 keyed
+
+work/quick/short:
+report.txt
+short-1.png
+short-2.png
+
+work/quick/wide:
+report.txt
+wide-1.png
+wide-2.png

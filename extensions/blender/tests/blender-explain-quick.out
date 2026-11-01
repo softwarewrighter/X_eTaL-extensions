@@ -45,9 +45,9 @@ matmul-fly at 32: the run, the error lines, what Blender made
 exit 0
 errors 0
 frames 1 to 541 at 30 a second
-A: 1 objects, 0 keyed
-B: 1 objects, 0 keyed
-C: 1 objects, 0 keyed
+A: 1 objects, 1 keyed
+B: 1 objects, 1 keyed
+C: 1 objects, 1 keyed
 C empty: 1 objects, 0 keyed
 names: 3 objects, 0 keyed
 products: 32 objects, 32 keyed

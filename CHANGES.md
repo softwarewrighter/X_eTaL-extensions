@@ -11,6 +11,12 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-01
+
+- `ext` the explainer kit (Saga 15, step 14, explain-kit) in `lib/Video.xtl`, for YouTube videos narrated later: `vd:landscape` (1920 by 1080) and `vd:shorts` (1080 by 1920); `vd:f_it`, how far back the camera stands for a region to fill either; `vd:r_etime`, a scene's own seconds mapped to the video's (slow motion, time-lapse); `vd:g_lows`, how strongly things glow keyed from data, each at its own times; `vd:c_ards`, title cards; captions sized to the picture's shorter side and wrapped to its width; `vd:c_ues` and `vd:s_rt`, the captions as a cue sheet (TOML) and subtitles (.srt). The report counts an object keyed when its material is (goldens `blender-explain-quick` and `blender-video-script` rebased; the literate documents' script sizes updated). No 3D code text: explainers show data, not listings.
+- `ext` demo `hex-pc` (`demos/PcWalk.xtl`, alias `pw:`): HEX1000's program counter visiting a ROM page's 64 addresses in shift-register order (X_eTaL-fpga's `hx:Order`), each cell lit as it is reached, colored by when, the path drawn; a title card, six hops in slow motion and 57 as a time-lapse, captions; a video and a Short with a cue sheet and subtitles. Recorded for the site (`videos/hex-pc.film`); golden `blender-hex-pc-quick` (both shapes, small, the cue sheet and subtitles).
+- `build` X_eTaL-fpga pinned at `FPGA_COMMIT` (8eeedf3), cloned into work/fpga by `scripts/libraries.sh`; Hex1000 and Radix, and X_eTaL-libraries' Strings, which Hex1000 uses, on `XETAL_PATH`. `GPU_COMMIT` and `FPGA_COMMIT` changes check everything (`scripts/affected.py`).
+
 ## 2026-10-29
 
 - `ext` the tower defense pieces republished at blender/td with their meshes (`pages/blender/td`, stamped with effa216): twelve `NAME-mesh.toml`, the manifest with `mesh-format` and the meshes' SHA-256s, the page's mesh links; the renders differ by a bit, so every file's hash changed.

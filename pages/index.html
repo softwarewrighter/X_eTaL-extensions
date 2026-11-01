@@ -13,7 +13,7 @@
   <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
   <ul>
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
-    <li><a href="#blender">blender</a><ul><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
+    <li><a href="#blender">blender</a><ul><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
     <li><a href="#clock">clock</a><ul><li><a href="#clock-bridge-cost">bridge-cost</a></li></ul></li>
     <li><a href="#digest">digest</a></li>
@@ -91,6 +91,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <p class="note">Blender, 1: X_eTaL runs Blender. The program writes two Python files -- the launcher, which runs Blender in the background (with its factory settings, so the run never depends on yours), and the script Blender runs inside, which writes a report -- then runs the launcher with python3 and reads the report back. The chain: X_eTaL, the extension, python3, Blender, Python inside Blender.</p>
       <video src="blender/hello.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo blender hello</pre>
+    </section>
+    <section class="panel demo" id="blender-hex-pc">
+      <h3>blender / hex-pc <a class="docs" href="doc/extensions-blender-demos-hex-pc.xtl.html">source and docs</a></h3>
+      <p class="note">Blender, 9: HEX1000&#x27;s program counter, an explainer made with the kit. The 64 addresses of a ROM page as cells in reading order; the program counter visits them in its shift register&#x27;s order -- 0 1 3 7 15 31 63 62 ..., never +1 -- each cell lit as it is reached, colored by when, the path drawn behind. The order is X_eTaL-fpga&#x27;s Hex1000 library (pinned at FPGA_COMMIT); the first hops in slow motion, the rest a time-lapse, after a title card, with captions. Made twice -- a YouTube video (1920 by 1080) and a Short (1080 by 1920) -- with a cue sheet and subtitles (.srt) to record narration against (PcWalk.xtl).</p>
+      <video src="blender/hex-pc.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo blender hex-pc</pre>
     </section>
     <section class="panel demo" id="blender-matmul-fly">
       <h3>blender / matmul-fly <a class="docs" href="doc/extensions-blender-demos-matmul-fly.xtl.html">source and docs</a> <a class="docs" href="literate/matmul.html" title="Matrix multiply, arrays to video">literate document</a></h3>
@@ -318,7 +324,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at f63b8f3</span>
+  <span>built at 45b68c5</span>
 </footer>
 </body>
 </html>

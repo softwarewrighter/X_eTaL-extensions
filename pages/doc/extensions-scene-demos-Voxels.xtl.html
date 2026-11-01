@@ -40,6 +40,7 @@
 <h3>std/</h3>
 <ul>
 <li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
 </ul>
 <h3>extensions/blender/lib/</h3>
 <ul>
@@ -56,6 +57,8 @@
 <li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
 <li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
 <li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-pc.xtl.html">hex-pc.xtl</a></li>
+<li><a href="extensions-blender-demos-PcWalk.xtl.html">PcWalk.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-fly.xtl.html">matmul-fly.xtl</a></li>
 <li><a href="extensions-blender-demos-MatmulFly.xtl.html">MatmulFly.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-steps.xtl.html">matmul-steps.xtl</a></li>
@@ -67,6 +70,18 @@
 <h3>extensions/digest/lib/</h3>
 <ul>
 <li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Hex1000/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html">Hex1000.xtl</a></li>
+</ul>
+<h3>work/libraries/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libraries-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Radix/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Radix-src-Radix.xtl.html">Radix.xtl</a></li>
 </ul>
 <h3>work/gpu/libs/Accel/src/</h3>
 <ul>
@@ -370,7 +385,7 @@ buried by the game (voxels-game), never made by the terrain</p>
 <div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L41">line 41</a></div>
 <div class="doc">
 <p>the blocks' names, in their order</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="extensions-scene-demos-Voxels.xtl.html#l.names">ᵛˣnames</a>
 air stone dirt grass sand water wood leaves lamp gem</pre>
 </div>
@@ -399,7 +414,7 @@ gem $</p>
 <div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L52">line 52</a></div>
 <div class="doc">
 <p>every cell's x (east), as a vector in the chunk's order (x slowest)</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><span class="c-number">18</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.xs">ᵛˣxs</a>
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</pre>
 </div>
@@ -420,7 +435,7 @@ gem $</p>
 <div class="meta">value &middot; <a href="extensions-scene-demos-Voxels.xtl.src.html#L59">line 59</a></div>
 <div class="doc">
 <p>every cell's z (south), in the chunk's order (z fastest)</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><span class="c-number">18</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.zs">ᵛˣzs</a>
 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 0 1</pre>
 </div>
@@ -612,7 +627,7 @@ block -- the six directions' exposed faces, then water's surface</p>
 <div class="doc">
 <p>vx:c_ount f: how many faces in each direction (west east down up
 north south); a single block shows one face each way:</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>one ← <span class="c-number">16</span> <span class="c-number">16</span> <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="extensions-scene-demos-Voxels.xtl.html#l.xs">ᵛˣxs</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">8</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-scene-demos-Voxels.xtl.html#l.ys">ᵛˣys</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">8</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.zs">ᵛˣzs</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">8</span></pre>
 <pre class="example"><span class="prompt">      </span><a href="extensions-scene-demos-Voxels.xtl.html#l.c_ount" class="c-libfunc">ᵛˣc̲ount</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.f_aces" class="c-libfunc">ᵛˣf̲aces</a> one
 1 1 1 1 1 1</pre>
@@ -900,7 +915,7 @@ stands on grass -- vx:t_ree folded over them</p>
 by j, any integers): the same point always gets the same value, so
 any part of an endless world can be made by itself and fits its
 neighbors</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(<span class="c-number">3</span> <a href="extensions-scene-demos-Voxels.xtl.html#l.h_ash" class="c-libfunc">ᵛˣh̲ash</a> <span class="c-number">4</span>) <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">3</span> <a href="extensions-scene-demos-Voxels.xtl.html#l.h_ash" class="c-libfunc">ᵛˣh̲ash</a> <span class="c-number">4</span>
 1</pre>
 </div>
@@ -1179,7 +1194,7 @@ neighbors less 3 (the same six shifts as the faces), so light reaches
 under overhangs and into tunnels and fades over 5 blocks. Light from
 beyond the border is not seen: a lamp more than a block into a
 neighboring column does not light this one.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛˣ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-scene-demos-Voxels.xtl.html" class="c-string">&quot;Voxels&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><span class="c-userfunc">ᵘs̲unOf</span> ← { (sun, _) → sun }</pre>
 <pre class="example"><span class="prompt">      </span><span class="c-builtin">'</span><a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-userfunc">ᵘs̲unOf</span> <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnLight" class="c-libfunc">ᵛˣc̲olumnLight</a> <a href="extensions-scene-demos-Voxels.xtl.html#l.c_olumnBlocks" class="c-libfunc">ᵛˣc̲olumnBlocks</a> <span class="c-number">0</span> <span class="c-number">0</span>
 15</pre>

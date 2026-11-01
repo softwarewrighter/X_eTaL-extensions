@@ -40,6 +40,7 @@
 <h3>std/</h3>
 <ul>
 <li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
 </ul>
 <h3>extensions/blender/lib/</h3>
 <ul>
@@ -56,6 +57,8 @@
 <li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
 <li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
 <li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-pc.xtl.html">hex-pc.xtl</a></li>
+<li><a href="extensions-blender-demos-PcWalk.xtl.html">PcWalk.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-fly.xtl.html">matmul-fly.xtl</a></li>
 <li><a href="extensions-blender-demos-MatmulFly.xtl.html">MatmulFly.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-steps.xtl.html">matmul-steps.xtl</a></li>
@@ -67,6 +70,18 @@
 <h3>extensions/digest/lib/</h3>
 <ul>
 <li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Hex1000/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html">Hex1000.xtl</a></li>
+</ul>
+<h3>work/libraries/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libraries-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Radix/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Radix-src-Radix.xtl.html">Radix.xtl</a></li>
 </ul>
 <h3>work/gpu/libs/Accel/src/</h3>
 <ul>
@@ -257,7 +272,7 @@ Import: &quot;mm:&quot; u_se&lt; &quot;Matmul&quot;</p>
 <div class="doc">
 <p>c: their product, ac:m_atmul (3 by 2): each item the sum of a row of a
 times a column of b</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵐᵐ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-demos-Matmul.xtl.html" class="c-string">&quot;Matmul&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵐᵐ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-Matmul.xtl.html" class="c-string">&quot;Matmul&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="extensions-blender-demos-Matmul.xtl.html#l.c">ᵐᵐc</a>
 12 1
 28 5
@@ -328,7 +343,7 @@ its item (from 0), i, j and k</p>
 <div class="meta">value &middot; <a href="extensions-blender-demos-Matmul.xtl.src.html#L54">line 54</a></div>
 <div class="doc">
 <p>the products: a[i;k] times b[k;j], each (24)</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵐᵐ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-demos-Matmul.xtl.html" class="c-string">&quot;Matmul&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵐᵐ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-Matmul.xtl.html" class="c-string">&quot;Matmul&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><span class="c-number">4</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.products">ᵐᵐproducts</a>
 1 0 3 8</pre>
 </div>
@@ -340,7 +355,7 @@ its item (from 0), i, j and k</p>
 <div class="meta">value &middot; <a href="extensions-blender-demos-Matmul.xtl.src.html#L60">line 60</a></div>
 <div class="doc">
 <p>the products added up, four at a time, are c, item by item</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵐᵐ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-demos-Matmul.xtl.html" class="c-string">&quot;Matmul&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵐᵐ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-Matmul.xtl.html" class="c-string">&quot;Matmul&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.c">ᵐᵐc</a>) <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <span class="c-number">6</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-Matmul.xtl.html#l.products">ᵐᵐproducts</a>
 1 1 1 1 1 1</pre>
 </div>

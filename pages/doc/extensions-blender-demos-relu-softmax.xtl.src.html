@@ -40,6 +40,7 @@
 <h3>std/</h3>
 <ul>
 <li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
 </ul>
 <h3>extensions/blender/lib/</h3>
 <ul>
@@ -56,6 +57,8 @@
 <li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
 <li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
 <li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-pc.xtl.html">hex-pc.xtl</a></li>
+<li><a href="extensions-blender-demos-PcWalk.xtl.html">PcWalk.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-fly.xtl.html">matmul-fly.xtl</a></li>
 <li><a href="extensions-blender-demos-MatmulFly.xtl.html">MatmulFly.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-steps.xtl.html">matmul-steps.xtl</a></li>
@@ -67,6 +70,18 @@
 <h3>extensions/digest/lib/</h3>
 <ul>
 <li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Hex1000/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html">Hex1000.xtl</a></li>
+</ul>
+<h3>work/libraries/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libraries-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Radix/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Radix-src-Radix.xtl.html">Radix.xtl</a></li>
 </ul>
 <h3>work/gpu/libs/Accel/src/</h3>
 <ul>
@@ -185,10 +200,10 @@
 <span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-comment">⍝</span><span class="c-comment"># docs/literate/relu-softmax.org.</span></span>
 <span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-comment">⍝</span><span class="c-comment"># Run: just demo blender relu-softmax   (a few minutes: 901 frames)</span></span>
 <span class="line" id="L10"><a class="ln" href="#L10">10</a></span>
-<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-libfunc">ᵇˡ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Blender.xtl.html" class="c-string">&quot;Blender&quot;</a></span>
-<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-libfunc">ᵇᵖ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Bpy.xtl.html" class="c-string">&quot;Bpy&quot;</a></span>
-<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-libfunc">ᵛᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></span>
-<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-libfunc">ʳˢ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-demos-ReluSoftmax.xtl.html" class="c-string">&quot;ReluSoftmax&quot;</a></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-libfunc">ᵇˡ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Blender.xtl.html" class="c-string">&quot;Blender&quot;</a></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-libfunc">ᵇᵖ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Bpy.xtl.html" class="c-string">&quot;Bpy&quot;</a></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-libfunc">ᵛᵈ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-libfunc">ʳˢ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-ReluSoftmax.xtl.html" class="c-string">&quot;ReluSoftmax&quot;</a></span>
 <span class="line" id="L15"><a class="ln" href="#L15">15</a></span>
 <span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-comment">⍝</span><span class="c-comment"> five stills (the documents' pictures), then every frame as the video</span></span>
 <span class="line" id="L17"><a class="ln" href="#L17">17</a>script ← ((<span class="c-number">1920</span>, <span class="c-number">1080</span>) <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_cene" class="c-libfunc">ʳˢs̲cene</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">2.0</span> <span class="c-number">8.0</span> <span class="c-number">14.0</span> <span class="c-number">23.0</span> <span class="c-number">28.0</span>, <span class="c-string">&quot;relu-softmax&quot;</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_tills" class="c-libfunc">ᵛᵈs̲tills</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#l.r_ender" class="c-libfunc">ᵛᵈr̲ender</a> <span class="c-string">&quot;relu-softmax.mp4&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-lib-Video.xtl.html#l.report">ᵛᵈreport</a></span>

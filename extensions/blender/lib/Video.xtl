@@ -10,6 +10,15 @@
 ## vd:s_tills), written with bl:w_rite! and run by bp:launcher through
 ## bl:r_un!.
 ##
+## For explainer videos: the picture's size is any (vd:landscape, 1920
+## by 1080, or vd:shorts, 1080 by 1920, upright); vd:f_it places the
+## camera so a region fills either; vd:r_etime remaps a scene's own
+## seconds to the video's (slow motion, time-lapse); vd:g_lows keys how
+## strongly things glow from data; vd:c_ards are title cards; captions
+## and cards are sized to the picture and wrapped to its width; and
+## vd:c_ues and vd:s_rt write the cue sheet and the subtitles (.srt) of
+## the same captions, to record narration against.
+##
 ## The look: flat colors that glow (emission only), on a near-black
 ## sky, the Standard view (colors as given); text in JuliaMono Black
 ## (work/fonts, `just font`), facing the camera; captions on a dark
@@ -22,7 +31,7 @@
 
 # the player, in parts (one expression nests too deep): the start, nums,
 # frame, the font, glow
-h:playBase := ("import bpy, math, os, sys\n" c_at
+h:playBase := ("import bpy, math, os, sys, textwrap\n" c_at
   "args = sys.argv[sys.argv.index('--') + 1:]\n" c_at
   "out = args[0]\n" c_at
   "os.makedirs(out, exist_ok=True)\n" c_at
@@ -51,6 +60,7 @@ h:playBase := ("import bpy, math, os, sys\n" c_at
   "        d = os.path.dirname(d)\n" c_at
   "\n" c_at
   "FONT = font()\n" c_at
+  "ADVANCE = 0.33\n" c_at
   "\n" c_at
   "def glow(name, rgb, strength=1.0, alpha=1.0):\n" c_at
   "    m = bpy.data.materials.new(name)\n" c_at
@@ -174,23 +184,59 @@ h:playText := ("def text(n, body, size, rgb):\n" c_at
   "        made.append(o)\n" c_at
   "    groups[name] = made\n" c_at
   "\n" c_at
+  "def view(d):\n" c_at
+  "    f = rig['camera'].data.view_frame(scene=scene)\n" c_at
+  "    k = d / -f[0].z\n" c_at
+  "    return max(abs(v.x) for v in f) * k, max(abs(v.y) for v in f) * k\n" c_at
+  "\n" c_at
+  "def wrap(body, size, width):\n" c_at
+  "    return textwrap.fill(body, max(1, int(width / (ADVANCE * size))), break_on_hyphens=False)\n" c_at
+  "\n" c_at
   "def captions(bodies, rows):\n" c_at
   "    d = 0.05\n" c_at
-  "    size = 0.042\n" c_at
+  "    hw, hh = view(d)\n" c_at
+  "    size = 0.16 * min(hw, hh)\n" c_at
+  "    line = size\n" c_at
   "    cam = rig['camera']\n" c_at
   "    for i, (body, r) in enumerate(zip(bodies.split('|'), rows)):\n" c_at
-  "        o = text('caption %d' % (i + 1), body, size * d, r[2:5])\n" c_at
+  "        body = wrap(body, size, 1.7 * hw)\n" c_at
+  "        n = body.count('\\n')\n" c_at
+  "        o = text('caption %d' % (i + 1), body, size, r[2:5])\n" c_at
   "        o.data.align_y = 'TOP_BASELINE'\n" c_at
   "        o.parent = cam\n" c_at
-  "        o.location = (0.0, -0.235 * d, -d)\n" c_at
+  "        o.location = (0.0, -0.86 * hh + n * line, -d)\n" c_at
   "        p = bpy.data.objects.new('plate %d' % (i + 1), cube_mesh())\n" c_at
   "        scene.collection.objects.link(p)\n" c_at
   "        p.parent = cam\n" c_at
-  "        p.location = (0.0, (-0.235 + 0.35 * size) * d, -d * 1.002)\n" c_at
-  "        p.scale = ((0.6 * size * len(body) + 0.04) * d, size * 1.6 * d, 0.0001)\n" c_at
+  "        p.location = (0.0, -0.86 * hh + 0.35 * size + 0.5 * n * line, -d * 1.002)\n" c_at
+  "        p.scale = (ADVANCE * size * max(len(x) for x in body.split('\\n')) + 1.4 * size, 1.6 * size + n * line, 0.0001)\n" c_at
   "        p.data.materials.append(glow('plate %d' % (i + 1), (0.0, 0.0, 0.0), 1.0, 0.72))\n" c_at
   "        for x in (o, p):\n" c_at
   "            span(x, r[0], r[1])\n" c_at
+  "\n" c_at
+  "def cards(titles, subs, rows):\n" c_at
+  "    d = 0.05\n" c_at
+  "    hw, hh = view(d)\n" c_at
+  "    u = min(hw, hh)\n" c_at
+  "    cam = rig['camera']\n" c_at
+  "    made = []\n" c_at
+  "    for i, (title, sub, r) in enumerate(zip(titles.split('|'), subs.split('|'), rows)):\n" c_at
+  "        p = bpy.data.objects.new('card %d' % (i + 1), cube_mesh())\n" c_at
+  "        scene.collection.objects.link(p)\n" c_at
+  "        p.location = (0.0, 0.0, -d * 1.004)\n" c_at
+  "        p.scale = (2.2 * hw, 2.2 * hh, 0.0001)\n" c_at
+  "        p.data.materials.append(glow('card %d' % (i + 1), r[5:8]))\n" c_at
+  "        parts = [p]\n" c_at
+  "        for j, (body, size, y) in enumerate(((title, 0.34 * u, 0.15 * u), (sub, 0.15 * u, -0.3 * u))):\n" c_at
+  "            if body:\n" c_at
+  "                o = text('card %d %s' % (i + 1, 'title' if j == 0 else 'subtitle'), wrap(body, size, 1.8 * hw), size, r[2:5])\n" c_at
+  "                o.location = (0.0, y, -d)\n" c_at
+  "                parts.append(o)\n" c_at
+  "        for x in parts:\n" c_at
+  "            x.parent = cam\n" c_at
+  "            span(x, r[0], r[1])\n" c_at
+  "        made.append(p)\n" c_at
+  "    groups['cards'] = made\n" c_at
   "\n")
 
 # the player, continued: span and after
@@ -225,6 +271,13 @@ h:playKeys := ("def span(o, a, b):\n" c_at
   "        s = o.data.materials[0].node_tree.nodes['glow'].inputs['Color']\n" c_at
   "        for j, t in enumerate(times):\n" c_at
   "            s.default_value = tuple(r[3 * j:3 * j + 3]) + (1.0,)\n" c_at
+  "            s.keyframe_insert('default_value', frame=frame(t))\n" c_at
+  "\n" c_at
+  "def glows(name, times, rows):\n" c_at
+  "    for o, ts, r in zip(groups[name], times, rows):\n" c_at
+  "        s = o.data.materials[0].node_tree.nodes['glow'].inputs['Strength']\n" c_at
+  "        for t, g in zip(ts, r):\n" c_at
+  "            s.default_value = g\n" c_at
   "            s.keyframe_insert('default_value', frame=frame(t))\n" c_at
   "\n" c_at
   "def camera(times, eyes, aims):\n" c_at
@@ -315,20 +368,23 @@ h:playOutput := ("def stills(times, prefix):\n" c_at
   "    scene.render.filepath = os.path.join(out, file)\n" c_at
   "    bpy.ops.render.render(animation=True)\n" c_at
   "\n" c_at
+  "def animated(x):\n" c_at
+  "    return bool(x and x.animation_data and x.animation_data.action)\n" c_at
+  "\n" c_at
   "def report():\n" c_at
   "    with open(os.path.join(out, 'report.txt'), 'w') as f:\n" c_at
   "        f.write('frames %d to %d at %d a second\\n' % (scene.frame_start, scene.frame_end, scene.render.fps))\n" c_at
   "        for name in sorted(groups):\n" c_at
   "            os_ = groups[name]\n" c_at
-  "            keyed = sum(1 for o in os_ if o.animation_data and o.animation_data.action)\n" c_at
+  "            keyed = sum(1 for o in os_ if animated(o) or any(m and animated(m.node_tree) for m in getattr(o.data, 'materials', [])))\n" c_at
   "            f.write('%s: %d objects, %d keyed\\n' % (name, len(os_), keyed))\n" c_at
   "\n")
 
 ## vd:head: the inner script's start, the player: an empty scene, the
 ## output directory (the first argument after "--"), keys eased in and
 ## out (Bezier), and the functions the calls below use -- stage, boxes,
-## labels, captions, shown, moves, tints, camera, grid, stills, video,
-## report. Fixed text: what a video shows is all in the numbers after it.
+## lines, labels, captions, cards, shown, moves, tints, glows, camera,
+## grid, stills, video, report. Fixed text: what a video shows is all in the numbers after it.
 l:head := h:playBase c_at h:playStage c_at h:playLines c_at h:playText c_at h:playKeys c_at h:playGrid c_at h:playOutput
 
 ### Numbers and text into Python
@@ -336,15 +392,19 @@ l:head := h:playBase c_at h:playStage c_at h:playLines c_at h:playText c_at h:pl
 # (values, k) h:n_ums 0: the values as Python reading them k to a row
 h:n_ums := { (v, k) z -> "nums('" c_at (f_ormat r_avel v) c_at "', " c_at (f_ormat k) c_at ")" }
 
-# a Python string: the text in single quotes, each quote and backslash
-# in it written with a backslash before it (ASCII text)
-h:q_uote := { t ->
+# q h:q_uoteIn text: the text in quotes (the character code q), each
+# such quote and backslash in it written with a backslash before it
+# (ASCII text): a Python or TOML string
+h:q_uoteIn := { q t ->
   c := []U_CS t
-  e := (c = 39) | c = 92
+  e := (c = q) | c = 92
   k := (1 + e) r_eplicate r_ange t_ally c
   m := ((1 + e) r_eplicate e) & k != 0 c_at -1 d_rop k
-  "'" c_at ([]U_CHAR (92 * m) + (1 - m) * (1 + e) r_eplicate c) c_at "'"
+  ([]U_CHAR q) c_at ([]U_CHAR (92 * m) + (1 - m) * (1 + e) r_eplicate c) c_at []U_CHAR q
 }
+
+# a Python string: the text in single quotes
+h:q_uote := { t -> 39 h:q_uoteIn t }
 
 # one value as text with d digits after the point, rounded
 h:o_ne := { d x ->
@@ -420,6 +480,103 @@ l:t_one := { (v, lo, hi) z ->
   (a * (1.0 - u) 'l_eft t_able 1 2 3) + b * u 'l_eft t_able 1 2 3
 }
 
+### Pictures and time
+
+## vd:landscape: a YouTube video's picture, 1920 by 1080 (width, height)
+l:landscape := 1920 1080
+
+## vd:shorts: a YouTube Short's picture, 1080 by 1920, upright
+l:shorts := 1080 1920
+
+## (width, height, lens, w, h) vd:f_it 0: how far from a region w by h
+## (meters, facing it) a camera with that lens (mm) stands for the
+## region to just fill a picture width by height (pixels): Blender fits
+## its 36 mm sensor to the picture's longer side, so the same region
+## needs the camera further back in a Short
+## >> "vd:" u_se< "Video"
+## >> (1920, 1080, 36, 4.0, 1.0) vd:f_it 0
+## 4.0
+## >> (1000, 2000, 36, 2.0, 2.0) vd:f_it 0
+## 4.0
+l:f_it := { (pw, ph, lens, w, h) z ->
+  t := 18.0 / f_loat lens
+  tw := t * (f_loat pw) / f_loat pw m_ax ph
+  th := t * (f_loat ph) / f_loat pw m_ax ph
+  ((0.5 * w) / tw) m_ax (0.5 * h) / th
+}
+
+## (map, times) vd:r_etime 0: a scene's own seconds as the video's:
+## map is k by 2 (k at least 2), a row a pair (scene second, video
+## second), both increasing; a time between two rows falls between
+## their video seconds in proportion, one before the first or after the
+## last on the nearest pair's line. Where the video has more seconds
+## than the scene it is slow motion, fewer a time-lapse: a scene is
+## worked out in its own seconds and every time in it -- spans, keys,
+## the camera, captions -- passed through the map. Times of any shape.
+## >> "vd:" u_se< "Video"
+## >> (3 2 r_eshape 0 0  4 8  8 9, 0.0 2.0 4.0 6.0 8.0 10.0) vd:r_etime 0
+## 0.0 4.0 8.0 8.5 9.0 9.5
+l:r_etime := { (m, t) z ->
+  s := f_loat 1 s_elect_2 m
+  v := f_loat 2 s_elect_2 m
+  k := t_ally s
+  '{ x ->
+    i := 1 m_ax (k - 1) m_in '+ r_/ s <= x
+    (i s_elect v) + ((x - i s_elect s) * ((i + 1) s_elect v) - i s_elect v) / ((i + 1) s_elect s) - i s_elect s
+  } e_ach f_loat t
+}
+
+### Cues
+
+# the texts between |s, boxed (none may be empty)
+h:t_exts := { t -> (n_ot t = f_irst "|") p_artition t }
+
+# two boxed texts as one
+h:c_at := { a b -> e_nclose (d_isclose a) c_at d_isclose b }
+
+# seconds as an SRT time, hh:mm:ss,mmm
+h:s_rtTime := { x ->
+  ms := f_loor 0.5 + 1000.0 * x
+  (1 d_rop f_ormat 100 + ms d_iv 3600000) c_at ":" c_at (1 d_rop f_ormat 100 + (ms d_iv 60000) m_od 60) c_at ":" c_at (1 d_rop f_ormat 100 + (ms d_iv 1000) m_od 60) c_at "," c_at 1 d_rop f_ormat 1000 + ms m_od 1000
+}
+
+## (texts, table) vd:s_rt 0: the captions as subtitles, an .srt file's
+## text: one a row of the table, from and to (seconds; more columns, as
+## vd:c_aptions's colors, are ignored), texts as vd:c_aptions's (none
+## empty) -- what an editor or YouTube shows under the video, timed to
+## the narration recorded against it
+## >> "vd:" u_se< "Video"
+## >> ("two", 1 2 r_eshape 61.0 3725.5) vd:s_rt 0
+## 1
+## 00:01:01,000 --> 01:02:05,500
+## two
+##
+l:s_rt := { (texts, t) z ->
+  b := h:t_exts texts
+  a := 1 s_elect_2 t
+  e := 2 s_elect_2 t
+  d_isclose 'h:c_at r_/ '{ i -> (f_ormat i) c_at "\n" c_at (h:s_rtTime i s_elect a) c_at " --> " c_at (h:s_rtTime i s_elect e) c_at "\n" c_at (d_isclose i s_elect b) c_at "\n\n" } m_ap r_ange t_ally b
+}
+
+## (texts, table) vd:c_ues 0: the cue sheet of the same captions, as
+## TOML: a [[cue]] a row -- its number, start and end (seconds) and its
+## caption -- the scenes to record narration against, read by a program
+## (arguments as vd:s_rt's)
+## >> "vd:" u_se< "Video"
+## >> ("the \"top\"", 1 2 r_eshape 0.0 3.5) vd:c_ues 0
+## [[cue]]
+## n = 1
+## start = 0.000
+## end = 3.500
+## caption = "the \"top\""
+##
+l:c_ues := { (texts, t) z ->
+  b := h:t_exts texts
+  a := 1 s_elect_2 t
+  e := 2 s_elect_2 t
+  d_isclose 'h:c_at r_/ '{ i -> "[[cue]]\nn = " c_at (f_ormat i) c_at "\nstart = " c_at (3 l:f_ixed i s_elect a) c_at "\nend = " c_at (3 l:f_ixed i s_elect e) c_at "\ncaption = " c_at (34 h:q_uoteIn d_isclose i s_elect b) c_at "\n\n" } m_ap r_ange t_ally b
+}
+
 ### The calls
 
 ## (width, height, fps, seconds, sky, lens) vd:s_tage 0: Python setting
@@ -480,7 +637,9 @@ l:l_abels := { (name, texts, t) z ->
 
 ## (texts, table) vd:c_aptions 0: Python putting captions near the bottom
 ## of the picture, on a dark plate, one a row of the table: from and to
-## (seconds), r g b (0 to 255); texts as vd:l_abels
+## (seconds), r g b (0 to 255); texts as vd:l_abels. Sized to the
+## picture's shorter side and wrapped to its width, so the same captions
+## read in a Short (vd:c_ues and vd:s_rt write them for narration)
 l:c_aptions := { (texts, t) z ->
   p := (2 t_ake_2 f_loat t) c_at_2 l:l_inear 2 d_rop_2 t
   "captions(" c_at (h:q_uote texts) c_at ", " c_at ((p, 5) h:n_ums 0) c_at ")\n"
@@ -514,6 +673,27 @@ l:t_ints := { (name, ts, c) z ->
   "tints(" c_at (h:q_uote name) c_at ", " c_at ((f_loat ts, t_ally ts) h:n_ums 0) c_at "[0], " c_at ((l:l_inear c, k) h:n_ums 0) c_at ")\n"
 }
 
+## (name, times, strengths) vd:g_lows 0: Python keying how strongly
+## each object of the group glows (1 is its color as given, 0 dark), at
+## times of its own: times and strengths are n by k, a row an object --
+## a value's size or a part's activity as light (a flash when a register
+## is written, a cell lit as it is reached)
+l:g_lows := { (name, ts, g) z ->
+  k := 2 s_elect s_hape ts
+  "glows(" c_at (h:q_uote name) c_at ", " c_at ((f_loat ts, k) h:n_ums 0) c_at ", " c_at ((f_loat g, k) h:n_ums 0) c_at ")\n"
+}
+
+## (titles, subtitles, table) vd:c_ards 0: Python putting title cards in
+## front of the camera, each filling the picture, one a row of the
+## table: from and to (seconds), r g b of the words, r g b of the card
+## (0 to 255); a title big in the middle, its subtitle smaller below,
+## each wrapped to the picture's width; | between the cards' texts (an
+## empty subtitle: none)
+l:c_ards := { (titles, subs, t) z ->
+  p := (2 t_ake_2 f_loat t) c_at_2 (l:l_inear 3 t_ake_2 2 d_rop_2 t) c_at_2 l:l_inear 3 t_ake_2 5 d_rop_2 t
+  "cards(" c_at (h:q_uote titles) c_at ", " c_at (h:q_uote subs) c_at ", " c_at ((p, 8) h:n_ums 0) c_at ")\n"
+}
+
 ## (times, eyes, aims) vd:c_amera 0: Python keying the camera: at each
 ## time (k seconds) it is at an eye (k by 3) looking at an aim (k by 3)
 l:c_amera := { (ts, e, a) z ->
@@ -545,5 +725,6 @@ l:s_tills := { (ts, name) z -> "stills(" c_at ((f_loat ts, t_ally ts) h:n_ums 0)
 l:r_ender := { file -> "video(" c_at (h:q_uote file) c_at ")\n" }
 
 ## vd:report: Python writing out/report.txt: the frames, and each group,
-## how many objects and how many of them keyed -- what a test checks
+## how many objects and how many of them keyed (the object or its
+## material: a tint or a glow) -- what a test checks
 l:report := "report()\n"

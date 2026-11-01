@@ -40,6 +40,7 @@
 <h3>std/</h3>
 <ul>
 <li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
 </ul>
 <h3>extensions/blender/lib/</h3>
 <ul>
@@ -56,6 +57,8 @@
 <li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
 <li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
 <li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-pc.xtl.html">hex-pc.xtl</a></li>
+<li><a href="extensions-blender-demos-PcWalk.xtl.html">PcWalk.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-fly.xtl.html">matmul-fly.xtl</a></li>
 <li><a href="extensions-blender-demos-MatmulFly.xtl.html">MatmulFly.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-steps.xtl.html">matmul-steps.xtl</a></li>
@@ -67,6 +70,18 @@
 <h3>extensions/digest/lib/</h3>
 <ul>
 <li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Hex1000/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html">Hex1000.xtl</a></li>
+</ul>
+<h3>work/libraries/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libraries-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Radix/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Radix-src-Radix.xtl.html">Radix.xtl</a></li>
 </ul>
 <h3>work/gpu/libs/Accel/src/</h3>
 <ul>
@@ -443,7 +458,7 @@ matrix times its own (the other product, in h:t_urns).</p>
 <div class="meta">function &middot; <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.src.html#L91">line 91</a></div>
 <div class="doc">
 <p>l:t_urn m S: move m (1 to 12) applied to every cube of the batch S.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵉᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html" class="c-string">&quot;Eigencube&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵉᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html" class="c-string">&quot;Eigencube&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.solved">ᵉᶜsolved</a> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">4</span> <span class="c-quote">'</span>{ S → <span class="c-number">5</span> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.t_urn" class="c-libfunc">ᵉᶜt̲urn</a> S } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.solved">ᵉᶜsolved</a>
 1</pre>
 </div>
@@ -456,7 +471,7 @@ matrix times its own (the other product, in h:t_urns).</p>
 <div class="doc">
 <p>l:d_o ms S: the moves ms (a vector of 1 to 12) applied in order to
 every cube of the batch S.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵉᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html" class="c-string">&quot;Eigencube&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵉᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html" class="c-string">&quot;Eigencube&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.solved">ᵉᶜsolved</a> <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">12</span> <span class="c-number">11</span> <span class="c-number">10</span> <span class="c-number">9</span> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.d_o" class="c-libfunc">ᵉᶜd̲o</a> <span class="c-number">9</span> <span class="c-number">10</span> <span class="c-number">11</span> <span class="c-number">12</span> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.d_o" class="c-libfunc">ᵉᶜd̲o</a> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.solved">ᵉᶜsolved</a>
 1</pre>
 </div>
@@ -636,7 +651,7 @@ on, the nonzero coordinates of its name.</p>
 <p>l:s_olved? S: whether every cubelet of the cube S (a batch of one) is
 solved (eigencube.py's is_cube_solved): a center may still be turned
 about its own axis, which no sticker shows.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵉᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html" class="c-string">&quot;Eigencube&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵉᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html" class="c-string">&quot;Eigencube&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(<a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.s_olved-3f" class="c-libfunc">ᵉᶜs̲olved?</a> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.solved">ᵉᶜsolved</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.s_olved-3f" class="c-libfunc">ᵉᶜs̲olved?</a> <span class="c-number">1</span> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.t_urn" class="c-libfunc">ᵉᶜt̲urn</a> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.solved">ᵉᶜsolved</a>
 1 0</pre>
 </div>
@@ -1107,7 +1122,7 @@ clockwise, U' counterclockwise, separated by spaces.</p>
 <p>ec:p_arse t: moves written in the usual notation as numbers: each
 letter of ec:faces is a move, counterclockwise when a ' follows it;
 anything else between moves is ignored. The inverse of ec:n_ame.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵉᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html" class="c-string">&quot;Eigencube&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵉᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html" class="c-string">&quot;Eigencube&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.p_arse" class="c-libfunc">ᵉᶜp̲arse</a> <span class="c-string">&quot;U R' F B'&quot;</span>
 1 10 5 8</pre>
 <pre class="example"><span class="prompt">      </span>(<a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.p_arse" class="c-libfunc">ᵉᶜp̲arse</a> <a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html#l.n_ame" class="c-libfunc">ᵉᶜn̲ame</a> <span class="c-number">3</span> <span class="c-number">12</span> <span class="c-number">7</span>) <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> <span class="c-number">3</span> <span class="c-number">12</span> <span class="c-number">7</span>

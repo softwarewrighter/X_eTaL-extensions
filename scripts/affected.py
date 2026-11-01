@@ -31,7 +31,7 @@ root = Path(__file__).resolve().parent.parent
 
 # changes that check everything
 SHARED = re.compile(
-    r"^(crates/|Cargo\.(toml|lock)$|XETAL_COMMIT$|LIBRARIES_COMMIT$|templates/|"
+    r"^(crates/|Cargo\.(toml|lock)$|XETAL_COMMIT$|LIBRARIES_COMMIT$|GPU_COMMIT$|FPGA_COMMIT$|templates/|"
     r"scripts/(gate\.sh|affected\.py|test-exts\.sh|reg-ext\.sh|xetal\.sh|libraries\.sh|check-rust\.sh)$)"
 )
 # changes the bridge host's check depends on

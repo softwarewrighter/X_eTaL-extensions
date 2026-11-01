@@ -1,0 +1,3 @@
+command = 't=$(mktemp -d) && mkdir -p $t/work && ln -s "$PWD/../../work/fonts" $t/work/fonts && XETAL_BLENDER_ROOT=$t XETAL_PATH="$PWD/demos:$XETAL_PATH" xetal-x --ext .. run tests/hex-pc-quick.xtl && cd $t && ls work/quick/wide work/quick/short'
+exit_code = 0
+desc = "HEX1000's program counter (PcWalk.xtl, the explainer kit: a title card, retimed keys, glows from data, captions sized to the picture) through Blender at 160 by 90 and 90 by 160, two stills each: the cue sheet and subtitles, each run's errors (none), Blender's report, and the stills"

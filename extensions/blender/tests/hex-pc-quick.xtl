@@ -1,0 +1,29 @@
+## HEX1000's program counter (PcWalk.xtl), small and quick, through
+## Blender end to end in both shapes -- 160 by 90 and a Short, 90 by
+## 160 -- two stills each and no video; its cue sheet and subtitles, and
+## Blender's report of each.
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"pw:" u_se< "PcWalk"
+
+"the cue sheet:"
+(pw:cueTexts, pw:cueTable) vd:c_ues 0
+"the subtitles (.srt):"
+(pw:cueTexts, pw:cueTable) vd:s_rt 0
+n := "work/quick/run.py" bl:w_rite! bp:launcher
+n := "work/quick/wide.py" bl:w_rite! (pw:s_cene 160 90) c_at ((1.5 12.0, "wide") vd:s_tills 0) c_at vd:report
+r := "work/quick/run.py" bl:r_un! "work/quick/wide.py work/quick/wide"
+"160 by 90: the run, the error lines, what Blender made"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/quick/wide/report.txt"
+n := "work/quick/short.py" bl:w_rite! (pw:s_cene 90 160) c_at ((1.5 12.0, "short") vd:s_tills 0) c_at vd:report
+r := "work/quick/run.py" bl:r_un! "work/quick/short.py work/quick/short"
+"90 by 160: the run, the error lines, what Blender made"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/quick/short/report.txt"

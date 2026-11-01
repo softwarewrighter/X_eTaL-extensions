@@ -40,6 +40,7 @@
 <h3>std/</h3>
 <ul>
 <li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
 </ul>
 <h3>extensions/blender/lib/</h3>
 <ul>
@@ -56,6 +57,8 @@
 <li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
 <li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
 <li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-pc.xtl.html">hex-pc.xtl</a></li>
+<li><a href="extensions-blender-demos-PcWalk.xtl.html">PcWalk.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-fly.xtl.html">matmul-fly.xtl</a></li>
 <li><a href="extensions-blender-demos-MatmulFly.xtl.html">MatmulFly.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-steps.xtl.html">matmul-steps.xtl</a></li>
@@ -67,6 +70,18 @@
 <h3>extensions/digest/lib/</h3>
 <ul>
 <li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Hex1000/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html">Hex1000.xtl</a></li>
+</ul>
+<h3>work/libraries/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libraries-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Radix/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Radix-src-Radix.xtl.html">Radix.xtl</a></li>
 </ul>
 <h3>work/gpu/libs/Accel/src/</h3>
 <ul>
@@ -238,7 +253,7 @@ settings on SCRIPT, passing ARGS after &quot;--&quot;; a Python error inside
 makes the run fail.</p>
 </div>
 <pre class="code">ˡlauncher ← <span class="c-string">&quot;import os, subprocess, sys\nblender = os.environ.get(\&quot;XETAL_BLENDER\&quot;) or sys.exit(\&quot;no Blender found\&quot;)\nrun = [blender, \&quot;--background\&quot;, \&quot;--factory-startup\&quot;, \&quot;--python-exit-code\&quot;, \&quot;1\&quot;, \&quot;--python\&quot;, sys.argv[1], \&quot;--\&quot;] + sys.argv[2:]\nsys.exit(subprocess.run(run).returncode)\n&quot;</span></pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-cosy.xtl.html#n">n</a>, <a href="extensions-blender-demos-cubes.xtl.html#n">n</a>, <a href="extensions-blender-demos-game-assets.xtl.html#n">n</a>, <a href="extensions-blender-demos-matmul-fly.xtl.html#n">n</a>, <a href="extensions-blender-demos-matmul-steps.xtl.html#n">n</a>, <a href="extensions-blender-demos-relu-softmax.xtl.html#n">n</a>, <a href="extensions-blender-demos-td-models.xtl.html#n">n</a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-cosy.xtl.html#n">n</a>, <a href="extensions-blender-demos-cubes.xtl.html#n">n</a>, <a href="extensions-blender-demos-game-assets.xtl.html#n">n</a>, <a href="extensions-blender-demos-hex-pc.xtl.html#n">n</a>, <a href="extensions-blender-demos-matmul-fly.xtl.html#n">n</a>, <a href="extensions-blender-demos-matmul-steps.xtl.html#n">n</a>, <a href="extensions-blender-demos-relu-softmax.xtl.html#n">n</a>, <a href="extensions-blender-demos-td-models.xtl.html#n">n</a></div>
 </div>
 <div class="item" id="l.head">
 <h3><a href="#l.head">ˡhead</a> <span class="type">: Char</span></h3>
@@ -297,7 +312,7 @@ mesh in TOML (bp:m_eshToml); triangles counts a piece's triangles</p>
 <p>(centers, size) bp:c_ubeMesh 0: the corners (8n by 3) and faces (6n
 by 4, counting corners from 0) of n cubes of that size at the centers
 (n by 3), as one mesh</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵇᵖ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Bpy.xtl.html" class="c-string">&quot;Bpy&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵇᵖ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Bpy.xtl.html" class="c-string">&quot;Bpy&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(c, f) ← (<span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>  <span class="c-number">2.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">1.0</span>) <a href="extensions-blender-lib-Bpy.xtl.html#l.c_ubeMesh" class="c-libfunc">ᵇᵖc̲ubeMesh</a> <span class="c-number">0</span></pre>
 <pre class="example"><span class="prompt">      </span>(<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> f
 16 3 12 4</pre>
@@ -455,7 +470,7 @@ radius and its tube's radius (R r), lying flat, its middle at at</p>
 <p>size bp:o_ctahedronMesh 0: the 6 corners (6 by 3) and 8 faces (8 by
 3, from 0, counterclockwise from outside) of an octahedron reaching
 size (x y z) from its middle each way: a crystal</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵇᵖ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Bpy.xtl.html" class="c-string">&quot;Bpy&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵇᵖ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Bpy.xtl.html" class="c-string">&quot;Bpy&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(v, f) ← <span class="c-number">1.0</span> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <a href="extensions-blender-lib-Bpy.xtl.html#l.o_ctahedronMesh" class="c-libfunc">ᵇᵖo̲ctahedronMesh</a> <span class="c-number">0</span></pre>
 <pre class="example"><span class="prompt">      </span>(<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> f
 6 3 8 3</pre>
@@ -503,7 +518,7 @@ outward -- a wedge, a plate</p>
 axis: the profile is points (r z), bottom to top, each a radius and
 a height; the corners (segments times points, by 3) and the faces
 (quads, from 0, outward), worked out as arrays</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵇᵖ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Bpy.xtl.html" class="c-string">&quot;Bpy&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵇᵖ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Bpy.xtl.html" class="c-string">&quot;Bpy&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(v, f) ← (<span class="c-number">3</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span>  <span class="c-number">1.0</span> <span class="c-number">0.5</span>  <span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">8</span>) <a href="extensions-blender-lib-Bpy.xtl.html#l.l_atheMesh" class="c-libfunc">ᵇᵖl̲atheMesh</a> <span class="c-number">0</span></pre>
 <pre class="example"><span class="prompt">      </span>(<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> f
 24 3 16 4</pre>
@@ -596,7 +611,7 @@ renderer that reads TOML: top-level lists of strings -- vertices
 vertex numbers, from 1) and colors (a face's &quot;#rrggbb&quot;, sRGB, its
 part's color) -- and its name and triangles; a piece of more than
 MOST triangles is decimated (collapsed) to about that many first</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵇᵖ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Bpy.xtl.html" class="c-string">&quot;Bpy&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵇᵖ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Bpy.xtl.html" class="c-string">&quot;Bpy&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(<span class="c-string">&quot;tower&quot;</span>, <span class="c-number">500</span>) <a href="extensions-blender-lib-Bpy.xtl.html#l.m_eshToml" class="c-libfunc">ᵇᵖm̲eshToml</a> <span class="c-number">0</span>
 mesh_toml(bpy.data.objects[&quot;tower&quot;], os.path.join(out, &quot;tower-mesh.toml&quot;), 500)</pre>
 </div>

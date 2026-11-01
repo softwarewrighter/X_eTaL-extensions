@@ -1,6 +1,6 @@
 number = 14
 slug = "explain-kit"
-status = "pending"
+status = "in-progress"
 description = "Saga 15 step 12 (the user, 2026-10-14: YouTube animations showing the process..."
 role = "production"
 context_files = []

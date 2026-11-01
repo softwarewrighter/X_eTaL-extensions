@@ -117,16 +117,21 @@ a dark plate.
 | `vd:o_utlines`, `vd:g_lass` | the same as edges only, or see-through |
 | `(name, table) vd:l_ines 0` | a group of glowing lines: from, to, color, radius |
 | `(name, texts, table) vd:l_abels 0` | a group of words facing the camera (texts joined by `\|`; `vd:f_ixed` writes numbers so) |
-| `(texts, table) vd:c_aptions 0` | captions on a dark plate, each with its span and color |
+| `(texts, table) vd:c_aptions 0` | captions on a dark plate, each with its span and color, sized to the picture and wrapped to its width |
+| `(titles, subtitles, table) vd:c_ards 0` | title cards filling the picture, each with its span and colors |
 | `(name, spans) vd:s_hown 0` | when each object of a group is shown |
 | `(name, times, places) vd:m_oves 0` | each object keyed to a place and size at the times (n by k by 6) |
 | `(name, times, places) vd:m_ovesEach 0` | the same, each object at times of its own (n by k) |
 | `(name, times, colors) vd:t_ints 0` | each object's color keyed at the times |
+| `(name, times, strengths) vd:g_lows 0` | how strongly each object glows, keyed from data at times of its own (n by k) |
 | `(times, eyes, aims) vd:c_amera 0` | the camera's keys |
 | `(name, origin, u, v, colors, order, gap) vd:g_rid 0` | an n by m grid of cells as one mesh, each appearing at its second: a matrix as a wall (262,144 cells for 512 by 512) |
 | `(values, low, high) vd:t_one 0` | a color for each value, deep blue to orange (not Python) |
 | `vd:l_inear`, `vd:c_ontrast`, `vd:f_ixed` | colors made linear; WCAG contrast (7 or more for words); numbers as labels (not Python) |
 | `(times, name) vd:s_tills 0`, `vd:r_ender file`, `vd:report` | stills, the video (MP4, H.264), a report of the groups |
+| `vd:landscape`, `vd:shorts`, `(width, height, lens, w, h) vd:f_it 0` | 1920 by 1080 and 1080 by 1920; how far back a camera stands for a region to fill either (not Python) |
+| `(map, times) vd:r_etime 0` | a scene's own seconds as the video's: slow motion and time-lapse (not Python) |
+| `(texts, table) vd:c_ues 0`, `(texts, table) vd:s_rt 0` | the captions as a cue sheet (TOML) and as subtitles (.srt), to record narration against (not Python) |
 
 The videos' arrays come from X_eTaL-gpu's Accel library (the functions
 its GPU runs), pinned at `GPU_COMMIT` and put on `XETAL_PATH` by
@@ -134,6 +139,19 @@ its GPU runs), pinned at `GPU_COMMIT` and put on `XETAL_PATH` by
 the arrays to the MP4, in a literate document:
 [ReLU and softmax](https://softwarewrighter.github.io/X_eTaL-extensions/literate/relu-softmax.html)
 and [matrix multiply](https://softwarewrighter.github.io/X_eTaL-extensions/literate/matmul.html).
+
+For explainer videos (YouTube, narrated later), the same scene is made
+as a video (`vd:landscape`) or a Short (`vd:shorts`): `vd:f_it` places
+the camera so a region fills either, and captions and title cards are
+sized to the picture's shorter side and wrapped to its width. A scene
+is worked out in its own seconds and every time in it passed through
+`vd:r_etime`, a map from the scene's seconds to the video's, so one
+part can be slow motion and another a time-lapse. `vd:c_ues` and
+`vd:s_rt` write the cue sheet and the subtitles of the captions, the
+times to record narration against. Words stay few and large: shapes
+and data carry the explanation, not listings. The FPGA data comes from
+X_eTaL-fpga, pinned at `FPGA_COMMIT` like X_eTaL-gpu (Hex1000, with
+Radix and Strings, on `XETAL_PATH`).
 
 ## Demos
 
@@ -249,6 +267,18 @@ and [matrix multiply](https://softwarewrighter.github.io/X_eTaL-extensions/liter
    runs on the GPU with Metal when there is one, its kernels
    unoptimized: Blender 5.1.2 crashed optimizing them in the background
    partway through a render.
+9. `demos/hex-pc.xtl` (`just demo blender hex-pc`, a few minutes: 586
+   frames, twice): HEX1000's program counter, 19.5 seconds, made with
+   the explainer kit. The 64 addresses of a ROM page are cells in
+   reading order; the program counter visits them in its shift
+   register's order -- 0 1 3 7 15 31 63 62 ..., never +1 -- and each
+   cell flashes as it is reached and stays lit in a color for when, the
+   path drawn behind it. The order is X_eTaL-fpga's `hx:Order`; a title
+   card, the first six hops in slow motion and the other 57 as a
+   time-lapse, captions. Made as a video (`work/hexpc/out/hex-pc.mp4`,
+   1920 by 1080) and a Short (`work/hexpc/out-short/hex-pc-short.mp4`,
+   1080 by 1920), with its cue sheet and subtitles
+   (`work/hexpc/hex-pc.cues.toml`, `hex-pc.srt`; `demos/PcWalk.xtl`).
 
 ## Build and test
 
@@ -264,7 +294,10 @@ The Rust tests run a stand-in program in Blender's place; the goldens
 `blender-cubes-quick` renders the size comparison at 160 by 90, four
 frames, and checks 8, 800 and 8,000 vertices and the files;
 `blender-cosy-quick` fuses the CoSy logo in coarse voxels and checks
-the one mesh left, its pivot, camera and lights, and a still). Of them: the second writes two cubes and a label as bpy
+the one mesh left, its pivot, camera and lights, and a still;
+`blender-hex-pc-quick` makes HEX1000's program counter at 160 by 90
+and as a Short, 90 by 160, and checks its cue sheet and subtitles and
+what Blender made of each). Of them: the second writes two cubes and a label as bpy
 and checks what Blender made -- the mesh (16 vertices, 12 faces), the
 objects, a still, `.glb`, `.obj`, `.mtl`, `.blend`. `blender-bpy-script`
 pins the Python the library writes. `blender-shapes` makes one piece of

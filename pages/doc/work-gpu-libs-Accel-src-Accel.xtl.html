@@ -40,6 +40,7 @@
 <h3>std/</h3>
 <ul>
 <li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
 </ul>
 <h3>extensions/blender/lib/</h3>
 <ul>
@@ -56,6 +57,8 @@
 <li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
 <li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
 <li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-pc.xtl.html">hex-pc.xtl</a></li>
+<li><a href="extensions-blender-demos-PcWalk.xtl.html">PcWalk.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-fly.xtl.html">matmul-fly.xtl</a></li>
 <li><a href="extensions-blender-demos-MatmulFly.xtl.html">MatmulFly.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-steps.xtl.html">matmul-steps.xtl</a></li>
@@ -67,6 +70,18 @@
 <h3>extensions/digest/lib/</h3>
 <ul>
 <li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Hex1000/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html">Hex1000.xtl</a></li>
+</ul>
+<h3>work/libraries/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libraries-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Radix/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Radix-src-Radix.xtl.html">Radix.xtl</a></li>
 </ul>
 <h3>work/gpu/libs/Accel/src/</h3>
 <ul>
@@ -224,7 +239,7 @@ checks). Names with l: are exported; the others are private.</p>
 <div class="meta">function &middot; <a href="work-gpu-libs-Accel-src-Accel.xtl.src.html#L22">line 22</a></div>
 <div class="doc">
 <p>The sum, item by item: the first kernel, one work-item per element.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.v_add" class="c-libfunc">ᵃᶜv̲add</a> <span class="c-number">10</span> <span class="c-number">20</span> <span class="c-number">30</span> <span class="c-number">40</span>
 11 22 33 44</pre>
 </div>
@@ -235,7 +250,7 @@ checks). Names with l: are exported; the others are private.</p>
 <div class="meta">function &middot; <a href="work-gpu-libs-Accel-src-Accel.xtl.src.html#L28">line 28</a></div>
 <div class="doc">
 <p>Every item of the right times the number on the left.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><span class="c-number">3</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.s_cale" class="c-libfunc">ᵃᶜs̲cale</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span>
 3 6 9</pre>
 </div>
@@ -247,7 +262,7 @@ checks). Names with l: are exported; the others are private.</p>
 <div class="doc">
 <p>The items where positive, 0 elsewhere (a select by comparison with
 a constant), for Ints or Floats.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.r_elu" class="c-libfunc">ᵃᶜr̲elu</a> <span class="c-number">1</span> <span class="c-number">-2</span> <span class="c-number">3</span> <span class="c-number">-4</span>
 1 0 3 0</pre>
 </div>
@@ -262,7 +277,7 @@ a constant), for Ints or Floats.</p>
 <p>t ac:t_hreshold x: x where x &gt; t, 0.0 elsewhere, for Floats: the
 mask <code>x <a href="builtins.html#-3e" class="c-symbol">&gt;</a> t</code> made Float and multiplied in, the select a GPU does
 with a conditional move. A masked-out negative comes back as -0.0.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><span class="c-number">0.5</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.t_hreshold" class="c-libfunc">ᵃᶜt̲hreshold</a> <span class="c-number">0.25</span> <span class="c-number">0.5</span> <span class="c-number">0.75</span> <span class="c-number">1.0</span>
 0.0 0.0 0.75 1.0</pre>
 </div>
@@ -273,7 +288,7 @@ with a conditional move. A masked-out negative comes back as -0.0.</p>
 <div class="meta">function &middot; <a href="work-gpu-libs-Accel-src-Accel.xtl.src.html#L51">line 51</a></div>
 <div class="doc">
 <p>m ac:k_eep x: x where the Int mask m is 1, 0 elsewhere.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(<span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">0</span>) <a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.k_eep" class="c-libfunc">ᵃᶜk̲eep</a> <span class="c-number">5</span> <span class="c-number">6</span> <span class="c-number">7</span> <span class="c-number">8</span>
 5 0 7 0</pre>
 </div>
@@ -286,7 +301,7 @@ with a conditional move. A masked-out negative comes back as -0.0.</p>
 <div class="doc">
 <p>The sum of the items of a vector: a parallel reduction on a GPU
 (work-group partials, then a second pass).</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.s_um" class="c-libfunc">ᵃᶜs̲um</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span>
 10</pre>
 </div>
@@ -298,7 +313,7 @@ with a conditional move. A masked-out negative comes back as -0.0.</p>
 <div class="meta">function &middot; <a href="work-gpu-libs-Accel-src-Accel.xtl.src.html#L66">line 66</a></div>
 <div class="doc">
 <p>The largest item of a vector.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.l_argest" class="c-libfunc">ᵃᶜl̲argest</a> <span class="c-number">3</span> <span class="c-number">9</span> <span class="c-number">2</span>
 9</pre>
 </div>
@@ -309,7 +324,7 @@ with a conditional move. A masked-out negative comes back as -0.0.</p>
 <div class="meta">function &middot; <a href="work-gpu-libs-Accel-src-Accel.xtl.src.html#L72">line 72</a></div>
 <div class="doc">
 <p>The inner product of two vectors: a multiply, then a reduce.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.d_ot" class="c-libfunc">ᵃᶜd̲ot</a> <span class="c-number">4</span> <span class="c-number">5</span> <span class="c-number">6</span>
 32</pre>
 </div>
@@ -322,7 +337,7 @@ with a conditional move. A masked-out negative comes back as -0.0.</p>
 <div class="doc">
 <p>The sum of each row of a matrix (along axis 2: one work-item per
 row on a GPU).</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.r_owSums" class="c-libfunc">ᵃᶜr̲owSums</a> <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <span class="c-number">20</span> <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-number">5</span> <span class="c-number">60</span>
 24 69</pre>
 </div>
@@ -334,7 +349,7 @@ row on a GPU).</p>
 <div class="meta">function &middot; <a href="work-gpu-libs-Accel-src-Accel.xtl.src.html#L87">line 87</a></div>
 <div class="doc">
 <p>The sum of each column (along axis 1, the default of r_/).</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.c_olSums" class="c-libfunc">ᵃᶜc̲olSums</a> <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <span class="c-number">20</span> <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-number">5</span> <span class="c-number">60</span>
 5 25 63</pre>
 </div>
@@ -345,7 +360,7 @@ row on a GPU).</p>
 <div class="meta">function &middot; <a href="work-gpu-libs-Accel-src-Accel.xtl.src.html#L93">line 93</a></div>
 <div class="doc">
 <p>The largest item of each row.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.r_owMax" class="c-libfunc">ᵃᶜr̲owMax</a> <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <span class="c-number">20</span> <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-number">5</span> <span class="c-number">60</span>
 20 60</pre>
 </div>
@@ -361,7 +376,7 @@ row on a GPU).</p>
 (APL's +.x): a matrix times a matrix, a matrix times a vector, a
 vector times a matrix. Each result item is a sum of products, one
 GPU work-item each (or a tile of them, as the schedule says).</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(<span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">6</span>) <a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.m_atmul" class="c-libfunc">ᵃᶜm̲atmul</a> <span class="c-number">3</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">6</span>
 22 28
 49 64</pre>
@@ -381,7 +396,7 @@ key row (q k^T): the inner product of q with the transpose of k. On
 a GPU the transpose is a gather, one work-item per item, and the
 product follows (research7: attention decomposes into array
 operations; it is not an intrinsic).</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(<span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">6</span>) <a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.s_cores" class="c-libfunc">ᵃᶜs̲cores</a> <span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">12</span>
 14 32  50  68
 32 77 122 167</pre>
@@ -395,7 +410,7 @@ operations; it is not an intrinsic).</p>
 <p>x ac:w_eightGrad dy: the gradient of a dense layer's weights, for
 a batch x (a row per example) and the gradient dy at the layer's
 output: x^T dy, the product every backward pass is made of.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(<span class="c-number">4</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">8</span>) <a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.w_eightGrad" class="c-libfunc">ᵃᶜw̲eightGrad</a> <span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">12</span>
 118 134 150
 140 160 180</pre>
@@ -412,7 +427,7 @@ output: x^T dy, the product every backward pass is made of.</p>
 batch of embeddings (ids s_elect t). On a GPU a gather, one
 work-item per item of the result, the table resident; the ids are
 all that a prompt uploads.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>t ← <span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.1</span> <span class="c-number">0.2</span> <span class="c-number">1.0</span> <span class="c-number">1.1</span> <span class="c-number">1.2</span> <span class="c-number">2.0</span> <span class="c-number">2.1</span> <span class="c-number">2.2</span> <span class="c-number">3.0</span> <span class="c-number">3.1</span> <span class="c-number">3.2</span></pre>
 <pre class="example"><span class="prompt">      </span>t <a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.e_mbed" class="c-libfunc">ᵃᶜe̲mbed</a> <span class="c-number">4</span> <span class="c-number">1</span> <span class="c-number">2</span>
 3.0 3.1 3.2
@@ -433,7 +448,7 @@ last two axes, one copy per shift), their wrapped edges dropped,
 reshaped; the expression is X_eTaL-ML's Conv (cv:w_indows). On a
 GPU each rotation and each drop is a gather of its own and the
 reshape is nothing.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.w_indows" class="c-libfunc">ᵃᶜw̲indows</a> <span class="c-number">1</span> <span class="c-number">3</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">12</span>
  1  2
  2  3
@@ -459,7 +474,7 @@ reshape is nothing.</p>
 row) over every window of every picture of x, as one matrix
 product: the maps, n by f by (h - 2) by (w - 2) (a valid
 convolution without the bias; X_eTaL-ML's Conv adds its biases).</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(<span class="c-number">1</span> <span class="c-number">9</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span>) <a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.c_onv" class="c-libfunc">ᵃᶜc̲onv</a> <span class="c-number">1</span> <span class="c-number">3</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">12</span>
 6 7</pre>
 </div>
@@ -482,7 +497,7 @@ array operations the IR has: the row's largest spread along the
 row, a mask where the row equals it, the smallest position under
 the mask (n + 1 elsewhere). No new GPU operation: a row reduction,
 a table, a fused mask and a second row reduction.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.a_rgmax" class="c-libfunc">ᵃᶜa̲rgmax</a> <span class="c-number">3</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">5.0</span> <span class="c-number">1.0</span> <span class="c-number">9.0</span> <span class="c-number">9.0</span> <span class="c-number">2.0</span> <span class="c-number">2.0</span> <span class="c-number">2.0</span> <span class="c-number">2.0</span> <span class="c-number">7.0</span> <span class="c-number">8.0</span> <span class="c-number">6.0</span> <span class="c-number">8.0</span>
 3 1 2</pre>
 </div>
@@ -504,7 +519,7 @@ tied. The choice of a router, the candidates of a retrieval. A
 taken item is pushed below its row by more than the row's range
 (Sample subtracts 1e300, which is infinity in a GPU's f32 and
 poisons the row with NaN).</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><span class="c-number">2</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.t_opk" class="c-libfunc">ᵃᶜt̲opk</a> <span class="c-number">2</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.1</span> <span class="c-number">0.5</span> <span class="c-number">0.15</span> <span class="c-number">0.25</span> <span class="c-number">7.0</span> <span class="c-number">8.0</span> <span class="c-number">6.0</span> <span class="c-number">8.0</span>
 0.0 1.0 0.0 1.0
 1.0 1.0 0.0 1.0</pre>
@@ -525,7 +540,7 @@ poisons the row with NaN).</p>
 row), the weights W (a row per input, a column per output) with the
 bias b as one more row at the bottom of wb, as X_eTaL-ML's NN has
 it. The bias row is spread down the batch by a table (r_ight).</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>x ← <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span> <span class="c-number">-1.0</span> <span class="c-number">0.5</span> <span class="c-number">0.0</span></pre>
 <pre class="example"><span class="prompt">      </span>wb ← <span class="c-number">4</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.5</span> <span class="c-number">-1.0</span> <span class="c-number">1.0</span> <span class="c-number">0.25</span> <span class="c-number">-0.5</span> <span class="c-number">2.0</span> <span class="c-number">0.1</span> <span class="c-number">0.2</span></pre>
 <pre class="example"><span class="prompt">      </span>x <a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.d_ense" class="c-libfunc">ᵃᶜd̲ense</a> wb
@@ -542,7 +557,7 @@ it. The bias row is spread down the batch by a table (r_ight).</p>
 <p>Each row of a matrix into probabilities: the row's largest taken
 off (the same result, no overflow), e to each, each divided by its
 row's sum; a row's value spread across the row by a table (l_eft).</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.s_oftmax" class="c-libfunc">ᵃᶜs̲oftmax</a> <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">1.0</span> <span class="c-number">2.0</span> <span class="c-number">3.0</span>
  0.3333333333333333  0.3333333333333333 0.3333333333333333
 0.09003057317038046 0.24472847105479764 0.6652409557748218</pre>
@@ -563,7 +578,7 @@ row's sum; a row's value spread across the row by a table (l_eft).</p>
 the sum of the positive items of x + x * w: the first end-to-end
 test research7 asks for (arithmetic, map, zip, comparison,
 selection, reduction), for Ints or Floats.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵃᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="work-gpu-libs-Accel-src-Accel.xtl.html" class="c-string">&quot;Accel&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span> <a href="work-gpu-libs-Accel-src-Accel.xtl.html#l.p_ipeline" class="c-libfunc">ᵃᶜp̲ipeline</a> <span class="c-number">1</span> <span class="c-number">-2</span> <span class="c-number">1</span> <span class="c-number">-2</span>
 8</pre>
 </div>

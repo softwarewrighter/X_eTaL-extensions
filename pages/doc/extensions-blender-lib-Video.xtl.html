@@ -40,6 +40,7 @@
 <h3>std/</h3>
 <ul>
 <li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
 </ul>
 <h3>extensions/blender/lib/</h3>
 <ul>
@@ -56,6 +57,8 @@
 <li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
 <li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
 <li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-pc.xtl.html">hex-pc.xtl</a></li>
+<li><a href="extensions-blender-demos-PcWalk.xtl.html">PcWalk.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-fly.xtl.html">matmul-fly.xtl</a></li>
 <li><a href="extensions-blender-demos-MatmulFly.xtl.html">MatmulFly.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-steps.xtl.html">matmul-steps.xtl</a></li>
@@ -67,6 +70,18 @@
 <h3>extensions/digest/lib/</h3>
 <ul>
 <li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Hex1000/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html">Hex1000.xtl</a></li>
+</ul>
+<h3>work/libraries/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libraries-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Radix/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Radix-src-Radix.xtl.html">Radix.xtl</a></li>
 </ul>
 <h3>work/gpu/libs/Accel/src/</h3>
 <ul>
@@ -175,6 +190,7 @@
 <li class="item"><a href="#l.head">ˡhead</a></li>
 <li><a href="#section-2">Numbers and text into Python</a></li>
 <li class="item"><a href="#h.n_ums"><span class="c-libfunc">ʰn̲ums</span></a></li>
+<li class="item"><a href="#h.q_uoteIn"><span class="c-libfunc">ʰq̲uoteIn</span></a></li>
 <li class="item"><a href="#h.q_uote"><span class="c-libfunc">ʰq̲uote</span></a></li>
 <li class="item"><a href="#h.o_ne"><span class="c-libfunc">ʰo̲ne</span></a></li>
 <li class="item"><a href="#h.j_oin"><span class="c-libfunc">ʰj̲oin</span></a></li>
@@ -186,7 +202,18 @@
 <li class="item"><a href="#l.c_ontrast"><span class="c-libfunc">ˡc̲ontrast</span></a></li>
 <li class="item"><a href="#l.stops">ˡstops</a></li>
 <li class="item"><a href="#l.t_one"><span class="c-libfunc">ˡt̲one</span></a></li>
-<li><a href="#section-4">The calls</a></li>
+<li><a href="#section-4">Pictures and time</a></li>
+<li class="item"><a href="#l.landscape">ˡlandscape</a></li>
+<li class="item"><a href="#l.shorts">ˡshorts</a></li>
+<li class="item"><a href="#l.f_it"><span class="c-libfunc">ˡf̲it</span></a></li>
+<li class="item"><a href="#l.r_etime"><span class="c-libfunc">ˡr̲etime</span></a></li>
+<li><a href="#section-5">Cues</a></li>
+<li class="item"><a href="#h.t_exts"><span class="c-libfunc">ʰt̲exts</span></a></li>
+<li class="item"><a href="#h.c_at"><span class="c-libfunc">ʰc̲at</span></a></li>
+<li class="item"><a href="#h.s_rtTime"><span class="c-libfunc">ʰs̲rtTime</span></a></li>
+<li class="item"><a href="#l.s_rt"><span class="c-libfunc">ˡs̲rt</span></a></li>
+<li class="item"><a href="#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a></li>
+<li><a href="#section-6">The calls</a></li>
 <li class="item"><a href="#l.s_tage"><span class="c-libfunc">ˡs̲tage</span></a></li>
 <li class="item"><a href="#h.b_oxes"><span class="c-libfunc">ʰb̲oxes</span></a></li>
 <li class="item"><a href="#h.p_aint"><span class="c-libfunc">ʰp̲aint</span></a></li>
@@ -200,6 +227,8 @@
 <li class="item"><a href="#l.m_oves"><span class="c-libfunc">ˡm̲oves</span></a></li>
 <li class="item"><a href="#l.m_ovesEach"><span class="c-libfunc">ˡm̲ovesEach</span></a></li>
 <li class="item"><a href="#l.t_ints"><span class="c-libfunc">ˡt̲ints</span></a></li>
+<li class="item"><a href="#l.g_lows"><span class="c-libfunc">ˡg̲lows</span></a></li>
+<li class="item"><a href="#l.c_ards"><span class="c-libfunc">ˡc̲ards</span></a></li>
 <li class="item"><a href="#l.c_amera"><span class="c-libfunc">ˡc̲amera</span></a></li>
 <li class="item"><a href="#l.g_rid"><span class="c-libfunc">ˡg̲rid</span></a></li>
 <li class="item"><a href="#l.s_tills"><span class="c-libfunc">ˡs̲tills</span></a></li>
@@ -223,6 +252,14 @@ decides nothing. A video is vd:head, then vd:s_tage, the groups, their
 spans, keys and tints, the camera, the captions, then vd:r_ender (or
 vd:s_tills), written with bl:w_rite! and run by bp:launcher through
 bl:r_un!.</p>
+<p>For explainer videos: the picture's size is any (vd:landscape, 1920
+by 1080, or vd:shorts, 1080 by 1920, upright); vd:f_it places the
+camera so a region fills either; vd:r_etime remaps a scene's own
+seconds to the video's (slow motion, time-lapse); vd:g_lows keys how
+strongly things glow from data; vd:c_ards are title cards; captions
+and cards are sized to the picture and wrapped to its width; and
+vd:c_ues and vd:s_rt write the cue sheet and the subtitles (.srt) of
+the same captions, to record narration against.</p>
 <p>The look: flat colors that glow (emission only), on a near-black
 sky, the Standard view (colors as given); text in JuliaMono Black
 (work/fonts, <code>just font</code>), facing the camera; captions on a dark
@@ -235,8 +272,8 @@ Import: &quot;vd:&quot; u_se&lt; &quot;Video&quot;</p>
 <h2 class="section" id="section-1">The player</h2>
 <div class="item" id="h.playBase">
 <h3><a href="#h.playBase">ʰplayBase</a> <span class="type">: Char</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L25">line 25</a></div>
-<pre class="code">ʰplayBase ← (<span class="c-string">&quot;import bpy, math, os, sys\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L34">line 34</a></div>
+<pre class="code">ʰplayBase ← (<span class="c-string">&quot;import bpy, math, os, sys, textwrap\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;args = sys.argv[sys.argv.index('--') + 1:]\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;out = args[0]\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;os.makedirs(out, exist_ok=True)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
@@ -265,6 +302,7 @@ Import: &quot;vd:&quot; u_se&lt; &quot;Video&quot;</p>
   <span class="c-string">&quot;        d = os.path.dirname(d)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;FONT = font()\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;ADVANCE = 0.33\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;def glow(name, rgb, strength=1.0, alpha=1.0):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    m = bpy.data.materials.new(name)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
@@ -293,7 +331,7 @@ Import: &quot;vd:&quot; u_se&lt; &quot;Video&quot;</p>
 </div>
 <div class="item" id="h.playStage">
 <h3><a href="#h.playStage">ʰplayStage</a> <span class="type">: Char</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L80">line 80</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L90">line 90</a></div>
 <pre class="code">ʰplayStage ← (<span class="c-string">&quot;def stage(w, h, fps, seconds, sky, lens):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    scene.render.engine = 'BLENDER_EEVEE'\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    scene.eevee.taa_render_samples = 16\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
@@ -349,7 +387,7 @@ Import: &quot;vd:&quot; u_se&lt; &quot;Video&quot;</p>
 </div>
 <div class="item" id="h.playLines">
 <h3><a href="#h.playLines">ʰplayLines</a> <span class="type">: Char</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L133">line 133</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L143">line 143</a></div>
 <pre class="code">ʰplayLines ← (<span class="c-string">&quot;def lines(name, rows):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    made = []\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    for i, r in enumerate(rows):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
@@ -371,7 +409,7 @@ Import: &quot;vd:&quot; u_se&lt; &quot;Video&quot;</p>
 </div>
 <div class="item" id="h.playText">
 <h3><a href="#h.playText">ʰplayText</a> <span class="type">: Char</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L152">line 152</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L162">line 162</a></div>
 <pre class="code">ʰplayText ← (<span class="c-string">&quot;def text(n, body, size, rgb):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    c = bpy.data.curves.new(n, type='FONT')\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    c.body = body\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
@@ -397,29 +435,65 @@ Import: &quot;vd:&quot; u_se&lt; &quot;Video&quot;</p>
   <span class="c-string">&quot;        made.append(o)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    groups[name] = made\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;def view(d):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    f = rig['camera'].data.view_frame(scene=scene)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    k = d / -f[0].z\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    return max(abs(v.x) for v in f) * k, max(abs(v.y) for v in f) * k\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;def wrap(body, size, width):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    return textwrap.fill(body, max(1, int(width / (ADVANCE * size))), break_on_hyphens=False)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;def captions(bodies, rows):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    d = 0.05\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
-  <span class="c-string">&quot;    size = 0.042\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    hw, hh = view(d)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    size = 0.16 * min(hw, hh)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    line = size\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    cam = rig['camera']\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    for i, (body, r) in enumerate(zip(bodies.split('|'), rows)):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
-  <span class="c-string">&quot;        o = text('caption %d' % (i + 1), body, size * d, r[2:5])\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        body = wrap(body, size, 1.7 * hw)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        n = body.count('\\n')\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        o = text('caption %d' % (i + 1), body, size, r[2:5])\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;        o.data.align_y = 'TOP_BASELINE'\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;        o.parent = cam\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
-  <span class="c-string">&quot;        o.location = (0.0, -0.235 * d, -d)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        o.location = (0.0, -0.86 * hh + n * line, -d)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;        p = bpy.data.objects.new('plate %d' % (i + 1), cube_mesh())\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;        scene.collection.objects.link(p)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;        p.parent = cam\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
-  <span class="c-string">&quot;        p.location = (0.0, (-0.235 + 0.35 * size) * d, -d * 1.002)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
-  <span class="c-string">&quot;        p.scale = ((0.6 * size * len(body) + 0.04) * d, size * 1.6 * d, 0.0001)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        p.location = (0.0, -0.86 * hh + 0.35 * size + 0.5 * n * line, -d * 1.002)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        p.scale = (ADVANCE * size * max(len(x) for x in body.split('\\n')) + 1.4 * size, 1.6 * size + n * line, 0.0001)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;        p.data.materials.append(glow('plate %d' % (i + 1), (0.0, 0.0, 0.0), 1.0, 0.72))\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;        for x in (o, p):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;            span(x, r[0], r[1])\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;def cards(titles, subs, rows):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    d = 0.05\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    hw, hh = view(d)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    u = min(hw, hh)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    cam = rig['camera']\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    made = []\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    for i, (title, sub, r) in enumerate(zip(titles.split('|'), subs.split('|'), rows)):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        p = bpy.data.objects.new('card %d' % (i + 1), cube_mesh())\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        scene.collection.objects.link(p)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        p.location = (0.0, 0.0, -d * 1.004)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        p.scale = (2.2 * hw, 2.2 * hh, 0.0001)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        p.data.materials.append(glow('card %d' % (i + 1), r[5:8]))\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        parts = [p]\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        for j, (body, size, y) in enumerate(((title, 0.34 * u, 0.15 * u), (sub, 0.15 * u, -0.3 * u))):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;            if body:\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;                o = text('card %d %s' % (i + 1, 'title' if j == 0 else 'subtitle'), wrap(body, size, 1.8 * hw), size, r[2:5])\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;                o.location = (0.0, y, -d)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;                parts.append(o)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        for x in parts:\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;            x.parent = cam\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;            span(x, r[0], r[1])\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        made.append(p)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    groups['cards'] = made\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;\n&quot;</span>)</pre>
 <div class="uses">Used in: <a href="extensions-blender-lib-Video.xtl.html#l.head">ˡhead</a></div>
 </div>
 <div class="item" id="h.playKeys">
 <h3><a href="#h.playKeys">ʰplayKeys</a> <span class="type">: Char</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L197">line 197</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L243">line 243</a></div>
 <pre class="code">ʰplayKeys ← (<span class="c-string">&quot;def span(o, a, b):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    keys = {1: True, frame(a): False, frame(b) + 1: True} if a &gt; 0 else {1: False, frame(b) + 1: True}\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    for f in sorted(keys):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
@@ -453,6 +527,13 @@ Import: &quot;vd:&quot; u_se&lt; &quot;Video&quot;</p>
   <span class="c-string">&quot;            s.default_value = tuple(r[3 * j:3 * j + 3]) + (1.0,)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;            s.keyframe_insert('default_value', frame=frame(t))\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;def glows(name, times, rows):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    for o, ts, r in zip(groups[name], times, rows):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        s = o.data.materials[0].node_tree.nodes['glow'].inputs['Strength']\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;        for t, g in zip(ts, r):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;            s.default_value = g\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;            s.keyframe_insert('default_value', frame=frame(t))\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;def camera(times, eyes, aims):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    for t, e, a in zip(times, eyes, aims):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;        rig['camera'].location = e\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
@@ -464,7 +545,7 @@ Import: &quot;vd:&quot; u_se&lt; &quot;Video&quot;</p>
 </div>
 <div class="item" id="h.playGrid">
 <h3><a href="#h.playGrid">ʰplayGrid</a> <span class="type">: Char</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L239">line 239</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L292">line 292</a></div>
 <pre class="code">ʰplayGrid ← (<span class="c-string">&quot;def grid(name, origin, u, v, shape, colors, order, gap):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    n, m = int(shape[0]), int(shape[1])\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    k = n * m\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
@@ -529,7 +610,7 @@ Import: &quot;vd:&quot; u_se&lt; &quot;Video&quot;</p>
 </div>
 <div class="item" id="h.playOutput">
 <h3><a href="#h.playOutput">ʰplayOutput</a> <span class="type">: Char</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L301">line 301</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L354">line 354</a></div>
 <pre class="code">ʰplayOutput ← (<span class="c-string">&quot;def stills(times, prefix):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    scene.render.image_settings.media_type = 'IMAGE'\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    scene.render.image_settings.file_format = 'PNG'\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
@@ -547,51 +628,60 @@ Import: &quot;vd:&quot; u_se&lt; &quot;Video&quot;</p>
   <span class="c-string">&quot;    scene.render.filepath = os.path.join(out, file)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    bpy.ops.render.render(animation=True)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;def animated(x):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;    return bool(x and x.animation_data and x.animation_data.action)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;def report():\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;    with open(os.path.join(out, 'report.txt'), 'w') as f:\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;        f.write('frames %d to %d at %d a second\\n' % (scene.frame_start, scene.frame_end, scene.render.fps))\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;        for name in sorted(groups):\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;            os_ = groups[name]\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
-  <span class="c-string">&quot;            keyed = sum(1 for o in os_ if o.animation_data and o.animation_data.action)\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-string">&quot;            keyed = sum(1 for o in os_ if animated(o) or any(m and animated(m.node_tree) for m in getattr(o.data, 'materials', [])))\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;            f.write('%s: %d objects, %d keyed\\n' % (name, len(os_), keyed))\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-string">&quot;\n&quot;</span>)</pre>
 <div class="uses">Used in: <a href="extensions-blender-lib-Video.xtl.html#l.head">ˡhead</a></div>
 </div>
 <div class="item" id="l.head">
 <h3><a href="#l.head">ˡhead</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L332">line 332</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L388">line 388</a></div>
 <div class="doc">
 <p>vd:head: the inner script's start, the player: an empty scene, the
 output directory (the first argument after &quot;--&quot;), keys eased in and
 out (Bezier), and the functions the calls below use -- stage, boxes,
-labels, captions, shown, moves, tints, camera, grid, stills, video,
-report. Fixed text: what a video shows is all in the numbers after it.</p>
+lines, labels, captions, cards, shown, moves, tints, glows, camera,
+grid, stills, video, report. Fixed text: what a video shows is all in the numbers after it.</p>
 </div>
 <pre class="code">ˡhead ← <a href="extensions-blender-lib-Video.xtl.html#h.playBase">ʰplayBase</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-lib-Video.xtl.html#h.playStage">ʰplayStage</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-lib-Video.xtl.html#h.playLines">ʰplayLines</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-lib-Video.xtl.html#h.playText">ʰplayText</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-lib-Video.xtl.html#h.playKeys">ʰplayKeys</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-lib-Video.xtl.html#h.playGrid">ʰplayGrid</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-lib-Video.xtl.html#h.playOutput">ʰplayOutput</a></pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-MatmulFly.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.s_teps"><span class="c-libfunc">ˡs̲teps</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-PcWalk.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-MatmulFly.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.s_teps"><span class="c-libfunc">ˡs̲teps</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
 </div>
 <h2 class="section" id="section-2">Numbers and text into Python</h2>
 <div class="item" id="h.n_ums">
 <h3><a href="#h.n_ums"><span class="c-libfunc">ʰn̲ums</span></a> <span class="type">: Any c =&gt; (a, b) -&gt; c -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L337">line 337</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L393">line 393</a></div>
 <pre class="code"><span class="c-libfunc">ʰn̲ums</span> ← { (v, k) z → <span class="c-string">&quot;nums('&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> v) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;', &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> k) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)&quot;</span> }</pre>
-<div class="uses">Used in: <a href="extensions-blender-lib-Video.xtl.html#l.s_tage"><span class="c-libfunc">ˡs̲tage</span></a>, <a href="extensions-blender-lib-Video.xtl.html#h.b_oxes"><span class="c-libfunc">ʰb̲oxes</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.l_ines"><span class="c-libfunc">ˡl̲ines</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.l_abels"><span class="c-libfunc">ˡl̲abels</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.c_aptions"><span class="c-libfunc">ˡc̲aptions</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.s_hown"><span class="c-libfunc">ˡs̲hown</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.m_oves"><span class="c-libfunc">ˡm̲oves</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.m_ovesEach"><span class="c-libfunc">ˡm̲ovesEach</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.t_ints"><span class="c-libfunc">ˡt̲ints</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.c_amera"><span class="c-libfunc">ˡc̲amera</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.g_rid"><span class="c-libfunc">ˡg̲rid</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.s_tills"><span class="c-libfunc">ˡs̲tills</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-lib-Video.xtl.html#l.s_tage"><span class="c-libfunc">ˡs̲tage</span></a>, <a href="extensions-blender-lib-Video.xtl.html#h.b_oxes"><span class="c-libfunc">ʰb̲oxes</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.l_ines"><span class="c-libfunc">ˡl̲ines</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.l_abels"><span class="c-libfunc">ˡl̲abels</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.c_aptions"><span class="c-libfunc">ˡc̲aptions</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.s_hown"><span class="c-libfunc">ˡs̲hown</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.m_oves"><span class="c-libfunc">ˡm̲oves</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.m_ovesEach"><span class="c-libfunc">ˡm̲ovesEach</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.t_ints"><span class="c-libfunc">ˡt̲ints</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.g_lows"><span class="c-libfunc">ˡg̲lows</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.c_ards"><span class="c-libfunc">ˡc̲ards</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.c_amera"><span class="c-libfunc">ˡc̲amera</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.g_rid"><span class="c-libfunc">ˡg̲rid</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.s_tills"><span class="c-libfunc">ˡs̲tills</span></a></div>
+</div>
+<div class="item" id="h.q_uoteIn">
+<h3><a href="#h.q_uoteIn"><span class="c-libfunc">ʰq̲uoteIn</span></a> <span class="type">: Int -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L398">line 398</a></div>
+<pre class="code"><span class="c-libfunc">ʰq̲uoteIn</span> ← { q t →
+  c ← <a href="builtins.html#-5b-5dU_CS" class="c-builtin">⎕U̲CS</a> t
+  e ← (c <a href="builtins.html#-3d" class="c-symbol">=</a> q) <a href="builtins.html#-7c" class="c-symbol">∨</a> c <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">92</span>
+  k ← (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> e) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> c
+  m ← ((<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> e) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> e) <a href="builtins.html#-26" class="c-symbol">∧</a> k <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <span class="c-number">0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> k
+  (<a href="builtins.html#-5b-5dU_CHAR" class="c-builtin">⎕U̲CHAR</a> q) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#-5b-5dU_CHAR" class="c-builtin">⎕U̲CHAR</a> (<span class="c-number">92</span> <a href="builtins.html#-2a" class="c-symbol">×</a> m) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">1</span> <a href="builtins.html#-2d" class="c-symbol">−</a> m) <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> e) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#-5b-5dU_CHAR" class="c-builtin">⎕U̲CHAR</a> q
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-lib-Video.xtl.html#h.q_uote"><span class="c-libfunc">ʰq̲uote</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a></div>
 </div>
 <div class="item" id="h.q_uote">
 <h3><a href="#h.q_uote"><span class="c-libfunc">ʰq̲uote</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L341">line 341</a></div>
-<pre class="code"><span class="c-libfunc">ʰq̲uote</span> ← { t →
-  c ← <a href="builtins.html#-5b-5dU_CS" class="c-builtin">⎕U̲CS</a> t
-  e ← (c <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">39</span>) <a href="builtins.html#-7c" class="c-symbol">∨</a> c <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">92</span>
-  k ← (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> e) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> c
-  m ← ((<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> e) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> e) <a href="builtins.html#-26" class="c-symbol">∧</a> k <a href="builtins.html#-21-3d" class="c-symbol">≠</a> <span class="c-number">0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> k
-  <span class="c-string">&quot;'&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#-5b-5dU_CHAR" class="c-builtin">⎕U̲CHAR</a> (<span class="c-number">92</span> <a href="builtins.html#-2a" class="c-symbol">×</a> m) <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">1</span> <a href="builtins.html#-2d" class="c-symbol">−</a> m) <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> e) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;'&quot;</span>
-}</pre>
-<div class="uses">Used in: <a href="extensions-blender-lib-Video.xtl.html#h.b_oxes"><span class="c-libfunc">ʰb̲oxes</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.l_ines"><span class="c-libfunc">ˡl̲ines</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.l_abels"><span class="c-libfunc">ˡl̲abels</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.c_aptions"><span class="c-libfunc">ˡc̲aptions</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.s_hown"><span class="c-libfunc">ˡs̲hown</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.m_oves"><span class="c-libfunc">ˡm̲oves</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.m_ovesEach"><span class="c-libfunc">ˡm̲ovesEach</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.t_ints"><span class="c-libfunc">ˡt̲ints</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.g_rid"><span class="c-libfunc">ˡg̲rid</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.s_tills"><span class="c-libfunc">ˡs̲tills</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.r_ender"><span class="c-libfunc">ˡr̲ender</span></a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L407">line 407</a></div>
+<pre class="code"><span class="c-libfunc">ʰq̲uote</span> ← { t → <span class="c-number">39</span> <a href="extensions-blender-lib-Video.xtl.html#h.q_uoteIn" class="c-libfunc">ʰq̲uoteIn</a> t }</pre>
+<div class="uses">Used in: <a href="extensions-blender-lib-Video.xtl.html#h.b_oxes"><span class="c-libfunc">ʰb̲oxes</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.l_ines"><span class="c-libfunc">ˡl̲ines</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.l_abels"><span class="c-libfunc">ˡl̲abels</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.c_aptions"><span class="c-libfunc">ˡc̲aptions</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.s_hown"><span class="c-libfunc">ˡs̲hown</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.m_oves"><span class="c-libfunc">ˡm̲oves</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.m_ovesEach"><span class="c-libfunc">ˡm̲ovesEach</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.t_ints"><span class="c-libfunc">ˡt̲ints</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.g_lows"><span class="c-libfunc">ˡg̲lows</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.c_ards"><span class="c-libfunc">ˡc̲ards</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.g_rid"><span class="c-libfunc">ˡg̲rid</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.s_tills"><span class="c-libfunc">ˡs̲tills</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.r_ender"><span class="c-libfunc">ˡr̲ender</span></a></div>
 </div>
 <div class="item" id="h.o_ne">
 <h3><a href="#h.o_ne"><span class="c-libfunc">ʰo̲ne</span></a> <span class="type">: Int -&gt; Float -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L350">line 350</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L410">line 410</a></div>
 <pre class="code"><span class="c-libfunc">ʰo̲ne</span> ← { d x →
   k ← <span class="c-number">10</span> <a href="builtins.html#-5e" class="c-symbol">^</a> d
   n ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> k) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> x
@@ -602,42 +692,42 @@ report. Fixed text: what a video shows is all in the numbers after it.</p>
 </div>
 <div class="item" id="h.j_oin">
 <h3><a href="#h.j_oin"><span class="c-libfunc">ʰj̲oin</span></a> <span class="type">: Box Char -&gt; Box Char -&gt; Box Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L358">line 358</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L418">line 418</a></div>
 <pre class="code"><span class="c-libfunc">ʰj̲oin</span> ← { a b → <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> a) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> b }</pre>
 <div class="uses">Used in: <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed"><span class="c-libfunc">ˡf̲ixed</span></a></div>
 </div>
 <div class="item" id="l.f_ixed">
 <h3><a href="#l.f_ixed"><span class="c-libfunc">ˡf̲ixed</span></a> <span class="type">: Int -&gt; Float -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L367">line 367</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L427">line 427</a></div>
 <div class="doc">
 <p>d vd:f_ixed values: the values as text, each with d digits after the
 point (none and no point for 0), rounded, separated by | -- the labels of vd:l_abels</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛᵈ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><span class="c-number">2</span> <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed" class="c-libfunc">ᵛᵈf̲ixed</a> <span class="c-number">0.75</span> <span class="c-number">-1.0</span> <span class="c-number">0.125</span> <span class="c-number">-0.004</span>
 0.75|-1.00|0.13|0.00</pre>
 <pre class="example"><span class="prompt">      </span><span class="c-number">0</span> <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed" class="c-libfunc">ᵛᵈf̲ixed</a> <span class="c-number">1.0</span> <span class="c-number">-1.0</span> <span class="c-number">44.0</span>
 1|-1|44</pre>
 </div>
 <pre class="code"><span class="c-libfunc">ˡf̲ixed</span> ← { d v → <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-libfunc">'</span><a href="extensions-blender-lib-Video.xtl.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ x → d <a href="extensions-blender-lib-Video.xtl.html#h.o_ne" class="c-libfunc">ʰo̲ne</a> x } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> v }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-Matmul.xtl.html#l.w_alls"><span class="c-libfunc">ˡw̲alls</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.i_tems"><span class="c-libfunc">ˡi̲tems</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.r_eluScript"><span class="c-libfunc">ˡr̲eluScript</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_oftmaxScript"><span class="c-libfunc">ˡs̲oftmaxScript</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.v_alues"><span class="c-libfunc">ʰv̲alues</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-lib-Video.xtl.html#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.w_alls"><span class="c-libfunc">ˡw̲alls</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.i_tems"><span class="c-libfunc">ˡi̲tems</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.r_eluScript"><span class="c-libfunc">ˡr̲eluScript</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_oftmaxScript"><span class="c-libfunc">ˡs̲oftmaxScript</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.v_alues"><span class="c-libfunc">ʰv̲alues</span></a></div>
 </div>
 <h2 class="section" id="section-3">Colors</h2>
 <div class="item" id="l.l_inear">
 <h3><a href="#l.l_inear"><span class="c-libfunc">ˡl̲inear</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L376">line 376</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L436">line 436</a></div>
 <div class="doc">
 <p>vd:l_inear rgb: colors written 0 to 255 (sRGB, a row of red green blue
 each, any number of rows) as Blender's linear 0 to 1</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛᵈ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="extensions-blender-lib-Video.xtl.html#l.l_inear" class="c-libfunc">ᵛᵈl̲inear</a> <span class="c-number">255</span> <span class="c-number">128</span> <span class="c-number">0</span>
 1.0 0.2195197180748679 0.0</pre>
 </div>
 <pre class="code"><span class="c-libfunc">ˡl̲inear</span> ← { c → ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> c) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">255.0</span>) <a href="builtins.html#-5e" class="c-symbol">^</a> <span class="c-number">2.2</span> }</pre>
-<div class="uses">Used in: <a href="extensions-blender-lib-Video.xtl.html#l.s_tage"><span class="c-libfunc">ˡs̲tage</span></a>, <a href="extensions-blender-lib-Video.xtl.html#h.p_aint"><span class="c-libfunc">ʰp̲aint</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.l_ines"><span class="c-libfunc">ˡl̲ines</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.l_abels"><span class="c-libfunc">ˡl̲abels</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.c_aptions"><span class="c-libfunc">ˡc̲aptions</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.t_ints"><span class="c-libfunc">ˡt̲ints</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-lib-Video.xtl.html#l.s_tage"><span class="c-libfunc">ˡs̲tage</span></a>, <a href="extensions-blender-lib-Video.xtl.html#h.p_aint"><span class="c-libfunc">ʰp̲aint</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.l_ines"><span class="c-libfunc">ˡl̲ines</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.l_abels"><span class="c-libfunc">ˡl̲abels</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.c_aptions"><span class="c-libfunc">ˡc̲aptions</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.t_ints"><span class="c-libfunc">ˡt̲ints</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.c_ards"><span class="c-libfunc">ˡc̲ards</span></a></div>
 </div>
 <div class="item" id="h.c_hannel">
 <h3><a href="#h.c_hannel"><span class="c-libfunc">ʰc̲hannel</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L379">line 379</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L439">line 439</a></div>
 <pre class="code"><span class="c-libfunc">ʰc̲hannel</span> ← { c →
   s ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> c) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">255.0</span>
   m ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> s <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> <span class="c-number">0.04045</span>
@@ -647,7 +737,7 @@ each, any number of rows) as Blender's linear 0 to 1</p>
 </div>
 <div class="item" id="l.l_uminance">
 <h3><a href="#l.l_uminance"><span class="c-libfunc">ˡl̲uminance</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L387">line 387</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L447">line 447</a></div>
 <div class="doc">
 <p>vd:l_uminance rgb: how bright a color (0 to 255, sRGB) is, 0 to 1
 (WCAG's relative luminance)</p>
@@ -657,11 +747,11 @@ each, any number of rows) as Blender's linear 0 to 1</p>
 </div>
 <div class="item" id="l.c_ontrast">
 <h3><a href="#l.c_ontrast"><span class="c-libfunc">ˡc̲ontrast</span></a> <span class="type">: (Num a, Num b) =&gt; a -&gt; b -&gt; Float</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L394">line 394</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L454">line 454</a></div>
 <div class="doc">
 <p>a vd:c_ontrast b: the contrast of two colors (0 to 255, sRGB), 1 to
 21 (WCAG): text should be 7 or more on its background</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛᵈ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span><a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span> <a href="extensions-blender-lib-Video.xtl.html#l.c_ontrast" class="c-libfunc">ᵛᵈc̲ontrast</a> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span>
 21</pre>
 </div>
@@ -673,7 +763,7 @@ each, any number of rows) as Blender's linear 0 to 1</p>
 </div>
 <div class="item" id="l.stops">
 <h3><a href="#l.stops">ˡstops</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L402">line 402</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L462">line 462</a></div>
 <div class="doc">
 <p>the stops of vd:t_one, low to high: deep blue, cyan, yellow, orange
 (0 to 255)</p>
@@ -683,13 +773,13 @@ each, any number of rows) as Blender's linear 0 to 1</p>
 </div>
 <div class="item" id="l.t_one">
 <h3><a href="#l.t_one"><span class="c-libfunc">ˡt̲one</span></a> <span class="type">: (Num a, Any b) =&gt; (a, Float, Float) -&gt; b -&gt; Float</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L413">line 413</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L473">line 473</a></div>
 <div class="doc">
 <p>(values, low, high) vd:t_one 0: a color for each value (n by 3, 0 to
 255): low is deep blue, high orange, through cyan and yellow, mixed
 between the stops; values outside are the ends' colors -- how big a
 number is, at a glance</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛᵈ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(<span class="c-number">0.0</span> <span class="c-number">0.5</span> <span class="c-number">1.0</span>, <span class="c-number">0.0</span>, <span class="c-number">1.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.t_one" class="c-libfunc">ᵛᵈt̲one</a> <span class="c-number">0</span>
  43.0  74.0 154.0
 151.0 199.5 145.5
@@ -704,12 +794,150 @@ number is, at a glance</p>
   b ← (i <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-lib-Video.xtl.html#l.stops">ˡstops</a>
   (a <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> u) <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> b <a href="builtins.html#-2a" class="c-symbol">×</a> u <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-MatmulFly.xtl.html#l.w_alls"><span class="c-libfunc">ˡw̲alls</span></a>, <a href="extensions-blender-demos-MatmulFly.xtl.html#l.w_ork"><span class="c-libfunc">ˡw̲ork</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.w_alls"><span class="c-libfunc">ˡw̲alls</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.i_tems"><span class="c-libfunc">ˡi̲tems</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-PcWalk.xtl.html#l.colors">ˡcolors</a>, <a href="extensions-blender-demos-MatmulFly.xtl.html#l.w_alls"><span class="c-libfunc">ˡw̲alls</span></a>, <a href="extensions-blender-demos-MatmulFly.xtl.html#l.w_ork"><span class="c-libfunc">ˡw̲ork</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.w_alls"><span class="c-libfunc">ˡw̲alls</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.i_tems"><span class="c-libfunc">ˡi̲tems</span></a></div>
 </div>
-<h2 class="section" id="section-4">The calls</h2>
+<h2 class="section" id="section-4">Pictures and time</h2>
+<div class="item" id="l.landscape">
+<h3><a href="#l.landscape">ˡlandscape</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L486">line 486</a></div>
+<div class="doc">
+<p>vd:landscape: a YouTube video's picture, 1920 by 1080 (width, height)</p>
+</div>
+<pre class="code">ˡlandscape ← <span class="c-number">1920</span> <span class="c-number">1080</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-hex-pc.xtl.html#n">n</a></div>
+</div>
+<div class="item" id="l.shorts">
+<h3><a href="#l.shorts">ˡshorts</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L489">line 489</a></div>
+<div class="doc">
+<p>vd:shorts: a YouTube Short's picture, 1080 by 1920, upright</p>
+</div>
+<pre class="code">ˡshorts ← <span class="c-number">1080</span> <span class="c-number">1920</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-hex-pc.xtl.html#n">n</a></div>
+</div>
+<div class="item" id="l.f_it">
+<h3><a href="#l.f_it"><span class="c-libfunc">ˡf̲it</span></a> <span class="type">: (Num a, Num b, Any c) =&gt; (a, a, b, Float, Float) -&gt; c -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L501">line 501</a></div>
+<div class="doc">
+<p>(width, height, lens, w, h) vd:f_it 0: how far from a region w by h
+(meters, facing it) a camera with that lens (mm) stands for the
+region to just fill a picture width by height (pixels): Blender fits
+its 36 mm sensor to the picture's longer side, so the same region
+needs the camera further back in a Short</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛᵈ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">1920</span>, <span class="c-number">1080</span>, <span class="c-number">36</span>, <span class="c-number">4.0</span>, <span class="c-number">1.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.f_it" class="c-libfunc">ᵛᵈf̲it</a> <span class="c-number">0</span>
+4.0</pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">1000</span>, <span class="c-number">2000</span>, <span class="c-number">36</span>, <span class="c-number">2.0</span>, <span class="c-number">2.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.f_it" class="c-libfunc">ᵛᵈf̲it</a> <span class="c-number">0</span>
+4.0</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡf̲it</span> ← { (pw, ph, lens, w, h) z →
+  t ← <span class="c-number">18.0</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> lens
+  tw ← t <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> pw) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> pw <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> ph
+  th ← t <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> ph) <a href="builtins.html#-2f" class="c-symbol">÷</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> pw <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> ph
+  ((<span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> w) <a href="builtins.html#-2f" class="c-symbol">÷</a> tw) <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> (<span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> h) <a href="builtins.html#-2f" class="c-symbol">÷</a> th
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-PcWalk.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.r_etime">
+<h3><a href="#l.r_etime"><span class="c-libfunc">ˡr̲etime</span></a> <span class="type">: (Num a, Num b, Any c) =&gt; (a, b) -&gt; c -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L519">line 519</a></div>
+<div class="doc">
+<p>(map, times) vd:r_etime 0: a scene's own seconds as the video's:
+map is k by 2 (k at least 2), a row a pair (scene second, video
+second), both increasing; a time between two rows falls between
+their video seconds in proportion, one before the first or after the
+last on the nearest pair's line. Where the video has more seconds
+than the scene it is slow motion, fewer a time-lapse: a scene is
+worked out in its own seconds and every time in it -- spans, keys,
+the camera, captions -- passed through the map. Times of any shape.</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛᵈ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-number">3</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <span class="c-number">0</span>  <span class="c-number">4</span> <span class="c-number">8</span>  <span class="c-number">8</span> <span class="c-number">9</span>, <span class="c-number">0.0</span> <span class="c-number">2.0</span> <span class="c-number">4.0</span> <span class="c-number">6.0</span> <span class="c-number">8.0</span> <span class="c-number">10.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.r_etime" class="c-libfunc">ᵛᵈr̲etime</a> <span class="c-number">0</span>
+0.0 4.0 8.0 8.5 9.0 9.5</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡr̲etime</span> ← { (m, t) z →
+  s ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> m
+  v ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> m
+  k ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> s
+  <span class="c-quote">'</span>{ x →
+    i ← <span class="c-number">1</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> (k <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> s <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> x
+    (i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> v) <a href="builtins.html#-2b" class="c-symbol">+</a> ((x <a href="builtins.html#-2d" class="c-symbol">−</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#-2a" class="c-symbol">×</a> ((i <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> v) <a href="builtins.html#-2d" class="c-symbol">−</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> v) <a href="builtins.html#-2f" class="c-symbol">÷</a> ((i <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#-2d" class="c-symbol">−</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s
+  } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> t
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-PcWalk.xtl.html#l.at">ˡat</a>, <a href="extensions-blender-demos-PcWalk.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<h2 class="section" id="section-5">Cues</h2>
+<div class="item" id="h.t_exts">
+<h3><a href="#h.t_exts"><span class="c-libfunc">ʰt̲exts</span></a> <span class="type">: Char -&gt; Box Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L532">line 532</a></div>
+<pre class="code"><span class="c-libfunc">ʰt̲exts</span> ← { t → (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> t <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-string">&quot;|&quot;</span>) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> t }</pre>
+<div class="uses">Used in: <a href="extensions-blender-lib-Video.xtl.html#l.s_rt"><span class="c-libfunc">ˡs̲rt</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a></div>
+</div>
+<div class="item" id="h.c_at">
+<h3><a href="#h.c_at"><span class="c-libfunc">ʰc̲at</span></a> <span class="type">: Box a -&gt; Box a -&gt; Box a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L535">line 535</a></div>
+<pre class="code"><span class="c-libfunc">ʰc̲at</span> ← { a b → <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> a) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> b }</pre>
+<div class="uses">Used in: <a href="extensions-blender-lib-Video.xtl.html#l.s_rt"><span class="c-libfunc">ˡs̲rt</span></a>, <a href="extensions-blender-lib-Video.xtl.html#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a></div>
+</div>
+<div class="item" id="h.s_rtTime">
+<h3><a href="#h.s_rtTime"><span class="c-libfunc">ʰs̲rtTime</span></a> <span class="type">: Float -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L538">line 538</a></div>
+<pre class="code"><span class="c-libfunc">ʰs̲rtTime</span> ← { x →
+  ms ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1000.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x
+  (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">100</span> <a href="builtins.html#-2b" class="c-symbol">+</a> ms <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">3600000</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;:&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">100</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (ms <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">60000</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">60</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;:&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">100</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (ms <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">1000</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">60</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;,&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">1000</span> <a href="builtins.html#-2b" class="c-symbol">+</a> ms <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">1000</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-lib-Video.xtl.html#l.s_rt"><span class="c-libfunc">ˡs̲rt</span></a></div>
+</div>
+<div class="item" id="l.s_rt">
+<h3><a href="#l.s_rt"><span class="c-libfunc">ˡs̲rt</span></a> <span class="type">: Any a =&gt; (Char, Float) -&gt; a -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L554">line 554</a></div>
+<div class="doc">
+<p>(texts, table) vd:s_rt 0: the captions as subtitles, an .srt file's
+text: one a row of the table, from and to (seconds; more columns, as
+vd:c_aptions's colors, are ignored), texts as vd:c_aptions's (none
+empty) -- what an editor or YouTube shows under the video, timed to
+the narration recorded against it</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛᵈ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-string">&quot;two&quot;</span>, <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">61.0</span> <span class="c-number">3725.5</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_rt" class="c-libfunc">ᵛᵈs̲rt</a> <span class="c-number">0</span>
+1
+00:01:01,000 --&gt; 01:02:05,500
+two</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲rt</span> ← { (texts, t) z →
+  b ← <a href="extensions-blender-lib-Video.xtl.html#h.t_exts" class="c-libfunc">ʰt̲exts</a> texts
+  a ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> t
+  e ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> t
+  <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-libfunc">'</span><a href="extensions-blender-lib-Video.xtl.html#h.c_at" class="c-libfunc">ʰc̲at</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ i → (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> i) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#h.s_rtTime" class="c-libfunc">ʰs̲rtTime</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> a) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; --&gt; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#h.s_rtTime" class="c-libfunc">ʰs̲rtTime</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> b) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n\n&quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-hex-pc.xtl.html#n">n</a></div>
+</div>
+<div class="item" id="l.c_ues">
+<h3><a href="#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a> <span class="type">: Any a =&gt; (Char, Float) -&gt; a -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L573">line 573</a></div>
+<div class="doc">
+<p>(texts, table) vd:c_ues 0: the cue sheet of the same captions, as
+TOML: a [[cue]] a row -- its number, start and end (seconds) and its
+caption -- the scenes to record narration against, read by a program
+(arguments as vd:s_rt's)</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛᵈ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span>(<span class="c-string">&quot;the \&quot;top\&quot;&quot;</span>, <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">3.5</span>) <a href="extensions-blender-lib-Video.xtl.html#l.c_ues" class="c-libfunc">ᵛᵈc̲ues</a> <span class="c-number">0</span>
+[[cue]]
+n = 1
+start = 0.000
+end = 3.500
+caption = &quot;the \&quot;top\&quot;&quot;</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡc̲ues</span> ← { (texts, t) z →
+  b ← <a href="extensions-blender-lib-Video.xtl.html#h.t_exts" class="c-libfunc">ʰt̲exts</a> texts
+  a ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> t
+  e ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> t
+  <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-libfunc">'</span><a href="extensions-blender-lib-Video.xtl.html#h.c_at" class="c-libfunc">ʰc̲at</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ i → <span class="c-string">&quot;[[cue]]\nn = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> i) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\nstart = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">3</span> <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed" class="c-libfunc">ˡf̲ixed</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> a) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\nend = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">3</span> <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed" class="c-libfunc">ˡf̲ixed</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> e) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\ncaption = &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">34</span> <a href="extensions-blender-lib-Video.xtl.html#h.q_uoteIn" class="c-libfunc">ʰq̲uoteIn</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> b) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\n\n&quot;</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> b
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-hex-pc.xtl.html#n">n</a></div>
+</div>
+<h2 class="section" id="section-6">The calls</h2>
 <div class="item" id="l.s_tage">
 <h3><a href="#l.s_tage"><span class="c-libfunc">ˡs̲tage</span></a> <span class="type">: (Num e, Any g) =&gt; (a, b, c, d, e, f) -&gt; g -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L430">line 430</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L587">line 587</a></div>
 <div class="doc">
 <p>(width, height, fps, seconds, sky, lens) vd:s_tage 0: Python setting
 the picture's size, the frame rate and the video's length, EEVEE and
@@ -720,11 +948,11 @@ vd:c_amera keys them. First, before any group.</p>
 <pre class="code"><span class="c-libfunc">ˡs̲tage</span> ← { (w, h, fps, secs, sky, lens) z →
   <span class="c-string">&quot;stage(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> h) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> fps) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> secs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="extensions-blender-lib-Video.xtl.html#l.l_inear" class="c-libfunc">ˡl̲inear</a> sky, <span class="c-number">3</span>) <a href="extensions-blender-lib-Video.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;[0], &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> lens) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-MatmulFly.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.s_teps"><span class="c-libfunc">ˡs̲teps</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-PcWalk.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-MatmulFly.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.s_teps"><span class="c-libfunc">ˡs̲teps</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
 </div>
 <div class="item" id="h.b_oxes">
 <h3><a href="#h.b_oxes"><span class="c-libfunc">ʰb̲oxes</span></a> <span class="type">: Num a =&gt; Char -&gt; (Char, a) -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L435">line 435</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L592">line 592</a></div>
 <pre class="code"><span class="c-libfunc">ʰb̲oxes</span> ← { style (name, t) →
   <span class="c-string">&quot;boxes(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (((<a href="extensions-blender-lib-Video.xtl.html#h.p_aint" class="c-libfunc">ʰp̲aint</a> t), <span class="c-number">10</span>) <a href="extensions-blender-lib-Video.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> style) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 }</pre>
@@ -732,7 +960,7 @@ vd:c_amera keys them. First, before any group.</p>
 </div>
 <div class="item" id="h.p_aint">
 <h3><a href="#h.p_aint"><span class="c-libfunc">ʰp̲aint</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L440">line 440</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L597">line 597</a></div>
 <pre class="code"><span class="c-libfunc">ʰp̲aint</span> ← { t →
   (<span class="c-number">6</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<a href="extensions-blender-lib-Video.xtl.html#l.l_inear" class="c-libfunc">ˡl̲inear</a> <span class="c-number">3</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <span class="c-number">6</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₂</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">10</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> t
 }</pre>
@@ -740,34 +968,34 @@ vd:c_amera keys them. First, before any group.</p>
 </div>
 <div class="item" id="l.b_oxes">
 <h3><a href="#l.b_oxes"><span class="c-libfunc">ˡb̲oxes</span></a> <span class="type">: (Num a, Any b) =&gt; (Char, a) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L452">line 452</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L609">line 609</a></div>
 <div class="doc">
 <p>(name, table) vd:b_oxes 0: Python making a group of solid boxes,
 objects NAME 1 to NAME n, one a row of the table: x y z (its middle),
 w d h (its size), r g b (0 to 255) and how strongly it glows (1 is
 its color as given). A bar of height h standing on the floor has its
 middle at h / 2; one hanging below it at -h / 2.</p>
-<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ᵛᵈ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></pre>
 <pre class="example"><span class="prompt">      </span>(<span class="c-string">&quot;bar&quot;</span>, <span class="c-number">1</span> <span class="c-number">10</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">1</span>) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
 boxes('bar', nums('0.0 0.0 1.0 1.0 1.0 2.0 1.0 1.0 1.0 1.0', 10), 'solid')</pre>
 </div>
 <pre class="code"><span class="c-libfunc">ˡb̲oxes</span> ← { (name, t) z → <span class="c-string">&quot;solid&quot;</span> <a href="extensions-blender-lib-Video.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> (name, t) }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-MatmulFly.xtl.html#l.w_ork"><span class="c-libfunc">ˡw̲ork</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#h.g_roup"><span class="c-libfunc">ʰg̲roup</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.i_tems"><span class="c-libfunc">ˡi̲tems</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.r_eluScript"><span class="c-libfunc">ˡr̲eluScript</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_oftmaxScript"><span class="c-libfunc">ˡs̲oftmaxScript</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-PcWalk.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-MatmulFly.xtl.html#l.w_ork"><span class="c-libfunc">ˡw̲ork</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#h.g_roup"><span class="c-libfunc">ʰg̲roup</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.i_tems"><span class="c-libfunc">ˡi̲tems</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.r_eluScript"><span class="c-libfunc">ˡr̲eluScript</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_oftmaxScript"><span class="c-libfunc">ˡs̲oftmaxScript</span></a></div>
 </div>
 <div class="item" id="l.o_utlines">
 <h3><a href="#l.o_utlines"><span class="c-libfunc">ˡo̲utlines</span></a> <span class="type">: (Num a, Any b) =&gt; (Char, a) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L457">line 457</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L614">line 614</a></div>
 <div class="doc">
 <p>(name, table) vd:o_utlines 0: Python making a group of boxes drawn as
 their edges only (a wireframe), rows as vd:b_oxes: what a value was
 before it went</p>
 </div>
 <pre class="code"><span class="c-libfunc">ˡo̲utlines</span> ← { (name, t) z → <span class="c-string">&quot;wire&quot;</span> <a href="extensions-blender-lib-Video.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> (name, t) }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-MatmulFly.xtl.html#l.w_alls"><span class="c-libfunc">ˡw̲alls</span></a>, <a href="extensions-blender-demos-MatmulFly.xtl.html#l.w_ork"><span class="c-libfunc">ˡw̲ork</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#h.o_utlined"><span class="c-libfunc">ʰo̲utlined</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.r_eluScript"><span class="c-libfunc">ˡr̲eluScript</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-PcWalk.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-MatmulFly.xtl.html#l.w_alls"><span class="c-libfunc">ˡw̲alls</span></a>, <a href="extensions-blender-demos-MatmulFly.xtl.html#l.w_ork"><span class="c-libfunc">ˡw̲ork</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#h.o_utlined"><span class="c-libfunc">ʰo̲utlined</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.r_eluScript"><span class="c-libfunc">ˡr̲eluScript</span></a></div>
 </div>
 <div class="item" id="l.g_lass">
 <h3><a href="#l.g_lass"><span class="c-libfunc">ˡg̲lass</span></a> <span class="type">: (Num a, Any b) =&gt; (Char, a) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L462">line 462</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L619">line 619</a></div>
 <div class="doc">
 <p>(name, table) vd:g_lass 0: Python making a group of see-through
 boxes, rows as vd:b_oxes: a floor at zero that bars stand on and
@@ -778,7 +1006,7 @@ hang below</p>
 </div>
 <div class="item" id="l.l_ines">
 <h3><a href="#l.l_ines"><span class="c-libfunc">ˡl̲ines</span></a> <span class="type">: (Num a, Any b) =&gt; (Char, a) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L467">line 467</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L624">line 624</a></div>
 <div class="doc">
 <p>(name, table) vd:l_ines 0: Python making a group of straight lines
 that glow, one a row of the table: from x y z, to x y z, r g b (0 to
@@ -788,11 +1016,11 @@ that glow, one a row of the table: from x y z, to x y z, r g b (0 to
   p ← (<span class="c-number">6</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<a href="extensions-blender-lib-Video.xtl.html#l.l_inear" class="c-libfunc">ˡl̲inear</a> <span class="c-number">3</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <span class="c-number">6</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₂</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">10</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> t
   <span class="c-string">&quot;lines(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((p, <span class="c-number">10</span>) <a href="extensions-blender-lib-Video.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-Matmul.xtl.html#l.i_tems"><span class="c-libfunc">ˡi̲tems</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-PcWalk.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.i_tems"><span class="c-libfunc">ˡi̲tems</span></a></div>
 </div>
 <div class="item" id="l.l_abels">
 <h3><a href="#l.l_abels"><span class="c-libfunc">ˡl̲abels</span></a> <span class="type">: (Num a, Any b) =&gt; (Char, Char, a) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L476">line 476</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L633">line 633</a></div>
 <div class="doc">
 <p>(name, texts, table) vd:l_abels 0: Python making a group of words,
 one a row of the table -- x y z (its middle), its height, r g b (0
@@ -807,32 +1035,34 @@ them (vd:f_ixed writes numbers so)</p>
 </div>
 <div class="item" id="l.c_aptions">
 <h3><a href="#l.c_aptions"><span class="c-libfunc">ˡc̲aptions</span></a> <span class="type">: (Num a, Any b) =&gt; (Char, a) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L484">line 484</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L643">line 643</a></div>
 <div class="doc">
 <p>(texts, table) vd:c_aptions 0: Python putting captions near the bottom
 of the picture, on a dark plate, one a row of the table: from and to
-(seconds), r g b (0 to 255); texts as vd:l_abels</p>
+(seconds), r g b (0 to 255); texts as vd:l_abels. Sized to the
+picture's shorter side and wrapped to its width, so the same captions
+read in a Short (vd:c_ues and vd:s_rt write them for narration)</p>
 </div>
 <pre class="code"><span class="c-libfunc">ˡc̲aptions</span> ← { (texts, t) z →
   p ← (<span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="extensions-blender-lib-Video.xtl.html#l.l_inear" class="c-libfunc">ˡl̲inear</a> <span class="c-number">2</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₂</a> t
   <span class="c-string">&quot;captions(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> texts) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((p, <span class="c-number">5</span>) <a href="extensions-blender-lib-Video.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-MatmulFly.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.s_teps"><span class="c-libfunc">ˡs̲teps</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-PcWalk.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-MatmulFly.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.s_teps"><span class="c-libfunc">ˡs̲teps</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
 </div>
 <div class="item" id="l.s_hown">
 <h3><a href="#l.s_hown"><span class="c-libfunc">ˡs̲hown</span></a> <span class="type">: (Num a, Any b) =&gt; (Char, a) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L492">line 492</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L651">line 651</a></div>
 <div class="doc">
 <p>(name, spans) vd:s_hown 0: Python showing each object of the group
 only from one second to another, a row of spans each (n by 2); a span
 from 0 shows it from the start</p>
 </div>
 <pre class="code"><span class="c-libfunc">ˡs̲hown</span> ← { (name, s) z → <span class="c-string">&quot;shown(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> s, <span class="c-number">2</span>) <a href="extensions-blender-lib-Video.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span> }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-MatmulFly.xtl.html#l.w_ork"><span class="c-libfunc">ˡw̲ork</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#h.s_pans"><span class="c-libfunc">ʰs̲pans</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.r_eluScript"><span class="c-libfunc">ˡr̲eluScript</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_oftmaxScript"><span class="c-libfunc">ˡs̲oftmaxScript</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.v_alues"><span class="c-libfunc">ʰv̲alues</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-PcWalk.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-MatmulFly.xtl.html#l.w_ork"><span class="c-libfunc">ˡw̲ork</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#h.s_pans"><span class="c-libfunc">ʰs̲pans</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.r_eluScript"><span class="c-libfunc">ˡr̲eluScript</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_oftmaxScript"><span class="c-libfunc">ˡs̲oftmaxScript</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#h.v_alues"><span class="c-libfunc">ʰv̲alues</span></a></div>
 </div>
 <div class="item" id="l.m_oves">
 <h3><a href="#l.m_oves"><span class="c-libfunc">ˡm̲oves</span></a> <span class="type">: (Num a, Num b, Any c) =&gt; (Char, a, b) -&gt; c -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L497">line 497</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L656">line 656</a></div>
 <div class="doc">
 <p>(name, times, places) vd:m_oves 0: Python keying each object of the
 group to its place and size at the times (k seconds): places is n by
@@ -842,11 +1072,11 @@ k by 6, x y z w d h; between keys they ease from one to the next</p>
   k ← <span class="c-number">6</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ts
   <span class="c-string">&quot;moves(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> ts, <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ts) <a href="extensions-blender-lib-Video.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;[0], &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> p, k) <a href="extensions-blender-lib-Video.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-MatmulFly.xtl.html#l.w_ork"><span class="c-libfunc">ˡw̲ork</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.r_eluScript"><span class="c-libfunc">ˡr̲eluScript</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_oftmaxScript"><span class="c-libfunc">ˡs̲oftmaxScript</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-PcWalk.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-MatmulFly.xtl.html#l.w_ork"><span class="c-libfunc">ˡw̲ork</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.r_eluScript"><span class="c-libfunc">ˡr̲eluScript</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_oftmaxScript"><span class="c-libfunc">ˡs̲oftmaxScript</span></a></div>
 </div>
 <div class="item" id="l.m_ovesEach">
 <h3><a href="#l.m_ovesEach"><span class="c-libfunc">ˡm̲ovesEach</span></a> <span class="type">: (Num a, Num b, Any c) =&gt; (Char, a, b) -&gt; c -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L505">line 505</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L664">line 664</a></div>
 <div class="doc">
 <p>(name, times, places) vd:m_ovesEach 0: as vd:m_oves, but each object
 keyed at times of its own: times is n by k, a row an object -- things
@@ -860,7 +1090,7 @@ that move one after another</p>
 </div>
 <div class="item" id="l.t_ints">
 <h3><a href="#l.t_ints"><span class="c-libfunc">ˡt̲ints</span></a> <span class="type">: (Num a, Num b, Any c) =&gt; (Char, a, b) -&gt; c -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L512">line 512</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L671">line 671</a></div>
 <div class="doc">
 <p>(name, times, colors) vd:t_ints 0: Python keying each object's color
 at the times (k seconds): colors is n by k by 3, 0 to 255</p>
@@ -871,9 +1101,42 @@ at the times (k seconds): colors is n by k by 3, 0 to 255</p>
 }</pre>
 <div class="uses">Used in: <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.r_eluScript"><span class="c-libfunc">ˡr̲eluScript</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_oftmaxScript"><span class="c-libfunc">ˡs̲oftmaxScript</span></a></div>
 </div>
+<div class="item" id="l.g_lows">
+<h3><a href="#l.g_lows"><span class="c-libfunc">ˡg̲lows</span></a> <span class="type">: (Num a, Num b, Any c) =&gt; (Char, a, b) -&gt; c -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L681">line 681</a></div>
+<div class="doc">
+<p>(name, times, strengths) vd:g_lows 0: Python keying how strongly
+each object of the group glows (1 is its color as given, 0 dark), at
+times of its own: times and strengths are n by k, a row an object --
+a value's size or a part's activity as light (a flash when a register
+is written, a cell lit as it is reached)</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡg̲lows</span> ← { (name, ts, g) z →
+  k ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> ts
+  <span class="c-string">&quot;glows(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> ts, k) <a href="extensions-blender-lib-Video.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> g, k) <a href="extensions-blender-lib-Video.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-PcWalk.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.c_ards">
+<h3><a href="#l.c_ards"><span class="c-libfunc">ˡc̲ards</span></a> <span class="type">: (Num a, Any b) =&gt; (Char, Char, a) -&gt; b -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L692">line 692</a></div>
+<div class="doc">
+<p>(titles, subtitles, table) vd:c_ards 0: Python putting title cards in
+front of the camera, each filling the picture, one a row of the
+table: from and to (seconds), r g b of the words, r g b of the card
+(0 to 255); a title big in the middle, its subtitle smaller below,
+each wrapped to the picture's width; | between the cards' texts (an
+empty subtitle: none)</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡc̲ards</span> ← { (titles, subs, t) z →
+  p ← (<span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<a href="extensions-blender-lib-Video.xtl.html#l.l_inear" class="c-libfunc">ˡl̲inear</a> <span class="c-number">3</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <span class="c-number">2</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₂</a> t) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <a href="extensions-blender-lib-Video.xtl.html#l.l_inear" class="c-libfunc">ˡl̲inear</a> <span class="c-number">3</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <span class="c-number">5</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₂</a> t
+  <span class="c-string">&quot;cards(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> titles) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> subs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((p, <span class="c-number">8</span>) <a href="extensions-blender-lib-Video.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-PcWalk.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
 <div class="item" id="l.c_amera">
 <h3><a href="#l.c_amera"><span class="c-libfunc">ˡc̲amera</span></a> <span class="type">: (Num a, Num b, Num c, Any d) =&gt; (a, b, c) -&gt; d -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L519">line 519</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L699">line 699</a></div>
 <div class="doc">
 <p>(times, eyes, aims) vd:c_amera 0: Python keying the camera: at each
 time (k seconds) it is at an eye (k by 3) looking at an aim (k by 3)</p>
@@ -881,11 +1144,11 @@ time (k seconds) it is at an eye (k by 3) looking at an aim (k by 3)</p>
 <pre class="code"><span class="c-libfunc">ˡc̲amera</span> ← { (ts, e, a) z →
   <span class="c-string">&quot;camera(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> ts, <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ts) <a href="extensions-blender-lib-Video.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;[0], &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> e, <span class="c-number">3</span>) <a href="extensions-blender-lib-Video.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a, <span class="c-number">3</span>) <a href="extensions-blender-lib-Video.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-MatmulFly.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.s_teps"><span class="c-libfunc">ˡs̲teps</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-PcWalk.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-MatmulFly.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-Matmul.xtl.html#l.s_teps"><span class="c-libfunc">ˡs̲teps</span></a>, <a href="extensions-blender-demos-ReluSoftmax.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
 </div>
 <div class="item" id="l.g_rid">
 <h3><a href="#l.g_rid"><span class="c-libfunc">ˡg̲rid</span></a> <span class="type">: (Num a, Num b, Num c, Num d, Num e, Any g) =&gt; (Char, a, b, c, d, e, f) -&gt; g -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L532">line 532</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L712">line 712</a></div>
 <div class="doc">
 <p>(name, origin, u, v, colors, order, gap) vd:g_rid 0: Python making a
 grid of n by m flat cells as one mesh: cell (i, j) spans origin +
@@ -907,7 +1170,7 @@ milliseconds.</p>
 </div>
 <div class="item" id="l.s_tills">
 <h3><a href="#l.s_tills"><span class="c-libfunc">ˡs̲tills</span></a> <span class="type">: (Num a, Any b) =&gt; (a, Char) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L541">line 541</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L721">line 721</a></div>
 <div class="doc">
 <p>(times, name) vd:s_tills 0: Python rendering the frames at the times
 (seconds) as out/NAME-1.png, NAME-2.png, ...</p>
@@ -917,23 +1180,24 @@ milliseconds.</p>
 </div>
 <div class="item" id="l.r_ender">
 <h3><a href="#l.r_ender"><span class="c-libfunc">ˡr̲ender</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L545">line 545</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L725">line 725</a></div>
 <div class="doc">
 <p>vd:r_ender file: Python rendering every frame to out/FILE, an MP4
 (H.264)</p>
 </div>
 <pre class="code"><span class="c-libfunc">ˡr̲ender</span> ← { file → <span class="c-string">&quot;video(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> file) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span> }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-matmul-fly.xtl.html#script">script</a>, <a href="extensions-blender-demos-matmul-steps.xtl.html#script">script</a>, <a href="extensions-blender-demos-relu-softmax.xtl.html#script">script</a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-hex-pc.xtl.html#n">n</a>, <a href="extensions-blender-demos-matmul-fly.xtl.html#script">script</a>, <a href="extensions-blender-demos-matmul-steps.xtl.html#script">script</a>, <a href="extensions-blender-demos-relu-softmax.xtl.html#script">script</a></div>
 </div>
 <div class="item" id="l.report">
 <h3><a href="#l.report">ˡreport</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L549">line 549</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-lib-Video.xtl.src.html#L730">line 730</a></div>
 <div class="doc">
 <p>vd:report: Python writing out/report.txt: the frames, and each group,
-how many objects and how many of them keyed -- what a test checks</p>
+how many objects and how many of them keyed (the object or its
+material: a tint or a glow) -- what a test checks</p>
 </div>
 <pre class="code">ˡreport ← <span class="c-string">&quot;report()\n&quot;</span></pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-matmul-fly.xtl.html#script">script</a>, <a href="extensions-blender-demos-matmul-steps.xtl.html#script">script</a>, <a href="extensions-blender-demos-relu-softmax.xtl.html#script">script</a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-hex-pc.xtl.html#n">n</a>, <a href="extensions-blender-demos-matmul-fly.xtl.html#script">script</a>, <a href="extensions-blender-demos-matmul-steps.xtl.html#script">script</a>, <a href="extensions-blender-demos-relu-softmax.xtl.html#script">script</a></div>
 </div>
 </main>
 </body>
