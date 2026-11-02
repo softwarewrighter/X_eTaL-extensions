@@ -1,6 +1,6 @@
 number = 16
 slug = "hex1000-build"
-status = "pending"
+status = "in-progress"
 description = "Saga 15 step 14: the HEX1000 process video: Hex1000.xtl, emitted hex1000.v, t..."
 role = "production"
 context_files = []
