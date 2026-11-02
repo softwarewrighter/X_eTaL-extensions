@@ -380,12 +380,71 @@ h:playOutput := ("def stills(times, prefix):\n" c_at
   "            f.write('%s: %d objects, %d keyed\\n' % (name, len(os_), keyed))\n" c_at
   "\n")
 
+# the player, continued: steps, readouts, pictures
+h:playSteps := ("def steps(name, path, rows):\n" c_at
+  "    made = groups[name]\n" c_at
+  "    last = {}\n" c_at
+  "    for r in rows:\n" c_at
+  "        i = int(r[0]) - 1\n" c_at
+  "        o = made[i]\n" c_at
+  "        f = frame(r[1])\n" c_at
+  "        v = r[2] if path == 'glow' else r[2:5]\n" c_at
+  "        if path == 'glow':\n" c_at
+  "            o, attr = o.data.materials[0].node_tree.nodes['glow'].inputs['Strength'], 'default_value'\n" c_at
+  "        else:\n" c_at
+  "            attr = path\n" c_at
+  "        if i in last and last[i][0] < f - 1:\n" c_at
+  "            setattr(o, attr, last[i][1])\n" c_at
+  "            o.keyframe_insert(attr, frame=f - 1)\n" c_at
+  "        setattr(o, attr, v)\n" c_at
+  "        o.keyframe_insert(attr, frame=f)\n" c_at
+  "        last[i] = (f, v)\n" c_at
+  "\n" c_at
+  "def readout(name, row, bodies, times):\n" c_at
+  "    d = 0.05\n" c_at
+  "    hw, hh = view(d)\n" c_at
+  "    o = text(name, '', row[2] * min(hw, hh), row[3:6])\n" c_at
+  "    o.parent = rig['camera']\n" c_at
+  "    o.location = (row[0] * hw, row[1] * hh, -d)\n" c_at
+  "    fs = [frame(t) for t in times]\n" c_at
+  "    bodies = bodies.split('|')\n" c_at
+  "    def show(sc, *rest):\n" c_at
+  "        body = ''\n" c_at
+  "        for f, b in zip(fs, bodies):\n" c_at
+  "            if f > sc.frame_current:\n" c_at
+  "                break\n" c_at
+  "            body = b\n" c_at
+  "        if o.data.body != body:\n" c_at
+  "            o.data.body = body\n" c_at
+  "    bpy.app.handlers.frame_change_pre.append(show)\n" c_at
+  "    groups[name] = [o]\n" c_at
+  "\n" c_at
+  "def picture(name, path, row):\n" c_at
+  "    img = bpy.data.images.load(os.path.abspath(path))\n" c_at
+  "    w = row[3]\n" c_at
+  "    h = w * img.size[1] / img.size[0]\n" c_at
+  "    me = bpy.data.meshes.new(name)\n" c_at
+  "    me.from_pydata([(-w / 2, 0, -h / 2), (w / 2, 0, -h / 2), (w / 2, 0, h / 2), (-w / 2, 0, h / 2)], [], [(0, 1, 2, 3)])\n" c_at
+  "    uv = me.uv_layers.new()\n" c_at
+  "    for i, c in enumerate(((0, 0), (1, 0), (1, 1), (0, 1))):\n" c_at
+  "        uv.data[i].uv = c\n" c_at
+  "    o = bpy.data.objects.new(name, me)\n" c_at
+  "    scene.collection.objects.link(o)\n" c_at
+  "    o.location = row[0:3]\n" c_at
+  "    m = glow(name, (1.0, 1.0, 1.0))\n" c_at
+  "    t = m.node_tree.nodes.new('ShaderNodeTexImage')\n" c_at
+  "    t.image = img\n" c_at
+  "    m.node_tree.links.new(t.outputs['Color'], m.node_tree.nodes['glow'].inputs['Color'])\n" c_at
+  "    me.materials.append(m)\n" c_at
+  "    groups[name] = [o]\n" c_at
+  "\n")
+
 ## vd:head: the inner script's start, the player: an empty scene, the
 ## output directory (the first argument after "--"), keys eased in and
 ## out (Bezier), and the functions the calls below use -- stage, boxes,
 ## lines, labels, captions, cards, shown, moves, tints, glows, camera,
-## grid, stills, video, report. Fixed text: what a video shows is all in the numbers after it.
-l:head := h:playBase c_at h:playStage c_at h:playLines c_at h:playText c_at h:playKeys c_at h:playGrid c_at h:playOutput
+## grid, steps, readout, picture, stills, video, report. Fixed text: what a video shows is all in the numbers after it.
+l:head := h:playBase c_at h:playStage c_at h:playLines c_at h:playText c_at h:playKeys c_at h:playGrid c_at h:playSteps c_at h:playOutput
 
 ### Numbers and text into Python
 
@@ -396,6 +455,7 @@ h:n_ums := { (v, k) z -> "nums('" c_at (f_ormat r_avel v) c_at "', " c_at (f_orm
 # such quote and backslash in it written with a backslash before it
 # (ASCII text): a Python or TOML string
 h:q_uoteIn := { q t ->
+  0 = t_ally t ? []U_CHAR q c_at q
   c := []U_CS t
   e := (c = q) | c = 92
   k := (1 + e) r_eplicate r_ange t_ally c
@@ -698,6 +758,44 @@ l:c_ards := { (titles, subs, t) z ->
 ## time (k seconds) it is at an eye (k by 3) looking at an aim (k by 3)
 l:c_amera := { (ts, e, a) z ->
   "camera(" c_at ((f_loat ts, t_ally ts) h:n_ums 0) c_at "[0], " c_at ((f_loat e, 3) h:n_ums 0) c_at ", " c_at ((f_loat a, 3) h:n_ums 0) c_at ")\n"
+}
+
+## (name, what, rows) vd:s_teps 0: Python keying the group's objects in
+## steps -- each value holds until the next (keyed again the frame
+## before it), the change within one frame: a lamp on or off,
+## a marker jumping from place to place, a bar's new length. A row a
+## key: the object (from 1), the second, then its value -- what "glow"
+## (how strongly it glows), "location" (x y z) or "scale" (w d h).
+## Rows for one object in time order; data sampled once a frame keys
+## only where it changed
+## >> "vd:" u_se< "Video"
+## >> ("lamp", "glow", 2 3 r_eshape 1 0.0 0.0  1 2.5 1.0) vd:s_teps 0
+## steps('lamp', 'glow', nums('1.0 0.0 0.0 1.0 2.5 1.0', 3))
+l:s_teps := { (name, what, rows) z ->
+  k := 2 s_elect s_hape rows
+  "steps(" c_at (h:q_uote name) c_at ", " c_at (h:q_uote what) c_at ", " c_at ((f_loat rows, k) h:n_ums 0) c_at ")\n"
+}
+
+## (name, place, texts, times) vd:r_eadout 0: Python putting a readout
+## in front of the camera -- a counter, a register's name -- that shows
+## each text from its time (seconds, increasing) until the next, nothing
+## before the first: texts | between them, as vd:l_abels. place: x and y
+## as fractions of the picture's half width and half height from its
+## middle, the text's height as a fraction of its shorter half, r g b
+## (0 to 255). The text changes as the video plays (a frame handler),
+## so the numbers are the data's own, not keys
+l:r_eadout := { (name, p, texts, ts) z ->
+  q := (3 t_ake f_loat p) c_at l:l_inear 3 d_rop p
+  "readout(" c_at (h:q_uote name) c_at ", " c_at ((q, t_ally q) h:n_ums 0) c_at "[0]" c_at ", " c_at (h:q_uote texts) c_at ", " c_at ((f_loat ts, t_ally ts) h:n_ums 0) c_at "[0])\n"
+}
+
+## (name, path, place) vd:p_icture 0: Python putting a picture (a PNG,
+## path from the working directory) in the scene, upright and facing -y,
+## glowing as its own colors: place is x y z (its middle) and its width
+## (meters); its height keeps the picture's shape -- a screenshot beside
+## the model of what it shows
+l:p_icture := { (name, path, p) z ->
+  "picture(" c_at (h:q_uote name) c_at ", " c_at (h:q_uote path) c_at ", " c_at ((f_loat p, 4) h:n_ums 0) c_at "[0]" c_at ")\n"
 }
 
 ## (name, origin, u, v, colors, order, gap) vd:g_rid 0: Python making a

@@ -59,6 +59,9 @@
 <li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
 <li><a href="extensions-blender-demos-hex-pc.xtl.html">hex-pc.xtl</a></li>
 <li><a href="extensions-blender-demos-PcWalk.xtl.html">PcWalk.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-run.xtl.html">hex-run.xtl</a></li>
+<li><a href="extensions-blender-demos-Vcd.xtl.html">Vcd.xtl</a></li>
+<li><a href="extensions-blender-demos-HexRun.xtl.html">HexRun.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-fly.xtl.html">matmul-fly.xtl</a></li>
 <li><a href="extensions-blender-demos-MatmulFly.xtl.html">MatmulFly.xtl</a></li>
 <li><a href="extensions-blender-demos-matmul-steps.xtl.html">matmul-steps.xtl</a></li>
@@ -291,7 +294,7 @@ YNEC, ACC, BR and CALL, which take an operand.</p>
 40</pre>
 </div>
 <pre class="code">ˡNames ← <a href="work-libraries-libs-Strings-src-Strings.xtl.html#l.w_ords" class="c-libfunc">ˢw̲ords</a> <span class="c-string">&quot;NOP TAY TYA CLA TAM TMA TMY TAMIY TAMZA XMA AMAAC SAMAN IMAC DMAN IA IYC DYN CPAIZ ALEM MNEZ YNEA KNEZ TKA SETR RSTR TDO CLO COMX RETN SBIT RBIT TBIT LDX LDP TCY TCMIY YNEC ACC BR CALL&quot;</span></pre>
-<div class="uses">Used in: <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.d_isasm"><span class="c-libfunc">ˡd̲isasm</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#h.p_lace"><span class="c-libfunc">ʰp̲lace</span></a></div>
+<div class="uses">Used in: <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.d_isasm"><span class="c-libfunc">ˡd̲isasm</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#h.p_lace"><span class="c-libfunc">ʰp̲lace</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
 </div>
 <div class="item" id="Base">
 <h3><a href="#Base">Base</a> <span class="type">: Int</span></h3>
@@ -329,7 +332,7 @@ plus its operand.</p>
   jump ← (op <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">128</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">38</span> <a href="builtins.html#-2b" class="c-symbol">+</a> op <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">192</span>
   fixed <a href="builtins.html#-2b" class="c-symbol">+</a> bits <a href="builtins.html#-2b" class="c-symbol">+</a> imm <a href="builtins.html#-2b" class="c-symbol">+</a> jump
 }</pre>
-<div class="uses">Used in: <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.d_isasm"><span class="c-libfunc">ˡd̲isasm</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.s_tep"><span class="c-libfunc">ˡs̲tep</span></a></div>
+<div class="uses">Used in: <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.d_isasm"><span class="c-libfunc">ˡd̲isasm</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.s_tep"><span class="c-libfunc">ˡs̲tep</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
 </div>
 <div class="item" id="l.d_isasm">
 <h3><a href="#l.d_isasm"><span class="c-libfunc">ˡd̲isasm</span></a> <span class="type">: Int -&gt; Char</span></h3>
@@ -361,7 +364,7 @@ CL, O, R, RAM): everything 0 but S, which is 1.</p>
 0 0 0 1 0 0 0 0 0 0</pre>
 </div>
 <pre class="code">ˡReset ← (<span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">1</span>, <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>, <span class="c-number">64</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>)</pre>
-<div class="uses">Used in: <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.c_alc"><span class="c-libfunc">ˡc̲alc</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.c_ost"><span class="c-libfunc">ˡc̲ost</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.s_erial"><span class="c-libfunc">ˡs̲erial</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.w_ires"><span class="c-libfunc">ˡw̲ires</span></a></div>
+<div class="uses">Used in: <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.c_alc"><span class="c-libfunc">ˡc̲alc</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.c_ost"><span class="c-libfunc">ˡc̲ost</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.s_erial"><span class="c-libfunc">ˡs̲erial</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.w_ires"><span class="c-libfunc">ˡw̲ires</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.c_heck"><span class="c-libfunc">ˡc̲heck</span></a></div>
 </div>
 <div class="item" id="l.r_egs">
 <h3><a href="#l.r_egs"><span class="c-libfunc">ˡr̲egs</span></a> <span class="type">: (Any b, Any c) =&gt; (a, a, a, a, a, a, a, a, a, a, b, c) -&gt; a</span></h3>
@@ -376,7 +379,7 @@ view a trace shows).</p>
 <pre class="code"><span class="c-libfunc">ˡr̲egs</span> ← { (a, y, x, s, pc, pa, pb, sr, cl, o, r, ram) →
   a <a href="builtins.html#c_at" class="c-builtin">c̲at</a> y <a href="builtins.html#c_at" class="c-builtin">c̲at</a> x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> s <a href="builtins.html#c_at" class="c-builtin">c̲at</a> pc <a href="builtins.html#c_at" class="c-builtin">c̲at</a> pa <a href="builtins.html#c_at" class="c-builtin">c̲at</a> pb <a href="builtins.html#c_at" class="c-builtin">c̲at</a> sr <a href="builtins.html#c_at" class="c-builtin">c̲at</a> cl <a href="builtins.html#c_at" class="c-builtin">c̲at</a> o
 }</pre>
-<div class="uses">Used in: <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.t_race"><span class="c-libfunc">ˡt̲race</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#h.n_ext"><span class="c-libfunc">ʰn̲ext</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#h.r_ec"><span class="c-libfunc">ʰr̲ec</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#h.t_ick"><span class="c-libfunc">ʰt̲ick</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.b_oard"><span class="c-libfunc">ˡb̲oard</span></a></div>
+<div class="uses">Used in: <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.t_race"><span class="c-libfunc">ˡt̲race</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#h.n_ext"><span class="c-libfunc">ʰn̲ext</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#h.r_ec"><span class="c-libfunc">ʰr̲ec</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#h.t_ick"><span class="c-libfunc">ʰt̲ick</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.b_oard"><span class="c-libfunc">ˡb̲oard</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.c_heck"><span class="c-libfunc">ˡc̲heck</span></a></div>
 </div>
 <div class="item" id="l.r_am">
 <h3><a href="#l.r_am"><span class="c-libfunc">ˡr̲am</span></a> <span class="type">: (Any a, Any b, Any c, Any d, Any e, Any f, Any g, Any h, Any i, Any j, Any k) =&gt; (a, b, c, d, e, f, g, h, i, j, k, l) -&gt; l</span></h3>
@@ -471,7 +474,7 @@ once: u:s_tep := rom hx:s_tep, then st u:s_tep k.</p>
   (i <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">39</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> s <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span> ? (a, y, x, <span class="c-number">1</span>, go, pa, pb, sr, cl, o, r, ram)               <span class="c-comment">⍝</span><span class="c-comment"> CALL in a subroutine: a branch in the page</span>
   (a, y, x, <span class="c-number">1</span>, p1, pa, pb, sr, cl, o, r, ram)                                  <span class="c-comment">⍝</span><span class="c-comment"> NOP, and BR or CALL with S 0</span>
 }</pre>
-<div class="uses">Used in: <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.r_un"><span class="c-libfunc">ˡr̲un</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#h.n_ext"><span class="c-libfunc">ʰn̲ext</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#h.t_ick"><span class="c-libfunc">ʰt̲ick</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.b_oard"><span class="c-libfunc">ˡb̲oard</span></a></div>
+<div class="uses">Used in: <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.r_un"><span class="c-libfunc">ˡr̲un</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#h.n_ext"><span class="c-libfunc">ʰn̲ext</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#h.t_ick"><span class="c-libfunc">ʰt̲ick</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.b_oard"><span class="c-libfunc">ˡb̲oard</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.c_heck"><span class="c-libfunc">ˡc̲heck</span></a></div>
 </div>
 <h2 class="section" id="section-5">Running a program</h2>
 <div class="item" id="l.r_un">
@@ -781,7 +784,7 @@ eight-digit hexadecimal calculator, Radix's behavior key for key.</p>
 CALL 0</pre>
 </div>
 <pre class="code">ˡCalcRom ← <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.a_ssemble" class="c-libfunc">ˡa̲ssemble</a> <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.Calc">ˡCalc</a></pre>
-<div class="uses">Used in: <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.c_alc"><span class="c-libfunc">ˡc̲alc</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.c_ost"><span class="c-libfunc">ˡc̲ost</span></a></div>
+<div class="uses">Used in: <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.c_alc"><span class="c-libfunc">ˡc̲alc</span></a>, <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.c_ost"><span class="c-libfunc">ˡc̲ost</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.c_heck"><span class="c-libfunc">ˡc̲heck</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
 </div>
 <div class="item" id="l.m_atrix">
 <h3><a href="#l.m_atrix"><span class="c-libfunc">ˡm̲atrix</span></a> <span class="type">: (Int, Int) -&gt; Int</span></h3>
@@ -928,6 +931,7 @@ of a text, from reset until it is ready after the last key (at
   <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> done ? <a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> <span class="c-string">&quot;hx:c_alc: the program did not finish &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> text <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; in &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> n
   <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.s_creen" class="c-libfunc">ˡs̲creen</a> <a href="builtins.html#r_ev" class="c-builtin">r̲ev</a> digits
 }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.c_heck"><span class="c-libfunc">ˡc̲heck</span></a></div>
 </div>
 <div class="item" id="l.c_ost">
 <h3><a href="#l.c_ost"><span class="c-libfunc">ˡc̲ost</span></a> <span class="type">: Num a =&gt; Char -&gt; a</span></h3>

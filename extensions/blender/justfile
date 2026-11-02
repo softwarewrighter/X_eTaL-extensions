@@ -40,6 +40,12 @@ list: build
 demo name: build
     XETAL_PATH="$({{root}}/scripts/libraries.sh)" {{root}}/target/debug/xetal-x --ext {{root}}/extensions run --draw work/draw "demos/$1.xtl"
 
+# The HEX1000 video: the board simulated (iverilog), the browser calculator typed at (headless Chrome), then demos/hex-run.xtl renders (about 25 minutes)
+hex-run: build
+    {{root}}/scripts/hex1000-sim.sh "C0DE+BEEF=" work/hexrun
+    {{root}}/.venv/bin/python3 {{root}}/scripts/hex1000-browser.py "C0DE+BEEF=" work/hexrun
+    XETAL_PATH="$({{root}}/scripts/libraries.sh)" {{root}}/target/debug/xetal-x --ext {{root}}/extensions run --draw work/draw demos/hex-run.xtl
+
 # Publish the tower defense pieces demos/game-assets.xtl made on the site (pages/blender/td)
 publish-td:
     {{root}}/scripts/publish-td.sh

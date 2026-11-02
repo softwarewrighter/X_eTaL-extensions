@@ -1,0 +1,88 @@
+## Vcd.xtl -- a simulation's waveform (a VCD file, as iverilog writes
+## it) read into arrays: every change of every signal as a row of
+## numbers, and any signal's value at any times. Values wider than 62
+## bits do not fit an Int (split them into narrower signals); x and z
+## read as 0. Used by the hex-run video (HexRun.xtl).
+## Import: "vc:" u_se< "Vcd"
+
+### Reading
+
+# a line's words
+h:w_ords := { t -> (n_ot t = f_irst " ") p_artition t }
+
+# a value change's value: b and its bits, or one bit
+h:v_alue := { l ->
+  f_irst l = f_irst "b" ? 2 d_ecode (1 d_rop ((f_irst l i_ndexOf " ") - 1) t_ake l) = f_irst "1"
+  (f_irst l = f_irst "1") * 1
+}
+
+# a value change's signal: after the space, or after the bit
+h:i_d := { l ->
+  f_irst l = f_irst "b" ? d_isclose f_irst r_ev h:w_ords l
+  1 d_rop l
+}
+
+## vc:r_ead path: the VCD file at path as (names, changes): the
+## signals' names in the order they are declared, and a row per change
+## -- the time (in the file's units), the signal (its place in names,
+## from 1), the value -- in the order of the file
+## >> "vc:" u_se< "Vcd"
+## >> n := "$var wire 1 ! go $end\n$var wire 4 \" n [3:0] $end\n$enddefinitions $end\n#0\n0!\nb0 \"\n#5\n1!\nb1010 \"\n" []N_PUT "work/t.vcd"
+## >> (names, changes) := vc:r_ead "work/t.vcd"
+## >> changes
+## 0 1  0
+## 0 2  0
+## 5 1  1
+## 5 2 10
+l:r_ead := { path ->
+  t := []N_GET path
+  lines := (n_ot t = f_irst "\n") p_artition t
+  decls := ('{ "$var " m_atch 5 t_ake d_isclose _r } e_ach lines) r_eplicate lines
+  ids := '{ d_isclose 4 s_elect h:w_ords d_isclose _r } m_ap decls
+  names := '{ d_isclose 5 s_elect h:w_ords d_isclose _r } m_ap decls
+  k := '{ f_irst d_isclose _r } e_ach lines
+  keep := k m_ember? "#b01xz"
+  body := keep r_eplicate lines
+  isT := (keep r_eplicate k) = f_irst "#"
+  times := '{ f_irst n_umbers 1 d_rop d_isclose _r } e_ach isT r_eplicate body
+  at := (n_ot isT) r_eplicate ('+ s_\ isT) s_elect times
+  ch := (n_ot isT) r_eplicate body
+  sig := ids i_ndexOf '{ h:i_d d_isclose _r } m_ap ch
+  v := '{ h:v_alue d_isclose _r } e_ach ch
+  (names, 2 1 t_ranspose (3 c_at t_ally v) r_eshape (f_loor at) c_at sig c_at v)
+}
+
+### Values
+
+## (vcd, name) vc:c_hanges 0: a signal's changes as rows of time and
+## value
+## >> "vc:" u_se< "Vcd"
+## >> n := "$var wire 1 ! go $end\n$enddefinitions $end\n#0\n0!\n#5\n1!\n#9\n0!\n" []N_PUT "work/t.vcd"
+## >> (vc:r_ead "work/t.vcd", "go") vc:c_hanges 0
+## 0 0
+## 5 1
+## 9 0
+l:c_hanges := { ((names, changes), name) z ->
+  i := f_irst names i_ndexOf e_nclose name
+  i > t_ally names ? []P_ANIC "vcd: no signal " c_at name
+  rows := (i = 2 s_elect_2 changes) r_eplicate changes
+  2 1 t_ranspose (2 c_at t_ally rows) r_eshape (1 s_elect_2 rows) c_at 3 s_elect_2 rows
+}
+
+## (vcd, name, ts) vc:a_t 0: a signal's value at each time of ts (in
+## order or not): its last change at or before it (0 before the first)
+## >> "vc:" u_se< "Vcd"
+## >> n := "$var wire 1 ! go $end\n$enddefinitions $end\n#0\n0!\n#5\n1!\n#9\n0!\n" []N_PUT "work/t.vcd"
+## >> (vc:r_ead "work/t.vcd", "go", 0 4 5 8 9 20) vc:a_t 0
+## 0 0 1 1 0 0
+l:a_t := { ((names, changes), name, ts) z ->
+  c := ((names, changes), name) l:c_hanges 0
+  ct := 1 s_elect_2 c
+  n := t_ally ct
+  # the changes and the times sorted together, a change before a time
+  # it equals: how many changes come before a time is its last change
+  order := g_rade (2 * ct) c_at 1 + 2 * ts
+  seen := '+ s_\ order <= n
+  k := (n d_rop g_rade order) s_elect seen
+  (1 + k) s_elect 0 c_at 2 s_elect_2 c
+}

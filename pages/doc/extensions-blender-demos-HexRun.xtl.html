@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/blender/demos/HexRun.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>lib/</h3>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+</ul>
+<h3>extensions/audio/lib/</h3>
+<ul>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+</ul>
+<h3>extensions/audio/demos/</h3>
+<ul>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+</ul>
+<h3>extensions/canvas/lib/</h3>
+<ul>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+</ul>
+<h3>extensions/scene/lib/</h3>
+<ul>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>extensions/blender/lib/</h3>
+<ul>
+<li><a href="extensions-blender-lib-Blender.xtl.html">Blender.xtl</a></li>
+<li><a href="extensions-blender-lib-Bpy.xtl.html">Bpy.xtl</a></li>
+<li><a href="extensions-blender-lib-Video.xtl.html">Video.xtl</a></li>
+</ul>
+<h3>extensions/blender/demos/</h3>
+<ul>
+<li><a href="extensions-blender-demos-cosy.xtl.html">cosy.xtl</a></li>
+<li><a href="extensions-blender-demos-CosyLogo.xtl.html">CosyLogo.xtl</a></li>
+<li><a href="extensions-blender-demos-cubes.xtl.html">cubes.xtl</a></li>
+<li><a href="extensions-blender-demos-Sizes.xtl.html">Sizes.xtl</a></li>
+<li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
+<li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
+<li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-pc.xtl.html">hex-pc.xtl</a></li>
+<li><a href="extensions-blender-demos-PcWalk.xtl.html">PcWalk.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-run.xtl.html">hex-run.xtl</a></li>
+<li><a href="extensions-blender-demos-Vcd.xtl.html">Vcd.xtl</a></li>
+<li><a href="extensions-blender-demos-HexRun.xtl.html">HexRun.xtl</a></li>
+<li><a href="extensions-blender-demos-matmul-fly.xtl.html">matmul-fly.xtl</a></li>
+<li><a href="extensions-blender-demos-MatmulFly.xtl.html">MatmulFly.xtl</a></li>
+<li><a href="extensions-blender-demos-matmul-steps.xtl.html">matmul-steps.xtl</a></li>
+<li><a href="extensions-blender-demos-Matmul.xtl.html">Matmul.xtl</a></li>
+<li><a href="extensions-blender-demos-relu-softmax.xtl.html">relu-softmax.xtl</a></li>
+<li><a href="extensions-blender-demos-ReluSoftmax.xtl.html">ReluSoftmax.xtl</a></li>
+<li><a href="extensions-blender-demos-td-models.xtl.html">td-models.xtl</a></li>
+</ul>
+<h3>extensions/digest/lib/</h3>
+<ul>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Hex1000/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html">Hex1000.xtl</a></li>
+</ul>
+<h3>work/libraries/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libraries-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Radix/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Radix-src-Radix.xtl.html">Radix.xtl</a></li>
+</ul>
+<h3>work/gpu/libs/Accel/src/</h3>
+<ul>
+<li><a href="work-gpu-libs-Accel-src-Accel.xtl.html">Accel.xtl</a></li>
+</ul>
+<h3>extensions/canvas/demos/</h3>
+<ul>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+</ul>
+<h3>extensions/clock/lib/</h3>
+<ul>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+</ul>
+<h3>extensions/clock/demos/</h3>
+<ul>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+</ul>
+<h3>extensions/hello/lib/</h3>
+<ul>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+</ul>
+<h3>extensions/hello/demos/</h3>
+<ul>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+</ul>
+<h3>extensions/http/lib/</h3>
+<ul>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+</ul>
+<h3>extensions/http/demos/</h3>
+<ul>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+</ul>
+<h3>extensions/sqlite/lib/</h3>
+<ul>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+</ul>
+<h3>extensions/image/lib/</h3>
+<ul>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+</ul>
+<h3>extensions/image/demos/</h3>
+<ul>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+</ul>
+<h3>extensions/linalg/lib/</h3>
+<ul>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+</ul>
+<h3>extensions/scene/demos/</h3>
+<ul>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-Endless.xtl.html">Endless.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-Play.xtl.html">Play.xtl</a></li>
+<li><a href="extensions-scene-demos-Rubik.xtl.html">Rubik.xtl</a></li>
+<li><a href="extensions-scene-demos-RubikPlay.xtl.html">RubikPlay.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-dig.xtl.html">voxels-dig.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-game.xtl.html">voxels-game.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-light.xtl.html">voxels-light.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">voxels-rubik-solve.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik.xtl.html">voxels-rubik.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-water.xtl.html">voxels-water.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+</ul>
+<h3>work/libraries/libs/Eigencube/src/</h3>
+<ul>
+<li><a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html">Eigencube.xtl</a></li>
+</ul>
+<h3>extensions/sqlite/demos/</h3>
+<ul>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+</ul>
+<h3>extensions/web/lib/</h3>
+<ul>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+</ul>
+<h3>extensions/web/demos/</h3>
+<ul>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">The run</a></li>
+<li class="item"><a href="#l.text">ˡtext</a></li>
+<li class="item"><a href="#l.bit">ˡbit</a></li>
+<li class="item"><a href="#h.a_t"><span class="c-libfunc">ʰa̲t</span></a></li>
+<li class="item"><a href="#h.u_s"><span class="c-libfunc">ʰu̲s</span></a></li>
+<li class="item"><a href="#l.c_locks"><span class="c-libfunc">ˡc̲locks</span></a></li>
+<li class="item"><a href="#l.l_ine"><span class="c-libfunc">ˡl̲ine</span></a></li>
+<li class="item"><a href="#l.r_eceived"><span class="c-libfunc">ˡr̲eceived</span></a></li>
+<li class="item"><a href="#l.segments">ˡsegments</a></li>
+<li class="item"><a href="#l.s_creen"><span class="c-libfunc">ˡs̲creen</span></a></li>
+<li class="item"><a href="#l.c_heck"><span class="c-libfunc">ˡc̲heck</span></a></li>
+<li><a href="#section-2">Time</a></li>
+<li class="item"><a href="#l.map">ˡmap</a></li>
+<li class="item"><a href="#l.length">ˡlength</a></li>
+<li class="item"><a href="#l.frames">ˡframes</a></li>
+<li class="item"><a href="#l.framePs">ˡframePs</a></li>
+<li class="item"><a href="#h.v_ideo"><span class="c-libfunc">ʰv̲ideo</span></a></li>
+<li class="item"><a href="#h.f_rames"><span class="c-libfunc">ʰf̲rames</span></a></li>
+<li class="item"><a href="#h.s_tepRows"><span class="c-libfunc">ʰs̲tepRows</span></a></li>
+<li class="item"><a href="#h.p_laceRows"><span class="c-libfunc">ʰp̲laceRows</span></a></li>
+<li><a href="#section-3">Where things are</a></li>
+<li class="item"><a href="#l.uart">ˡuart</a></li>
+<li class="item"><a href="#l.keys">ˡkeys</a></li>
+<li class="item"><a href="#l.cpu">ˡcpu</a></li>
+<li class="item"><a href="#l.display">ˡdisplay</a></li>
+<li class="item"><a href="#h.p_os"><span class="c-libfunc">ʰp̲os</span></a></li>
+<li class="item"><a href="#h.b_oxes"><span class="c-libfunc">ʰb̲oxes</span></a></li>
+<li class="item"><a href="#h.b_ars"><span class="c-libfunc">ʰb̲ars</span></a></li>
+<li class="item"><a href="#h.bitJ">ʰbitJ</a></li>
+<li class="item"><a href="#h.bitX">ʰbitX</a></li>
+<li class="item"><a href="#h.bitZ">ʰbitZ</a></li>
+<li class="item"><a href="#h.codes">ʰcodes</a></li>
+<li class="item"><a href="#h.keyX">ʰkeyX</a></li>
+<li class="item"><a href="#h.keyZ">ʰkeyZ</a></li>
+<li class="item"><a href="#l.keyNames">ˡkeyNames</a></li>
+<li class="item"><a href="#h.addr">ʰaddr</a></li>
+<li class="item"><a href="#h.romX">ʰromX</a></li>
+<li class="item"><a href="#h.romZ">ʰromZ</a></li>
+<li class="item"><a href="#h.word">ʰword</a></li>
+<li class="item"><a href="#h.ramX">ʰramX</a></li>
+<li class="item"><a href="#h.ramFloor">ʰramFloor</a></li>
+<li class="item"><a href="#h.seg">ʰseg</a></li>
+<li class="item"><a href="#h.segP">ʰsegP</a></li>
+<li class="item"><a href="#h.segS">ʰsegS</a></li>
+<li class="item"><a href="#h.segDx">ʰsegDx</a></li>
+<li class="item"><a href="#h.segDz">ʰsegDz</a></li>
+<li class="item"><a href="#h.segFlat">ʰsegFlat</a></li>
+<li class="item"><a href="#h.aluKinds">ʰaluKinds</a></li>
+<li><a href="#section-4">Words</a></li>
+<li class="item"><a href="#l.title">ˡtitle</a></li>
+<li class="item"><a href="#l.subtitle">ˡsubtitle</a></li>
+<li class="item"><a href="#l.captionTable">ˡcaptionTable</a></li>
+<li class="item"><a href="#h.cardTable">ʰcardTable</a></li>
+<li class="item"><a href="#l.c_aptions"><span class="c-libfunc">ˡc̲aptions</span></a></li>
+<li class="item"><a href="#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a></li>
+<li class="item"><a href="#l.cueTable">ˡcueTable</a></li>
+<li><a href="#section-5">The scene</a></li>
+<li class="item"><a href="#h.sky">ʰsky</a></li>
+<li class="item"><a href="#h.camTimes">ʰcamTimes</a></li>
+<li class="item"><a href="#h.camAims">ʰcamAims</a></li>
+<li class="item"><a href="#h.camWide">ʰcamWide</a></li>
+<li class="item"><a href="#h.camSide">ʰcamSide</a></li>
+<li class="item"><a href="#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></li>
+<li class="item"><a href="#h.r_am"><span class="c-libfunc">ʰr̲am</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">library</span>extensions/blender/demos/HexRun.xtl</h1>
+<div class="doc">
+<p>HexRun.xtl -- HEX1000 computing C0DE+BEEF=, a video made with the
+explainer kit (Video.xtl) from a simulation of its board: the text
+sent over the serial line bit by bit, the board queuing each key, the
+machine scanning its key matrix, its program counter hopping through
+a ROM page, A, the status, the ALU and the RAM changing, and the
+digits strobed out to a calculator's display. Everything moving is a
+signal of the simulation's waveform (scripts/hex1000-sim.sh: the
+board's Verilog from X_eTaL-fpga at FPGA_COMMIT under iverilog; Vcd.xtl
+reads it), sampled once a frame; X_eTaL-fpga's Hex1000.xtl replays
+the same clocks from the K inputs the circuit saw and must agree with
+its registers at every one, and the display it ends with must be the
+evaluator's (hx:c_alc) -- else no script is written. Beside the
+calculator at the end, the browser calculator's screen
+(scripts/hex1000-browser.py). Shared by the demo (demos/hex-run.xtl)
+and its test.
+Import: &quot;hr:&quot; u_se&lt; &quot;HexRun&quot;</p>
+</div>
+<p class="meta"><a href="extensions-blender-demos-HexRun.xtl.src.html">source</a> &middot; imports <code><span class="c-error">hx:</span></code> <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html">work/fpga/libs/Hex1000/src/Hex1000.xtl</a>; <code><span class="c-error">vc:</span></code> <a href="extensions-blender-demos-Vcd.xtl.html">extensions/blender/demos/Vcd.xtl</a>; <code><span class="c-error">vd:</span></code> <a href="extensions-blender-lib-Video.xtl.html">extensions/blender/lib/Video.xtl</a>; <code><span class="c-error">s:</span></code> <a href="work-libraries-libs-Strings-src-Strings.xtl.html">work/libraries/libs/Strings/src/Strings.xtl</a></p>
+<h2 class="section" id="section-1">The run</h2>
+<div class="item" id="l.text">
+<h3><a href="#l.text">ˡtext</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L26">line 26</a></div>
+<div class="doc">
+<p>text: what is typed at the board, over its serial line</p>
+</div>
+<pre class="code">ˡtext ← <span class="c-string">&quot;C0DE+BEEF=&quot;</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.l_ine"><span class="c-libfunc">ˡl̲ine</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.c_heck"><span class="c-libfunc">ˡc̲heck</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.bitJ">ʰbitJ</a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.c_aptions"><span class="c-libfunc">ˡc̲aptions</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.bit">
+<h3><a href="#l.bit">ˡbit</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L29">line 29</a></div>
+<div class="doc">
+<p>bit: the serial line's bit time in the simulation (ps; 115200 baud)</p>
+</div>
+<pre class="code">ˡbit ← <span class="c-number">8680000</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.l_ine"><span class="c-libfunc">ˡl̲ine</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.a_t">
+<h3><a href="#h.a_t"><span class="c-libfunc">ʰa̲t</span></a> <span class="type">: Any a =&gt; ((Box Char, Int), Char, Int) -&gt; a -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L32">line 32</a></div>
+<pre class="code"><span class="c-libfunc">ʰa̲t</span> ← { (v, name, ts) z → (v, name, ts) <a href="extensions-blender-demos-Vcd.xtl.html#l.a_t" class="c-libfunc">ᵛᶜa̲t</a> <span class="c-number">0</span> }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.l_ine"><span class="c-libfunc">ˡl̲ine</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.r_eceived"><span class="c-libfunc">ˡr̲eceived</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.c_heck"><span class="c-libfunc">ˡc̲heck</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.c_aptions"><span class="c-libfunc">ˡc̲aptions</span></a></div>
+</div>
+<div class="item" id="h.u_s">
+<h3><a href="#h.u_s"><span class="c-libfunc">ʰu̲s</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L35">line 35</a></div>
+<pre class="code"><span class="c-libfunc">ʰu̲s</span> ← { ps → (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> ps) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000000.0</span> }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#h.v_ideo"><span class="c-libfunc">ʰv̲ideo</span></a></div>
+</div>
+<div class="item" id="l.c_locks">
+<h3><a href="#l.c_locks"><span class="c-libfunc">ˡc̲locks</span></a> <span class="type">: (Box Char, Int) -&gt; Int</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L40">line 40</a></div>
+<div class="doc">
+<p>hr:c_locks v: when the waveform v's count of machine clocks became
+each value, 0 (reset) 1 2 ... (ps): a state is the circuit's after
+that many instructions</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡc̲locks</span> ← { v → <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> (v, <span class="c-string">&quot;cycle&quot;</span>) <a href="extensions-blender-demos-Vcd.xtl.html#l.c_hanges" class="c-libfunc">ᵛᶜc̲hanges</a> <span class="c-number">0</span> }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.c_heck"><span class="c-libfunc">ˡc̲heck</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.c_aptions"><span class="c-libfunc">ˡc̲aptions</span></a></div>
+</div>
+<div class="item" id="l.l_ine">
+<h3><a href="#l.l_ine"><span class="c-libfunc">ˡl̲ine</span></a> <span class="type">: (Box Char, Int) -&gt; (Int, Int)</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L47">line 47</a></div>
+<div class="doc">
+<p>hr:l_ine v: the serial line decoded from the waveform: (starts, bits)
+-- when each character's start bit began (ps; the testbench sends
+them back to back) and its ten bits as the line had them at their
+middles, a row a character: start (0), the data bits from the lowest,
+stop (1)</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡl̲ine</span> ← { v →
+  c ← (v, <span class="c-string">&quot;uart_rx&quot;</span>) <a href="extensions-blender-demos-Vcd.xtl.html#l.c_hanges" class="c-libfunc">ᵛᶜc̲hanges</a> <span class="c-number">0</span>
+  first ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> ((<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> c) <a href="builtins.html#-26" class="c-symbol">∧</a> <span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> c) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> c
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.text">ˡtext</a>
+  starts ← first <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">10</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.bit">ˡbit</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>
+  ts ← (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">10</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> starts <span class="c-builtin">'</span><a href="builtins.html#l_eft" class="c-builtin">l̲eft</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-number">5</span> <span class="c-number">6</span> <span class="c-number">7</span> <span class="c-number">8</span> <span class="c-number">9</span>
+  at ← ts <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="extensions-blender-demos-HexRun.xtl.html#l.bit">ˡbit</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.bit">ˡbit</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">10</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-number">5</span> <span class="c-number">6</span> <span class="c-number">7</span> <span class="c-number">8</span> <span class="c-number">9</span>
+  (starts, (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">10</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (v, <span class="c-string">&quot;uart_rx&quot;</span>, <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> at) <a href="extensions-blender-demos-HexRun.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">0</span>)
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.c_heck"><span class="c-libfunc">ˡc̲heck</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.r_eceived">
+<h3><a href="#l.r_eceived"><span class="c-libfunc">ˡr̲eceived</span></a> <span class="type">: (Box Char, Int) -&gt; (Int, Int)</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L59">line 59</a></div>
+<div class="doc">
+<p>hr:r_eceived v: the bytes the board's UART core handed on, (times,
+bytes): when its valid flag rose (ps), and the byte</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡr̲eceived</span> ← { v →
+  c ← (v, <span class="c-string">&quot;valid&quot;</span>) <a href="extensions-blender-demos-Vcd.xtl.html#l.c_hanges" class="c-libfunc">ᵛᶜc̲hanges</a> <span class="c-number">0</span>
+  ts ← (<span class="c-number">1</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> c) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> c
+  (ts, (v, <span class="c-string">&quot;rxb&quot;</span>, ts) <a href="extensions-blender-demos-HexRun.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">0</span>)
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.c_heck"><span class="c-libfunc">ˡc̲heck</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.segments">
+<h3><a href="#l.segments">ˡsegments</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L70">line 70</a></div>
+<div class="doc">
+<p>the seven segments a b c d e f g of each hexadecimal digit, a bit
+each from the lowest</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ʰʳ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-HexRun.xtl.html" class="c-string">&quot;HexRun&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">4</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.segments">ʰʳsegments</a>
+63 6 91 79</pre>
+</div>
+<pre class="code">ˡsegments ← <span class="c-number">63</span> <span class="c-number">6</span> <span class="c-number">91</span> <span class="c-number">79</span> <span class="c-number">102</span> <span class="c-number">109</span> <span class="c-number">125</span> <span class="c-number">7</span> <span class="c-number">127</span> <span class="c-number">111</span> <span class="c-number">119</span> <span class="c-number">124</span> <span class="c-number">57</span> <span class="c-number">94</span> <span class="c-number">121</span> <span class="c-number">113</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.s_creen">
+<h3><a href="#l.s_creen"><span class="c-libfunc">ˡs̲creen</span></a> <span class="type">: Int -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L78">line 78</a></div>
+<div class="doc">
+<p>hr:s_creen shown: the display's eight digit latches (5 bits each,
+digit 0 the lowest: a digit shown when its bit 4 is set) as the text
+a terminal shows, digit 7 first, blank where not shown</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ʰʳ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-HexRun.xtl.html" class="c-string">&quot;HexRun&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="extensions-blender-demos-HexRun.xtl.html#l.s_creen" class="c-libfunc">ʰʳs̲creen</a> <span class="c-number">18612125</span>
+   17FCD</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲creen</span> ← { d →
+  ds ← (<span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">32</span>) <a href="builtins.html#e_ncode" class="c-builtin">e̲ncode</a> d
+  (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (ds <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">16</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> ds <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">16</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-string">&quot; 0123456789ABCDEF&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.c_heck"><span class="c-libfunc">ˡc̲heck</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.c_aptions"><span class="c-libfunc">ˡc̲aptions</span></a></div>
+</div>
+<div class="item" id="l.c_heck">
+<h3><a href="#l.c_heck"><span class="c-libfunc">ˡc̲heck</span></a> <span class="type">: Any a =&gt; ((Box Char, Int), Char) -&gt; a -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L89">line 89</a></div>
+<div class="doc">
+<p>hr:c_heck (v, browser): the checks a video is made after, as lines of
+text, or a panic naming the one that failed: the line carries the
+text, the board's UART receives it, Hex1000.xtl replaying the clocks
+from the K inputs the circuit saw has its A, S, PC and PA at every
+one, and the display at the end is the evaluator's (hx:c_alc) and
+the browser's (its screen's text; &quot;&quot; skips that check)</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡc̲heck</span> ← { (v, browser) z →
+  (starts, bits) ← <a href="extensions-blender-demos-HexRun.xtl.html#l.l_ine" class="c-libfunc">ˡl̲ine</a> v
+  codes ← <a href="builtins.html#-5b-5dU_CS" class="c-builtin">⎕U̲CS</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.text">ˡtext</a>
+  data ← <span class="c-number">2</span> <a href="builtins.html#d_ecode" class="c-builtin">d̲ecode</a> <a href="builtins.html#r_ev" class="c-builtin">r̲ev</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> <span class="c-number">8</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop₂</a> bits
+  ok1 ← (<span class="c-number">0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> bits) <a href="builtins.html#-26" class="c-symbol">∧</a> (<span class="c-symbol">'</span><a href="builtins.html#-2a" class="c-symbol">×</a>  <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-number">10</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> bits) <a href="builtins.html#-26" class="c-symbol">∧</a> codes <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> data
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> ok1 ? <a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> <span class="c-string">&quot;hex-run: the serial line does not carry &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.text">ˡtext</a>
+  (ts, bytes) ← <a href="extensions-blender-demos-HexRun.xtl.html#l.r_eceived" class="c-libfunc">ˡr̲eceived</a> v
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> codes <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> bytes ? <a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> <span class="c-string">&quot;hex-run: the board received &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#-5b-5dU_CHAR" class="c-builtin">⎕U̲CHAR</a> bytes
+  t ← <a href="extensions-blender-demos-HexRun.xtl.html#l.c_locks" class="c-libfunc">ˡc̲locks</a> v
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t
+  mid ← t <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">518000</span>
+  ks ← (v, <span class="c-string">&quot;k&quot;</span>, mid) <a href="extensions-blender-demos-HexRun.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">0</span>
+  rom ← <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.CalcRom">ʰˣCalcRom</a>
+  (last, i, rows) ← (n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <span class="c-quote">'</span>{ (st, i, m) → s1 ← (rom <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.s_tep" class="c-libfunc">ʰˣs̲tep</a> st)_ i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> ks
+    (s1, i <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span>, m <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <span class="c-number">4</span> <span class="c-number">5</span> <span class="c-number">6</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.r_egs" class="c-libfunc">ʰˣr̲egs</a> s1) } <a href="builtins.html#p_ower" class="c-builtin">p̲ower</a> (<a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.Reset">ʰˣReset</a>, <span class="c-number">1</span>, <span class="c-number">0</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span>)
+  m ← ((n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">4</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> rows
+  vcd ← <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">4</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> (v, <span class="c-string">&quot;a&quot;</span>, mid) <a href="extensions-blender-demos-HexRun.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> (v, <span class="c-string">&quot;s&quot;</span>, mid) <a href="extensions-blender-demos-HexRun.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> (v, <span class="c-string">&quot;pc&quot;</span>, mid) <a href="extensions-blender-demos-HexRun.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> (v, <span class="c-string">&quot;pa&quot;</span>, mid) <a href="extensions-blender-demos-HexRun.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">0</span>
+  bad ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> m <a href="builtins.html#-3d" class="c-symbol">=</a> vcd
+  bad <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span> ? <a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> <span class="c-string">&quot;hex-run: Hex1000.xtl and the circuit differ at &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> bad) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; register values&quot;</span>
+  shown ← <a href="extensions-blender-demos-HexRun.xtl.html#l.s_creen" class="c-libfunc">ˡs̲creen</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> (v, <span class="c-string">&quot;shown&quot;</span>, <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> (v, <span class="c-string">&quot;shown&quot;</span>) <a href="extensions-blender-demos-Vcd.xtl.html#l.c_hanges" class="c-libfunc">ᵛᶜc̲hanges</a> <span class="c-number">0</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">0</span>
+  want ← <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.c_alc" class="c-libfunc">ʰˣc̲alc</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.text">ˡtext</a>
+  <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> want <a href="builtins.html#m_atch" class="c-builtin">m̲atch</a> shown ? <a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> <span class="c-string">&quot;hex-run: the display ends &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> shown <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, the evaluator's &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> want
+  inb ← (<span class="c-string">&quot;| &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> want <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; |&quot;</span>) <a href="work-libraries-libs-Strings-src-Strings.xtl.html#l.i_nfix-3f" class="c-libfunc">ˢi̲nfix?</a> browser
+  ((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> browser) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> inb ? <a href="builtins.html#-5b-5dP_ANIC" class="c-builtin">⎕P̲ANIC</a> <span class="c-string">&quot;hex-run: the browser's screen is not &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> want
+  also ← <span class="c-string">&quot;\nthe browser calculator shows it too&quot;</span>
+  b ← (((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> browser) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> also) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> also
+  <span class="c-string">&quot;the line carries &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.text">ˡtext</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> bits) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; characters of 10 bits)\nthe board's UART received &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#-5b-5dU_CHAR" class="c-builtin">⎕U̲CHAR</a> bytes) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;\nHex1000.xtl replayed &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> n <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; clocks from the circuit's K: A, S, PC and PA agree at every one\nthe display ends showing &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="work-libraries-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ˢt̲rim</a> shown) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, the evaluator's (hx:c_alc)&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> b
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-hex-run.xtl.src.html#L25">extensions/blender/demos/hex-run.xtl:25</a></div>
+</div>
+<h2 class="section" id="section-2">Time</h2>
+<div class="item" id="l.map">
+<h3><a href="#l.map">ˡmap</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L124">line 124</a></div>
+<div class="doc">
+<p>map: the simulation's microseconds as the video's seconds
+(vd:r_etime): a title card; the first character's ten bits in slow
+motion; the machine finding that key, slower still; the other nine
+keys a time-lapse; one addition in slow motion; then the display</p>
+</div>
+<pre class="code">ˡmap ← <span class="c-number">6</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">290.0</span> <span class="c-number">3.4</span>  <span class="c-number">387.0</span> <span class="c-number">10.4</span>  <span class="c-number">413.0</span> <span class="c-number">16.4</span>  <span class="c-number">2975.0</span> <span class="c-number">25.4</span>  <span class="c-number">3055.0</span> <span class="c-number">35.4</span>  <span class="c-number">3175.0</span> <span class="c-number">37.6</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.framePs">ˡframePs</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.v_ideo"><span class="c-libfunc">ʰv̲ideo</span></a></div>
+</div>
+<div class="item" id="l.length">
+<h3><a href="#l.length">ˡlength</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L127">line 127</a></div>
+<div class="doc">
+<p>length: the video's seconds</p>
+</div>
+<pre class="code">ˡlength ← <span class="c-number">42.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.frames">ˡframes</a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.frames">
+<h3><a href="#l.frames">ˡframes</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L133">line 133</a></div>
+<div class="doc">
+<p>frames: each frame's second in the video (30 a second)</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ʰʳ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-HexRun.xtl.html" class="c-string">&quot;HexRun&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">3</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.frames">ʰʳframes</a>
+0.0 0.03333333333333333 0.06666666666666667</pre>
+</div>
+<pre class="code">ˡframes ← ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">0.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">30.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.length">ˡlength</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">30.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.framePs">ˡframePs</a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.framePs">
+<h3><a href="#l.framePs">ˡframePs</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L136">line 136</a></div>
+<div class="doc">
+<p>framePs: the simulation's time at each frame (ps)</p>
+</div>
+<pre class="code">ˡframePs ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">1000000.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> ((<span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.map">ˡmap</a>), <a href="extensions-blender-demos-HexRun.xtl.html#l.frames">ˡframes</a>) <a href="extensions-blender-lib-Video.xtl.html#l.r_etime" class="c-libfunc">ᵛᵈr̲etime</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#h.f_rames"><span class="c-libfunc">ʰf̲rames</span></a></div>
+</div>
+<div class="item" id="h.v_ideo">
+<h3><a href="#h.v_ideo"><span class="c-libfunc">ʰv̲ideo</span></a> <span class="type">: Num a =&gt; a -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L139">line 139</a></div>
+<pre class="code"><span class="c-libfunc">ʰv̲ideo</span> ← { ps → (<a href="extensions-blender-demos-HexRun.xtl.html#l.map">ˡmap</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.u_s" class="c-libfunc">ʰu̲s</a> ps) <a href="extensions-blender-lib-Video.xtl.html#l.r_etime" class="c-libfunc">ᵛᵈr̲etime</a> <span class="c-number">0</span> }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.f_rames">
+<h3><a href="#h.f_rames"><span class="c-libfunc">ʰf̲rames</span></a> <span class="type">: Any a =&gt; ((Box Char, Int), Char) -&gt; a -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L142">line 142</a></div>
+<pre class="code"><span class="c-libfunc">ʰf̲rames</span> ← { (v, name) z → (v, name, <a href="extensions-blender-demos-HexRun.xtl.html#l.framePs">ˡframePs</a>) <a href="extensions-blender-demos-Vcd.xtl.html#l.a_t" class="c-libfunc">ᵛᶜa̲t</a> <span class="c-number">0</span> }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.r_am"><span class="c-libfunc">ʰr̲am</span></a></div>
+</div>
+<div class="item" id="h.s_tepRows">
+<h3><a href="#h.s_tepRows"><span class="c-libfunc">ʰs̲tepRows</span></a> <span class="type">: (Num a, Num b, Any c) =&gt; (a, b) -&gt; c -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L147">line 147</a></div>
+<pre class="code"><span class="c-libfunc">ʰs̲tepRows</span> ← { (g, ts) z →
+  n ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> g
+  m ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> g
+  keep ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> ((<span class="c-number">1</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> m) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> g) <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> g
+  obj ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> m) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> m
+  at ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (m <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> ts
+  val ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> g
+  k ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> keep
+  <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> k) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (keep <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> obj) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (keep <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> at) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> keep <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> val
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.p_laceRows">
+<h3><a href="#h.p_laceRows"><span class="c-libfunc">ʰp̲laceRows</span></a> <span class="type">: (Num a, Any b) =&gt; (a, a) -&gt; b -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L160">line 160</a></div>
+<pre class="code"><span class="c-libfunc">ʰp̲laceRows</span> ← { (rows, p) z →
+  i ← <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> rows
+  (<span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> rows) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> i) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> p) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> p) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> p
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<h2 class="section" id="section-3">Where things are</h2>
+<div class="item" id="l.uart">
+<h3><a href="#l.uart">ˡuart</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L169">line 169</a></div>
+<div class="doc">
+<p>the four areas' middles: the serial line, the key matrix, the
+machine, the display</p>
+</div>
+<pre class="code">ˡuart ← <span class="c-number">-7.0</span> <span class="c-number">0.0</span> <span class="c-number">4.5</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.keys">
+<h3><a href="#l.keys">ˡkeys</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L171">line 171</a></div>
+<div class="doc">
+<p>the key matrix's</p>
+</div>
+<pre class="code">ˡkeys ← <span class="c-number">7.0</span> <span class="c-number">0.0</span> <span class="c-number">4.5</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.cpu">
+<h3><a href="#l.cpu">ˡcpu</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L173">line 173</a></div>
+<div class="doc">
+<p>the machine's</p>
+</div>
+<pre class="code">ˡcpu ← <span class="c-number">7.0</span> <span class="c-number">0.0</span> <span class="c-number">-5.5</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.display">
+<h3><a href="#l.display">ˡdisplay</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L175">line 175</a></div>
+<div class="doc">
+<p>the display's</p>
+</div>
+<pre class="code">ˡdisplay ← <span class="c-number">-7.0</span> <span class="c-number">0.0</span> <span class="c-number">-5.5</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.p_os">
+<h3><a href="#h.p_os"><span class="c-libfunc">ʰp̲os</span></a> <span class="type">: (Num a, Any b) =&gt; (a, a, a) -&gt; b -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L179">line 179</a></div>
+<pre class="code"><span class="c-libfunc">ʰp̲os</span> ← { (c, xs, zs) z →
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> xs
+  <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (xs <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> c) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> zs <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> c
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.b_oxes">
+<h3><a href="#h.b_oxes"><span class="c-libfunc">ʰb̲oxes</span></a> <span class="type">: (Num a, Num b) =&gt; (Float, a, b, Float) -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L185">line 185</a></div>
+<pre class="code"><span class="c-libfunc">ʰb̲oxes</span> ← { (p, size, rgb, g) →
+  n ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> p
+  p <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">7</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> size) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> rgb) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> g
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.b_ars">
+<h3><a href="#h.b_ars"><span class="c-libfunc">ʰb̲ars</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L191">line 191</a></div>
+<pre class="code"><span class="c-libfunc">ʰb̲ars</span> ← { t → <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> t) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-string">&quot;|&quot;</span> }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.bitJ">
+<h3><a href="#h.bitJ">ʰbitJ</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L194">line 194</a></div>
+<pre class="code">ʰbitJ ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">10</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.text">ˡtext</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#h.bitX">ʰbitX</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.bitZ">ʰbitZ</a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.bitX">
+<h3><a href="#h.bitX">ʰbitX</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L195">line 195</a></div>
+<pre class="code">ʰbitX ← <span class="c-number">-4.4</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.86</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.bitJ">ʰbitJ</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">10.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.bitJ">ʰbitJ</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">10.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.bitZ">
+<h3><a href="#h.bitZ">ʰbitZ</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L196">line 196</a></div>
+<pre class="code">ʰbitZ ← <span class="c-number">2.6</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.62</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.bitJ">ʰbitJ</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">10.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.codes">
+<h3><a href="#h.codes">ʰcodes</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L200">line 200</a></div>
+<pre class="code">ʰcodes ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">21</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#h.keyX">ʰkeyX</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.keyZ">ʰkeyZ</a></div>
+</div>
+<div class="item" id="h.keyX">
+<h3><a href="#h.keyX">ʰkeyX</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L201">line 201</a></div>
+<pre class="code">ʰkeyX ← <span class="c-number">-3.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.25</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.codes">ʰcodes</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">4.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.keyZ">
+<h3><a href="#h.keyZ">ʰkeyZ</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L202">line 202</a></div>
+<pre class="code">ʰkeyZ ← <span class="c-number">-2.3</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.25</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.codes">ʰcodes</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">4.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.codes">ʰcodes</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">4.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.keyNames">
+<h3><a href="#l.keyNames">ˡkeyNames</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L204">line 204</a></div>
+<div class="doc">
+<p>keyNames: the keys' labels, by code</p>
+</div>
+<pre class="code">ˡkeyNames ← <span class="c-string">&quot;0|1|2|3|4|5|6|7|8|9|A|B|C|D|E|F|+|-|*|=|X&quot;</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.addr">
+<h3><a href="#h.addr">ʰaddr</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L207">line 207</a></div>
+<pre class="code">ʰaddr ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">64</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#h.romX">ʰromX</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.romZ">ʰromZ</a></div>
+</div>
+<div class="item" id="h.romX">
+<h3><a href="#h.romX">ʰromX</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L208">line 208</a></div>
+<pre class="code">ʰromX ← <span class="c-number">-5.6</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.62</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.addr">ʰaddr</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">8.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.addr">ʰaddr</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">8.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.romZ">
+<h3><a href="#h.romZ">ʰromZ</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L209">line 209</a></div>
+<pre class="code">ʰromZ ← <span class="c-number">2.9</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.62</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.addr">ʰaddr</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">8.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.word">
+<h3><a href="#h.word">ʰword</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L212">line 212</a></div>
+<pre class="code">ʰword ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">64</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#h.ramX">ʰramX</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.ramFloor">ʰramFloor</a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.ramX">
+<h3><a href="#h.ramX">ʰramX</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L213">line 213</a></div>
+<pre class="code">ʰramX ← <span class="c-number">1.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.24</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.word">ʰword</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">16.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.word">ʰword</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">16.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.ramFloor">
+<h3><a href="#h.ramFloor">ʰramFloor</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L214">line 214</a></div>
+<pre class="code">ʰramFloor ← <span class="c-number">-0.2</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.05</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.word">ʰword</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">16.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.seg">
+<h3><a href="#h.seg">ʰseg</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L217">line 217</a></div>
+<pre class="code">ʰseg ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">56</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#h.segP">ʰsegP</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.segS">ʰsegS</a></div>
+</div>
+<div class="item" id="h.segP">
+<h3><a href="#h.segP">ʰsegP</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L218">line 218</a></div>
+<pre class="code">ʰsegP ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.seg">ʰseg</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">7.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#h.segS">ʰsegS</a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.segS">
+<h3><a href="#h.segS">ʰsegS</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L219">line 219</a></div>
+<pre class="code">ʰsegS ← <a href="extensions-blender-demos-HexRun.xtl.html#h.seg">ʰseg</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">7.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.segP">ʰsegP</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#h.segDx">ʰsegDx</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.segDz">ʰsegDz</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.segFlat">ʰsegFlat</a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.segDx">
+<h3><a href="#h.segDx">ʰsegDx</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L220">line 220</a></div>
+<pre class="code">ʰsegDx ← (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.segS">ʰsegS</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">0.0</span> <span class="c-number">0.3</span> <span class="c-number">0.3</span> <span class="c-number">0.0</span> <span class="c-number">-0.3</span> <span class="c-number">-0.3</span> <span class="c-number">0.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.segDz">
+<h3><a href="#h.segDz">ʰsegDz</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L221">line 221</a></div>
+<pre class="code">ʰsegDz ← (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.segS">ʰsegS</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">0.6</span> <span class="c-number">0.3</span> <span class="c-number">-0.3</span> <span class="c-number">-0.6</span> <span class="c-number">-0.3</span> <span class="c-number">0.3</span> <span class="c-number">0.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.segFlat">
+<h3><a href="#h.segFlat">ʰsegFlat</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L222">line 222</a></div>
+<pre class="code">ʰsegFlat ← (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.segS">ʰsegS</a>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.aluKinds">
+<h3><a href="#h.aluKinds">ʰaluKinds</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L225">line 225</a></div>
+<pre class="code">ʰaluKinds ← <span class="c-number">10</span> <span class="c-number">11</span> <span class="c-number">12</span> <span class="c-number">13</span> <span class="c-number">14</span> <span class="c-number">15</span> <span class="c-number">16</span> <span class="c-number">17</span> <span class="c-number">18</span> <span class="c-number">19</span> <span class="c-number">20</span> <span class="c-number">36</span> <span class="c-number">37</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<h2 class="section" id="section-4">Words</h2>
+<div class="item" id="l.title">
+<h3><a href="#l.title">ˡtitle</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L230">line 230</a></div>
+<div class="doc">
+<p>the title card's title and subtitle</p>
+</div>
+<pre class="code">ˡtitle ← <span class="c-string">&quot;HEX1000&quot;</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.subtitle">
+<h3><a href="#l.subtitle">ˡsubtitle</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L232">line 232</a></div>
+<div class="doc">
+<p>the subtitle</p>
+</div>
+<pre class="code">ˡsubtitle ← <span class="c-string">&quot;C0DE+BEEF= typed at a 4-bit machine, its circuit simulated clock by clock&quot;</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.captionTable">
+<h3><a href="#l.captionTable">ˡcaptionTable</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L235">line 235</a></div>
+<div class="doc">
+<p>captionTable: each caption's from and to (video seconds), white</p>
+</div>
+<pre class="code">ˡcaptionTable ← <span class="c-number">5</span> <span class="c-number">5</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">3.8</span> <span class="c-number">10.0</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span>  <span class="c-number">10.8</span> <span class="c-number">16.2</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span>  <span class="c-number">17.8</span> <span class="c-number">24.8</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span>  <span class="c-number">25.8</span> <span class="c-number">35.2</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span>  <span class="c-number">36.8</span> <span class="c-number">42.0</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.cueTable">ˡcueTable</a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.cardTable">
+<h3><a href="#h.cardTable">ʰcardTable</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L238">line 238</a></div>
+<pre class="code">ʰcardTable ← <span class="c-number">1</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">3.2</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">18</span> <span class="c-number">22</span> <span class="c-number">44</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.cueTable">ˡcueTable</a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.c_aptions">
+<h3><a href="#l.c_aptions"><span class="c-libfunc">ˡc̲aptions</span></a> <span class="type">: (Box Char, Int) -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L242">line 242</a></div>
+<div class="doc">
+<p>hr:c_aptions v: the captions, | between them, their numbers from
+the run</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡc̲aptions</span> ← { v →
+  t ← <a href="extensions-blender-demos-HexRun.xtl.html#l.c_locks" class="c-libfunc">ˡc̲locks</a> v
+  done ← <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-number">-1</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> (v, <span class="c-string">&quot;shown&quot;</span>) <a href="extensions-blender-demos-Vcd.xtl.html#l.c_hanges" class="c-libfunc">ᵛᶜc̲hanges</a> <span class="c-number">0</span>
+  clocks ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> t <a href="builtins.html#-3c-3d" class="c-symbol">≤</a> done
+  shown ← <a href="work-libraries-libs-Strings-src-Strings.xtl.html#l.t_rim" class="c-libfunc">ˢt̲rim</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.s_creen" class="c-libfunc">ˡs̲creen</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> (v, <span class="c-string">&quot;shown&quot;</span>, <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> done) <a href="extensions-blender-demos-HexRun.xtl.html#h.a_t" class="c-libfunc">ʰa̲t</a> <span class="c-number">0</span>
+  <span class="c-string">&quot;slow motion: each key arrives on the serial line as 10 bits, a start bit, 8 data bits from the lowest, a stop bit&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|the board queues it; the machine selects the key columns one by one (R8 to R13) and finds its row on K&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|time-lapse: the other &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.text">ˡtext</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; keys wait in the queue, a few hundred clocks each, and the display shows them&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|slow motion: the sum, a digit at a time with its carry (AMAAC), the RAM's bars changing&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> shown <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; after &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> clocks) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; clocks: the circuit's display, the evaluator's and the browser's agree&quot;</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.c_ues">
+<h3><a href="#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a> <span class="type">: (Box Char, Int) -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L252">line 252</a></div>
+<div class="doc">
+<p>hr:c_ues v: the title card's and the captions' texts, for vd:c_ues
+and vd:s_rt</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡc̲ues</span> ← { v → <a href="extensions-blender-demos-HexRun.xtl.html#l.title">ˡtitle</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.subtitle">ˡsubtitle</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.c_aptions" class="c-libfunc">ˡc̲aptions</a> v }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-hex-run.xtl.html#n">n</a></div>
+</div>
+<div class="item" id="l.cueTable">
+<h3><a href="#l.cueTable">ˡcueTable</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L254">line 254</a></div>
+<div class="doc">
+<p>cueTable: their from and to (video seconds)</p>
+</div>
+<pre class="code">ˡcueTable ← (<span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.cardTable">ʰcardTable</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span> <a href="builtins.html#t_ake" class="c-builtin">t̲ake₂</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.captionTable">ˡcaptionTable</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-hex-run.xtl.html#n">n</a></div>
+</div>
+<h2 class="section" id="section-5">The scene</h2>
+<div class="item" id="h.sky">
+<h3><a href="#h.sky">ʰsky</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L259">line 259</a></div>
+<pre class="code">ʰsky ← <span class="c-number">8</span> <span class="c-number">10</span> <span class="c-number">18</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.camTimes">
+<h3><a href="#h.camTimes">ʰcamTimes</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L264">line 264</a></div>
+<pre class="code">ʰcamTimes ← <span class="c-number">0.0</span> <span class="c-number">10.0</span> <span class="c-number">11.0</span> <span class="c-number">16.4</span> <span class="c-number">17.6</span> <span class="c-number">24.8</span> <span class="c-number">25.8</span> <span class="c-number">35.2</span> <span class="c-number">36.6</span> <span class="c-number">42.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.camAims">
+<h3><a href="#h.camAims">ʰcamAims</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L265">line 265</a></div>
+<pre class="code">ʰcamAims ← <span class="c-number">10</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-7.0</span> <span class="c-number">0.0</span> <span class="c-number">4.5</span>  <span class="c-number">-7.0</span> <span class="c-number">0.0</span> <span class="c-number">4.5</span>  <span class="c-number">7.0</span> <span class="c-number">0.0</span> <span class="c-number">4.5</span>  <span class="c-number">7.0</span> <span class="c-number">0.0</span> <span class="c-number">4.5</span>  <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">-0.5</span>  <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">-0.5</span>  <span class="c-number">7.0</span> <span class="c-number">0.0</span> <span class="c-number">-5.5</span>  <span class="c-number">7.0</span> <span class="c-number">0.0</span> <span class="c-number">-5.5</span>  <span class="c-number">-7.0</span> <span class="c-number">0.0</span> <span class="c-number">-5.5</span>  <span class="c-number">-7.0</span> <span class="c-number">0.0</span> <span class="c-number">-5.5</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.camWide">
+<h3><a href="#h.camWide">ʰcamWide</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L266">line 266</a></div>
+<pre class="code">ʰcamWide ← <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.camSide">
+<h3><a href="#h.camSide">ʰcamSide</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L267">line 267</a></div>
+<pre class="code">ʰcamSide ← <span class="c-number">0.06</span> <span class="c-number">-0.04</span> <span class="c-number">0.05</span> <span class="c-number">-0.05</span> <span class="c-number">0.0</span> <span class="c-number">0.03</span> <span class="c-number">-0.05</span> <span class="c-number">0.05</span> <span class="c-number">0.04</span> <span class="c-number">-0.04</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.s_cene">
+<h3><a href="#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a> <span class="type">: (Num a, Any b) =&gt; (a, (Box Char, Int), Char) -&gt; b -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L276">line 276</a></div>
+<div class="doc">
+<p>(size, v, picture) hr:s_cene 0: the whole script Blender runs, before
+its stills or video: the stage at that size (vd:landscape or
+vd:shorts); the serial line, the key matrix, the machine and the
+display, every lamp, bar, marker and segment keyed in steps from the
+waveform v sampled once a frame; a clock count and the instruction in
+front of the camera; the browser's screen (a PNG; &quot;&quot; for none) under
+the display; the camera, the title card, the captions</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲cene</span> ← { (size, v, picture) z →
+  w ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> size
+  h ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> size
+  d ← (w, h, <span class="c-number">35</span>, <span class="c-number">14.0</span>, <span class="c-number">13.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.f_it" class="c-libfunc">ᵛᵈf̲it</a> <span class="c-number">0</span>
+  dw ← (w, h, <span class="c-number">35</span>, <span class="c-number">28.5</span>, <span class="c-number">21.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.f_it" class="c-libfunc">ᵛᵈf̲it</a> <span class="c-number">0</span>
+  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.frames">ˡframes</a>
+  ts ← <a href="extensions-blender-demos-HexRun.xtl.html#l.frames">ˡframes</a>
+  <span class="c-comment">⍝</span><span class="c-comment"> the stage, the areas' names, the wires between them</span>
+  t ← <a href="extensions-blender-lib-Video.xtl.html#l.head">ᵛᵈhead</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((w, h, <span class="c-number">30</span>, <a href="extensions-blender-demos-HexRun.xtl.html#l.length">ˡlength</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.sky">ʰsky</a>, <span class="c-number">35</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_tage" class="c-libfunc">ᵛᵈs̲tage</a> <span class="c-number">0</span>)
+  middles ← <span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.uart">ˡuart</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.keys">ˡkeys</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.cpu">ˡcpu</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.display">ˡdisplay</a>
+  names ← (middles <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">4</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">4.2</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">4</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.6</span> <span class="c-number">200</span> <span class="c-number">205</span> <span class="c-number">230</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;areas&quot;</span>, <span class="c-string">&quot;serial line|key matrix|HEX1000|display&quot;</span>, names) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;wires&quot;</span>, <span class="c-number">3</span> <span class="c-number">10</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-0.6</span> <span class="c-number">0.3</span> <span class="c-number">4.5</span> <span class="c-number">0.6</span> <span class="c-number">0.3</span> <span class="c-number">4.5</span> <span class="c-number">90</span> <span class="c-number">100</span> <span class="c-number">140</span> <span class="c-number">0.06</span>  <span class="c-number">7.0</span> <span class="c-number">0.3</span> <span class="c-number">-0.3</span> <span class="c-number">7.0</span> <span class="c-number">0.3</span> <span class="c-number">-0.7</span> <span class="c-number">90</span> <span class="c-number">100</span> <span class="c-number">140</span> <span class="c-number">0.06</span>  <span class="c-number">0.6</span> <span class="c-number">0.3</span> <span class="c-number">-5.5</span> <span class="c-number">-0.6</span> <span class="c-number">0.3</span> <span class="c-number">-5.5</span> <span class="c-number">90</span> <span class="c-number">100</span> <span class="c-number">140</span> <span class="c-number">0.06</span>) <a href="extensions-blender-lib-Video.xtl.html#l.l_ines" class="c-libfunc">ᵛᵈl̲ines</a> <span class="c-number">0</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> the serial line: the line itself, high bright and low dark, and each</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> bit lit as it arrives, a 1 bright and a 0 dim; the bytes received</span>
+  (starts, bits) ← <a href="extensions-blender-demos-HexRun.xtl.html#l.l_ine" class="c-libfunc">ˡl̲ine</a> v
+  nb ← <span class="c-number">10</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.text">ˡtext</a>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;line&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> ((<a href="extensions-blender-demos-HexRun.xtl.html#l.uart">ˡuart</a>, <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-0.4</span>, <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">3.45</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_os" class="c-libfunc">ʰp̲os</a> <span class="c-number">0</span>, <span class="c-number">8.6</span> <span class="c-number">0.2</span> <span class="c-number">0.16</span>, <span class="c-number">47</span> <span class="c-number">183</span> <span class="c-number">214</span>, <span class="c-number">1.0</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
+  rx ← (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.15</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.35</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (v, <span class="c-string">&quot;uart_rx&quot;</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.f_rames" class="c-libfunc">ʰf̲rames</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;line&quot;</span>, <span class="c-string">&quot;glow&quot;</span>, (rx, ts) <a href="extensions-blender-demos-HexRun.xtl.html#h.s_tepRows" class="c-libfunc">ʰs̲tepRows</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_teps" class="c-libfunc">ᵛᵈs̲teps</a> <span class="c-number">0</span>
+  p ← (<a href="extensions-blender-demos-HexRun.xtl.html#l.uart">ˡuart</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.bitX">ʰbitX</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.bitZ">ʰbitZ</a>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_os" class="c-libfunc">ʰp̲os</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;bit page&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> (p, <span class="c-number">0.74</span> <span class="c-number">0.24</span> <span class="c-number">0.54</span>, <span class="c-number">70</span> <span class="c-number">76</span> <span class="c-number">96</span>, <span class="c-number">1.0</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.o_utlines" class="c-libfunc">ᵛᵈo̲utlines</a> <span class="c-number">0</span>
+  edge ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<span class="c-number">0.0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.bitJ">ʰbitJ</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">10.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.bitJ">ʰbitJ</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">10.0</span>) <a href="builtins.html#-7c" class="c-symbol">∨</a> <span class="c-number">9.0</span> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.bitJ">ʰbitJ</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">10.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.bitJ">ʰbitJ</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">10.0</span>
+  rgb ← <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> nb) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">255.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">135.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> edge) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">216.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">76.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> edge) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">77.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">143.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> edge
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;bits&quot;</span>, p <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((nb <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.7</span> <span class="c-number">0.2</span> <span class="c-number">0.5</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> rgb <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (nb <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
+  arrive ← <a href="extensions-blender-demos-HexRun.xtl.html#h.v_ideo" class="c-libfunc">ʰv̲ideo</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (<a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> starts) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> (<a href="extensions-blender-demos-HexRun.xtl.html#l.bit">ˡbit</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.bit">ˡbit</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-number">5</span> <span class="c-number">6</span> <span class="c-number">7</span> <span class="c-number">8</span> <span class="c-number">9</span>
+  lit ← <span class="c-number">0.3</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> bits
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;bits&quot;</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> nb) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (nb <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (arrive <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">30.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> arrive, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> nb) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (nb <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (nb <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> lit) <a href="extensions-blender-lib-Video.xtl.html#l.g_lows" class="c-libfunc">ᵛᵈg̲lows</a> <span class="c-number">0</span>
+  (got, bytes) ← <a href="extensions-blender-demos-HexRun.xtl.html#l.r_eceived" class="c-libfunc">ˡr̲eceived</a> v
+  nc ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> bytes
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;bytes&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#h.b_ars" class="c-libfunc">ʰb̲ars</a> <a href="builtins.html#-5b-5dU_CHAR" class="c-builtin">⎕U̲CHAR</a> bytes, ((<a href="extensions-blender-demos-HexRun.xtl.html#l.uart">ˡuart</a>, nc <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">4.6</span>, <span class="c-number">2.6</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.62</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> nc) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_os" class="c-libfunc">ʰp̲os</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (nc <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">4</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.6</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span>) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;bytes&quot;</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> nc) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="extensions-blender-demos-HexRun.xtl.html#h.v_ideo" class="c-libfunc">ʰv̲ideo</a> got) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> nc <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.length">ˡlength</a>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> the key matrix: the keys, the held one framed, the columns R8 to R13</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> and the rows K as lamps, the board's queue</span>
+  kp ← (<a href="extensions-blender-demos-HexRun.xtl.html#l.keys">ˡkeys</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.keyX">ʰkeyX</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.keyZ">ʰkeyZ</a>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_os" class="c-libfunc">ʰp̲os</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;keys&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> (kp, <span class="c-number">1.0</span> <span class="c-number">0.3</span> <span class="c-number">1.0</span>, <span class="c-number">64</span> <span class="c-number">72</span> <span class="c-number">104</span>, <span class="c-number">1.0</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;key names&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#l.keyNames">ˡkeyNames</a>, (kp <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">21</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">-0.35</span> <span class="c-number">0.0</span>)) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<span class="c-number">21</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.55</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;held&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> (<span class="c-number">1</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> kp, <span class="c-number">1.25</span> <span class="c-number">0.45</span> <span class="c-number">1.25</span>, <span class="c-number">255</span> <span class="c-number">122</span> <span class="c-number">61</span>, <span class="c-number">0.0</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.o_utlines" class="c-libfunc">ᵛᵈo̲utlines</a> <span class="c-number">0</span>
+  active ← (v, <span class="c-string">&quot;key_active&quot;</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.f_rames" class="c-libfunc">ʰf̲rames</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;held&quot;</span>, <span class="c-string">&quot;glow&quot;</span>, ((n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">3.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> active, ts) <a href="extensions-blender-demos-HexRun.xtl.html#h.s_tepRows" class="c-libfunc">ʰs̲tepRows</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_teps" class="c-libfunc">ᵛᵈs̲teps</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;held&quot;</span>, <span class="c-string">&quot;location&quot;</span>, (((n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (v, <span class="c-string">&quot;key_code&quot;</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.f_rames" class="c-libfunc">ʰf̲rames</a> <span class="c-number">0</span>, ts) <a href="extensions-blender-demos-HexRun.xtl.html#h.s_tepRows" class="c-libfunc">ʰs̲tepRows</a> <span class="c-number">0</span>, kp) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_laceRows" class="c-libfunc">ʰp̲laceRows</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_teps" class="c-libfunc">ᵛᵈs̲teps</a> <span class="c-number">0</span>
+  cols ← (<a href="extensions-blender-demos-HexRun.xtl.html#l.keys">ˡkeys</a>, <span class="c-number">-3.5</span> <span class="c-number">-2.25</span> <span class="c-number">-1.0</span> <span class="c-number">0.25</span> <span class="c-number">1.5</span> <span class="c-number">2.75</span>, <span class="c-number">6</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2.75</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_os" class="c-libfunc">ʰp̲os</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;columns&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> (cols, <span class="c-number">0.9</span> <span class="c-number">0.2</span> <span class="c-number">0.25</span>, <span class="c-number">120</span> <span class="c-number">230</span> <span class="c-number">120</span>, <span class="c-number">0.1</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
+  r ← (v, <span class="c-string">&quot;r&quot;</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.f_rames" class="c-libfunc">ʰf̲rames</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;columns&quot;</span>, <span class="c-string">&quot;glow&quot;</span>, (<span class="c-number">0.1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (r <span class="c-builtin">'</span><a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">256</span> <span class="c-number">512</span> <span class="c-number">1024</span> <span class="c-number">2048</span> <span class="c-number">4096</span> <span class="c-number">8192</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span>, ts) <a href="extensions-blender-demos-HexRun.xtl.html#h.s_tepRows" class="c-libfunc">ʰs̲tepRows</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_teps" class="c-libfunc">ᵛᵈs̲teps</a> <span class="c-number">0</span>
+  rows ← (<a href="extensions-blender-demos-HexRun.xtl.html#l.keys">ˡkeys</a>, <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-4.75</span>, <span class="c-number">-2.3</span> <span class="c-number">-1.05</span> <span class="c-number">0.2</span> <span class="c-number">1.45</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_os" class="c-libfunc">ʰp̲os</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;rows&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> (rows, <span class="c-number">0.25</span> <span class="c-number">0.2</span> <span class="c-number">0.9</span>, <span class="c-number">47</span> <span class="c-number">183</span> <span class="c-number">214</span>, <span class="c-number">0.1</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
+  k ← (v, <span class="c-string">&quot;k&quot;</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.f_rames" class="c-libfunc">ʰf̲rames</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;rows&quot;</span>, <span class="c-string">&quot;glow&quot;</span>, (<span class="c-number">0.1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (k <span class="c-builtin">'</span><a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">4</span> <span class="c-number">8</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span>, ts) <a href="extensions-blender-demos-HexRun.xtl.html#h.s_tepRows" class="c-libfunc">ʰs̲tepRows</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_teps" class="c-libfunc">ᵛᵈs̲teps</a> <span class="c-number">0</span>
+  qp ← (<a href="extensions-blender-demos-HexRun.xtl.html#l.keys">ˡkeys</a>, <span class="c-number">10</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">4.6</span>, <span class="c-number">-2.6</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">10</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_os" class="c-libfunc">ʰp̲os</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;queue&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> (qp, <span class="c-number">0.6</span> <span class="c-number">0.2</span> <span class="c-number">0.35</span>, <span class="c-number">255</span> <span class="c-number">122</span> <span class="c-number">61</span>, <span class="c-number">0.08</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
+  q ← (v, <span class="c-string">&quot;queued&quot;</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.f_rames" class="c-libfunc">ʰf̲rames</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;queue&quot;</span>, <span class="c-string">&quot;glow&quot;</span>, (<span class="c-number">0.08</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">1.9</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">1</span> <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> q <span class="c-symbol">'</span><a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">10</span>, ts) <a href="extensions-blender-demos-HexRun.xtl.html#h.s_tepRows" class="c-libfunc">ʰs̲tepRows</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_teps" class="c-libfunc">ᵛᵈs̲teps</a> <span class="c-number">0</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> the machine: the ROM page with the program counter's marker, the</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> page lamps, A's bits, the status, the adder, the RAM's bars</span>
+  rp ← (<a href="extensions-blender-demos-HexRun.xtl.html#l.cpu">ˡcpu</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.romX">ʰromX</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.romZ">ʰromZ</a>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_os" class="c-libfunc">ʰp̲os</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;rom page&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> (rp, <span class="c-number">0.5</span> <span class="c-number">0.2</span> <span class="c-number">0.5</span>, <span class="c-number">70</span> <span class="c-number">76</span> <span class="c-number">96</span>, <span class="c-number">1.0</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.o_utlines" class="c-libfunc">ᵛᵈo̲utlines</a> <span class="c-number">0</span>
+  pc ← (v, <span class="c-string">&quot;pc&quot;</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.f_rames" class="c-libfunc">ʰf̲rames</a> <span class="c-number">0</span>
+  pa ← (v, <span class="c-string">&quot;pa&quot;</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.f_rames" class="c-libfunc">ʰf̲rames</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;pc&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> (<span class="c-number">1</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> rp, <span class="c-number">0.42</span> <span class="c-number">0.25</span> <span class="c-number">0.42</span>, <span class="c-number">240</span> <span class="c-number">240</span> <span class="c-number">255</span>, <span class="c-number">2.0</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;pc&quot;</span>, <span class="c-string">&quot;location&quot;</span>, (((n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> pc, ts) <a href="extensions-blender-demos-HexRun.xtl.html#h.s_tepRows" class="c-libfunc">ʰs̲tepRows</a> <span class="c-number">0</span>, rp <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">64</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">-0.05</span> <span class="c-number">0.0</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_laceRows" class="c-libfunc">ʰp̲laceRows</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_teps" class="c-libfunc">ᵛᵈs̲teps</a> <span class="c-number">0</span>
+  pp ← (<a href="extensions-blender-demos-HexRun.xtl.html#l.cpu">ˡcpu</a>, <span class="c-number">-5.6</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.29</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">16</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>, <span class="c-number">16</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">3.55</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_os" class="c-libfunc">ʰp̲os</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;pages&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> (pp, <span class="c-number">0.22</span> <span class="c-number">0.2</span> <span class="c-number">0.22</span>, <span class="c-number">255</span> <span class="c-number">216</span> <span class="c-number">77</span>, <span class="c-number">0.1</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;pages&quot;</span>, <span class="c-string">&quot;glow&quot;</span>, (<span class="c-number">0.1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">0</span> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">1</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#a_bs" class="c-builtin">a̲bs</a> pa <span class="c-symbol">'</span><a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">16</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>, ts) <a href="extensions-blender-demos-HexRun.xtl.html#h.s_tepRows" class="c-libfunc">ʰs̲tepRows</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_teps" class="c-libfunc">ᵛᵈs̲teps</a> <span class="c-number">0</span>
+  ap ← (<a href="extensions-blender-demos-HexRun.xtl.html#l.cpu">ˡcpu</a>, <span class="c-number">2.8</span> <span class="c-number">2.2</span> <span class="c-number">1.6</span> <span class="c-number">1.0</span>, <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2.7</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_os" class="c-libfunc">ʰp̲os</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;a&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> (ap, <span class="c-number">0.45</span> <span class="c-number">0.2</span> <span class="c-number">0.45</span>, <span class="c-number">47</span> <span class="c-number">183</span> <span class="c-number">214</span>, <span class="c-number">0.1</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;a&quot;</span>, <span class="c-string">&quot;glow&quot;</span>, (<span class="c-number">0.1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (((v, <span class="c-string">&quot;a&quot;</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.f_rames" class="c-libfunc">ʰf̲rames</a> <span class="c-number">0</span>) <span class="c-builtin">'</span><a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">4</span> <span class="c-number">8</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span>, ts) <a href="extensions-blender-demos-HexRun.xtl.html#h.s_tepRows" class="c-libfunc">ʰs̲tepRows</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_teps" class="c-libfunc">ᵛᵈs̲teps</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;s&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> ((<a href="extensions-blender-demos-HexRun.xtl.html#l.cpu">ˡcpu</a>, <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">4.6</span>, <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2.7</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_os" class="c-libfunc">ʰp̲os</a> <span class="c-number">0</span>, <span class="c-number">0.45</span> <span class="c-number">0.2</span> <span class="c-number">0.45</span>, <span class="c-number">255</span> <span class="c-number">122</span> <span class="c-number">61</span>, <span class="c-number">0.1</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;s&quot;</span>, <span class="c-string">&quot;glow&quot;</span>, ((n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (v, <span class="c-string">&quot;s&quot;</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.f_rames" class="c-libfunc">ʰf̲rames</a> <span class="c-number">0</span>, ts) <a href="extensions-blender-demos-HexRun.xtl.html#h.s_tepRows" class="c-libfunc">ʰs̲tepRows</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_teps" class="c-libfunc">ᵛᵈs̲teps</a> <span class="c-number">0</span>
+  kind ← <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.k_ind" class="c-libfunc">ʰˣk̲ind</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> pc <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">64</span> <a href="builtins.html#-2a" class="c-symbol">×</a> pa) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.CalcRom">ʰˣCalcRom</a>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;alu&quot;</span>, <a href="extensions-blender-demos-HexRun.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> ((<a href="extensions-blender-demos-HexRun.xtl.html#l.cpu">ˡcpu</a>, <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2.6</span>, <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.5</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_os" class="c-libfunc">ʰp̲os</a> <span class="c-number">0</span>, <span class="c-number">2.4</span> <span class="c-number">0.3</span> <span class="c-number">0.6</span>, <span class="c-number">255</span> <span class="c-number">216</span> <span class="c-number">77</span>, <span class="c-number">0.1</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;alu&quot;</span>, <span class="c-string">&quot;glow&quot;</span>, ((n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.4</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> kind <a href="builtins.html#m_ember-3f" class="c-builtin">m̲ember?</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.aluKinds">ʰaluKinds</a>, ts) <a href="extensions-blender-demos-HexRun.xtl.html#h.s_tepRows" class="c-libfunc">ʰs̲tepRows</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_teps" class="c-libfunc">ᵛᵈs̲teps</a> <span class="c-number">0</span>
+  ram ← (v, n) <a href="extensions-blender-demos-HexRun.xtl.html#h.r_am" class="c-libfunc">ʰr̲am</a> <span class="c-number">0</span>
+  bars ← (<a href="extensions-blender-demos-HexRun.xtl.html#l.cpu">ˡcpu</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.ramX">ʰramX</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.ramFloor">ʰramFloor</a>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_os" class="c-libfunc">ʰp̲os</a> <span class="c-number">0</span>
+  file ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.word">ʰword</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">16.0</span>
+  hs ← <span class="c-number">0.06</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.055</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> ram
+  first ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> hs
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;ram&quot;</span>, (bars <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">64</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">128</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> first) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((<span class="c-number">64</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.18</span> <span class="c-number">0.2</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (first <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (file, <span class="c-number">0.0</span>, <span class="c-number">3.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.t_one" class="c-libfunc">ᵛᵈt̲one</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<span class="c-number">64</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
+  steps ← (hs, ts) <a href="extensions-blender-demos-HexRun.xtl.html#h.s_tepRows" class="c-libfunc">ʰs̲tepRows</a> <span class="c-number">0</span>
+  o ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> steps
+  i ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> o
+  ns ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> o
+  hv ← <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> steps
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;ram&quot;</span>, <span class="c-string">&quot;location&quot;</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">5</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ns) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> o <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> steps) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> bars) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (ns <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.cpu">ˡcpu</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (i <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> bars) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> hv) <a href="extensions-blender-lib-Video.xtl.html#l.s_teps" class="c-libfunc">ᵛᵈs̲teps</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;ram&quot;</span>, <span class="c-string">&quot;scale&quot;</span>, <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">5</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ns) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> o <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> steps) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (ns <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.18</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (ns <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.2</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> hv) <a href="extensions-blender-lib-Video.xtl.html#l.s_teps" class="c-libfunc">ᵛᵈs̲teps</a> <span class="c-number">0</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> the labels of the machine's parts</span>
+  at ← (<span class="c-number">6</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.cpu">ˡcpu</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">6</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-3.43</span> <span class="c-number">0.0</span> <span class="c-number">-2.15</span>  <span class="c-number">0.3</span> <span class="c-number">0.0</span> <span class="c-number">2.7</span>  <span class="c-number">4.0</span> <span class="c-number">0.0</span> <span class="c-number">2.7</span>  <span class="c-number">0.6</span> <span class="c-number">0.0</span> <span class="c-number">1.5</span>  <span class="c-number">0.3</span> <span class="c-number">0.0</span> <span class="c-number">-1.8</span>  <span class="c-number">-3.43</span> <span class="c-number">0.0</span> <span class="c-number">3.95</span>
+  parts ← at <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<span class="c-number">6</span> <span class="c-number">1</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.4</span> <span class="c-number">0.5</span> <span class="c-number">0.5</span> <span class="c-number">0.45</span> <span class="c-number">0.45</span> <span class="c-number">0.3</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">6</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">200</span> <span class="c-number">205</span> <span class="c-number">230</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;parts&quot;</span>, <span class="c-string">&quot;ROM page|A|S|ALU|RAM|pages&quot;</span>, parts) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> the display: a calculator, its eight digits' segments lit from the</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> digit latches, the browser's screen under it</span>
+  body ← ((<span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.display">ˡdisplay</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.1</span> <span class="c-number">2.0</span>  <span class="c-number">0.0</span> <span class="c-number">-0.22</span> <span class="c-number">2.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">2</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">10.5</span> <span class="c-number">0.6</span> <span class="c-number">3.0</span> <span class="c-number">40</span> <span class="c-number">44</span> <span class="c-number">56</span> <span class="c-number">1.0</span>  <span class="c-number">9.6</span> <span class="c-number">0.05</span> <span class="c-number">2.0</span> <span class="c-number">16</span> <span class="c-number">28</span> <span class="c-number">16</span> <span class="c-number">1.0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;calculator&quot;</span>, body) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
+  sx ← <span class="c-number">3.85</span> <a href="builtins.html#-2d" class="c-symbol">−</a> (<span class="c-number">1.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.segP">ʰsegP</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.segDx">ʰsegDx</a>
+  sp ← (<a href="extensions-blender-demos-HexRun.xtl.html#l.display">ˡdisplay</a>, sx, <span class="c-number">2.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.segDz">ʰsegDz</a>) <a href="extensions-blender-demos-HexRun.xtl.html#h.p_os" class="c-libfunc">ʰp̲os</a> <span class="c-number">0</span>
+  flat ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.segFlat">ʰsegFlat</a>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;segments&quot;</span>, (sp <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">56</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">-0.3</span> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">56</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">0.12</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.38</span> <a href="builtins.html#-2a" class="c-symbol">×</a> flat) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">56</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.06</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.5</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.38</span> <a href="builtins.html#-2a" class="c-symbol">×</a> flat) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (<span class="c-number">56</span> <span class="c-number">4</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">156</span> <span class="c-number">245</span> <span class="c-number">154</span> <span class="c-number">0.03</span>)) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span>
+  shown ← (v, <span class="c-string">&quot;shown&quot;</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.f_rames" class="c-libfunc">ʰf̲rames</a> <span class="c-number">0</span>
+  dg ← (shown <span class="c-builtin">'</span><a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> <span class="c-number">32</span> <a href="builtins.html#-5e" class="c-symbol">^</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.segP">ʰsegP</a>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">32</span>
+  on ← (dg <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">16</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> ((((<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> dg <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">16</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="extensions-blender-demos-HexRun.xtl.html#l.segments">ˡsegments</a>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">56</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2</span> <a href="builtins.html#-5e" class="c-symbol">^</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.segS">ʰsegS</a>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;segments&quot;</span>, <span class="c-string">&quot;glow&quot;</span>, (<span class="c-number">0.03</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2.97</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> on, ts) <a href="extensions-blender-demos-HexRun.xtl.html#h.s_tepRows" class="c-libfunc">ʰs̲tepRows</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_teps" class="c-libfunc">ᵛᵈs̲teps</a> <span class="c-number">0</span>
+  pt ← (<span class="c-string">&quot;browser&quot;</span>, picture, (<a href="extensions-blender-demos-HexRun.xtl.html#l.display">ˡdisplay</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">-2.3</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">7.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.p_icture" class="c-libfunc">ᵛᵈp̲icture</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">0</span> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> picture) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> pt) <a href="builtins.html#t_ake" class="c-builtin">t̲ake</a> pt
+  <span class="c-comment">⍝</span><span class="c-comment"> in front of the camera: the clock count, and the instruction while</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> slow</span>
+  cy ← (v, <span class="c-string">&quot;cycle&quot;</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.f_rames" class="c-libfunc">ʰf̲rames</a> <span class="c-number">0</span>
+  ch ← <span class="c-number">1</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> (<span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> cy) <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">-1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> cy
+  clockAt ← (ch <a href="builtins.html#-26" class="c-symbol">∧</a> ts <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">3.4</span>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> ts
+  clockTexts ← <span class="c-quote">'</span>{ <span class="c-string">&quot;clock &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-lambdaarg">⍵</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> (ch <a href="builtins.html#-26" class="c-symbol">∧</a> ts <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">3.4</span>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> cy
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;clock&quot;</span>, <span class="c-number">-0.7</span> <span class="c-number">0.84</span> <span class="c-number">0.09</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span>, <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-quote">'</span>{ a b → <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> a) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> b } <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> clockTexts, clockAt) <a href="extensions-blender-lib-Video.xtl.html#l.r_eadout" class="c-libfunc">ᵛᵈr̲eadout</a> <span class="c-number">0</span>
+  slow ← ((ts <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">10.4</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> ts <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">16.4</span>) <a href="builtins.html#-7c" class="c-symbol">∨</a> (ts <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <span class="c-number">25.4</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> ts <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">35.4</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> NOP (code 0) is blank, as is everything while fast</span>
+  blank ← (<a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <span class="c-string">&quot; &quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span> <a href="builtins.html#d_rop" class="c-builtin">d̲rop</a> <a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html#l.Names">ʰˣNames</a>
+  names ← <span class="c-quote">'</span>{ <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> (<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-lambdaarg">⍵</span>) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> blank } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> kind <a href="builtins.html#-2a" class="c-symbol">×</a> slow
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;instruction&quot;</span>, <span class="c-number">0.7</span> <span class="c-number">0.84</span> <span class="c-number">0.09</span> <span class="c-number">255</span> <span class="c-number">216</span> <span class="c-number">77</span>, <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-quote">'</span>{ a b → <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> a) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> b } <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> names, ts) <a href="extensions-blender-lib-Video.xtl.html#l.r_eadout" class="c-libfunc">ᵛᵈr̲eadout</a> <span class="c-number">0</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> the camera, the title card, the captions</span>
+  <span class="c-comment">⍝</span><span class="c-comment"> close up, the camera looks a little low, the area above the captions</span>
+  dist ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.camWide">ʰcamWide</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> dw <a href="builtins.html#-2d" class="c-symbol">−</a> d
+  aims ← <a href="extensions-blender-demos-HexRun.xtl.html#h.camAims">ʰcamAims</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">10</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">20</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">-1.5</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-HexRun.xtl.html#h.camWide">ʰcamWide</a>
+  eyes ← aims <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">10</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<a href="extensions-blender-demos-HexRun.xtl.html#h.camSide">ʰcamSide</a> <a href="builtins.html#-2a" class="c-symbol">×</a> dist <a href="builtins.html#-2b" class="c-symbol">+</a> d) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> dist <a href="builtins.html#-2b" class="c-symbol">+</a> d) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.08</span> <a href="builtins.html#-2a" class="c-symbol">×</a> dist <a href="builtins.html#-2b" class="c-symbol">+</a> d
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-HexRun.xtl.html#h.camTimes">ʰcamTimes</a>, eyes, aims) <a href="extensions-blender-lib-Video.xtl.html#l.c_amera" class="c-libfunc">ᵛᵈc̲amera</a> <span class="c-number">0</span>
+  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="extensions-blender-demos-HexRun.xtl.html#l.title">ˡtitle</a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.subtitle">ˡsubtitle</a>, <a href="extensions-blender-demos-HexRun.xtl.html#h.cardTable">ʰcardTable</a>) <a href="extensions-blender-lib-Video.xtl.html#l.c_ards" class="c-libfunc">ᵛᵈc̲ards</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-HexRun.xtl.html#l.c_aptions" class="c-libfunc">ˡc̲aptions</a> v, <a href="extensions-blender-demos-HexRun.xtl.html#l.captionTable">ˡcaptionTable</a>) <a href="extensions-blender-lib-Video.xtl.html#l.c_aptions" class="c-libfunc">ᵛᵈc̲aptions</a> <span class="c-number">0</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-hex-run.xtl.html#n">n</a></div>
+</div>
+<div class="item" id="h.r_am">
+<h3><a href="#h.r_am"><span class="c-libfunc">ʰr̲am</span></a> <span class="type">: Num a =&gt; ((Box Char, Int), Int) -&gt; a -&gt; Int</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexRun.xtl.src.html#L402">line 402</a></div>
+<pre class="code"><span class="c-libfunc">ʰr̲am</span> ← { (v, n) z →
+  all ← <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-quote">'</span>{ a b → <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> a) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> b } <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ (v, <span class="c-string">&quot;ram&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-lambdaarg">⍵</span>) <a href="extensions-blender-demos-HexRun.xtl.html#h.f_rames" class="c-libfunc">ʰf̲rames</a> <span class="c-number">0</span> } <a href="builtins.html#m_ap" class="c-builtin">m̲ap</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">16</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>
+  m ← <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">16</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> all
+  w ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <span class="c-number">64</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>
+  i ← (<span class="c-number">16</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> n) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> w <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">4</span>
+  (((<span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> i) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> m) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">64</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">16</span> <a href="builtins.html#-5e" class="c-symbol">^</a> w <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">4</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">16</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+</main>
+</body>
+</html>

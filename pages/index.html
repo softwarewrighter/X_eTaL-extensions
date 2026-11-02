@@ -13,7 +13,7 @@
   <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
   <ul>
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
-    <li><a href="#blender">blender</a><ul><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
+    <li><a href="#blender">blender</a><ul><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-hex-run">hex-run</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
     <li><a href="#clock">clock</a><ul><li><a href="#clock-bridge-cost">bridge-cost</a></li></ul></li>
     <li><a href="#digest">digest</a></li>
@@ -97,6 +97,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <p class="note">Blender, 9: HEX1000&#x27;s program counter, an explainer made with the kit. The 64 addresses of a ROM page as cells in reading order; the program counter visits them in its shift register&#x27;s order -- 0 1 3 7 15 31 63 62 ..., never +1 -- each cell lit as it is reached, colored by when, the path drawn behind. The order is X_eTaL-fpga&#x27;s Hex1000 library (pinned at FPGA_COMMIT); the first hops in slow motion, the rest a time-lapse, after a title card, with captions. Made twice -- a YouTube video (1920 by 1080) and a Short (1080 by 1920) -- with a cue sheet and subtitles (.srt) to record narration against (PcWalk.xtl).</p>
       <video src="blender/hex-pc.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo blender hex-pc</pre>
+    </section>
+    <section class="panel demo" id="blender-hex-run">
+      <h3>blender / hex-run <a class="docs" href="doc/extensions-blender-demos-hex-run.xtl.html">source and docs</a></h3>
+      <p class="note">Blender, 10: HEX1000 computing C0DE+BEEF=, from a simulation of its board. scripts/hex1000-sim.sh runs X_eTaL-fpga&#x27;s board Verilog (at FPGA_COMMIT) under iverilog, the text sent over its serial line, into a waveform (VCD); scripts/hex1000-browser.py types the same text at the live browser calculator in headless Chrome. This program reads the waveform (Vcd.xtl), checks it -- the line carries the text, the board receives it, Hex1000.xtl replaying the clocks agrees with the circuit&#x27;s registers at every one, the display ends as the evaluator&#x27;s (hx:c_alc) and the browser&#x27;s -- and only then writes the video (HexRun.xtl): the bits arriving and the key matrix in slow motion, the typing as a time-lapse, one addition in slow motion, the display, the browser&#x27;s screen beside it. A YouTube video and a Short, with a cue sheet and subtitles.</p>
+      <video src="blender/hex-run.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just demo blender hex-run</pre>
     </section>
     <section class="panel demo" id="blender-matmul-fly">
       <h3>blender / matmul-fly <a class="docs" href="doc/extensions-blender-demos-matmul-fly.xtl.html">source and docs</a> <a class="docs" href="literate/matmul.html" title="Matrix multiply, arrays to video">literate document</a></h3>
@@ -324,7 +330,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at 45b68c5</span>
+  <span>built at 0f93e06</span>
 </footer>
 </body>
 </html>

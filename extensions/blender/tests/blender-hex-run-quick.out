@@ -1,0 +1,113 @@
+cycles 4971 shown 00011bff9d
+the checks:
+the line carries C0DE+BEEF= (10 characters of 10 bits)
+the board's UART received C0DE+BEEF=
+Hex1000.xtl replayed 4971 clocks from the circuit's K: A, S, PC and PA agree at every one
+the display ends showing 17FCD, the evaluator's (hx:c_alc)
+the cue sheet:
+[[cue]]
+n = 1
+start = 0.000
+end = 3.200
+caption = "HEX1000: C0DE+BEEF= typed at a 4-bit machine, its circuit simulated clock by clock"
+
+[[cue]]
+n = 2
+start = 3.800
+end = 10.000
+caption = "slow motion: each key arrives on the serial line as 10 bits, a start bit, 8 data bits from the lowest, a stop bit"
+
+[[cue]]
+n = 3
+start = 10.800
+end = 16.200
+caption = "the board queues it; the machine selects the key columns one by one (R8 to R13) and finds its row on K"
+
+[[cue]]
+n = 4
+start = 17.800
+end = 24.800
+caption = "time-lapse: the other 9 keys wait in the queue, a few hundred clocks each, and the display shows them"
+
+[[cue]]
+n = 5
+start = 25.800
+end = 35.200
+caption = "slow motion: the sum, a digit at a time with its carry (AMAAC), the RAM's bars changing"
+
+[[cue]]
+n = 6
+start = 36.800
+end = 42.000
+caption = "17FCD after 3044 clocks: the circuit's display, the evaluator's and the browser's agree"
+
+
+160 by 90: the run, the error lines, what Blender made
+exit 0
+errors 0
+frames 1 to 1261 at 30 a second
+a: 4 objects, 4 keyed
+alu: 1 objects, 1 keyed
+areas: 4 objects, 0 keyed
+bit page: 100 objects, 0 keyed
+bits: 100 objects, 100 keyed
+bytes: 10 objects, 10 keyed
+calculator: 2 objects, 0 keyed
+cards: 1 objects, 1 keyed
+clock: 1 objects, 0 keyed
+columns: 6 objects, 6 keyed
+held: 1 objects, 1 keyed
+instruction: 1 objects, 0 keyed
+key names: 21 objects, 0 keyed
+keys: 21 objects, 0 keyed
+line: 1 objects, 1 keyed
+pages: 16 objects, 16 keyed
+parts: 6 objects, 0 keyed
+pc: 1 objects, 1 keyed
+queue: 10 objects, 10 keyed
+ram: 64 objects, 64 keyed
+rom page: 64 objects, 0 keyed
+rows: 4 objects, 4 keyed
+s: 1 objects, 1 keyed
+segments: 56 objects, 56 keyed
+wires: 3 objects, 0 keyed
+
+90 by 160: the run, the error lines, what Blender made
+exit 0
+errors 0
+frames 1 to 1261 at 30 a second
+a: 4 objects, 4 keyed
+alu: 1 objects, 1 keyed
+areas: 4 objects, 0 keyed
+bit page: 100 objects, 0 keyed
+bits: 100 objects, 100 keyed
+bytes: 10 objects, 10 keyed
+calculator: 2 objects, 0 keyed
+cards: 1 objects, 1 keyed
+clock: 1 objects, 0 keyed
+columns: 6 objects, 6 keyed
+held: 1 objects, 1 keyed
+instruction: 1 objects, 0 keyed
+key names: 21 objects, 0 keyed
+keys: 21 objects, 0 keyed
+line: 1 objects, 1 keyed
+pages: 16 objects, 16 keyed
+parts: 6 objects, 0 keyed
+pc: 1 objects, 1 keyed
+queue: 10 objects, 10 keyed
+ram: 64 objects, 64 keyed
+rom page: 64 objects, 0 keyed
+rows: 4 objects, 4 keyed
+s: 1 objects, 1 keyed
+segments: 56 objects, 56 keyed
+wires: 3 objects, 0 keyed
+
+work/quick/hexrun-short:
+report.txt
+short-1.png
+short-2.png
+
+work/quick/hexrun-wide:
+report.txt
+wide-1.png
+wide-2.png

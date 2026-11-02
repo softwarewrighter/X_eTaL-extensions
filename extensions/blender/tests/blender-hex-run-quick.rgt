@@ -1,0 +1,3 @@
+command = '../../scripts/hex1000-sim.sh "C0DE+BEEF=" work/quick-hexrun && t=$(mktemp -d) && mkdir -p $t/work && ln -s "$PWD/../../work/fonts" $t/work/fonts && XETAL_BLENDER_ROOT=$t XETAL_PATH="$PWD/demos:$XETAL_PATH" xetal-x --ext .. run tests/hex-run-quick.xtl && cd $t && ls work/quick/hexrun-wide work/quick/hexrun-short'
+exit_code = 0
+desc = "HEX1000 computing C0DE+BEEF= (HexRun.xtl) from its board's simulated waveform: the checks (the serial line, the bytes received, Hex1000.xtl agreeing with the circuit at every clock, the display the evaluator's), the cue sheet, then through Blender at 160 by 90 and 90 by 160, two stills each: each run's errors (none), Blender's report, and the stills"

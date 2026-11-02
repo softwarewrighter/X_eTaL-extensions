@@ -1,0 +1,45 @@
+## Blender, 10: HEX1000 computing C0DE+BEEF=, from a simulation of its
+## board. scripts/hex1000-sim.sh runs X_eTaL-fpga's board Verilog (at
+## FPGA_COMMIT) under iverilog, the text sent over its serial line, into
+## a waveform (VCD); scripts/hex1000-browser.py types the same text at
+## the live browser calculator in headless Chrome. This program reads
+## the waveform (Vcd.xtl), checks it -- the line carries the text, the
+## board receives it, Hex1000.xtl replaying the clocks agrees with the
+## circuit's registers at every one, the display ends as the
+## evaluator's (hx:c_alc) and the browser's -- and only then writes the
+## video (HexRun.xtl): the bits arriving and the key matrix in slow
+## motion, the typing as a time-lapse, one addition in slow motion, the
+## display, the browser's screen beside it. A YouTube video and a Short,
+## with a cue sheet and subtitles.
+## Run: just ext blender hex-run   (the simulation, the browser, then this:
+## about 25 minutes, 1261 frames twice)
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"vc:" u_se< "Vcd"
+"hr:" u_se< "HexRun"
+
+v := vc:r_ead "work/hexrun/hex-run.vcd"
+"the checks:"
+(v, bl:r_ead "work/hexrun/browser.txt") hr:c_heck 0
+n := "work/hexrun/run.py" bl:w_rite! bp:launcher
+n := "work/hexrun/hex-run.cues.toml" bl:w_rite! (hr:c_ues v, hr:cueTable) vd:c_ues 0
+n := "work/hexrun/hex-run.srt" bl:w_rite! (hr:c_ues v, hr:cueTable) vd:s_rt 0
+"the cue sheet (work/hexrun/hex-run.cues.toml):"
+bl:r_ead "work/hexrun/hex-run.cues.toml"
+n := "work/hexrun/video.py" bl:w_rite! ((vd:landscape, v, "work/hexrun/browser.png") hr:s_cene 0) c_at (vd:r_ender "hex-run.mp4") c_at vd:report
+n := "work/hexrun/short.py" bl:w_rite! ((vd:shorts, v, "work/hexrun/browser.png") hr:s_cene 0) c_at (vd:r_ender "hex-run-short.mp4") c_at vd:report
+"rendering 1261 frames at 1920 by 1080 with Blender (EEVEE) ..."
+r := "work/hexrun/run.py" bl:r_un! "work/hexrun/video.py work/hexrun/out"
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+"rendering the Short, 1261 frames at 1080 by 1920 ..."
+r := "work/hexrun/run.py" bl:r_un! "work/hexrun/short.py work/hexrun/out-short"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+"what Blender made:"
+bl:r_ead "work/hexrun/out/report.txt"

@@ -1,0 +1,408 @@
+## HexRun.xtl -- HEX1000 computing C0DE+BEEF=, a video made with the
+## explainer kit (Video.xtl) from a simulation of its board: the text
+## sent over the serial line bit by bit, the board queuing each key, the
+## machine scanning its key matrix, its program counter hopping through
+## a ROM page, A, the status, the ALU and the RAM changing, and the
+## digits strobed out to a calculator's display. Everything moving is a
+## signal of the simulation's waveform (scripts/hex1000-sim.sh: the
+## board's Verilog from X_eTaL-fpga at FPGA_COMMIT under iverilog; Vcd.xtl
+## reads it), sampled once a frame; X_eTaL-fpga's Hex1000.xtl replays
+## the same clocks from the K inputs the circuit saw and must agree with
+## its registers at every one, and the display it ends with must be the
+## evaluator's (hx:c_alc) -- else no script is written. Beside the
+## calculator at the end, the browser calculator's screen
+## (scripts/hex1000-browser.py). Shared by the demo (demos/hex-run.xtl)
+## and its test.
+## Import: "hr:" u_se< "HexRun"
+
+"hx:" u_se< "Hex1000"
+"vc:" u_se< "Vcd"
+"vd:" u_se< "Video"
+"s:" u_se< "Strings"
+
+### The run
+
+## text: what is typed at the board, over its serial line
+l:text := "C0DE+BEEF="
+
+## bit: the serial line's bit time in the simulation (ps; 115200 baud)
+l:bit := 8680000
+
+# a signal of the waveform at times (ps)
+h:a_t := { (v, name, ts) z -> (v, name, ts) vc:a_t 0 }
+
+# a time in ps as microseconds
+h:u_s := { ps -> (f_loat ps) / 1000000.0 }
+
+## hr:c_locks v: when the waveform v's count of machine clocks became
+## each value, 0 (reset) 1 2 ... (ps): a state is the circuit's after
+## that many instructions
+l:c_locks := { v -> 1 s_elect_2 (v, "cycle") vc:c_hanges 0 }
+
+## hr:l_ine v: the serial line decoded from the waveform: (starts, bits)
+## -- when each character's start bit began (ps; the testbench sends
+## them back to back) and its ten bits as the line had them at their
+## middles, a row a character: start (0), the data bits from the lowest,
+## stop (1)
+l:l_ine := { v ->
+  c := (v, "uart_rx") vc:c_hanges 0
+  first := f_irst ((0 = 2 s_elect_2 c) & 0 < 1 s_elect_2 c) r_eplicate 1 s_elect_2 c
+  n := t_ally l:text
+  starts := first + 10 * l:bit * (r_ange n) - 1
+  ts := (n c_at 10) r_eshape r_avel starts 'l_eft t_able 0 1 2 3 4 5 6 7 8 9
+  at := ts + (l:bit d_iv 2) + l:bit * (n c_at 10) r_eshape 0 1 2 3 4 5 6 7 8 9
+  (starts, (n c_at 10) r_eshape (v, "uart_rx", r_avel at) h:a_t 0)
+}
+
+## hr:r_eceived v: the bytes the board's UART core handed on, (times,
+## bytes): when its valid flag rose (ps), and the byte
+l:r_eceived := { v ->
+  c := (v, "valid") vc:c_hanges 0
+  ts := (1 = 2 s_elect_2 c) r_eplicate 1 s_elect_2 c
+  (ts, (v, "rxb", ts) h:a_t 0)
+}
+
+## the seven segments a b c d e f g of each hexadecimal digit, a bit
+## each from the lowest
+## >> "hr:" u_se< "HexRun"
+## >> 4 t_ake hr:segments
+## 63 6 91 79
+l:segments := 63 6 91 79 102 109 125 7 127 111 119 124 57 94 121 113
+
+## hr:s_creen shown: the display's eight digit latches (5 bits each,
+## digit 0 the lowest: a digit shown when its bit 4 is set) as the text
+## a terminal shows, digit 7 first, blank where not shown
+## >> "hr:" u_se< "HexRun"
+## >> hr:s_creen 18612125
+##    17FCD
+l:s_creen := { d ->
+  ds := (8 r_eshape 32) e_ncode d
+  (1 + (ds >= 16) * 1 + ds m_od 16) s_elect " 0123456789ABCDEF"
+}
+
+## hr:c_heck (v, browser): the checks a video is made after, as lines of
+## text, or a panic naming the one that failed: the line carries the
+## text, the board's UART receives it, Hex1000.xtl replaying the clocks
+## from the K inputs the circuit saw has its A, S, PC and PA at every
+## one, and the display at the end is the evaluator's (hx:c_alc) and
+## the browser's (its screen's text; "" skips that check)
+l:c_heck := { (v, browser) z ->
+  (starts, bits) := l:l_ine v
+  codes := []U_CS l:text
+  data := 2 d_ecode r_ev 2 1 t_ranspose 8 t_ake_2 1 d_rop_2 bits
+  ok1 := (0 = '+ r_/ 1 s_elect_2 bits) & ('*  r_/ 10 s_elect_2 bits) & codes m_atch data
+  n_ot ok1 ? []P_ANIC "hex-run: the serial line does not carry " c_at l:text
+  (ts, bytes) := l:r_eceived v
+  n_ot codes m_atch bytes ? []P_ANIC "hex-run: the board received " c_at []U_CHAR bytes
+  t := l:c_locks v
+  n := t_ally t
+  mid := t + 518000
+  ks := (v, "k", mid) h:a_t 0
+  rom := hx:CalcRom
+  (last, i, rows) := (n - 1) '{ (st, i, m) -> s1 := (rom hx:s_tep st)_ i s_elect ks
+    (s1, i + 1, m c_at 1 4 5 6 s_elect hx:r_egs s1) } p_ower (hx:Reset, 1, 0 r_eshape 0)
+  m := ((n - 1) c_at 4) r_eshape rows
+  vcd := 2 1 t_ranspose (4 c_at n - 1) r_eshape (1 d_rop (v, "a", mid) h:a_t 0) c_at (1 d_rop (v, "s", mid) h:a_t 0) c_at (1 d_rop (v, "pc", mid) h:a_t 0) c_at 1 d_rop (v, "pa", mid) h:a_t 0
+  bad := '+ r_/ r_avel n_ot m = vcd
+  bad > 0 ? []P_ANIC "hex-run: Hex1000.xtl and the circuit differ at " c_at (f_ormat bad) c_at " register values"
+  shown := l:s_creen f_irst (v, "shown", 1 r_eshape f_irst -1 t_ake 1 s_elect_2 (v, "shown") vc:c_hanges 0) h:a_t 0
+  want := hx:c_alc l:text
+  n_ot want m_atch shown ? []P_ANIC "hex-run: the display ends " c_at shown c_at ", the evaluator's " c_at want
+  inb := ("| " c_at want c_at " |") s:i_nfix? browser
+  ((t_ally browser) > 0) & n_ot inb ? []P_ANIC "hex-run: the browser's screen is not " c_at want
+  also := "\nthe browser calculator shows it too"
+  b := (((t_ally browser) > 0) * t_ally also) t_ake also
+  "the line carries " c_at l:text c_at " (" c_at (f_ormat t_ally bits) c_at " characters of 10 bits)\nthe board's UART received " c_at ([]U_CHAR bytes) c_at "\nHex1000.xtl replayed " c_at (f_ormat n - 1) c_at " clocks from the circuit's K: A, S, PC and PA agree at every one\nthe display ends showing " c_at (s:t_rim shown) c_at ", the evaluator's (hx:c_alc)" c_at b
+}
+
+### Time
+
+## map: the simulation's microseconds as the video's seconds
+## (vd:r_etime): a title card; the first character's ten bits in slow
+## motion; the machine finding that key, slower still; the other nine
+## keys a time-lapse; one addition in slow motion; then the display
+l:map := 6 2 r_eshape 290.0 3.4  387.0 10.4  413.0 16.4  2975.0 25.4  3055.0 35.4  3175.0 37.6
+
+## length: the video's seconds
+l:length := 42.0
+
+## frames: each frame's second in the video (30 a second)
+## >> "hr:" u_se< "HexRun"
+## >> 3 t_ake hr:frames
+## 0.0 0.03333333333333333 0.06666666666666667
+l:frames := ((f_loat r_ange 1 + f_loor 0.5 + 30.0 * l:length) - 1.0) / 30.0
+
+## framePs: the simulation's time at each frame (ps)
+l:framePs := f_loor 1000000.0 * ((2 1 s_elect_2 l:map), l:frames) vd:r_etime 0
+
+# simulation times (ps) as the video's seconds
+h:v_ideo := { ps -> (l:map, h:u_s ps) vd:r_etime 0 }
+
+# a signal at every frame
+h:f_rames := { (v, name) z -> (v, name, l:framePs) vc:a_t 0 }
+
+# (values, times) h:s_tepRows 0: vd:s_teps rows (object, second, value)
+# for a frames by objects matrix: each object's first frame and every
+# frame where its value changed, object by object
+h:s_tepRows := { (g, ts) z ->
+  n := 1 s_elect s_hape g
+  m := 2 s_elect s_hape g
+  keep := r_avel 2 1 t_ranspose ((1 c_at m) r_eshape 1 = 1) c_at n_ot (1 d_rop g) = -1 d_rop g
+  obj := r_avel 2 1 t_ranspose (n c_at m) r_eshape f_loat r_ange m
+  at := r_avel (m c_at n) r_eshape f_loat ts
+  val := r_avel 2 1 t_ranspose f_loat g
+  k := '+ r_/ keep
+  2 1 t_ranspose (3 c_at k) r_eshape (keep r_eplicate obj) c_at (keep r_eplicate at) c_at keep r_eplicate val
+}
+
+# (rows, places) h:p_laceRows 0: step rows whose value is a place's
+# number (from 0) as location rows (object, second, x y z)
+h:p_laceRows := { (rows, p) z ->
+  i := 1 + f_loor 3 s_elect_2 rows
+  (2 t_ake_2 rows) c_at_2 2 1 t_ranspose (3 c_at t_ally i) r_eshape (i s_elect 1 s_elect_2 p) c_at (i s_elect 2 s_elect_2 p) c_at i s_elect 3 s_elect_2 p
+}
+
+### Where things are
+
+## the four areas' middles: the serial line, the key matrix, the
+## machine, the display
+l:uart := -7.0 0.0 4.5
+## the key matrix's
+l:keys := 7.0 0.0 4.5
+## the machine's
+l:cpu := 7.0 0.0 -5.5
+## the display's
+l:display := -7.0 0.0 -5.5
+
+# (middle, xs, zs) h:p_os 0: places (n by 3) at xs and zs from a middle,
+# in its plane
+h:p_os := { (c, xs, zs) z ->
+  n := t_ally xs
+  2 1 t_ranspose (3 c_at n) r_eshape (xs + 1 s_elect c) c_at (n r_eshape 2 s_elect c) c_at zs + 3 s_elect c
+}
+
+# (places, size, rgb, strength) h:b_oxes 0: vd:b_oxes rows
+h:b_oxes := { (p, size, rgb, g) ->
+  n := 1 s_elect s_hape p
+  p c_at_2 (n c_at 7) r_eshape (f_loat size) c_at (f_loat rgb) c_at g
+}
+
+# texts as one text, | between
+h:b_ars := { t -> -1 d_rop r_avel 2 1 t_ranspose (2 c_at t_ally t) r_eshape t c_at (t_ally t) r_eshape "|" }
+
+# the serial line: column j, row k of the bits
+h:bitJ := f_loat (r_ange 10 * t_ally l:text) - 1
+h:bitX := -4.4 + 0.86 * h:bitJ - 10.0 * f_loat f_loor h:bitJ / 10.0
+h:bitZ := 2.6 - 0.62 * f_loat f_loor h:bitJ / 10.0
+
+# the keys: code c in column c / 4 (selected by R8 to R13), row c mod 4
+# (its K bit), row 0 at the bottom
+h:codes := f_loat (r_ange 21) - 1
+h:keyX := -3.5 + 1.25 * f_loat f_loor h:codes / 4.0
+h:keyZ := -2.3 + 1.25 * h:codes - 4.0 * f_loat f_loor h:codes / 4.0
+## keyNames: the keys' labels, by code
+l:keyNames := "0|1|2|3|4|5|6|7|8|9|A|B|C|D|E|F|+|-|*|=|X"
+
+# the ROM page: address a at reading order, 8 a row
+h:addr := f_loat (r_ange 64) - 1
+h:romX := -5.6 + 0.62 * h:addr - 8.0 * f_loat f_loor h:addr / 8.0
+h:romZ := 2.9 - 0.62 * f_loat f_loor h:addr / 8.0
+
+# the RAM: word w of file f, a bar standing on its file's floor
+h:word := f_loat (r_ange 64) - 1
+h:ramX := 1.0 + 0.24 * h:word - 16.0 * f_loat f_loor h:word / 16.0
+h:ramFloor := -0.2 - 1.05 * f_loat f_loor h:word / 16.0
+
+# the display's segments: digit p (0 on the right), segment s (a to g)
+h:seg := f_loat (r_ange 56) - 1
+h:segP := f_loat f_loor h:seg / 7.0
+h:segS := h:seg - 7.0 * h:segP
+h:segDx := (1 + f_loor h:segS) s_elect 0.0 0.3 0.3 0.0 -0.3 -0.3 0.0
+h:segDz := (1 + f_loor h:segS) s_elect 0.6 0.3 -0.3 -0.6 -0.3 0.3 0.0
+h:segFlat := (1 + f_loor h:segS) s_elect 1 0 0 1 0 0 1
+
+# the instructions that use the adder, by kind (hx:Names, from 0)
+h:aluKinds := 10 11 12 13 14 15 16 17 18 19 20 36 37
+
+### Words
+
+## the title card's title and subtitle
+l:title := "HEX1000"
+## the subtitle
+l:subtitle := "C0DE+BEEF= typed at a 4-bit machine, its circuit simulated clock by clock"
+
+## captionTable: each caption's from and to (video seconds), white
+l:captionTable := 5 5 r_eshape 3.8 10.0 255 255 255  10.8 16.2 255 255 255  17.8 24.8 255 255 255  25.8 35.2 255 255 255  36.8 42.0 255 255 255
+
+# the card: from, to, the words' color, the card's
+h:cardTable := 1 8 r_eshape 0.0 3.2 255 255 255 18 22 44
+
+## hr:c_aptions v: the captions, | between them, their numbers from
+## the run
+l:c_aptions := { v ->
+  t := l:c_locks v
+  done := f_irst -1 t_ake 1 s_elect_2 (v, "shown") vc:c_hanges 0
+  clocks := '+ r_/ t <= done
+  shown := s:t_rim l:s_creen f_irst (v, "shown", 1 r_eshape done) h:a_t 0
+  "slow motion: each key arrives on the serial line as 10 bits, a start bit, 8 data bits from the lowest, a stop bit" c_at "|the board queues it; the machine selects the key columns one by one (R8 to R13) and finds its row on K" c_at "|time-lapse: the other " c_at (f_ormat (t_ally l:text) - 1) c_at " keys wait in the queue, a few hundred clocks each, and the display shows them" c_at "|slow motion: the sum, a digit at a time with its carry (AMAAC), the RAM's bars changing" c_at "|" c_at shown c_at " after " c_at (f_ormat clocks) c_at " clocks: the circuit's display, the evaluator's and the browser's agree"
+}
+
+## hr:c_ues v: the title card's and the captions' texts, for vd:c_ues
+## and vd:s_rt
+l:c_ues := { v -> l:title c_at ": " c_at l:subtitle c_at "|" c_at l:c_aptions v }
+## cueTable: their from and to (video seconds)
+l:cueTable := (2 t_ake_2 h:cardTable) c_at 2 t_ake_2 l:captionTable
+
+### The scene
+
+# the sky: near black
+h:sky := 8 10 18
+
+# the camera: where it looks at each key (video seconds) -- the line,
+# the keys, all four areas, the machine, the display -- and whether it
+# stands back for all of them (1)
+h:camTimes := 0.0 10.0 11.0 16.4 17.6 24.8 25.8 35.2 36.6 42.0
+h:camAims := 10 3 r_eshape -7.0 0.0 4.5  -7.0 0.0 4.5  7.0 0.0 4.5  7.0 0.0 4.5  0.0 0.0 -0.5  0.0 0.0 -0.5  7.0 0.0 -5.5  7.0 0.0 -5.5  -7.0 0.0 -5.5  -7.0 0.0 -5.5
+h:camWide := 0 0 0 0 1 1 0 0 0 0
+h:camSide := 0.06 -0.04 0.05 -0.05 0.0 0.03 -0.05 0.05 0.04 -0.04
+
+## (size, v, picture) hr:s_cene 0: the whole script Blender runs, before
+## its stills or video: the stage at that size (vd:landscape or
+## vd:shorts); the serial line, the key matrix, the machine and the
+## display, every lamp, bar, marker and segment keyed in steps from the
+## waveform v sampled once a frame; a clock count and the instruction in
+## front of the camera; the browser's screen (a PNG; "" for none) under
+## the display; the camera, the title card, the captions
+l:s_cene := { (size, v, picture) z ->
+  w := 1 s_elect size
+  h := 2 s_elect size
+  d := (w, h, 35, 14.0, 13.0) vd:f_it 0
+  dw := (w, h, 35, 28.5, 21.0) vd:f_it 0
+  n := t_ally l:frames
+  ts := l:frames
+  # the stage, the areas' names, the wires between them
+  t := vd:head c_at ((w, h, 30, l:length, h:sky, 35) vd:s_tage 0)
+  middles := 4 3 r_eshape l:uart c_at l:keys c_at l:cpu c_at l:display
+  names := (middles + 4 3 r_eshape 0.0 0.0 4.2) c_at_2 4 4 r_eshape 0.6 200 205 230
+  t := t c_at ("areas", "serial line|key matrix|HEX1000|display", names) vd:l_abels 0
+  t := t c_at ("wires", 3 10 r_eshape -0.6 0.3 4.5 0.6 0.3 4.5 90 100 140 0.06  7.0 0.3 -0.3 7.0 0.3 -0.7 90 100 140 0.06  0.6 0.3 -5.5 -0.6 0.3 -5.5 90 100 140 0.06) vd:l_ines 0
+  # the serial line: the line itself, high bright and low dark, and each
+  # bit lit as it arrives, a 1 bright and a 0 dim; the bytes received
+  (starts, bits) := l:l_ine v
+  nb := 10 * t_ally l:text
+  t := t c_at ("line", h:b_oxes ((l:uart, 1 r_eshape -0.4, 1 r_eshape 3.45) h:p_os 0, 8.6 0.2 0.16, 47 183 214, 1.0)) vd:b_oxes 0
+  rx := (n c_at 1) r_eshape 0.15 + 2.35 * f_loat (v, "uart_rx") h:f_rames 0
+  t := t c_at ("line", "glow", (rx, ts) h:s_tepRows 0) vd:s_teps 0
+  p := (l:uart, h:bitX, h:bitZ) h:p_os 0
+  t := t c_at ("bit page", h:b_oxes (p, 0.74 0.24 0.54, 70 76 96, 1.0)) vd:o_utlines 0
+  edge := f_loat (0.0 = h:bitJ - 10.0 * f_loat f_loor h:bitJ / 10.0) | 9.0 = h:bitJ - 10.0 * f_loat f_loor h:bitJ / 10.0
+  rgb := 2 1 t_ranspose (3 c_at nb) r_eshape (255.0 - 135.0 * edge) c_at (216.0 - 76.0 * edge) c_at 77.0 + 143.0 * edge
+  t := t c_at ("bits", p c_at_2 ((nb c_at 3) r_eshape 0.7 0.2 0.5) c_at_2 rgb c_at_2 (nb c_at 1) r_eshape 0.0) vd:b_oxes 0
+  arrive := h:v_ideo r_avel (r_avel starts) '+ t_able (l:bit d_iv 2) + l:bit * 0 1 2 3 4 5 6 7 8 9
+  lit := 0.3 + 1.9 * f_loat r_avel bits
+  t := t c_at ("bits", 2 1 t_ranspose (3 c_at nb) r_eshape (nb r_eshape 0.0) c_at (arrive - 1.0 / 30.0) c_at arrive, 2 1 t_ranspose (3 c_at nb) r_eshape (nb r_eshape 0.0) c_at (nb r_eshape 0.0) c_at lit) vd:g_lows 0
+  (got, bytes) := l:r_eceived v
+  nc := t_ally bytes
+  t := t c_at ("bytes", h:b_ars []U_CHAR bytes, ((l:uart, nc r_eshape 4.6, 2.6 - 0.62 * f_loat (r_ange nc) - 1) h:p_os 0) c_at_2 (nc c_at 4) r_eshape 0.6 255 255 255) vd:l_abels 0
+  t := t c_at ("bytes", 2 1 t_ranspose (2 c_at nc) r_eshape (h:v_ideo got) c_at nc r_eshape l:length) vd:s_hown 0
+  # the key matrix: the keys, the held one framed, the columns R8 to R13
+  # and the rows K as lamps, the board's queue
+  kp := (l:keys, h:keyX, h:keyZ) h:p_os 0
+  t := t c_at ("keys", h:b_oxes (kp, 1.0 0.3 1.0, 64 72 104, 1.0)) vd:b_oxes 0
+  t := t c_at ("key names", l:keyNames, (kp + (21 3 r_eshape 0.0 -0.35 0.0)) c_at_2 (21 4 r_eshape 0.55 255 255 255)) vd:l_abels 0
+  t := t c_at ("held", h:b_oxes (1 3 r_eshape kp, 1.25 0.45 1.25, 255 122 61, 0.0)) vd:o_utlines 0
+  active := (v, "key_active") h:f_rames 0
+  t := t c_at ("held", "glow", ((n c_at 1) r_eshape 3.0 * f_loat active, ts) h:s_tepRows 0) vd:s_teps 0
+  t := t c_at ("held", "location", (((n c_at 1) r_eshape (v, "key_code") h:f_rames 0, ts) h:s_tepRows 0, kp) h:p_laceRows 0) vd:s_teps 0
+  cols := (l:keys, -3.5 -2.25 -1.0 0.25 1.5 2.75, 6 r_eshape 2.75) h:p_os 0
+  t := t c_at ("columns", h:b_oxes (cols, 0.9 0.2 0.25, 120 230 120, 0.1)) vd:b_oxes 0
+  r := (v, "r") h:f_rames 0
+  t := t c_at ("columns", "glow", (0.1 + 2.4 * f_loat (r 'd_iv t_able 256 512 1024 2048 4096 8192) m_od 2, ts) h:s_tepRows 0) vd:s_teps 0
+  rows := (l:keys, 4 r_eshape -4.75, -2.3 -1.05 0.2 1.45) h:p_os 0
+  t := t c_at ("rows", h:b_oxes (rows, 0.25 0.2 0.9, 47 183 214, 0.1)) vd:b_oxes 0
+  k := (v, "k") h:f_rames 0
+  t := t c_at ("rows", "glow", (0.1 + 2.4 * f_loat (k 'd_iv t_able 1 2 4 8) m_od 2, ts) h:s_tepRows 0) vd:s_teps 0
+  qp := (l:keys, 10 r_eshape 4.6, -2.6 + 0.5 * f_loat (r_ange 10) - 1) h:p_os 0
+  t := t c_at ("queue", h:b_oxes (qp, 0.6 0.2 0.35, 255 122 61, 0.08)) vd:b_oxes 0
+  q := (v, "queued") h:f_rames 0
+  t := t c_at ("queue", "glow", (0.08 + 1.9 * f_loat 0 m_ax 1 m_in 1 + q '- t_able r_ange 10, ts) h:s_tepRows 0) vd:s_teps 0
+  # the machine: the ROM page with the program counter's marker, the
+  # page lamps, A's bits, the status, the adder, the RAM's bars
+  rp := (l:cpu, h:romX, h:romZ) h:p_os 0
+  t := t c_at ("rom page", h:b_oxes (rp, 0.5 0.2 0.5, 70 76 96, 1.0)) vd:o_utlines 0
+  pc := (v, "pc") h:f_rames 0
+  pa := (v, "pa") h:f_rames 0
+  t := t c_at ("pc", h:b_oxes (1 3 r_eshape rp, 0.42 0.25 0.42, 240 240 255, 2.0)) vd:b_oxes 0
+  t := t c_at ("pc", "location", (((n c_at 1) r_eshape pc, ts) h:s_tepRows 0, rp + 64 3 r_eshape 0.0 -0.05 0.0) h:p_laceRows 0) vd:s_teps 0
+  pp := (l:cpu, -5.6 + 0.29 * f_loat (r_ange 16) - 1, 16 r_eshape 3.55) h:p_os 0
+  t := t c_at ("pages", h:b_oxes (pp, 0.22 0.2 0.22, 255 216 77, 0.1)) vd:b_oxes 0
+  t := t c_at ("pages", "glow", (0.1 + 2.4 * f_loat 0 m_ax 1 - a_bs pa '- t_able (r_ange 16) - 1, ts) h:s_tepRows 0) vd:s_teps 0
+  ap := (l:cpu, 2.8 2.2 1.6 1.0, 4 r_eshape 2.7) h:p_os 0
+  t := t c_at ("a", h:b_oxes (ap, 0.45 0.2 0.45, 47 183 214, 0.1)) vd:b_oxes 0
+  t := t c_at ("a", "glow", (0.1 + 2.4 * f_loat (((v, "a") h:f_rames 0) 'd_iv t_able 1 2 4 8) m_od 2, ts) h:s_tepRows 0) vd:s_teps 0
+  t := t c_at ("s", h:b_oxes ((l:cpu, 1 r_eshape 4.6, 1 r_eshape 2.7) h:p_os 0, 0.45 0.2 0.45, 255 122 61, 0.1)) vd:b_oxes 0
+  t := t c_at ("s", "glow", ((n c_at 1) r_eshape 0.1 + 2.4 * f_loat (v, "s") h:f_rames 0, ts) h:s_tepRows 0) vd:s_teps 0
+  kind := hx:k_ind (1 + pc + 64 * pa) s_elect hx:CalcRom
+  t := t c_at ("alu", h:b_oxes ((l:cpu, 1 r_eshape 2.6, 1 r_eshape 1.5) h:p_os 0, 2.4 0.3 0.6, 255 216 77, 0.1)) vd:b_oxes 0
+  t := t c_at ("alu", "glow", ((n c_at 1) r_eshape 0.1 + 2.4 * f_loat kind m_ember? h:aluKinds, ts) h:s_tepRows 0) vd:s_teps 0
+  ram := (v, n) h:r_am 0
+  bars := (l:cpu, h:ramX, h:ramFloor) h:p_os 0
+  file := f_loor h:word / 16.0
+  hs := 0.06 + 0.055 * f_loat ram
+  first := 1 s_elect hs
+  t := t c_at ("ram", (bars + 2 1 t_ranspose (3 c_at 64) r_eshape (128 r_eshape 0.0) c_at 0.5 * first) c_at_2 ((64 c_at 2) r_eshape 0.18 0.2) c_at_2 (first c_at_2 (file, 0.0, 3.0) vd:t_one 0) c_at_2 (64 c_at 1) r_eshape 1.0) vd:b_oxes 0
+  steps := (hs, ts) h:s_tepRows 0
+  o := 1 s_elect_2 steps
+  i := f_loor o
+  ns := t_ally o
+  hv := 3 s_elect_2 steps
+  t := t c_at ("ram", "location", 2 1 t_ranspose (5 c_at ns) r_eshape o c_at (2 s_elect_2 steps) c_at (i s_elect 1 s_elect_2 bars) c_at (ns r_eshape 2 s_elect l:cpu) c_at (i s_elect 3 s_elect_2 bars) + 0.5 * hv) vd:s_teps 0
+  t := t c_at ("ram", "scale", 2 1 t_ranspose (5 c_at ns) r_eshape o c_at (2 s_elect_2 steps) c_at (ns r_eshape 0.18) c_at (ns r_eshape 0.2) c_at hv) vd:s_teps 0
+  # the labels of the machine's parts
+  at := (6 3 r_eshape l:cpu) + 6 3 r_eshape -3.43 0.0 -2.15  0.3 0.0 2.7  4.0 0.0 2.7  0.6 0.0 1.5  0.3 0.0 -1.8  -3.43 0.0 3.95
+  parts := at c_at_2 (6 1 r_eshape 0.4 0.5 0.5 0.45 0.45 0.3) c_at_2 6 3 r_eshape 200 205 230
+  t := t c_at ("parts", "ROM page|A|S|ALU|RAM|pages", parts) vd:l_abels 0
+  # the display: a calculator, its eight digits' segments lit from the
+  # digit latches, the browser's screen under it
+  body := ((2 3 r_eshape l:display) + 2 3 r_eshape 0.0 0.1 2.0  0.0 -0.22 2.0) c_at_2 2 7 r_eshape 10.5 0.6 3.0 40 44 56 1.0  9.6 0.05 2.0 16 28 16 1.0
+  t := t c_at ("calculator", body) vd:b_oxes 0
+  sx := 3.85 - (1.1 * h:segP) - h:segDx
+  sp := (l:display, sx, 2.0 + h:segDz) h:p_os 0
+  flat := f_loat h:segFlat
+  t := t c_at ("segments", (sp + 56 3 r_eshape 0.0 -0.3 0.0) c_at_2 (2 1 t_ranspose (3 c_at 56) r_eshape (0.12 + 0.38 * flat) c_at (56 r_eshape 0.06) c_at 0.5 - 0.38 * flat) c_at_2 (56 4 r_eshape 156 245 154 0.03)) vd:b_oxes 0
+  shown := (v, "shown") h:f_rames 0
+  dg := (shown 'd_iv t_able 32 ^ f_loor h:segP) m_od 32
+  on := (dg >= 16) * ((((1 + dg m_od 16) s_elect l:segments) d_iv (n c_at 56) r_eshape 2 ^ f_loor h:segS) m_od 2)
+  t := t c_at ("segments", "glow", (0.03 + 2.97 * f_loat on, ts) h:s_tepRows 0) vd:s_teps 0
+  pt := ("browser", picture, (l:display + 0.0 0.0 -2.3) c_at 7.0) vd:p_icture 0
+  t := t c_at ((0 < t_ally picture) * t_ally pt) t_ake pt
+  # in front of the camera: the clock count, and the instruction while
+  # slow
+  cy := (v, "cycle") h:f_rames 0
+  ch := 1 c_at n_ot (1 d_rop cy) = -1 d_rop cy
+  clockAt := (ch & ts >= 3.4) r_eplicate ts
+  clockTexts := '{ "clock " c_at f_ormat _r } m_ap (ch & ts >= 3.4) r_eplicate cy
+  t := t c_at ("clock", -0.7 0.84 0.09 255 255 255, d_isclose '{ a b -> e_nclose (d_isclose a) c_at "|" c_at d_isclose b } r_/ clockTexts, clockAt) vd:r_eadout 0
+  slow := ((ts >= 10.4) & ts < 16.4) | (ts >= 25.4) & ts < 35.4
+  # NOP (code 0) is blank, as is everything while fast
+  blank := (e_nclose " ") c_at 1 d_rop hx:Names
+  names := '{ d_isclose (1 + _r) s_elect blank } m_ap kind * slow
+  t := t c_at ("instruction", 0.7 0.84 0.09 255 216 77, d_isclose '{ a b -> e_nclose (d_isclose a) c_at "|" c_at d_isclose b } r_/ names, ts) vd:r_eadout 0
+  # the camera, the title card, the captions
+  # close up, the camera looks a little low, the area above the captions
+  dist := (f_loat h:camWide) * dw - d
+  aims := h:camAims + 2 1 t_ranspose (3 c_at 10) r_eshape (20 r_eshape 0.0) c_at -1.5 * 1.0 - f_loat h:camWide
+  eyes := aims + 2 1 t_ranspose (3 c_at 10) r_eshape (h:camSide * dist + d) c_at (n_eg dist + d) c_at 0.08 * dist + d
+  t := t c_at (h:camTimes, eyes, aims) vd:c_amera 0
+  t c_at ((l:title, l:subtitle, h:cardTable) vd:c_ards 0) c_at (l:c_aptions v, l:captionTable) vd:c_aptions 0
+}
+
+# (v, n) h:r_am 0: the RAM's 64 words at every frame (n by 64), from
+# the waveform's 16 signals of 4 words each
+h:r_am := { (v, n) z ->
+  all := d_isclose '{ a b -> e_nclose (d_isclose a) c_at d_isclose b } r_/ '{ (v, "ram" c_at f_ormat _r) h:f_rames 0 } m_ap (r_ange 16) - 1
+  m := r_avel 2 1 t_ranspose (16 c_at n) r_eshape all
+  w := (r_ange 64) - 1
+  i := (16 * (r_ange n) - 1) '+ t_able w d_iv 4
+  (((1 + i) s_elect m) d_iv (n c_at 64) r_eshape 16 ^ w m_od 4) m_od 16
+}

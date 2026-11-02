@@ -124,6 +124,9 @@ a dark plate.
 | `(name, times, places) vd:m_ovesEach 0` | the same, each object at times of its own (n by k) |
 | `(name, times, colors) vd:t_ints 0` | each object's color keyed at the times |
 | `(name, times, strengths) vd:g_lows 0` | how strongly each object glows, keyed from data at times of its own (n by k) |
+| `(name, what, rows) vd:s_teps 0` | keys that hold until the next (a lamp, a marker, a bar's length), a row each: object, second, value -- a signal sampled once a frame |
+| `(name, place, texts, times) vd:r_eadout 0` | words in front of the camera that change as the video plays (a clock count) |
+| `(name, path, place) vd:p_icture 0` | a picture (PNG) in the scene, its own colors: a screenshot beside the model |
 | `(times, eyes, aims) vd:c_amera 0` | the camera's keys |
 | `(name, origin, u, v, colors, order, gap) vd:g_rid 0` | an n by m grid of cells as one mesh, each appearing at its second: a matrix as a wall (262,144 cells for 512 by 512) |
 | `(values, low, high) vd:t_one 0` | a color for each value, deep blue to orange (not Python) |
@@ -151,7 +154,11 @@ part can be slow motion and another a time-lapse. `vd:c_ues` and
 times to record narration against. Words stay few and large: shapes
 and data carry the explanation, not listings. The FPGA data comes from
 X_eTaL-fpga, pinned at `FPGA_COMMIT` like X_eTaL-gpu (Hex1000, with
-Radix and Strings, on `XETAL_PATH`).
+Radix and Strings, on `XETAL_PATH`). A simulation's waveform drives a
+video directly: `demos/Vcd.xtl` (`vc:`) reads a VCD file into arrays
+(`vc:r_ead`, `vc:c_hanges`, and `vc:a_t`, any signal's value at any
+times), so every lamp is a signal sampled once a frame and keyed with
+`vd:s_teps`.
 
 ## Demos
 
@@ -279,6 +286,35 @@ Radix and Strings, on `XETAL_PATH`).
    1920 by 1080) and a Short (`work/hexpc/out-short/hex-pc-short.mp4`,
    1080 by 1920), with its cue sheet and subtitles
    (`work/hexpc/hex-pc.cues.toml`, `hex-pc.srt`; `demos/PcWalk.xtl`).
+10. `demos/hex-run.xtl` (`just ext blender hex-run`, about 25 minutes:
+    1261 frames, twice): HEX1000 computing C0DE+BEEF=, 42 seconds,
+    from a simulation of its board. `scripts/hex1000-sim.sh` builds
+    X_eTaL-fpga's board (its top, its UART core, the machine's
+    Verilog, at `FPGA_COMMIT`) and runs it under iverilog
+    (`demos/hex-run.tb.v`), the text sent over the serial line bit by
+    bit, into a waveform; `scripts/hex1000-browser.py` types the same
+    text at the live browser calculator in headless Chrome (its
+    DevTools pipe, no window) and saves its screen. The program reads
+    the waveform and checks it before writing anything: the line
+    carries the text, the board's UART receives it, Hex1000.xtl
+    replaying the clocks from the K inputs the circuit saw has the
+    circuit's A, S, PC and PA at every one (4971 clocks), and the
+    display ends as the evaluator's `hx:c_alc` and the browser's
+    (17FCD). Then the video (`demos/HexRun.xtl`): four areas -- the
+    serial line (each character's ten bits lit as they arrive, the
+    bytes received), the key matrix (the column lamps R8 to R13, the
+    row lamps K, the held key, the board's queue), the machine (the ROM
+    page with the program counter's marker, the page, A, the status,
+    the adder, the RAM's 64 words as bars) and a calculator's display
+    (its segments lit from the digit latches, the browser's screen
+    under it) -- every lamp a signal sampled once a frame; a clock
+    count, and while slow the instruction, in front of the camera. The
+    first character and the key matrix finding it in slow motion, the
+    other keys as a time-lapse, the addition (AMAAC, a digit at a time
+    with its carry) in slow motion, a title card, captions. A video
+    (`work/hexrun/out/hex-run.mp4`) and a Short
+    (`work/hexrun/out-short/hex-run-short.mp4`), with its cue sheet and
+    subtitles (`work/hexrun/hex-run.cues.toml`, `hex-run.srt`).
 
 ## Build and test
 
@@ -297,7 +333,9 @@ frames, and checks 8, 800 and 8,000 vertices and the files;
 the one mesh left, its pivot, camera and lights, and a still;
 `blender-hex-pc-quick` makes HEX1000's program counter at 160 by 90
 and as a Short, 90 by 160, and checks its cue sheet and subtitles and
-what Blender made of each). Of them: the second writes two cubes and a label as bpy
+what Blender made of each; `blender-hex-run-quick` simulates the board
+(it needs iverilog), checks the waveform as the demo does and makes
+the HEX1000 run at 160 by 90 and 90 by 160). Of them: the second writes two cubes and a label as bpy
 and checks what Blender made -- the mesh (16 vertices, 12 faces), the
 objects, a still, `.glb`, `.obj`, `.mtl`, `.blend`. `blender-bpy-script`
 pins the Python the library writes. `blender-shapes` makes one piece of

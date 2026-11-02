@@ -1,0 +1,34 @@
+## HEX1000 computing C0DE+BEEF= (HexRun.xtl), small and quick: the
+## board's waveform (scripts/hex1000-sim.sh wrote it to
+## work/quick-hexrun) read and checked -- the line, the bytes received,
+## Hex1000.xtl's replay against the circuit's registers at every clock,
+## the display against the evaluator's (no browser here) -- the cue
+## sheet, then through Blender in both shapes, 160 by 90 and a Short, 90
+## by 160, two stills each and no video, and Blender's report of each.
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"vc:" u_se< "Vcd"
+"hr:" u_se< "HexRun"
+
+v := vc:r_ead "work/quick-hexrun/hex-run.vcd"
+"the checks:"
+(v, "") hr:c_heck 0
+"the cue sheet:"
+(hr:c_ues v, hr:cueTable) vd:c_ues 0
+n := "work/quick/run.py" bl:w_rite! bp:launcher
+n := "work/quick/hexrun-wide.py" bl:w_rite! ((160 90, v, "") hr:s_cene 0) c_at ((13.0 40.0, "wide") vd:s_tills 0) c_at vd:report
+r := "work/quick/run.py" bl:r_un! "work/quick/hexrun-wide.py work/quick/hexrun-wide"
+"160 by 90: the run, the error lines, what Blender made"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/quick/hexrun-wide/report.txt"
+n := "work/quick/hexrun-short.py" bl:w_rite! ((90 160, v, "") hr:s_cene 0) c_at ((13.0 40.0, "short") vd:s_tills 0) c_at vd:report
+r := "work/quick/run.py" bl:r_un! "work/quick/hexrun-short.py work/quick/hexrun-short"
+"90 by 160: the run, the error lines, what Blender made"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/quick/hexrun-short/report.txt"

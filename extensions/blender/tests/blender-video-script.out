@@ -307,6 +307,63 @@ def grid(name, origin, u, v, shape, colors, order, gap):
     bpy.context.preferences.edit.keyframe_new_interpolation_type = 'BEZIER'
     groups[name] = [o]
 
+def steps(name, path, rows):
+    made = groups[name]
+    last = {}
+    for r in rows:
+        i = int(r[0]) - 1
+        o = made[i]
+        f = frame(r[1])
+        v = r[2] if path == 'glow' else r[2:5]
+        if path == 'glow':
+            o, attr = o.data.materials[0].node_tree.nodes['glow'].inputs['Strength'], 'default_value'
+        else:
+            attr = path
+        if i in last and last[i][0] < f - 1:
+            setattr(o, attr, last[i][1])
+            o.keyframe_insert(attr, frame=f - 1)
+        setattr(o, attr, v)
+        o.keyframe_insert(attr, frame=f)
+        last[i] = (f, v)
+
+def readout(name, row, bodies, times):
+    d = 0.05
+    hw, hh = view(d)
+    o = text(name, '', row[2] * min(hw, hh), row[3:6])
+    o.parent = rig['camera']
+    o.location = (row[0] * hw, row[1] * hh, -d)
+    fs = [frame(t) for t in times]
+    bodies = bodies.split('|')
+    def show(sc, *rest):
+        body = ''
+        for f, b in zip(fs, bodies):
+            if f > sc.frame_current:
+                break
+            body = b
+        if o.data.body != body:
+            o.data.body = body
+    bpy.app.handlers.frame_change_pre.append(show)
+    groups[name] = [o]
+
+def picture(name, path, row):
+    img = bpy.data.images.load(os.path.abspath(path))
+    w = row[3]
+    h = w * img.size[1] / img.size[0]
+    me = bpy.data.meshes.new(name)
+    me.from_pydata([(-w / 2, 0, -h / 2), (w / 2, 0, -h / 2), (w / 2, 0, h / 2), (-w / 2, 0, h / 2)], [], [(0, 1, 2, 3)])
+    uv = me.uv_layers.new()
+    for i, c in enumerate(((0, 0), (1, 0), (1, 1), (0, 1))):
+        uv.data[i].uv = c
+    o = bpy.data.objects.new(name, me)
+    scene.collection.objects.link(o)
+    o.location = row[0:3]
+    m = glow(name, (1.0, 1.0, 1.0))
+    t = m.node_tree.nodes.new('ShaderNodeTexImage')
+    t.image = img
+    m.node_tree.links.new(t.outputs['Color'], m.node_tree.nodes['glow'].inputs['Color'])
+    me.materials.append(m)
+    groups[name] = [o]
+
 def stills(times, prefix):
     scene.render.image_settings.media_type = 'IMAGE'
     scene.render.image_settings.file_format = 'PNG'
