@@ -11,6 +11,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-02
+
+- `build` `web/shell/Cargo.lock` refreshed for the pinned X_eTaL (d284a8c): its crate graph gained `xetal-source`, `xetal-table` and `xetal-store` as dependencies; the lock was last committed at the v0.1.0 pin, so every build of the site's crates rewrote it.
+
 ## 2026-11-01
 
 - `ext` demo `hex-run` (Saga 15, step 15, hex1000-run; `just ext blender hex-run`): HEX1000 computing C0DE+BEEF=, driven by a simulation of its board. `scripts/hex1000-sim.sh` builds X_eTaL-fpga's board (top, UART core, machine, at `FPGA_COMMIT`; its tool built into work/fpga-target) and runs it under iverilog with `demos/hex-run.tb.v`, the text sent over the serial line, into a VCD; `scripts/hex1000-browser.py` types the text at the live browser calculator in headless Chrome (DevTools pipe, standard library only) and saves its screen. `demos/Vcd.xtl` (alias `vc:`) reads a VCD into arrays (`vc:r_ead`, `vc:c_hanges`, `vc:a_t`). `demos/HexRun.xtl` (alias `hr:`) checks the run before writing a script -- the line carries the text, the UART receives it, Hex1000.xtl replaying 4971 clocks from the circuit's K agrees with its A, S, PC and PA at every one, the display ends as `hx:c_alc` and the browser (17FCD) -- then makes the video: the serial line's bits, the key matrix, the ROM page and program counter, A, S, the ALU, the RAM as bars, a seven-segment display with the browser's screen under it, every lamp a signal sampled once a frame; a clock count and the instruction; slow motion on the first key and the addition, the typing a time-lapse; a video and a Short, cue sheet and subtitles. `Video.xtl`: `vd:s_teps` (keys that hold), `vd:r_eadout` (changing words in front of the camera), `vd:p_icture` (an image in the scene). Recorded for the site (`videos/hex-run.film`); golden `blender-hex-run-quick` (the simulation, the checks, both shapes small); `blender-video-script` rebased for the new player.
