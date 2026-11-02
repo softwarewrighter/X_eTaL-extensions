@@ -1,0 +1,3 @@
+command = 't=$(mktemp -d) && mkdir -p $t/work && ln -s "$PWD/../../work/fonts" $t/work/fonts && XETAL_BLENDER_ROOT=$t XETAL_PATH="$PWD/demos:$XETAL_PATH" xetal-x --ext .. run tests/hex-build-fixture.xtl && cd $t && ls work/hexbuild/quick work/hexbuild/quick-short'
+exit_code = 0
+desc = "HEX1000 build scene: a fixture with LUT and flip-flop BELs sharing a tile, cue sheet, unplaced, placed, routed and board stills in landscape and portrait, and Blender reports"

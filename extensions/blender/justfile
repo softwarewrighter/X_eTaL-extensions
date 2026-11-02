@@ -46,6 +46,18 @@ hex-run: build
     {{root}}/.venv/bin/python3 {{root}}/scripts/hex1000-browser.py "C0DE+BEEF=" work/hexrun
     XETAL_PATH="$({{root}}/scripts/libraries.sh)" {{root}}/target/debug/xetal-x --ext {{root}}/extensions run --draw work/draw demos/hex-run.xtl
 
+# Synthesize, place, route and pack the pinned board; OSS CAD Suite on PATH
+hex-build-data:
+    {{root}}/.venv/bin/python3 {{root}}/scripts/hex1000-build.py work/hexbuild
+
+# Validate the build-evidence reader, including incomplete placement and routing
+hex-build-check:
+    {{root}}/.venv/bin/python3 tests/hex-build-data.py
+
+# The build-process video and Short, from the actual tool artifacts (headless)
+hex-build: hex-build-data
+    {{root}}/scripts/demos.sh blender hex-build
+
 # Publish the tower defense pieces demos/game-assets.xtl made on the site (pages/blender/td)
 publish-td:
     {{root}}/scripts/publish-td.sh

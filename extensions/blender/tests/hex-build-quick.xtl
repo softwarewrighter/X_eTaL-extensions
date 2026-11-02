@@ -1,0 +1,25 @@
+## Actual build artifacts through the scene generator and Blender:
+## two shapes, the unplaced, placed, routed and board stages.
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"hb:" u_se< "HexBuild"
+
+rawcells := n_umbers bl:r_ead "work/hexbuild/cells.txt"
+rawroutes := n_umbers bl:r_ead "work/hexbuild/routes.txt"
+cells := (((t_ally rawcells) d_iv 4) c_at 4) r_eshape rawcells
+routes := (((t_ally rawroutes) d_iv 2) c_at 2) r_eshape rawroutes
+stats := f_loor n_umbers bl:r_ead "work/hexbuild/stats.txt"
+n := "work/hexbuild/run.py" bl:w_rite! bp:launcher
+n := "work/hexbuild/quick.py" bl:w_rite! ((160 90, cells, routes, stats) hb:s_cene 0) c_at ((9.0 15.8 18.0 23.0, "wide") vd:s_tills 0) c_at vd:report
+r := "work/hexbuild/run.py" bl:r_un! "work/hexbuild/quick.py work/hexbuild/quick"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/hexbuild/quick/report.txt"
+n := "work/hexbuild/quick-short.py" bl:w_rite! ((90 160, cells, routes, stats) hb:s_cene 0) c_at ((9.0 15.8 18.0 23.0, "short") vd:s_tills 0) c_at vd:report
+r := "work/hexbuild/run.py" bl:r_un! "work/hexbuild/quick-short.py work/hexbuild/quick-short"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/hexbuild/quick-short/report.txt"

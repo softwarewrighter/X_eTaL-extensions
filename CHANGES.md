@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-02
 
+- `ext` HEX1000 build-process video and Short (`just ext blender hex-build`): the pinned board synthesized, placed, routed and packed with the OSS CAD Suite; artifact hashes, counts, cell identities and BEL assignments retained in `evidence.json`. X_eTaL moves LUTs and flip-flops to their actual placements, shows routed wire tile occupancy and a bitstream entering a schematic Tang Nano 9K. Counts come from the tools, and the hand-written source-to-XIR lowering is labeled. Cue sheet, subtitles, evidence-reader tests and a two-shape scene regression accompany the demo; Python bytecode caches are ignored. The Blender launcher disables audio and accepts optional XETAL_BLENDER_ARGS so Linux NVIDIA renders can select Vulkan instead of Mesa software OpenGL. A tracked placeholder preserves linalg's required empty demos directory in fresh checkouts; the E9 inferred-type filter now passes separate patterns compatible with both GNU and BSD diff.
 - `build` `web/shell/Cargo.lock` refreshed for the pinned X_eTaL (d284a8c): its crate graph gained `xetal-source`, `xetal-table` and `xetal-store` as dependencies; the lock was last committed at the v0.1.0 pin, so every build of the site's crates rewrote it.
 
 ## 2026-11-01

@@ -1,0 +1,25 @@
+## Fixed placement fixture through the scene generator and Blender:
+## two shapes, the unplaced, placed, routed and board stages.
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"hb:" u_se< "HexBuild"
+
+cells := f_loat 4 4 r_eshape 1 1 0 0  1 1 0 1  3 4 2 0  4 3 2 1
+routes := f_loat 4 2 r_eshape 1 1 2 1 3 2 4 3
+stats := 2 2 4 4 3 128
+"the cue sheet:"
+(hb:c_ues stats, hb:cueTable) vd:c_ues 0
+n := "work/hexbuild/run.py" bl:w_rite! bp:launcher
+n := "work/hexbuild/quick.py" bl:w_rite! ((160 90, cells, routes, stats) hb:s_cene 0) c_at ((9.0 15.8 18.0 23.0, "wide") vd:s_tills 0) c_at vd:report
+r := "work/hexbuild/run.py" bl:r_un! "work/hexbuild/quick.py work/hexbuild/quick"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/hexbuild/quick/report.txt"
+n := "work/hexbuild/quick-short.py" bl:w_rite! ((90 160, cells, routes, stats) hb:s_cene 0) c_at ((9.0 15.8 18.0 23.0, "short") vd:s_tills 0) c_at vd:report
+r := "work/hexbuild/run.py" bl:r_un! "work/hexbuild/quick-short.py work/hexbuild/quick-short"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/hexbuild/quick-short/report.txt"

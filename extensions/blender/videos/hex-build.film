@@ -1,0 +1,8 @@
+# The actual build's LUT/flip-flop placement, routed wire tiles and
+# bitstream entering a schematic Tang Nano 9K. Build the evidence first
+# with just ext blender hex-build-data; the YouTube master, Short and
+# cue sheet stay in work/hexbuild/.
+demo=hex-build
+file=work/hexbuild/out/hex-build.mp4
+scale=1280
+fps=30

@@ -1,0 +1,34 @@
+## Blender, 11: HEX1000 from source to a configured Tang Nano 9K.
+## Run just ext blender hex-build with the OSS CAD Suite on PATH:
+## synthesize, place, route, pack, then render this video and Short.
+## The build evidence stays in work/hexbuild/evidence.json.
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"hb:" u_se< "HexBuild"
+
+h:c_heck := { result ->
+  n_ot "exit 0\nerrors 0\n" m_atch 16 t_ake result ? []P_ANIC "hex-build: Blender failed: " c_at result
+  result
+}
+
+rawcells := n_umbers bl:r_ead "work/hexbuild/cells.txt"
+rawroutes := n_umbers bl:r_ead "work/hexbuild/routes.txt"
+cells := (((t_ally rawcells) d_iv 4) c_at 4) r_eshape rawcells
+routes := (((t_ally rawroutes) d_iv 2) c_at 2) r_eshape rawroutes
+stats := f_loor n_umbers bl:r_ead "work/hexbuild/stats.txt"
+"the build (LUTs, flip-flops, placed logic, route tiles, routed nets, bitstream bytes):"
+stats
+n := "work/hexbuild/run.py" bl:w_rite! bp:launcher
+n := "work/hexbuild/hex-build.cues.toml" bl:w_rite! (hb:c_ues stats, hb:cueTable) vd:c_ues 0
+n := "work/hexbuild/hex-build.srt" bl:w_rite! (hb:c_ues stats, hb:cueTable) vd:s_rt 0
+n := "work/hexbuild/video.py" bl:w_rite! ((vd:landscape, cells, routes, stats) hb:s_cene 0) c_at (vd:r_ender "hex-build.mp4") c_at vd:report
+n := "work/hexbuild/short.py" bl:w_rite! ((vd:shorts, cells, routes, stats) hb:s_cene 0) c_at (vd:r_ender "hex-build-short.mp4") c_at vd:report
+"rendering the landscape video ..."
+r := "work/hexbuild/run.py" bl:r_un! "work/hexbuild/video.py work/hexbuild/out"
+h:c_heck r
+"rendering the Short ..."
+r := "work/hexbuild/run.py" bl:r_un! "work/hexbuild/short.py work/hexbuild/out-short"
+h:c_heck r
+bl:r_ead "work/hexbuild/out/report.txt"

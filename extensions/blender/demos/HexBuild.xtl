@@ -1,0 +1,85 @@
+## HexBuild.xtl -- the HEX1000 build, from the pinned circuit's actual
+## synthesis, placement and routing artifacts. X_eTaL computes the
+## geometry, colors and timing; Video writes the Blender player.
+## The board is a schematic model; die coordinates are nextpnr tiles,
+## not physical dimensions. Routes show occupied wire tiles.
+## Import: "hb:" u_se< "HexBuild"
+
+"vd:" u_se< "Video"
+
+## length: seconds, including the title and the closing board
+l:length := 24.0
+
+## cueTable: start and end of the six scenes, in seconds
+l:cueTable := 6 2 r_eshape 0.0 3.0  3.0 7.0  7.0 11.0  11.0 16.0  16.0 20.0  20.0 24.0
+
+## hb:c_ues stats: captions with this build's LUT, flip-flop and byte
+## counts; the source-to-XIR lowering is explicitly hand-written
+l:c_ues := { stats ->
+  "HEX1000: from a pure step to a configured FPGA|Hex1000.xtl: hx:s_tep. Hand-lowered XIR emits hex1000.v; add the board and UART.|Yosys maps the board to " c_at (f_ormat 1 s_elect stats) c_at " LUTs and " c_at (f_ormat 2 s_elect stats) c_at " flip-flops, plus memory and carry logic.|nextpnr: the logic flies to its assigned BELs. Blue: LUTs. Orange: flip-flops.|Routing: green marks the tiles occupied by routed wires, from nextpnr.|gowin_pack: " c_at (f_ormat 6 s_elect stats) c_at " bytes of bitstream. Configuration enters a schematic Tang Nano 9K."
+}
+
+# a nextpnr coordinate to the scene's tile plane (x, depth, z)
+h:p_laces := { (cells, y, center, scale) z ->
+  x := scale * (1 s_elect_2 cells) - 1 s_elect center
+  zz := scale * (2 s_elect center) - 2 s_elect_2 cells
+  n := t_ally x
+  2 1 t_ranspose (3 c_at n) r_eshape x c_at (n r_eshape y) c_at zz
+}
+
+## (size, cells, routes, stats) hb:s_cene 0: the Python scene, before
+## stills or video. cells: x y BEL-slot is-flip-flop (n by 4); routes:
+## unique occupied wire tiles (m by 2); stats: the export's six counts.
+## LUTs/flip-flops keep their actual BEL assignments, offset within a
+## tile by their slots so several cells at one tile remain visible.
+l:s_cene := { (size, cells, routes, stats) z ->
+  w := 1 s_elect size
+  h := 2 s_elect size
+  n := t_ally cells
+  nr := t_ally routes
+  ff := 4 s_elect_2 cells
+  slots := 3 s_elect_2 cells
+  coords := (2 t_ake_2 cells) c_at routes
+  xs := 1 s_elect_2 coords
+  ys := 2 s_elect_2 coords
+  center := ((('m_in r_/ xs) + 'm_ax r_/ xs) / 2.0) c_at ((('m_in r_/ ys) + 'm_ax r_/ ys) / 2.0)
+  scale := 9.0 / 1.0 m_ax (('m_ax r_/ xs) - 'm_in r_/ xs) m_ax ('m_ax r_/ ys) - 'm_in r_/ ys
+  placed := (cells, 0.0, center, scale) h:p_laces 0
+  offsets := 2 1 t_ranspose (3 c_at n) r_eshape (0.025 * slots) c_at (n r_eshape -0.1) c_at 0.08 * ff
+  placed := placed + offsets
+  # A readable unplaced cloud, with each cell retaining its identity.
+  ids := (r_ange n) - 1
+  cloud := 2 1 t_ranspose (3 c_at n) r_eshape (0.18 * (f_loat ids m_od 60) - 29.5) c_at (n r_eshape -0.5) c_at 0.18 * 15.0 - f_loat ids d_iv 60
+  dims := (n c_at 3) r_eshape 0.065 0.07 0.065
+  rgb := 2 1 t_ranspose (3 c_at n) r_eshape (70 + 185 * ff) c_at (155 + 15 * ff) c_at 250 - 180 * ff
+  boxes := cloud c_at_2 dims c_at_2 rgb c_at_2 (n c_at 1) r_eshape 1.0
+  keys := (n c_at 2 c_at 6) r_eshape r_avel ((cloud c_at_2 dims) c_at_2 placed c_at_2 dims)
+  t := vd:head c_at ((w, h, 30, l:length, 8 10 18, 35) vd:s_tage 0)
+  source := 3 10 r_eshape -4 0 1 3.6 0.15 1.8 35 65 105 1  0 0 1 3.6 0.15 1.8 70 55 105 1  4 0 1 3.6 0.15 1.8 35 85 80 1
+  t := t c_at (("source", source) vd:b_oxes 0) c_at ("source", 3 2 r_eshape 3 7) vd:s_hown 0
+  words := 3 7 r_eshape -4 -0.2 1 0.3 255 255 255  0 -0.2 1 0.3 255 255 255  4 -0.2 1 0.3 255 255 255
+  t := t c_at (("source labels", "hx:s_tep|hand-lowered XIR|hex1000.v + UART", words) vd:l_abels 0) c_at ("source labels", 3 2 r_eshape 3 7) vd:s_hown 0
+  t := t c_at (("logic", boxes) vd:b_oxes 0) c_at (("logic", 11.0 15.5, keys) vd:m_oves 0)
+  t := t c_at ("logic", (n c_at 2) r_eshape 7.0 20.0) vd:s_hown 0
+  t := t c_at (("die", 1 10 r_eshape 0.0 0.3 0.0 10.5 0.2 10.5 65 85 140 1.0) vd:o_utlines 0)
+  t := t c_at ("die", 1 2 r_eshape 3 20) vd:s_hown 0
+  routeBoxes := ((routes, -0.25, center, scale) h:p_laces 0) c_at_2 (nr c_at 7) r_eshape 0.14 0.03 0.14 40 220 125 1.0
+  t := t c_at (("routes", routeBoxes) vd:b_oxes 0) c_at ("routes", (nr c_at 2) r_eshape 16.0 20.0) vd:s_hown 0
+  # Board silhouette, package, USB connector and two rows of headers:
+  # intentionally schematic, with no claim of measured geometry.
+  board := 3 10 r_eshape 0 0 0 3.0 0.25 7.0 20 105 70 1  0 -0.3 0 1.8 0.3 1.8 25 28 40 1  0 -0.2 3.0 1.5 0.6 1.2 180 185 200 1
+  t := t c_at (("board", board) vd:b_oxes 0) c_at ("board", 3 2 r_eshape 20 24 20 24 20 24) vd:s_hown 0
+  # Headers worked out as an array, 14 contacts on each side.
+  pinx := (14 r_eshape -1.3) c_at 14 r_eshape 1.3
+  pinz := 2 14 r_eshape -2.8 + 0.42 * (f_loat r_ange 14) - 1.0
+  pins := (2 1 t_ranspose 3 28 r_eshape pinx c_at (28 r_eshape -0.2) c_at r_avel pinz) c_at_2 28 7 r_eshape 0.2 0.3 0.2 220 180 65 1
+  t := t c_at (("headers", pins) vd:b_oxes 0) c_at ("headers", 28 2 r_eshape 20 24) vd:s_hown 0
+  packet := 1 10 r_eshape -5.0 -0.5 3.0 0.8 0.2 0.4 100 240 180 2
+  t := t c_at (("bitstream", packet) vd:b_oxes 0) c_at (("bitstream", 20.0 22.5, 1 2 6 r_eshape -5 -0.5 3 0.8 0.2 0.4  0 -0.5 0 0.1 0.1 0.1) vd:m_oves 0)
+  t := t c_at ("bitstream", 1 2 r_eshape 20 22.6) vd:s_hown 0
+  d := (w, h, 35, 13.0, 12.0) vd:f_it 0
+  t := t c_at (0.0 24.0, 2 3 r_eshape 0.0 c_at (n_eg d) c_at 0.0, 2 3 r_eshape 0.0) vd:c_amera 0
+  t := t c_at (("HEX1000", "from source to a configured FPGA", 1 8 r_eshape 0 3 255 255 255 18 22 44) vd:c_ards 0)
+  captions := l:cueTable c_at_2 6 3 r_eshape 255 255 255
+  t c_at ((l:c_ues stats, captions) vd:c_aptions 0)
+}

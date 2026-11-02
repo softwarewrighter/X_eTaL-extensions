@@ -40,3 +40,4 @@ extensions/*/demos/zz-*
 
 # the uv virtual environment (just venv)
 .venv/
+__pycache__/

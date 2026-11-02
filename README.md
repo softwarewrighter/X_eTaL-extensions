@@ -74,6 +74,7 @@ just demo blender matmul-fly   # a 512 x 512 matrix product flown through: a vid
 just demo blender cosy         # the CoSy logo as fused magenta tubes turning once round, rendered with Cycles (several minutes)
 just demo blender hex-pc       # HEX1000's program counter in shift-register order: a video and a Short, with a cue sheet (a few minutes)
 just ext blender hex-run       # HEX1000 computing C0DE+BEEF= from its board's simulated waveform (iverilog, headless Chrome; about 25 minutes)
+just ext blender hex-build     # HEX1000 synthesis, actual placement and routed wire tiles, bitstream to a schematic board (OSS CAD Suite)
 just demo scene voxels-rubik-buttons  # the cube with buttons: U U' R R' F F', animated, queued, undo
 just demo scene voxels-rubik-solve    # scramble, solve (the Eigencube library), step or play the solution
 just walkthrough                # a fresh clone, built and run, checked against the goldens

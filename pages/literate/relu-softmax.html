@@ -39,7 +39,7 @@ A neural network's layers are array operations: multiply by weights,
 add a bias, then a function applied to every value. Two of those
 functions turn up everywhere. ReLU keeps positive values and makes every
 negative one 0. Softmax turns a row of scores into shares that add up
-to 1 &#x2013; how sure the network is of each answer. This document shows a
+to 1 &ndash; how sure the network is of each answer. This document shows a
 30-second video of both, made from a real network's arrays, and how
 every part of the video comes from X_eTaL.
 </p>
@@ -57,7 +57,7 @@ every part of the video comes from X_eTaL.
 <p>
 The network is X_eTaL-gpu's tiny-net: four examples of three inputs,
 a dense layer of five with ReLU, a dense layer of two with softmax.
-X_eTaL-gpu compiles the same X_eTaL functions &#x2013; its Accel library &#x2013; to
+X_eTaL-gpu compiles the same X_eTaL functions &ndash; its Accel library &ndash; to
 run on Apple and NVIDIA GPUs and checks the GPU's answers against the
 X_eTaL evaluator. Here the evaluator runs them, and the arrays it gives
 are drawn:
@@ -77,8 +77,8 @@ every column 1 tall.</li>
 </ul>
 
 <p>
-The point for a reader is the shape of the computation &#x2013; which values
-change, which do not, and why softmax's results add up to 1 &#x2013; told by
+The point for a reader is the shape of the computation &ndash; which values
+change, which do not, and why softmax's results add up to 1 &ndash; told by
 the arrays themselves rather than by a listing.
 </p>
 </div>
@@ -138,7 +138,6 @@ imports the library:
 4 3
 </pre>
 
-
 <p>
 The input x is four examples of three features. The weights are
 X_eTaL-gpu's data files, a row per input and the bias as the last row:
@@ -166,8 +165,8 @@ X_eTaL-gpu's data files, a row per input and the bias as the last row:
 </div>
 
 <p>
-The first layer is <code>ac:d_ense</code> &#x2013; x times the weights, plus the bias row
-spread down the batch &#x2013; and ReLU follows it:
+The first layer is <code>ac:d_ense</code> &ndash; x times the weights, plus the bias row
+spread down the batch &ndash; and ReLU follows it:
 </p>
 
 <div class="org-src-container">
@@ -198,7 +197,6 @@ spread down the batch &#x2013; and ReLU follows it:
               -0.33 0.11000000000000007  0.8500000000000001                 -0.36 0.020000000000000046
 </pre>
 
-
 <div class="org-src-container">
 <pre class="src src-xetal">ʳˢh
 
@@ -212,7 +210,6 @@ spread down the batch &#x2013; and ReLU follows it:
 0.12499999999999996              0.5875                0.0   0.0                 0.95
                 0.0 0.11000000000000007 0.8500000000000001   0.0 0.020000000000000046
 </pre>
-
 
 <p>
 ReLU changed only the negatives. How many there are, and that the rest
@@ -230,7 +227,6 @@ are untouched:
 9
 </pre>
 
-
 <div class="org-src-container">
 <pre class="src src-xetal"><span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> <span class="c-builtin">r̲avel</span> <span class="c-builtin">a̲bs</span> (ʳˢz1 <span class="c-symbol">−</span> ʳˢh) <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> ʳˢz1 <span class="c-symbol">≥</span> <span class="c-number">0.0</span>
 
@@ -241,7 +237,6 @@ are untouched:
 <pre class="example">
 0.0
 </pre>
-
 
 <p>
 The second layer gives two scores for each example, and softmax turns
@@ -276,7 +271,6 @@ each row into shares of 1:
               0.509  0.23800000000000002
 </pre>
 
-
 <div class="org-src-container">
 <pre class="src src-xetal">ʳˢp
 
@@ -290,7 +284,6 @@ each row into shares of 1:
 0.6761752908117927  0.3238247091882072
 0.5673383870169968  0.4326616129830031
 </pre>
-
 
 <div class="org-src-container">
 <pre class="src src-xetal"><span class="c-libfunc">ᵃᶜr̲owSums</span> ʳˢp
@@ -309,7 +302,7 @@ each row into shares of 1:
 <div class="outline-text-2" id="text-org7267e04">
 <p>
 <code>ac:s_oftmax</code> is one expression. To show its steps the library writes
-them out with Accel's own pieces &#x2013; <code>ac:r_owMax</code>, <code>ac:r_owSums</code> &#x2013; and
+them out with Accel's own pieces &ndash; <code>ac:r_owMax</code>, <code>ac:r_owSums</code> &ndash; and
 checks that they give <code>ac:s_oftmax</code>'s answer:
 </p>
 
@@ -368,7 +361,6 @@ keeps e from overflowing:
 0.0              -0.271
 </pre>
 
-
 <p>
 e to each: every value positive, each row's largest exactly 1:
 </p>
@@ -387,7 +379,6 @@ e to each: every value positive, each row's largest exactly 1:
 1.0  0.7626164964050653
 </pre>
 
-
 <p>
 Each row's sum, and each value divided by it:
 </p>
@@ -403,7 +394,6 @@ Each row's sum, and each value divided by it:
 1.5683601467575405 1.4795054589748942 1.478906451608775 1.7626164964050655
 </pre>
 
-
 <div class="org-src-container">
 <pre class="src src-xetal"><span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> <span class="c-builtin">r̲avel</span> <span class="c-builtin">a̲bs</span> ʳˢshares <span class="c-symbol">−</span> ʳˢp
 
@@ -414,7 +404,6 @@ Each row's sum, and each value divided by it:
 <pre class="example">
 0.0
 </pre>
-
 
 
 <div id="orgb719911" class="figure">
@@ -428,7 +417,7 @@ Each row's sum, and each value divided by it:
 <div class="outline-text-2" id="text-org3b127e4">
 <p>
 A video here is a timeline of groups of objects. Every object is a box
-or a word; a group is one kind of thing &#x2013; z1's twenty bars, their
+or a word; a group is one kind of thing &ndash; z1's twenty bars, their
 twenty labels, the outlines of the nine removed values. For each group
 the program gives tables, one row an object:
 </p>
@@ -441,8 +430,8 @@ place, height and color;</li>
 Blender eases from one to the next (Bezier), so a bar shrinks
 smoothly;</li>
 <li>its tints: at each of a few times, its color;</li>
-<li>and, for the whole video, the camera's keys &#x2013; where it is and what it
-looks at &#x2013; and the captions, each with its span.</li>
+<li>and, for the whole video, the camera's keys &ndash; where it is and what it
+looks at &ndash; and the captions, each with its span.</li>
 </ul>
 
 <p>
@@ -508,7 +497,6 @@ camera can glide from one to the other):
 -14.8 -13.4 -12.0 -10.6 -9.2
 </pre>
 
-
 <p>
 A bar is a box: its middle (x y z) and its size (w d h). A bar of
 value v is v times 2.2 m tall; standing on the floor its middle is at
@@ -535,10 +523,9 @@ library works out every bar at once, a row of six numbers each:
 1.0 0.0 -0.5 0.5 0.5 1.0
 </pre>
 
-
 <p>
 ReLU is three keys for each bar: at 0 s and 4 s the bar is z1's value,
-at 5.6 s it is ReLU's &#x2013; 0 for a negative, the same for the rest. The
+at 5.6 s it is ReLU's &ndash; 0 for a negative, the same for the rest. The
 three tables, one under another, become one array of 20 bars by 3 keys
 by 6 numbers:
 </p>
@@ -567,7 +554,6 @@ keys ← <span class="c-number">3</span> <span class="c-libfunc">ʳˢk̲eyed</sp
 20 3 6
 </pre>
 
-
 <p>
 The second bar is z1's -1.0: below the floor until 4 s, then a sliver
 (0.004 m) at 5.6 s:
@@ -586,11 +572,10 @@ The second bar is z1's -1.0: below the floor until 4 s, then a sliver
 -13.4 0.0  0.0 0.62 0.62 0.004
 </pre>
 
-
 <p>
 Its color is keyed the same way: blue until 3 s, red by 3.6 s, so the
-eye goes to the values about to go. Colors are picked from a mask &#x2013;
-one where the value is negative &#x2013; as arrays:
+eye goes to the values about to go. Colors are picked from a mask &ndash;
+one where the value is negative &ndash; as arrays:
 </p>
 
 <div class="org-src-container">
@@ -607,7 +592,6 @@ one where the value is negative &#x2013; as arrays:
 255.0  74.0 61.0
 255.0 179.0 71.0
 </pre>
-
 
 <p>
 The whole ReLU part is one function: a glass floor, the bars with
@@ -666,7 +650,6 @@ apart, so no bar hides another:
                5.7                 6.9
 </pre>
 
-
 <p>
 A score's bar has seven keys: the score, held until the shift, the
 shifted score, held until the e's, the e, held until the division, the
@@ -675,7 +658,7 @@ is what makes each step a pause, then a move. Each row's sum is a
 white bar beside its two, shown from the sum's step to just after the
 division. The result is a column per row: its two shares stacked, the
 first on the floor, the second on top of it, so every column stands
-3.2 m &#x2013; 1 &#x2013; tall:
+3.2 m &ndash; 1 &ndash; tall:
 </p>
 
 <div class="org-src-container">
@@ -709,8 +692,8 @@ first on the floor, the second on top of it, so every column stands
 <h2 id="org0977849">6. Captions and the camera</h2>
 <div class="outline-text-2" id="text-org0977849">
 <p>
-The captions are words with spans and colors. Their numbers &#x2013; the
-shapes, how many values are negative &#x2013; are the arrays', so a caption
+The captions are words with spans and colors. Their numbers &ndash; the
+shapes, how many values are negative &ndash; are the arrays', so a caption
 cannot disagree with what it shows:
 </p>
 
@@ -755,7 +738,6 @@ cannot disagree with what it shows:
 <pre class="example">
 z1 [4 5]: 20 values, 9 of them negative|relu: every negative becomes 0|h [4 5]: the negatives are gone; the rest unchanged|z2 [4 2]: two scores in each row|1. subtract each row's largest|2. exp: every value positive, the largest 1|3. add up each row|4. divide by the sum|p [4 2]: each row shares out 1
 </pre>
-
 
 <p>
 The camera has four keys: above the ReLU stage at the start, the same
@@ -830,7 +812,6 @@ The ReLU bars' keys, as the script has them (the first 160 characters):
 moves('z1', nums('0.0 4.0 5.6', 3)[0], nums('-14.8 0.0 0.8250000000000001 0.62 0.62 1.6500000000000001 -14.8 0.0 0.8250000000000001 0.62 0.62 1.6500000000000001
 </pre>
 
-
 <p>
 And the whole script, the player and then the calls, its length in
 characters and in lines, the same every time:
@@ -846,7 +827,6 @@ characters and in lines, the same every time:
 <pre class="example">
 38526
 </pre>
-
 
 <div class="org-src-container">
 <pre class="src src-xetal">lines ← (<span class="c-builtin">n̲ot</span> ((<span class="c-number">1920</span>, <span class="c-number">1080</span>) <span class="c-libfunc">ʳˢs̲cene</span> <span class="c-number">0</span>) <span class="c-symbol">=</span> <span class="c-builtin">f̲irst</span> <span class="c-string">&quot;\n&quot;</span>) <span class="c-builtin">p̲artition</span> (<span class="c-number">1920</span>, <span class="c-number">1080</span>) <span class="c-libfunc">ʳˢs̲cene</span> <span class="c-number">0</span>
@@ -975,8 +955,8 @@ render.
 <div class="outline-text-2" id="text-org81ef8b9">
 <p>
 The demo writes the launcher (<code>bp:launcher</code>) and the script, and runs
-Blender through the extension. Five stills come first &#x2013; the pictures
-in this document &#x2013; then the video, and Blender's report of what it
+Blender through the extension. Five stills come first &ndash; the pictures
+in this document &ndash; then the video, and Blender's report of what it
 made:
 </p>
 

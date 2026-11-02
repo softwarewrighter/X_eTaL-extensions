@@ -13,8 +13,10 @@
 ## bp:launcher: the outer script. python3 run.py SCRIPT ARGS runs Blender
 ## (XETAL_BLENDER, set by bl:r_un!) in the background with its factory
 ## settings on SCRIPT, passing ARGS after "--"; a Python error inside
-## makes the run fail.
-l:launcher := "import os, subprocess, sys\nblender = os.environ.get(\"XETAL_BLENDER\") or sys.exit(\"no Blender found\")\nrun = [blender, \"--background\", \"--factory-startup\", \"--python-exit-code\", \"1\", \"--python\", sys.argv[1], \"--\"] + sys.argv[2:]\nsys.exit(subprocess.run(run).returncode)\n"
+## makes the run fail. Audio is disabled; XETAL_BLENDER_ARGS supplies
+## optional command-line arguments (shell quoting, without a shell),
+## for example --gpu-backend vulkan on a Linux NVIDIA machine.
+l:launcher := "import os, shlex, subprocess, sys\nblender = os.environ.get(\"XETAL_BLENDER\") or sys.exit(\"no Blender found\")\nrun = [blender, \"--background\"] + shlex.split(os.environ.get(\"XETAL_BLENDER_ARGS\", \"\")) + [\"-noaudio\", \"--factory-startup\", \"--python-exit-code\", \"1\", \"--python\", sys.argv[1], \"--\"] + sys.argv[2:]\nsys.exit(subprocess.run(run).returncode)\n"
 
 ## bp:head: the inner script's start: an empty scene, the output
 ## directory (the first argument after "--", made), keyframes linear (an

@@ -233,7 +233,9 @@ literals; a small function alone is stable. The doc site built from it
 (`xetal doc --out`) changes on every build. Wanted: the same file
 types the same way every run. Workaround: the masks are made Int for
 certain (`f_loor f_loat`), which settled `Endless.xtl`; the pages
-check ignores lines that differ only in an inferred type.
+check ignores lines that differ only in an inferred type. Its filter
+passes separate patterns to diff so the same workaround works with
+GNU diff on Linux as well as on macOS.
 
 ### E10: a top-level tuple pattern's hidden value on the doc pages
 

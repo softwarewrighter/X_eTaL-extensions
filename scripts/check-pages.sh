@@ -18,8 +18,11 @@ PAGES_DIR="$fresh" "$root/scripts/build-pages.sh" >/dev/null
 # some functions differently from run to run (docs/xetal-asks.md, E9).
 # A new or renamed function still changes other lines (its source page,
 # its anchors), so the check still catches a stale site.
-types='class="type"|<td>function</td>|","function","'
-if ! diff -r -I 'built at [0-9a-f]*' -I "$types" "$root/pages" "$fresh" >"$tmp/pages-check.diff"; then
+# Separate -I options avoid the different alternation syntax of GNU
+# (basic regular expressions) and BSD (extended regular expressions).
+if ! diff -r -I 'built at [0-9a-f]*' -I 'class="type"' \
+    -I '<td>function</td>' -I '","function","' \
+    "$root/pages" "$fresh" >"$tmp/pages-check.diff"; then
   head -40 "$tmp/pages-check.diff"
   echo "check-pages: pages/ is out of date; run just pages and commit it" >&2
   exit 1

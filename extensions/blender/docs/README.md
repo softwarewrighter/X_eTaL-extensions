@@ -46,6 +46,11 @@ factory settings keep a run from depending on the user's own Blender
 setup, and `--python-exit-code 1` makes a Python error inside Blender
 the run's failure.
 
+Audio is disabled. Optional `XETAL_BLENDER_ARGS` adds command-line
+arguments without invoking a shell. On Linux NVIDIA, use
+`XETAL_BLENDER_ARGS="--gpu-backend vulkan"` if the default OpenGL
+backend selects Mesa software rendering.
+
 ## Writing bpy: Bpy.xtl
 
 `lib/Bpy.xtl` (alias `bp:`) writes Blender's Python from X_eTaL: each
@@ -315,6 +320,39 @@ times), so every lamp is a signal sampled once a frame and keyed with
     (`work/hexrun/out/hex-run.mp4`) and a Short
     (`work/hexrun/out-short/hex-run-short.mp4`), with its cue sheet and
     subtitles (`work/hexrun/hex-run.cues.toml`, `hex-run.srt`).
+
+11. `demos/hex-build.xtl` (`just ext blender hex-build`, with the OSS
+    CAD Suite on `PATH`): the build process, from `hx:s_tep` through
+    hand-lowered XIR and emitted Verilog, Yosys synthesis, nextpnr
+    placement and routing, and `gowin_pack`'s bitstream entering a
+    schematic Tang Nano 9K. Blue LUTs and orange flip-flops move from
+    a cloud to their actual BEL coordinates. Green marks the tiles
+    occupied by routed wires; the view fits the occupied region, in
+    tile coordinates, without claiming physical wire paths or lengths.
+    The board silhouette is schematic, without measured dimensions.
+    The animation represents configuration; the recipe builds the
+    bitstream without accessing hardware.
+
+    `scripts/hex1000-build.py` runs the pinned FPGA board's tool flow
+    outside its clone and retains `synth.json`, `pnr.json`,
+    `hex1000.fs`, logs, and `evidence.json` (artifact hashes, counts,
+    cell names and BELs) in `work/hexbuild/`. Its small numeric tables
+    drive `demos/HexBuild.xtl`; counts in the captions come from the
+    build. Tool versions can change synthesis and packing: this
+    machine's Yosys produced 647 LUTs and 469 flip-flops, plus memory,
+    carry and wide multiplexer cells; nextpnr packing produced 1350
+    placed LUT/flip-flop cells. Neither count is hard-coded.
+
+    Outputs: `work/hexbuild/out/hex-build.mp4` (1920 by 1080),
+    `out-short/hex-build-short.mp4` (1080 by 1920), both 24 seconds
+    at 30 fps; `hex-build.cues.toml` and `hex-build.srt` beside them.
+    `just ext blender hex-build-data` rebuilds just the evidence;
+    `just demo blender hex-build` renders existing evidence.
+    `just ext blender hex-build-check` tests the evidence reader,
+    including missing placement and malformed or absent routing.
+    `tests/hex-build-quick.xtl` renders four stages in both shapes
+    from an actual build; `blender-hex-build-quick` uses a small,
+    stable fixture with LUTs and flip-flops sharing a tile.
 
 ## Build and test
 

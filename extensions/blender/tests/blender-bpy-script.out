@@ -1,7 +1,7 @@
 the launcher:
-import os, subprocess, sys
+import os, shlex, subprocess, sys
 blender = os.environ.get("XETAL_BLENDER") or sys.exit("no Blender found")
-run = [blender, "--background", "--factory-startup", "--python-exit-code", "1", "--python", sys.argv[1], "--"] + sys.argv[2:]
+run = [blender, "--background"] + shlex.split(os.environ.get("XETAL_BLENDER_ARGS", "")) + ["-noaudio", "--factory-startup", "--python-exit-code", "1", "--python", sys.argv[1], "--"] + sys.argv[2:]
 sys.exit(subprocess.run(run).returncode)
 
 the scene:

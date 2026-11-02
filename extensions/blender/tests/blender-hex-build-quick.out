@@ -1,0 +1,77 @@
+the cue sheet:
+[[cue]]
+n = 1
+start = 0.000
+end = 3.000
+caption = "HEX1000: from a pure step to a configured FPGA"
+
+[[cue]]
+n = 2
+start = 3.000
+end = 7.000
+caption = "Hex1000.xtl: hx:s_tep. Hand-lowered XIR emits hex1000.v; add the board and UART."
+
+[[cue]]
+n = 3
+start = 7.000
+end = 11.000
+caption = "Yosys maps the board to 2 LUTs and 2 flip-flops, plus memory and carry logic."
+
+[[cue]]
+n = 4
+start = 11.000
+end = 16.000
+caption = "nextpnr: the logic flies to its assigned BELs. Blue: LUTs. Orange: flip-flops."
+
+[[cue]]
+n = 5
+start = 16.000
+end = 20.000
+caption = "Routing: green marks the tiles occupied by routed wires, from nextpnr."
+
+[[cue]]
+n = 6
+start = 20.000
+end = 24.000
+caption = "gowin_pack: 128 bytes of bitstream. Configuration enters a schematic Tang Nano 9K."
+
+
+exit 0
+errors 0
+frames 1 to 721 at 30 a second
+bitstream: 1 objects, 1 keyed
+board: 3 objects, 3 keyed
+cards: 1 objects, 1 keyed
+die: 1 objects, 1 keyed
+headers: 28 objects, 28 keyed
+logic: 4 objects, 4 keyed
+routes: 4 objects, 4 keyed
+source: 3 objects, 3 keyed
+source labels: 3 objects, 3 keyed
+
+exit 0
+errors 0
+frames 1 to 721 at 30 a second
+bitstream: 1 objects, 1 keyed
+board: 3 objects, 3 keyed
+cards: 1 objects, 1 keyed
+die: 1 objects, 1 keyed
+headers: 28 objects, 28 keyed
+logic: 4 objects, 4 keyed
+routes: 4 objects, 4 keyed
+source: 3 objects, 3 keyed
+source labels: 3 objects, 3 keyed
+
+work/hexbuild/quick:
+report.txt
+wide-1.png
+wide-2.png
+wide-3.png
+wide-4.png
+
+work/hexbuild/quick-short:
+report.txt
+short-1.png
+short-2.png
+short-3.png
+short-4.png

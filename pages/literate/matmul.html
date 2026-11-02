@@ -34,8 +34,8 @@
 <p>
 A matrix product is the work a GPU does most: in a neural network's
 layers, in attention, in graphics. C = A x B takes a row of A and a
-column of B, multiplies them item by item and adds the products up &#x2013;
-one item of C &#x2013; for every row and every column. This document shows
+column of B, multiplies them item by item and adds the products up &ndash;
+one item of C &ndash; for every row and every column. This document shows
 two videos of it, made from X_eTaL arrays: a small product a step at a
 time, and a large one as a 3D construct the camera flies through, and
 how every part of both comes from X_eTaL.
@@ -65,7 +65,7 @@ back wall, and the cube between them is every product. Item by item
 a row of A and a column of B light up, their four products appear in
 the cube with lines from their two factors, fly into C's item and
 become its sum. The first item is slow, the next quicker; then all
-six light at once &#x2013; on a GPU every item is a work-item of its own.</li>
+six light at once &ndash; on a GPU every item is a work-item of its own.</li>
 <li><b>At scale</b> (18 s): the same construct for 512 by 512 matrices: 262,144
 cells a wall, 134 million multiply-adds in the cube. The camera starts
 far out to show the scale, flies to one work-group's 16 by 16 tile of
@@ -94,7 +94,7 @@ written by hand for these videos:
 <code>ac:m_atmul</code> (pinned at <code>GPU_COMMIT</code>).</li>
 <li><b>X_eTaL works out the videos</b>: <code>extensions/blender/demos/Matmul.xtl</code>
 and <code>MatmulFly.xtl</code> turn them into places, colors, keys, spans, the
-camera's path and the captions &#x2013; the only part made for these
+camera's path and the captions &ndash; the only part made for these
 videos.</li>
 <li><b>X_eTaL writes the Python</b>: the blender extension's <code>Video.xtl</code> turns
 each table into one call of its player, every number written out.</li>
@@ -124,7 +124,6 @@ player makes the objects and keys and EEVEE renders the MP4.</li>
 5  6  7  8
 9 10 11 12
 </pre>
-
 
 <div class="org-src-container">
 <pre class="src src-xetal">ˡa ← <span class="c-number">3</span> <span class="c-number">4</span> <span class="c-builtin">r̲eshape</span> <span class="c-builtin">r̲ange</span> <span class="c-number">12</span>
@@ -160,7 +159,6 @@ player makes the objects and keys and EEVEE renders the MP4.</li>
 1  1
 2 -1
 </pre>
-
 
 <div class="org-src-container">
 <pre class="src src-xetal">ᵐᵐc
@@ -238,7 +236,6 @@ which item it belongs to and its i, j and k, as arrays:
 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
 </pre>
 
-
 <div class="org-src-container">
 <pre class="src src-xetal">ᵐᵐprodK
 
@@ -249,7 +246,6 @@ which item it belongs to and its i, j and k, as arrays:
 <pre class="example">
 0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3 0 1 2 3
 </pre>
-
 
 <p>
 Each product is a[i;k] times b[k;j], picked out of the raveled
@@ -282,7 +278,6 @@ checks against Accel:
 1 0 3 8 0 2 3 -4 5 0 7 16 0 6 7 -8 9 0 11 24 0 10 11 -12
 </pre>
 
-
 <div class="org-src-container">
 <pre class="src src-xetal">(<span class="c-builtin">r̲avel</span> ᵐᵐc) <span class="c-symbol">=</span> ᵐᵐsums
 
@@ -308,8 +303,8 @@ between the keys.
 
 <p>
 What is new here is that things move one after another: each product
-has keys of its own &#x2013; it appears, waits, flies to C and lands at its
-own seconds &#x2013; so its group is keyed with <code>vd:m_ovesEach</code>, a row of
+has keys of its own &ndash; it appears, waits, flies to C and lands at its
+own seconds &ndash; so its group is keyed with <code>vd:m_ovesEach</code>, a row of
 times for each object, rather than one row for the group.
 </p>
 
@@ -364,7 +359,6 @@ before, and starts when it ends:
 1.5 4.5 6.7 8.3 9.600000000000001 10.7
 </pre>
 
-
 <div class="org-src-container">
 <pre class="src src-xetal">ᵐᵐlength
 
@@ -375,7 +369,6 @@ before, and starts when it ends:
 <pre class="example">
 15.5
 </pre>
-
 
 <p>
 Within its item's time, each of the four products appears a little
@@ -474,7 +467,6 @@ The 24 products' places, and the places in C they fly to:
 0.5 3.5 -0.5
 </pre>
 
-
 <p>
 Each product's color comes from its value through <code>vd:t_one</code>, a scale
 from deep blue through cyan and yellow to orange:
@@ -508,9 +500,8 @@ from deep blue through cyan and yellow to orange:
 255.0    192.5     73.0
 </pre>
 
-
 <p>
-The walls &#x2013; A, B, C's empty cells, the cube's edges, each matrix's
+The walls &ndash; A, B, C's empty cells, the cube's edges, each matrix's
 name and shape:
 </p>
 
@@ -585,12 +576,11 @@ so each wall shows a pattern at every distance:
 64 64
 </pre>
 
-
 <p>
 A wall of n by n cells is one mesh, <code>vd:g_rid</code>: its corner, the two
 directions its rows and columns run, a color and a time for every
-cell. For 512 that is 262,144 cells; written compactly &#x2013; whole numbers
-for colors, milliseconds for times &#x2013; the whole script is about 11.6
+cell. For 512 that is 262,144 cells; written compactly &ndash; whole numbers
+for colors, milliseconds for times &ndash; the whole script is about 11.6
 million characters:
 </p>
 
@@ -627,7 +617,6 @@ in the queue:
 15.193124999999998 15.339374999999999 15.778125
 </pre>
 
-
 <p>
 The work-group and work-item the camera visits:
 </p>
@@ -657,7 +646,6 @@ The work-group and work-item the camera visits:
 325 217
 </pre>
 
-
 <p>
 The work-item's products are a row of A times a column of B, item by
 item; the running sum adds them from the far end, so it ends, at the
@@ -684,7 +672,6 @@ partial ← <span class="c-builtin">r̲ev</span> <span class="c-symbol">'+</span
 <pre class="example">
 1
 </pre>
-
 
 <div class="org-src-container">
 <pre class="src src-xetal"><span class="c-libfunc">ˡw̲ork</span> ← { n z →
@@ -719,7 +706,6 @@ The captions' numbers are the arrays':
 <pre class="example">
 C = A x B|512 x 512 x 512 = 134217728 multiply-adds|one work-group: a 16 x 16 tile of C|one work-item: a row of A times a column of B|512 products, added one at a time from the far end|the sum is one item of C|every item of C: 262144 sums, a work-group at a time
 </pre>
-
 
 <video src="../blender/matmul-fly.webm" controls loop muted playsinline style="width:100%"></video>
 
@@ -781,7 +767,6 @@ them (the first 160 characters):
 moves_each('products', nums('3.54 4.140000000000001 3.54 4.140000000000001 3.54 4.140000000000001 3.54 4.140000000000001 5.996 6.436 5.996 6.436 5.996 6.436 5.9
 </pre>
 
-
 <p>
 The whole steps script, the same every time:
 </p>
@@ -796,7 +781,6 @@ The whole steps script, the same every time:
 <pre class="example">
 32084
 </pre>
-
 
 <p>
 The demos write the launcher and the script and run Blender through

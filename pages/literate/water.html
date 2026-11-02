@@ -95,7 +95,6 @@ row
 64 0 0 0 0
 </pre>
 
-
 <p>
 Spreading is done in passes, one a direction. In a pass east, each cup
 gives part of the difference to the cup east of it when that cup holds
@@ -132,7 +131,6 @@ difference, and why it is no more than half comes next.
 32 32 0 0 0
 </pre>
 
-
 <p>
 A tick is a pass west then a pass east. Six ticks, each row printed,
 and the water counted at the end:
@@ -168,7 +166,6 @@ z ← <span class="c-number">6</span> <span class="c-userfunc">ᵘs̲how</span> 
 64
 </pre>
 
-
 <p>
 The water spreads out and evens, and all 64 spoonfuls are still there.
 </p>
@@ -180,7 +177,7 @@ The water spreads out and evens, and all 64 spoonfuls are still there.
 <p>
 The first version gave the whole difference. Two cups, 0 and 64: the
 pass west moves all 64 into the first cup, the pass east moves them all
-back &#x2013; every tick ends where it began. The game saw that nothing had
+back &ndash; every tick ends where it began. The game saw that nothing had
 changed and put the water to sleep, the lake still full. Here is that
 rule, a pass west, then a tick, then two ticks:
 </p>
@@ -219,7 +216,6 @@ said ← <span class="c-builtin">p̲rint!</span> <span class="c-builtin">f̲orma
 0 64
 0 64
 </pre>
-
 
 <p>
 With half the difference two cups meet in the middle and stay there.
@@ -279,8 +275,8 @@ does water spread.
 Then the four passes, west, east, north, south. A cup spreads only when
 it cannot fall: rock, or a full cup, is under it (<code>held</code>). It gives
 only to a neighbor holding less (<code>go</code>). Its share of the difference is
-4/16, more the way it is already moving &#x2013; momentum, 7/16, which is
-why a stream keeps going straight down a narrow trench &#x2013; and the most
+4/16, more the way it is already moving &ndash; momentum, 7/16, which is
+why a stream keeps going straight down a narrow trench &ndash; and the most
 toward a neighbor with a drop under it, 8/16, so water pours off an
 edge. Never more than half; at least one spoonful when the difference
 is two or more; and the front of a stream moves on into an empty cell
@@ -366,8 +362,8 @@ gentle slope.
 <div class="outline-text-2" id="text-org7cd5f22">
 <p>
 The sea is the one endless supply: it is made of ordinary blocks, not
-cups, and a cup beside it is kept full &#x2013; so a hole dug next to the sea
-fills &#x2013; while water falling into it becomes sea.
+cups, and a cup beside it is kept full &ndash; so a hole dug next to the sea
+fills &ndash; while water falling into it becomes sea.
 </p>
 
 <div class="org-src-container">
