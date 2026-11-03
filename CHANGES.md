@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-03
 
+- `chore` complete HEX1000-keys-leds step 1 (UART naming); next is the independently pinned 1K source and evidence. The affected gate passed all 17 Blender regressions and the documentation/site checks.
 - `ext` distinguish the existing Tang Nano 9K videos as HEX1000-UART in opening cards, cue sheets, subtitles, docs and site headings, preserving hex-run/hex-build commands and URLs. X_eTaL renders replacement static cards; uart-titles refreshes the checked footage and available full masters with original inputs and stream/hash evidence retained. The separate 1K family is HEX1000-keys-leds. Demo Title metadata supplies display names independently of slugs.
 - `chore` complete the HEX1000-keys-leds planning step; the independent five-step video saga is queued and the current Blender saga returns to GPU build.
 - `plan` queue the five-step HEX1000-keys-leds video saga for hardwarewrighter/hex1000's physical Tang Nano 1K keypad/MAX7219 calculator, independently of the pending GPU videos. Plan HEX1000-UART public names for the existing 9K videos while preserving their URLs; define source pinning, evidence-driven execution/build videos, masters/Shorts/cues/tests and site release. Published videos are unchanged in this planning step.
