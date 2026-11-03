@@ -1,4 +1,4 @@
-## Blender, 10: HEX1000 computing C0DE+BEEF=, from a simulation of its
+## Blender, 10: HEX1000-UART computing C0DE+BEEF=, from a simulation of its
 ## board. scripts/hex1000-sim.sh runs X_eTaL-fpga's board Verilog (at
 ## FPGA_COMMIT) under iverilog, the text sent over its serial line, into
 ## a waveform (VCD); scripts/hex1000-browser.py types the same text at
@@ -11,6 +11,7 @@
 ## motion, the typing as a time-lapse, one addition in slow motion, the
 ## display, the browser's screen beside it. A YouTube video and a Short,
 ## with a cue sheet and subtitles.
+## Title: HEX1000-UART: execution
 ## Run: just ext blender hex-run   (the simulation, the browser, then this:
 ## about 25 minutes, 1261 frames twice)
 

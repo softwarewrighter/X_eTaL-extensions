@@ -638,7 +638,7 @@ with outlines, and exported as glTF, OBJ and .blend.
   name.
 
 
-## Saga 16 -- HEX1000-keys-leds videos (queued)
+## Saga 16 -- HEX1000-keys-leds videos
 
 Requested 2026-11-03: make execution and build-process videos for
 `../../hardwarewrighter/hex1000`, the physical Tang Nano 1K calculator:
@@ -654,14 +654,13 @@ Public video families:
 - **HEX1000-keys-leds**: the new Tang Nano 1K keypad/display videos.
 - The program-counter explainer remains shared HEX1000 material.
 
-The naming change is the first implementation step, not a claim that
-the published titles have already changed. Preserve existing `hex-run`
+The naming change is the first implementation step. Preserve existing `hex-run`
 and `hex-build` commands, asset paths and site anchors. New demo slugs
 are `hex-keys-leds-run` and `hex-keys-leds-build`.
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | uart-names | distinguish UART titles, captions, cue sheets, docs and recordings; retain existing URLs and commands |
+| 1 | uart-names | (done 2026-11-03) HEX1000-UART titles, cue sheets, docs and site headings; static opening cards rendered again and joined to checked footage, with frame counts/resolutions verified and original inputs retained; existing URLs and commands preserved; separate HEX1000-keys-leds family documented |
 | 2 | keys-leds-evidence | separate `HEX1000_COMMIT` and clean `work/hex1000` clone; full calculator sources, Front model/RTL, correct board variant and constraints; external build outputs, hashes, tools and evidence; no hardware programming |
 | 3 | keys-leds-run | external physical key contacts drive the complete board simulation, with production debounce timing; X_eTaL/RTL agreement, MAX7219 decoding and displayed digits checked; startup banner, first key, scan/debounce, held-key suppression, rejected bounce, `C0DE+BEEF=17FCD` and second-equals clear; waveform-driven animation with explicit time remapping |
 | 4 | keys-leds-build | actual full 1K calculator synthesis, placement, routing and timing for both clocks; resource counts including block RAM/carry/IO and BEL identities; label hand-written lowering/controller RTL; bitstream entering a schematic 1K, keypad, operator strip, shifter and LED display |
@@ -678,7 +677,7 @@ pack bitstreams without loading SRAM or programming flash.
 The executable saga is tracked separately at
 `.agentrail-queue/hex1000-keys-leds/.agentrail/`; the current Blender
 saga retains its GPU steps. From this repository root, inspect the
-queued work with:
+1K video work with:
 
 ```sh
 agentrail --saga .agentrail-queue/hex1000-keys-leds next

@@ -58,6 +58,14 @@ hex-build-check:
 hex-build: hex-build-data
     {{root}}/scripts/demos.sh blender hex-build
 
+# Refresh UART opening cards/cues, preserving footage, URLs and original inputs
+uart-titles:
+    cd {{root}} && cargo build -q --release --workspace
+    {{root}}/scripts/hex1000-sim.sh "C0DE+BEEF=" work/hexrun
+    {{root}}/.venv/bin/python3 tools/uart-titles.py
+    HEX_RUN_VIDEO=work/uart-titles/hex-run.mp4 {{root}}/scripts/videos.sh blender hex-run
+    HEX_BUILD_VIDEO=work/uart-titles/hex-build.mp4 {{root}}/scripts/videos.sh blender hex-build
+
 # Publish the tower defense pieces demos/game-assets.xtl made on the site (pages/blender/td)
 publish-td:
     {{root}}/scripts/publish-td.sh

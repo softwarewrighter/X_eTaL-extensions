@@ -201,7 +201,7 @@
 <section id="results"></section>
 <h1><span class="kind">program</span>extensions/blender/demos/hex-run.xtl</h1>
 <div class="doc">
-<p>Blender, 10: HEX1000 computing C0DE+BEEF=, from a simulation of its
+<p>Blender, 10: HEX1000-UART computing C0DE+BEEF=, from a simulation of its
 board. scripts/hex1000-sim.sh runs X_eTaL-fpga's board Verilog (at
 FPGA_COMMIT) under iverilog, the text sent over its serial line, into
 a waveform (VCD); scripts/hex1000-browser.py types the same text at
@@ -214,61 +214,62 @@ video (HexRun.xtl): the bits arriving and the key matrix in slow
 motion, the typing as a time-lapse, one addition in slow motion, the
 display, the browser's screen beside it. A YouTube video and a Short,
 with a cue sheet and subtitles.
+Title: HEX1000-UART: execution
 Run: just ext blender hex-run   (the simulation, the browser, then this:
 about 25 minutes, 1261 frames twice)</p>
 </div>
 <p class="meta"><a href="extensions-blender-demos-hex-run.xtl.src.html">source</a> &middot; imports <code><span class="c-error">bl:</span></code> <a href="extensions-blender-lib-Blender.xtl.html">extensions/blender/lib/Blender.xtl</a>; <code><span class="c-error">bp:</span></code> <a href="extensions-blender-lib-Bpy.xtl.html">extensions/blender/lib/Bpy.xtl</a>; <code><span class="c-error">vd:</span></code> <a href="extensions-blender-lib-Video.xtl.html">extensions/blender/lib/Video.xtl</a>; <code><span class="c-error">vc:</span></code> <a href="extensions-blender-demos-Vcd.xtl.html">extensions/blender/demos/Vcd.xtl</a>; <code><span class="c-error">hr:</span></code> <a href="extensions-blender-demos-HexRun.xtl.html">extensions/blender/demos/HexRun.xtl</a></p>
 <div class="item" id="v">
 <h3><a href="#v">v</a> <span class="type">: (Box Char, Int)</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L23">line 23</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L24">line 24</a></div>
 <pre class="code">v ← <a href="extensions-blender-demos-Vcd.xtl.html#l.r_ead" class="c-libfunc">ᵛᶜr̲ead</a> <span class="c-string">&quot;work/hexrun/hex-run.vcd&quot;</span></pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-hex-run.xtl.src.html#L25">extensions/blender/demos/hex-run.xtl:25</a>, <a href="extensions-blender-demos-hex-run.xtl.html#n">n</a></div>
-</div>
-<div class="item" id="n">
-<h3><a href="#n">n</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L26">line 26</a></div>
-<pre class="code">n ← <span class="c-string">&quot;work/hexrun/run.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> <a href="extensions-blender-lib-Bpy.xtl.html#l.launcher">ᵇᵖlauncher</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-hex-run.xtl.src.html#L26">extensions/blender/demos/hex-run.xtl:26</a>, <a href="extensions-blender-demos-hex-run.xtl.html#n">n</a></div>
 </div>
 <div class="item" id="n">
 <h3><a href="#n">n</a> <span class="type">: Int</span></h3>
 <div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L27">line 27</a></div>
-<pre class="code">n ← <span class="c-string">&quot;work/hexrun/hex-run.cues.toml&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> (<a href="extensions-blender-demos-HexRun.xtl.html#l.c_ues" class="c-libfunc">ʰʳc̲ues</a> <a href="extensions-blender-demos-hex-run.xtl.html#v">v</a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.cueTable">ʰʳcueTable</a>) <a href="extensions-blender-lib-Video.xtl.html#l.c_ues" class="c-libfunc">ᵛᵈc̲ues</a> <span class="c-number">0</span></pre>
+<pre class="code">n ← <span class="c-string">&quot;work/hexrun/run.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> <a href="extensions-blender-lib-Bpy.xtl.html#l.launcher">ᵇᵖlauncher</a></pre>
 </div>
 <div class="item" id="n">
 <h3><a href="#n">n</a> <span class="type">: Int</span></h3>
 <div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L28">line 28</a></div>
+<pre class="code">n ← <span class="c-string">&quot;work/hexrun/hex-run.cues.toml&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> (<a href="extensions-blender-demos-HexRun.xtl.html#l.c_ues" class="c-libfunc">ʰʳc̲ues</a> <a href="extensions-blender-demos-hex-run.xtl.html#v">v</a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.cueTable">ʰʳcueTable</a>) <a href="extensions-blender-lib-Video.xtl.html#l.c_ues" class="c-libfunc">ᵛᵈc̲ues</a> <span class="c-number">0</span></pre>
+</div>
+<div class="item" id="n">
+<h3><a href="#n">n</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L29">line 29</a></div>
 <pre class="code">n ← <span class="c-string">&quot;work/hexrun/hex-run.srt&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> (<a href="extensions-blender-demos-HexRun.xtl.html#l.c_ues" class="c-libfunc">ʰʳc̲ues</a> <a href="extensions-blender-demos-hex-run.xtl.html#v">v</a>, <a href="extensions-blender-demos-HexRun.xtl.html#l.cueTable">ʰʳcueTable</a>) <a href="extensions-blender-lib-Video.xtl.html#l.s_rt" class="c-libfunc">ᵛᵈs̲rt</a> <span class="c-number">0</span></pre>
 </div>
 <div class="item" id="n">
 <h3><a href="#n">n</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L31">line 31</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L32">line 32</a></div>
 <pre class="code">n ← <span class="c-string">&quot;work/hexrun/video.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> ((<a href="extensions-blender-lib-Video.xtl.html#l.landscape">ᵛᵈlandscape</a>, <a href="extensions-blender-demos-hex-run.xtl.html#v">v</a>, <span class="c-string">&quot;work/hexrun/browser.png&quot;</span>) <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene" class="c-libfunc">ʰʳs̲cene</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#l.r_ender" class="c-libfunc">ᵛᵈr̲ender</a> <span class="c-string">&quot;hex-run.mp4&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-lib-Video.xtl.html#l.report">ᵛᵈreport</a></pre>
 </div>
 <div class="item" id="n">
 <h3><a href="#n">n</a> <span class="type">: Int</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L32">line 32</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L33">line 33</a></div>
 <pre class="code">n ← <span class="c-string">&quot;work/hexrun/short.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.w_rite-21" class="c-libfunc">ᵇˡw̲rite!</a> ((<a href="extensions-blender-lib-Video.xtl.html#l.shorts">ᵛᵈshorts</a>, <a href="extensions-blender-demos-hex-run.xtl.html#v">v</a>, <span class="c-string">&quot;work/hexrun/browser.png&quot;</span>) <a href="extensions-blender-demos-HexRun.xtl.html#l.s_cene" class="c-libfunc">ʰʳs̲cene</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Video.xtl.html#l.r_ender" class="c-libfunc">ᵛᵈr̲ender</a> <span class="c-string">&quot;hex-run-short.mp4&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-lib-Video.xtl.html#l.report">ᵛᵈreport</a></pre>
 </div>
 <div class="item" id="r">
 <h3><a href="#r">r</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L34">line 34</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L35">line 35</a></div>
 <pre class="code">r ← <span class="c-string">&quot;work/hexrun/run.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.r_un-21" class="c-libfunc">ᵇˡr̲un!</a> <span class="c-string">&quot;work/hexrun/video.py work/hexrun/out&quot;</span></pre>
 <div class="uses">Used in: <a href="extensions-blender-demos-hex-run.xtl.html#lines">lines</a></div>
 </div>
 <div class="item" id="lines">
 <h3><a href="#lines">lines</a> <span class="type">: Box Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L36">line 36</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L37">line 37</a></div>
 <pre class="code">lines ← (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="extensions-blender-demos-hex-run.xtl.html#r">r</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-string">&quot;\n&quot;</span>) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> <a href="extensions-blender-demos-hex-run.xtl.html#r">r</a></pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-hex-run.xtl.src.html#L37">extensions/blender/demos/hex-run.xtl:37</a>, <a href="extensions-blender-demos-hex-run.xtl.src.html#L38">extensions/blender/demos/hex-run.xtl:38</a>, <a href="extensions-blender-demos-hex-run.xtl.src.html#L42">extensions/blender/demos/hex-run.xtl:42</a>, <a href="extensions-blender-demos-hex-run.xtl.src.html#L43">extensions/blender/demos/hex-run.xtl:43</a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-hex-run.xtl.src.html#L38">extensions/blender/demos/hex-run.xtl:38</a>, <a href="extensions-blender-demos-hex-run.xtl.src.html#L39">extensions/blender/demos/hex-run.xtl:39</a>, <a href="extensions-blender-demos-hex-run.xtl.src.html#L43">extensions/blender/demos/hex-run.xtl:43</a>, <a href="extensions-blender-demos-hex-run.xtl.src.html#L44">extensions/blender/demos/hex-run.xtl:44</a></div>
 </div>
 <div class="item" id="r">
 <h3><a href="#r">r</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L40">line 40</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L41">line 41</a></div>
 <pre class="code">r ← <span class="c-string">&quot;work/hexrun/run.py&quot;</span> <a href="extensions-blender-lib-Blender.xtl.html#l.r_un-21" class="c-libfunc">ᵇˡr̲un!</a> <span class="c-string">&quot;work/hexrun/short.py work/hexrun/out-short&quot;</span></pre>
 </div>
 <div class="item" id="lines">
 <h3><a href="#lines">lines</a> <span class="type">: Box Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L41">line 41</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-hex-run.xtl.src.html#L42">line 42</a></div>
 <pre class="code">lines ← (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="extensions-blender-demos-hex-run.xtl.html#r">r</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <span class="c-string">&quot;\n&quot;</span>) <a href="builtins.html#p_artition" class="c-builtin">p̲artition</a> <a href="extensions-blender-demos-hex-run.xtl.html#r">r</a></pre>
 </div>
 </main>

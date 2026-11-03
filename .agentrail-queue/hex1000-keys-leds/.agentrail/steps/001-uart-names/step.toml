@@ -1,6 +1,6 @@
 number = 1
 slug = "uart-names"
-status = "pending"
+status = "in-progress"
 description = "Name the existing Tang Nano 9K execution/build videos HEX1000-UART in public ..."
 role = "production"
 context_files = []

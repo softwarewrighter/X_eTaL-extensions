@@ -103,10 +103,20 @@ def what(demo):
         t = line.lstrip("# ").rstrip()
         if t.startswith("Run:") or not t:
             break
-        if t.startswith(("Page: ", "Cover: ", "Link: ")):
+        if t.startswith(("Page: ", "Cover: ", "Link: ", "Title: ")):
             continue
         lines.append(t)
     return " ".join(lines)
+
+
+def title(demo, default):
+    for line in demo.read_text().splitlines():
+        if not line.startswith("#"):
+            break
+        text = line.lstrip("# ")
+        if text.startswith("Title: "):
+            return text[len("Title: "):].strip()
+    return default
 
 
 def vendored():
@@ -129,13 +139,13 @@ for ext_dir in sorted(p.parent for p in root.glob("extensions/*/extension.toml")
         else:
             player = '<p class="note">(no recording yet)</p>'
         demos.append(f"""    <section class="panel demo" id="{ext}-{name}">
-      <h3>{html.escape(ext)} / {html.escape(name)} <a class="docs" href="doc/extensions-{ext}-demos-{name}.xtl.html">source and docs</a>{lit_link(ext, name)}{page_link(demo)}{link_lines(demo)}</h3>
+      <h3>{html.escape(title(demo, f'{ext} / {name}'))} <a class="docs" href="doc/extensions-{ext}-demos-{name}.xtl.html">source and docs</a>{lit_link(ext, name)}{page_link(demo)}{link_lines(demo)}</h3>
       {cover(ext, demo)}<p class="note">{html.escape(what(demo))}</p>
       {player}
       <pre class="source">just demo {ext} {name}</pre>
     </section>""")
-    links = "".join(f'<li><a href="#{ext}-{d}">{html.escape(d)}</a></li>'
-                    for d in sorted(d.stem for d in (ext_dir / "demos").glob("*.xtl") if d.stem[0].islower()))
+    links = "".join(f'<li><a href="#{ext}-{d.stem}">{html.escape(title(d, d.stem))}</a></li>'
+                    for d in sorted((ext_dir / "demos").glob("*.xtl")) if d.stem[0].islower())
     toc.append(f'    <li><a href="#{ext}">{html.escape(ext)}</a>'
                + (f"<ul>{links}</ul>" if links else "") + "</li>")
     facades = sorted(p.name for p in (ext_dir / "lib").glob("*.xtl"))

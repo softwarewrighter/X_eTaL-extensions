@@ -9,7 +9,7 @@ the cue sheet:
 n = 1
 start = 0.000
 end = 3.200
-caption = "HEX1000: C0DE+BEEF= typed at a 4-bit machine, its circuit simulated clock by clock"
+caption = "HEX1000-UART: C0DE+BEEF= over UART on a Tang Nano 9K, simulated clock by clock"
 
 [[cue]]
 n = 2

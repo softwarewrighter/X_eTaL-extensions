@@ -1,4 +1,4 @@
-## HexRun.xtl -- HEX1000 computing C0DE+BEEF=, a video made with the
+## HexRun.xtl -- HEX1000-UART computing C0DE+BEEF=, a video made with the
 ## explainer kit (Video.xtl) from a simulation of its board: the text
 ## sent over the serial line bit by bit, the board queuing each key, the
 ## machine scanning its key matrix, its program counter hopping through
@@ -227,9 +227,9 @@ h:aluKinds := 10 11 12 13 14 15 16 17 18 19 20 36 37
 ### Words
 
 ## the title card's title and subtitle
-l:title := "HEX1000"
+l:title := "HEX1000-UART"
 ## the subtitle
-l:subtitle := "C0DE+BEEF= typed at a 4-bit machine, its circuit simulated clock by clock"
+l:subtitle := "C0DE+BEEF= over UART on a Tang Nano 9K, simulated clock by clock"
 
 ## captionTable: each caption's from and to (video seconds), white
 l:captionTable := 5 5 r_eshape 3.8 10.0 255 255 255  10.8 16.2 255 255 255  17.8 24.8 255 255 255  25.8 35.2 255 255 255  36.8 42.0 255 255 255

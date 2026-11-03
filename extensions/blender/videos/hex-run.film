@@ -1,4 +1,4 @@
-# extensions/blender/videos/hex-run.webm and .webp: HEX1000 computing
+# extensions/blender/videos/hex-run.webm and .webp: HEX1000-UART computing
 # C0DE+BEEF= from a simulation of its board -- the serial line's bits,
 # the key matrix, the program counter, A, the status, the ALU, the RAM,
 # the display -- every lamp keyed from the waveform, the browser
@@ -7,6 +7,6 @@
 # blender hex-run; about 25 minutes when the video is not there yet).
 # The demo's Short (1080 by 1920) and cue sheet stay in work/.
 demo=hex-run
-file=work/hexrun/out/hex-run.mp4
+file="${HEX_RUN_VIDEO:-work/hexrun/out/hex-run.mp4}"
 scale=1280
 fps=30

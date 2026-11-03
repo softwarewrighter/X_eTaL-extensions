@@ -184,6 +184,8 @@
 </ul>
 <h2>On this page</h2>
 <ul>
+<li class="item"><a href="#l.title">ˡtitle</a></li>
+<li class="item"><a href="#l.subtitle">ˡsubtitle</a></li>
 <li class="item"><a href="#l.length">ˡlength</a></li>
 <li class="item"><a href="#l.cueTable">ˡcueTable</a></li>
 <li class="item"><a href="#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a></li>
@@ -196,7 +198,7 @@
 <section id="results"></section>
 <h1><span class="kind">library</span>extensions/blender/demos/HexBuild.xtl</h1>
 <div class="doc">
-<p>HexBuild.xtl -- the HEX1000 build, from the pinned circuit's actual
+<p>HexBuild.xtl -- the HEX1000-UART build, from the pinned circuit's actual
 synthesis, placement and routing artifacts. X_eTaL computes the
 geometry, colors and timing; Video writes the Blender player.
 The board is a schematic model; die coordinates are nextpnr tiles,
@@ -204,9 +206,27 @@ not physical dimensions. Routes show occupied wire tiles.
 Import: &quot;hb:&quot; u_se&lt; &quot;HexBuild&quot;</p>
 </div>
 <p class="meta"><a href="extensions-blender-demos-HexBuild.xtl.src.html">source</a> &middot; imports <code><span class="c-error">vd:</span></code> <a href="extensions-blender-lib-Video.xtl.html">extensions/blender/lib/Video.xtl</a></p>
+<div class="item" id="l.title">
+<h3><a href="#l.title">ˡtitle</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexBuild.xtl.src.html#L11">line 11</a></div>
+<div class="doc">
+<p>title: public name of the Tang Nano 9K UART video family</p>
+</div>
+<pre class="code">ˡtitle ← <span class="c-string">&quot;HEX1000-UART&quot;</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexBuild.xtl.html#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a>, <a href="extensions-blender-demos-HexBuild.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.subtitle">
+<h3><a href="#l.subtitle">ˡsubtitle</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexBuild.xtl.src.html#L14">line 14</a></div>
+<div class="doc">
+<p>subtitle: the build video</p>
+</div>
+<pre class="code">ˡsubtitle ← <span class="c-string">&quot;from source to a configured Tang Nano 9K&quot;</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-HexBuild.xtl.html#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a>, <a href="extensions-blender-demos-HexBuild.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
 <div class="item" id="l.length">
 <h3><a href="#l.length">ˡlength</a> <span class="type">: Float</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-HexBuild.xtl.src.html#L11">line 11</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexBuild.xtl.src.html#L17">line 17</a></div>
 <div class="doc">
 <p>length: seconds, including the title and the closing board</p>
 </div>
@@ -215,7 +235,7 @@ Import: &quot;hb:&quot; u_se&lt; &quot;HexBuild&quot;</p>
 </div>
 <div class="item" id="l.cueTable">
 <h3><a href="#l.cueTable">ˡcueTable</a> <span class="type">: Float</span></h3>
-<div class="meta">value &middot; <a href="extensions-blender-demos-HexBuild.xtl.src.html#L14">line 14</a></div>
+<div class="meta">value &middot; <a href="extensions-blender-demos-HexBuild.xtl.src.html#L20">line 20</a></div>
 <div class="doc">
 <p>cueTable: start and end of the six scenes, in seconds</p>
 </div>
@@ -224,19 +244,19 @@ Import: &quot;hb:&quot; u_se&lt; &quot;HexBuild&quot;</p>
 </div>
 <div class="item" id="l.c_ues">
 <h3><a href="#l.c_ues"><span class="c-libfunc">ˡc̲ues</span></a> <span class="type">: a -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-demos-HexBuild.xtl.src.html#L18">line 18</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-demos-HexBuild.xtl.src.html#L24">line 24</a></div>
 <div class="doc">
 <p>hb:c_ues stats: captions with this build's LUT, flip-flop and byte
 counts; the source-to-XIR lowering is explicitly hand-written</p>
 </div>
 <pre class="code"><span class="c-libfunc">ˡc̲ues</span> ← { stats →
-  <span class="c-string">&quot;HEX1000: from a pure step to a configured FPGA|Hex1000.xtl: hx:s_tep. Hand-lowered XIR emits hex1000.v; add the board and UART.|Yosys maps the board to &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> stats) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; LUTs and &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> stats) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; flip-flops, plus memory and carry logic.|nextpnr: the logic flies to its assigned BELs. Blue: LUTs. Orange: flip-flops.|Routing: green marks the tiles occupied by routed wires, from nextpnr.|gowin_pack: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">6</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> stats) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; bytes of bitstream. Configuration enters a schematic Tang Nano 9K.&quot;</span>
+  <a href="extensions-blender-demos-HexBuild.xtl.html#l.title">ˡtitle</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-HexBuild.xtl.html#l.subtitle">ˡsubtitle</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|Hex1000.xtl: hx:s_tep. Hand-lowered XIR emits hex1000.v; add the board and UART.|Yosys maps the board to &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> stats) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; LUTs and &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> stats) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; flip-flops, plus memory and carry logic.|nextpnr: the logic flies to its assigned BELs. Blue: LUTs. Orange: flip-flops.|Routing: green marks the tiles occupied by routed wires, from nextpnr.|gowin_pack: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">6</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> stats) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; bytes of bitstream. Configuration enters a schematic Tang Nano 9K.&quot;</span>
 }</pre>
 <div class="uses">Used in: <a href="extensions-blender-demos-hex-build.xtl.html#n">n</a>, <a href="extensions-blender-demos-HexBuild.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
 </div>
 <div class="item" id="h.p_laces">
 <h3><a href="#h.p_laces"><span class="c-libfunc">ʰp̲laces</span></a> <span class="type">: (Num a, Any b) =&gt; (a, a, a, a) -&gt; b -&gt; a</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexBuild.xtl.src.html#L23">line 23</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-HexBuild.xtl.src.html#L29">line 29</a></div>
 <pre class="code"><span class="c-libfunc">ʰp̲laces</span> ← { (cells, y, center, scale) z →
   x ← scale <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> cells) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> center
   zz ← scale <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> center) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> cells
@@ -247,7 +267,7 @@ counts; the source-to-XIR lowering is explicitly hand-written</p>
 </div>
 <div class="item" id="l.s_cene">
 <h3><a href="#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a> <span class="type">: (Num a, Any c) =&gt; (a, Float, Float, b) -&gt; c -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-blender-demos-HexBuild.xtl.src.html#L35">line 35</a></div>
+<div class="meta">function &middot; <a href="extensions-blender-demos-HexBuild.xtl.src.html#L41">line 41</a></div>
 <div class="doc">
 <p>(size, cells, routes, stats) hb:s_cene 0: the Python scene, before
 stills or video. cells: x y BEL-slot is-flip-flop (n by 4); routes:
@@ -302,7 +322,7 @@ tile by their slots so several cells at one tile remain visible.</p>
   t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;bitstream&quot;</span>, <span class="c-number">1</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">20</span> <span class="c-number">22.6</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span>
   d ← (w, h, <span class="c-number">35</span>, <span class="c-number">13.0</span>, <span class="c-number">12.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.f_it" class="c-libfunc">ᵛᵈf̲it</a> <span class="c-number">0</span>
   t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.0</span> <span class="c-number">24.0</span>, <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> d) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span>, <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.c_amera" class="c-libfunc">ᵛᵈc̲amera</a> <span class="c-number">0</span>
-  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;HEX1000&quot;</span>, <span class="c-string">&quot;from source to a configured FPGA&quot;</span>, <span class="c-number">1</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <span class="c-number">3</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">18</span> <span class="c-number">22</span> <span class="c-number">44</span>) <a href="extensions-blender-lib-Video.xtl.html#l.c_ards" class="c-libfunc">ᵛᵈc̲ards</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="extensions-blender-demos-HexBuild.xtl.html#l.title">ˡtitle</a>, <a href="extensions-blender-demos-HexBuild.xtl.html#l.subtitle">ˡsubtitle</a>, <span class="c-number">1</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <span class="c-number">3</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">18</span> <span class="c-number">22</span> <span class="c-number">44</span>) <a href="extensions-blender-lib-Video.xtl.html#l.c_ards" class="c-libfunc">ᵛᵈc̲ards</a> <span class="c-number">0</span>)
   captions ← <a href="extensions-blender-demos-HexBuild.xtl.html#l.cueTable">ˡcueTable</a> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">6</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span>
   t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="extensions-blender-demos-HexBuild.xtl.html#l.c_ues" class="c-libfunc">ˡc̲ues</a> stats, captions) <a href="extensions-blender-lib-Video.xtl.html#l.c_aptions" class="c-libfunc">ᵛᵈc̲aptions</a> <span class="c-number">0</span>)
 }</pre>

@@ -1,4 +1,4 @@
-## HexBuild.xtl -- the HEX1000 build, from the pinned circuit's actual
+## HexBuild.xtl -- the HEX1000-UART build, from the pinned circuit's actual
 ## synthesis, placement and routing artifacts. X_eTaL computes the
 ## geometry, colors and timing; Video writes the Blender player.
 ## The board is a schematic model; die coordinates are nextpnr tiles,
@@ -6,6 +6,12 @@
 ## Import: "hb:" u_se< "HexBuild"
 
 "vd:" u_se< "Video"
+
+## title: public name of the Tang Nano 9K UART video family
+l:title := "HEX1000-UART"
+
+## subtitle: the build video
+l:subtitle := "from source to a configured Tang Nano 9K"
 
 ## length: seconds, including the title and the closing board
 l:length := 24.0
@@ -16,7 +22,7 @@ l:cueTable := 6 2 r_eshape 0.0 3.0  3.0 7.0  7.0 11.0  11.0 16.0  16.0 20.0  20.
 ## hb:c_ues stats: captions with this build's LUT, flip-flop and byte
 ## counts; the source-to-XIR lowering is explicitly hand-written
 l:c_ues := { stats ->
-  "HEX1000: from a pure step to a configured FPGA|Hex1000.xtl: hx:s_tep. Hand-lowered XIR emits hex1000.v; add the board and UART.|Yosys maps the board to " c_at (f_ormat 1 s_elect stats) c_at " LUTs and " c_at (f_ormat 2 s_elect stats) c_at " flip-flops, plus memory and carry logic.|nextpnr: the logic flies to its assigned BELs. Blue: LUTs. Orange: flip-flops.|Routing: green marks the tiles occupied by routed wires, from nextpnr.|gowin_pack: " c_at (f_ormat 6 s_elect stats) c_at " bytes of bitstream. Configuration enters a schematic Tang Nano 9K."
+  l:title c_at ": " c_at l:subtitle c_at "|Hex1000.xtl: hx:s_tep. Hand-lowered XIR emits hex1000.v; add the board and UART.|Yosys maps the board to " c_at (f_ormat 1 s_elect stats) c_at " LUTs and " c_at (f_ormat 2 s_elect stats) c_at " flip-flops, plus memory and carry logic.|nextpnr: the logic flies to its assigned BELs. Blue: LUTs. Orange: flip-flops.|Routing: green marks the tiles occupied by routed wires, from nextpnr.|gowin_pack: " c_at (f_ormat 6 s_elect stats) c_at " bytes of bitstream. Configuration enters a schematic Tang Nano 9K."
 }
 
 # a nextpnr coordinate to the scene's tile plane (x, depth, z)
@@ -79,7 +85,7 @@ l:s_cene := { (size, cells, routes, stats) z ->
   t := t c_at ("bitstream", 1 2 r_eshape 20 22.6) vd:s_hown 0
   d := (w, h, 35, 13.0, 12.0) vd:f_it 0
   t := t c_at (0.0 24.0, 2 3 r_eshape 0.0 c_at (n_eg d) c_at 0.0, 2 3 r_eshape 0.0) vd:c_amera 0
-  t := t c_at (("HEX1000", "from source to a configured FPGA", 1 8 r_eshape 0 3 255 255 255 18 22 44) vd:c_ards 0)
+  t := t c_at ((l:title, l:subtitle, 1 8 r_eshape 0 3 255 255 255 18 22 44) vd:c_ards 0)
   captions := l:cueTable c_at_2 6 3 r_eshape 255 255 255
   t c_at ((l:c_ues stats, captions) vd:c_aptions 0)
 }

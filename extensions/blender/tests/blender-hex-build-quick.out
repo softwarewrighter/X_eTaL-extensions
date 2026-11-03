@@ -3,7 +3,7 @@ the cue sheet:
 n = 1
 start = 0.000
 end = 3.000
-caption = "HEX1000: from a pure step to a configured FPGA"
+caption = "HEX1000-UART: from source to a configured Tang Nano 9K"
 
 [[cue]]
 n = 2

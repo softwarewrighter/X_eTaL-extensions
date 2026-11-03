@@ -1,7 +1,8 @@
-## Blender, 11: HEX1000 from source to a configured Tang Nano 9K.
+## Blender, 11: HEX1000-UART from source to a configured Tang Nano 9K.
 ## Run just ext blender hex-build with the OSS CAD Suite on PATH:
 ## synthesize, place, route, pack, then render this video and Short.
 ## The build evidence stays in work/hexbuild/evidence.json.
+## Title: HEX1000-UART: build process
 
 "bl:" u_se< "Blender"
 "bp:" u_se< "Bpy"

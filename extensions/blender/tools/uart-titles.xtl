@@ -1,0 +1,39 @@
+## Refresh the two UART title cards and cue sheets without rendering
+## their unchanged execution/build scenes. Run via just uart-titles.
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"vc:" u_se< "Vcd"
+"hr:" u_se< "HexRun"
+"hb:" u_se< "HexBuild"
+
+h:c_ard := { (size, title, subtitle, finish, name) z ->
+  w := 1 s_elect size
+  h := 2 s_elect size
+  t := vd:head c_at ((w, h, 30, finish, 8 10 18, 35) vd:s_tage 0)
+  t := t c_at (0.0 4.0, 2 3 r_eshape 0 -20 0, 2 3 r_eshape 0.0) vd:c_amera 0
+  t := t c_at ((title, subtitle, 1 8 r_eshape 0.0 c_at finish c_at 255 255 255 18 22 44) vd:c_ards 0)
+  t c_at ((1.0, name) vd:s_tills 0)
+}
+
+h:r_un! := { (name, script) z ->
+  n := ("work/uart-titles/" c_at name c_at ".py") bl:w_rite! script
+  r := "work/uart-titles/run.py" bl:r_un! ("work/uart-titles/" c_at name c_at ".py work/uart-titles/cards")
+  n_ot "exit 0\nerrors 0\n" m_atch 16 t_ake r ? []P_ANIC r
+  name
+}
+
+v := vc:r_ead "work/hexrun/hex-run.vcd"
+(v, "") hr:c_heck 0
+stats := f_loor n_umbers bl:r_ead "work/hexbuild/stats.txt"
+n := "work/hexrun/hex-run.cues.toml" bl:w_rite! (hr:c_ues v, hr:cueTable) vd:c_ues 0
+n := "work/hexrun/hex-run.srt" bl:w_rite! (hr:c_ues v, hr:cueTable) vd:s_rt 0
+n := "work/hexbuild/hex-build.cues.toml" bl:w_rite! (hb:c_ues stats, hb:cueTable) vd:c_ues 0
+n := "work/hexbuild/hex-build.srt" bl:w_rite! (hb:c_ues stats, hb:cueTable) vd:s_rt 0
+n := "work/uart-titles/run.py" bl:w_rite! bp:launcher
+("run-site", (1280 720, hr:title, hr:subtitle, 3.2, "run-site") h:c_ard 0) h:r_un! 0
+("build-site", (1280 720, hb:title, hb:subtitle, 3.0, "build-site") h:c_ard 0) h:r_un! 0
+("run-wide", (vd:landscape, hr:title, hr:subtitle, 3.2, "run-wide") h:c_ard 0) h:r_un! 0
+("build-wide", (vd:landscape, hb:title, hb:subtitle, 3.0, "build-wide") h:c_ard 0) h:r_un! 0
+("run-short", (vd:shorts, hr:title, hr:subtitle, 3.2, "run-short") h:c_ard 0) h:r_un! 0
+("build-short", (vd:shorts, hb:title, hb:subtitle, 3.0, "build-short") h:c_ard 0) h:r_un! 0

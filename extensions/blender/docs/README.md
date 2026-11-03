@@ -292,7 +292,7 @@ times), so every lamp is a signal sampled once a frame and keyed with
    1080 by 1920), with its cue sheet and subtitles
    (`work/hexpc/hex-pc.cues.toml`, `hex-pc.srt`; `demos/PcWalk.xtl`).
 10. `demos/hex-run.xtl` (`just ext blender hex-run`, about 25 minutes:
-    1261 frames, twice): HEX1000 computing C0DE+BEEF=, 42 seconds,
+    1261 frames, twice): HEX1000-UART computing C0DE+BEEF=, 42 seconds,
     from a simulation of its board. `scripts/hex1000-sim.sh` builds
     X_eTaL-fpga's board (its top, its UART core, the machine's
     Verilog, at `FPGA_COMMIT`) and runs it under iverilog
@@ -322,7 +322,7 @@ times), so every lamp is a signal sampled once a frame and keyed with
     subtitles (`work/hexrun/hex-run.cues.toml`, `hex-run.srt`).
 
 11. `demos/hex-build.xtl` (`just ext blender hex-build`, with the OSS
-    CAD Suite on `PATH`): the build process, from `hx:s_tep` through
+    CAD Suite on `PATH`): the HEX1000-UART build process, from `hx:s_tep` through
     hand-lowered XIR and emitted Verilog, Yosys synthesis, nextpnr
     placement and routing, and `gowin_pack`'s bitstream entering a
     schematic Tang Nano 9K. Blue LUTs and orange flip-flops move from
@@ -353,6 +353,29 @@ times), so every lamp is a signal sampled once a frame and keyed with
     `tests/hex-build-quick.xtl` renders four stages in both shapes
     from an actual build; `blender-hex-build-quick` uses a small,
     stable fixture with LUTs and flip-flops sharing a tile.
+
+## HEX1000 video families
+
+**HEX1000-UART** is the Tang Nano 9K design with serial input. Its
+execution and build-process recordings keep their `hex-run` and
+`hex-build` commands, file paths and site anchors. **HEX1000-keys-leds**
+is the separate Tang Nano 1K project with a physical 4x4 keypad, four
+operator buttons and an eight-digit MAX7219 display; its videos are
+planned. The program-counter video (`hex-pc`) is shared HEX1000 material.
+
+`just ext blender uart-titles` refreshes the static opening cards and
+cue sheets using the existing checked build counts and a fresh UART
+simulation. It renders six title stills with X_eTaL/Blender, replaces
+only the introductory frames, and re-encodes the two site recordings.
+Original inputs and stream/hash evidence stay in `work/uart-titles/`.
+Repeated retitling reuses those original inputs; use the full demo
+renderer when the footage itself changes.
+Existing full masters are refreshed at their own resolutions; missing
+masters are left for the full demo renderer, which uses the new titles.
+The recording specifications accept optional `HEX_RUN_VIDEO` and
+`HEX_BUILD_VIDEO` source paths for this operation. Keep the OSS CAD
+Suite and recording tools on PATH, and build the counts first with
+`just ext blender hex-build-data` if needed.
 
 ## Build and test
 

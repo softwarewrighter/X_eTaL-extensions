@@ -13,15 +13,15 @@
   <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
   <ul>
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
-    <li><a href="#blender">blender</a><ul><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-build">hex-build</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-hex-run">hex-run</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
+    <li><a href="#blender">blender</a><ul><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-build">HEX1000-UART: build process</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-hex-run">HEX1000-UART: execution</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
     <li><a href="#clock">clock</a><ul><li><a href="#clock-bridge-cost">bridge-cost</a></li></ul></li>
     <li><a href="#digest">digest</a></li>
     <li><a href="#hello">hello</a><ul><li><a href="#hello-tour">tour</a></li></ul></li>
-    <li><a href="#http">http</a><ul><li><a href="#http-quakes">quakes</a></li><li><a href="#http-quakes-live">quakes-live</a></li></ul></li>
+    <li><a href="#http">http</a><ul><li><a href="#http-quakes-live">quakes-live</a></li><li><a href="#http-quakes">quakes</a></li></ul></li>
     <li><a href="#image">image</a><ul><li><a href="#image-photo-lab">photo-lab</a></li></ul></li>
     <li><a href="#linalg">linalg</a></li>
-    <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-dig">voxels-dig</a></li><li><a href="#scene-voxels-endless">voxels-endless</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-fly">voxels-fly</a></li><li><a href="#scene-voxels-game">voxels-game</a></li><li><a href="#scene-voxels-light">voxels-light</a></li><li><a href="#scene-voxels-rubik">voxels-rubik</a></li><li><a href="#scene-voxels-rubik-buttons">voxels-rubik-buttons</a></li><li><a href="#scene-voxels-rubik-solve">voxels-rubik-solve</a></li><li><a href="#scene-voxels-rubik-turn">voxels-rubik-turn</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-water">voxels-water</a></li><li><a href="#scene-voxels-world">voxels-world</a></li></ul></li>
+    <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-dig">voxels-dig</a></li><li><a href="#scene-voxels-endless">voxels-endless</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-fly">voxels-fly</a></li><li><a href="#scene-voxels-game">voxels-game</a></li><li><a href="#scene-voxels-light">voxels-light</a></li><li><a href="#scene-voxels-rubik-buttons">voxels-rubik-buttons</a></li><li><a href="#scene-voxels-rubik-solve">voxels-rubik-solve</a></li><li><a href="#scene-voxels-rubik-turn">voxels-rubik-turn</a></li><li><a href="#scene-voxels-rubik">voxels-rubik</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-water">voxels-water</a></li><li><a href="#scene-voxels-world">voxels-world</a></li></ul></li>
     <li><a href="#sqlite">sqlite</a><ul><li><a href="#sqlite-notebook">notebook</a></li></ul></li>
     <li><a href="#web">web</a><ul><li><a href="#web-life">life</a></li><li><a href="#web-todomvc">todomvc</a></li></ul></li>
   </ul>
@@ -93,8 +93,8 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <pre class="source">just demo blender hello</pre>
     </section>
     <section class="panel demo" id="blender-hex-build">
-      <h3>blender / hex-build <a class="docs" href="doc/extensions-blender-demos-hex-build.xtl.html">source and docs</a></h3>
-      <p class="note">Blender, 11: HEX1000 from source to a configured Tang Nano 9K. Run just ext blender hex-build with the OSS CAD Suite on PATH: synthesize, place, route, pack, then render this video and Short. The build evidence stays in work/hexbuild/evidence.json.</p>
+      <h3>HEX1000-UART: build process <a class="docs" href="doc/extensions-blender-demos-hex-build.xtl.html">source and docs</a></h3>
+      <p class="note">Blender, 11: HEX1000-UART from source to a configured Tang Nano 9K. Run just ext blender hex-build with the OSS CAD Suite on PATH: synthesize, place, route, pack, then render this video and Short. The build evidence stays in work/hexbuild/evidence.json.</p>
       <video src="blender/hex-build.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo blender hex-build</pre>
     </section>
@@ -105,8 +105,8 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <pre class="source">just demo blender hex-pc</pre>
     </section>
     <section class="panel demo" id="blender-hex-run">
-      <h3>blender / hex-run <a class="docs" href="doc/extensions-blender-demos-hex-run.xtl.html">source and docs</a></h3>
-      <p class="note">Blender, 10: HEX1000 computing C0DE+BEEF=, from a simulation of its board. scripts/hex1000-sim.sh runs X_eTaL-fpga&#x27;s board Verilog (at FPGA_COMMIT) under iverilog, the text sent over its serial line, into a waveform (VCD); scripts/hex1000-browser.py types the same text at the live browser calculator in headless Chrome. This program reads the waveform (Vcd.xtl), checks it -- the line carries the text, the board receives it, Hex1000.xtl replaying the clocks agrees with the circuit&#x27;s registers at every one, the display ends as the evaluator&#x27;s (hx:c_alc) and the browser&#x27;s -- and only then writes the video (HexRun.xtl): the bits arriving and the key matrix in slow motion, the typing as a time-lapse, one addition in slow motion, the display, the browser&#x27;s screen beside it. A YouTube video and a Short, with a cue sheet and subtitles.</p>
+      <h3>HEX1000-UART: execution <a class="docs" href="doc/extensions-blender-demos-hex-run.xtl.html">source and docs</a></h3>
+      <p class="note">Blender, 10: HEX1000-UART computing C0DE+BEEF=, from a simulation of its board. scripts/hex1000-sim.sh runs X_eTaL-fpga&#x27;s board Verilog (at FPGA_COMMIT) under iverilog, the text sent over its serial line, into a waveform (VCD); scripts/hex1000-browser.py types the same text at the live browser calculator in headless Chrome. This program reads the waveform (Vcd.xtl), checks it -- the line carries the text, the board receives it, Hex1000.xtl replaying the clocks agrees with the circuit&#x27;s registers at every one, the display ends as the evaluator&#x27;s (hx:c_alc) and the browser&#x27;s -- and only then writes the video (HexRun.xtl): the bits arriving and the key matrix in slow motion, the typing as a time-lapse, one addition in slow motion, the display, the browser&#x27;s screen beside it. A YouTube video and a Short, with a cue sheet and subtitles.</p>
       <video src="blender/hex-run.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo blender hex-run</pre>
     </section>
@@ -336,7 +336,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at 954b2c0</span>
+  <span>built at 1ed9a4f</span>
 </footer>
 </body>
 </html>
