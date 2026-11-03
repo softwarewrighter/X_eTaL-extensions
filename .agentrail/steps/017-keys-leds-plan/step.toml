@@ -1,0 +1,8 @@
+number = 17
+slug = "keys-leds-plan"
+status = "in-progress"
+description = "Plan a separate HEX1000-keys-leds video saga from hardwarewrighter/hex1000 (T..."
+role = "meta"
+context_files = []
+created_at = "2026-11-03T08:41:41"
+commits = []

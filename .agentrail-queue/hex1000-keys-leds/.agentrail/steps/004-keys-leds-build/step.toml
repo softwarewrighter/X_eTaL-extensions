@@ -1,0 +1,8 @@
+number = 4
+slug = "keys-leds-build"
+status = "pending"
+description = "Create hex-keys-leds-build: show the actual 1K calculator build from Hex1000 ..."
+role = "production"
+context_files = []
+created_at = "2026-11-03T08:42:28"
+commits = []

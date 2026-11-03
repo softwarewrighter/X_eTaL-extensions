@@ -1,0 +1,8 @@
+number = 2
+slug = "keys-leds-evidence"
+status = "pending"
+description = "Pin hardwarewrighter/hex1000 at a reviewed clean commit (candidate b7148fea99..."
+role = "production"
+context_files = []
+created_at = "2026-11-03T08:42:28"
+commits = []

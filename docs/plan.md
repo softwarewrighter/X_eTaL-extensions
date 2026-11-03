@@ -606,9 +606,10 @@ extension runs the launcher and reports what happened. Renderer: EEVEE
 | 14 | explain-kit | (done 2026-11-01: in `lib/Video.xtl` -- `vd:landscape` and `vd:shorts`, `vd:f_it` (the camera distance for a region to fill either), `vd:r_etime` (a scene's seconds to the video's: slow motion, time-lapse), `vd:g_lows` (glow strength keyed from data, each object at its own times), `vd:c_ards` (title cards), captions sized to the picture and wrapped to its width, `vd:c_ues` and `vd:s_rt` (the cue sheet as TOML, the subtitles); the report counts material keys; X_eTaL-fpga pinned at `FPGA_COMMIT` (work/fpga; Hex1000, Radix and Strings on `XETAL_PATH`); demo `hex-pc` (`PcWalk.xtl`: HEX1000's program counter through a ROM page in shift-register order, a video and a Short, cue sheet and .srt); golden `blender-hex-pc-quick`. 3D text for code was dropped: the user's rule of 2026-10-14, no listings, only a few large words) (added 2026-10-14, the user: animations for YouTube that show the process and the execution of X_eTaL on GPUs and an FPGA; narration added later) what the explainer videos need: 3D text for code, emissive materials driven by data, camera paths with time remapping (slow motion, time-lapse), title cards and captions in the scene, 1920 by 1080 at 30 fps and 1080 by 1920 Shorts, and a cue sheet per video (each scene's start, end and caption, also as .srt) to record narration against; the data read from X_eTaL-gpu and X_eTaL-fpga at pinned commits, never copied by hand |
 | 15 | hex1000-run | (done 2026-11-01: `just ext blender hex-run` -- `scripts/hex1000-sim.sh` (the 9K board's Verilog from X_eTaL-fpga under iverilog, `demos/hex-run.tb.v`, into a VCD), `scripts/hex1000-browser.py` (the live browser calculator typed at in headless Chrome); `demos/Vcd.xtl` reads the VCD; `demos/HexRun.xtl` checks the line, the UART, Hex1000.xtl's replay against the circuit's registers at every clock (4971) and the display against `hx:c_alc` and the browser before writing a script, then keys every lamp from the waveform sampled once a frame; `Video.xtl` gained `vd:s_teps`, `vd:r_eadout`, `vd:p_icture`; golden `blender-hex-run-quick`) the HEX1000 execution: C0DE+BEEF= arrives over UART bit by bit, the key matrix, the program counter hopping through a ROM page in its shift-register order, A, RAM, the ALU and the status flag, the digits strobed out to a 3D calculator's display; driven by the simulation's VCD and the Hex1000.xtl trace, a cycle counter, slow motion on one addition; the render fails unless its final display is the evaluator's 17FCD; beside it the browser calculator (headless Chrome) |
 | 16 | hex1000-build | (done 2026-11-02) the HEX1000 process (`just ext blender hex-build`): the pinned board built with Yosys, nextpnr and gowin_pack outside its clone; artifact hashes, cell identities and BELs in `work/hexbuild/evidence.json`; `HexBuild.xtl` flies LUTs/flip-flops to their actual placements and shows occupied wire tiles, then a bitstream entering a schematic Tang Nano 9K. Hand-lowered XIR is labeled. Counts come from the tools (this Yosys: 647 LUTs, 469 flip-flops, plus memories/carry/wide muxes; nextpnr packing: 1350 LUT/flip-flop cells), replacing the old estimate of 2828/791. Video and Short, cue sheet and subtitles; evidence-reader tests and a small two-shape scene regression |
-| 17 | gpu-build | the GPU process: an .xtl program lowered to Core and XIR, the elementwise chain fused into one OpenCL kernel (its real source), the schedules for the Apple M1 Max and the RTX 5060 Ti |
-| 18 | gpu-run | the GPU execution: arrays bound and uploaded (over PCIe to the RTX, in place in the M1 Max's unified memory), work-groups across the compute units, a reduction folding in local memory, the result read back and checked against the evaluator; timed by the OpenCL profiling events and the measured binding, upload and readback, on their true scale |
-| 19 | explain-release | the goal of steps 11 and 14 to 18 (the user, 2026-10-14): X_eTaL driving a GPU, an FPGA and Blender, shown for a blog post and possibly a narrated YouTube video later. A 60 s trailer cut from steps 11 and 14 to 17 (one X_eTaL program, three targets), the blog's media (stills, short loops), YouTube masters and Shorts with their cue sheets, the recordings on the site, the extension's page, the retrospective |
+| 17 | keys-leds-plan | (done 2026-11-03) queue Saga 16 for the physical Tang Nano 1K calculator; distinguish HEX1000-UART from HEX1000-keys-leds without replacing the pending GPU work |
+| 18 | gpu-build | the GPU process: an .xtl program lowered to Core and XIR, the elementwise chain fused into one OpenCL kernel (its real source), the schedules for the Apple M1 Max and the RTX 5060 Ti |
+| 19 | gpu-run | the GPU execution: arrays bound and uploaded (over PCIe to the RTX, in place in the M1 Max's unified memory), work-groups across the compute units, a reduction folding in local memory, the result read back and checked against the evaluator; timed by the OpenCL profiling events and the measured binding, upload and readback, on their true scale |
+| 20 | explain-release | the goal of steps 11, 14 to 16, 18 and 19 (the user, 2026-10-14): X_eTaL driving a GPU, an FPGA and Blender, shown for a blog post and possibly a narrated YouTube video later. A 60 s trailer (one X_eTaL program, three targets), the blog's media (stills, short loops), YouTube masters and Shorts with their cue sheets, the recordings on the site, the extension's page, the retrospective |
 
 Steps 12 to 19 were added with their numbers before the insertions of
 blender-pipeline and cosy-logo; their slugs, not the numbers in their
@@ -636,6 +637,57 @@ with outlines, and exported as glTF, OBJ and .blend.
 - A flaky test found by the gate: two runs at once shared a temporary
   name.
 
+
+## Saga 16 -- HEX1000-keys-leds videos (queued)
+
+Requested 2026-11-03: make execution and build-process videos for
+`../../hardwarewrighter/hex1000`, the physical Tang Nano 1K calculator:
+a 4x4 hexadecimal keypad, four operator buttons and an eight-digit
+MAX7219 LED display. The source checkout was clean at
+`b7148fea99121e60f4f58151682dce96cbbfa5be` when planned. Confirm and
+pin that project independently when implementation starts; its physical
+front panel is different from the 9K UART wrapper in `FPGA_COMMIT`.
+
+Public video families:
+
+- **HEX1000-UART**: the existing Tang Nano 9K execution/build videos.
+- **HEX1000-keys-leds**: the new Tang Nano 1K keypad/display videos.
+- The program-counter explainer remains shared HEX1000 material.
+
+The naming change is the first implementation step, not a claim that
+the published titles have already changed. Preserve existing `hex-run`
+and `hex-build` commands, asset paths and site anchors. New demo slugs
+are `hex-keys-leds-run` and `hex-keys-leds-build`.
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | uart-names | distinguish UART titles, captions, cue sheets, docs and recordings; retain existing URLs and commands |
+| 2 | keys-leds-evidence | separate `HEX1000_COMMIT` and clean `work/hex1000` clone; full calculator sources, Front model/RTL, correct board variant and constraints; external build outputs, hashes, tools and evidence; no hardware programming |
+| 3 | keys-leds-run | external physical key contacts drive the complete board simulation, with production debounce timing; X_eTaL/RTL agreement, MAX7219 decoding and displayed digits checked; startup banner, first key, scan/debounce, held-key suppression, rejected bounce, `C0DE+BEEF=17FCD` and second-equals clear; waveform-driven animation with explicit time remapping |
+| 4 | keys-leds-build | actual full 1K calculator synthesis, placement, routing and timing for both clocks; resource counts including block RAM/carry/IO and BEL identities; label hand-written lowering/controller RTL; bitstream entering a schematic 1K, keypad, operator strip, shifter and LED display |
+| 5 | keys-leds-release | landscape masters and Shorts, cue sheets and SRT, small headless regressions, updated recordings/site/docs, full gate and deployed-video verification |
+
+Every animated value comes from evidence and X_eTaL scene arrays, using
+the existing Video/Bpy kit. Use the complete calculator, not the
+peripheral-free self-test or UART wrapper. Keep historical physical
+observations distinct from new simulation checks; full physical key
+coverage and a separate cold boot were still unrecorded upstream.
+Use documented geometry or label the assembly schematic. Build and
+pack bitstreams without loading SRAM or programming flash.
+
+The executable saga is tracked separately at
+`.agentrail-queue/hex1000-keys-leds/.agentrail/`; the current Blender
+saga retains its GPU steps. From this repository root, inspect the
+queued work with:
+
+```sh
+agentrail --saga .agentrail-queue/hex1000-keys-leds next
+```
+
+When working this saga, use that same `--saga` argument for begin,
+complete and other state commands. Keep source changes and both saga
+records committed in this repository; do not hand-edit or delete the
+queued record. The planning session does not render or rename videos.
 
 ## Saga 12 -- native hook (blocked)
 

@@ -11,6 +11,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-03
+
+- `plan` queue the five-step HEX1000-keys-leds video saga for hardwarewrighter/hex1000's physical Tang Nano 1K keypad/MAX7219 calculator, independently of the pending GPU videos. Plan HEX1000-UART public names for the existing 9K videos while preserving their URLs; define source pinning, evidence-driven execution/build videos, masters/Shorts/cues/tests and site release. Published videos are unchanged in this planning step.
+
 ## 2026-11-02
 
 - `chore` complete blender step 16 (HEX1000 build-process video); next is the GPU build-process video. The affected gate passed all 26 regression tests and the site, docs, literate, spelling and formatting checks.
