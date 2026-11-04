@@ -13,6 +13,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-04
 
+- `chore` complete HEX1000-keys-leds step 2 (independent 1K source and evidence); next is the waveform-driven physical-key/MAX7219 execution video. Eight guard tests, complete model/board checks, artifact verification and the affected gate passed.
 - `build` independently pin the physical Nano 1K HEX1000-keys-leds calculator and its transitive Strings library. Add clean-clone guards and extension-owned model/board simulation, synthesis, placement/routing and packing, with source/tool/database/artifact hashes, commands, BELs, routing and clock/resource evidence. The full TXS/OE variant fits at 772 LUTs, 289 flip-flops and two block RAMs; both clocks pass. Eight tests reject bad pins, row polarity, clock evidence, stale pins and changed artifacts. No hardware access; UART pins/libraries remain separate.
 
 ## 2026-11-03
