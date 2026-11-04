@@ -75,6 +75,7 @@ just demo blender cosy         # the CoSy logo as fused magenta tubes turning on
 just demo blender hex-pc       # HEX1000's program counter in shift-register order: a video and a Short, with a cue sheet (a few minutes)
 just ext blender hex-run       # HEX1000-UART computing C0DE+BEEF= from its board's simulated waveform (iverilog, headless Chrome; about 25 minutes)
 just ext blender hex-build     # HEX1000-UART synthesis, actual placement and routed wire tiles, bitstream to a schematic board (OSS CAD Suite)
+just ext blender hex-keys-leds-evidence # pinned physical Nano 1K calculator: model/RTL checks and full routed build (OSS CAD Suite)
 just demo scene voxels-rubik-buttons  # the cube with buttons: U U' R R' F F', animated, queued, undo
 just demo scene voxels-rubik-solve    # scramble, solve (the Eigencube library), step or play the solution
 just walkthrough                # a fresh clone, built and run, checked against the goldens
@@ -91,6 +92,8 @@ The Tang Nano 9K serial-input videos are **HEX1000-UART**. The planned
 **HEX1000-keys-leds** videos cover the separate Tang Nano 1K calculator
 with physical keys and a MAX7219 LED display. The program-counter
 explainer is shared; see the [Blender video families](extensions/blender/docs/README.md#hex1000-video-families).
+The 1K evidence recipe is ready; it checks the model and complete board,
+then saves the build, timing and provenance without programming hardware.
 
 ## What this is
 

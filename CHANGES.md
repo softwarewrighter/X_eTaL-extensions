@@ -11,6 +11,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-04
+
+- `build` independently pin the physical Nano 1K HEX1000-keys-leds calculator and its transitive Strings library. Add clean-clone guards and extension-owned model/board simulation, synthesis, placement/routing and packing, with source/tool/database/artifact hashes, commands, BELs, routing and clock/resource evidence. The full TXS/OE variant fits at 772 LUTs, 289 flip-flops and two block RAMs; both clocks pass. Eight tests reject bad pins, row polarity, clock evidence, stale pins and changed artifacts. No hardware access; UART pins/libraries remain separate.
+
 ## 2026-11-03
 
 - `chore` complete HEX1000-keys-leds step 1 (UART naming); next is the independently pinned 1K source and evidence. The affected gate passed all 17 Blender regressions and the documentation/site checks.

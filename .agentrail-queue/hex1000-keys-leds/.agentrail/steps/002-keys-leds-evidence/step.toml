@@ -1,6 +1,6 @@
 number = 2
 slug = "keys-leds-evidence"
-status = "pending"
+status = "in-progress"
 description = "Pin hardwarewrighter/hex1000 at a reviewed clean commit (candidate b7148fea99..."
 role = "production"
 context_files = []

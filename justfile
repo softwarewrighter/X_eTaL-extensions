@@ -50,6 +50,10 @@ test crate="":
 libraries:
     scripts/libraries.sh
 
+# Get the separate physical Tang Nano 1K calculator at HEX1000_COMMIT
+hex1000:
+    bash scripts/hex1000.sh
+
 # Run a program with the bridge host and every extension here: just run-x FILE [ARGS]
 run-x file *args:
     @cargo build -q --workspace

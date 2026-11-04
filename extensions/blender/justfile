@@ -54,6 +54,24 @@ hex-build-data:
 hex-build-check:
     {{root}}/.venv/bin/python3 tests/hex-build-data.py
 
+# Full physical 1K calculator evidence: model/RTL tests, synthesis, route and pack
+hex-keys-leds-evidence:
+    {{root}}/scripts/xetal.sh > /dev/null
+    {{root}}/.venv/bin/python3 tools/keys-leds-evidence.py work/keys-leds-evidence
+
+# The same pinned models and complete board simulations, without synthesis
+hex-keys-leds-sim:
+    {{root}}/scripts/xetal.sh > /dev/null
+    {{root}}/.venv/bin/python3 tools/keys-leds-evidence.py work/keys-leds-sim --simulate-only
+
+# Negative checks for reviewed pins, row-enable polarity and clock timing
+hex-keys-leds-check:
+    {{root}}/.venv/bin/python3 tests/keys-leds-evidence.py
+
+# Verify the saved evidence against current pins, input copies and artifact hashes
+hex-keys-leds-verify:
+    {{root}}/.venv/bin/python3 tools/keys-leds-evidence.py work/keys-leds-evidence --verify-only
+
 # The build-process video and Short, from the actual tool artifacts (headless)
 hex-build: hex-build-data
     {{root}}/scripts/demos.sh blender hex-build

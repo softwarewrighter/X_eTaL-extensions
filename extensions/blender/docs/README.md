@@ -377,6 +377,71 @@ The recording specifications accept optional `HEX_RUN_VIDEO` and
 Suite and recording tools on PATH, and build the counts first with
 `just ext blender hex-build-data` if needed.
 
+## Physical 1K calculator evidence
+
+`HEX1000_COMMIT` independently pins
+[hardwarewrighter/hex1000](https://github.com/hardwarewrighter/hex1000)
+at `b7148fea99121e60f4f58151682dce96cbbfa5be`. `just hex1000` clones it
+into `work/hex1000` and its own pinned Strings dependency into
+`work/hex1000-libraries`. Both clones must remain clean. Their libraries
+are isolated from the existing UART demos; `FPGA_COMMIT` is unchanged.
+The physical project's evaluator pin is checked against `XETAL_COMMIT`.
+
+With the OSS CAD Suite on PATH:
+
+```sh
+just hex1000
+just ext blender hex-keys-leds-check
+just ext blender hex-keys-leds-evidence
+just ext blender hex-keys-leds-verify
+```
+
+The selected top is the full `hex1000_calculator` with keypad, operator
+strip and MAX7219, using the TXS0108E OE output on FPGA23. It retains
+explicit `TO=SIG` row-enable polarity, the global machine clock, input
+synchronizers and production startup/debounce counts. The adapter
+follows the pinned project's `scripts/board-calculator.py`, copies its
+RTL/testbenches into extension-owned output directories and never runs
+the clone's build or programming scripts.
+
+`work/keys-leds-evidence/evidence.json` records source/transitive pins,
+input and artifact hashes, exact commands, tool versions/fingerprints,
+device databases, simulation results and resource/timing evidence.
+`synth.json`, `pnr.json`, `timing.json`, `cells.json`, `routes.json`,
+`calculator.fs` and logs remain beside it. Verification rejects changed
+pins, input copies and artifacts. A new run invalidates the previous
+success record before building. `hex-keys-leds-sim` runs only the model
+comparison and board simulations, in `work/keys-leds-sim`.
+
+The Front model matches 1,100 RTL clocks. Complete calculator simulations
+at 4 and 256 clocks per row cover the startup banner, rejected bounce,
+first key, held-key handshake, arithmetic, second-equals clear and
+MAX7219 initialization/framing/segments. The upstream testbench uses a
+100 MHz stimulus clock; its production divider, row and startup counts
+are retained. Board timing targets the actual 27 MHz input and
+27/28 MHz machine clock. This build uses:
+
+| Resource | Used | Available |
+| -------- | ---- | --------- |
+| LUTs | 772 | 1,152 |
+| Flip-flops | 289 | 864 |
+| Carry ALUs | 174 | 864 |
+| Block RAMs | 2 | 4 |
+| I/O pads | 16 | 48 |
+
+Routed maximum frequencies are 148.721 MHz for the 27 MHz input and
+71.937 MHz for the 0.964286 MHz machine clock; both pass. The one
+dedicated-route warning is the divider's data-feedback inverter; clock
+sinks use the checked machine BUFG. The uncompressed bitstream is
+679,890 bytes. Counts and timing come from the saved router report.
+
+These are fresh simulation/build results. The source project's physical
+arithmetic and flash-CRC observations are dated historical evidence.
+No device detection, SRAM loading or flash programming is performed.
+Overflow still wraps, and upstream still lists overflow text, ROM-side
+RAM clearing, complete physical key coverage and a separate cold boot
+as follow-ups. No 1K animation has been published yet.
+
 ## Build and test
 
 ```sh
