@@ -13,7 +13,7 @@
   <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
   <ul>
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
-    <li><a href="#blender">blender</a><ul><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-build">HEX1000-UART: build process</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-hex-run">HEX1000-UART: execution</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
+    <li><a href="#blender">blender</a><ul><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-build">HEX1000-UART: build process</a></li><li><a href="#blender-hex-keys-leds-run">HEX1000-keys-leds: execution</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-hex-run">HEX1000-UART: execution</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
     <li><a href="#clock">clock</a><ul><li><a href="#clock-bridge-cost">bridge-cost</a></li></ul></li>
     <li><a href="#digest">digest</a></li>
@@ -97,6 +97,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <p class="note">Blender, 11: HEX1000-UART from source to a configured Tang Nano 9K. Run just ext blender hex-build with the OSS CAD Suite on PATH: synthesize, place, route, pack, then render this video and Short. The build evidence stays in work/hexbuild/evidence.json.</p>
       <video src="blender/hex-build.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo blender hex-build</pre>
+    </section>
+    <section class="panel demo" id="blender-hex-keys-leds-run">
+      <h3>HEX1000-keys-leds: execution <a class="docs" href="doc/extensions-blender-demos-hex-keys-leds-run.xtl.html">source and docs</a></h3>
+      <p class="note">HEX1000-keys-leds computing C0DE+BEEF= through physical key contacts and MAX7219 serial output: the complete pinned Nano 1K simulation, checked against the Hex1000 and Front models at every active clock.</p>
+      <video src="blender/hex-keys-leds-run.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just ext blender hex-keys-leds-run</pre>
     </section>
     <section class="panel demo" id="blender-hex-pc">
       <h3>blender / hex-pc <a class="docs" href="doc/extensions-blender-demos-hex-pc.xtl.html">source and docs</a></h3>
@@ -336,7 +342,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at 1ed9a4f</span>
+  <span>built at 24034b7</span>
 </footer>
 </body>
 </html>

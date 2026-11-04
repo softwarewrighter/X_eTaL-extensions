@@ -76,6 +76,7 @@ just demo blender hex-pc       # HEX1000's program counter in shift-register ord
 just ext blender hex-run       # HEX1000-UART computing C0DE+BEEF= from its board's simulated waveform (iverilog, headless Chrome; about 25 minutes)
 just ext blender hex-build     # HEX1000-UART synthesis, actual placement and routed wire tiles, bitstream to a schematic board (OSS CAD Suite)
 just ext blender hex-keys-leds-evidence # pinned physical Nano 1K calculator: model/RTL checks and full routed build (OSS CAD Suite)
+just ext blender hex-keys-leds-run # physical Nano 1K keys, scanning, debounce and MAX7219: checked execution video and Short
 just demo scene voxels-rubik-buttons  # the cube with buttons: U U' R R' F F', animated, queued, undo
 just demo scene voxels-rubik-solve    # scramble, solve (the Eigencube library), step or play the solution
 just walkthrough                # a fresh clone, built and run, checked against the goldens
@@ -88,12 +89,13 @@ its documentation:
 [the docs](https://softwarewrighter.github.io/X_eTaL-extensions/doc/)
 (`just doc`; built by X_eTaL's `xetal doc`).
 
-The Tang Nano 9K serial-input videos are **HEX1000-UART**. The planned
+The Tang Nano 9K serial-input videos are **HEX1000-UART**. The
 **HEX1000-keys-leds** videos cover the separate Tang Nano 1K calculator
 with physical keys and a MAX7219 LED display. The program-counter
 explainer is shared; see the [Blender video families](extensions/blender/docs/README.md#hex1000-video-families).
-The 1K evidence recipe is ready; it checks the model and complete board,
-then saves the build, timing and provenance without programming hardware.
+The 1K execution video shows physical key entry, scanning/debounce and
+serial LED writes. The evidence recipe checks the model and complete
+board, then saves build, timing and provenance without programming hardware.
 
 ## What this is
 
@@ -187,7 +189,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | [image](extensions/image/docs/README.md) | `Image` | PNG and JPEG to and from Float arrays; resize | image | done: facade, round-trip tests, the photo lab |
 | [linalg](extensions/linalg/docs/README.md) | `Linalg` | solve, inverse, determinant, least squares, eigenvalues, SVD | nalgebra | done: facade, cross-checked in pure X_eTaL |
 | [http](extensions/http/docs/README.md) | `Http` | bounded GET (size, time, redirects); downloads | ureq | done: facade, loopback tests, the earthquake report |
-| [blender](extensions/blender/docs/README.md) | `Blender` | Blender 3D in batch: X_eTaL writes the launcher and the bpy script, runs them, reads back what was made | none (python3 and Blender) | started: the chain, a report back; the size comparison orbited, a video and 3D files; game pieces with clips for X_eTaL-games ([published](https://softwarewrighter.github.io/X_eTaL-extensions/blender/td/)); arrays to video (`Video.xtl`): ReLU, softmax and matrix products as videos, explained in [literate documents](https://softwarewrighter.github.io/X_eTaL-extensions/literate/); the CoSy logo as fused tubes, turning; explainer videos (title cards, slow motion and time-lapse, YouTube and Shorts, cue sheets): HEX1000's program counter from X_eTaL-fpga, and HEX1000-UART computing C0DE+BEEF= driven by its board's simulated waveform (VCD) |
+| [blender](extensions/blender/docs/README.md) | `Blender` | Blender 3D in batch: X_eTaL writes the launcher and the bpy script, runs them, reads back what was made | none (python3 and Blender) | started: the chain, a report back; the size comparison orbited, a video and 3D files; game pieces with clips for X_eTaL-games ([published](https://softwarewrighter.github.io/X_eTaL-extensions/blender/td/)); arrays to video (`Video.xtl`): ReLU, softmax and matrix products as videos, explained in [literate documents](https://softwarewrighter.github.io/X_eTaL-extensions/literate/); the CoSy logo as fused tubes, turning; explainer videos (title cards, slow motion and time-lapse, YouTube and Shorts, cue sheets): HEX1000's program counter from X_eTaL-fpga, HEX1000-UART computing C0DE+BEEF= driven by its board's simulated waveform (VCD), and physical Nano 1K HEX1000-keys-leds scanning/debounce/MAX7219 execution |
 | [digest](extensions/digest/docs/README.md) | `Digest` | SHA-256 and CRC-32 of text and files | sha2, crc32fast | done: facade, vectors, tests |
 
 Each extension is a self-contained directory, `extensions/NAME/`: its

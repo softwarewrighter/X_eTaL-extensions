@@ -360,8 +360,9 @@ times), so every lamp is a signal sampled once a frame and keyed with
 execution and build-process recordings keep their `hex-run` and
 `hex-build` commands, file paths and site anchors. **HEX1000-keys-leds**
 is the separate Tang Nano 1K project with a physical 4x4 keypad, four
-operator buttons and an eight-digit MAX7219 display; its videos are
-planned. The program-counter video (`hex-pc`) is shared HEX1000 material.
+operator buttons and an eight-digit MAX7219 display. Its execution video
+is `hex-keys-leds-run`; the build-process video follows. The
+program-counter video (`hex-pc`) is shared HEX1000 material.
 
 `just ext blender uart-titles` refreshes the static opening cards and
 cue sheets using the existing checked build counts and a fresh UART
@@ -376,6 +377,39 @@ The recording specifications accept optional `HEX_RUN_VIDEO` and
 `HEX_BUILD_VIDEO` source paths for this operation. Keep the OSS CAD
 Suite and recording tools on PATH, and build the counts first with
 `just ext blender hex-build-data` if needed.
+
+## Physical 1K execution video
+
+`just ext blender hex-keys-leds-run` simulates the complete pinned board,
+checks it against the physical project's Hex1000 and Front models, then
+renders a 36-second landscape video and vertical Short, both at 30 fps.
+The OSS CAD Suite must be on PATH. Linux NVIDIA users can select Vulkan
+with `XETAL_BLENDER_ARGS='--gpu-backend vulkan'`.
+
+External matrix contacts and operator buttons enter `C0DE+BEEF=`. The
+production startup and 256-clock row timing are retained, with a nominal
+27 MHz stimulus (37.038 ns per simulated period). All 221,161 active
+clocks agree with the X_eTaL core/controller models: registers, R,
+scanner, debounce, handshake, digits and SPI state. Independently decoded
+DIN/SCLK/LOAD transactions (6,143 words) show `DEADBEEF`, `17FCD`, then
+zero after the second equals. A short bounce is rejected; held keys
+produce one accepted event each.
+
+X_eTaL chooses the scene geometry and time map. The waveform adapter
+samples the checked VCD at those times; every contact, scan lamp,
+accepted lamp, serial pin and LED segment comes from that waveform.
+Captions identify slow motion and time-lapse, including a single serial
+word expanded for inspection. Board geometry is schematic, using the
+Panel library's key positions rather than measured dimensions. This is
+simulation evidence; no hardware is accessed.
+
+Masters, cue sheet, subtitles, trace, waveforms, hashes and model logs
+remain in `work/keysrun/`; `just videos blender hex-keys-leds-run` makes
+the site recording from the existing master. `hex-keys-leds-preview`
+renders six critical stills in both shapes from checked evidence;
+`hex-keys-leds-wave-check` tests malformed serial transactions. The replay
+uses bounded chunks to avoid scalar selection copying a whole large
+trace (ask E11 in `docs/xetal-asks.md`).
 
 ## Physical 1K calculator evidence
 
@@ -440,7 +474,8 @@ arithmetic and flash-CRC observations are dated historical evidence.
 No device detection, SRAM loading or flash programming is performed.
 Overflow still wraps, and upstream still lists overflow text, ROM-side
 RAM clearing, complete physical key coverage and a separate cold boot
-as follow-ups. No 1K animation has been published yet.
+as follow-ups. The execution video uses the fresh simulation described
+above.
 
 ## Build and test
 
@@ -461,7 +496,11 @@ the one mesh left, its pivot, camera and lights, and a still;
 and as a Short, 90 by 160, and checks its cue sheet and subtitles and
 what Blender made of each; `blender-hex-run-quick` simulates the board
 (it needs iverilog), checks the waveform as the demo does and makes
-the HEX1000 run at 160 by 90 and 90 by 160). Of them: the second writes two cubes and a label as bpy
+the HEX1000 run at 160 by 90 and 90 by 160).
+`blender-keys-leds-quick` simulates the physical 1K with production
+timing, replays all active clocks and decodes the serial display, then
+renders six stages at 640 by 360 and 360 by 640.
+Of them: the second writes two cubes and a label as bpy
 and checks what Blender made -- the mesh (16 vertices, 12 faces), the
 objects, a still, `.glb`, `.obj`, `.mtl`, `.blend`. `blender-bpy-script`
 pins the Python the library writes. `blender-shapes` makes one piece of

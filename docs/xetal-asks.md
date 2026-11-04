@@ -22,6 +22,7 @@ and the workaround in use.
 | E8 | landed (X_eTaL d284a8c; re-checked: `quakes.xtl` importing `Quakes` no longer finds itself) | bug | a program `quakes.xtl` importing a library `Quakes` (`"q:" u_se< "Quakes"`) on a case-insensitive file system (macOS) finds the program itself and reports `import-cycle: quakes.xtl -> quakes.xtl`; wanted: library lookup matches the name's case exactly, or the error says the library resolved to the importing file | demos with a library beside them (audio, http) | name the library differently (`Instruments.xtl`, `Seismic.xtl`) |
 | E9 | open (found 2026-10-09 at X_eTaL d284a8c) | bug | `xetal type` (and so `xetal doc`) infers different types for the same file from run to run: free type variables or `Int` for the same tuple part, extra `Num e` constraints. Integer literals' types are settled in an order that varies (a hash map's?), so a doc page and the search index change on every build | scene's shared demo libraries (Endless.xtl, Play.xtl) and the demos that use them | the masks made Int for certain (`f_loor f_loat`); `scripts/check-pages.sh` ignores lines that differ only in an inferred type (a renamed or new function still changes other lines) |
 | E10 | open (found 2026-10-09 at X_eTaL d284a8c) | bug | `xetal doc` lists the hidden value a top-level tuple pattern binds -- `(a, b) := pair` shows a value `%1` (drawn in the error color) beside `a` and `b`, on the file's page, its source page and the index; `xetal type` does not list it | the scene demos that unpacked their final state (voxels-dig, -water, -rubik-buttons, -rubik-solve) and the cube cross-check | top-level tuples unpacked by small accessor functions (`u:w_orldOf := { (s, _) -> s }`) |
+| E11 | open (found 2026-11-04 at X_eTaL d284a8c) | speed | scalar selection copies the entire array, making a clock-by-clock replay quadratic in trace length | blender physical Nano 1K execution | partition into 64-row chunks and select within each bounded chunk |
 
 2026-10-08, X_eTaL d284a8c pinned (the user: the newer doc site): E7 and E8 landed; `l:package` is kept in each facade, as it names the native package on the doc pages; libraries' private functions are now `h:` (`xetal migrate`). E1, E3 and E5 still open.
 
@@ -254,4 +255,25 @@ in the error color. A reader of the voxel demos' pages asked what
 `xetal type` does). Workaround: no top-level tuple patterns here; a
 small accessor function takes the part needed
 (`u:w_orldOf := { (s, _, _, _) -> s }`, then `s := u:w_orldOf last`).
+
+### E11: scalar selection copies the whole array
+
+The physical Nano 1K replay selects one row for every active clock.
+At X_eTaL d284a8c, `s_elect` calls `as_vector`, which clones the entire
+array (`xetal-value/src/convert.rs`, `xetal-struct/src/calls.rs`). A loop
+over a large trace therefore copies the whole trace on each iteration.
+The initial 221,161-clock replay was stopped after seven minutes;
+selecting within 64-row chunks completes the same full comparison.
+
+Minimal example of the access pattern:
+
+```xtl
+rows := (10000 38) r_eshape o_ffsets 380000
+10000 '{ (total, i) -> (total + f_irst i s_elect rows, i + 1) } p_ower (0, 1)
+```
+
+Wanted: scalar selection reads only the requested item without copying
+unrelated rows. Workaround: `keys-leds-replay.xtl` partitions once into
+64-row chunks, selects each chunk once, then selects rows within that
+bounded chunk. No upstream source is changed.
 

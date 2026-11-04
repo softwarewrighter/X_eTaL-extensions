@@ -1,0 +1,5 @@
+## Choose actual simulation times for the video frames in X_eTaL.
+"kr:" u_se< "KeysRun"
+points := f_loor n_umbers []N_GET "work/keysrun/landmarks.txt"
+n := (f_ormat kr:t_imes points) []N_PUT "work/keysrun/sample-times.txt"
+n := (f_ormat kr:m_ap points) []N_PUT "work/keysrun/time-map.txt"

@@ -1,0 +1,6 @@
+# Checked physical Nano 1K contacts, scan/debounce and MAX7219 execution.
+# Render the landscape master and Short with just ext blender hex-keys-leds-run.
+demo=hex-keys-leds-run
+file=work/keysrun/out/hex-keys-leds-run.mp4
+scale=1280
+fps=30

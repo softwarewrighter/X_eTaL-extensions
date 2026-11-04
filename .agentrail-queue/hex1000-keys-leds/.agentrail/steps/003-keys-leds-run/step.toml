@@ -1,6 +1,6 @@
 number = 3
 slug = "keys-leds-run"
-status = "pending"
+status = "in-progress"
 description = "Create hex-keys-leds-run and a shared scene library: simulate the complete Ta..."
 role = "production"
 context_files = []

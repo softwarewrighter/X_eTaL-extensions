@@ -1,0 +1,28 @@
+## HEX1000-keys-leds computing C0DE+BEEF= through physical key contacts
+## and MAX7219 serial output: the complete pinned Nano 1K simulation,
+## checked against the Hex1000 and Front models at every active clock.
+## Title: HEX1000-keys-leds: execution
+## Command: just ext blender hex-keys-leds-run
+## Run: just ext blender hex-keys-leds-run
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"kr:" u_se< "KeysRun"
+
+h:c_heck := { r ->
+  n_ot "exit 0\nerrors 0\n" m_atch 16 t_ake r ? []P_ANIC r
+  "exit 0; errors 0"
+}
+raw := f_loor n_umbers []N_GET "work/keysrun/samples.txt"
+samples := (((t_ally raw) d_iv 26) c_at 26) r_eshape raw
+word := f_irst f_loor n_umbers []N_GET "work/keysrun/spi-word.txt"
+n := "work/keysrun/run.py" bl:w_rite! bp:launcher
+n := "work/keysrun/hex-keys-leds-run.cues.toml" bl:w_rite! (kr:cueTexts, kr:cueTable) vd:c_ues 0
+n := "work/keysrun/hex-keys-leds-run.srt" bl:w_rite! (kr:cueTexts, kr:cueTable) vd:s_rt 0
+n := "work/keysrun/video.py" bl:w_rite! ((vd:landscape, samples, word) kr:s_cene 0) c_at (vd:r_ender "hex-keys-leds-run.mp4") c_at vd:report
+n := "work/keysrun/short.py" bl:w_rite! ((vd:shorts, samples, word) kr:s_cene 0) c_at (vd:r_ender "hex-keys-leds-run-short.mp4") c_at vd:report
+"rendering HEX1000-keys-leds landscape ..."
+h:c_heck "work/keysrun/run.py" bl:r_un! "work/keysrun/video.py work/keysrun/out"
+"rendering HEX1000-keys-leds Short ..."
+h:c_heck "work/keysrun/run.py" bl:r_un! "work/keysrun/short.py work/keysrun/out-short"
+bl:r_ead "work/keysrun/out/report.txt"

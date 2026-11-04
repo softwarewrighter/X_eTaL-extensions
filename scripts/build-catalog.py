@@ -103,20 +103,24 @@ def what(demo):
         t = line.lstrip("# ").rstrip()
         if t.startswith("Run:") or not t:
             break
-        if t.startswith(("Page: ", "Cover: ", "Link: ", "Title: ")):
+        if t.startswith(("Page: ", "Cover: ", "Link: ", "Title: ", "Command: ")):
             continue
         lines.append(t)
     return " ".join(lines)
 
 
-def title(demo, default):
+def metadata(demo, key, default):
     for line in demo.read_text().splitlines():
         if not line.startswith("#"):
             break
         text = line.lstrip("# ")
-        if text.startswith("Title: "):
-            return text[len("Title: "):].strip()
+        if text.startswith(key + ": "):
+            return text[len(key) + 2:].strip()
     return default
+
+
+def title(demo, default):
+    return metadata(demo, "Title", default)
 
 
 def vendored():
@@ -142,7 +146,7 @@ for ext_dir in sorted(p.parent for p in root.glob("extensions/*/extension.toml")
       <h3>{html.escape(title(demo, f'{ext} / {name}'))} <a class="docs" href="doc/extensions-{ext}-demos-{name}.xtl.html">source and docs</a>{lit_link(ext, name)}{page_link(demo)}{link_lines(demo)}</h3>
       {cover(ext, demo)}<p class="note">{html.escape(what(demo))}</p>
       {player}
-      <pre class="source">just demo {ext} {name}</pre>
+      <pre class="source">{html.escape(metadata(demo, 'Command', f'just demo {ext} {name}'))}</pre>
     </section>""")
     links = "".join(f'<li><a href="#{ext}-{d.stem}">{html.escape(title(d, d.stem))}</a></li>'
                     for d in sorted((ext_dir / "demos").glob("*.xtl")) if d.stem[0].islower())

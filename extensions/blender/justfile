@@ -72,6 +72,22 @@ hex-keys-leds-check:
 hex-keys-leds-verify:
     {{root}}/.venv/bin/python3 tools/keys-leds-evidence.py work/keys-leds-evidence --verify-only
 
+# The physical 1K execution: contacts, full model replay, SPI, video and Short
+hex-keys-leds-run:
+    {{root}}/scripts/xetal.sh > /dev/null
+    bash {{root}}/scripts/hex1000.sh > /dev/null
+    cd {{root}} && cargo build -q --release --workspace
+    {{root}}/.venv/bin/python3 tools/keys-leds-run.py prepare
+    {{root}}/.venv/bin/python3 tools/keys-leds-run.py render
+
+# Six critical stills in each shape, from an existing checked simulation
+hex-keys-leds-preview:
+    {{root}}/.venv/bin/python3 tools/keys-leds-run.py preview
+
+# Reject malformed MAX7219 transactions in the waveform adapter
+hex-keys-leds-wave-check:
+    {{root}}/.venv/bin/python3 tests/keys-leds-wave.py
+
 # The build-process video and Short, from the actual tool artifacts (headless)
 hex-build: hex-build-data
     {{root}}/scripts/demos.sh blender hex-build

@@ -1,0 +1,107 @@
+## KeysRun.xtl -- HEX1000-keys-leds: the complete Nano 1K calculator
+## driven by physical contacts, from checked board simulation. Geometry
+## and animation keys are X_eTaL arrays. The keypad/display layout is
+## the pinned Panel library's scene units, not measured dimensions.
+## Import: "kr:" u_se< "KeysRun"
+"vd:" u_se< "Video"
+"pn:" u_se< "Panel"
+"fr:" u_se< "Front"
+
+## title: the physical-key Nano 1K video family
+l:title := "HEX1000-keys-leds"
+## subtitle: the source of every animated value
+l:subtitle := "physical keys and MAX7219 LEDs on a Tang Nano 1K; full board simulation"
+## length: video seconds
+l:length := 36.0
+## frames: seconds sampled at 30 frames per second
+l:frames := (f_loat o_ffsets 1081) / 30.0
+## l:m_ap landmarks: actual VCD picoseconds to video seconds, explicit
+## slow motion for bounce, first-key acceptance and one serial word
+l:m_ap := { points ->
+  2 1 t_ranspose 2 14 r_eshape (0.0 c_at f_loat points) c_at 0.0 3.0 6.0 8.0 10.0 15.0 16.5 24.0 26.0 26.5 30.0 31.0 34.0 35.0
+}
+## l:t_imes landmarks: VCD time of each video frame; hold at the end
+l:t_imes := { points ->
+  m := l:m_ap points
+  f_loor (f_loat f_irst -1 t_ake points) m_in 0.0 m_ax ((2 1 s_elect_2 m, l:frames) vd:r_etime 0)
+}
+## cueTexts: narration and on-screen captions, in chronological order
+l:cueTexts := l:title c_at ": " c_at l:subtitle c_at "|Startup: the level shifter enables, and real MAX7219 writes light DEADBEEF.|Slow motion: a short bouncing contact is rejected. The startup banner stays.|First key C: rows scan, columns synchronize, eight stable scans accept one press. Holding it does not repeat.|Time-lapse: release between keys. The circuit and X_eTaL agree; C0DE+BEEF= ends at 17FCD.|Slow motion: one actual 16-bit MAX7219 word, DIN sampled on clock rises, LOAD latching the LEDs.|Press equals again: Front translates it to Clear. The physical display returns to zero."
+## cueTable: start and end of each cue
+l:cueTable := 7 2 r_eshape 0 2.6  2.8 6  6 9.8  10 16.4  16.5 26.4  26.5 30.5  31 36
+
+# Frames by objects to the first state and every changed state.
+h:s_teps := { g ->
+  n := 1 s_elect s_hape g
+  m := 2 s_elect s_hape g
+  keep := r_avel 2 1 t_ranspose ((1 c_at m) r_eshape 1 = 1) c_at n_ot (1 d_rop g) = -1 d_rop g
+  obj := r_avel 2 1 t_ranspose (n c_at m) r_eshape f_loat r_ange m
+  at := r_avel (m c_at n) r_eshape l:frames
+  val := r_avel 2 1 t_ranspose f_loat g
+  k := '+ r_/ keep
+  2 1 t_ranspose (3 c_at k) r_eshape (keep r_eplicate obj) c_at (keep r_eplicate at) c_at keep r_eplicate val
+}
+h:l_it := { (name, boxes, on) z ->
+  ((name, boxes) vd:b_oxes 0) c_at (name, "glow", h:s_teps 0.06 + 2.5 * f_loat on) vd:s_teps 0
+}
+h:s_trokes := { (lit, _) -> lit }
+h:b_oxes := { (p, dims, color) z -> p c_at_2 (((t_ally p) c_at 3) r_eshape dims) c_at_2 (((t_ally p) c_at 4) r_eshape color c_at 0.06) }
+h:j_oin := { a b -> e_nclose (d_isclose a) c_at "|" c_at d_isclose b }
+
+## (size, samples, word) l:s_cene 0: schematic panel and Nano 1K,
+## glows from the checked VCD samples. Samples are time, contacts,
+## scan/sync/debounce/handshake, machine, serial pins, eight decoded
+## display registers, stage and actual serial-bit count.
+l:s_cene := { (size, samples, word) z ->
+  w := 1 s_elect size
+  h := 2 s_elect size
+  n := t_ally samples
+  ts := n t_ake l:frames
+  t := vd:head c_at ((w, h, 30, l:length, 8 10 18, 35) vd:s_tage 0)
+  d := (w, h, 35, 13.0, 11.0) vd:f_it 0
+  t := t c_at (0.0 36.0, 2 3 r_eshape 0.0 c_at (n_eg d) c_at 0.0, 2 3 r_eshape 0.0) vd:c_amera 0
+  t := t c_at (("panel", 2 10 r_eshape -3.0 0.2 0.25 5.5 0.4 6.7 35 45 65 1  -3.0 -0.05 2.3 4.9 0.1 1.1 12 25 18 1) vd:b_oxes 0)
+  xy := pn:k_eyAt o_ffsets 20
+  keyAt := 2 1 t_ranspose 3 20 r_eshape ((1 s_elect_2 xy) - 3.0) c_at (20 r_eshape -0.2) c_at 2 s_elect_2 xy
+  contacts := (2 s_elect_2 samples) + 65536 * 15 - 3 s_elect_2 samples
+  positions := (fr:Map i_ndexOf o_ffsets 20) - 1
+  down := (contacts 'd_iv t_able 2 ^ positions) m_od 2
+  t := t c_at ("keys", (keyAt, 0.78 0.3 0.78, 50 130 210) h:b_oxes 0, down) h:l_it 0
+  legendAt := (keyAt + 20 3 r_eshape 0.0 -0.35 0.0) c_at_2 20 4 r_eshape 0.26 245 245 255
+  t := t c_at ("legends", "0|1|2|3|4|5|6|7|8|9|A|B|C|D|E|F|+|-|*|=", legendAt) vd:l_abels 0
+  strokes := h:s_trokes pn:d_igits 8 r_eshape 24
+  lines := (1 s_elect_2 strokes) - 3.0
+  segs := (2 1 t_ranspose 6 56 r_eshape lines c_at (56 r_eshape -0.25) c_at (2 s_elect_2 strokes) c_at ((3 s_elect_2 strokes) - 3.0) c_at (56 r_eshape -0.25) c_at 4 s_elect_2 strokes) c_at_2 56 4 r_eshape 100 250 160 0.025
+  t := t c_at ("segments", segs) vd:l_ines 0
+  digit := (o_ffsets 56) d_iv 7
+  # MAX7219 a..g are bits 6..0; the Panel strokes are a..g.
+  dg := (1 + digit) s_elect_2 8 t_ake_2 16 d_rop_2 samples
+  on := (dg d_iv ((n c_at 56) r_eshape 2 ^ 6 - (o_ffsets 56) m_od 7)) m_od 2
+  t := t c_at ("segments", "glow", h:s_teps 0.04 + 3.0 * f_loat on) vd:s_teps 0
+  rowAt := 2 1 t_ranspose 3 4 r_eshape (4 r_eshape -5.55) c_at (4 r_eshape -0.25) c_at 0.55 - 0.95 * f_loat o_ffsets 4
+  rowOn := ((4 s_elect_2 samples) 'd_iv t_able 2 ^ o_ffsets 4) m_od 2
+  t := t c_at ("rows", (rowAt, 0.14 0.08 0.14, 255 170 65) h:b_oxes 0, rowOn) h:l_it 0
+  colAt := 2 1 t_ranspose 3 4 r_eshape (-5.0 + 0.95 * f_loat o_ffsets 4) c_at (4 r_eshape -0.25) c_at 4 r_eshape 1.3
+  colOn := ((15 - 5 s_elect_2 samples) 'd_iv t_able 2 ^ o_ffsets 4) m_od 2
+  t := t c_at ("columns", (colAt, 0.14 0.08 0.14, 255 170 65) h:b_oxes 0, colOn) h:l_it 0
+  board := 3 10 r_eshape 3.0 0.1 0.9 2.4 0.3 3.4 20 105 70 1  3.0 -0.2 0.9 1.25 0.25 1.25 25 28 40 1  3.0 -0.1 2.3 1.1 0.4 0.5 180 185 200 1
+  t := t c_at ("Nano 1K", board) vd:b_oxes 0
+  flags := (6 s_elect_2 samples) != 0
+  t := t c_at ("accepted", 1 10 r_eshape 3.0 -0.3 -1.2 0.25 0.1 0.25 100 250 160 0.06, (n c_at 1) r_eshape flags) h:l_it 0
+  spiAt := 3 3 r_eshape 1.7 -0.2 -2.2  3.0 -0.2 -2.2  4.3 -0.2 -2.2
+  spiOn := 3 t_ake_2 12 d_rop_2 samples
+  t := t c_at ("SPI pins", (spiAt, 0.22 0.1 0.22, 250 190 70) h:b_oxes 0, spiOn) h:l_it 0
+  texts := "Nano 1K (schematic)|accepted|DIN|CLK|LOAD|physical contacts / row scan|MAX7219 LEDs"
+  words := 7 7 r_eshape 3 -0.6 3.0 0.34 230 235 255  3 -0.6 -1.65 0.25 230 235 255  1.7 -0.6 -2.65 0.23 230 235 255  3 -0.6 -2.65 0.23 230 235 255  4.3 -0.6 -2.65 0.23 230 235 255  -3 -0.6 -3.5 0.28 230 235 255  -3 -0.6 3.3 0.34 230 235 255
+  t := t c_at ("labels", texts, words) vd:l_abels 0
+  bitAt := 2 1 t_ranspose 3 16 r_eshape (0.6 + 0.3 * f_loat o_ffsets 16) c_at (16 r_eshape -0.2) c_at 16 r_eshape -3.35
+  bits := (word d_iv 2 ^ 15 - o_ffsets 16) m_od 2
+  sent := (26 s_elect_2 samples) '> t_able o_ffsets 16
+  bitOn := (f_loat sent) * (n c_at 16) r_eshape 0.2 + 0.8 * f_loat bits
+  t := t c_at ("word", (bitAt, 0.23 0.07 0.3, 100 220 250) h:b_oxes 0, bitOn) h:l_it 0
+  t := t c_at ("word", 16 2 r_eshape 26.5 30.0) vd:s_hown 0
+  clockText := d_isclose 'h:j_oin r_/ '{ i -> e_nclose (3 vd:f_ixed (f_loat i s_elect 1 s_elect_2 samples) / 1000000000.0) c_at " ms   A " c_at (f_ormat i s_elect 10 s_elect_2 samples) c_at "  PC " c_at (f_ormat i s_elect 11 s_elect_2 samples) c_at "  stable " c_at f_ormat i s_elect 7 s_elect_2 samples } e_ach r_ange n
+  t := t c_at ("state", 0.0 0.84 0.09 255 230 150, clockText, ts) vd:r_eadout 0
+  t := t c_at ((l:title, l:subtitle, 1 8 r_eshape 0 2.6 255 255 255 18 22 44) vd:c_ards 0)
+  t c_at (l:cueTexts, l:cueTable c_at_2 7 3 r_eshape 255 255 255) vd:c_aptions 0
+}

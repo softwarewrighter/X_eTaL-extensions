@@ -28,6 +28,10 @@ for d in extensions/*/lib extensions/*/demos; do path="$path:$d"; done
 # page after its file's path, and an absolute one would put this
 # machine's directories in the published names (and differ on any other)
 path="$path:$("$root/scripts/libraries.sh" | sed "s#$root/##g")"
+# Physical-panel vocabulary for KeysRun's types and cross references.
+# Runtime videos choose their own full model path; UART lookup stays first here.
+bash "$root/scripts/hex1000.sh" > /dev/null
+path="$path:work/hex1000/libs/Front/src:work/hex1000/libs/Panel/src"
 # the binding macro, then each extension's facade followed by its demos
 # (the sidebar groups files by directory, in this order)
 files=(lib/*.xtlm)

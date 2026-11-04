@@ -1,0 +1,38 @@
+PASS VCD: 6143 SPI words; DEADBEEF -> 17FCD -> 0; 11 accepted keys
+sampled 1081 video frames from checked VCD
+rendering tests/keys-leds-quick.xtl
+exit 0
+errors 0
+frames 1 to 1081 at 30 a second
+Nano 1K: 3 objects, 0 keyed
+SPI pins: 3 objects, 3 keyed
+accepted: 1 objects, 1 keyed
+cards: 1 objects, 1 keyed
+columns: 4 objects, 4 keyed
+keys: 20 objects, 20 keyed
+labels: 7 objects, 0 keyed
+legends: 20 objects, 0 keyed
+panel: 2 objects, 0 keyed
+rows: 4 objects, 4 keyed
+segments: 56 objects, 56 keyed
+state: 1 objects, 0 keyed
+word: 16 objects, 16 keyed
+
+exit 0
+errors 0
+frames 1 to 1081 at 30 a second
+Nano 1K: 3 objects, 0 keyed
+SPI pins: 3 objects, 3 keyed
+accepted: 1 objects, 1 keyed
+cards: 1 objects, 1 keyed
+columns: 4 objects, 4 keyed
+keys: 20 objects, 20 keyed
+labels: 7 objects, 0 keyed
+legends: 20 objects, 0 keyed
+panel: 2 objects, 0 keyed
+rows: 4 objects, 4 keyed
+segments: 56 objects, 56 keyed
+state: 1 objects, 0 keyed
+word: 16 objects, 16 keyed
+
+

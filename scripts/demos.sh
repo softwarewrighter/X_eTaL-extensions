@@ -33,6 +33,10 @@ file="$root/extensions/$ext/demos/$name.xtl"
 (cd "$root" && cargo build -q --release --workspace)
 # the shared libraries used here (X_eTaL-libraries at LIBRARIES_COMMIT)
 XETAL_PATH="$("$root/scripts/libraries.sh")${XETAL_PATH:+:$XETAL_PATH}"
+if [ "$ext" = blender ] && [[ "$name" == hex-keys-leds-* ]]; then
+  physical="$(bash "$root/scripts/hex1000.sh")"
+  XETAL_PATH="$physical/libs/Front/src:$physical/libs/Panel/src:$physical/libs/Hex1000/src:$physical/libs/Radix/src:$root/work/hex1000-libraries/libs/Strings/src:$XETAL_PATH"
+fi
 export XETAL_PATH
 cd "$root/extensions/$ext"
 exec "$root/target/release/xetal-x" --ext "$root/extensions" run --draw work/draw "$@" "demos/$name.xtl"

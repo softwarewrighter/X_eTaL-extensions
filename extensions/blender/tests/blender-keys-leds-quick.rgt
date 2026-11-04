@@ -1,0 +1,3 @@
+command = '../../.venv/bin/python3 tools/keys-leds-run.py prepare && ../../.venv/bin/python3 tools/keys-leds-run.py preview'
+exit_code = 0
+desc = "Physical Nano 1K: production contacts and debounce, 221161 clocks checked against Hex1000 and Front, independently decoded MAX7219, six scene stages in both video shapes"

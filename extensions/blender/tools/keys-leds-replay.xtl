@@ -1,0 +1,39 @@
+## Replay every active machine clock from the physical-board simulation
+## against the pinned Hex1000 and Front models. No render on disagreement.
+"hx:" u_se< "Hex1000"
+"fr:" u_se< "Front"
+
+raw := f_loor n_umbers []N_GET "work/keysrun/trace.txt"
+trace := (((t_ally raw) d_iv 38) c_at 38) r_eshape raw
+chunks := (1 + (o_ffsets t_ally trace) d_iv 64) p_artition trace
+rom := hx:CalcRom
+h:s_canRow := { (a,b,c,d,e,f) -> a c_at b c_at c c_at d c_at e c_at f }
+h:k_eyRow := { (a,b,c) -> a c_at b c_at c }
+h:a_ccepted := { (_,_,_,_,_,a) -> a }
+h:p_hase := { (p,_,_) -> p }
+h:s_tep := { (core, scan, key, digits, previous, spi, had, i) row ->
+  r := 2 d_ecode r_ev hx:l_atches core
+  o := 10 s_elect hx:r_egs core
+  accepted := h:a_ccepted scan
+  nextScan := 256 fr:s_can (scan, 1 s_elect row, 2 s_elect row)
+  nextKey := fr:k_ey (key, accepted, r)
+  nextDigits := fr:d_igits (digits, previous, o, r)
+  nextSpi := fr:s_pi (spi, fr:d_isplay (had, digits))
+  nextHad := fr:s_tartup (had, h:p_hase key, accepted)
+  nextCore := (rom hx:s_tep core)_ 3 s_elect row
+  nextR := 2 d_ecode r_ev hx:l_atches nextCore
+  nextK := fr:k_inputs (nextKey, nextR)
+  got := (hx:r_egs nextCore) c_at nextR c_at (h:s_canRow nextScan) c_at (h:k_eyRow nextKey) c_at (32 d_ecode r_ev nextDigits) c_at (h:s_canRow nextSpi) c_at nextHad c_at nextK
+  want := 29 t_ake 3 d_rop row
+  n_ot got m_atch want ? []P_ANIC "keys-leds model mismatch at clock " c_at (f_ormat i) c_at "\nmodel: " c_at (f_ormat got) c_at "\nRTL: " c_at f_ormat want
+  (nextCore, nextScan, nextKey, nextDigits, r, nextSpi, nextHad, i + 1)
+}
+h:s_tate := { (state, _) -> state }
+h:c_hunk := { (state, j) ->
+  block := d_isclose j s_elect chunks
+  after := (t_ally block) '{ (st, k) -> (st h:s_tep k s_elect block, k + 1) } p_ower (state, 1)
+  (h:s_tate after, j + 1)
+}
+last := (t_ally chunks) 'h:c_hunk p_ower ((hx:Reset, fr:ScanReset, fr:KeyReset, 8 r_eshape 0, 0, fr:SpiReset, 0, 1), 1)
+"PASS Hex1000 and Front replay: " c_at (f_ormat t_ally trace) c_at " active clocks; registers, R, scanner, debounce, handshake, digits, startup and SPI agree"
+hx:c_alc "C0DE+BEEF="
