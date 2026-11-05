@@ -1,0 +1,102 @@
+## KeysBuild.xtl -- the HEX1000-keys-leds build, from the pinned circuit's actual
+## synthesis, placement and routing artifacts. X_eTaL computes the
+## geometry, colors and timing; Video writes the Blender player.
+## The board is a schematic model; die coordinates are nextpnr tiles,
+## not physical dimensions. Routes show occupied wire tiles.
+## Import: "kb:" u_se< "KeysBuild"
+
+"vd:" u_se< "Video"
+"pn:" u_se< "Panel"
+
+h:l_it := { (lit, _) -> lit }
+
+## title: public name of the Tang Nano 1K physical-key video family
+l:title := "HEX1000-keys-leds"
+
+## subtitle: the build video
+l:subtitle := "from source to a configured Tang Nano 1K"
+
+## length: seconds, including the title and the closing board
+l:length := 32.0
+
+## cueTable: source, mapping, placement, routing, timing and configuration
+l:cueTable := 7 2 r_eshape 0.0 3.0  3.0 8.0  8.0 12.0  12.0 17.0  17.0 21.0  21.0 26.0  26.0 32.0
+
+## kb:c_ues stats: actual packed resources and both routed clock checks.
+## Core lowering and controller RTL are hand-written, not a compiler demo.
+l:c_ues := { stats ->
+  l:title c_at ": " c_at l:subtitle c_at "|Hex1000 + Front specifications. Core: hand-lowered XIR. Controller and full 1K wrapper: hand-written RTL. Upstream compiler absent.|Yosys/nextpnr packed resources: " c_at (f_ormat 1 s_elect stats) c_at " LUTs, " c_at (f_ormat 2 s_elect stats) c_at " flip-flops, " c_at (f_ormat 7 s_elect stats) c_at " carry ALUs, " c_at (f_ormat 8 s_elect stats) c_at " block RAMs, " c_at (f_ormat 9 s_elect stats) c_at " pad cells (" c_at (f_ormat 15 s_elect stats) c_at " I/O buffers + " c_at (f_ormat 14 s_elect stats) c_at " tri-state rows).|nextpnr places every cell at its assigned BEL. Blue LUTs; orange flip-flops; pink carry; purple RAM; yellow I/O; gray other.|Routing: " c_at (f_ormat 5 s_elect stats) c_at " nets occupy " c_at (f_ormat 4 s_elect stats) c_at " wire tiles. Green is a tile footprint, not physical wire geometry.|Both clocks pass: input " c_at (3 vd:f_ixed (f_loat 10 s_elect stats) / 1000.0) c_at " MHz vs 27; machine " c_at (3 vd:f_ixed (f_loat 11 s_elect stats) / 1000.0) c_at " MHz vs 0.964. BUFG clock sinks; one divider-feedback routing warning.|gowin_pack: " c_at (f_ormat 6 s_elect stats) c_at " bytes. Schematic Nano 1K, keypad, operators, TXS0108E and MAX7219. Configuration animation; no hardware programmed."
+}
+
+# a nextpnr coordinate to the scene's tile plane (x, depth, z)
+h:p_laces := { (cells, y, center, scale) z ->
+  x := scale * (1 s_elect_2 cells) - 1 s_elect center
+  zz := scale * (2 s_elect center) - 2 s_elect_2 cells
+  n := t_ally x
+  2 1 t_ranspose (3 c_at n) r_eshape x c_at (n r_eshape y) c_at zz
+}
+
+## (size, cells, routes, stats) kb:s_cene 0: the Python scene, before
+## stills or video. cells: x y BEL-slot resource-class (n by 4); routes:
+## unique occupied wire tiles (m by 2); stats: counts and both clock results (15 values).
+## Cells keep their actual BEL assignments, offset within a
+## tile by their slots so several cells at one tile remain visible.
+l:s_cene := { (size, cells, routes, stats) z ->
+  w := 1 s_elect size
+  h := 2 s_elect size
+  n := t_ally cells
+  nr := t_ally routes
+  kind := f_loor 4 s_elect_2 cells
+  slots := 3 s_elect_2 cells
+  coords := (2 t_ake_2 cells) c_at routes
+  xs := 1 s_elect_2 coords
+  ys := 2 s_elect_2 coords
+  center := ((('m_in r_/ xs) + 'm_ax r_/ xs) / 2.0) c_at ((('m_in r_/ ys) + 'm_ax r_/ ys) / 2.0)
+  scale := 9.0 / 1.0 m_ax (('m_ax r_/ xs) - 'm_in r_/ xs) m_ax ('m_ax r_/ ys) - 'm_in r_/ ys
+  placed := (cells, 0.0, center, scale) h:p_laces 0
+  offsets := 2 1 t_ranspose (3 c_at n) r_eshape (0.025 * slots) c_at (n r_eshape -0.1) c_at 0.08 * f_loat kind
+  placed := placed + offsets
+  # A readable unplaced cloud, with each cell retaining its identity.
+  ids := (r_ange n) - 1
+  cloud := 2 1 t_ranspose (3 c_at n) r_eshape (0.18 * (f_loat ids m_od 60) - 29.5) c_at (n r_eshape -0.5) c_at 0.18 * 15.0 - f_loat ids d_iv 60
+  wide := 0.065 + 0.15 * f_loat kind = 3
+  dims := 2 1 t_ranspose (3 c_at n) r_eshape wide c_at (n r_eshape 0.07) c_at wide
+  rgb := 2 1 t_ranspose (3 c_at n) r_eshape ((1 + kind) s_elect 70 255 245 185 250 150) c_at ((1 + kind) s_elect 155 170 90 110 225 155) c_at (1 + kind) s_elect 250 70 170 250 70 165
+  boxes := cloud c_at_2 dims c_at_2 rgb c_at_2 (n c_at 1) r_eshape 1.0
+  keys := (n c_at 2 c_at 6) r_eshape r_avel ((cloud c_at_2 dims) c_at_2 placed c_at_2 dims)
+  t := vd:head c_at ((w, h, 30, l:length, 8 10 18, 35) vd:s_tage 0)
+  source := 3 10 r_eshape -4 0 1 3.6 0.15 1.8 35 65 105 1  0 0 1 3.6 0.15 1.8 70 55 105 1  4 0 1 3.6 0.15 1.8 35 85 80 1
+  t := t c_at (("source", source) vd:b_oxes 0) c_at ("source", 3 2 r_eshape 3 8) vd:s_hown 0
+  words := 3 7 r_eshape -4 -0.2 1 0.3 255 255 255  0 -0.2 1 0.3 255 255 255  4 -0.2 1 0.3 255 255 255
+  t := t c_at (("source labels", "Hex1000 + Front|reference RTL|full 1K wrapper", words) vd:l_abels 0) c_at ("source labels", 3 2 r_eshape 3 8) vd:s_hown 0
+  t := t c_at (("logic", boxes) vd:b_oxes 0) c_at (("logic", 12.0 16.8, keys) vd:m_oves 0)
+  t := t c_at ("logic", (n c_at 2) r_eshape 8.0 26.0) vd:s_hown 0
+  t := t c_at (("die", 1 10 r_eshape 0.0 0.3 0.0 10.5 0.2 10.5 65 85 140 1.0) vd:o_utlines 0)
+  t := t c_at ("die", 1 2 r_eshape 3 26) vd:s_hown 0
+  routeBoxes := ((routes, -0.25, center, scale) h:p_laces 0) c_at_2 (nr c_at 7) r_eshape 0.14 0.03 0.14 40 220 125 1.0
+  t := t c_at (("routes", routeBoxes) vd:b_oxes 0) c_at ("routes", (nr c_at 2) r_eshape 17.0 21.0) vd:s_hown 0
+  # Scene units only. No measured board dimensions or wire geometry.
+  board := 5 10 r_eshape 3 0 0 2.2 0.25 4.5 20 105 70 1  3 -0.3 0 1.3 0.3 1.3 25 28 40 1  3 -0.2 1.9 1.0 0.4 0.6 180 185 200 1  -3 0 0 5.2 0.3 6.2 35 45 65 1  0.3 0 -2.7 1.0 0.2 0.8 120 85 150 1
+  t := t c_at (("board", board) vd:b_oxes 0) c_at ("board", 5 2 r_eshape 26 32) vd:s_hown 0
+  xy := pn:k_eyAt o_ffsets 20
+  keyAt := 2 1 t_ranspose 3 20 r_eshape ((1 s_elect_2 xy) - 3.0) c_at (20 r_eshape -0.3) c_at 2 s_elect_2 xy
+  keys := keyAt c_at_2 20 7 r_eshape 0.72 0.2 0.72 50 130 210 0.08
+  t := t c_at (("keys", keys) vd:b_oxes 0) c_at ("keys", 20 2 r_eshape 26 32) vd:s_hown 0
+  labels := (keyAt + 20 3 r_eshape 0.0 -0.2 0.0) c_at_2 20 4 r_eshape 0.25 245 245 255
+  t := t c_at (("legends", "0|1|2|3|4|5|6|7|8|9|A|B|C|D|E|F|+|-|*|=", labels) vd:l_abels 0) c_at ("legends", 20 2 r_eshape 26 32) vd:s_hown 0
+  display := 1 10 r_eshape -3 -0.3 2.3 4.9 0.1 1.1 12 25 18 1
+  t := t c_at (("display", display) vd:b_oxes 0) c_at ("display", 1 2 r_eshape 26 32) vd:s_hown 0
+  strokes := h:l_it pn:d_igits 8 r_eshape 24
+  segments := (2 1 t_ranspose 6 56 r_eshape ((1 s_elect_2 strokes) - 3.0) c_at (56 r_eshape -0.4) c_at (2 s_elect_2 strokes) c_at ((3 s_elect_2 strokes) - 3.0) c_at (56 r_eshape -0.4) c_at 4 s_elect_2 strokes) c_at_2 56 4 r_eshape 60 150 100 0.025
+  t := t c_at (("segments", segments) vd:l_ines 0) c_at ("segments", 56 2 r_eshape 26 32) vd:s_hown 0
+  labels := 3 7 r_eshape 3 -0.5 2.8 0.27 240 245 255  -3 -0.5 3.2 0.27 240 245 255  0.3 -0.5 -3.3 0.23 240 245 255
+  t := t c_at (("parts", "Nano 1K (schematic)|MAX7219 + keypad|TXS0108E", labels) vd:l_abels 0) c_at ("parts", 3 2 r_eshape 26 32) vd:s_hown 0
+  packet := 1 10 r_eshape 5.5 -0.5 3.0 0.8 0.2 0.4 100 240 180 2
+  t := t c_at (("bitstream", packet) vd:b_oxes 0) c_at (("bitstream", 26.0 30.5, 1 2 6 r_eshape 5.5 -0.5 3 0.8 0.2 0.4  3 -0.5 0 0.1 0.1 0.1) vd:m_oves 0)
+  t := t c_at ("bitstream", 1 2 r_eshape 26 30.6) vd:s_hown 0
+  d := (w, h, 35, 13.0, 12.0) vd:f_it 0
+  t := t c_at (0.0 32.0, 2 3 r_eshape 0.0 c_at (n_eg d) c_at 0.0, 2 3 r_eshape 0.0) vd:c_amera 0
+  t := t c_at ((l:title, l:subtitle, 1 8 r_eshape 0 3 255 255 255 18 22 44) vd:c_ards 0)
+  captions := l:cueTable c_at_2 7 3 r_eshape 255 255 255
+  t c_at ((l:c_ues stats, captions) vd:c_aptions 0)
+}

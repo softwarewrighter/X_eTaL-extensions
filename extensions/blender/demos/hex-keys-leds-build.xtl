@@ -1,0 +1,36 @@
+## HEX1000-keys-leds from source to a configured Tang Nano 1K.
+## The full physical calculator: actual cell placement, routed wire
+## footprints, both clock results, and schematic configuration.
+## Title: HEX1000-keys-leds: build process
+## Command: just ext blender hex-keys-leds-build
+## Run: just ext blender hex-keys-leds-build
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"kb:" u_se< "KeysBuild"
+
+h:c_heck := { result ->
+  n_ot "exit 0\nerrors 0\n" m_atch 16 t_ake result ? []P_ANIC "hex-keys-leds-build: Blender failed: " c_at result
+  result
+}
+
+rawcells := n_umbers bl:r_ead "work/keysbuild/cells.txt"
+rawroutes := n_umbers bl:r_ead "work/keysbuild/routes.txt"
+cells := (((t_ally rawcells) d_iv 4) c_at 4) r_eshape rawcells
+routes := (((t_ally rawroutes) d_iv 2) c_at 2) r_eshape rawroutes
+stats := f_loor n_umbers bl:r_ead "work/keysbuild/stats.txt"
+"the build (LUTs, flip-flops, cells, tiles, nets, bytes, ALUs, RAMs, I/O, clock evidence):"
+stats
+n := "work/keysbuild/run.py" bl:w_rite! bp:launcher
+n := "work/keysbuild/hex-keys-leds-build.cues.toml" bl:w_rite! (kb:c_ues stats, kb:cueTable) vd:c_ues 0
+n := "work/keysbuild/hex-keys-leds-build.srt" bl:w_rite! (kb:c_ues stats, kb:cueTable) vd:s_rt 0
+n := "work/keysbuild/video.py" bl:w_rite! ((vd:landscape, cells, routes, stats) kb:s_cene 0) c_at (vd:r_ender "hex-keys-leds-build.mp4") c_at vd:report
+n := "work/keysbuild/short.py" bl:w_rite! ((vd:shorts, cells, routes, stats) kb:s_cene 0) c_at (vd:r_ender "hex-keys-leds-build-short.mp4") c_at vd:report
+"rendering the landscape video ..."
+r := "work/keysbuild/run.py" bl:r_un! "work/keysbuild/video.py work/keysbuild/out"
+h:c_heck r
+"rendering the Short ..."
+r := "work/keysbuild/run.py" bl:r_un! "work/keysbuild/short.py work/keysbuild/out-short"
+h:c_heck r
+bl:r_ead "work/keysbuild/out/report.txt"

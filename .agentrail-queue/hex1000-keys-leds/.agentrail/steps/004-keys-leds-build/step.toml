@@ -1,6 +1,6 @@
 number = 4
 slug = "keys-leds-build"
-status = "pending"
+status = "in-progress"
 description = "Create hex-keys-leds-build: show the actual 1K calculator build from Hex1000 ..."
 role = "production"
 context_files = []

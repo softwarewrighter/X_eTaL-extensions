@@ -1,0 +1,25 @@
+## Fixed placement fixture through the scene generator and Blender:
+## two shapes, the unplaced, placed, routed and board stages.
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"kb:" u_se< "KeysBuild"
+
+cells := f_loat 9 4 r_eshape 1 1 0 0  1 1 0 1  2 1 1 2  1 2 0 3  2 2 0 3  0 1 0 4  0 2 1 4  1 1 5 5  0 3 0 4
+routes := f_loat 2 2 r_eshape 1 1 2 1
+stats := 1 1 9 2 1 64 1 2 3 30000 2000 27000000 964286 1 2
+"the cue sheet:"
+(kb:c_ues stats, kb:cueTable) vd:c_ues 0
+n := "work/keysbuild-fixture/run.py" bl:w_rite! bp:launcher
+n := "work/keysbuild-fixture/quick.py" bl:w_rite! ((160 90, cells, routes, stats) kb:s_cene 0) c_at ((5.0 10.0 16.8 19.0 23.0 31.0, "wide") vd:s_tills 0) c_at vd:report
+r := "work/keysbuild-fixture/run.py" bl:r_un! "work/keysbuild-fixture/quick.py work/keysbuild-fixture/quick"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/keysbuild-fixture/quick/report.txt"
+n := "work/keysbuild-fixture/quick-short.py" bl:w_rite! ((90 160, cells, routes, stats) kb:s_cene 0) c_at ((5.0 10.0 16.8 19.0 23.0 31.0, "short") vd:s_tills 0) c_at vd:report
+r := "work/keysbuild-fixture/run.py" bl:r_un! "work/keysbuild-fixture/quick-short.py work/keysbuild-fixture/quick-short"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/keysbuild-fixture/quick-short/report.txt"

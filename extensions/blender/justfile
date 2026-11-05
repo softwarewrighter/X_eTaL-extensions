@@ -92,6 +92,23 @@ hex-keys-leds-wave-check:
 hex-build: hex-build-data
     {{root}}/scripts/demos.sh blender hex-build
 
+# Full 1K build and verified scene arrays, then landscape and Short
+hex-keys-leds-build: hex-keys-leds-evidence
+    {{root}}/.venv/bin/python3 tools/keys-leds-build.py
+    XETAL_BLENDER_TIMEOUT=3600 {{root}}/scripts/demos.sh blender hex-keys-leds-build
+
+# Recheck existing build artifacts and export their actual BEL/tile arrays
+hex-keys-leds-build-data:
+    {{root}}/.venv/bin/python3 tools/keys-leds-build.py
+
+# Six actual build stages in both shapes, before the full render
+hex-keys-leds-build-preview: hex-keys-leds-build-data
+    XETAL_BLENDER_TIMEOUT=3600 XETAL_PATH="demos:lib:{{root}}/lib:{{root}}/work/hex1000/libs/Panel/src:{{root}}/work/hex1000/libs/Hex1000/src:{{root}}/work/hex1000/libs/Radix/src:{{root}}/work/hex1000-libraries/libs/Strings/src" {{root}}/target/release/xetal-x --ext {{root}}/extensions run tests/keys-build-quick.xtl
+
+# Focused malformed-placement, resource, route and clock checks
+hex-keys-leds-build-check:
+    {{root}}/.venv/bin/python3 tests/keys-leds-build.py
+
 # Refresh UART opening cards/cues, preserving footage, URLs and original inputs
 uart-titles:
     cd {{root}} && cargo build -q --release --workspace

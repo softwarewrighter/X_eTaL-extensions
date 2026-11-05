@@ -1,0 +1,79 @@
+PASS 7 physical build-array checks
+the cue sheet:
+[[cue]]
+n = 1
+start = 0.000
+end = 3.000
+caption = "HEX1000-keys-leds: from source to a configured Tang Nano 1K"
+
+[[cue]]
+n = 2
+start = 3.000
+end = 8.000
+caption = "Hex1000 + Front specifications. Core: hand-lowered XIR. Controller and full 1K wrapper: hand-written RTL. Upstream compiler absent."
+
+[[cue]]
+n = 3
+start = 8.000
+end = 12.000
+caption = "Yosys/nextpnr packed resources: 1 LUTs, 1 flip-flops, 1 carry ALUs, 2 block RAMs, 3 pad cells (2 I/O buffers + 1 tri-state rows)."
+
+[[cue]]
+n = 4
+start = 12.000
+end = 17.000
+caption = "nextpnr places every cell at its assigned BEL. Blue LUTs; orange flip-flops; pink carry; purple RAM; yellow I/O; gray other."
+
+[[cue]]
+n = 5
+start = 17.000
+end = 21.000
+caption = "Routing: 1 nets occupy 2 wire tiles. Green is a tile footprint, not physical wire geometry."
+
+[[cue]]
+n = 6
+start = 21.000
+end = 26.000
+caption = "Both clocks pass: input 30.000 MHz vs 27; machine 2.000 MHz vs 0.964. BUFG clock sinks; one divider-feedback routing warning."
+
+[[cue]]
+n = 7
+start = 26.000
+end = 32.000
+caption = "gowin_pack: 64 bytes. Schematic Nano 1K, keypad, operators, TXS0108E and MAX7219. Configuration animation; no hardware programmed."
+
+
+exit 0
+errors 0
+frames 1 to 961 at 30 a second
+bitstream: 1 objects, 1 keyed
+board: 5 objects, 5 keyed
+cards: 1 objects, 1 keyed
+die: 1 objects, 1 keyed
+display: 1 objects, 1 keyed
+keys: 20 objects, 20 keyed
+legends: 20 objects, 20 keyed
+logic: 9 objects, 9 keyed
+parts: 3 objects, 3 keyed
+routes: 2 objects, 2 keyed
+segments: 56 objects, 56 keyed
+source: 3 objects, 3 keyed
+source labels: 3 objects, 3 keyed
+
+exit 0
+errors 0
+frames 1 to 961 at 30 a second
+bitstream: 1 objects, 1 keyed
+board: 5 objects, 5 keyed
+cards: 1 objects, 1 keyed
+die: 1 objects, 1 keyed
+display: 1 objects, 1 keyed
+keys: 20 objects, 20 keyed
+legends: 20 objects, 20 keyed
+logic: 9 objects, 9 keyed
+parts: 3 objects, 3 keyed
+routes: 2 objects, 2 keyed
+segments: 56 objects, 56 keyed
+source: 3 objects, 3 keyed
+source labels: 3 objects, 3 keyed
+

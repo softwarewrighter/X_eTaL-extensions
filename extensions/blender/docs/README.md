@@ -361,7 +361,7 @@ execution and build-process recordings keep their `hex-run` and
 `hex-build` commands, file paths and site anchors. **HEX1000-keys-leds**
 is the separate Tang Nano 1K project with a physical 4x4 keypad, four
 operator buttons and an eight-digit MAX7219 display. Its execution video
-is `hex-keys-leds-run`; the build-process video follows. The
+is `hex-keys-leds-run`; its build-process video is `hex-keys-leds-build`. The
 program-counter video (`hex-pc`) is shared HEX1000 material.
 
 `just ext blender uart-titles` refreshes the static opening cards and
@@ -410,6 +410,48 @@ renders six critical stills in both shapes from checked evidence;
 `hex-keys-leds-wave-check` tests malformed serial transactions. The replay
 uses bounded chunks to avoid scalar selection copying a whole large
 trace (ask E11 in `docs/xetal-asks.md`).
+
+## Physical 1K build-process video
+
+`just ext blender hex-keys-leds-build` builds the full pinned calculator
+with the OSS CAD Suite, verifies its evidence, then renders a 32-second
+landscape video and vertical Short at 30 fps. The input is the physical
+calculator with keypad, operators, MAX7219 and TXS0108E OE, using the
+same independent source pin as the execution video.
+
+The opening identifies Hex1000 and Front specifications, the core's
+hand-lowered XIR and the hand-written controller/wrapper RTL. This
+project does not contain the upstream compiler. Yosys, nextpnr and
+gowin_pack supply the build evidence; the video shows packed resource
+counts, including carry, block RAM and I/O, rather than treating every
+placed cell as a LUT. The 20 pad BELs include 16 ordinary I/O buffers
+and four tri-state row outputs, which nextpnr reports separately.
+
+All 1,382 cell identities and BEL assignments are retained. Colors
+distinguish LUTs, flip-flops, carry ALUs, block RAM, I/O and other cells.
+Cell positions come from their actual BEL tiles; offsets within tiles
+keep the schematic symbols visible. The 1,422 routed nets occupy 206
+unique wire tiles. Green marks that footprint, without claiming
+physical wire geometry. Captions report both passing clocks and the
+divider-feedback dedicated-route warning, with BUFG routing to the
+machine clock sinks.
+
+The closing configuration animation shows the 679,890-byte packed file
+entering a schematic Nano 1K beside its keypad, operator strip, level
+shifter and eight-digit display. Geometry uses scene units; this is
+build/pack evidence with no hardware detection or programming.
+
+`hex-keys-leds-build-data` verifies existing artifacts and exports their
+scene arrays into `work/keysbuild/`, with source-evidence and array
+hashes plus the complete cell identity/BEL list in `scene-evidence.json`.
+It checks recorded counts and timing against the router report and
+bitstream size against the packed file. `hex-keys-leds-build-preview`
+renders six stages in both shapes from those artifacts;
+`hex-keys-leds-build-check` tests incomplete placement, identities,
+resource totals, routing and timing. The regression uses a small fixed
+fixture containing all six resource classes. Masters, cues and SRT stay
+in `work/keysbuild/`; `just videos blender hex-keys-leds-build` encodes
+the existing landscape master for the site.
 
 ## Physical 1K calculator evidence
 
@@ -461,7 +503,11 @@ are retained. Board timing targets the actual 27 MHz input and
 | Flip-flops | 289 | 864 |
 | Carry ALUs | 174 | 864 |
 | Block RAMs | 2 | 4 |
-| I/O pads | 16 | 48 |
+| I/O buffers (router report) | 16 | 48 |
+
+Four additional tri-state row outputs occupy four distinct pad BELs;
+the full calculator uses 20 pads. nextpnr lists TBUF separately with no
+standalone capacity; its 16-IOB count is not the physical pin count.
 
 Routed maximum frequencies are 148.721 MHz for the 27 MHz input and
 71.937 MHz for the 0.964286 MHz machine clock; both pass. The one

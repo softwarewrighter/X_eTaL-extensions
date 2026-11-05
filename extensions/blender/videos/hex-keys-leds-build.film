@@ -1,0 +1,6 @@
+# Full calculator build, actual cell placements and occupied wire tiles.
+# Masters and cue sheets: just ext blender hex-keys-leds-build.
+demo=hex-keys-leds-build
+file=work/keysbuild/out/hex-keys-leds-build.mp4
+scale=1280
+fps=30
