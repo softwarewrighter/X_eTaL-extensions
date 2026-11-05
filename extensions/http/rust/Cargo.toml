@@ -26,6 +26,4 @@ workspace = true
 
 [dev-dependencies]
 xetal-ext-loader = { path = "../../../crates/xetal-ext-loader" }
-# a real server on loopback to fetch from
-xetal-ext-web = { path = "../../web/rust" }
 tempfile = "3"

@@ -350,7 +350,8 @@ Run: just demo blender hello</li>
 Run just ext blender hex-build with the OSS CAD Suite on PATH:
 synthesize, place, route, pack, then render this video and Short.
 The build evidence stays in work/hexbuild/evidence.json.
-Title: HEX1000-UART: build process</li>
+Title: HEX1000-UART: build process
+Command: just ext blender hex-build</li>
 <li>library <a href="extensions-blender-demos-HexBuild.xtl.html">extensions/blender/demos/HexBuild.xtl</a>: HexBuild.xtl -- the HEX1000-UART build, from the pinned circuit's actual
 synthesis, placement and routing artifacts. X_eTaL computes the
 geometry, colors and timing; Video writes the Blender player.
@@ -426,6 +427,7 @@ motion, the typing as a time-lapse, one addition in slow motion, the
 display, the browser's screen beside it. A YouTube video and a Short,
 with a cue sheet and subtitles.
 Title: HEX1000-UART: execution
+Command: just ext blender hex-run
 Run: just ext blender hex-run   (the simulation, the browser, then this:
 about 25 minutes, 1261 frames twice)</li>
 <li>library <a href="extensions-blender-demos-Vcd.xtl.html">extensions/blender/demos/Vcd.xtl</a>: Vcd.xtl -- a simulation's waveform (a VCD file, as iverilog writes
@@ -1447,6 +1449,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-blender-demos-PcWalk.xtl.html#h.camTimes">ʰcamTimes</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-PcWalk.xtl.html#h.camFrom">ʰcamFrom</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-PcWalk.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-blender-demos-hex-run.xtl.html#h.c_heck"><span class="c-libfunc">ʰc̲heck</span></a></td><td>function</td><td><code>Num a =&gt; Char -&gt; a</code></td></tr>
 <tr><td><a href="extensions-blender-demos-hex-run.xtl.html#v">v</a></td><td>value</td><td><code>(Box Char, Int)</code></td></tr>
 <tr><td><a href="extensions-blender-demos-hex-run.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-hex-run.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -1454,8 +1457,10 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-blender-demos-hex-run.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-hex-run.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-hex-run.xtl.html#r">r</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-blender-demos-hex-run.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-hex-run.xtl.html#lines">lines</a></td><td>value</td><td><code>Box Char</code></td></tr>
 <tr><td><a href="extensions-blender-demos-hex-run.xtl.html#r">r</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-blender-demos-hex-run.xtl.html#n">n</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-hex-run.xtl.html#lines">lines</a></td><td>value</td><td><code>Box Char</code></td></tr>
 <tr><td><a href="extensions-blender-demos-Vcd.xtl.html#h.w_ords"><span class="c-libfunc">ʰw̲ords</span></a></td><td>function</td><td><code>Char -&gt; Box Char</code></td></tr>
 <tr><td><a href="extensions-blender-demos-Vcd.xtl.html#h.v_alue"><span class="c-libfunc">ʰv̲alue</span></a></td><td>function</td><td><code>(Num a, Truthy a) =&gt; Char -&gt; a</code></td></tr>

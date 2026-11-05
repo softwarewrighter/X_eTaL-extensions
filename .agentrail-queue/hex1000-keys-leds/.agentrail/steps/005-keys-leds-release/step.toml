@@ -1,6 +1,6 @@
 number = 5
 slug = "keys-leds-release"
-status = "pending"
+status = "in-progress"
 description = "Publish HEX1000-UART and HEX1000-keys-leds as clearly separate video families..."
 role = "production"
 context_files = []

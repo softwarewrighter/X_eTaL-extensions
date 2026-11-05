@@ -13,7 +13,7 @@ repository's tests fetch from servers on loopback.
   `xetal_ext_http`: `libxetal_ext_http.dylib` on macOS, `.so` on Linux)
 - Facade: `lib/Http.xtl`, recommended alias `ht:`
 - Native crates: `ureq` 3 (rustls: no system TLS library); for tests,
-  the web extension's server and `tempfile`
+  an independent standard-library loopback server and `tempfile`
 
 ## From X_eTaL
 
@@ -60,7 +60,7 @@ just test       # Rust tests (rust/tests) and reg-rs tests (tests/)
 just list       # the functions as xetal-x sees them
 ```
 
-The Rust tests fetch from the web extension's server on loopback: text,
+The Rust tests fetch from an independent server on loopback: text,
 headers, a redirect followed and a redirect loop refused, a 404, a
 download into a confined file (and nothing written when the fetch
 fails), a body over the size limit, a server too slow for the time

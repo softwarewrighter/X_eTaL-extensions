@@ -12,6 +12,7 @@
 ## display, the browser's screen beside it. A YouTube video and a Short,
 ## with a cue sheet and subtitles.
 ## Title: HEX1000-UART: execution
+## Command: just ext blender hex-run
 ## Run: just ext blender hex-run   (the simulation, the browser, then this:
 ## about 25 minutes, 1261 frames twice)
 
@@ -20,6 +21,11 @@
 "vd:" u_se< "Video"
 "vc:" u_se< "Vcd"
 "hr:" u_se< "HexRun"
+
+h:c_heck := { result ->
+  n_ot "exit 0\nerrors 0\n" m_atch 16 t_ake result ? []P_ANIC "hex-run: Blender failed: " c_at result
+  0
+}
 
 v := vc:r_ead "work/hexrun/hex-run.vcd"
 "the checks:"
@@ -33,12 +39,14 @@ n := "work/hexrun/video.py" bl:w_rite! ((vd:landscape, v, "work/hexrun/browser.p
 n := "work/hexrun/short.py" bl:w_rite! ((vd:shorts, v, "work/hexrun/browser.png") hr:s_cene 0) c_at (vd:r_ender "hex-run-short.mp4") c_at vd:report
 "rendering 1261 frames at 1920 by 1080 with Blender (EEVEE) ..."
 r := "work/hexrun/run.py" bl:r_un! "work/hexrun/video.py work/hexrun/out"
+n := h:c_heck r
 "the run, and the error lines in Blender's log:"
 lines := (n_ot r = f_irst "\n") p_artition r
 d_isclose 1 s_elect lines
 d_isclose 2 s_elect lines
 "rendering the Short, 1261 frames at 1080 by 1920 ..."
 r := "work/hexrun/run.py" bl:r_un! "work/hexrun/short.py work/hexrun/out-short"
+n := h:c_heck r
 lines := (n_ot r = f_irst "\n") p_artition r
 d_isclose 1 s_elect lines
 d_isclose 2 s_elect lines

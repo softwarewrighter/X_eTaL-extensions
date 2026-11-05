@@ -1,0 +1,8 @@
+number = 6
+slug = "linux-release-gate"
+status = "pending"
+description = "Unplanned release gate repairs on Linux: remove HTTP test-fixture linkage to ..."
+role = "production"
+context_files = []
+created_at = "2026-11-05T12:38:16"
+commits = []

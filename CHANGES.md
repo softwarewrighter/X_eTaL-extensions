@@ -11,6 +11,14 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-05
+
+- `release` audit both HEX1000 families: all four landscape/Short pairs, recordings, cue sheets and SRT, decoded frame counts, family headings, preparation commands, site copies and critical-stage samples. Regenerate the missing UART execution master and Short from the pinned simulation and fresh headless browser check; refresh only that recording, preserving URLs. Document all export locations and the Saga 16 retrospective, including the corrected 20-pad accounting.
+- `fix` allow the American forms programmed, programming and programmer in the spelling checker; continue rejecting British noun forms, with positive and negative self-test samples.
+- `fix` give long UART film recipes a one-hour default timeout (still overridable), and stop the execution script on a failed Blender run. A full-size render exceeds the native 15-minute default on this machine.
+- `fix` use an independent loopback HTTP test server instead of linking the Web extension into HTTP tests. This avoids duplicate ABI entry symbols on Linux while retaining redirect, header, status, size, timeout and file-save coverage; dynamic extension exports remain intact.
+- `test` use relative SVG output paths for the earthquake and voxel-chunk regressions, replacing checkout-specific macOS paths while preserving their numerical baselines.
+
 ## 2026-11-04
 
 - `chore` complete HEX1000-keys-leds step 4 (full 1K build-process video, landscape and Short). The affected gate passed all 19 Blender regressions and docs/site checks. Next is the final release audit; the root GPU saga remains unchanged.

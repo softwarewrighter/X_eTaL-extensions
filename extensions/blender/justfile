@@ -44,7 +44,7 @@ demo name: build
 hex-run: build
     {{root}}/scripts/hex1000-sim.sh "C0DE+BEEF=" work/hexrun
     {{root}}/.venv/bin/python3 {{root}}/scripts/hex1000-browser.py "C0DE+BEEF=" work/hexrun
-    XETAL_PATH="$({{root}}/scripts/libraries.sh)" {{root}}/target/debug/xetal-x --ext {{root}}/extensions run --draw work/draw demos/hex-run.xtl
+    XETAL_BLENDER_TIMEOUT="${XETAL_BLENDER_TIMEOUT:-3600}" XETAL_PATH="$({{root}}/scripts/libraries.sh)" {{root}}/target/debug/xetal-x --ext {{root}}/extensions run --draw work/draw demos/hex-run.xtl
 
 # Synthesize, place, route and pack the pinned board; OSS CAD Suite on PATH
 hex-build-data:
@@ -90,7 +90,7 @@ hex-keys-leds-wave-check:
 
 # The build-process video and Short, from the actual tool artifacts (headless)
 hex-build: hex-build-data
-    {{root}}/scripts/demos.sh blender hex-build
+    XETAL_BLENDER_TIMEOUT="${XETAL_BLENDER_TIMEOUT:-3600}" {{root}}/scripts/demos.sh blender hex-build
 
 # Full 1K build and verified scene arrays, then landscape and Short
 hex-keys-leds-build: hex-keys-leds-evidence
@@ -108,6 +108,11 @@ hex-keys-leds-build-preview: hex-keys-leds-build-data
 # Focused malformed-placement, resource, route and clock checks
 hex-keys-leds-build-check:
     {{root}}/.venv/bin/python3 tests/keys-leds-build.py
+
+# Verify both families' four videos, exports, cues/SRT and stage samples
+hex-release-check:
+    {{root}}/scripts/check-busy.sh
+    {{root}}/.venv/bin/python3 tools/hex-release.py
 
 # Refresh UART opening cards/cues, preserving footage, URLs and original inputs
 uart-titles:

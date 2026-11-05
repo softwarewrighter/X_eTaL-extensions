@@ -4832,7 +4832,6 @@ dependencies = [
  "ureq",
  "xetal-ext-loader",
  "xetal-ext-sdk",
- "xetal-ext-web",
 ]
 
 [[package]]

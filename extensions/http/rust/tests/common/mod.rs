@@ -1,38 +1,58 @@
-//! A server on loopback to fetch from: the web extension's, answering
-//! by path from a thread (as an X_eTaL program would).
+//! An independent HTTP fixture on loopback. Linking another extension's
+//! rlib here would also link its unmangled ABI entry point on Linux.
 
+use std::io::{BufRead, BufReader, Read, Write};
+use std::net::{TcpListener, TcpStream};
 use std::thread;
 use std::time::Duration;
 
-use xetal_ext_web::server::{Reply, Server, parse_header};
-
 /// Serves on a free port until the test ends; the base URL.
 pub fn serve() -> String {
-    let s = Server::start(0, Duration::from_secs(20)).unwrap();
-    let base = format!("http://127.0.0.1:{}", s.port());
+    let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+    let base = format!("http://{}", listener.local_addr().unwrap());
     thread::spawn(move || {
-        while let Some(p) = s.next(Duration::from_secs(60)) {
-            let path = p.request.path.clone();
-            let reply = |status: u16, body: &str, headers: &[&str]| Reply {
-                status,
-                content_type: "text/plain; charset=utf-8".into(),
-                headers: headers.iter().map(|h| parse_header(h).unwrap()).collect(),
-                body: body.into(),
-            };
-            let r = match path.as_str() {
-                "/text" => reply(200, "hello, X_eTaL", &["X-Answer: 42"]),
-                "/moved" => reply(302, "", &["Location: /text"]),
-                "/loop" => reply(302, "", &["Location: /loop"]),
-                "/big" => reply(200, &"x".repeat(100_000), &[]),
-                "/slow" => {
-                    thread::sleep(Duration::from_secs(3));
-                    continue;
-                }
-                "/csv" => reply(200, "a,b\n1,2\n", &[]),
-                _ => reply(404, "no such page", &[]),
-            };
-            let _ = p.reply.send(r);
+        for connection in listener.incoming().flatten() {
+            thread::spawn(move || respond(connection));
         }
     });
     base
+}
+
+fn respond(mut stream: TcpStream) {
+    stream
+        .set_read_timeout(Some(Duration::from_secs(5)))
+        .unwrap();
+    let path = {
+        let mut reader = BufReader::new((&mut stream).take(16 * 1024));
+        let mut line = String::new();
+        if reader.read_line(&mut line).unwrap_or(0) == 0 {
+            return;
+        }
+        let path = line.split_whitespace().nth(1).unwrap_or("/").to_owned();
+        loop {
+            line.clear();
+            if reader.read_line(&mut line).unwrap_or(0) == 0 || line == "\r\n" {
+                break;
+            }
+        }
+        path
+    };
+    let (status, headers, body) = match path.as_str() {
+        "/text" => ("200 OK", "X-Answer: 42\r\n", "hello, X_eTaL".to_owned()),
+        "/moved" => ("302 Found", "Location: /text\r\n", String::new()),
+        "/loop" => ("302 Found", "Location: /loop\r\n", String::new()),
+        "/big" => ("200 OK", "", "x".repeat(100_000)),
+        "/slow" => {
+            thread::sleep(Duration::from_secs(3));
+            return;
+        }
+        "/csv" => ("200 OK", "", "a,b\n1,2\n".to_owned()),
+        _ => ("404 Not Found", "", "no such page".to_owned()),
+    };
+    // Close each connection so the client can make independent requests.
+    let _ = write!(
+        stream,
+        "HTTP/1.1 {status}\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Length: {}\r\nConnection: close\r\n{headers}\r\n{body}",
+        body.len()
+    );
 }

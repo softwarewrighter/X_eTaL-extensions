@@ -364,6 +364,37 @@ operator buttons and an eight-digit MAX7219 display. Its execution video
 is `hex-keys-leds-run`; its build-process video is `hex-keys-leds-build`. The
 program-counter video (`hex-pc`) is shared HEX1000 material.
 
+| Family | Recording | Duration | Export directory |
+| ------ | --------- | -------- | ---------------- |
+| HEX1000-UART (Nano 9K) | [execution](https://softwarewrighter.github.io/X_eTaL-extensions/#blender-hex-run) | 42 seconds | `work/hexrun/` |
+| HEX1000-UART (Nano 9K) | [build](https://softwarewrighter.github.io/X_eTaL-extensions/#blender-hex-build) | 24 seconds | `work/hexbuild/` |
+| HEX1000-keys-leds (Nano 1K) | [execution](https://softwarewrighter.github.io/X_eTaL-extensions/#blender-hex-keys-leds-run) | 36 seconds | `work/keysrun/` |
+| HEX1000-keys-leds (Nano 1K) | [build](https://softwarewrighter.github.io/X_eTaL-extensions/#blender-hex-keys-leds-build) | 32 seconds | `work/keysbuild/` |
+
+Each export directory contains a 1920 by 1080 landscape master under
+`out/`, a 1080 by 1920 Short under `out-short/`, and its cue sheet and
+SRT. Both shapes use 30 fps. Durations above are the nominal timelines;
+the inclusive final frame adds 1/30 second to each file. The site uses
+1280 by 720 recordings at 30 fps, with the existing public URLs intact.
+
+After rendering and recording, run `just ext blender hex-release-check`
+with ffmpeg and ffprobe on PATH.
+It decodes and counts all twelve video streams (eight exports and four
+recordings), checks cue/SRT text and timing, verifies site copies and
+family headings, and extracts critical stages from both shapes. Its
+hashes, pinned commits and sampled frames stay in `work/hex-release/`.
+The report records media-tool versions and verifies the saved build,
+execution and scene-array hashes. Synthesis/router/packer versions,
+executable and device-database hashes are retained in the physical
+calculator's build evidence below.
+The original UART execution master and Short were absent at the final
+audit; they were regenerated from the pinned board simulation and a
+fresh headless browser calculation, without changing their public URL.
+The UART film recipes allow one hour per Blender run by default; set
+`XETAL_BLENDER_TIMEOUT` to override it. The execution script stops on a
+failed render. Linux NVIDIA renders can select Vulkan with
+`XETAL_BLENDER_ARGS='--gpu-backend vulkan'`.
+
 `just ext blender uart-titles` refreshes the static opening cards and
 cue sheets using the existing checked build counts and a fresh UART
 simulation. It renders six title stills with X_eTaL/Blender, replaces

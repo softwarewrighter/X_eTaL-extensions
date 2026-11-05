@@ -29,7 +29,7 @@ WORDS = [
     (r"grey(s|ed|ing|ish|er|est|ness)?", "gray"),
     (r"aluminium", "aluminum"),
     (r"(catalog|dialog|analog)ue(s|d)?", "catalog, dialog, analog"),
-    (r"programme(s|d)?", "program"),
+    (r"programmes?", "program"),
     (r"(defen|offen|preten)ce(s)?", "defense, offense, pretense"),
     (r"licence(s|d)?", "license"),
     (r"(trav|mod|lab|canc|lev|sign|fu|tot|marsh|quarr|chann|tunn|duel|jew|counsel|dial|equ|riv|shriv|swiv|ten)ell(ed|ing|er|ers|or|ors)", "a single l (traveled, modeled, labeled, canceled...)"),
@@ -69,8 +69,8 @@ def files():
 
 
 def self_test():
-    british = "colour neighbours centred grey modelled whilst normalise initialisation analysed catalogue licence travelled"
-    american = "color neighbors centered gray modeled while normalize initialization analyzed catalog license traveled emphasis parameter exercise precise advertise promise analysis rise wise premise"
+    british = "colour neighbours centred grey modelled whilst normalise initialisation analysed catalogue licence travelled programme programmes"
+    american = "color neighbors centered gray modeled while normalize initialization analyzed catalog license traveled emphasis parameter exercise precise advertise promise analysis rise wise premise program programs programmed programming programmer"
     found = [w for _, w, _ in hits(british)]
     assert len(found) == len(british.split()), f"missed: {set(british.split()) - set(found)}"
     wrong = [w for _, w, _ in hits(american)]

@@ -3,6 +3,7 @@
 ## synthesize, place, route, pack, then render this video and Short.
 ## The build evidence stays in work/hexbuild/evidence.json.
 ## Title: HEX1000-UART: build process
+## Command: just ext blender hex-build
 
 "bl:" u_se< "Blender"
 "bp:" u_se< "Bpy"

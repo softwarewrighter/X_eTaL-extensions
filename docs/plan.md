@@ -661,10 +661,36 @@ are `hex-keys-leds-run` and `hex-keys-leds-build`.
 | # | Step slug | Delivers |
 | - | --------- | -------- |
 | 1 | uart-names | (done 2026-11-03) HEX1000-UART titles, cue sheets, docs and site headings; static opening cards rendered again and joined to checked footage, with frame counts/resolutions verified and original inputs retained; existing URLs and commands preserved; separate HEX1000-keys-leds family documented |
-| 2 | keys-leds-evidence | (done 2026-11-04) independent `HEX1000_COMMIT` b7148fe, clean `work/hex1000` and transitive Strings clone; full TXS/OE calculator with explicit row polarity and machine BUFG; 1100 Front model clocks and full board simulations at row counts 4/256; 772 LUTs, 289 flip-flops, 174 ALUs, 2 block RAMs, 16 I/O pads; both routed clocks pass; 679890-byte bitstream, hashes/tool fingerprints/cell identities/routes/timing/limitations retained outside clones; eight negative/verification tests; no hardware access |
+| 2 | keys-leds-evidence | (done 2026-11-04) independent `HEX1000_COMMIT` b7148fe, clean `work/hex1000` and transitive Strings clone; full TXS/OE calculator with explicit row polarity and machine BUFG; 1100 Front model clocks and full board simulations at row counts 4/256; 772 LUTs, 289 flip-flops, 174 ALUs, 2 block RAMs; router reports 16 IOB plus four TBUF (20 distinct pad BELs, clarified in step 4); both routed clocks pass; 679890-byte bitstream, hashes/tool fingerprints/cell identities/routes/timing/limitations retained outside clones; eight negative/verification tests; no hardware access |
 | 3 | keys-leds-run | (done 2026-11-04) external contacts drive the complete production-timing board; all 221161 active clocks agree with Hex1000/Front, and 6143 MAX7219 words independently decode DEADBEEF, 17FCD and clear. X_eTaL chooses the waveform-driven scene and explicit time map; 36-second landscape and Short, cues/SRT, six two-shape preview stages, serial guard tests and site recording. E11 bounded-chunk replay workaround documented |
 | 4 | keys-leds-build | (done 2026-11-04) full physical calculator build evidence verified against pins, source/artifact hashes, router counts/timing and packed file size; 1382 BEL identities, 1422 routed nets and 206 wire tiles. Six resource classes, 20 pad BELs (16 IOB plus four TBUF), both clocks and divider-feedback warning; hand-written lowering/controller labeled; schematic 1K, keypad, operators, TXS0108E and MAX7219. 32-second landscape/Short, cues/SRT, six-stage two-shape previews, seven guard tests and a small scene fixture; site recording |
-| 5 | keys-leds-release | landscape masters and Shorts, cue sheets and SRT, small headless regressions, updated recordings/site/docs, full gate and deployed-video verification |
+| 5 | keys-leds-release | (done 2026-11-05) audit all four landscape/Short pairs, recordings, cues and SRT with frame counts, hashes, headings, site copies and critical-stage samples; regenerate missing UART execution exports from pinned simulation and fresh headless browser check; preserve public URLs, update docs/status/recordings, full gate and deployed-video verification |
+| 6 | linux-release-gate | (unplanned release-gate repairs, done 2026-11-05) independent loopback HTTP test fixture avoids linking the Web extension's duplicate ABI entry symbol; relative SVG diagnostic paths replace checkout-specific macOS baselines; preserve dynamic exports and numerical coverage, then repeat the full gate |
+
+Retrospective: the physical 1K project required its own pin, Front model,
+production key timing and MAX7219 decoder; the UART wrapper was not an
+adequate substitute. Every active execution clock agrees with Hex1000
+and Front, and display bytes are decoded independently. Build pictures
+retain actual BEL identities and routed tile footprints. The router's
+IOB and TBUF categories required separate accounting to identify all 20
+physical pad BELs. E11 forced a bounded-chunk replay rather than copying
+the large trace at every scalar selection. The release audit also
+caught missing older UART masters despite an intact site recording;
+the full render repaired those exports rather than enlarging a site
+copy. Both families now have reproducible commands, distinct titles,
+both video shapes and narration artifacts. Hardware observations remain
+historical; no FPGA was detected or written during this work.
+The older UART recipes also inherited a 15-minute native timeout,
+shorter than a full render on this machine. Their one-hour default
+and an execution failure guard make future regeneration reliable.
+The audit corrected the spelling checker's false positive for the
+American word programmed, with explicit self-test coverage.
+The full gate also exposed duplicate ABI symbols when HTTP tests linked
+the Web extension's rlib on Linux. An independent loopback fixture keeps
+the client tests real while preserving all dynamic extension exports.
+Two SVG regressions also embedded absolute macOS checkout paths; their
+relative output directories make the diagnostics portable without
+changing numerical baselines.
 
 Every animated value comes from evidence and X_eTaL scene arrays, using
 the existing Video/Bpy kit. Use the complete calculator, not the

@@ -78,6 +78,7 @@ just ext blender hex-build     # HEX1000-UART synthesis, actual placement and ro
 just ext blender hex-keys-leds-evidence # pinned physical Nano 1K calculator: model/RTL checks and full routed build (OSS CAD Suite)
 just ext blender hex-keys-leds-run # physical Nano 1K keys, scanning, debounce and MAX7219: checked execution video and Short
 just ext blender hex-keys-leds-build # full Nano 1K calculator synthesis, actual placement, routing and timing; video and Short
+just ext blender hex-release-check # audit all four HEX1000 master/Short pairs, recordings, cues and subtitles
 just demo scene voxels-rubik-buttons  # the cube with buttons: U U' R R' F F', animated, queued, undo
 just demo scene voxels-rubik-solve    # scramble, solve (the Eigencube library), step or play the solution
 just walkthrough                # a fresh clone, built and run, checked against the goldens

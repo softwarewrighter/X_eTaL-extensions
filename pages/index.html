@@ -96,7 +96,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <h3>HEX1000-UART: build process <a class="docs" href="doc/extensions-blender-demos-hex-build.xtl.html">source and docs</a></h3>
       <p class="note">Blender, 11: HEX1000-UART from source to a configured Tang Nano 9K. Run just ext blender hex-build with the OSS CAD Suite on PATH: synthesize, place, route, pack, then render this video and Short. The build evidence stays in work/hexbuild/evidence.json.</p>
       <video src="blender/hex-build.webm" autoplay loop muted playsinline controls preload="metadata"></video>
-      <pre class="source">just demo blender hex-build</pre>
+      <pre class="source">just ext blender hex-build</pre>
     </section>
     <section class="panel demo" id="blender-hex-keys-leds-build">
       <h3>HEX1000-keys-leds: build process <a class="docs" href="doc/extensions-blender-demos-hex-keys-leds-build.xtl.html">source and docs</a></h3>
@@ -120,7 +120,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <h3>HEX1000-UART: execution <a class="docs" href="doc/extensions-blender-demos-hex-run.xtl.html">source and docs</a></h3>
       <p class="note">Blender, 10: HEX1000-UART computing C0DE+BEEF=, from a simulation of its board. scripts/hex1000-sim.sh runs X_eTaL-fpga&#x27;s board Verilog (at FPGA_COMMIT) under iverilog, the text sent over its serial line, into a waveform (VCD); scripts/hex1000-browser.py types the same text at the live browser calculator in headless Chrome. This program reads the waveform (Vcd.xtl), checks it -- the line carries the text, the board receives it, Hex1000.xtl replaying the clocks agrees with the circuit&#x27;s registers at every one, the display ends as the evaluator&#x27;s (hx:c_alc) and the browser&#x27;s -- and only then writes the video (HexRun.xtl): the bits arriving and the key matrix in slow motion, the typing as a time-lapse, one addition in slow motion, the display, the browser&#x27;s screen beside it. A YouTube video and a Short, with a cue sheet and subtitles.</p>
       <video src="blender/hex-run.webm" autoplay loop muted playsinline controls preload="metadata"></video>
-      <pre class="source">just demo blender hex-run</pre>
+      <pre class="source">just ext blender hex-run</pre>
     </section>
     <section class="panel demo" id="blender-matmul-fly">
       <h3>blender / matmul-fly <a class="docs" href="doc/extensions-blender-demos-matmul-fly.xtl.html">source and docs</a> <a class="docs" href="literate/matmul.html" title="Matrix multiply, arrays to video">literate document</a></h3>
@@ -348,7 +348,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at 7a27604</span>
+  <span>built at 28544c2</span>
 </footer>
 </body>
 </html>
