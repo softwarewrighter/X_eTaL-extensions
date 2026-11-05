@@ -1,7 +1,6 @@
 # Changes
 
-Every commit, newest first, grouped by day. Times are Pacific
-(UTC-07:00), as committed.
+Every commit, newest first, grouped by day in Pacific time, as committed.
 
 Categories: `feat` new capability, `fix` a bug or wrong behavior,
 `refactor` structure without behavior change, `test` tests only,
@@ -13,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-05
 
+- `chore` record the completed unplanned Linux release-gate repair: independent HTTP test fixture and portable SVG diagnostics; focused tests and the full gate passed.
 - `release` audit both HEX1000 families: all four landscape/Short pairs, recordings, cue sheets and SRT, decoded frame counts, family headings, preparation commands, site copies and critical-stage samples. Regenerate the missing UART execution master and Short from the pinned simulation and fresh headless browser check; refresh only that recording, preserving URLs. Document all export locations and the Saga 16 retrospective, including the corrected 20-pad accounting.
 - `fix` allow the American forms programmed, programming and programmer in the spelling checker; continue rejecting British noun forms, with positive and negative self-test samples.
 - `fix` give long UART film recipes a one-hour default timeout (still overridable), and stop the execution script on a failed Blender run. A full-size render exceeds the native 15-minute default on this machine.
