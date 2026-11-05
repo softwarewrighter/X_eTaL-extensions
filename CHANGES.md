@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-05
 
+- `chore` complete the HEX1000-keys-leds saga after the release audit and recorded Linux gate repairs. Four master/Short pairs, four recordings and narration artifacts are verified; the full gate passes all 109 regressions and three web crates. The root GPU saga remains unchanged.
 - `chore` record the completed unplanned Linux release-gate repair: independent HTTP test fixture and portable SVG diagnostics; focused tests and the full gate passed.
 - `release` audit both HEX1000 families: all four landscape/Short pairs, recordings, cue sheets and SRT, decoded frame counts, family headings, preparation commands, site copies and critical-stage samples. Regenerate the missing UART execution master and Short from the pinned simulation and fresh headless browser check; refresh only that recording, preserving URLs. Document all export locations and the Saga 16 retrospective, including the corrected 20-pad accounting.
 - `fix` allow the American forms programmed, programming and programmer in the spelling checker; continue rejecting British noun forms, with positive and negative self-test samples.
