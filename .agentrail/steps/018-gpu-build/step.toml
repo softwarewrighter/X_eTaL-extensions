@@ -1,8 +1,9 @@
 number = 18
 slug = "gpu-build"
-status = "in-progress"
+status = "completed"
 description = "Saga 15 step 15: the GPU process video: .xtl lowered to Core and XIR, the fus..."
 role = "production"
 context_files = []
 created_at = "2026-10-14T14:53:34"
-commits = []
+completed_at = "2026-11-05T16:20:00"
+commits = ["3131a95b15efa51f71c376a5ee577b8eab633c31"]

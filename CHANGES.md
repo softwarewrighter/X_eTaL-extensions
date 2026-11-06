@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-05
 
+- `chore` complete GPU build-process step 18 after both 1080p formats, compiler artifacts, eight evidence checks, Core-adapter Clippy and the affected gate (20 Blender regressions) passed. Next is GPU execution and profiling, step 19.
 - `ext` GPU build-process video and Short from actual source, resolved Core, typed XIR, fused OpenCL and saved M1 Max/RTX 5060 Ti schedules. Isolate the GPU compiler's evaluator dependency while preserving the root animation pin. Check both evaluators and XIR outputs, compile emitted OpenCL syntax, retain hashes and publish 22 compiler artifacts. Show four kernels, eight global buffers, five eliminated intermediate arrays and the matrix tile policy without device timing claims; add focused parser checks and both-shape scene regression, cues/subtitles and site recording.
 - `chore` complete the HEX1000-keys-leds saga after the release audit and recorded Linux gate repairs. Four master/Short pairs, four recordings and narration artifacts are verified; the full gate passes all 109 regressions and three web crates. The root GPU saga remains unchanged.
 - `chore` record the completed unplanned Linux release-gate repair: independent HTTP test fixture and portable SVG diagnostics; focused tests and the full gate passed.
