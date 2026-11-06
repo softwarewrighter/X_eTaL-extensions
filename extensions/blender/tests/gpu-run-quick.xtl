@@ -1,0 +1,24 @@
+## Six execution stages in both shapes, using checked device evidence.
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"gr:" u_se< "GpuRun"
+stats := n_umbers bl:r_ead "work/gpurun/stats.txt"
+timings := 4 2 r_eshape n_umbers bl:r_ead "work/gpurun/timings.txt"
+timingLabels := bl:r_ead "work/gpurun/timing-labels.txt"
+reduction := 9 256 r_eshape n_umbers bl:r_ead "work/gpurun/reduction.txt"
+reductionLabels := bl:r_ead "work/gpurun/reduction-labels.txt"
+hostLabels := bl:r_ead "work/gpurun/host-labels.txt"
+n := "work/gpurun/run.py" bl:w_rite! bp:launcher
+n := "work/gpurun/quick.py" bl:w_rite! ((640 360, stats, timings, timingLabels, reduction, reductionLabels, hostLabels) gr:s_cene 0) c_at ((6.0 11.0 21.8 24.0 30.0 34.0, "wide") vd:s_tills 0) c_at vd:report
+r := "work/gpurun/run.py" bl:r_un! "work/gpurun/quick.py work/gpurun/quick"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/gpurun/quick/report.txt"
+n := "work/gpurun/quick-short.py" bl:w_rite! ((360 640, stats, timings, timingLabels, reduction, reductionLabels, hostLabels) gr:s_cene 0) c_at ((6.0 11.0 21.8 24.0 30.0 34.0, "short") vd:s_tills 0) c_at vd:report
+r := "work/gpurun/run.py" bl:r_un! "work/gpurun/quick-short.py work/gpurun/quick-short"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/gpurun/quick-short/report.txt"

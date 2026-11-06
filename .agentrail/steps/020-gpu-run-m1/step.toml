@@ -1,0 +1,8 @@
+number = 20
+slug = "gpu-run-m1"
+status = "pending"
+description = "Finish the M1 Max portion of the GPU execution video when its SSH hostname/us..."
+role = "production"
+context_files = []
+created_at = "2026-11-05T16:48:04"
+commits = []

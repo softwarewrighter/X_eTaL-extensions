@@ -614,6 +614,65 @@ NVIDIA renders can select `XETAL_BLENDER_ARGS='--gpu-backend vulkan'`.
 Masters, cue sheet and SRT stay in `work/gpubuild/`; the existing master
 is recorded with `just videos blender gpu-build`.
 
+## GPU execution video
+
+`just ext blender gpu-run-data` builds the same pinned compiler and
+collects a fresh RTX 5060 Ti observation. `just ext blender gpu-run`
+renders that checked capture as a 36-second landscape video and Short,
+without collecting different timings. `gpu-run-preview` draws six
+stages in both shapes; `gpu-run-check` checks nine evidence guards.
+The recording is `just videos blender gpu-run`. Masters, cue sheet
+and SRT are under `work/gpurun/`.
+
+The eight-item pipeline above executes its actual four emitted kernels.
+The device reports 36 compute units, work-groups to 1,024 and 49,152
+bytes of local memory. Four input buffers upload 192 bytes; the two
+outputs read back 12 bytes. Both the independent event observer and
+the pinned GPU runtime return 32 and 16.625, matching the XIR CPU
+interpreter and the build video's two pinned evaluator oracles.
+The Int reduction uses 256 local slots: eight map results and 248
+zeros. Its eight barrier-separated folds end at 32. The scene computes
+these algorithm states; it does not claim to trace hardware lanes.
+Work-group icons show the queue order, with no claimed CU placement.
+
+The portable standard-library `tools/gpu-profile.py` observer uses
+the emitted OpenCL C, compiler buffer sizes, kernel arguments and
+launch sizes unchanged. It uses an in-order profiling queue, blocking
+copies, and OpenCL queued/submit/start/end timestamps for all ten
+commands. It preserves three trials, reuploading the four inputs each
+time; trial 2 (the third) is selected in advance for the scene.
+This is an observation, not a performance benchmark. All trials are
+published, including startup and scheduling variation. Binding means
+the observer's host-array copy; host times include Python/driver
+overhead and are not the pinned Rust runtime's timings.
+
+The captured third trial sums to 15.104 us of device kernel execution
+over 38.464 us from the first kernel's start to the last one's end.
+Bars preserve actual widths and gaps on that common axis. Host phase
+bars use a separate monotonic clock: binding, blocking upload,
+enqueue-and-wait and blocking readback. Device execution is contained
+inside launch wait; never add those times. Context creation, program
+build, buffers and kernel argument setup took 956.067 ms in this
+capture and are measured separately. No time is attributed to a
+specific PCIe transaction, compute unit or memory channel.
+
+The M1 Max panel explains shared physical memory only; it contains no
+M1 timing or zero-copy claim. Fresh M1 collection awaits that host's
+SSH address or local access and remains tracked before the release.
+The same observer accepts explicit `--data` and `--output` paths on
+macOS. Even unified-memory devices use the OpenCL API's buffer/copy
+contract here; shared memory alone does not prove a copy was free.
+
+`gpu-run-verify` checks input and output hashes and validates each
+trace, rejecting missing commands, incorrect transfer sizes, reversed
+or overlapping in-order timestamps, changed outputs and invalid host
+phase accounting. The public
+[execution evidence](../demos/gpu-run-data/) includes raw records,
+independent runtime stdout/stderr, device/driver information and the
+derived scene arrays. The fixture uses that immutable capture without
+requiring an OpenCL device during the gate. Python observes and adapts
+the data; all scene geometry and animation are X_eTaL.
+
 ## Build and test
 
 ```sh

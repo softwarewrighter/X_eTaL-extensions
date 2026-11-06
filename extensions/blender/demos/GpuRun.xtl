@@ -1,0 +1,96 @@
+## GpuRun.xtl -- checked OpenCL execution, event timing and reduction.
+## X_eTaL chooses all geometry, colors and animation. Device timestamps
+## time commands; work-group placement and local-memory cells are diagrams.
+## Import: "gr:" u_se< "GpuRun"
+"vd:" u_se< "Video"
+
+## title: the execution video
+l:title := "X_eTaL GPU: execution"
+## subtitle: measured device and scope
+l:subtitle := "RTX 5060 Ti: checked results and OpenCL event timestamps"
+## length: video seconds
+l:length := 36.0
+## cueTable: narration spans
+l:cueTable := f_loat 7 2 r_eshape 0 3  3 9  9 14  14 22  22 28  28 33  33 36
+## gr:c_ues stats: measured counts and units, with limits explicit
+l:c_ues := { s ->
+  l:title c_at ": " c_at l:subtitle c_at "|RTX: four buffers, " c_at (f_ormat f_loor 3 s_elect s) c_at " bytes uploaded, " c_at (f_ormat f_loor 4 s_elect s) c_at " bytes read back. M1 Max shares physical memory; its panel is architectural. No M1 timing captured.|Four kernels, one work-group each: map, sum, map, sum. The device reports " c_at (f_ormat f_loor 1 s_elect s) c_at " compute units. Queue order is measured; placement is not.|256 local slots: eight inputs and 248 zeros. Barriers halve the active lanes until slot zero holds 32. Algorithm illustration in slow motion.|One warm trial: " c_at (3 vd:f_ixed 11 s_elect s) c_at " us executing kernels over " c_at (3 vd:f_ixed 12 s_elect s) c_at " us. Bars and gaps share one measured device-time axis.|Host binding, upload, launch wait, readback: one scale. Device execution is inside launch wait. Setup: " c_at (3 vd:f_ixed 5 s_elect s) c_at " ms, separate. Three trials retained; no speedup claim.|32 and 16.625: device, XIR interpreter and both pinned evaluators agree. The independent observer and pinned GPU runtime match."
+}
+
+h:b_oxes := { (p, dims, color) z -> p c_at_2 (((t_ally p) c_at 3) r_eshape dims) c_at_2 (((t_ally p) c_at 4) r_eshape color) }
+h:l_abels := { (p, size) z -> p c_at_2 (((t_ally p) c_at 4) r_eshape size c_at 235 245 255) }
+
+## (size, stats, timings, timingLabels, reduction, reductionLabels, hostLabels)
+## gr:s_cene 0: real event widths and host phases on separate scales;
+## transfer motion, work-groups and reduction states are algorithm diagrams.
+l:s_cene := { (size, s, timings, timingLabels, reduction, reductionLabels, hostLabels) z ->
+  w := 1 s_elect size
+  h := 2 s_elect size
+  t := vd:head c_at ((w, h, 30, l:length, 8 10 18, 35) vd:s_tage 0)
+  d := (w, h, 35, 13.0, 11.0) vd:f_it 0
+  t := t c_at (0.0 36.0, 2 3 r_eshape 0.0 c_at (n_eg d) c_at 0.0, 2 3 r_eshape 0.0) vd:c_amera 0
+  # Two memory architectures; only the RTX panel has captured timings.
+  outlines := 3 10 r_eshape -3.0 0.2 1.3 4.0 0.2 2.5 80 160 245 0.8  3.0 0.2 1.3 4.0 0.2 2.5 245 170 80 0.8  0.0 0.2 -2.0 10.0 0.2 1.5 100 230 160 0.8
+  t := t c_at ("memory", outlines) vd:o_utlines 0
+  t := t c_at ("memory", 3 2 r_eshape 3 9) vd:s_hown 0
+  titles := 3 7 r_eshape -3 -0.2 3 0.5 235 245 255  3 -0.2 3 0.5 235 245 255  0 -0.2 -2 0.45 235 245 255
+  t := t c_at ("memory names", "RTX host|RTX device|M1 Max: unified (architecture)", titles) vd:l_abels 0
+  t := t c_at ("memory names", 3 2 r_eshape 3 9) vd:s_hown 0
+  inputs := 4 3 r_eshape -4 0 1.8  -2 0 1.8  -4 0 0.8  -2 0 0.8
+  t := t c_at ("uploads", (inputs, 1.2 0.15 0.65, 65 155 245 0.5) h:b_oxes 0) vd:b_oxes 0
+  t := t c_at ("uploads", 4 2 r_eshape 3 9) vd:s_hown 0
+  moved := inputs + 4 3 r_eshape 6 0 0
+  moves := 4 2 6 r_eshape r_avel (inputs c_at_2 4 3 r_eshape 1.2 0.15 0.65) c_at_2 moved c_at_2 4 3 r_eshape 1.2 0.15 0.65
+  t := t c_at ("uploads", 4.0 7.0, moves) vd:m_oves 0
+  # Logical groups remain outside the CU outline: no invented placement.
+  n := f_loor 1 s_elect s
+  i := o_ffsets n
+  p := 2 1 t_ranspose (3 c_at n) r_eshape (0.6 * f_loat i m_od 6) c_at (n r_eshape 0.2) c_at 1.5 - 0.6 * f_loat i d_iv 6
+  t := t c_at ("compute units", (p, 0.45 0.15 0.45, 70 105 150 0.2) h:b_oxes 0) vd:o_utlines 0
+  t := t c_at ("compute units", (n c_at 2) r_eshape 9 14) vd:s_hown 0
+  groups := 4 3 r_eshape -4 0 1.8  -4 0 0.7  -4 0 -0.4  -4 0 -1.5
+  t := t c_at ("groups", (groups, 2.7 0.15 0.7, 80 220 170 0.4) h:b_oxes 0) vd:b_oxes 0
+  t := t c_at ("groups", 4 2 r_eshape 9 14) vd:s_hown 0
+  t := t c_at ("group names", "map Int|sum Int|map Float|sum Float", (groups + 4 3 r_eshape 0 -0.2 0, 0.4) h:l_abels 0) vd:l_abels 0
+  t := t c_at ("group names", 4 2 r_eshape 9 14) vd:s_hown 0
+  t := t c_at ("groups", "glow", 8 3 r_eshape 1 9 2  1 10 0.1  2 10 2  2 11 0.1  3 11 2  3 12 0.1  4 12 2  4 13 0.1) vd:s_teps 0
+  # Exact Int local-memory tree, 256 lanes, barrier after each fold.
+  lane := o_ffsets 256
+  lp := 2 1 t_ranspose 3 256 r_eshape (0.24 * (f_loat lane m_od 16) - 1.8) c_at (256 r_eshape 0.0) c_at 1.8 - 0.24 * f_loat lane d_iv 16
+  t := t c_at ("local slots", (lp, 0.19 0.1 0.19, 245 175 65 0.1) h:b_oxes 0) vd:b_oxes 0
+  t := t c_at ("local slots", 256 2 r_eshape 14 22) vd:s_hown 0
+  active := lane '< t_able 256 128 64 32 16 8 4 2 1
+  glow := 0.08 + 2.0 * f_loat active & (2 1 t_ranspose reduction) > 0.0
+  t := t c_at ("local slots", 256 9 r_eshape 14.0 15.0 16.0 17.0 18.0 19.0 20.0 21.0 21.8, glow) vd:g_lows 0
+  t := t c_at ("local values", 0.0 0.35 0.055 250 210 140, reductionLabels, 14.0 15.0 16.0 17.0 18.0 19.0 20.0 21.0 21.8 22.0) vd:r_eadout 0
+  # Four kernels: common microsecond scale including the real gaps.
+  begin := 1 s_elect_2 timings
+  end := 2 s_elect_2 timings
+  span := 12 s_elect s
+  x := -4.8 + 9.6 * ((begin + end) / 2.0) / span
+  z := 1.8 - 0.85 * f_loat o_ffsets 4
+  bars := (2 1 t_ranspose 3 4 r_eshape x c_at (4 r_eshape 0.0) c_at z) c_at_2 (2 1 t_ranspose 3 4 r_eshape (9.6 * (end - begin) / span) c_at (4 r_eshape 0.15) c_at 4 r_eshape 0.3) c_at_2 4 4 r_eshape 80 210 180 0.5
+  t := t c_at ("event bars", bars) vd:b_oxes 0
+  t := t c_at ("event bars", 4 2 r_eshape 22 28) vd:s_hown 0
+  labels := 2 1 t_ranspose 3 4 r_eshape (4 r_eshape 0.0) c_at (4 r_eshape -0.2) c_at z + 0.4
+  t := t c_at ("event names", timingLabels, (labels, 0.5) h:l_abels 0) vd:l_abels 0
+  t := t c_at ("event names", 4 2 r_eshape 22 28) vd:s_hown 0
+  axis := "0 to " c_at (3 vd:f_ixed span) c_at " us (one shared scale)"
+  t := t c_at ("event axis", axis, 1 7 r_eshape 0 -0.2 2.7 0.4 235 245 255) vd:l_abels 0
+  t := t c_at ("event axis", 1 2 r_eshape 22 28) vd:s_hown 0
+  # Host phases use their own clock. Launch wait contains device time.
+  host := 4 t_ake 6 d_rop s
+  before := 0.0 c_at (1 s_elect host) c_at ((1 s_elect host) + 2 s_elect host) c_at '+ r_/ 3 t_ake host
+  hp := 2 1 t_ranspose 3 4 r_eshape (-4.8 + 9.6 * (before + host / 2.0) / 6 s_elect s) c_at (4 r_eshape 0.0) c_at (4 r_eshape -0.8)
+  hb := hp c_at_2 (2 1 t_ranspose 3 4 r_eshape (9.6 * host / 6 s_elect s) c_at (4 r_eshape 0.15) c_at 4 r_eshape 0.6) c_at_2 4 4 r_eshape 120 130 245 0.5  65 160 245 0.5  80 220 170 0.5  245 175 65 0.5
+  t := t c_at ("host phases", hb) vd:b_oxes 0
+  t := t c_at ("host phases", 4 2 r_eshape 28 33) vd:s_hown 0
+  hz := 1.8 - 0.7 * f_loat o_ffsets 4
+  hl := 2 1 t_ranspose 3 4 r_eshape (4 r_eshape 0.0) c_at (4 r_eshape -0.2) c_at hz + 0.6
+  t := t c_at ("host names", hostLabels, (hl, 0.5) h:l_abels 0) vd:l_abels 0
+  t := t c_at ("host names", 4 2 r_eshape 28 33) vd:s_hown 0
+  t := t c_at ("results", "32|16.625", 2 7 r_eshape -2.5 -0.2 1.0 1.1 100 250 160  2.5 -0.2 1.0 1.1 250 180 100) vd:l_abels 0
+  t := t c_at ("results", 2 2 r_eshape 33 36) vd:s_hown 0
+  t := t c_at ((l:title, l:subtitle, 1 8 r_eshape 0 3 255 255 255 18 22 44) vd:c_ards 0)
+  t c_at (l:c_ues s, l:cueTable c_at_2 7 3 r_eshape 255 255 255) vd:c_aptions 0
+}

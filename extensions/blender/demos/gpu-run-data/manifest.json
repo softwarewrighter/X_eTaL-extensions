@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "gpu_commit": "3910b5e20f6d0951892143d787a1215b8c16c1fe",
+  "selected_trial": 2,
+  "all_trials_retained": true,
+  "limits": "RTX observation only; M1 unified-memory panel is architectural, with no M1 timing. Work-group placement and reduction animation are algorithm diagrams, not hardware traces. Host launch time contains device execution; never add them. Separate host/device clocks. No benchmark or speedup claim.",
+  "files_sha256": {
+    "rtx.json": "f15c663509eccdda5755bf5c93a193bfda85831c295b3701ca49e3eee398f119",
+    "device.stdout": "4774dd7202e23a218c35579599a534a37e6d0ed1619ae51534b16e4aa639c498",
+    "device.stderr": "912ef39c0e2935de093bb96fbb89463bffee8a23651debfa903405d0a0063db8",
+    "cpu.stdout": "4774dd7202e23a218c35579599a534a37e6d0ed1619ae51534b16e4aa639c498",
+    "cpu.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tool-sha.txt": "201d781153d724eefc6892a8b3c50ab1e22087e8194bef201c674aa4795f5b4e",
+    "stats.txt": "24c36ed950a68e3501b4a798d6e5d2552c8b50b2075dc13d34843e9cd6c516f3",
+    "timings.txt": "6695556ac7af92c896dbfffd4d6cc45dab63fb0ad8aee52d1f254a30e3a7b7e5",
+    "timing-labels.txt": "d0665a26ffa06d81273934be4d20e1908253e14523bf3b1b014cee9fb3849b26",
+    "reduction.txt": "851978dd04a128e59c34ef67b5d3c0de95f838635c58727c06548514e8cd7c95",
+    "reduction-labels.txt": "f62f82d1c0acf98942201944e6f7c5a69a531d6de3cfa7f4683420323de3c5c4",
+    "host-labels.txt": "020efb8bac34806a210801e650058126b4070130d29e4872533d5bf02637492c"
+  },
+  "inputs_sha256": {
+    "extensions/blender/tools/gpu-run.py": "0c8cc9c8a6cf8e4f1cb1e2ee4ee7146b17fea4c5166292a89effbacd144e91e6",
+    "extensions/blender/tools/gpu-profile.py": "2391fcf727043eaae7de16e1efa5ad8014dcb35fe310cd13e9950fd34e0d6df9",
+    "GPU_COMMIT": "466a34ca17e1f42544c7c25c59dddcf1dd3dbe10a39a719d7a69aa94251f0804",
+    "extensions/blender/demos/gpu-build-data/manifest.json": "f9c9eb14d4f3d239b5e797f10d38f97307e6fe38e5d98f14dd31d38d9073010a"
+  }
+}

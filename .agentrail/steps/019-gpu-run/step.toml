@@ -1,6 +1,6 @@
 number = 19
 slug = "gpu-run"
-status = "pending"
+status = "in-progress"
 description = "Saga 15 step 16: the GPU execution video: binding and upload (PCIe vs unified..."
 role = "production"
 context_files = []

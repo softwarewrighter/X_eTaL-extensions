@@ -139,6 +139,27 @@ gpu-build-preview: gpu-build-verify
 gpu-build-check:
     {{root}}/.venv/bin/python3 tests/gpu-build-data.py
 
+# Collect actual OpenCL events and independent pinned runtime results
+gpu-run-data: gpu-build-sources
+    {{root}}/.venv/bin/python3 tools/gpu-run.py collect
+    {{root}}/.venv/bin/python3 tools/gpu-run.py publish
+
+# Existing captured inputs, outputs and event timestamps must still agree
+gpu-run-verify:
+    {{root}}/.venv/bin/python3 tools/gpu-run.py verify
+
+# Render the checked observation, without recollecting different timings
+gpu-run: gpu-run-verify
+    XETAL_BLENDER_TIMEOUT="${XETAL_BLENDER_TIMEOUT:-3600}" {{root}}/scripts/demos.sh blender gpu-run
+
+# Six stages in both formats, before the full render
+gpu-run-preview: gpu-run-verify
+    XETAL_BLENDER_TIMEOUT=3600 XETAL_PATH="demos:lib:{{root}}/lib" {{root}}/target/release/xetal-x --ext {{root}}/extensions run tests/gpu-run-quick.xtl
+
+# Malformed timestamp, transfer, output and host timing guards
+gpu-run-check:
+    {{root}}/.venv/bin/python3 tests/gpu-run-data.py
+
 # Refresh UART opening cards/cues, preserving footage, URLs and original inputs
 uart-titles:
     cd {{root}} && cargo build -q --release --workspace

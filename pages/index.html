@@ -13,7 +13,7 @@
   <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
   <ul>
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
-    <li><a href="#blender">blender</a><ul><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-gpu-build">X_eTaL GPU: build process</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-build">HEX1000-UART: build process</a></li><li><a href="#blender-hex-keys-leds-build">HEX1000-keys-leds: build process</a></li><li><a href="#blender-hex-keys-leds-run">HEX1000-keys-leds: execution</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-hex-run">HEX1000-UART: execution</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
+    <li><a href="#blender">blender</a><ul><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-gpu-build">X_eTaL GPU: build process</a></li><li><a href="#blender-gpu-run">X_eTaL GPU: execution</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-build">HEX1000-UART: build process</a></li><li><a href="#blender-hex-keys-leds-build">HEX1000-keys-leds: build process</a></li><li><a href="#blender-hex-keys-leds-run">HEX1000-keys-leds: execution</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-hex-run">HEX1000-UART: execution</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
     <li><a href="#clock">clock</a><ul><li><a href="#clock-bridge-cost">bridge-cost</a></li></ul></li>
     <li><a href="#digest">digest</a></li>
@@ -91,6 +91,12 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <p class="note">X_eTaL source to resolved Core, typed XIR and fused OpenCL kernels. Compare the pinned M1 Max and RTX 5060 Ti schedule files, including a matrix example. Compiler evidence only; no device timing claims.</p>
       <video src="blender/gpu-build.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just ext blender gpu-build</pre>
+    </section>
+    <section class="panel demo" id="blender-gpu-run">
+      <h3>X_eTaL GPU: execution <a class="docs" href="doc/extensions-blender-demos-gpu-run.xtl.html">source and docs</a> <a class="docs" href="https://github.com/softwarewrighter/X_eTaL-extensions/tree/main/extensions/blender/demos/gpu-run-data">execution evidence</a></h3>
+      <p class="note">Execute the emitted OpenCL plan, check results, then explain its trace.</p>
+      <video src="blender/gpu-run.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just ext blender gpu-run-data &amp;&amp; just ext blender gpu-run</pre>
     </section>
     <section class="panel demo" id="blender-hello">
       <h3>blender / hello <a class="docs" href="doc/extensions-blender-demos-hello.xtl.html">source and docs</a></h3>
@@ -354,7 +360,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at bf6521a</span>
+  <span>built at 09c9645</span>
 </footer>
 </body>
 </html>

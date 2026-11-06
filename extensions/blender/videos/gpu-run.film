@@ -1,0 +1,5 @@
+# Encode the checked execution master; do not recollect different timings.
+demo=gpu-run
+file=work/gpurun/out/gpu-run.mp4
+scale=1280
+fps=30

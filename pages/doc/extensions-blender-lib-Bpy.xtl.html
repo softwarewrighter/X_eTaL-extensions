@@ -58,6 +58,8 @@
 <li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
 <li><a href="extensions-blender-demos-gpu-build.xtl.html">gpu-build.xtl</a></li>
 <li><a href="extensions-blender-demos-GpuBuild.xtl.html">GpuBuild.xtl</a></li>
+<li><a href="extensions-blender-demos-gpu-run.xtl.html">gpu-run.xtl</a></li>
+<li><a href="extensions-blender-demos-GpuRun.xtl.html">GpuRun.xtl</a></li>
 <li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
 <li><a href="extensions-blender-demos-hex-build.xtl.html">hex-build.xtl</a></li>
 <li><a href="extensions-blender-demos-HexBuild.xtl.html">HexBuild.xtl</a></li>
@@ -274,7 +276,7 @@ optional command-line arguments (shell quoting, without a shell),
 for example --gpu-backend vulkan on a Linux NVIDIA machine.</p>
 </div>
 <pre class="code">ˡlauncher ← <span class="c-string">&quot;import os, shlex, subprocess, sys\nblender = os.environ.get(\&quot;XETAL_BLENDER\&quot;) or sys.exit(\&quot;no Blender found\&quot;)\nrun = [blender, \&quot;--background\&quot;] + shlex.split(os.environ.get(\&quot;XETAL_BLENDER_ARGS\&quot;, \&quot;\&quot;)) + [\&quot;-noaudio\&quot;, \&quot;--factory-startup\&quot;, \&quot;--python-exit-code\&quot;, \&quot;1\&quot;, \&quot;--python\&quot;, sys.argv[1], \&quot;--\&quot;] + sys.argv[2:]\nsys.exit(subprocess.run(run).returncode)\n&quot;</span></pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-cosy.xtl.html#n">n</a>, <a href="extensions-blender-demos-cubes.xtl.html#n">n</a>, <a href="extensions-blender-demos-game-assets.xtl.html#n">n</a>, <a href="extensions-blender-demos-gpu-build.xtl.html#n">n</a>, <a href="extensions-blender-demos-hex-build.xtl.html#n">n</a>, <a href="extensions-blender-demos-hex-keys-leds-build.xtl.html#n">n</a>, <a href="extensions-blender-demos-hex-keys-leds-run.xtl.html#n">n</a>, <a href="extensions-blender-demos-hex-pc.xtl.html#n">n</a>, <a href="extensions-blender-demos-hex-run.xtl.html#n">n</a>, <a href="extensions-blender-demos-matmul-fly.xtl.html#n">n</a>, <a href="extensions-blender-demos-matmul-steps.xtl.html#n">n</a>, <a href="extensions-blender-demos-relu-softmax.xtl.html#n">n</a>, <a href="extensions-blender-demos-td-models.xtl.html#n">n</a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-cosy.xtl.html#n">n</a>, <a href="extensions-blender-demos-cubes.xtl.html#n">n</a>, <a href="extensions-blender-demos-game-assets.xtl.html#n">n</a>, <a href="extensions-blender-demos-gpu-build.xtl.html#n">n</a>, <a href="extensions-blender-demos-gpu-run.xtl.html#n">n</a>, <a href="extensions-blender-demos-hex-build.xtl.html#n">n</a>, <a href="extensions-blender-demos-hex-keys-leds-build.xtl.html#n">n</a>, <a href="extensions-blender-demos-hex-keys-leds-run.xtl.html#n">n</a>, <a href="extensions-blender-demos-hex-pc.xtl.html#n">n</a>, <a href="extensions-blender-demos-hex-run.xtl.html#n">n</a>, <a href="extensions-blender-demos-matmul-fly.xtl.html#n">n</a>, <a href="extensions-blender-demos-matmul-steps.xtl.html#n">n</a>, <a href="extensions-blender-demos-relu-softmax.xtl.html#n">n</a>, <a href="extensions-blender-demos-td-models.xtl.html#n">n</a></div>
 </div>
 <div class="item" id="l.head">
 <h3><a href="#l.head">ˡhead</a> <span class="type">: Char</span></h3>

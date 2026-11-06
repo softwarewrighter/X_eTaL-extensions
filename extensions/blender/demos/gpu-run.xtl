@@ -1,0 +1,29 @@
+## Execute the emitted OpenCL plan, check results, then explain its trace.
+## Title: X_eTaL GPU: execution
+## Command: just ext blender gpu-run-data && just ext blender gpu-run
+## Link: https://github.com/softwarewrighter/X_eTaL-extensions/tree/main/extensions/blender/demos/gpu-run-data execution evidence
+## Run: just ext blender gpu-run
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"gr:" u_se< "GpuRun"
+h:c_heck := { r ->
+  n_ot "exit 0\nerrors 0\n" m_atch 16 t_ake r ? []P_ANIC r
+  "exit 0; errors 0"
+}
+stats := n_umbers bl:r_ead "work/gpurun/stats.txt"
+timings := 4 2 r_eshape n_umbers bl:r_ead "work/gpurun/timings.txt"
+timingLabels := bl:r_ead "work/gpurun/timing-labels.txt"
+reduction := 9 256 r_eshape n_umbers bl:r_ead "work/gpurun/reduction.txt"
+reductionLabels := bl:r_ead "work/gpurun/reduction-labels.txt"
+hostLabels := bl:r_ead "work/gpurun/host-labels.txt"
+n := "work/gpurun/run.py" bl:w_rite! bp:launcher
+n := "work/gpurun/gpu-run.cues.toml" bl:w_rite! (gr:c_ues stats, gr:cueTable) vd:c_ues 0
+n := "work/gpurun/gpu-run.srt" bl:w_rite! (gr:c_ues stats, gr:cueTable) vd:s_rt 0
+n := "work/gpurun/video.py" bl:w_rite! ((vd:landscape, stats, timings, timingLabels, reduction, reductionLabels, hostLabels) gr:s_cene 0) c_at (vd:r_ender "gpu-run.mp4") c_at vd:report
+n := "work/gpurun/short.py" bl:w_rite! ((vd:shorts, stats, timings, timingLabels, reduction, reductionLabels, hostLabels) gr:s_cene 0) c_at (vd:r_ender "gpu-run-short.mp4") c_at vd:report
+"rendering GPU execution landscape ..."
+h:c_heck "work/gpurun/run.py" bl:r_un! "work/gpurun/video.py work/gpurun/out"
+"rendering GPU execution Short ..."
+h:c_heck "work/gpurun/run.py" bl:r_un! "work/gpurun/short.py work/gpurun/out-short"
+bl:r_ead "work/gpurun/out/report.txt"

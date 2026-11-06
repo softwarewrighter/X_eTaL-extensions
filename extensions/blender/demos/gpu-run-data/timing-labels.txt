@@ -1,0 +1,1 @@
+k0: 1.600 us|reduce_add_long: 4.288 us|k1: 4.512 us|reduce_add_float: 4.704 us

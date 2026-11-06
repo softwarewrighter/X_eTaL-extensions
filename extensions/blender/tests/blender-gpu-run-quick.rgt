@@ -1,0 +1,3 @@
+command = '../../.venv/bin/python3 tests/gpu-run-data.py && XETAL_PATH="demos:lib:../../lib" xetal-x --ext .. run tests/gpu-run-fixture.xtl'
+exit_code = 0
+desc = "GPU execution evidence: checked outputs, transfer sizes, in-order event times, host phases and hashes; six execution stages in both shapes"

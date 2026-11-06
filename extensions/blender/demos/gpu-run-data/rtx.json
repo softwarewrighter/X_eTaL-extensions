@@ -1,0 +1,341 @@
+{
+  "schema": 1,
+  "device": {
+    "name": "NVIDIA GeForce RTX 5060 Ti",
+    "vendor": "NVIDIA Corporation",
+    "driver": "615.78.08",
+    "version": "OpenCL 3.0 CUDA",
+    "compute_units": 36,
+    "max_work_group": 1024,
+    "local_memory_bytes": 49152,
+    "host_unified_memory": 0
+  },
+  "setup_ms": 956.066997,
+  "records": [
+    {
+      "trial": 0,
+      "outputs": [
+        32,
+        16.625
+      ],
+      "events": [
+        {
+          "kind": "upload",
+          "name": "b_x",
+          "bytes": 64,
+          "queued_ns": 1793925944973055328,
+          "submitted_ns": 1793925944974056480,
+          "start_ns": 1793925944976041408,
+          "end_ns": 1793925944976041984
+        },
+        {
+          "kind": "upload",
+          "name": "b_w",
+          "bytes": 64,
+          "queued_ns": 1793925944977054304,
+          "submitted_ns": 1793925944977058976,
+          "start_ns": 1793925944977062400,
+          "end_ns": 1793925944977062624
+        },
+        {
+          "kind": "upload",
+          "name": "b_l",
+          "bytes": 32,
+          "queued_ns": 1793925944977073792,
+          "submitted_ns": 1793925944977078080,
+          "start_ns": 1793925944977081440,
+          "end_ns": 1793925944977081696
+        },
+        {
+          "kind": "upload",
+          "name": "b_g",
+          "bytes": 32,
+          "queued_ns": 1793925944977090560,
+          "submitted_ns": 1793925944977093984,
+          "start_ns": 1793925944977592096,
+          "end_ns": 1793925944977592352
+        },
+        {
+          "kind": "kernel",
+          "name": "k0",
+          "bytes": 0,
+          "queued_ns": 1793925944979080160,
+          "submitted_ns": 1793925944979083360,
+          "start_ns": 1793925944979086720,
+          "end_ns": 1793925944979592736
+        },
+        {
+          "kind": "kernel",
+          "name": "reduce_add_long",
+          "bytes": 0,
+          "queued_ns": 1793925944979591840,
+          "submitted_ns": 1793925944980090816,
+          "start_ns": 1793925944980094304,
+          "end_ns": 1793925944980099616
+        },
+        {
+          "kind": "kernel",
+          "name": "k1",
+          "bytes": 0,
+          "queued_ns": 1793925944980105664,
+          "submitted_ns": 1793925944980605504,
+          "start_ns": 1793925944980608928,
+          "end_ns": 1793925944980613664
+        },
+        {
+          "kind": "kernel",
+          "name": "reduce_add_float",
+          "bytes": 0,
+          "queued_ns": 1793925944981111264,
+          "submitted_ns": 1793925944981114208,
+          "start_ns": 1793925944981117568,
+          "end_ns": 1793925944981618208
+        },
+        {
+          "kind": "download",
+          "name": "b_addr",
+          "bytes": 8,
+          "queued_ns": 1793925944983104768,
+          "submitted_ns": 1793925944984098016,
+          "start_ns": 1793925944986084480,
+          "end_ns": 1793925944986085440
+        },
+        {
+          "kind": "download",
+          "name": "b_addr_2",
+          "bytes": 4,
+          "queued_ns": 1793925944987077856,
+          "submitted_ns": 1793925944987082976,
+          "start_ns": 1793925944987086336,
+          "end_ns": 1793925944987086848
+        }
+      ],
+      "host_ms": {
+        "bind": 0.018167,
+        "upload": 7.964107,
+        "launch": 4.024171,
+        "download": 4.974808,
+        "total": 16.983324
+      }
+    },
+    {
+      "trial": 1,
+      "outputs": [
+        32,
+        16.625
+      ],
+      "events": [
+        {
+          "kind": "upload",
+          "name": "b_x",
+          "bytes": 64,
+          "queued_ns": 1793925944988082496,
+          "submitted_ns": 1793925944989572000,
+          "start_ns": 1793925944990564992,
+          "end_ns": 1793925944990565248
+        },
+        {
+          "kind": "upload",
+          "name": "b_w",
+          "bytes": 64,
+          "queued_ns": 1793925944992053568,
+          "submitted_ns": 1793925944993047200,
+          "start_ns": 1793925944994536000,
+          "end_ns": 1793925944994536224
+        },
+        {
+          "kind": "upload",
+          "name": "b_l",
+          "bytes": 32,
+          "queued_ns": 1793925944996024096,
+          "submitted_ns": 1793925944996526144,
+          "start_ns": 1793925944996529504,
+          "end_ns": 1793925944996529760
+        },
+        {
+          "kind": "upload",
+          "name": "b_g",
+          "bytes": 32,
+          "queued_ns": 1793925944996536096,
+          "submitted_ns": 1793925944996539488,
+          "start_ns": 1793925944996543008,
+          "end_ns": 1793925944996543264
+        },
+        {
+          "kind": "kernel",
+          "name": "k0",
+          "bytes": 0,
+          "queued_ns": 1793925944996553312,
+          "submitted_ns": 1793925944997052352,
+          "start_ns": 1793925944997056064,
+          "end_ns": 1793925944998062112
+        },
+        {
+          "kind": "kernel",
+          "name": "reduce_add_long",
+          "bytes": 0,
+          "queued_ns": 1793925944998062720,
+          "submitted_ns": 1793925944998065760,
+          "start_ns": 1793925944998069280,
+          "end_ns": 1793925944998569504
+        },
+        {
+          "kind": "kernel",
+          "name": "k1",
+          "bytes": 0,
+          "queued_ns": 1793925944998570080,
+          "submitted_ns": 1793925944998573024,
+          "start_ns": 1793925944999565888,
+          "end_ns": 1793925945000064544
+        },
+        {
+          "kind": "kernel",
+          "name": "reduce_add_float",
+          "bytes": 0,
+          "queued_ns": 1793925945000061504,
+          "submitted_ns": 1793925945001054880,
+          "start_ns": 1793925945003534592,
+          "end_ns": 1793925945003536928
+        },
+        {
+          "kind": "download",
+          "name": "b_addr",
+          "bytes": 8,
+          "queued_ns": 1793925945005023520,
+          "submitted_ns": 1793925945006016960,
+          "start_ns": 1793925945007506080,
+          "end_ns": 1793925945007506432
+        },
+        {
+          "kind": "download",
+          "name": "b_addr_2",
+          "bytes": 4,
+          "queued_ns": 1793925945008497920,
+          "submitted_ns": 1793925945009491808,
+          "start_ns": 1793925945011476096,
+          "end_ns": 1793925945011476448
+        }
+      ],
+      "host_ms": {
+        "bind": 0.006837,
+        "upload": 9.326597,
+        "launch": 7.486632,
+        "download": 7.940738,
+        "total": 24.762379
+      }
+    },
+    {
+      "trial": 2,
+      "outputs": [
+        32,
+        16.625
+      ],
+      "events": [
+        {
+          "kind": "upload",
+          "name": "b_x",
+          "bytes": 64,
+          "queued_ns": 1793925945012468864,
+          "submitted_ns": 1793925945014453312,
+          "start_ns": 1793925945014955072,
+          "end_ns": 1793925945014955328
+        },
+        {
+          "kind": "upload",
+          "name": "b_w",
+          "bytes": 64,
+          "queued_ns": 1793925945015457120,
+          "submitted_ns": 1793925945015460672,
+          "start_ns": 1793925945015959680,
+          "end_ns": 1793925945015959904
+        },
+        {
+          "kind": "upload",
+          "name": "b_l",
+          "bytes": 32,
+          "queued_ns": 1793925945015966336,
+          "submitted_ns": 1793925945016465760,
+          "start_ns": 1793925945016469120,
+          "end_ns": 1793925945016469376
+        },
+        {
+          "kind": "upload",
+          "name": "b_g",
+          "bytes": 32,
+          "queued_ns": 1793925945016971616,
+          "submitted_ns": 1793925945016974976,
+          "start_ns": 1793925945017474400,
+          "end_ns": 1793925945017474656
+        },
+        {
+          "kind": "kernel",
+          "name": "k0",
+          "bytes": 0,
+          "queued_ns": 1793925945017482848,
+          "submitted_ns": 1793925945017485792,
+          "start_ns": 1793925945018479584,
+          "end_ns": 1793925945018481184
+        },
+        {
+          "kind": "kernel",
+          "name": "reduce_add_long",
+          "bytes": 0,
+          "queued_ns": 1793925945018479680,
+          "submitted_ns": 1793925945018482624,
+          "start_ns": 1793925945018486112,
+          "end_ns": 1793925945018490400
+        },
+        {
+          "kind": "kernel",
+          "name": "k1",
+          "bytes": 0,
+          "queued_ns": 1793925945018493888,
+          "submitted_ns": 1793925945018496896,
+          "start_ns": 1793925945018500224,
+          "end_ns": 1793925945018504736
+        },
+        {
+          "kind": "kernel",
+          "name": "reduce_add_float",
+          "bytes": 0,
+          "queued_ns": 1793925945018507040,
+          "submitted_ns": 1793925945018509984,
+          "start_ns": 1793925945018513344,
+          "end_ns": 1793925945018518048
+        },
+        {
+          "kind": "download",
+          "name": "b_addr",
+          "bytes": 8,
+          "queued_ns": 1793925945018527392,
+          "submitted_ns": 1793925945018531520,
+          "start_ns": 1793925945018534880,
+          "end_ns": 1793925945018535264
+        },
+        {
+          "kind": "download",
+          "name": "b_addr_2",
+          "bytes": 4,
+          "queued_ns": 1793925945018541664,
+          "submitted_ns": 1793925945019040448,
+          "start_ns": 1793925945019541888,
+          "end_ns": 1793925945019542272
+        }
+      ],
+      "host_ms": {
+        "bind": 0.00342,
+        "upload": 5.409895,
+        "launch": 1.043038,
+        "download": 1.022182,
+        "total": 7.481848
+      }
+    }
+  ],
+  "method": "independent ctypes observer; same emitted source, buffers, arguments and launch plan; blocking transfers; in-order profiling queue; each trial reuploads inputs; host and device clocks are separate; trials are observations, not a benchmark",
+  "artifacts_sha256": {
+    "rtx-pipeline.cl": "8652a14e611cfbf3a1557a7547ac67d14e58a2ea27ee8f53d4149c2ab52917c6",
+    "rtx-pipeline.plan": "03160709cd8c545a40b2c1a6c2898818a42021199f2f1ddc6ad262275dcdefb7",
+    "pipeline.xir": "b70bafaa70b04bb0132f14e3c02d5ebdc9a8f5cabe2d6e699aea6fa3154e15e9"
+  },
+  "observer_sha256": "2391fcf727043eaae7de16e1efa5ad8014dcb35fe310cd13e9950fd34e0d6df9"
+}

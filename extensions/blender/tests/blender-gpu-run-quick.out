@@ -1,0 +1,39 @@
+PASS 9 GPU execution-evidence checks
+exit 0
+errors 0
+frames 1 to 1081 at 30 a second
+cards: 1 objects, 1 keyed
+compute units: 36 objects, 36 keyed
+event axis: 1 objects, 1 keyed
+event bars: 4 objects, 4 keyed
+event names: 4 objects, 4 keyed
+group names: 4 objects, 4 keyed
+groups: 4 objects, 4 keyed
+host names: 4 objects, 4 keyed
+host phases: 4 objects, 4 keyed
+local slots: 256 objects, 256 keyed
+local values: 1 objects, 0 keyed
+memory: 3 objects, 3 keyed
+memory names: 3 objects, 3 keyed
+results: 2 objects, 2 keyed
+uploads: 4 objects, 4 keyed
+
+exit 0
+errors 0
+frames 1 to 1081 at 30 a second
+cards: 1 objects, 1 keyed
+compute units: 36 objects, 36 keyed
+event axis: 1 objects, 1 keyed
+event bars: 4 objects, 4 keyed
+event names: 4 objects, 4 keyed
+group names: 4 objects, 4 keyed
+groups: 4 objects, 4 keyed
+host names: 4 objects, 4 keyed
+host phases: 4 objects, 4 keyed
+local slots: 256 objects, 256 keyed
+local values: 1 objects, 0 keyed
+memory: 3 objects, 3 keyed
+memory names: 3 objects, 3 keyed
+results: 2 objects, 2 keyed
+uploads: 4 objects, 4 keyed
+
