@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/blender/demos/GpuBuild.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>lib/</h3>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+</ul>
+<h3>extensions/audio/lib/</h3>
+<ul>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+</ul>
+<h3>extensions/audio/demos/</h3>
+<ul>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+</ul>
+<h3>extensions/canvas/lib/</h3>
+<ul>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+</ul>
+<h3>extensions/scene/lib/</h3>
+<ul>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>extensions/blender/lib/</h3>
+<ul>
+<li><a href="extensions-blender-lib-Blender.xtl.html">Blender.xtl</a></li>
+<li><a href="extensions-blender-lib-Bpy.xtl.html">Bpy.xtl</a></li>
+<li><a href="extensions-blender-lib-Video.xtl.html">Video.xtl</a></li>
+</ul>
+<h3>extensions/blender/demos/</h3>
+<ul>
+<li><a href="extensions-blender-demos-CosyLogo.xtl.html">CosyLogo.xtl</a></li>
+<li><a href="extensions-blender-demos-cosy.xtl.html">cosy.xtl</a></li>
+<li><a href="extensions-blender-demos-cubes.xtl.html">cubes.xtl</a></li>
+<li><a href="extensions-blender-demos-Sizes.xtl.html">Sizes.xtl</a></li>
+<li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
+<li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
+<li><a href="extensions-blender-demos-gpu-build.xtl.html">gpu-build.xtl</a></li>
+<li><a href="extensions-blender-demos-GpuBuild.xtl.html">GpuBuild.xtl</a></li>
+<li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-build.xtl.html">hex-build.xtl</a></li>
+<li><a href="extensions-blender-demos-HexBuild.xtl.html">HexBuild.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-keys-leds-build.xtl.html">hex-keys-leds-build.xtl</a></li>
+<li><a href="extensions-blender-demos-KeysBuild.xtl.html">KeysBuild.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-keys-leds-run.xtl.html">hex-keys-leds-run.xtl</a></li>
+<li><a href="extensions-blender-demos-KeysRun.xtl.html">KeysRun.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-pc.xtl.html">hex-pc.xtl</a></li>
+<li><a href="extensions-blender-demos-PcWalk.xtl.html">PcWalk.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-run.xtl.html">hex-run.xtl</a></li>
+<li><a href="extensions-blender-demos-Vcd.xtl.html">Vcd.xtl</a></li>
+<li><a href="extensions-blender-demos-HexRun.xtl.html">HexRun.xtl</a></li>
+<li><a href="extensions-blender-demos-matmul-fly.xtl.html">matmul-fly.xtl</a></li>
+<li><a href="extensions-blender-demos-MatmulFly.xtl.html">MatmulFly.xtl</a></li>
+<li><a href="extensions-blender-demos-matmul-steps.xtl.html">matmul-steps.xtl</a></li>
+<li><a href="extensions-blender-demos-Matmul.xtl.html">Matmul.xtl</a></li>
+<li><a href="extensions-blender-demos-relu-softmax.xtl.html">relu-softmax.xtl</a></li>
+<li><a href="extensions-blender-demos-ReluSoftmax.xtl.html">ReluSoftmax.xtl</a></li>
+<li><a href="extensions-blender-demos-td-models.xtl.html">td-models.xtl</a></li>
+</ul>
+<h3>extensions/digest/lib/</h3>
+<ul>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>work/hex1000/libs/Panel/src/</h3>
+<ul>
+<li><a href="work-hex1000-libs-Panel-src-Panel.xtl.html">Panel.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Hex1000/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html">Hex1000.xtl</a></li>
+</ul>
+<h3>work/libraries/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libraries-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Radix/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Radix-src-Radix.xtl.html">Radix.xtl</a></li>
+</ul>
+<h3>work/hex1000/libs/Front/src/</h3>
+<ul>
+<li><a href="work-hex1000-libs-Front-src-Front.xtl.html">Front.xtl</a></li>
+</ul>
+<h3>work/gpu/libs/Accel/src/</h3>
+<ul>
+<li><a href="work-gpu-libs-Accel-src-Accel.xtl.html">Accel.xtl</a></li>
+</ul>
+<h3>extensions/canvas/demos/</h3>
+<ul>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+</ul>
+<h3>extensions/clock/lib/</h3>
+<ul>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+</ul>
+<h3>extensions/clock/demos/</h3>
+<ul>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+</ul>
+<h3>extensions/hello/lib/</h3>
+<ul>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+</ul>
+<h3>extensions/hello/demos/</h3>
+<ul>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+</ul>
+<h3>extensions/http/lib/</h3>
+<ul>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+</ul>
+<h3>extensions/http/demos/</h3>
+<ul>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+</ul>
+<h3>extensions/sqlite/lib/</h3>
+<ul>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+</ul>
+<h3>extensions/image/lib/</h3>
+<ul>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+</ul>
+<h3>extensions/image/demos/</h3>
+<ul>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+</ul>
+<h3>extensions/linalg/lib/</h3>
+<ul>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+</ul>
+<h3>extensions/scene/demos/</h3>
+<ul>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-Endless.xtl.html">Endless.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-Play.xtl.html">Play.xtl</a></li>
+<li><a href="extensions-scene-demos-RubikPlay.xtl.html">RubikPlay.xtl</a></li>
+<li><a href="extensions-scene-demos-Rubik.xtl.html">Rubik.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-dig.xtl.html">voxels-dig.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-game.xtl.html">voxels-game.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-light.xtl.html">voxels-light.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">voxels-rubik-solve.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik.xtl.html">voxels-rubik.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-water.xtl.html">voxels-water.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+</ul>
+<h3>work/libraries/libs/Eigencube/src/</h3>
+<ul>
+<li><a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html">Eigencube.xtl</a></li>
+</ul>
+<h3>extensions/sqlite/demos/</h3>
+<ul>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+</ul>
+<h3>extensions/web/lib/</h3>
+<ul>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+</ul>
+<h3>extensions/web/demos/</h3>
+<ul>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li class="item"><a href="#L8">ˡtitle</a></li>
+<li class="item"><a href="#L10">ˡsubtitle</a></li>
+<li class="item"><a href="#L12">ˡlength</a></li>
+<li class="item"><a href="#L14">ˡcueTable</a></li>
+<li class="item"><a href="#L16"><span class="c-libfunc">ˡc̲ues</span></a></li>
+<li class="item"><a href="#L20"><span class="c-libfunc">ʰb̲oxes</span></a></li>
+<li class="item"><a href="#L21"><span class="c-libfunc">ʰl̲abels</span></a></li>
+<li class="item"><a href="#L22"><span class="c-libfunc">ʰj̲oin</span></a></li>
+<li class="item"><a href="#L23"><span class="c-libfunc">ʰt̲exts</span></a></li>
+<li class="item"><a href="#L29"><span class="c-libfunc">ˡs̲cene</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">source</span><a href="extensions-blender-demos-GpuBuild.xtl.html">extensions/blender/demos/GpuBuild.xtl</a></h1>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment"># GpuBuild.xtl -- source, resolved Core, typed XIR, real OpenCL fusion,</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># and two saved device schedules. All geometry and animation are X_eTaL.</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># Diagrams show compiler structure and logical work-items, not GPU dies.</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># Import: &quot;gb:&quot; u_se&lt; &quot;GpuBuild&quot;</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-libfunc">ᵛᵈ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-lib-Video.xtl.html" class="c-string">&quot;Video&quot;</a></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-comment">⍝</span><span class="c-comment"># title: this compiler-process video</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a>ˡtitle ← <span class="c-string">&quot;X_eTaL GPU: build&quot;</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-comment">⍝</span><span class="c-comment"># subtitle: provenance and limits of this video</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a>ˡsubtitle ← <span class="c-string">&quot;real Core, XIR and OpenCL; saved M1 Max and RTX 5060 Ti profiles&quot;</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-comment">⍝</span><span class="c-comment"># length: nominal video seconds</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a>ˡlength ← <span class="c-number">36.0</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-comment">⍝</span><span class="c-comment"># cueTable: source, IR, fusion, profiles, buffers and verification</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a>ˡcueTable ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">7</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <span class="c-number">3</span>  <span class="c-number">3</span> <span class="c-number">8</span>  <span class="c-number">8</span> <span class="c-number">13</span>  <span class="c-number">13</span> <span class="c-number">20</span>  <span class="c-number">20</span> <span class="c-number">27</span>  <span class="c-number">27</span> <span class="c-number">32</span>  <span class="c-number">32</span> <span class="c-number">36</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-comment">⍝</span><span class="c-comment"># gb:c_ues stats: counts come from the compiler artifacts, not estimates</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-libfunc">ˡc̲ues</span> ← { s →</span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a>  <a href="extensions-blender-demos-GpuBuild.xtl.html#l.title">ˡtitle</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-GpuBuild.xtl.html#l.subtitle">ˡsubtitle</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|Source arrays enter Core. The GPU lowerer resolves &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">18</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; called Accel closures and inlines their bodies.|Typed XIR: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; values; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; elementwise operations and &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; reductions. Int is i64; these profiles emit Float as f32.|Real OpenCL C: each elementwise chain fuses into one kernel. The two sums remain separate: &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">4</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; kernels total. Envelopes are compiler groups.|Saved schedules, matrix example: six output stores. M1 profile: untiled, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">11</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; work-items. RTX profile: 16 by 16 tile, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">13</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; slots with edge padding. No timing comparison.|Fusion avoids &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">6</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; intermediate arrays; &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot; buffers remain. Blue inputs, green map results, orange sums. Both profiles use a 256-item reduction group.|32 and 16.625: both pinned evaluators and the XIR interpreter agree. Emitted kernels pass OpenCL C syntax checks. Device execution and profiling follow separately.&quot;</span></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a>}</span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-libfunc">ʰb̲oxes</span> ← { (positions, dims, color) z → positions <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> positions) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> dims) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> positions) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">4</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> color) }</span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a><span class="c-libfunc">ʰl̲abels</span> ← { (positions, size) z → (positions <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> positions) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">-0.2</span> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (((<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> positions) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">4</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> size <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">240</span> <span class="c-number">245</span> <span class="c-number">255</span>) }</span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-libfunc">ʰj̲oin</span> ← { a b → <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> (<a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> a) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> b }</span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-libfunc">ʰt̲exts</span> ← { values → <a href="builtins.html#d_isclose" class="c-builtin">d̲isclose</a> <span class="c-libfunc">'</span><a href="extensions-blender-demos-GpuBuild.xtl.html#h.j_oin" class="c-libfunc">ʰj̲oin</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <span class="c-quote">'</span>{ v → <a href="builtins.html#e_nclose" class="c-builtin">e̲nclose</a> <a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> v } <a href="builtins.html#e_ach" class="c-builtin">e̲ach</a> values }</span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-comment">⍝</span><span class="c-comment"># (size, nodes, edges, labels, inputs, coreLabels, buffers, stats) gb:s_cene 0:</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-comment">⍝</span><span class="c-comment"># nodes are id/kind/type/items/kernel, edges are actual XIR dependencies.</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a><span class="c-comment">⍝</span><span class="c-comment"># Compiler nodes move into their real fusion groups. Profile grids are</span></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-comment">⍝</span><span class="c-comment"># logical launch slots; green marks valid stores for a 3 by 2 result.</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-libfunc">ˡs̲cene</span> ← { (size, nodes, edges, names, inputs, coreNames, bufferData, s) z →</span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a>  w ← <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> size</span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a>  h ← <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> size</span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a>  n ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> nodes</span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a>  ids ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> nodes</span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a>  kind ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> nodes</span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a>  ty ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> nodes</span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a>  kernel ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">5</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> nodes</span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a>  ni ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> ty <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a>  col ← ids <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> ty <a href="builtins.html#-2a" class="c-symbol">×</a> ni</span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a>  at ← <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">1.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> col) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">4.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1.6</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">3.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> ty</span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a>  t ← <a href="extensions-blender-lib-Video.xtl.html#l.head">ᵛᵈhead</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((w, h, <span class="c-number">30</span>, <a href="extensions-blender-demos-GpuBuild.xtl.html#l.length">ˡlength</a>, <span class="c-number">8</span> <span class="c-number">10</span> <span class="c-number">18</span>, <span class="c-number">35</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_tage" class="c-libfunc">ᵛᵈs̲tage</a> <span class="c-number">0</span>)</span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a>  d ← (w, h, <span class="c-number">35</span>, <span class="c-number">13.0</span>, <span class="c-number">11.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.f_it" class="c-libfunc">ᵛᵈf̲it</a> <span class="c-number">0</span></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">0.0</span> <span class="c-number">36.0</span>, <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#n_eg" class="c-builtin">n̲eg</a> d) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span>, <span class="c-number">2</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.c_amera" class="c-libfunc">ᵛᵈc̲amera</a> <span class="c-number">0</span></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a>  <span class="c-comment">⍝</span><span class="c-comment"> Literal input arrays, as values, not a code listing.</span></span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a>  a ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> inputs</span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a>  count ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> a</span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a>  ax ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> count) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">8</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">3.5</span></span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a>  az ← <span class="c-number">2.8</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> count) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">8</span></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a>  ap ← <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> count) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> ax <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (count <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> az</span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;inputs&quot;</span>, (ap, <span class="c-number">0.7</span> <span class="c-number">0.15</span> <span class="c-number">0.6</span>, <span class="c-number">45</span> <span class="c-number">105</span> <span class="c-number">165</span> <span class="c-number">0.3</span>) <a href="extensions-blender-demos-GpuBuild.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span></span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;inputs&quot;</span>, (count <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">3</span> <span class="c-number">8</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;input values&quot;</span>, <a href="extensions-blender-demos-GpuBuild.xtl.html#h.t_exts" class="c-libfunc">ʰt̲exts</a> a, (ap, <span class="c-number">0.35</span>) <a href="extensions-blender-demos-GpuBuild.xtl.html#h.l_abels" class="c-libfunc">ʰl̲abels</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span></span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;input values&quot;</span>, (count <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">3</span> <span class="c-number">8</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a>  cp ← <span class="c-number">3</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-3</span> <span class="c-number">0</span> <span class="c-number">-0.7</span>  <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">-0.7</span>  <span class="c-number">3</span> <span class="c-number">0</span> <span class="c-number">-0.7</span></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;Core&quot;</span>, (cp, <span class="c-number">2.5</span> <span class="c-number">0.15</span> <span class="c-number">1.0</span>, <span class="c-number">100</span> <span class="c-number">70</span> <span class="c-number">155</span> <span class="c-number">0.4</span>) <a href="extensions-blender-demos-GpuBuild.xtl.html#h.b_oxes" class="c-libfunc">ʰb̲oxes</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;Core&quot;</span>, <span class="c-number">3</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">3</span> <span class="c-number">8</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;Core names&quot;</span>, coreNames, (cp, <span class="c-number">0.45</span>) <a href="extensions-blender-demos-GpuBuild.xtl.html#h.l_abels" class="c-libfunc">ʰl̲abels</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;Core names&quot;</span>, <span class="c-number">3</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">3</span> <span class="c-number">8</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a>  <span class="c-comment">⍝</span><span class="c-comment"> Actual checked XIR, with typed values and dependencies.</span></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a>  rgb ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">65</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">185</span> <a href="builtins.html#-2a" class="c-symbol">×</a> ty) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">160</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">25</span> <a href="builtins.html#-2a" class="c-symbol">×</a> ty) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">245</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">160</span> <a href="builtins.html#-2a" class="c-symbol">×</a> ty</span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a>  boxes ← at <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.8</span> <span class="c-number">0.15</span> <span class="c-number">0.65</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> rgb <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.4</span></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;values&quot;</span>, boxes) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a>  spans ← <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">8.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">20.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">7.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> kind <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;values&quot;</span>, spans) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;value names&quot;</span>, names, (at, <span class="c-number">0.42</span>) <a href="extensions-blender-demos-GpuBuild.xtl.html#h.l_abels" class="c-libfunc">ʰl̲abels</a> <span class="c-number">0</span>) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span></span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;value names&quot;</span>, spans) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a>  ne ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> edges</span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a>  start ← (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> edges) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> at</span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a>  end ← (<a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> edges) <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> at</span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a>  wires ← (start <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> start) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.12</span> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (end <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> end) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.12</span> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (ne <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">4</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">100</span> <span class="c-number">150</span> <span class="c-number">190</span> <span class="c-number">0.02</span></span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;dependencies&quot;</span>, wires) <a href="extensions-blender-lib-Video.xtl.html#l.l_ines" class="c-libfunc">ᵛᵈl̲ines</a> <span class="c-number">0</span></span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;dependencies&quot;</span>, (ne <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">8</span> <span class="c-number">13</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a>  rank ← <span class="c-symbol">'</span><a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#r_-2f" class="c-builtin">r̲/₂</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (kernel <span class="c-symbol">'</span><a href="builtins.html#-3d" class="c-symbol">=</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> kernel) <a href="builtins.html#-26" class="c-symbol">∧</a> ids <span class="c-symbol">'</span><a href="builtins.html#-3e-3d" class="c-symbol">≥</a> <a href="builtins.html#t_able" class="c-builtin">t̲able</a> ids</span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a>  mapped ← (kind <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> kind <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">5</span></span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a>  xx ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> mapped) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">-1.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> rank <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a>  xx ← xx <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">4.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> xx) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> kind <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">5</span></span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a>  xx ← xx <a href="builtins.html#-2b" class="c-symbol">+</a> ((<span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> at) <a href="builtins.html#-2d" class="c-symbol">−</a> xx) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> kind <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span></span>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a>  fused ← <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> xx <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> at</span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a>  moves ← (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">6</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> ((at <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.8</span> <span class="c-number">0.15</span> <span class="c-number">0.65</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> fused <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.8</span> <span class="c-number">0.15</span> <span class="c-number">0.65</span>)</span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;values&quot;</span>, <span class="c-number">13.0</span> <span class="c-number">17.0</span>, moves) <a href="extensions-blender-lib-Video.xtl.html#l.m_oves" class="c-libfunc">ᵛᵈm̲oves</a> <span class="c-number">0</span></span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a>  lm ← (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">6</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#r_avel" class="c-builtin">r̲avel</a> (((at <a href="builtins.html#-2b" class="c-symbol">+</a> (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">-0.2</span> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (fused <a href="builtins.html#-2b" class="c-symbol">+</a> (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">-0.2</span> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">1.0</span>)</span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;value names&quot;</span>, <span class="c-number">13.0</span> <span class="c-number">17.0</span>, lm) <a href="extensions-blender-lib-Video.xtl.html#l.m_oves" class="c-libfunc">ᵛᵈm̲oves</a> <span class="c-number">0</span></span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a>  envelopes ← <span class="c-number">4</span> <span class="c-number">10</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-0.5</span> <span class="c-number">0.2</span> <span class="c-number">1.6</span> <span class="c-number">3.6</span> <span class="c-number">0.2</span> <span class="c-number">1.2</span> <span class="c-number">90</span> <span class="c-number">200</span> <span class="c-number">245</span> <span class="c-number">1</span>  <span class="c-number">4</span> <span class="c-number">0.2</span> <span class="c-number">1.6</span> <span class="c-number">1.6</span> <span class="c-number">0.2</span> <span class="c-number">1.2</span> <span class="c-number">90</span> <span class="c-number">200</span> <span class="c-number">245</span> <span class="c-number">1</span>  <span class="c-number">0</span> <span class="c-number">0.2</span> <span class="c-number">-1.6</span> <span class="c-number">4.6</span> <span class="c-number">0.2</span> <span class="c-number">1.2</span> <span class="c-number">245</span> <span class="c-number">150</span> <span class="c-number">90</span> <span class="c-number">1</span>  <span class="c-number">4</span> <span class="c-number">0.2</span> <span class="c-number">-1.6</span> <span class="c-number">1.6</span> <span class="c-number">0.2</span> <span class="c-number">1.2</span> <span class="c-number">245</span> <span class="c-number">150</span> <span class="c-number">90</span> <span class="c-number">1</span></span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;kernels&quot;</span>, envelopes) <a href="extensions-blender-lib-Video.xtl.html#l.o_utlines" class="c-libfunc">ᵛᵈo̲utlines</a> <span class="c-number">0</span></span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;kernels&quot;</span>, <span class="c-number">4</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">17</span> <span class="c-number">20</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a>  <span class="c-comment">⍝</span><span class="c-comment"> Saved matrix launch plans. Gray slots are padding, not idle hardware.</span></span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a>  m ← <span class="c-number">11</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s</span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a>  r ← <span class="c-number">13</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s</span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a>  grid ← <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> m <a href="builtins.html#-2b" class="c-symbol">+</a> r</span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a>  rt ← grid <a href="builtins.html#-3e-3d" class="c-symbol">≥</a> m</span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a>  j ← grid <a href="builtins.html#-2d" class="c-symbol">−</a> m <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> rt</span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a>  columns ← <span class="c-number">2</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">14</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> rt</span>
+<span class="line" id="L92"><a class="ln" href="#L92">92</a>  jx ← j <a href="builtins.html#m_od" class="c-builtin">m̲od</a> columns</span>
+<span class="line" id="L93"><a class="ln" href="#L93">93</a>  jy ← j <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> columns</span>
+<span class="line" id="L94"><a class="ln" href="#L94">94</a>  gx ← ((<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">2.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> rt) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">-3.1</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.23</span> <a href="builtins.html#-2a" class="c-symbol">×</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> jx) <a href="builtins.html#-2d" class="c-symbol">−</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> columns) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>)</span>
+<span class="line" id="L95"><a class="ln" href="#L95">95</a>  gz ← <span class="c-number">1.6</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.23</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> jy</span>
+<span class="line" id="L96"><a class="ln" href="#L96">96</a>  good ← ((<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> rt) <a href="builtins.html#-26" class="c-symbol">∧</a> j <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">6</span>) <a href="builtins.html#-7c" class="c-symbol">∨</a> rt <a href="builtins.html#-26" class="c-symbol">∧</a> (jx <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">2</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> jy <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">3</span></span>
+<span class="line" id="L97"><a class="ln" href="#L97">97</a>  gp ← <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> m <a href="builtins.html#-2b" class="c-symbol">+</a> r) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> gx <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((m <a href="builtins.html#-2b" class="c-symbol">+</a> r) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> gz</span>
+<span class="line" id="L98"><a class="ln" href="#L98">98</a>  colors ← <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> m <a href="builtins.html#-2b" class="c-symbol">+</a> r) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">55</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">25</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> good) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-number">65</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">175</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> good) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">80</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">80</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> good</span>
+<span class="line" id="L99"><a class="ln" href="#L99">99</a>  gdims ← ((m <a href="builtins.html#-2b" class="c-symbol">+</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.18</span> <span class="c-number">0.1</span> <span class="c-number">0.18</span></span>
+<span class="line" id="L100"><a class="ln" href="#L100">100</a>  gboxes ← gp <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> gdims <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> colors <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((m <a href="builtins.html#-2b" class="c-symbol">+</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.4</span></span>
+<span class="line" id="L101"><a class="ln" href="#L101">101</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;launch slots&quot;</span>, gboxes) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span></span>
+<span class="line" id="L102"><a class="ln" href="#L102">102</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;launch slots&quot;</span>, ((m <a href="builtins.html#-2b" class="c-symbol">+</a> r) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">20</span> <span class="c-number">27</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L103"><a class="ln" href="#L103">103</a>  titles ← <span class="c-number">2</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-3.1</span> <span class="c-number">-0.2</span> <span class="c-number">2.4</span> <span class="c-number">0.6</span> <span class="c-number">235</span> <span class="c-number">240</span> <span class="c-number">255</span>  <span class="c-number">3.1</span> <span class="c-number">-0.2</span> <span class="c-number">2.4</span> <span class="c-number">0.6</span> <span class="c-number">235</span> <span class="c-number">240</span> <span class="c-number">255</span></span>
+<span class="line" id="L104"><a class="ln" href="#L104">104</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;profiles&quot;</span>, <span class="c-string">&quot;M1 Max|RTX 5060 Ti&quot;</span>, titles) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span></span>
+<span class="line" id="L105"><a class="ln" href="#L105">105</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;profiles&quot;</span>, <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">20</span> <span class="c-number">27</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L106"><a class="ln" href="#L106">106</a>  <span class="c-comment">⍝</span><span class="c-comment"> Allocated buffer list; no fictional per-operation arrays survive fusion.</span></span>
+<span class="line" id="L107"><a class="ln" href="#L107">107</a>  nb ← <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> bufferData</span>
+<span class="line" id="L108"><a class="ln" href="#L108">108</a>  bi ← <a href="builtins.html#o_ffsets" class="c-builtin">o̲ffsets</a> nb</span>
+<span class="line" id="L109"><a class="ln" href="#L109">109</a>  bp ← <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> nb) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (<span class="c-number">1.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> bi <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">4</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.5</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (nb <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1.4</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.6</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> bi <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">4</span></span>
+<span class="line" id="L110"><a class="ln" href="#L110">110</a>  br ← <span class="c-number">1</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">1</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect₂</a> bufferData</span>
+<span class="line" id="L111"><a class="ln" href="#L111">111</a>  bc ← <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (<span class="c-number">3</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> nb) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> (br <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">60</span> <span class="c-number">60</span> <span class="c-number">250</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (br <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">140</span> <span class="c-number">220</span> <span class="c-number">160</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> br <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <span class="c-number">240</span> <span class="c-number">130</span> <span class="c-number">80</span></span>
+<span class="line" id="L112"><a class="ln" href="#L112">112</a>  bb ← bp <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> ((nb <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.85</span> <span class="c-number">0.15</span> <span class="c-number">0.75</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> bc <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> (nb <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">1</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.4</span></span>
+<span class="line" id="L113"><a class="ln" href="#L113">113</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;buffers&quot;</span>, bb) <a href="extensions-blender-lib-Video.xtl.html#l.b_oxes" class="c-libfunc">ᵛᵈb̲oxes</a> <span class="c-number">0</span></span>
+<span class="line" id="L114"><a class="ln" href="#L114">114</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;buffers&quot;</span>, (nb <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">2</span>) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">27</span> <span class="c-number">32</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L115"><a class="ln" href="#L115">115</a>  result ← <span class="c-number">2</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-2.5</span> <span class="c-number">-0.2</span> <span class="c-number">1.0</span> <span class="c-number">1.1</span> <span class="c-number">100</span> <span class="c-number">250</span> <span class="c-number">160</span>  <span class="c-number">2.5</span> <span class="c-number">-0.2</span> <span class="c-number">1.0</span> <span class="c-number">1.1</span> <span class="c-number">250</span> <span class="c-number">180</span> <span class="c-number">100</span></span>
+<span class="line" id="L116"><a class="ln" href="#L116">116</a>  resultText ← (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> <span class="c-number">16</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;|&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">3</span> <a href="extensions-blender-lib-Video.xtl.html#l.f_ixed" class="c-libfunc">ᵛᵈf̲ixed</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">17</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> s) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">1000.0</span></span>
+<span class="line" id="L117"><a class="ln" href="#L117">117</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;results&quot;</span>, resultText, result) <a href="extensions-blender-lib-Video.xtl.html#l.l_abels" class="c-libfunc">ᵛᵈl̲abels</a> <span class="c-number">0</span></span>
+<span class="line" id="L118"><a class="ln" href="#L118">118</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<span class="c-string">&quot;results&quot;</span>, <span class="c-number">2</span> <span class="c-number">2</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">32</span> <span class="c-number">36</span>) <a href="extensions-blender-lib-Video.xtl.html#l.s_hown" class="c-libfunc">ᵛᵈs̲hown</a> <span class="c-number">0</span></span>
+<span class="line" id="L119"><a class="ln" href="#L119">119</a>  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="extensions-blender-demos-GpuBuild.xtl.html#l.title">ˡtitle</a>, <a href="extensions-blender-demos-GpuBuild.xtl.html#l.subtitle">ˡsubtitle</a>, <span class="c-number">1</span> <span class="c-number">8</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0</span> <span class="c-number">3</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">18</span> <span class="c-number">22</span> <span class="c-number">44</span>) <a href="extensions-blender-lib-Video.xtl.html#l.c_ards" class="c-libfunc">ᵛᵈc̲ards</a> <span class="c-number">0</span>)</span>
+<span class="line" id="L120"><a class="ln" href="#L120">120</a>  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-GpuBuild.xtl.html#l.c_ues" class="c-libfunc">ˡc̲ues</a> s, <a href="extensions-blender-demos-GpuBuild.xtl.html#l.cueTable">ˡcueTable</a> <a href="builtins.html#c_at" class="c-builtin">c̲at₂</a> <span class="c-number">7</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span>) <a href="extensions-blender-lib-Video.xtl.html#l.c_aptions" class="c-libfunc">ᵛᵈc̲aptions</a> <span class="c-number">0</span></span>
+<span class="line" id="L121"><a class="ln" href="#L121">121</a>}</span>
+</div>
+</main>
+</body>
+</html>

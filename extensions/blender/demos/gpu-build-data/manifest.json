@@ -1,0 +1,123 @@
+{
+  "gpu_commit": "3910b5e20f6d0951892143d787a1215b8c16c1fe",
+  "animation_evaluator_commit": "d284a8cb226a2681dc99adbf364c8444ad34c6a2",
+  "compiler_evaluator_commit": "27b3fd0d4903e43be4b9b6e93da7476987383dcf",
+  "core_closures": {
+    "LA:p_ipeline": "(lam x (lam w (app LA:s_um (app LA:r_elu (app2 #+ x (app2 #* x w))))))",
+    "LA:s_um": "(lam x (app (app #r_/ #+) x))",
+    "LA:r_elu": "(lam x (app2 #m_ax x 0))"
+  },
+  "oracle_results": [
+    [
+      32.0,
+      16.625
+    ],
+    [
+      32.0,
+      16.625
+    ],
+    [
+      32.0,
+      16.625
+    ]
+  ],
+  "matrix_oracles": [
+    [
+      12.0,
+      1.0,
+      28.0,
+      5.0,
+      44.0,
+      9.0,
+      -2.0,
+      -2.0,
+      -2.0,
+      38.0,
+      44.0,
+      50.0,
+      56.0,
+      2.1875,
+      2.5,
+      2.8125,
+      4.9375,
+      5.75,
+      6.5625,
+      7.6875,
+      9.0,
+      10.3125
+    ],
+    [
+      12.0,
+      1.0,
+      28.0,
+      5.0,
+      44.0,
+      9.0,
+      -2.0,
+      -2.0,
+      -2.0,
+      38.0,
+      44.0,
+      50.0,
+      56.0,
+      2.1875,
+      2.5,
+      2.8125,
+      4.9375,
+      5.75,
+      6.5625,
+      7.6875,
+      9.0,
+      10.3125
+    ],
+    [
+      12.0,
+      1.0,
+      28.0,
+      5.0,
+      44.0,
+      9.0,
+      -2.0,
+      -2.0,
+      -2.0,
+      38.0,
+      44.0,
+      50.0,
+      56.0,
+      2.1875,
+      2.5,
+      2.8125,
+      4.9375,
+      5.75,
+      6.5625,
+      7.6875,
+      9.0,
+      10.3125
+    ]
+  ],
+  "device_execution": false,
+  "artifacts_sha256": {
+    "resolved.core": "f5d7e2347a28497a069a35ce4c21b4c7871b72178a27cc64160bbb37a09fa8c0",
+    "surface.core": "cc1585a90c50d2ff1af74307f9bd35f8de127dccffd651fe24b2bef40f4b0947",
+    "pipeline.xir": "b70bafaa70b04bb0132f14e3c02d5ebdc9a8f5cabe2d6e699aea6fa3154e15e9",
+    "checked.txt": "ecab4c730dde3a2e305f791b772d7f5f54965b1e253afec56132ae32b46ee0af",
+    "nodes.txt": "7eb333cc8d5c659d87dd8d91dce4b0847e54fb39b707a5f78640e2475e79a060",
+    "edges.txt": "b2e69196d3339875025b6ec6f491373ab7d7258a2f24b4dc39a7985fc6ae6d45",
+    "labels.txt": "fe7535c1f898333eb9d51f91ff0824013b9bd48da657a8e90a4a9991232d1112",
+    "inputs.txt": "7dc9077d617a187d64e1d0dcbc8671c5f8fe80e7ce74995a1cc5970f6cd95e35",
+    "stats.txt": "89ec3d31356845c575206e8efd6e50d410c85b175512de2654d5c3a495eff702",
+    "buffers.txt": "c22bbf01b50e99bd160fd7ee71cbc0e88f5199d964fa46f00d4e4a099a7184ed",
+    "core-labels.txt": "b9344f93865f78fe51b59ffda0d53faa0a093715d0e76fc81ae098f7c2865efc",
+    "core-edges.txt": "b45ba5238cded49b2d943554e2ac1cb3c84aeecc8e82e10966b8dd4e516226bc",
+    "m1-pipeline.cl": "8652a14e611cfbf3a1557a7547ac67d14e58a2ea27ee8f53d4149c2ab52917c6",
+    "m1-pipeline.plan": "b4e1ca60b4ac7d231c5a73382a4eecdaee25da8bd2a26e689d82778bf480bd93",
+    "m1-matmul.cl": "e7c78eee727eb53fa1ddaabda8e6d95dcbdaca15593c14b204d9629aa59d6075",
+    "m1-matmul.plan": "c63501f64ff5ea3d423dbe1e3774ac26ec5f1c4cf8ee74d70d9907c069820f1a",
+    "rtx-pipeline.cl": "8652a14e611cfbf3a1557a7547ac67d14e58a2ea27ee8f53d4149c2ab52917c6",
+    "rtx-pipeline.plan": "03160709cd8c545a40b2c1a6c2898818a42021199f2f1ddc6ad262275dcdefb7",
+    "rtx-matmul.cl": "6a7d6b09eb0958259dbe91ac95289ee85a7b7995ca3cb0f3c49922f023e1082e",
+    "rtx-matmul.plan": "d4a41e5c5e5d8df3c3ecacd5b716bf589b6489cf0df9f25e5208e350c3c42f47",
+    "m1-profile.toml": "537578228df7491a276b7f2c018663e6783be2fc80ce993490b8d7377c83f40b",
+    "rtx-profile.toml": "7a427f1950cdf9f8e69d50b50810935b10bad61231dd663eab2de677953d4815"
+  }
+}

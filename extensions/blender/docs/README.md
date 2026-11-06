@@ -554,6 +554,66 @@ RAM clearing, complete physical key coverage and a separate cold boot
 as follow-ups. The execution video uses the fresh simulation described
 above.
 
+## GPU compiler-process video
+
+`just ext blender gpu-build` builds the pinned GPU compiler, collects
+checked compiler artifacts, then renders a 36-second landscape video
+and vertical Short at 30 fps, with cues and SRT. `gpu-build-preview`
+renders six compiler stages in both shapes from existing evidence.
+The video uses arrays and diagrams rather than code listings.
+
+The real programs are X_eTaL-gpu's `Accel/demos/pipeline.xtl` and
+`matmul.xtl` at `GPU_COMMIT` (`3910b5e`). The pipeline resolves three
+called Core closures, then lowers to 16 typed XIR values: seven maps,
+two reductions and seven constants. Its three integer maps fuse into
+one OpenCL kernel; its four Float maps fuse into another. The two sums
+remain separate, for four kernels and four launches. Five intermediate
+arrays disappear; the plan retains eight global buffers. Reduction
+scratch is separate: 2,048 bytes for Int and 1,024 for Float.
+
+Both saved schedules use i64 Int and f32 device Float, even though the
+XIR semantic Float type is f64. This example's values are exactly
+representable. The eight-item map launches use eight work-items, while
+the reduction launches use 256; the profile's 256 setting is not the
+size of every launch. The pipeline plans match for both profiles.
+A separate 3 by 4 times 4 by 2 matrix example shows their differing
+tile settings: M1 Max's saved profile is untiled, with eight logical
+work-items; RTX 5060 Ti's uses a 16 by 16 tile and 256 slots. Green
+marks the six valid output stores; gray marks edge padding. These are
+logical launch diagrams, not measured GPU layouts or speed comparisons.
+The profile files' tested flags are upstream historical records.
+
+The compiler uses the GPU project's own known-good evaluator dependency,
+`27b3fd0`, in an isolated workspace under `work/gpu-tool/`. The animation
+runtime stays at this repository's `XETAL_COMMIT` (`d284a8c`); neither
+pin nor pristine clone is changed. `scripts/gpu-video-tool.sh` copies
+compiler components outside the source clone and builds into the root's
+`work/gpu-video-target/`. The small `tools/gpu-core` adapter dumps the
+library-resolved Core through the same `xetal_program::load` API used by
+the GPU lowerer; the ordinary Core CLI also supplies a surface dump.
+No Core or XIR lowering is invented by the animation adapter.
+
+Both pinned evaluators and the XIR interpreter agree on the pipeline's
+32 and 16.625 and on the matrix program's outputs. All four emitted
+pipeline/matrix OpenCL sources pass `clang -x cl -cl-std=CL1.2`
+syntax checks. This step does not execute the OpenCL programs or record
+device timings; those belong to the execution video.
+
+`gpu-build-data` writes the real Core, XIR, checked types, compiler plans,
+kernel source, oracle results, command logs, tool hashes and input/output
+hashes into `work/gpubuild/`. `gpu-build-verify` rejects changed inputs,
+outputs or compiler binaries. `gpu-build-sources` publishes 22 checked
+artifacts and a provenance manifest under
+[demos/gpu-build-data](../demos/gpu-build-data/), including the actual
+OpenCL source linked from the catalog. `gpu-build-check` runs eight
+dependency/fusion/launch/hash checks; the scene regression uses these
+same pinned artifact snapshots. Python only adapts compiler data;
+X_eTaL computes all scene geometry, animation keys and captions.
+The build needs Rust, clang, git and the uv Python environment. Linux
+NVIDIA renders can select `XETAL_BLENDER_ARGS='--gpu-backend vulkan'`.
+Masters, cue sheet and SRT stay in `work/gpubuild/`; the existing master
+is recorded with `just videos blender gpu-build`.
+
 ## Build and test
 
 ```sh

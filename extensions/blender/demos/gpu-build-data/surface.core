@@ -1,0 +1,7 @@
+(eval (app2 #u_se< "ac:" "Accel"))
+(let x (app #r_ange 8))
+(let w (array 1 -1 1 -1 1 -1 1 -1))
+(eval (app2 ac:p_ipeline x w))
+(let f (app2 #/ (app #r_ange 8) 4))
+(let g (array -1.5 -1.0 -0.5 0.0 0.5 1.0 1.5 2.0))
+(eval (app2 ac:p_ipeline f g))

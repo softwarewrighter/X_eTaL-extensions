@@ -1,0 +1,6 @@
+# Real source -> Core -> XIR -> fused OpenCL, plus saved schedule profiles.
+# Render masters with just ext blender gpu-build; encode the existing master.
+demo=gpu-build
+file=work/gpubuild/out/gpu-build.mp4
+scale=1280
+fps=30

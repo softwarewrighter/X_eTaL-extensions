@@ -1,0 +1,28 @@
+## Actual compiler stages in both shapes, using verified artifacts.
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"gb:" u_se< "GpuBuild"
+raw := n_umbers bl:r_ead "demos/gpu-build-data/nodes.txt"
+nodes := (((t_ally raw) d_iv 5) c_at 5) r_eshape raw
+raw := f_loor n_umbers bl:r_ead "demos/gpu-build-data/edges.txt"
+edges := (((t_ally raw) d_iv 2) c_at 2) r_eshape raw
+names := bl:r_ead "demos/gpu-build-data/labels.txt"
+inputs := bl:r_ead "demos/gpu-build-data/inputs.txt"
+coreNames := bl:r_ead "demos/gpu-build-data/core-labels.txt"
+raw := n_umbers bl:r_ead "demos/gpu-build-data/buffers.txt"
+bufferData := (((t_ally raw) d_iv 3) c_at 3) r_eshape raw
+stats := f_loor n_umbers bl:r_ead "demos/gpu-build-data/stats.txt"
+n := "work/gpubuild-fixture/run.py" bl:w_rite! bp:launcher
+n := "work/gpubuild-fixture/quick.py" bl:w_rite! ((160 90, nodes, edges, names, inputs, coreNames, bufferData, stats) gb:s_cene 0) c_at ((5.0 10.0 18.0 23.0 29.0 34.0, "wide") vd:s_tills 0) c_at vd:report
+r := "work/gpubuild-fixture/run.py" bl:r_un! "work/gpubuild-fixture/quick.py work/gpubuild-fixture/quick"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/gpubuild-fixture/quick/report.txt"
+n := "work/gpubuild-fixture/quick-short.py" bl:w_rite! ((90 160, nodes, edges, names, inputs, coreNames, bufferData, stats) gb:s_cene 0) c_at ((5.0 10.0 18.0 23.0 29.0 34.0, "short") vd:s_tills 0) c_at vd:report
+r := "work/gpubuild-fixture/run.py" bl:r_un! "work/gpubuild-fixture/quick-short.py work/gpubuild-fixture/quick-short"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/gpubuild-fixture/quick-short/report.txt"

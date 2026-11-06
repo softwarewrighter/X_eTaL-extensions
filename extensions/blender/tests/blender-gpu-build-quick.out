@@ -1,0 +1,35 @@
+PASS 8 GPU compiler-evidence checks
+exit 0
+errors 0
+frames 1 to 1081 at 30 a second
+Core: 3 objects, 3 keyed
+Core names: 3 objects, 3 keyed
+buffers: 8 objects, 8 keyed
+cards: 1 objects, 1 keyed
+dependencies: 16 objects, 16 keyed
+input values: 16 objects, 16 keyed
+inputs: 16 objects, 16 keyed
+kernels: 4 objects, 4 keyed
+launch slots: 264 objects, 264 keyed
+profiles: 2 objects, 2 keyed
+results: 2 objects, 2 keyed
+value names: 16 objects, 16 keyed
+values: 16 objects, 16 keyed
+
+exit 0
+errors 0
+frames 1 to 1081 at 30 a second
+Core: 3 objects, 3 keyed
+Core names: 3 objects, 3 keyed
+buffers: 8 objects, 8 keyed
+cards: 1 objects, 1 keyed
+dependencies: 16 objects, 16 keyed
+input values: 16 objects, 16 keyed
+inputs: 16 objects, 16 keyed
+kernels: 4 objects, 4 keyed
+launch slots: 264 objects, 264 keyed
+profiles: 2 objects, 2 keyed
+results: 2 objects, 2 keyed
+value names: 16 objects, 16 keyed
+values: 16 objects, 16 keyed
+

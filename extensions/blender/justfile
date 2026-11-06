@@ -114,6 +114,31 @@ hex-release-check:
     {{root}}/scripts/check-busy.sh
     {{root}}/.venv/bin/python3 tools/hex-release.py
 
+# Build the pinned GPU compiler in isolation and extract actual artifacts
+gpu-build-data:
+    bash {{root}}/scripts/gpu-video-tool.sh
+    {{root}}/.venv/bin/python3 tools/gpu-build.py
+
+# Commit-ready Core, XIR, profiles, compiler plans and real emitted kernels
+gpu-build-sources: gpu-build-data
+    {{root}}/.venv/bin/python3 tools/gpu-build.py publish
+
+# Verify existing compiler sources, outputs and tool hashes
+gpu-build-verify:
+    {{root}}/.venv/bin/python3 tools/gpu-build.py verify
+
+# Source-to-OpenCL movie and Short, using verified compiler artifacts
+gpu-build: gpu-build-sources
+    XETAL_BLENDER_TIMEOUT="${XETAL_BLENDER_TIMEOUT:-3600}" {{root}}/scripts/demos.sh blender gpu-build
+
+# Critical compiler stages, both shapes, from existing verified data
+gpu-build-preview: gpu-build-verify
+    XETAL_BLENDER_TIMEOUT=3600 XETAL_PATH="demos:lib:{{root}}/lib" {{root}}/target/release/xetal-x --ext {{root}}/extensions run tests/gpu-build-quick.xtl
+
+# Negative compiler-evidence parser checks
+gpu-build-check:
+    {{root}}/.venv/bin/python3 tests/gpu-build-data.py
+
 # Refresh UART opening cards/cues, preserving footage, URLs and original inputs
 uart-titles:
     cd {{root}} && cargo build -q --release --workspace

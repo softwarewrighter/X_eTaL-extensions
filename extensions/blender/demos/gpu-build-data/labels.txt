@@ -1,0 +1,1 @@
+x|w|mul|add|0|max|sum|l|4.0|div|g|mul|add|0.0|max|sum

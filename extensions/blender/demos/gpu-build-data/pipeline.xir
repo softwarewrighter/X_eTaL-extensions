@@ -1,0 +1,18 @@
+%x = const i64 [8] 1 2 3 4 5 6 7 8
+%w = const i64 [8] 1 -1 1 -1 1 -1 1 -1
+%mul = map mul %x %w
+%add = map add %x %mul
+%r = const i64 [] 0
+%max = map max %add %r
+%addr = reduce add %max
+%l = const f64 [8] 1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0
+%r_2 = const f64 [] 4.0
+%div = map div %l %r_2
+%g = const f64 [8] -1.5 -1.0 -0.5 0.0 0.5 1.0 1.5 2.0
+%mul_2 = map mul %div %g
+%add_2 = map add %div %mul_2
+%r_3 = const f64 [] 0.0
+%max_2 = map max %add_2 %r_3
+%addr_2 = reduce add %max_2
+output %addr
+output %addr_2

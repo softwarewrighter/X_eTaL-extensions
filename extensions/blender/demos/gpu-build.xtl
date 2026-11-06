@@ -1,0 +1,36 @@
+## X_eTaL source to resolved Core, typed XIR and fused OpenCL kernels.
+## Compare the pinned M1 Max and RTX 5060 Ti schedule files, including
+## a matrix example. Compiler evidence only; no device timing claims.
+## Title: X_eTaL GPU: build process
+## Command: just ext blender gpu-build
+## Link: https://github.com/softwarewrighter/X_eTaL-extensions/tree/main/extensions/blender/demos/gpu-build-data compiler artifacts
+## Run: just ext blender gpu-build
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"gb:" u_se< "GpuBuild"
+
+h:c_heck := { result ->
+  n_ot "exit 0\nerrors 0\n" m_atch 16 t_ake result ? []P_ANIC result
+  "exit 0; errors 0"
+}
+raw := n_umbers bl:r_ead "work/gpubuild/nodes.txt"
+nodes := (((t_ally raw) d_iv 5) c_at 5) r_eshape raw
+raw := f_loor n_umbers bl:r_ead "work/gpubuild/edges.txt"
+edges := (((t_ally raw) d_iv 2) c_at 2) r_eshape raw
+names := bl:r_ead "work/gpubuild/labels.txt"
+inputs := bl:r_ead "work/gpubuild/inputs.txt"
+coreNames := bl:r_ead "work/gpubuild/core-labels.txt"
+raw := n_umbers bl:r_ead "work/gpubuild/buffers.txt"
+bufferData := (((t_ally raw) d_iv 3) c_at 3) r_eshape raw
+stats := f_loor n_umbers bl:r_ead "work/gpubuild/stats.txt"
+n := "work/gpubuild/run.py" bl:w_rite! bp:launcher
+n := "work/gpubuild/gpu-build.cues.toml" bl:w_rite! (gb:c_ues stats, gb:cueTable) vd:c_ues 0
+n := "work/gpubuild/gpu-build.srt" bl:w_rite! (gb:c_ues stats, gb:cueTable) vd:s_rt 0
+n := "work/gpubuild/video.py" bl:w_rite! ((vd:landscape, nodes, edges, names, inputs, coreNames, bufferData, stats) gb:s_cene 0) c_at (vd:r_ender "gpu-build.mp4") c_at vd:report
+n := "work/gpubuild/short.py" bl:w_rite! ((vd:shorts, nodes, edges, names, inputs, coreNames, bufferData, stats) gb:s_cene 0) c_at (vd:r_ender "gpu-build-short.mp4") c_at vd:report
+"rendering GPU build landscape ..."
+h:c_heck "work/gpubuild/run.py" bl:r_un! "work/gpubuild/video.py work/gpubuild/out"
+"rendering GPU build Short ..."
+h:c_heck "work/gpubuild/run.py" bl:r_un! "work/gpubuild/short.py work/gpubuild/out-short"
+bl:r_ead "work/gpubuild/out/report.txt"

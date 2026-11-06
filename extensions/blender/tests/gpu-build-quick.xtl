@@ -1,0 +1,28 @@
+## Actual compiler stages in both shapes, using verified artifacts.
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"vd:" u_se< "Video"
+"gb:" u_se< "GpuBuild"
+raw := n_umbers bl:r_ead "work/gpubuild/nodes.txt"
+nodes := (((t_ally raw) d_iv 5) c_at 5) r_eshape raw
+raw := f_loor n_umbers bl:r_ead "work/gpubuild/edges.txt"
+edges := (((t_ally raw) d_iv 2) c_at 2) r_eshape raw
+names := bl:r_ead "work/gpubuild/labels.txt"
+inputs := bl:r_ead "work/gpubuild/inputs.txt"
+coreNames := bl:r_ead "work/gpubuild/core-labels.txt"
+raw := n_umbers bl:r_ead "work/gpubuild/buffers.txt"
+bufferData := (((t_ally raw) d_iv 3) c_at 3) r_eshape raw
+stats := f_loor n_umbers bl:r_ead "work/gpubuild/stats.txt"
+n := "work/gpubuild/run.py" bl:w_rite! bp:launcher
+n := "work/gpubuild/quick.py" bl:w_rite! ((640 360, nodes, edges, names, inputs, coreNames, bufferData, stats) gb:s_cene 0) c_at ((5.0 10.0 18.0 23.0 29.0 34.0, "wide") vd:s_tills 0) c_at vd:report
+r := "work/gpubuild/run.py" bl:r_un! "work/gpubuild/quick.py work/gpubuild/quick"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/gpubuild/quick/report.txt"
+n := "work/gpubuild/quick-short.py" bl:w_rite! ((360 640, nodes, edges, names, inputs, coreNames, bufferData, stats) gb:s_cene 0) c_at ((5.0 10.0 18.0 23.0 29.0 34.0, "short") vd:s_tills 0) c_at vd:report
+r := "work/gpubuild/run.py" bl:r_un! "work/gpubuild/quick-short.py work/gpubuild/quick-short"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/gpubuild/quick-short/report.txt"

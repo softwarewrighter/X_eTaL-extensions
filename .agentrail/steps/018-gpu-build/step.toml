@@ -1,6 +1,6 @@
 number = 18
 slug = "gpu-build"
-status = "pending"
+status = "in-progress"
 description = "Saga 15 step 15: the GPU process video: .xtl lowered to Core and XIR, the fus..."
 role = "production"
 context_files = []

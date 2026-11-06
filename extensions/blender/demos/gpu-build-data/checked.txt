@@ -1,0 +1,18 @@
+%x : i64 [8] = const (8 items)
+%w : i64 [8] = const (8 items)
+%mul : i64 [8] = map mul %x %w
+%add : i64 [8] = map add %x %mul
+%r : i64 [] = const (1 item)
+%max : i64 [8] = map max %add %r
+%addr : i64 [] = reduce add %max
+%l : f64 [8] = const (8 items)
+%r_2 : f64 [] = const (1 item)
+%div : f64 [8] = map div %l %r_2
+%g : f64 [8] = const (8 items)
+%mul_2 : f64 [8] = map mul %div %g
+%add_2 : f64 [8] = map add %div %mul_2
+%r_3 : f64 [] = const (1 item)
+%max_2 : f64 [8] = map max %add_2 %r_3
+%addr_2 : f64 [] = reduce add %max_2
+output %addr
+output %addr_2

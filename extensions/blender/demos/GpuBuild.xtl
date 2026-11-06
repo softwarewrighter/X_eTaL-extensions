@@ -1,0 +1,121 @@
+## GpuBuild.xtl -- source, resolved Core, typed XIR, real OpenCL fusion,
+## and two saved device schedules. All geometry and animation are X_eTaL.
+## Diagrams show compiler structure and logical work-items, not GPU dies.
+## Import: "gb:" u_se< "GpuBuild"
+"vd:" u_se< "Video"
+
+## title: this compiler-process video
+l:title := "X_eTaL GPU: build"
+## subtitle: provenance and limits of this video
+l:subtitle := "real Core, XIR and OpenCL; saved M1 Max and RTX 5060 Ti profiles"
+## length: nominal video seconds
+l:length := 36.0
+## cueTable: source, IR, fusion, profiles, buffers and verification
+l:cueTable := f_loat 7 2 r_eshape 0 3  3 8  8 13  13 20  20 27  27 32  32 36
+## gb:c_ues stats: counts come from the compiler artifacts, not estimates
+l:c_ues := { s ->
+  l:title c_at ": " c_at l:subtitle c_at "|Source arrays enter Core. The GPU lowerer resolves " c_at (f_ormat 18 s_elect s) c_at " called Accel closures and inlines their bodies.|Typed XIR: " c_at (f_ormat 1 s_elect s) c_at " values; " c_at (f_ormat 2 s_elect s) c_at " elementwise operations and " c_at (f_ormat 3 s_elect s) c_at " reductions. Int is i64; these profiles emit Float as f32.|Real OpenCL C: each elementwise chain fuses into one kernel. The two sums remain separate: " c_at (f_ormat 4 s_elect s) c_at " kernels total. Envelopes are compiler groups.|Saved schedules, matrix example: six output stores. M1 profile: untiled, " c_at (f_ormat 11 s_elect s) c_at " work-items. RTX profile: 16 by 16 tile, " c_at (f_ormat 13 s_elect s) c_at " slots with edge padding. No timing comparison.|Fusion avoids " c_at (f_ormat 6 s_elect s) c_at " intermediate arrays; " c_at (f_ormat 5 s_elect s) c_at " buffers remain. Blue inputs, green map results, orange sums. Both profiles use a 256-item reduction group.|32 and 16.625: both pinned evaluators and the XIR interpreter agree. Emitted kernels pass OpenCL C syntax checks. Device execution and profiling follow separately."
+}
+
+h:b_oxes := { (positions, dims, color) z -> positions c_at_2 (((t_ally positions) c_at 3) r_eshape dims) c_at_2 (((t_ally positions) c_at 4) r_eshape color) }
+h:l_abels := { (positions, size) z -> (positions + (s_hape positions) r_eshape 0.0 -0.2 0.0) c_at_2 (((t_ally positions) c_at 4) r_eshape size c_at 240 245 255) }
+h:j_oin := { a b -> e_nclose (d_isclose a) c_at "|" c_at d_isclose b }
+h:t_exts := { values -> d_isclose 'h:j_oin r_/ '{ v -> e_nclose f_ormat v } e_ach values }
+
+## (size, nodes, edges, labels, inputs, coreLabels, buffers, stats) gb:s_cene 0:
+## nodes are id/kind/type/items/kernel, edges are actual XIR dependencies.
+## Compiler nodes move into their real fusion groups. Profile grids are
+## logical launch slots; green marks valid stores for a 3 by 2 result.
+l:s_cene := { (size, nodes, edges, names, inputs, coreNames, bufferData, s) z ->
+  w := 1 s_elect size
+  h := 2 s_elect size
+  n := t_ally nodes
+  ids := f_loor 1 s_elect_2 nodes
+  kind := f_loor 2 s_elect_2 nodes
+  ty := f_loor 3 s_elect_2 nodes
+  kernel := f_loor 5 s_elect_2 nodes
+  ni := '+ r_/ f_loor f_loat ty = 0
+  col := ids - 1 + ty * ni
+  at := 2 1 t_ranspose (3 c_at n) r_eshape (1.2 * (f_loat col) - 4.0) c_at (n r_eshape 0.0) c_at 1.6 - 3.2 * f_loat ty
+  t := vd:head c_at ((w, h, 30, l:length, 8 10 18, 35) vd:s_tage 0)
+  d := (w, h, 35, 13.0, 11.0) vd:f_it 0
+  t := t c_at (0.0 36.0, 2 3 r_eshape 0.0 c_at (n_eg d) c_at 0.0, 2 3 r_eshape 0.0) vd:c_amera 0
+  # Literal input arrays, as values, not a code listing.
+  a := f_loor n_umbers inputs
+  count := t_ally a
+  ax := (f_loat (o_ffsets count) m_od 8) - 3.5
+  az := 2.8 - 1.1 * f_loat (o_ffsets count) d_iv 8
+  ap := 2 1 t_ranspose (3 c_at count) r_eshape ax c_at (count r_eshape 0.0) c_at az
+  t := t c_at ("inputs", (ap, 0.7 0.15 0.6, 45 105 165 0.3) h:b_oxes 0) vd:b_oxes 0
+  t := t c_at ("inputs", (count c_at 2) r_eshape 3 8) vd:s_hown 0
+  t := t c_at ("input values", h:t_exts a, (ap, 0.35) h:l_abels 0) vd:l_abels 0
+  t := t c_at ("input values", (count c_at 2) r_eshape 3 8) vd:s_hown 0
+  cp := 3 3 r_eshape -3 0 -0.7  0 0 -0.7  3 0 -0.7
+  t := t c_at ("Core", (cp, 2.5 0.15 1.0, 100 70 155 0.4) h:b_oxes 0) vd:b_oxes 0
+  t := t c_at ("Core", 3 2 r_eshape 3 8) vd:s_hown 0
+  t := t c_at ("Core names", coreNames, (cp, 0.45) h:l_abels 0) vd:l_abels 0
+  t := t c_at ("Core names", 3 2 r_eshape 3 8) vd:s_hown 0
+  # Actual checked XIR, with typed values and dependencies.
+  rgb := f_loat 2 1 t_ranspose (3 c_at n) r_eshape (65 + 185 * ty) c_at (160 - 25 * ty) c_at 245 - 160 * ty
+  boxes := at c_at_2 ((n c_at 3) r_eshape 0.8 0.15 0.65) c_at_2 rgb c_at_2 (n c_at 1) r_eshape 0.4
+  t := t c_at ("values", boxes) vd:b_oxes 0
+  spans := 2 1 t_ranspose (2 c_at n) r_eshape (n r_eshape 8.0) c_at 20.0 - 7.0 * f_loat kind = 0
+  t := t c_at ("values", spans) vd:s_hown 0
+  t := t c_at ("value names", names, (at, 0.42) h:l_abels 0) vd:l_abels 0
+  t := t c_at ("value names", spans) vd:s_hown 0
+  ne := t_ally edges
+  start := (f_loor 1 s_elect_2 edges) s_elect at
+  end := (f_loor 2 s_elect_2 edges) s_elect at
+  wires := (start + (s_hape start) r_eshape 0.0 0.12 0.0) c_at_2 (end + (s_hape end) r_eshape 0.0 0.12 0.0) c_at_2 (ne c_at 4) r_eshape 100 150 190 0.02
+  t := t c_at ("dependencies", wires) vd:l_ines 0
+  t := t c_at ("dependencies", (ne c_at 2) r_eshape 8 13) vd:s_hown 0
+  rank := '+ r_/_2 f_loor f_loat (kernel '= t_able kernel) & ids '>= t_able ids
+  mapped := (kind > 0) & kind < 5
+  xx := (f_loat mapped) * -1.5 + f_loat rank - 1
+  xx := xx + (4.0 - xx) * f_loat kind = 5
+  xx := xx + ((1 s_elect_2 at) - xx) * f_loat kind = 0
+  fused := 2 1 t_ranspose (3 c_at n) r_eshape xx c_at (n r_eshape 0.0) c_at 3 s_elect_2 at
+  moves := (n c_at 2 c_at 6) r_eshape r_avel ((at c_at_2 (n c_at 3) r_eshape 0.8 0.15 0.65) c_at_2 fused c_at_2 (n c_at 3) r_eshape 0.8 0.15 0.65)
+  t := t c_at ("values", 13.0 17.0, moves) vd:m_oves 0
+  lm := (n c_at 2 c_at 6) r_eshape r_avel (((at + (n c_at 3) r_eshape 0.0 -0.2 0.0) c_at_2 (n c_at 3) r_eshape 1.0) c_at_2 (fused + (n c_at 3) r_eshape 0.0 -0.2 0.0) c_at_2 (n c_at 3) r_eshape 1.0)
+  t := t c_at ("value names", 13.0 17.0, lm) vd:m_oves 0
+  envelopes := 4 10 r_eshape -0.5 0.2 1.6 3.6 0.2 1.2 90 200 245 1  4 0.2 1.6 1.6 0.2 1.2 90 200 245 1  0 0.2 -1.6 4.6 0.2 1.2 245 150 90 1  4 0.2 -1.6 1.6 0.2 1.2 245 150 90 1
+  t := t c_at ("kernels", envelopes) vd:o_utlines 0
+  t := t c_at ("kernels", 4 2 r_eshape 17 20) vd:s_hown 0
+  # Saved matrix launch plans. Gray slots are padding, not idle hardware.
+  m := 11 s_elect s
+  r := 13 s_elect s
+  grid := o_ffsets m + r
+  rt := grid >= m
+  j := grid - m * f_loor f_loat rt
+  columns := 2 + 14 * f_loor f_loat rt
+  jx := j m_od columns
+  jy := j d_iv columns
+  gx := ((1.0 - 2.0 * f_loat rt) * -3.1) + 0.23 * ((f_loat jx) - ((f_loat columns) - 1.0) / 2.0)
+  gz := 1.6 - 0.23 * f_loat jy
+  good := ((n_ot rt) & j < 6) | rt & (jx < 2) & jy < 3
+  gp := 2 1 t_ranspose (3 c_at m + r) r_eshape gx c_at ((m + r) r_eshape 0.0) c_at gz
+  colors := 2 1 t_ranspose (3 c_at m + r) r_eshape (55 + 25 * f_loat good) c_at (65 + 175 * f_loat good) c_at 80 + 80 * f_loat good
+  gdims := ((m + r) c_at 3) r_eshape 0.18 0.1 0.18
+  gboxes := gp c_at_2 gdims c_at_2 colors c_at_2 ((m + r) c_at 1) r_eshape 0.4
+  t := t c_at ("launch slots", gboxes) vd:b_oxes 0
+  t := t c_at ("launch slots", ((m + r) c_at 2) r_eshape 20 27) vd:s_hown 0
+  titles := 2 7 r_eshape -3.1 -0.2 2.4 0.6 235 240 255  3.1 -0.2 2.4 0.6 235 240 255
+  t := t c_at ("profiles", "M1 Max|RTX 5060 Ti", titles) vd:l_abels 0
+  t := t c_at ("profiles", 2 2 r_eshape 20 27) vd:s_hown 0
+  # Allocated buffer list; no fictional per-operation arrays survive fusion.
+  nb := t_ally bufferData
+  bi := o_ffsets nb
+  bp := 2 1 t_ranspose (3 c_at nb) r_eshape (1.2 * (f_loat bi m_od 4) - 1.5) c_at (nb r_eshape 0.0) c_at 1.4 - 1.6 * f_loat bi d_iv 4
+  br := 1 + f_loor 1 s_elect_2 bufferData
+  bc := f_loat 2 1 t_ranspose (3 c_at nb) r_eshape (br s_elect 60 60 250) c_at (br s_elect 140 220 160) c_at br s_elect 240 130 80
+  bb := bp c_at_2 ((nb c_at 3) r_eshape 0.85 0.15 0.75) c_at_2 bc c_at_2 (nb c_at 1) r_eshape 0.4
+  t := t c_at ("buffers", bb) vd:b_oxes 0
+  t := t c_at ("buffers", (nb c_at 2) r_eshape 27 32) vd:s_hown 0
+  result := 2 7 r_eshape -2.5 -0.2 1.0 1.1 100 250 160  2.5 -0.2 1.0 1.1 250 180 100
+  resultText := (f_ormat 16 s_elect s) c_at "|" c_at 3 vd:f_ixed (f_loat 17 s_elect s) / 1000.0
+  t := t c_at ("results", resultText, result) vd:l_abels 0
+  t := t c_at ("results", 2 2 r_eshape 32 36) vd:s_hown 0
+  t := t c_at ((l:title, l:subtitle, 1 8 r_eshape 0 3 255 255 255 18 22 44) vd:c_ards 0)
+  t c_at (l:c_ues s, l:cueTable c_at_2 7 3 r_eshape 255 255 255) vd:c_aptions 0
+}
