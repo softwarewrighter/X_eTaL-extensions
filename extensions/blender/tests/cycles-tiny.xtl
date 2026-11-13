@@ -1,0 +1,37 @@
+## A street corner written by Cycles.xtl and ray-traced by Blender end
+## to end, tiny and quick (the processor, 4 samples): every kind of
+## material, boxes, a sign, a model shown twice, lamps, a spot, fog,
+## steam, a flown camera, bloom; a still, three frames (a second run
+## would render none again), the frames as a video, and the report.
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"cy:" u_se< "Cycles"
+
+t := cy:head c_at ((64, 36, 10, 0.2, 4, "CPU") cy:s_tage 0) c_at (("AgX - Punchy", 0.0, 0.5) cy:l_ook 0) c_at ((10 5 20, 1 1 3, 1.0) cy:s_ky 0)
+t := t c_at (("steel", 40 40 45, 0.4, 1.0) cy:s_urface 0) c_at (("pink", 255 0 128, 8.0) cy:n_eon 0)
+t := t c_at (("glass", 60 62 70, 255 220 170, 180 230 255, 1.6 3.2, 0.3, 2.5) cy:f_acade 0)
+t := t c_at (("street", 62 62 65, 0.45, 5.0, 0.25) cy:w_et 0)
+t := t c_at (("bars", "bars", 255 0 128, 0 255 255, 0.5, 5.0) cy:s_creen 0) c_at (("rings", "rings", 255 160 0, 80 0 255, 0.4, 5.0) cy:s_creen 0)
+t := t c_at (("rain", "rain", 0 255 128, 255 255 255, 0.6, 6.0) cy:s_creen 0) c_at (("tiles", "tiles", 255 0 0, 0 100 255, 2.0, 5.0) cy:s_creen 0)
+t := t c_at (("ground", 1 7 r_eshape 0.0 0.0 -0.5 200.0 200.0 1.0 0.0, "street") cy:b_oxes 0)
+t := t c_at (("towers", 2 7 r_eshape -20 20 30 20 20 60 0  20 20 20 16 16 40 30, "glass") cy:b_oxes 0)
+t := t c_at (("ads", 1 7 r_eshape -9.8 20 12 0.3 8 10 0, "bars") cy:b_oxes 0) c_at (("ads2", 1 7 r_eshape 11.8 20 12 0.3 8 10 30, "rings") cy:b_oxes 0)
+t := t c_at (("ads3", 1 7 r_eshape -20 9.8 30 8 0.3 10 0, "rain") cy:b_oxes 0) c_at (("ads4", 1 7 r_eshape -20 9.8 45 8 0.3 10 0, "tiles") cy:b_oxes 0)
+t := t c_at (("open", "OPEN", -9.5 12.0 22.0, 2.0, 90, 1, "pink") cy:s_ign 0)
+t := t c_at (cy:m_odel "car") c_at (("body", 1 7 r_eshape 0.0 0.0 0.6 4.2 1.8 0.7 0.0, "steel", "car") cy:p_arts 0)
+t := t c_at (("north", "car", 2 6 r_eshape 3 -10 0 3 0 0  -3 20 0 -3 10 0) cy:f_leet 0)
+t := t c_at (("lamp", 1 8 r_eshape 8.5 0 7 255 180 100 900 0.2) cy:l_amps 0) c_at (("beam", 1 11 r_eshape -9 0 30 0 5 0 100 150 255 20000 35) cy:s_pots 0)
+t := t c_at (("haze", 1 6 r_eshape 0 0 30 200 200 60, 150 180 255, 0.002, 0.5) cy:f_og 0)
+t := t c_at (("vent", 1 6 r_eshape 4 6 6 6 6 12, 255 255 255, 1.2, 1.5) cy:s_team 0)
+t := t c_at ((0.0 0.2, 2 3 r_eshape 0 -40 12  0 -38 11, 2 3 r_eshape 0 20 15  0 20 15, 24, 2.8) cy:f_ly 0)
+t := t c_at ((1.0, 0.6, 0.6) cy:b_loom 0) c_at (("still.png", 0.1) cy:s_till 0) c_at (("frames", 0, 0) cy:f_rames 0) c_at (("frames", "corner.mp4") cy:e_ncode 0) c_at cy:report
+n := "work/cycles/run.py" bl:w_rite! bp:launcher
+n := "work/cycles/scene.py" bl:w_rite! t
+r := "work/cycles/run.py" bl:r_un! "work/cycles/scene.py work/cycles/out"
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+"what Blender made:"
+bl:r_ead "work/cycles/out/report.txt"

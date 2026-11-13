@@ -1,0 +1,3 @@
+command = "t=$(mktemp -d) && XETAL_BLENDER_ROOT=$t xetal-x --ext .. run tests/cycles-tiny.xtl && cd $t && find work/cycles/out -type f | sort"
+exit_code = 0
+desc = "a street corner written by Cycles.xtl and ray-traced by Blender (Cycles on the processor, 64 by 36, 4 samples) end to end: the report (objects, faces, materials, the model) and the files (a still, three frames, the frames as a video)"

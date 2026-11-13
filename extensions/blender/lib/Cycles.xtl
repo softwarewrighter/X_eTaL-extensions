@@ -1,0 +1,773 @@
+## Cycles.xtl -- arrays to a ray-traced film: a Blender scene for Cycles
+## (path tracing: real reflections, shadows from every light, light
+## scattered in fog) described by X_eTaL arrays. A program works out the
+## scene as tables -- a row a box, a lamp, a vehicle, a puff of steam --
+## and each function here writes one table into Blender's Python as
+## numbers, one call of the player for a whole group. The player
+## (cy:head) is fixed Python, the same for every film: it reads the
+## numbers and makes the objects, materials and keys, and decides
+## nothing. A film is cy:head, then cy:s_tage, the materials, the groups
+## that wear them, lights, fog, the camera's flight, then cy:s_till,
+## or cy:f_rames and cy:e_ncode; written with bl:w_rite! and run by
+## bp:launcher through bl:r_un!.
+##
+## Nothing is loaded: every surface is worked out by its material from
+## where it is -- a facade's windows from the wall's own coordinates, a
+## street's puddles from noise, a screen's picture from its face and
+## the time -- so a table of boxes is a city. (cy:r_eel is the one
+## exception: a screen playing a video file.)
+##
+## Places are meters, z up; times are seconds; angles are degrees;
+## colors are 0 to 255 (sRGB), made linear here; a light's strength is
+## watts. Written for Blender 5.1.
+## Import: "cy:" u_se< "Cycles"
+
+### The player
+
+# the player, in parts (one expression nests too deep): the start
+h:play1 := ("import bpy, math, os, sys\n" c_at
+  "from mathutils import Vector\n" c_at
+  "args = sys.argv[sys.argv.index('--') + 1:]\n" c_at
+  "out = args[0]\n" c_at
+  "os.makedirs(out, exist_ok=True)\n" c_at
+  "bpy.ops.wm.read_factory_settings(use_empty=True)\n" c_at
+  "bpy.context.preferences.edit.keyframe_new_interpolation_type = 'LINEAR'\n" c_at
+  "scene = bpy.context.scene\n" c_at
+  "mats = {}\n" c_at
+  "models = {}\n" c_at
+  "rig = {}\n" c_at
+  "\n" c_at
+  "def nums(text, k):\n" c_at
+  "    v = [float(t) for t in text.split()]\n" c_at
+  "    return [tuple(v[i:i + k]) for i in range(0, len(v), k)]\n" c_at
+  "\n" c_at
+  "def frame(t):\n" c_at
+  "    return 1 + round(t * scene.render.fps)\n" c_at
+  "\n" c_at
+  "def gpu():\n" c_at
+  "    p = bpy.context.preferences.addons['cycles'].preferences\n" c_at
+  "    for kind in ('OPTIX', 'CUDA', 'HIP', 'ONEAPI', 'METAL'):\n" c_at
+  "        try:\n" c_at
+  "            p.compute_device_type = kind\n" c_at
+  "        except TypeError:\n" c_at
+  "            continue\n" c_at
+  "        p.get_devices()\n" c_at
+  "        if any(d.type == kind for d in p.devices):\n" c_at
+  "            for d in p.devices:\n" c_at
+  "                d.use = d.type == kind\n" c_at
+  "            return kind\n" c_at
+  "    return ''\n" c_at
+  "\n" c_at
+  "def font():\n" c_at
+  "    d = os.getcwd()\n" c_at
+  "    while True:\n" c_at
+  "        p = os.path.join(d, 'work', 'fonts', 'JuliaMono-Black.ttf')\n" c_at
+  "        if os.path.exists(p):\n" c_at
+  "            return bpy.data.fonts.load(p, check_existing=True)\n" c_at
+  "        if os.path.dirname(d) == d:\n" c_at
+  "            return None\n" c_at
+  "        d = os.path.dirname(d)\n" c_at
+  "\n" c_at
+  "rig['font'] = font()\n" c_at
+  "\n")
+
+# the player, part 2: stage and after
+h:play2 := ("def stage(w, h, fps, seconds, samples, device):\n" c_at
+  "    scene.render.engine = 'CYCLES'\n" c_at
+  "    c = scene.cycles\n" c_at
+  "    rig['device'] = gpu() if device == 'GPU' else ''\n" c_at
+  "    c.device = 'GPU' if rig['device'] else 'CPU'\n" c_at
+  "    c.samples = int(samples)\n" c_at
+  "    c.use_adaptive_sampling = True\n" c_at
+  "    c.adaptive_threshold = 0.02\n" c_at
+  "    c.use_denoising = True\n" c_at
+  "    c.max_bounces = 6\n" c_at
+  "    c.diffuse_bounces = 2\n" c_at
+  "    c.glossy_bounces = 4\n" c_at
+  "    c.transmission_bounces = 4\n" c_at
+  "    c.volume_bounces = 1\n" c_at
+  "    c.sample_clamp_indirect = 8.0\n" c_at
+  "    scene.render.use_persistent_data = True\n" c_at
+  "    scene.render.resolution_x, scene.render.resolution_y = int(w), int(h)\n" c_at
+  "    scene.render.resolution_percentage = 100\n" c_at
+  "    scene.render.fps = int(fps)\n" c_at
+  "    scene.frame_start, scene.frame_end = 1, frame(seconds)\n" c_at
+  "    scene.view_settings.view_transform = 'AgX'\n" c_at
+  "\n" c_at
+  "def look(name, exposure, shutter):\n" c_at
+  "    try:\n" c_at
+  "        scene.view_settings.look = name\n" c_at
+  "    except TypeError:\n" c_at
+  "        pass\n" c_at
+  "    scene.view_settings.exposure = exposure\n" c_at
+  "    scene.render.use_motion_blur = shutter > 0.0\n" c_at
+  "    scene.render.motion_blur_shutter = max(shutter, 0.01)\n" c_at
+  "\n" c_at
+  "def node(nt, kind, **sets):\n" c_at
+  "    n = nt.nodes.new(kind)\n" c_at
+  "    for k, v in sets.items():\n" c_at
+  "        setattr(n, k, v)\n" c_at
+  "    return n\n" c_at
+  "\n" c_at
+  "def feed(nt, socket, value):\n" c_at
+  "    if hasattr(value, 'links'):\n" c_at
+  "        nt.links.new(value, socket)\n" c_at
+  "    elif hasattr(socket.default_value, '__len__') and not hasattr(value, '__len__'):\n" c_at
+  "        socket.default_value = (value,) * len(socket.default_value)\n" c_at
+  "    else:\n" c_at
+  "        socket.default_value = value\n" c_at
+  "\n")
+
+# the player, part 3: calc and after
+h:play3 := ("def calc(nt, op, a, b=None, c=None):\n" c_at
+  "    n = node(nt, 'ShaderNodeMath', operation=op)\n" c_at
+  "    for i, v in enumerate((a, b, c)):\n" c_at
+  "        if v is not None:\n" c_at
+  "            feed(nt, n.inputs[i], v)\n" c_at
+  "    return n.outputs[0]\n" c_at
+  "\n" c_at
+  "def blend(nt, f, a, b):\n" c_at
+  "    n = node(nt, 'ShaderNodeMix', data_type='RGBA')\n" c_at
+  "    feed(nt, n.inputs[0], f)\n" c_at
+  "    feed(nt, n.inputs[6], a if hasattr(a, 'links') else tuple(a) + (1.0,))\n" c_at
+  "    feed(nt, n.inputs[7], b if hasattr(b, 'links') else tuple(b) + (1.0,))\n" c_at
+  "    return n.outputs[2]\n" c_at
+  "\n" c_at
+  "def step(nt, x, lo, hi):\n" c_at
+  "    n = node(nt, 'ShaderNodeMapRange', interpolation_type='SMOOTHSTEP')\n" c_at
+  "    feed(nt, n.inputs[0], x)\n" c_at
+  "    n.inputs[1].default_value, n.inputs[2].default_value = lo, hi\n" c_at
+  "    return n.outputs[0]\n" c_at
+  "\n" c_at
+  "def xyz(nt, v):\n" c_at
+  "    n = node(nt, 'ShaderNodeSeparateXYZ')\n" c_at
+  "    nt.links.new(v, n.inputs[0])\n" c_at
+  "    return n.outputs\n" c_at
+  "\n" c_at
+  "def join(nt, x, y, z):\n" c_at
+  "    n = node(nt, 'ShaderNodeCombineXYZ')\n" c_at
+  "    for s, v in zip(n.inputs, (x, y, z)):\n" c_at
+  "        feed(nt, s, v)\n" c_at
+  "    return n.outputs[0]\n" c_at
+  "\n" c_at
+  "def noise(nt, v, scale, detail, w=None):\n" c_at
+  "    n = node(nt, 'ShaderNodeTexNoise', noise_dimensions='4D' if w is not None else '3D')\n" c_at
+  "    feed(nt, n.inputs['Vector'], v)\n" c_at
+  "    if w is not None:\n" c_at
+  "        feed(nt, n.inputs['W'], w)\n" c_at
+  "    n.inputs['Scale'].default_value = scale\n" c_at
+  "    n.inputs['Detail'].default_value = detail\n" c_at
+  "    return n.outputs[0]\n" c_at
+  "\n")
+
+# the player, part 4: dice and after
+h:play4 := ("def dice(nt, v):\n" c_at
+  "    n = node(nt, 'ShaderNodeTexWhiteNoise', noise_dimensions='3D')\n" c_at
+  "    feed(nt, n.inputs['Vector'], v)\n" c_at
+  "    return n.outputs\n" c_at
+  "\n" c_at
+  "def clock(nt):\n" c_at
+  "    n = node(nt, 'ShaderNodeValue')\n" c_at
+  "    d = n.outputs[0].driver_add('default_value').driver\n" c_at
+  "    d.type = 'SCRIPTED'\n" c_at
+  "    d.expression = 'frame / %d' % scene.render.fps\n" c_at
+  "    return n.outputs[0]\n" c_at
+  "\n" c_at
+  "def fresh(name):\n" c_at
+  "    m = bpy.data.materials.new(name)\n" c_at
+  "    m.use_nodes = True\n" c_at
+  "    nt = m.node_tree\n" c_at
+  "    nt.nodes.clear()\n" c_at
+  "    mats[name] = m\n" c_at
+  "    return m, nt, node(nt, 'ShaderNodeOutputMaterial')\n" c_at
+  "\n" c_at
+  "def shell(nt, o):\n" c_at
+  "    p = node(nt, 'ShaderNodeBsdfPrincipled')\n" c_at
+  "    nt.links.new(p.outputs[0], o.inputs['Surface'])\n" c_at
+  "    return p\n" c_at
+  "\n" c_at
+  "def surface(name, rgb, roughness, metallic):\n" c_at
+  "    m, nt, o = fresh(name)\n" c_at
+  "    p = shell(nt, o)\n" c_at
+  "    p.inputs['Base Color'].default_value = tuple(rgb) + (1.0,)\n" c_at
+  "    p.inputs['Roughness'].default_value = roughness\n" c_at
+  "    p.inputs['Metallic'].default_value = metallic\n" c_at
+  "\n" c_at
+  "def neon(name, rgb, strength):\n" c_at
+  "    m, nt, o = fresh(name)\n" c_at
+  "    e = node(nt, 'ShaderNodeEmission')\n" c_at
+  "    e.inputs['Color'].default_value = tuple(rgb) + (1.0,)\n" c_at
+  "    e.inputs['Strength'].default_value = strength\n" c_at
+  "    nt.links.new(e.outputs[0], o.inputs['Surface'])\n" c_at
+  "\n" c_at
+  "def facade(name, wall, lit_a, lit_b, cell, lit, glow):\n" c_at
+  "    m, nt, o = fresh(name)\n" c_at
+  "    g = node(nt, 'ShaderNodeNewGeometry')\n" c_at
+  "    px, py, pz = xyz(nt, g.outputs['Position'])\n" c_at
+  "    nx, ny, nz = xyz(nt, g.outputs['True Normal'])\n" c_at
+  "    ax = calc(nt, 'GREATER_THAN', calc(nt, 'ABSOLUTE', nx), 0.5)\n" c_at
+  "    roof = calc(nt, 'GREATER_THAN', calc(nt, 'ABSOLUTE', nz), 0.5)\n" c_at
+  "    u = calc(nt, 'ADD', px, calc(nt, 'MULTIPLY', ax, calc(nt, 'SUBTRACT', py, px)))\n" c_at
+  "    depth = calc(nt, 'ADD', py, calc(nt, 'MULTIPLY', ax, calc(nt, 'SUBTRACT', px, py)))\n" c_at
+  "    cu = calc(nt, 'DIVIDE', u, cell[0])\n" c_at
+  "    cv = calc(nt, 'DIVIDE', pz, cell[1])\n" c_at
+  "    iu, iv = calc(nt, 'FLOOR', cu), calc(nt, 'FLOOR', cv)\n" c_at
+  "    fu, fv = calc(nt, 'FRACT', cu), calc(nt, 'FRACT', cv)\n" c_at
+  "    side = calc(nt, 'ADD', calc(nt, 'ROUND', calc(nt, 'MULTIPLY', depth, 2.0)), calc(nt, 'MULTIPLY', ax, 977.0))\n" c_at
+  "    pane = calc(nt, 'MULTIPLY', calc(nt, 'MULTIPLY', calc(nt, 'GREATER_THAN', fu, 0.14), calc(nt, 'LESS_THAN', fu, 0.86)), calc(nt, 'MULTIPLY', calc(nt, 'GREATER_THAN', fv, 0.3), calc(nt, 'LESS_THAN', fv, 0.88)))\n" c_at
+  "    pane = calc(nt, 'MULTIPLY', pane, calc(nt, 'SUBTRACT', 1.0, roof))\n" c_at
+  "    r = dice(nt, join(nt, iu, iv, side))\n" c_at
+  "    floor = dice(nt, join(nt, 0.0, iv, side))\n" c_at
+  "    chance = calc(nt, 'ADD', lit, calc(nt, 'MULTIPLY', calc(nt, 'SUBTRACT', floor[0], 0.5), 0.5))\n" c_at
+  "    on = calc(nt, 'MULTIPLY', pane, calc(nt, 'LESS_THAN', r[0], chance))\n" c_at
+  "    cr, cg, cb = xyz(nt, r[1])\n" c_at
+  "    grime = noise(nt, join(nt, calc(nt, 'MULTIPLY', px, 0.6), calc(nt, 'MULTIPLY', py, 0.6), calc(nt, 'MULTIPLY', pz, 0.08)), 1.0, 4.0)\n" c_at
+  "    wallc = blend(nt, grime, [0.45 * x for x in wall], [1.25 * x for x in wall])\n" c_at
+  "    p = shell(nt, o)\n" c_at
+  "    feed(nt, p.inputs['Base Color'], blend(nt, pane, wallc, (0.012, 0.014, 0.02)))\n" c_at
+  "    feed(nt, p.inputs['Roughness'], calc(nt, 'SUBTRACT', calc(nt, 'ADD', 0.45, calc(nt, 'MULTIPLY', grime, 0.4)), calc(nt, 'MULTIPLY', pane, 0.6)))\n" c_at
+  "    feed(nt, p.inputs['Emission Color'], blend(nt, cg, lit_a, lit_b))\n" c_at
+  "    feed(nt, p.inputs['Emission Strength'], calc(nt, 'MULTIPLY', on, calc(nt, 'MULTIPLY', glow, calc(nt, 'ADD', 0.25, cb))))\n" c_at
+  "    b = node(nt, 'ShaderNodeBump')\n" c_at
+  "    b.inputs['Strength'].default_value = 0.3\n" c_at
+  "    feed(nt, b.inputs['Height'], calc(nt, 'SUBTRACT', calc(nt, 'MULTIPLY', grime, 0.05), calc(nt, 'MULTIPLY', pane, 0.08)))\n" c_at
+  "    nt.links.new(b.outputs[0], p.inputs['Normal'])\n" c_at
+  "\n")
+
+# the player, part 5: wet and after
+h:play5 := ("def wet(name, rgb, puddles, size, ripple):\n" c_at
+  "    m, nt, o = fresh(name)\n" c_at
+  "    g = node(nt, 'ShaderNodeNewGeometry')\n" c_at
+  "    pos = g.outputs['Position']\n" c_at
+  "    big = noise(nt, pos, 1.0 / size, 3.0)\n" c_at
+  "    th = 0.5 + (0.5 - puddles) * 0.5\n" c_at
+  "    pool = step(nt, big, th - 0.03, th + 0.03)\n" c_at
+  "    fine = noise(nt, pos, 9.0, 6.0)\n" c_at
+  "    grit = noise(nt, pos, 60.0, 2.0)\n" c_at
+  "    rain = noise(nt, pos, 14.0, 1.0, calc(nt, 'MULTIPLY', clock(nt), 2.5))\n" c_at
+  "    p = shell(nt, o)\n" c_at
+  "    dry = blend(nt, fine, [0.5 * x for x in rgb], [1.3 * x for x in rgb])\n" c_at
+  "    feed(nt, p.inputs['Base Color'], blend(nt, pool, dry, [0.25 * x for x in rgb]))\n" c_at
+  "    rough = calc(nt, 'ADD', 0.22, calc(nt, 'MULTIPLY', fine, 0.3))\n" c_at
+  "    feed(nt, p.inputs['Roughness'], calc(nt, 'ADD', 0.015, calc(nt, 'MULTIPLY', calc(nt, 'SUBTRACT', 1.0, pool), rough)))\n" c_at
+  "    b = node(nt, 'ShaderNodeBump')\n" c_at
+  "    b.inputs['Strength'].default_value = 0.5\n" c_at
+  "    b.inputs['Distance'].default_value = 0.02\n" c_at
+  "    dryh = calc(nt, 'MULTIPLY', calc(nt, 'SUBTRACT', 1.0, pool), calc(nt, 'ADD', grit, calc(nt, 'MULTIPLY', fine, 2.0)))\n" c_at
+  "    feed(nt, b.inputs['Height'], calc(nt, 'ADD', dryh, calc(nt, 'MULTIPLY', pool, calc(nt, 'MULTIPLY', rain, ripple))))\n" c_at
+  "    nt.links.new(b.outputs[0], p.inputs['Normal'])\n" c_at
+  "\n" c_at
+  "def screen(name, kind, a, b, speed, strength):\n" c_at
+  "    m, nt, o = fresh(name)\n" c_at
+  "    uv = node(nt, 'ShaderNodeUVMap')\n" c_at
+  "    u, v, _ = xyz(nt, uv.outputs[0])\n" c_at
+  "    t = calc(nt, 'MULTIPLY', clock(nt), speed)\n" c_at
+  "    if kind == 'bars':\n" c_at
+  "        f = step(nt, calc(nt, 'SINE', calc(nt, 'MULTIPLY', calc(nt, 'ADD', calc(nt, 'MULTIPLY', v, 5.0), t), 6.2832)), -0.2, 0.2)\n" c_at
+  "        level = calc(nt, 'ADD', 0.35, calc(nt, 'MULTIPLY', f, 0.65))\n" c_at
+  "    elif kind == 'rings':\n" c_at
+  "        du, dv = calc(nt, 'SUBTRACT', u, 0.5), calc(nt, 'SUBTRACT', v, 0.5)\n" c_at
+  "        d = calc(nt, 'SQRT', calc(nt, 'ADD', calc(nt, 'MULTIPLY', du, du), calc(nt, 'MULTIPLY', dv, dv)))\n" c_at
+  "        f = step(nt, calc(nt, 'SINE', calc(nt, 'MULTIPLY', calc(nt, 'SUBTRACT', calc(nt, 'MULTIPLY', d, 7.0), t), 6.2832)), -0.3, 0.3)\n" c_at
+  "        level = calc(nt, 'ADD', 0.3, calc(nt, 'MULTIPLY', f, 0.7))\n" c_at
+  "    elif kind == 'rain':\n" c_at
+  "        col = calc(nt, 'FLOOR', calc(nt, 'MULTIPLY', u, 28.0))\n" c_at
+  "        r = dice(nt, join(nt, col, 3.0, 7.0))\n" c_at
+  "        _, r2, r3 = xyz(nt, r[1])\n" c_at
+  "        fall = calc(nt, 'FRACT', calc(nt, 'ADD', calc(nt, 'ADD', calc(nt, 'MULTIPLY', v, 1.5), calc(nt, 'MULTIPLY', t, calc(nt, 'ADD', 0.4, r2))), r3))\n" c_at
+  "        cell = calc(nt, 'FLOOR', calc(nt, 'MULTIPLY', v, 44.0))\n" c_at
+  "        glyph = dice(nt, join(nt, col, cell, calc(nt, 'FLOOR', calc(nt, 'MULTIPLY', t, 6.0))))\n" c_at
+  "        f = calc(nt, 'POWER', fall, 6.0)\n" c_at
+  "        level = calc(nt, 'MULTIPLY', calc(nt, 'POWER', fall, 3.0), calc(nt, 'ADD', 0.3, glyph[0]))\n" c_at
+  "    else:\n" c_at
+  "        cu, cv = calc(nt, 'FLOOR', calc(nt, 'MULTIPLY', u, 6.0)), calc(nt, 'FLOOR', calc(nt, 'MULTIPLY', v, 4.0))\n" c_at
+  "        r = dice(nt, join(nt, cu, cv, calc(nt, 'FLOOR', t)))\n" c_at
+  "        f = r[0]\n" c_at
+  "        _, r2, _ = xyz(nt, r[1])\n" c_at
+  "        level = calc(nt, 'ADD', 0.15, calc(nt, 'MULTIPLY', r2, 0.85))\n" c_at
+  "    lines = calc(nt, 'ADD', 0.8, calc(nt, 'MULTIPLY', 0.2, calc(nt, 'SINE', calc(nt, 'MULTIPLY', v, 400.0))))\n" c_at
+  "    p = shell(nt, o)\n" c_at
+  "    p.inputs['Base Color'].default_value = (0.01, 0.01, 0.012, 1.0)\n" c_at
+  "    p.inputs['Roughness'].default_value = 0.15\n" c_at
+  "    feed(nt, p.inputs['Emission Color'], blend(nt, f, a, b))\n" c_at
+  "    feed(nt, p.inputs['Emission Strength'], calc(nt, 'MULTIPLY', strength, calc(nt, 'MULTIPLY', level, lines)))\n" c_at
+  "\n")
+
+# the player, part 6: reel and after
+h:play6 := ("def reel(name, path, strength):\n" c_at
+  "    m, nt, o = fresh(name)\n" c_at
+  "    img = bpy.data.images.load(os.path.abspath(path), check_existing=True)\n" c_at
+  "    t = node(nt, 'ShaderNodeTexImage', image=img)\n" c_at
+  "    if img.source == 'MOVIE':\n" c_at
+  "        t.image_user.frame_duration = max(1, img.frame_duration)\n" c_at
+  "        t.image_user.use_cyclic = True\n" c_at
+  "        t.image_user.use_auto_refresh = True\n" c_at
+  "    p = shell(nt, o)\n" c_at
+  "    p.inputs['Base Color'].default_value = (0.01, 0.01, 0.012, 1.0)\n" c_at
+  "    p.inputs['Roughness'].default_value = 0.15\n" c_at
+  "    nt.links.new(t.outputs[0], p.inputs['Emission Color'])\n" c_at
+  "    p.inputs['Emission Strength'].default_value = strength\n" c_at
+  "\n" c_at
+  "def place(o, into):\n" c_at
+  "    (models[into] if into else scene.collection).objects.link(o)\n" c_at
+  "    return o\n" c_at
+  "\n" c_at
+  "def boxes(name, rows, material, into=''):\n" c_at
+  "    verts, faces = [], []\n" c_at
+  "    for r in rows:\n" c_at
+  "        ca, sa = math.cos(math.radians(r[6])), math.sin(math.radians(r[6]))\n" c_at
+  "        k = len(verts)\n" c_at
+  "        for i in range(8):\n" c_at
+  "            x, y, z = ((i & 1) - 0.5) * r[3], ((i >> 1 & 1) - 0.5) * r[4], ((i >> 2) - 0.5) * r[5]\n" c_at
+  "            verts.append((r[0] + x * ca - y * sa, r[1] + x * sa + y * ca, r[2] + z))\n" c_at
+  "        faces += [tuple(k + i for i in f) for f in ((0, 1, 5, 4), (3, 2, 6, 7), (1, 3, 7, 5), (2, 0, 4, 6), (4, 5, 7, 6), (0, 2, 3, 1))]\n" c_at
+  "    m = bpy.data.meshes.new(name)\n" c_at
+  "    m.from_pydata(verts, [], faces)\n" c_at
+  "    uv = m.uv_layers.new(name='UVMap')\n" c_at
+  "    for i, d in enumerate(uv.data):\n" c_at
+  "        d.uv = ((0.0, 0.0), (1.0, 0.0), (1.0, 1.0), (0.0, 1.0))[i % 4]\n" c_at
+  "    m.update()\n" c_at
+  "    m.materials.append(mats[material])\n" c_at
+  "    return place(bpy.data.objects.new(name, m), into)\n" c_at
+  "\n" c_at
+  "def sign(name, body, at, size, turn, stack, material):\n" c_at
+  "    c = bpy.data.curves.new(name, type='FONT')\n" c_at
+  "    c.body = chr(10).join(body) if stack else body\n" c_at
+  "    c.size = size\n" c_at
+  "    c.align_x = 'CENTER'\n" c_at
+  "    c.align_y = 'TOP' if stack else 'CENTER'\n" c_at
+  "    c.extrude = 0.06 * size\n" c_at
+  "    c.space_line = 0.85\n" c_at
+  "    if rig.get('font'):\n" c_at
+  "        c.font = rig['font']\n" c_at
+  "    c.materials.append(mats[material])\n" c_at
+  "    o = place(bpy.data.objects.new(name, c), '')\n" c_at
+  "    o.location = at\n" c_at
+  "    o.rotation_euler = (math.pi / 2, 0.0, math.radians(turn))\n" c_at
+  "\n")
+
+# the player, part 7: model and after
+h:play7 := ("def model(name):\n" c_at
+  "    models[name] = bpy.data.collections.new(name)\n" c_at
+  "\n" c_at
+  "def fleet(name, kind, rows):\n" c_at
+  "    for i, r in enumerate(rows):\n" c_at
+  "        o = place(bpy.data.objects.new('%s %d' % (name, i + 1), None), '')\n" c_at
+  "        o.instance_type = 'COLLECTION'\n" c_at
+  "        o.instance_collection = models[kind]\n" c_at
+  "        o.rotation_euler = (0.0, 0.0, math.atan2(r[4] - r[1], r[3] - r[0]))\n" c_at
+  "        for f, at in ((scene.frame_start, r[0:3]), (scene.frame_end, r[3:6])):\n" c_at
+  "            o.location = at\n" c_at
+  "            o.keyframe_insert('location', frame=f)\n" c_at
+  "\n" c_at
+  "def lamps(name, rows):\n" c_at
+  "    for i, r in enumerate(rows):\n" c_at
+  "        d = bpy.data.lights.new(name, type='POINT')\n" c_at
+  "        d.color, d.energy, d.shadow_soft_size = r[3:6], r[6], r[7]\n" c_at
+  "        place(bpy.data.objects.new('%s %d' % (name, i + 1), d), '').location = r[0:3]\n" c_at
+  "\n" c_at
+  "def spots(name, rows):\n" c_at
+  "    for i, r in enumerate(rows):\n" c_at
+  "        d = bpy.data.lights.new(name, type='SPOT')\n" c_at
+  "        d.color, d.energy, d.spot_size, d.spot_blend, d.shadow_soft_size = r[6:9], r[9], math.radians(r[10]), 0.4, 0.15\n" c_at
+  "        o = place(bpy.data.objects.new('%s %d' % (name, i + 1), d), '')\n" c_at
+  "        o.location = r[0:3]\n" c_at
+  "        o.rotation_euler = (Vector(r[3:6]) - Vector(r[0:3])).to_track_quat('-Z', 'Y').to_euler()\n" c_at
+  "\n" c_at
+  "def sky(horizon, zenith, strength):\n" c_at
+  "    w = bpy.data.worlds.new('sky')\n" c_at
+  "    w.use_nodes = True\n" c_at
+  "    nt = w.node_tree\n" c_at
+  "    nt.nodes.clear()\n" c_at
+  "    g = node(nt, 'ShaderNodeNewGeometry')\n" c_at
+  "    _, _, z = xyz(nt, g.outputs['Incoming'])\n" c_at
+  "    b = node(nt, 'ShaderNodeBackground')\n" c_at
+  "    feed(nt, b.inputs['Color'], blend(nt, step(nt, calc(nt, 'ABSOLUTE', z), 0.0, 0.6), horizon, zenith))\n" c_at
+  "    b.inputs['Strength'].default_value = strength\n" c_at
+  "    nt.links.new(b.outputs[0], node(nt, 'ShaderNodeOutputWorld').inputs['Surface'])\n" c_at
+  "    scene.world = w\n" c_at
+  "\n")
+
+# the player, part 8: fog and after
+h:play8 := ("def fog(name, rows, rgb, density, forward):\n" c_at
+  "    m, nt, o = fresh(name)\n" c_at
+  "    s = node(nt, 'ShaderNodeVolumeScatter')\n" c_at
+  "    s.inputs['Color'].default_value = tuple(rgb) + (1.0,)\n" c_at
+  "    s.inputs['Density'].default_value = density\n" c_at
+  "    s.inputs['Anisotropy'].default_value = forward\n" c_at
+  "    nt.links.new(s.outputs[0], o.inputs['Volume'])\n" c_at
+  "    boxes(name, [tuple(r) + (0.0,) for r in rows], name)\n" c_at
+  "\n" c_at
+  "def steam(name, rows, rgb, density, speed):\n" c_at
+  "    m, nt, o = fresh(name)\n" c_at
+  "    tc = node(nt, 'ShaderNodeTexCoord')\n" c_at
+  "    lx, ly, lz = xyz(nt, tc.outputs['Object'])\n" c_at
+  "    g = node(nt, 'ShaderNodeNewGeometry')\n" c_at
+  "    px, py, pz = xyz(nt, g.outputs['Position'])\n" c_at
+  "    t = clock(nt)\n" c_at
+  "    puff = noise(nt, join(nt, px, py, calc(nt, 'SUBTRACT', pz, calc(nt, 'MULTIPLY', t, speed))), 0.9, 4.0, calc(nt, 'MULTIPLY', t, 0.25))\n" c_at
+  "    rad = calc(nt, 'SQRT', calc(nt, 'ADD', calc(nt, 'MULTIPLY', lx, lx), calc(nt, 'MULTIPLY', ly, ly)))\n" c_at
+  "    up = calc(nt, 'ADD', lz, 0.5)\n" c_at
+  "    wide = calc(nt, 'ADD', 0.12, calc(nt, 'MULTIPLY', up, 0.38))\n" c_at
+  "    core = calc(nt, 'SUBTRACT', 1.0, step(nt, calc(nt, 'DIVIDE', rad, wide), 0.3, 1.0))\n" c_at
+  "    fade = calc(nt, 'MULTIPLY', step(nt, up, 0.0, 0.08), calc(nt, 'SUBTRACT', 1.0, step(nt, up, 0.35, 1.0)))\n" c_at
+  "    d = calc(nt, 'MULTIPLY', calc(nt, 'MULTIPLY', core, fade), calc(nt, 'MULTIPLY', density, step(nt, puff, 0.38, 0.7)))\n" c_at
+  "    s = node(nt, 'ShaderNodeVolumeScatter')\n" c_at
+  "    s.inputs['Color'].default_value = tuple(rgb) + (1.0,)\n" c_at
+  "    s.inputs['Anisotropy'].default_value = 0.3\n" c_at
+  "    nt.links.new(d, s.inputs['Density'])\n" c_at
+  "    nt.links.new(s.outputs[0], o.inputs['Volume'])\n" c_at
+  "    for i, r in enumerate(rows):\n" c_at
+  "        b = boxes('%s %d' % (name, i + 1), [(0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0)], name)\n" c_at
+  "        b.location, b.scale = r[0:3], r[3:6]\n" c_at
+  "\n" c_at
+  "def along(times, points, t):\n" c_at
+  "    n = len(times)\n" c_at
+  "    i = max(0, min(n - 2, max(k for k in range(n) if times[k] <= t or k == 0)))\n" c_at
+  "    u = min(1.0, max(0.0, (t - times[i]) / (times[i + 1] - times[i])))\n" c_at
+  "    p0, p1, p2, p3 = (Vector(points[max(0, min(n - 1, i + d))]) for d in (-1, 0, 1, 2))\n" c_at
+  "    return 0.5 * (2 * p1 + (p2 - p0) * u + (2 * p0 - 5 * p1 + 4 * p2 - p3) * u * u + (3 * p1 - p0 - 3 * p2 + p3) * u ** 3)\n" c_at
+  "\n" c_at
+  "def fly(times, eyes, aims, lens, fstop):\n" c_at
+  "    cam = place(bpy.data.objects.new('camera', bpy.data.cameras.new('camera')), '')\n" c_at
+  "    aim = place(bpy.data.objects.new('aim', None), '')\n" c_at
+  "    cam.data.lens = lens\n" c_at
+  "    cam.data.clip_start, cam.data.clip_end = 0.1, 5000.0\n" c_at
+  "    scene.camera = cam\n" c_at
+  "    look = cam.constraints.new('TRACK_TO')\n" c_at
+  "    look.target, look.track_axis, look.up_axis = aim, 'TRACK_NEGATIVE_Z', 'UP_Y'\n" c_at
+  "    if fstop > 0.0:\n" c_at
+  "        cam.data.dof.use_dof = True\n" c_at
+  "        cam.data.dof.focus_object = aim\n" c_at
+  "        cam.data.dof.aperture_fstop = fstop\n" c_at
+  "    for f in range(scene.frame_start - 1, scene.frame_end + 2):\n" c_at
+  "        t = (f - 1) / scene.render.fps\n" c_at
+  "        cam.location, aim.location = along(times, eyes, t), along(times, aims, t)\n" c_at
+  "        cam.keyframe_insert('location', frame=f)\n" c_at
+  "        aim.keyframe_insert('location', frame=f)\n" c_at
+  "\n")
+
+# the player, part 9: bloom and after
+h:play9 := ("def bloom(threshold, strength, size):\n" c_at
+  "    g = bpy.data.node_groups.new('bloom', 'CompositorNodeTree')\n" c_at
+  "    g.interface.new_socket(name='Image', in_out='OUTPUT', socket_type='NodeSocketColor')\n" c_at
+  "    src, glare, end = g.nodes.new('CompositorNodeRLayers'), g.nodes.new('CompositorNodeGlare'), g.nodes.new('NodeGroupOutput')\n" c_at
+  "    glare.inputs['Type'].default_value = 'Bloom'\n" c_at
+  "    glare.inputs['Threshold'].default_value = threshold\n" c_at
+  "    glare.inputs['Strength'].default_value = strength\n" c_at
+  "    glare.inputs['Size'].default_value = size\n" c_at
+  "    g.links.new(src.outputs['Image'], glare.inputs['Image'])\n" c_at
+  "    g.links.new(glare.outputs['Image'], end.inputs[0])\n" c_at
+  "    scene.compositing_node_group = g\n" c_at
+  "    scene.render.use_compositing = True\n" c_at
+  "\n" c_at
+  "def png(path):\n" c_at
+  "    scene.render.image_settings.media_type = 'IMAGE'\n" c_at
+  "    scene.render.image_settings.file_format = 'PNG'\n" c_at
+  "    scene.render.filepath = path\n" c_at
+  "\n" c_at
+  "def still(file, seconds):\n" c_at
+  "    scene.frame_set(frame(seconds))\n" c_at
+  "    png(os.path.join(out, file))\n" c_at
+  "    bpy.ops.render.render(write_still=True)\n" c_at
+  "\n" c_at
+  "def frames(folder, first, last):\n" c_at
+  "    keep = scene.frame_start, scene.frame_end\n" c_at
+  "    if last > 0:\n" c_at
+  "        scene.frame_start, scene.frame_end = int(first), int(last)\n" c_at
+  "    png(os.path.join(out, folder, ''))\n" c_at
+  "    scene.render.use_overwrite = False\n" c_at
+  "    bpy.ops.render.render(animation=True)\n" c_at
+  "    scene.frame_start, scene.frame_end = keep\n" c_at
+  "\n" c_at
+  "def encode(folder, file):\n" c_at
+  "    d = os.path.join(out, folder)\n" c_at
+  "    names = sorted(n for n in os.listdir(d) if n.endswith('.png'))\n" c_at
+  "    e = bpy.data.scenes.new('encode')\n" c_at
+  "    r = e.render\n" c_at
+  "    r.resolution_x, r.resolution_y, r.resolution_percentage = scene.render.resolution_x, scene.render.resolution_y, 100\n" c_at
+  "    r.fps = scene.render.fps\n" c_at
+  "    e.view_settings.view_transform = 'Standard'\n" c_at
+  "    s = e.sequence_editor_create().strips.new_image('frames', os.path.join(d, names[0]), 1, 1)\n" c_at
+  "    for n in names[1:]:\n" c_at
+  "        s.elements.append(n)\n" c_at
+  "    e.frame_start, e.frame_end = 1, len(names)\n" c_at
+  "    r.image_settings.media_type = 'VIDEO'\n" c_at
+  "    r.image_settings.file_format = 'FFMPEG'\n" c_at
+  "    r.ffmpeg.format, r.ffmpeg.codec, r.ffmpeg.constant_rate_factor = 'MPEG4', 'H264', 'HIGH'\n" c_at
+  "    r.filepath = os.path.join(out, file)\n" c_at
+  "    bpy.ops.render.render(animation=True, scene='encode')\n" c_at
+  "\n")
+
+# the player, part 10: report and after
+h:play10 := ("def report():\n" c_at
+  "    kinds = {}\n" c_at
+  "    for o in scene.objects:\n" c_at
+  "        kinds[o.type] = kinds.get(o.type, 0) + 1\n" c_at
+  "    with open(os.path.join(out, 'report.txt'), 'w') as f:\n" c_at
+  "        r = scene.render\n" c_at
+  "        f.write('%s, %d by %d, %d frames at %d a second, %d samples' % (r.engine, r.resolution_x, r.resolution_y, scene.frame_end, r.fps, scene.cycles.samples) + chr(10))\n" c_at
+  "        f.write('objects: ' + ', '.join('%d %s' % (kinds[k], k.lower()) for k in sorted(kinds)) + chr(10))\n" c_at
+  "        f.write('faces: %d' % sum(len(o.data.polygons) for o in scene.objects if o.type == 'MESH') + chr(10))\n" c_at
+  "        f.write('materials: ' + ' '.join(sorted(mats)) + chr(10))\n" c_at
+  "        f.write('models: ' + ' '.join(sorted(models)) + chr(10))\n" c_at
+  "    print('cycles device: %s' % (rig.get('device') or 'CPU'))\n")
+
+## cy:head: the player, the start of every script: an empty scene, the
+## output directory (the first argument after "--", made), and the
+## functions the calls below use -- stage, look, sky and bloom; the
+## materials (surface, neon, facade, wet, screen, reel), each a graph of
+## shader nodes built here; boxes (one mesh a group, each face mapped
+## for a screen), sign, model and fleet; lamps and spots; fog and
+## steam; fly (the camera keyed every frame along a curve through its
+## eyes); still, frames, encode and report. Its letters are in JuliaMono
+## Black when work/fonts has it (`just font`), else Blender's own.
+l:head := h:play1 c_at h:play2 c_at h:play3 c_at h:play4 c_at h:play5 c_at h:play6 c_at h:play7 c_at h:play8 c_at h:play9 c_at h:play10
+
+### Numbers and text into Python
+
+# (values, k) h:n_ums 0: the values as Python reading them k to a row
+h:n_ums := { (v, k) z -> "nums('" c_at (f_ormat r_avel v) c_at "', " c_at (f_ormat k) c_at ")" }
+
+# q h:q_uoteIn text: the text in quotes (the character code q), each
+# such quote and backslash in it written with a backslash before it
+# (ASCII text): a Python string (as Video.xtl's)
+h:q_uoteIn := { q t ->
+  0 = t_ally t ? []U_CHAR q c_at q
+  c := []U_CS t
+  e := (c = q) | c = 92
+  k := (1 + e) r_eplicate r_ange t_ally c
+  m := ((1 + e) r_eplicate e) & k != 0 c_at -1 d_rop k
+  ([]U_CHAR q) c_at ([]U_CHAR (92 * m) + (1 - m) * (1 + e) r_eplicate c) c_at []U_CHAR q
+}
+
+# a Python string: the text in single quotes
+h:q_uote := { t -> 39 h:q_uoteIn t }
+
+# a color (0 to 255) as a Python tuple, linear
+h:r_gb := { c -> ((l:l_inear c, 3) h:n_ums 0) c_at "[0]" }
+
+# a few numbers as a Python tuple
+h:t_uple := { v -> ((f_loat v, t_ally v) h:n_ums 0) c_at "[0]" }
+
+## cy:l_inear color: a color's channels, 0 to 255 (sRGB), as the linear
+## values, 0 to 1, that Blender's materials and lights take
+## >> "cy:" u_se< "Cycles"
+## >> cy:l_inear 0 255
+## 0.0 1.0
+l:l_inear := { c -> ((f_loat c) / 255.0) ^ 2.2 }
+
+### The picture
+
+## (width, height, fps, seconds, samples, device) cy:s_tage 0: Python
+## setting Cycles, the picture's size, the frame rate, the film's
+## length and how many samples each pixel takes at most (noise is
+## removed after: 24 show a scene, 64 to 128 finish it); device is
+## "GPU" (the graphics card when Cycles finds one it can use -- Metal,
+## OptiX, CUDA, HIP, oneAPI -- else the processor) or "CPU". The film
+## look (AgX), so bright lights roll off as a camera's do. First,
+## before anything else.
+## >> "cy:" u_se< "Cycles"
+## >> (640, 360, 30, 6.0, 24, "GPU") cy:s_tage 0
+## stage(640, 360, 30, 6.0, 24, 'GPU')
+l:s_tage := { (w, h, fps, secs, samples, device) z ->
+  "stage(" c_at (f_ormat w) c_at ", " c_at (f_ormat h) c_at ", " c_at (f_ormat fps) c_at ", " c_at (f_ormat secs) c_at ", " c_at (f_ormat samples) c_at ", " c_at (h:q_uote device) c_at ")\n"
+}
+
+## (look, exposure, shutter) cy:l_ook 0: Python setting the look (one of
+## Blender's AgX looks by name, "AgX - Punchy" for more contrast and
+## color; "None" for none), the exposure in stops (0 as rendered) and
+## motion blur: the shutter is open that part of a frame (0.5 as a film
+## camera; 0 for no blur)
+l:l_ook := { (name, exposure, shutter) z ->
+  "look(" c_at (h:q_uote name) c_at ", " c_at (f_ormat exposure) c_at ", " c_at (f_ormat shutter) c_at ")\n"
+}
+
+## (horizon, zenith, strength) cy:s_ky 0: Python making the sky: one
+## color at the horizon blending into another overhead, that bright (1
+## as given; a night sky's colors are near black)
+l:s_ky := { (horizon, zenith, strength) z ->
+  "sky(" c_at (h:r_gb horizon) c_at ", " c_at (h:r_gb zenith) c_at ", " c_at (f_ormat strength) c_at ")\n"
+}
+
+## (threshold, strength, size) cy:b_loom 0: Python making bright things
+## bleed light into the picture round them, as a lens does: what is
+## brighter than the threshold (1 is white) glows, that strongly (0 to
+## 1), that wide (0 to 1)
+l:b_loom := { (threshold, strength, size) z ->
+  "bloom(" c_at (f_ormat threshold) c_at ", " c_at (f_ormat strength) c_at ", " c_at (f_ormat size) c_at ")\n"
+}
+
+### Materials
+
+## A material is made by name, before the groups that wear it.
+
+## (name, color, roughness, metallic) cy:s_urface 0: Python making a
+## plain material: its color, how rough (0 a mirror, 1 chalk) and how
+## metallic (0 or 1)
+## >> "cy:" u_se< "Cycles"
+## >> ("steel", 255 255 255, 0.3, 1.0) cy:s_urface 0
+## surface('steel', nums('1.0 1.0 1.0', 3)[0], 0.3, 1.0)
+l:s_urface := { (name, rgb, roughness, metallic) z ->
+  "surface(" c_at (h:q_uote name) c_at ", " c_at (h:r_gb rgb) c_at ", " c_at (f_ormat roughness) c_at ", " c_at (f_ormat metallic) c_at ")\n"
+}
+
+## (name, color, strength) cy:n_eon 0: Python making a material that
+## only gives off light, that strongly (1 its color as given; 5 to 10 a
+## sign that lights the street)
+l:n_eon := { (name, rgb, strength) z ->
+  "neon(" c_at (h:q_uote name) c_at ", " c_at (h:r_gb rgb) c_at ", " c_at (f_ormat strength) c_at ")\n"
+}
+
+## (name, wall, lit a, lit b, cell, lit, glow) cy:f_acade 0: Python
+## making a building's skin, worked out from where each point of a wall
+## is: the wall is cut into cells (cell: a window's bay and a floor's
+## height, meters), each cell a dark glass pane in a wall of the wall's
+## color, weathered; a share of the panes (lit, 0 to 1, more on some
+## floors than others) are lit rooms, each a color between lit a and lit
+## b and its own brightness, glowing that strongly. Roofs have no
+## windows. For boxes that stand upright and do not move.
+l:f_acade := { (name, wall, a, b, cell, lit, glow) z ->
+  "facade(" c_at (h:q_uote name) c_at ", " c_at (h:r_gb wall) c_at ", " c_at (h:r_gb a) c_at ", " c_at (h:r_gb b) c_at ", " c_at (h:t_uple cell) c_at ", " c_at (f_ormat lit) c_at ", " c_at (f_ormat glow) c_at ")\n"
+}
+
+## (name, color, puddles, size, ripple) cy:w_et 0: Python making wet
+## ground: rough where it is only damp, a mirror where water stands --
+## puddles is the share under water (0 to 1), size how wide a puddle is
+## (meters), ripple how much rain disturbs the water (0 still)
+l:w_et := { (name, rgb, puddles, size, ripple) z ->
+  "wet(" c_at (h:q_uote name) c_at ", " c_at (h:r_gb rgb) c_at ", " c_at (f_ormat puddles) c_at ", " c_at (f_ormat size) c_at ", " c_at (f_ormat ripple) c_at ")\n"
+}
+
+## (name, kind, a, b, speed, strength) cy:s_creen 0: Python making a
+## screen that plays a moving picture in two colors, worked out from
+## the time, on each face of a box: kind is "bars" (stripes rolling
+## up), "rings" (rings spreading from the middle), "rain" (columns of
+## falling glyphs) or "tiles" (a mosaic that changes); speed is cycles
+## a second; it glows that strongly
+l:s_creen := { (name, kind, a, b, speed, strength) z ->
+  "screen(" c_at (h:q_uote name) c_at ", " c_at (h:q_uote kind) c_at ", " c_at (h:r_gb a) c_at ", " c_at (h:r_gb b) c_at ", " c_at (f_ormat speed) c_at ", " c_at (f_ormat strength) c_at ")\n"
+}
+
+## (name, path, strength) cy:r_eel 0: Python making a screen that plays
+## a video file (or shows a picture), looping, on each face of a box,
+## glowing that strongly
+l:r_eel := { (name, path, strength) z ->
+  "reel(" c_at (h:q_uote name) c_at ", " c_at (h:q_uote path) c_at ", " c_at (f_ormat strength) c_at ")\n"
+}
+
+### Things
+
+## (name, table, material) cy:b_oxes 0: Python making a group of boxes
+## as one object NAME wearing the material: a row a box -- x y z (its
+## middle), w d h (its size) and its turn about the upright axis. A
+## tower h tall standing on the ground has its middle at h / 2.
+## >> "cy:" u_se< "Cycles"
+## >> ("tower", 1 7 r_eshape 0 0 50 20 20 100 0, "glass") cy:b_oxes 0
+## boxes('tower', nums('0.0 0.0 50.0 20.0 20.0 100.0 0.0', 7), 'glass')
+l:b_oxes := { (name, t, material) z ->
+  "boxes(" c_at (h:q_uote name) c_at ", " c_at ((f_loat t, 7) h:n_ums 0) c_at ", " c_at (h:q_uote material) c_at ")\n"
+}
+
+## (name, text, place, size, turn, stack, material) cy:s_ign 0: Python
+## making a sign of solid letters that tall, standing upright, its
+## middle at place (x y z), turned about the upright axis (0 faces -y),
+## wearing the material (cy:n_eon); stack 1 writes the letters one
+## below another, hanging from place
+l:s_ign := { (name, body, at, size, turn, stack, material) z ->
+  "sign(" c_at (h:q_uote name) c_at ", " c_at (h:q_uote body) c_at ", " c_at (h:t_uple at) c_at ", " c_at (f_ormat size) c_at ", " c_at (f_ormat turn) c_at ", " c_at (f_ormat stack) c_at ", " c_at (h:q_uote material) c_at ")\n"
+}
+
+## cy:m_odel name: Python starting a model: a thing made once and shown
+## many times (a vehicle); its parts are cy:p_arts, about its own
+## middle, its front along x
+l:m_odel := { name -> "model(" c_at (h:q_uote name) c_at ")\n" }
+
+## (name, table, material, model) cy:p_arts 0: Python making boxes, as
+## cy:b_oxes, as a part of the model
+l:p_arts := { (name, t, material, model) z ->
+  "boxes(" c_at (h:q_uote name) c_at ", " c_at ((f_loat t, 7) h:n_ums 0) c_at ", " c_at (h:q_uote material) c_at ", " c_at (h:q_uote model) c_at ")\n"
+}
+
+## (name, model, table) cy:f_leet 0: Python showing the model once a row
+## of the table, each moving at an even speed through the whole film:
+## from x y z (at the start) to x y z (at the end), facing the way it
+## goes
+l:f_leet := { (name, model, t) z ->
+  "fleet(" c_at (h:q_uote name) c_at ", " c_at (h:q_uote model) c_at ", " c_at ((f_loat t, 6) h:n_ums 0) c_at ")\n"
+}
+
+### Light and air
+
+## (name, table) cy:l_amps 0: Python making lamps that shine all round,
+## a row each: x y z, r g b, its strength (watts) and its radius
+## (meters: a larger lamp casts softer shadows)
+l:l_amps := { (name, t) z ->
+  p := (3 t_ake_2 f_loat t) c_at_2 (l:l_inear 3 t_ake_2 3 d_rop_2 t) c_at_2 6 d_rop_2 f_loat t
+  "lamps(" c_at (h:q_uote name) c_at ", " c_at ((p, 8) h:n_ums 0) c_at ")\n"
+}
+
+## (name, table) cy:s_pots 0: Python making spotlights, a row each: at
+## x y z, aimed at x y z, r g b, its strength (watts) and the cone's
+## angle
+l:s_pots := { (name, t) z ->
+  p := (6 t_ake_2 f_loat t) c_at_2 (l:l_inear 3 t_ake_2 6 d_rop_2 t) c_at_2 9 d_rop_2 f_loat t
+  "spots(" c_at (h:q_uote name) c_at ", " c_at ((p, 11) h:n_ums 0) c_at ")\n"
+}
+
+## (name, table, color, density, forward) cy:f_og 0: Python filling
+## boxes with even haze that scatters light, so lamps and signs glow in
+## the air and far things fade: a row a box, x y z (its middle), w d h;
+## density is how much is scattered a meter (0.001 a clear night, 0.01
+## thick); forward (0 to 1) is how much goes on the way it was going
+l:f_og := { (name, t, rgb, density, forward) z ->
+  "fog(" c_at (h:q_uote name) c_at ", " c_at ((f_loat t, 6) h:n_ums 0) c_at ", " c_at (h:r_gb rgb) c_at ", " c_at (f_ormat density) c_at ", " c_at (f_ormat forward) c_at ")\n"
+}
+
+## (name, table, color, density, speed) cy:s_team 0: Python making
+## plumes of steam, a row each: x y z (its middle) and w d h, the box
+## the plume fills -- thin at the bottom's middle, wider and fainter as
+## it rises, billowing, climbing speed meters a second
+l:s_team := { (name, t, rgb, density, speed) z ->
+  "steam(" c_at (h:q_uote name) c_at ", " c_at ((f_loat t, 6) h:n_ums 0) c_at ", " c_at (h:r_gb rgb) c_at ", " c_at (f_ormat density) c_at ", " c_at (f_ormat speed) c_at ")\n"
+}
+
+### The camera
+
+## (times, eyes, aims, lens, fstop) cy:f_ly 0: Python flying the camera:
+## at each time (k seconds) it is at an eye (k by 3) looking at an aim
+## (k by 3), and between them it goes along a smooth curve through the
+## eyes, looking along a smooth curve through the aims; lens is its
+## focal length in mm (24 wide, 50 as an eye); it is focused on the aim
+## with an aperture of fstop (1.4 blurs what is nearer and farther, 8
+## little; 0 keeps everything sharp)
+l:f_ly := { (ts, e, a, lens, fstop) z ->
+  "fly(" c_at ((f_loat ts, t_ally ts) h:n_ums 0) c_at "[0], " c_at ((f_loat e, 3) h:n_ums 0) c_at ", " c_at ((f_loat a, 3) h:n_ums 0) c_at ", " c_at (f_ormat lens) c_at ", " c_at (f_ormat fstop) c_at ")\n"
+}
+
+### Rendering
+
+## (file, seconds) cy:s_till 0: Python rendering the frame at that time
+## to out/FILE (PNG)
+## >> "cy:" u_se< "Cycles"
+## >> ("street.png", 5.5) cy:s_till 0
+## still('street.png', 5.5)
+l:s_till := { (file, secs) z -> "still(" c_at (h:q_uote file) c_at ", " c_at (f_ormat secs) c_at ")\n" }
+
+## (folder, first, last) cy:f_rames 0: Python rendering the frames from
+## first to last (0 0 for the whole film) to out/FOLDER, a PNG each
+## (0001.png ...). A frame already there is not rendered again, so a
+## long render may be stopped and run again, or run a part at a time.
+l:f_rames := { (folder, first, last) z ->
+  "frames(" c_at (h:q_uote folder) c_at ", " c_at (f_ormat first) c_at ", " c_at (f_ormat last) c_at ")\n"
+}
+
+## (folder, file) cy:e_ncode 0: Python making the video out/FILE (MP4,
+## H.264) of the frames in out/FOLDER, in order, at the film's rate
+l:e_ncode := { (folder, file) z -> "encode(" c_at (h:q_uote folder) c_at ", " c_at (h:q_uote file) c_at ")\n" }
+
+## cy:report: Python writing out/report.txt -- the renderer, the
+## picture's size, frames, rate and samples; how many objects of each
+## kind; the faces; the materials and the models, by name -- what a
+## test checks
+l:report := "report()\n"

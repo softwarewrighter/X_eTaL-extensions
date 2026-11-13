@@ -165,6 +165,39 @@ video directly: `demos/Vcd.xtl` (`vc:`) reads a VCD file into arrays
 times), so every lamp is a signal sampled once a frame and keyed with
 `vd:s_teps`.
 
+## A ray-traced film: Cycles.xtl
+
+`lib/Cycles.xtl` (alias `cy:`) turns X_eTaL arrays into a scene for
+Cycles, Blender's path tracer: reflections, shadows from every light
+and light scattered in fog are traced, not approximated. A program
+works the scene out as tables -- a row a box, a lamp, a vehicle, a
+plume of steam -- and each function writes one table into the script
+as one call of the player, `cy:head`, fixed Python that reads the
+numbers and decides nothing, as `vd:head` does for Video.xtl.
+
+Nothing is loaded from a file. Every surface is worked out by its
+material from where it is, so a table of boxes is a city:
+
+| Function | What it makes |
+|---|---|
+| `cy:s_tage`, `cy:l_ook`, `cy:s_ky`, `cy:b_loom` | Cycles on the graphics card when there is one (Metal, OptiX, CUDA, HIP, oneAPI), the picture's size, rate, length and samples; the film look, exposure and motion blur; a sky of two colors; light bleeding round bright things |
+| `cy:f_acade` | a building's skin: the wall cut into window bays and floors, dark glass panes, a share of them lit rooms of varying color and brightness, weathered walls |
+| `cy:w_et` | wet ground: rough where damp, a mirror where puddles stand, rippled by rain |
+| `cy:s_creen` | a screen playing a picture worked out from the time: `bars`, `rings`, `rain` or `tiles` |
+| `cy:r_eel` | a screen playing a video file, looping |
+| `cy:n_eon`, `cy:s_urface` | a material that only gives off light; a plain one (color, roughness, metal) |
+| `cy:b_oxes`, `cy:s_ign` | a group of boxes as one object (x y z, w d h, turn); a sign of solid letters, across or stacked |
+| `cy:m_odel`, `cy:p_arts`, `cy:f_leet` | a thing made once (a vehicle) and shown many times, each moving at an even speed from one place to another |
+| `cy:l_amps`, `cy:s_pots` | lamps and spotlights from tables (place, color, watts) |
+| `cy:f_og`, `cy:s_team` | boxes of even haze; plumes of steam that billow and rise |
+| `cy:f_ly` | the camera flown along a smooth curve through its eyes, looking along another through its aims, focused on the aim (depth of field) |
+| `cy:s_till`, `cy:f_rames`, `cy:e_ncode`, `cy:report` | one frame; the frames as PNG files, none rendered twice, so a long render can be stopped and run again; the frames as an MP4; what was made, for a test |
+
+Places are meters, z up; times are seconds; colors are 0 to 255; a
+light's strength is watts. A film takes time: at 1280 by 720 and 96
+samples a frame of a street scene took about a minute on an M1 Max.
+Render stills at 24 samples while a scene is worked out.
+
 ## Demos
 
 1. `demos/hello.xtl` (`just demo blender hello`): the whole chain once.
@@ -696,6 +729,10 @@ the HEX1000 run at 160 by 90 and 90 by 160).
 `blender-keys-leds-quick` simulates the physical 1K with production
 timing, replays all active clocks and decodes the serial display, then
 renders six stages at 640 by 360 and 360 by 640.
+`blender-cycles-script` pins the Python Cycles.xtl writes, every word
+once; `blender-cycles-tiny` ray-traces a street corner (Cycles on the
+processor, 64 by 36, 4 samples) and checks the report and the files:
+a still, three frames, and the frames as a video.
 Of them: the second writes two cubes and a label as bpy
 and checks what Blender made -- the mesh (16 vertices, 12 faces), the
 objects, a still, `.glb`, `.obj`, `.mtl`, `.blend`. `blender-bpy-script`

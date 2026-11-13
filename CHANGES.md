@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-13
 
+- `ext` blender: `lib/Cycles.xtl` (`cy:`), arrays to a ray-traced film -- Cycles on the GPU when there is one; procedural materials (facades with lit windows, wet ground with puddles, animated screens, neon); boxes, signs, a model shown as a fleet of moving vehicles; lamps, spots, fog, steam; a camera flown along a curve with depth of field; bloom; frames that are never rendered twice and their video. Goldens `blender-cycles-script` and `blender-cycles-tiny`. A planning step, snowflow-study, inserted before the winter planet (the user's reference, a real-time WebGPU snow demo to be done in X_eTaL).
 - `plan` Blender saga: three steps inserted before the M1 profiling step for a ray-traced city fly-through (the user's request): cycles-kit (a Cycles facade: procedural materials, volumes, lights, a flown camera, bloom, resumable frames), neon-city (the scene worked out as arrays, stills, a timed frame), neon-city-render (the final render and the site); then, queued by the user, a second demo, a procedurally generated winter planet with simulated snow: winter-planet and winter-planet-render; gpu-run-m1 and explain-release move to 25 and 26.
 - `fix` The doc site lists files in the same order on every machine: scripts/doc-site.sh sorts its globs in the C locale (Linux put CosyLogo.xtl after cosy.xtl, macOS before it, so each machine found the other's pages/ out of date and the gate failed); pages/ rebuilt in that order.
 

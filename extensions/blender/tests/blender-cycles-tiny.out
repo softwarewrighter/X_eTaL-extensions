@@ -1,0 +1,16 @@
+the run, and the error lines in Blender's log:
+exit 0
+errors 0
+what Blender made:
+CYCLES, 64 by 36, 3 frames at 10 a second, 4 samples
+objects: 1 camera, 3 empty, 1 font, 2 light, 8 mesh
+faces: 54
+materials: bars glass haze pink rain rings steel street tiles vent
+models: car
+
+work/cycles/out/corner.mp4
+work/cycles/out/frames/0001.png
+work/cycles/out/frames/0002.png
+work/cycles/out/frames/0003.png
+work/cycles/out/report.txt
+work/cycles/out/still.png

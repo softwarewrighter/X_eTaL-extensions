@@ -1,0 +1,3 @@
+command = "xetal-x --ext .. run tests/cycles-script.xtl"
+exit_code = 0
+desc = "the Python Cycles.xtl writes for a small ray-traced scene, every word once (the picture, materials, boxes, a sign, a model and its fleet, lamps, spots, fog, steam, the flight, bloom, a still, frames, the video, the report), pinned; the player by its line count"
