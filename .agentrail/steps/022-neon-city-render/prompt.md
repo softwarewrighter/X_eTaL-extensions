@@ -1,0 +1,1 @@
+Saga 15: the city's final render and release. Render the frame sequence at final quality (resumable, in the background; the gate does not run beside it), encode with ffmpeg, check frames across the clip, put the recording on the site (just videos / just pages), the extension's page, README catalog, CHANGES.md, docs/plan.md; gate, commit, push, the site checked online.
