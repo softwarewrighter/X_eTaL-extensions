@@ -10,6 +10,11 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-13
+
+- `plan` Blender saga: three steps inserted before the M1 profiling step for a ray-traced city fly-through (the user's request): cycles-kit (a Cycles facade: procedural materials, volumes, lights, a flown camera, bloom, resumable frames), neon-city (the scene worked out as arrays, stills, a timed frame), neon-city-render (the final render and the site); then, queued by the user, a second demo, a procedurally generated winter planet with simulated snow: winter-planet and winter-planet-render; gpu-run-m1 and explain-release move to 25 and 26.
+- `fix` The doc site lists files in the same order on every machine: scripts/doc-site.sh sorts its globs in the C locale (Linux put CosyLogo.xtl after cosy.xtl, macOS before it, so each machine found the other's pages/ out of date and the gate failed); pages/ rebuilt in that order.
+
 ## 2026-11-05
 
 - `chore` complete the RTX portion of GPU execution step 19: both 1080p formats, real event/host measurements, independent outputs and narration artifacts checked; affected gate passes all 21 Blender regressions and docs/site checks. Fresh M1 profiling remains step 20, awaiting a reachable host, before release step 21.

@@ -15,6 +15,10 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
 "$root/scripts/venv.sh" --check
 cd "$root"
+# the files in the same order on every machine: a glob sorts by the
+# locale, which put CosyLogo.xtl after cosy.xtl on Linux and before it
+# on macOS, so each machine found the other's pages/ out of date
+export LC_ALL=C
 xetal="$("$root/scripts/build-xetal.sh")"
 dest="${DOC_OUT:-pages/doc}"
 tmp="$(mktemp -d)"
