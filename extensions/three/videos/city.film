@@ -1,0 +1,8 @@
+# extensions/three/videos/city.webm and .webp: the live city's ride, as
+# the page itself draws it -- headless Chrome (no window) at moments of
+# the flight, joined (just ext three city, then just ext three ride:
+# work/city/ride.mp4; then just videos three city).
+demo=city
+file=work/city/ride.mp4
+scale=640
+fps=10

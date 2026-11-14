@@ -1,0 +1,27 @@
+## Three.xtl -- the facade of the three extension: interactive 3D in a
+## browser. A scene is the calls of a player -- the text Cycles.xtl's
+## functions write (cy:s_tage, cy:f_acade, cy:b_oxes, cy:f_leet, cy:f_ly
+## and the rest) without cy:head, Blender's player. Here the player is
+## written with Three.js and draws the same calls in real time: ride
+## the camera's flight, fly or walk. th:s_how! draws a scene in the
+## page the program runs in (X_eTaL as WebAssembly); th:p_age! writes a
+## directory to serve, from the command line.
+## Import: "th:" u_se< "Three"
+## Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+## Each signature line is written out by the binding macro (lib/Ffi.xtlm).
+
+"ffi:" u_se< "Ffi"
+
+## th:a_bout @: the extension's name and version.
+"a_bout : unit -> text"          ffi:b_ind< "three/about"
+## th:s_how! scene: draws the scene in the page, in place of the one
+## shown before; how many calls it holds. From the command line there
+## is no page and nothing is drawn (the count is still given).
+"s_how! : text -> int"           ffi:b_ind< "three/show"
+## dir th:p_age! scene: writes a directory to serve (under the working
+## directory, or XETAL_THREE_ROOT) -- index.html, the player, Three.js
+## and the scene's calls -- made whole each time; how many files.
+"p_age! : text text -> int"      ffi:b_ind< "three/page"
+
+## The native package behind these functions.
+l:package := "three"

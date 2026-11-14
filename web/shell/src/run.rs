@@ -22,6 +22,20 @@ pub struct Linked {
 ///
 /// When a linked descriptor is invalid: a build error, not a user's.
 pub fn install(linked: &[Linked]) -> Vec<FunctionInfo> {
+    install_with(linked, &[])
+}
+
+/// As [`install`], with libraries a page's program imports besides the
+/// facades (file name and source): a shared demo library, another
+/// extension's X_eTaL library.
+///
+/// # Panics
+///
+/// When a linked descriptor is invalid: a build error, not a user's.
+pub fn install_with(
+    linked: &[Linked],
+    libraries: &[(&'static str, &'static str)],
+) -> Vec<FunctionInfo> {
     let mut registry = Registry::new();
     let mut facades = Vec::new();
     for l in linked {
@@ -38,7 +52,7 @@ pub fn install(linked: &[Linked]) -> Vec<FunctionInfo> {
     // the binding macro every facade is written with (lib/Ffi.xtlm)
     let mut store = ExtStore::new(Memory::default(), registry)
         .with_facade("Ffi.xtlm", include_str!("../../../lib/Ffi.xtlm"));
-    for (name, source) in facades {
+    for (name, source) in facades.into_iter().chain(libraries.iter().copied()) {
         store = store.with_facade(name, source);
     }
     xetal_store::install(Arc::new(store));

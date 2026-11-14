@@ -1,0 +1,4 @@
+three 0.1.0
+  three/about : Unit -> Char    # The extension's name and version.
+  three/show : Char -> Int    # Draw a scene (the calls of a player) in the page; how many calls. Natively nothing is drawn.
+  three/page : Char Char -> Int    # Write a directory to serve -- the page, the player, Three.js, the scene's calls; how many files.

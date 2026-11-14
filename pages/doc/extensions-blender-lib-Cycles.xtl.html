@@ -190,6 +190,14 @@
 <ul>
 <li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
 </ul>
+<h3>extensions/three/lib/</h3>
+<ul>
+<li><a href="extensions-three-lib-Three.xtl.html">Three.xtl</a></li>
+</ul>
+<h3>extensions/three/demos/</h3>
+<ul>
+<li><a href="extensions-three-demos-city.xtl.html">city.xtl</a></li>
+</ul>
 <h3>extensions/web/lib/</h3>
 <ul>
 <li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
@@ -891,7 +899,7 @@ stage(640, 360, 30, 6.0, 24, 'GPU')</pre>
 <pre class="code"><span class="c-libfunc">ˡs̲tage</span> ← { (w, h, fps, secs, samples, device) z →
   <span class="c-string">&quot;stage(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> w) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> h) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> fps) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> secs) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> samples) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Cycles.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> device) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.c_ity"><span class="c-libfunc">ˡc̲ity</span></a></div>
 </div>
 <div class="item" id="l.l_ook">
 <h3><a href="#l.l_ook"><span class="c-libfunc">ˡl̲ook</span></a> <span class="type">: Any c =&gt; (Char, a, b) -&gt; c -&gt; Char</span></h3>
@@ -906,7 +914,7 @@ camera; 0 for no blur)</p>
 <pre class="code"><span class="c-libfunc">ˡl̲ook</span> ← { (name, exposure, shutter) z →
   <span class="c-string">&quot;look(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Cycles.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> exposure) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> shutter) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.c_ity"><span class="c-libfunc">ˡc̲ity</span></a></div>
 </div>
 <div class="item" id="l.s_ky">
 <h3><a href="#l.s_ky"><span class="c-libfunc">ˡs̲ky</span></a> <span class="type">: (Num a, Num b, Any d) =&gt; (a, b, c) -&gt; d -&gt; Char</span></h3>
@@ -919,7 +927,7 @@ as given; a night sky's colors are near black)</p>
 <pre class="code"><span class="c-libfunc">ˡs̲ky</span> ← { (horizon, zenith, strength) z →
   <span class="c-string">&quot;sky(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Cycles.xtl.html#h.r_gb" class="c-libfunc">ʰr̲gb</a> horizon) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Cycles.xtl.html#h.r_gb" class="c-libfunc">ʰr̲gb</a> zenith) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> strength) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.c_ity"><span class="c-libfunc">ˡc̲ity</span></a></div>
 </div>
 <div class="item" id="l.b_loom">
 <h3><a href="#l.b_loom"><span class="c-libfunc">ˡb̲loom</span></a> <span class="type">: Any d =&gt; (a, b, c) -&gt; d -&gt; Char</span></h3>
@@ -933,7 +941,7 @@ brighter than the threshold (1 is white) glows, that strongly (0 to
 <pre class="code"><span class="c-libfunc">ˡb̲loom</span> ← { (threshold, strength, size) z →
   <span class="c-string">&quot;bloom(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> threshold) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> strength) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> size) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.c_ity"><span class="c-libfunc">ˡc̲ity</span></a></div>
 </div>
 <h2 class="section" id="section-4">Materials</h2>
 <div class="item" id="l.s_urface">
@@ -1136,7 +1144,7 @@ thick); forward (0 to 1) is how much goes on the way it was going</p>
 <pre class="code"><span class="c-libfunc">ˡf̲og</span> ← { (name, t, rgb, density, forward) z →
   <span class="c-string">&quot;fog(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Cycles.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> t, <span class="c-number">6</span>) <a href="extensions-blender-lib-Cycles.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Cycles.xtl.html#h.r_gb" class="c-libfunc">ʰr̲gb</a> rgb) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> density) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> forward) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.c_ity"><span class="c-libfunc">ˡc̲ity</span></a></div>
 </div>
 <div class="item" id="l.s_team">
 <h3><a href="#l.s_team"><span class="c-libfunc">ˡs̲team</span></a> <span class="type">: (Num a, Num b, Any e) =&gt; (Char, a, b, c, d) -&gt; e -&gt; Char</span></h3>
@@ -1150,7 +1158,7 @@ it rises, billowing, climbing speed meters a second</p>
 <pre class="code"><span class="c-libfunc">ˡs̲team</span> ← { (name, t, rgb, density, speed) z →
   <span class="c-string">&quot;steam(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Cycles.xtl.html#h.q_uote" class="c-libfunc">ʰq̲uote</a> name) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> t, <span class="c-number">6</span>) <a href="extensions-blender-lib-Cycles.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Cycles.xtl.html#h.r_gb" class="c-libfunc">ʰr̲gb</a> rgb) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> density) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> speed) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.c_ity"><span class="c-libfunc">ˡc̲ity</span></a></div>
 </div>
 <h2 class="section" id="section-7">The camera</h2>
 <div class="item" id="l.f_ly">
@@ -1168,7 +1176,7 @@ little; 0 keeps everything sharp)</p>
 <pre class="code"><span class="c-libfunc">ˡf̲ly</span> ← { (ts, e, a, lens, fstop) z →
   <span class="c-string">&quot;fly(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> ts, <a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> ts) <a href="extensions-blender-lib-Cycles.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;[0], &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> e, <span class="c-number">3</span>) <a href="extensions-blender-lib-Cycles.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> a, <span class="c-number">3</span>) <a href="extensions-blender-lib-Cycles.xtl.html#h.n_ums" class="c-libfunc">ʰn̲ums</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> lens) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_ormat" class="c-builtin">f̲ormat</a> fstop) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 }</pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.c_ity"><span class="c-libfunc">ˡc̲ity</span></a></div>
 </div>
 <h2 class="section" id="section-8">Rendering</h2>
 <div class="item" id="l.s_till">
@@ -1218,7 +1226,7 @@ kind; the faces; the materials and the models, by name -- what a
 test checks</p>
 </div>
 <pre class="code">ˡreport ← <span class="c-string">&quot;report()\n&quot;</span></pre>
-<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.c_ity"><span class="c-libfunc">ˡc̲ity</span></a></div>
 </div>
 </main>
 </body>

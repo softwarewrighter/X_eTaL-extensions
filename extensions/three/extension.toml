@@ -1,0 +1,9 @@
+# The three package: what the loader reads to find and check the
+# native library, and the facade programs import.
+[extension]
+name = "three"
+version = "0.1.0"
+abi = 1
+facade = "lib/Three.xtl"
+# The library's file stem: libxetal_ext_three.dylib on macOS, .so on Linux.
+library = "xetal_ext_three"

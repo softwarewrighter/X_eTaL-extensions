@@ -1,0 +1,8 @@
+## A scene of three calls: counted, and written as a page to serve.
+
+"th:" u_se< "Three"
+
+scene := "stage(640, 360, 30, 6.0, 24, 'GPU')\nsurface('steel', nums('1.0 1.0 1.0', 3)[0], 0.3, 1.0)\nboxes('tower', nums('0.0 0.0 50.0 20.0 20.0 100.0 0.0', 7), 'steel')\n"
+"the calls, and the files of the page:"
+th:s_how! scene
+"work/tiny" th:p_age! scene

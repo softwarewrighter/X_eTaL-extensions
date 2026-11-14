@@ -1,0 +1,15 @@
+[package]
+name = "three-web"
+description = "The three extension live: the neon city built from a seed by X_eTaL compiled to WebAssembly, drawn by a Three.js player, to ride, fly and walk through"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+
+[dependencies]
+xetal-ext-shell = { path = "../../../web/shell" }
+xetal-ext-three = { path = "../rust", features = ["static"] }
+wasm-bindgen = "0.2"
+
+# Its own workspace: three is linked with its `static` feature.
+[workspace]

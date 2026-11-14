@@ -1,0 +1,3 @@
+command = "xetal-x --ext . --ext-list"
+exit_code = 0
+desc = "the functions of the three extension, as xetal-x lists them"

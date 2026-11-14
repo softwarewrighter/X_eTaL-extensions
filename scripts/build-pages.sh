@@ -37,6 +37,11 @@ if [ -d "$root/pages/blender/td" ]; then
   mkdir -p "$out/blender/td"
   cp -R "$root/pages/blender/td/." "$out/blender/td/"
 fi
+# the three extension's live page, published by scripts/publish-three.sh
+if [ -d "$root/pages/three/live" ]; then
+  mkdir -p "$out/three/live"
+  cp -R "$root/pages/three/live/." "$out/three/live/"
+fi
 [ -n "${PAGES_DIR:-}" ] && exit 0
 "$root/scripts/sync-pages.py" "$out" "$root/pages"
 echo "pages/ built; commit it (git add pages/) and push to publish."

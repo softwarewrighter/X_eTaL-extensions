@@ -4891,6 +4891,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-ext-three"
+version = "0.1.0"
+dependencies = [
+ "js-sys",
+ "wasm-bindgen",
+ "xetal-ext-sdk",
+]
+
+[[package]]
 name = "xetal-ext-ui"
 version = "0.1.0"
 dependencies = [

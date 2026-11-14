@@ -1,0 +1,17 @@
+## Three.js, live: the neon city to fly and walk through in a browser.
+## The city is the same arrays as the ray-traced film (blender's
+## demos/NeonCity.xtl), written as the same calls (Cycles.xtl); here
+## they go to a player written with Three.js. This writes a directory
+## to serve, work/city: the page, the player, Three.js and the calls.
+## Run: just ext three city   (then just ext three serve city, and open
+## http://127.0.0.1:8470/)
+## Command: just ext three city && just ext three serve city
+## Page: three/live/ fly and walk through it, live
+
+"th:" u_se< "Three"
+"nc:" u_se< "NeonCity"
+
+scene := (nc:seed, 1280, 720, 30, 24, "GPU") nc:c_ity 0
+"the calls of the scene, and the files written to work/city:"
+th:s_how! scene
+"work/city" th:p_age! scene

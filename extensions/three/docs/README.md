@@ -1,0 +1,115 @@
+# three
+
+Interactive 3D in a browser. An X_eTaL program writes a scene as the
+calls of a player -- the same text the blender extension's Cycles.xtl
+writes for a ray-traced film -- and here a player written with
+Three.js draws those calls in real time: ride the camera's flight, fly,
+or walk. The first scene is the neon city: 240 lots worked out as
+arrays from a seed, so another seed is another city, built in the page
+by X_eTaL compiled to WebAssembly.
+
+Live: <https://softwarewrighter.github.io/X_eTaL-extensions/three/live/>
+
+- Package: `extensions/three/` (`extension.toml`; library
+  `xetal_ext_three`: `libxetal_ext_three.dylib` on macOS, `.so` on Linux)
+- Facade: `lib/Three.xtl`, recommended alias `th:`
+- Native crates: none beyond the SDK (in a browser, `js-sys` and
+  `wasm-bindgen` to reach the page)
+- Vendored: Three.js 0.170.0 (MIT) and the passes the player uses, in
+  `web/static/vendor/three/` with its license; nothing is loaded from
+  another site
+
+## Functions
+
+| Native name | Arity | X_eTaL type | What |
+| ----------- | ----- | ----------- | ---- |
+| `about` | 0 | `Unit -> Char` | the extension's name and version |
+| `show` | 1 | `Char -> Int` | draw a scene in the page, in place of the one before; how many calls it holds. From the command line there is no page and nothing is drawn |
+| `page` | 2 | `Char Char -> Int` | write a directory to serve -- the page, the player, Three.js and the scene's calls; how many files. Under the working directory (or `XETAL_THREE_ROOT`) |
+
+## From X_eTaL
+
+```
+"th:" u_se< "Three"
+"nc:" u_se< "NeonCity"
+scene := (7, 1280, 720, 30, 24, "GPU") nc:c_ity 0   # seed 7: the film's city
+th:s_how! scene                                    # in a page: draw it
+"work/city" th:p_age! scene                        # from the command line: a directory to serve
+```
+
+Run with `xetal-x --ext extensions run PROGRAM` (see the repository's
+docs/bridge.md); NeonCity.xtl is in `extensions/blender/demos`.
+
+## One scene, two players
+
+A scene is text: one call a line, each a table of numbers.
+
+```
+facade('skin 0', nums('0.04 0.04 0.06', 3)[0], ...)
+boxes('towers 0', nums('-19.5 -234.5 30.7 14.5 16.5 61.5 0.0 ...', 7), 'skin 0')
+fleet('cars', 'car', nums('-2.6 232.5 0.0 -2.6 76.0 0.0 ...', 6))
+fly(nums('0.0 3.0 6.0 9.0 12.0 15.0', 6)[0], ...)
+```
+
+The blender extension puts its player, `cy:head`, in front of that
+text and Blender runs it as Python: Cycles ray-traces a film. The same
+text is JavaScript, and `web/static/player.js` defines the same
+functions with Three.js: `stage`, `look`, `sky`, `bloom`, `surface`,
+`neon`, `facade`, `wet`, `screen`, `boxes`, `sign`, `model`, `fleet`,
+`lamps`, `fog`, `steam`, `fly`. Each reads its numbers and decides
+nothing about the scene.
+
+| In the film (Cycles) | Here (Three.js) |
+| -------------------- | --------------- |
+| puddles reflect by tracing rays | the street mirrors the city by drawing it a second time, upside down |
+| screens, signs and lamps light walls and street, with shadows | lamps light the street and plain surfaces; nothing casts a shadow; screens and neon glow (bloom) but do not light |
+| haze scatters light; steam is a volume | haze is a fade with distance; steam is a flat sheet facing you |
+| windows and puddles from Blender's noise | the same rules with other noise, so they fall in other places |
+| a video file on a screen (`cy:r_eel`) | tiles, for now |
+| depth of field, motion blur | neither |
+
+## The page
+
+- **Ride** follows the film's flight, again and again. **Fly** and
+  **Walk** start where you are: click the picture, then W A S D and
+  the mouse; E and Q rise and sink (flying); Shift is faster; Esc
+  frees the mouse. Towers, bridges and pylons stop you, flying or
+  walking.
+- **Seed**: Build makes the city of that number, Another a random one.
+  X_eTaL runs in the page and takes a fraction of a second.
+- **What this is** shows the program that ran, as X_eTaL draws it.
+- `?t=SECONDS` holds the flight at a moment, `?hud=0` hides the
+  controls, `?seed=N` builds that city first, `?mode=fly` or `walk`
+  starts there.
+
+## Demos
+
+1. `demos/city.xtl` (`just ext three city`): the film's city written
+   as a directory to serve, `work/city`; `just ext three serve city`
+   serves it at <http://127.0.0.1:8470/>. No WebAssembly: the calls
+   were worked out on the command line.
+2. The live page (`web/`, `just ext three live-serve`): X_eTaL and
+   this extension compiled to WebAssembly, the city built from the
+   seed you give. `just ext three publish` copies it to
+   `pages/three/live` for the site.
+
+`just ext three ride` records the ride from the page itself (headless
+Chrome, no window) as `work/city/ride.mp4`.
+
+## Build and test
+
+```sh
+just build      # the native library and xetal-x
+just test       # Rust tests (rust/tests) and reg-rs tests (tests/)
+just list       # the functions as xetal-x sees them
+just live       # the live page, with trunk, into web/dist
+```
+
+The Rust tests check the descriptor, that the player defines every
+call the vocabulary writes, and that the vendored Three.js is whole.
+The goldens: `three-list`; `three-tiny` (three calls counted, a page
+of 16 files written); `three-outside` (a path outside the working
+directory is refused); `three-demo-city` (the city: 69 calls). The
+page's crate (`web/`) runs its program natively for two seeds and
+checks the decorated source. What the player draws is checked by eye,
+from headless Chrome's pictures.

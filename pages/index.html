@@ -23,6 +23,7 @@
     <li><a href="#linalg">linalg</a></li>
     <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-dig">voxels-dig</a></li><li><a href="#scene-voxels-endless">voxels-endless</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-fly">voxels-fly</a></li><li><a href="#scene-voxels-game">voxels-game</a></li><li><a href="#scene-voxels-light">voxels-light</a></li><li><a href="#scene-voxels-rubik-buttons">voxels-rubik-buttons</a></li><li><a href="#scene-voxels-rubik-solve">voxels-rubik-solve</a></li><li><a href="#scene-voxels-rubik-turn">voxels-rubik-turn</a></li><li><a href="#scene-voxels-rubik">voxels-rubik</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-water">voxels-water</a></li><li><a href="#scene-voxels-world">voxels-world</a></li></ul></li>
     <li><a href="#sqlite">sqlite</a><ul><li><a href="#sqlite-notebook">notebook</a></li></ul></li>
+    <li><a href="#three">three</a><ul><li><a href="#three-city">city</a></li></ul></li>
     <li><a href="#web">web</a><ul><li><a href="#web-life">life</a></li><li><a href="#web-todomvc">todomvc</a></li></ul></li>
   </ul>
 </nav>
@@ -347,6 +348,16 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <pre class="source">just demo sqlite notebook</pre>
     </section>
   </div>
+  <h2 id="three"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/three/docs/README.md">three</a> <a class="docs" href="doc/extensions-three-lib-Three.xtl.html">facade docs</a></h2>
+  <p class="lede">Interactive 3D in a browser. An X_eTaL program writes a scene as the calls of a player -- the same text the blender extension&#x27;s Cycles.xtl writes for a ray-traced film -- and here a player written with Three.js draws those calls in real time: ride the camera&#x27;s flight, fly, or walk. The first scene is the neon city: 240 lots worked out as arrays from a seed, so another seed is another city, built in the page by X_eTaL compiled to WebAssembly.</p>
+  <div class="demos">
+    <section class="panel demo" id="three-city">
+      <h3>three / city <a class="docs" href="doc/extensions-three-demos-city.xtl.html">source and docs</a> <a class="docs" href="three/live/">fly and walk through it, live</a></h3>
+      <p class="note">Three.js, live: the neon city to fly and walk through in a browser. The city is the same arrays as the ray-traced film (blender&#x27;s demos/NeonCity.xtl), written as the same calls (Cycles.xtl); here they go to a player written with Three.js. This writes a directory to serve, work/city: the page, the player, Three.js and the calls.</p>
+      <video src="three/city.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just ext three city &amp;&amp; just ext three serve city</pre>
+    </section>
+  </div>
   <h2 id="web"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/web/docs/README.md">web</a> <a class="docs" href="doc/extensions-web-lib-Web.xtl.html">facade docs</a></h2>
   <p class="lede">&lt;p align=&quot;center&quot;&gt; &lt;img src=&quot;../videos/todomvc.webp&quot; alt=&quot;TodoMVC served by an X_eTaL program&quot; width=&quot;420&quot;&gt; &lt;img src=&quot;../videos/life.webp&quot; alt=&quot;Life computed in X_eTaL, one generation per request&quot; width=&quot;320&quot;&gt; &lt;/p&gt;</p>
   <div class="demos">
@@ -372,7 +383,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at 92b1afd</span>
+  <span>built at aa16ad0</span>
 </footer>
 </body>
 </html>

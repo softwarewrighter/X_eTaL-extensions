@@ -1,0 +1,3 @@
+# Page crates build into target/web/ (see web/shell/README.md).
+[build]
+target-dir = "../../../target/web"

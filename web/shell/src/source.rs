@@ -29,3 +29,24 @@ pub fn code(src: &str) -> Html {
 pub fn block(src: &str) -> Html {
     html! { <pre class="source">{ segments(src) }</pre> }
 }
+
+/// A program drawn decorated, as HTML text: a span a token, classed as
+/// [`block`]'s are -- for a page that is not drawn by yew.
+pub fn markup(src: &str) -> String {
+    let mut out = String::new();
+    for s in decorate(src) {
+        out.push_str("<span class=\"");
+        out.push_str(css(s.class));
+        out.push_str("\">");
+        for c in s.text.chars() {
+            match c {
+                '&' => out.push_str("&amp;"),
+                '<' => out.push_str("&lt;"),
+                '>' => out.push_str("&gt;"),
+                _ => out.push(c),
+            }
+        }
+        out.push_str("</span>");
+    }
+    out
+}

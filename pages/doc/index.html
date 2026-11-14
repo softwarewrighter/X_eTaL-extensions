@@ -190,6 +190,14 @@
 <ul>
 <li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
 </ul>
+<h3>extensions/three/lib/</h3>
+<ul>
+<li><a href="extensions-three-lib-Three.xtl.html">Three.xtl</a></li>
+</ul>
+<h3>extensions/three/demos/</h3>
+<ul>
+<li><a href="extensions-three-demos-city.xtl.html">city.xtl</a></li>
+</ul>
 <h3>extensions/web/lib/</h3>
 <ul>
 <li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
@@ -395,8 +403,8 @@ height, a footprint and a skin of its own from a hash of its number;
 screens on the walls that face the avenue, bands of neon, signs,
 lamps, steam, bridges across, cars on the ground and in the air, and
 a camera that comes down from the skyline to the puddles. Nothing is
-drawn by hand and nothing is loaded: change nc:seed and it is
-another city. Shared by the demo (demos/city.xtl: stills), its
+drawn by hand and nothing is loaded: another seed is another
+city (nc:c_ity). Shared by the demo (demos/city.xtl: stills), its
 preview and film, and its test.
 Import: &quot;nc:&quot; u_se&lt; &quot;NeonCity&quot;</li>
 <li>library <a href="extensions-blender-demos-PcWalk.xtl.html">extensions/blender/demos/PcWalk.xtl</a>: PcWalk.xtl -- HEX1000's program counter, a video made with the
@@ -876,6 +884,26 @@ Run: just demo scene voxels-world   (drag to turn it; q or close: quit)</li>
 arrays to compute, pictures to see it. Atmospheric CO2 at Mauna Loa,
 1959-2025 (NOAA GML and Scripps; demos/data/PROVENANCE.txt).
 Run: just demo sqlite notebook   (pictures go to work/draw/)</li>
+<li>library <a href="extensions-three-lib-Three.xtl.html">extensions/three/lib/Three.xtl</a>: Three.xtl -- the facade of the three extension: interactive 3D in a
+browser. A scene is the calls of a player -- the text Cycles.xtl's
+functions write (cy:s_tage, cy:f_acade, cy:b_oxes, cy:f_leet, cy:f_ly
+and the rest) without cy:head, Blender's player. Here the player is
+written with Three.js and draws the same calls in real time: ride
+the camera's flight, fly or walk. th:s_how! draws a scene in the
+page the program runs in (X_eTaL as WebAssembly); th:p_age! writes a
+directory to serve, from the command line.
+Import: &quot;th:&quot; u_se&lt; &quot;Three&quot;
+Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each signature line is written out by the binding macro (lib/Ffi.xtlm).</li>
+<li>program <a href="extensions-three-demos-city.xtl.html">extensions/three/demos/city.xtl</a>: Three.js, live: the neon city to fly and walk through in a browser.
+The city is the same arrays as the ray-traced film (blender's
+demos/NeonCity.xtl), written as the same calls (Cycles.xtl); here
+they go to a player written with Three.js. This writes a directory
+to serve, work/city: the page, the player, Three.js and the calls.
+Run: just ext three city   (then just ext three serve city, and open
+http://127.0.0.1:8470/)
+Command: just ext three city &amp;&amp; just ext three serve city
+Page: three/live/ fly and walk through it, live</li>
 <li>library <a href="extensions-web-lib-Web.xtl.html">extensions/web/lib/Web.xtl</a>: Web.xtl -- the facade of the web extension: HTTP serving, where the
 program is the request loop. axum serves on 127.0.0.1 in the
 background and queues each request; the program takes the next one,
@@ -1541,7 +1569,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.seed">ˡseed</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.seconds">ˡseconds</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#h.c_ols"><span class="c-libfunc">ʰc̲ols</span></a></td><td>function</td><td><code>Any b =&gt; (Int, a) -&gt; b -&gt; a</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and"><span class="c-libfunc">ˡr̲and</span></a></td><td>function</td><td><code>Any a =&gt; (Int, Int) -&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and"><span class="c-libfunc">ˡr̲and</span></a></td><td>function</td><td><code>Any a =&gt; (Int, Int, Int) -&gt; a -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox"><span class="c-libfunc">ʰb̲ox</span></a></td><td>function</td><td><code>Any a =&gt; (Float, Float, Float, Float, Float, Float) -&gt; a -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill"><span class="c-libfunc">ʰf̲ill</span></a></td><td>function</td><td><code>Num a =&gt; (Int, a) -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#cols">cols</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -1554,45 +1582,11 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#row">row</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#lx">lx</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#ly">ly</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#u">u</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#rough">rough</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#high">high</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#wide">wide</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#deep">deep</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#skin">skin</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#tiered">tiered</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#body">body</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#spired">spired</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.lots">ˡlots</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#bodies">bodies</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#tiers">tiers</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#spires">spires</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#tierSkin">tierSkin</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#spireSkin">spireSkin</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.t_owers"><span class="c-libfunc">ˡt̲owers</span></a></td><td>function</td><td><code>Int -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#top">top</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#units">units</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#aerial">aerial</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#mast">mast</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#masts">masts</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#tip">tip</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#tipX">tipX</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#tipY">tipY</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#beacons">beacons</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#near">near</a></td><td>value</td><td><code>Bool</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#foot">foot</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#ledge">ledge</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#hue">hue</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#hue2">hue2</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.b_ands"><span class="c-libfunc">ˡb̲ands</span></a></td><td>function</td><td><code>Int -&gt; Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#first">first</a></td><td>value</td><td><code>Bool</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#shown">shown</a></td><td>value</td><td><code>Bool</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#sw">sw</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#sh">sh</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#sz">sz</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#kind">kind</a></td><td>value</td><td><code>Int</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#panels">panels</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.s_creens"><span class="c-libfunc">ˡs̲creens</span></a></td><td>function</td><td><code>Int -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.l_ots"><span class="c-libfunc">ˡl̲ots</span></a></td><td>function</td><td><code>Int -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.t_owers"><span class="c-libfunc">ˡt̲owers</span></a></td><td>function</td><td><code>(Num a, Any b) =&gt; (Float, a) -&gt; b -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.r_oofs"><span class="c-libfunc">ˡr̲oofs</span></a></td><td>function</td><td><code>Any a =&gt; (Float, Int) -&gt; a -&gt; (Float, Float)</code></td></tr>
+<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.b_ands"><span class="c-libfunc">ˡb̲ands</span></a></td><td>function</td><td><code>Any a =&gt; (Float, Int, Int) -&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.s_creens"><span class="c-libfunc">ˡs̲creens</span></a></td><td>function</td><td><code>Any a =&gt; (Float, Int, Int) -&gt; a -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#blocks">blocks</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#bid">bid</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#bside">bside</a></td><td>value</td><td><code>Float</code></td></tr>
@@ -1624,31 +1618,25 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#lane">lane</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#north">north</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#cx">cx</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#cy0">cy0</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#run">run</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.cars">ˡcars</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.c_ars"><span class="c-libfunc">ˡc̲ars</span></a></td><td>function</td><td><code>Int -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#fliers">fliers</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#fid">fid</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#street">street</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#east">east</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#fy">fy</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#fz">fz</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#fx0">fx0</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#frun">frun</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#high2">high2</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#hid">hid</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#hn">hn</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#hy0">hy0</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#hrun">hrun</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#hz">hz</a></td><td>value</td><td><code>Float</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.fliers">ˡfliers</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.f_liers"><span class="c-libfunc">ˡf̲liers</span></a></td><td>function</td><td><code>Int -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.times">ˡtimes</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.eyes">ˡeyes</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.aims">ˡaims</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#h.s_kins"><span class="c-libfunc">ʰs̲kins</span></a></td><td>function</td><td><code>Any a =&gt; a -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></td><td>function</td><td><code>Any a =&gt; a -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></td><td>function</td><td><code>Int -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#h.s_igns"><span class="c-libfunc">ʰs̲igns</span></a></td><td>function</td><td><code>Any a =&gt; a -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#h.t_raffic"><span class="c-libfunc">ʰt̲raffic</span></a></td><td>function</td><td><code>Any a =&gt; a -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#h.t_raffic"><span class="c-libfunc">ʰt̲raffic</span></a></td><td>function</td><td><code>Int -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.c_ity"><span class="c-libfunc">ˡc̲ity</span></a></td><td>function</td><td><code>Any e =&gt; (Int, a, b, c, d, Char) -&gt; e -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></td><td>function</td><td><code>Any e =&gt; (a, b, c, d, Char) -&gt; e -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-blender-demos-PcWalk.xtl.html#l.order">ˡorder</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-blender-demos-PcWalk.xtl.html#l.n">ˡn</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -2079,7 +2067,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.f_all"><span class="c-libfunc">ʰf̲all</span></a></td><td>function</td><td><code>(Int, Int, Box Int, Box Int, Int, Int, Int, Int) -&gt; (Int, Int, Int) -&gt; (Int, Int, Int)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.s_pread"><span class="c-libfunc">ʰs̲pread</span></a></td><td>function</td><td><code>((Int, Int, Box Int, Box Int, Int, Int, Int, Int), Int) -&gt; (Int, Int, Int) -&gt; (Int, Int, Int)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.d_rawWater"><span class="c-libfunc">ʰd̲rawWater</span></a></td><td>function</td><td><code>((Int, Int, Box Int, Box Int, Int, Int, Int, Int), Int) -&gt; Int -&gt; Int</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.q_uads"><span class="c-libfunc">ʰq̲uads</span></a></td><td>function</td><td><code>Num a =&gt; (Int, (Float, Float, Float), (Float, Float, Float), (Float, Float, Float), (Float, Float, Float)) -&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Endless.xtl.html#h.q_uads"><span class="c-libfunc">ʰq̲uads</span></a></td><td>function</td><td><code>(Int, (Float, Float, Float), (Float, Float, Float), (Float, Float, Float), (Float, Float, Float)) -&gt; Int -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.w_ater"><span class="c-libfunc">ˡw̲ater</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d, Any e, Any f, Any g, Any h, Any i, Any j, Any k) =&gt; (a, (b, c, d, e, f, g, h, i), j, k) -&gt; h</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.a_sleep"><span class="c-libfunc">ˡa̲sleep</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d, Any e, Any f, Any g, Any h, Num i, Any j, Any k, Truthy l) =&gt; (a, (b, c, d, e, f, g, h, i), j, k) -&gt; l</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Endless.xtl.html#l.w_aterUnits"><span class="c-libfunc">ˡw̲aterUnits</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d, Any e, Any f, Any g, Num h, Any i, Any j, Any k) =&gt; (a, (b, c, d, e, f, g, h, i), j, k) -&gt; h</code></td></tr>
@@ -2194,8 +2182,8 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-Play.xtl.html#h.f_ly"><span class="c-libfunc">ʰf̲ly</span></a></td><td>function</td><td><code>(Truthy a, Any b, Any c, Any d, Any e, Any f, Any g) =&gt; a -&gt; ((b, Float, c, d, Float, Float), e, f, g) -&gt; ((b, Float, c, d, Float, Float), e, f, g)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Play.xtl.html#h.w_hen"><span class="c-libfunc">ʰw̲hen</span></a></td><td>function</td><td><code>(Truthy a, Any b, Any c, Any d, Num e, Any f, Any g) =&gt; a -&gt; ((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, e), f, g) -&gt; ((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, e), f, g)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Play.xtl.html#h.p_laceIf"><span class="c-libfunc">ʰp̲laceIf</span></a></td><td>function</td><td><code>(Truthy a, Any b, Any c, Any d, Num e, Any f, Any g, Any h, Any i, Any j, Num k) =&gt; a -&gt; (((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, e), f, (g, h, i, j, k)), Int) -&gt; (((Float, b, Float, Float, c, d), (Int, Int, Box Int, Box Int, Int, Int, Int, e), f, (g, h, i, j, k)), Int)</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Play.xtl.html#l.f_rame"><span class="c-libfunc">ˡf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b, Num c, Num d) =&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c, d)), Int) -&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c, d)), Int)</code></td></tr>
-<tr><td><a href="extensions-scene-demos-Play.xtl.html#l.f_rameV"><span class="c-libfunc">ˡf̲rameV</span></a></td><td>function</td><td><code>(Num a, Num b, Num c, Num d) =&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c, d)), Int) -&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c, d)), Int, Char)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Play.xtl.html#l.f_rame"><span class="c-libfunc">ˡf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b, Num c) =&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b, c)), Int) -&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b, c)), Int)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-Play.xtl.html#l.f_rameV"><span class="c-libfunc">ˡf̲rameV</span></a></td><td>function</td><td><code>(Num a, Num b, Num c) =&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b, c)), Int) -&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b, c)), Int, Char)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Rubik.xtl.html#normals">normals</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Rubik.xtl.html#q">q</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-Rubik.xtl.html#cubies">cubies</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -2297,9 +2285,9 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#k">k</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int, Int))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#s">s</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int, Int))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b, Num c) =&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b, c)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b, c))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.i_f"><span class="c-userfunc">ᵘi̲f</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c, Num d) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c, d)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c, d))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_ly"><span class="c-userfunc">ᵘf̲ly</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c, Num d) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c, d)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (b, Int, Int, Int), (Int, Int, Float, c, d))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b, Num c, Num d) =&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c, d)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c, d))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.i_f"><span class="c-userfunc">ᵘi̲f</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c, Num d, Num e) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d, e)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d, e))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#u.f_ly"><span class="c-userfunc">ᵘf̲ly</span></a></td><td>function</td><td><code>(Truthy a, Num b, Num c, Num d, Num e) =&gt; a -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d, e)) -&gt; ((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, b), (c, Int, Int, Int), (Int, Int, Float, d, e))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#last">last</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int, Int))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-fly.xtl.html#z">z</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-game.xtl.html#w">w</a></td><td>value</td><td><code>Int</code></td></tr>
@@ -2323,8 +2311,8 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-scene-demos-voxels-game.xtl.html#u.v_erdict"><span class="c-userfunc">ᵘv̲erdict</span></a></td><td>function</td><td><code>Truthy a =&gt; a -&gt; (b, Int) -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-game.xtl.html#u.f_inds"><span class="c-userfunc">ᵘf̲inds</span></a></td><td>function</td><td><code>(Any a, Any b, Any c, Any d, Any e, Num f, Any g, Any h, Any i, Any j, Any k, Num l, Truthy l, Any m, Any n) =&gt; ((a, (b, c, d, e, f, g, h, i), j, k), (f, l, m, n, Int)) -&gt; (f, l, m, n, Int)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-game.xtl.html#u.t_ell"><span class="c-userfunc">ᵘt̲ell</span></a></td><td>function</td><td><code>(Num a, Truthy a, Num b, Num c, Truthy c) =&gt; a -&gt; (b, c) -&gt; Char</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-game.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b, Num c, Num d, Truthy d, Num e, Truthy e) =&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b, c)), Int, (Int, d, Int, e, Int)) -&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b, c)), Int, (Int, d, Int, e, Int))</code></td></tr>
-<tr><td><a href="extensions-scene-demos-voxels-game.xtl.html#u.t_urn"><span class="c-userfunc">ᵘt̲urn</span></a></td><td>function</td><td><code>(Num a, Num b, Num c, Num d, Truthy d, Num e, Truthy e) =&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (a, Int, Int, Int), (Int, Int, Float, b, c)), Char, (Int, d, Int, e, Int)) -&gt; (Int, d, Int, e, Int)</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-game.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Num b, Num c, Num d, Num e, Truthy e, Num f, Truthy f) =&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c, d)), Int, (Int, e, Int, f, Int)) -&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c, d)), Int, (Int, e, Int, f, Int))</code></td></tr>
+<tr><td><a href="extensions-scene-demos-voxels-game.xtl.html#u.t_urn"><span class="c-userfunc">ᵘt̲urn</span></a></td><td>function</td><td><code>(Num a, Num b, Num c, Num d, Num e, Truthy e, Num f, Truthy f) =&gt; (((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, a), (b, Int, Int, Int), (Int, Int, Float, c, d)), Char, (Int, e, Int, f, Int)) -&gt; (Int, e, Int, f, Int)</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-game.xtl.html#hud">hud</a></td><td>value</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-game.xtl.html#s">s</a></td><td>value</td><td><code>((Float, Float, Float, Float, Float, Float), (Int, Int, Box Int, Box Int, Int, Int, Int, Int), (Int, Int, Int, Int), (Int, Int, Float, Int, Int))</code></td></tr>
 <tr><td><a href="extensions-scene-demos-voxels-game.xtl.html#game">game</a></td><td>value</td><td><code>(Int, Int, Int, Int, Int)</code></td></tr>
@@ -2649,6 +2637,11 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-sqlite-demos-notebook.xtl.html#w">w</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-sqlite-demos-notebook.xtl.html#v">v</a></td><td>value</td><td><code>Float</code></td></tr>
 <tr><td><a href="extensions-sqlite-demos-notebook.xtl.html#p">p</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-three-lib-Three.xtl.html#l.a_bout"><span class="c-libfunc">ˡa̲bout</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-three-lib-Three.xtl.html#l.s_how-21"><span class="c-libfunc">ˡs̲how!</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-three-lib-Three.xtl.html#l.p_age-21"><span class="c-libfunc">ˡp̲age!</span></a></td><td>function</td><td><code>Char -&gt; Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-three-lib-Three.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-three-demos-city.xtl.html#scene">scene</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-web-lib-Web.xtl.html#l.s_erve-21"><span class="c-libfunc">ˡs̲erve!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Int</code></td></tr>
 <tr><td><a href="extensions-web-lib-Web.xtl.html#l.n_ext-21"><span class="c-libfunc">ˡn̲ext!</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-web-lib-Web.xtl.html#l.m_ethod"><span class="c-libfunc">ˡm̲ethod</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>

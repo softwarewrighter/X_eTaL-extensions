@@ -8,8 +8,9 @@
 "nc:" u_se< "NeonCity"
 
 "the lots, and the boxes of the towers in each skin:"
-s_hape nc:lots
-(1 s_elect s_hape nc:t_owers 0) c_at (1 s_elect s_hape nc:t_owers 1) c_at 1 s_elect s_hape nc:t_owers 2
+lots := nc:l_ots nc:seed
+s_hape lots
+(1 s_elect s_hape (lots, 0) nc:t_owers 0) c_at (1 s_elect s_hape (lots, 1) nc:t_owers 0) c_at 1 s_elect s_hape (lots, 2) nc:t_owers 0
 script := ((64, 36, 30, 4, "CPU") nc:s_cene 0) c_at ("street.png", 10.5) cy:s_till 0
 n := "work/cityquick/run.py" bl:w_rite! bp:launcher
 n := "work/cityquick/scene.py" bl:w_rite! script

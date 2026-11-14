@@ -356,6 +356,11 @@ Read before working:
     builds `pages/` (commit it); the Pages workflow only uploads it.
     The gate fails when `pages/` is older than its sources
     (`scripts/check-pages.sh`); after a push, check the site online.
+    One live page, by the user's decision of 2026-11-14 ("good enough
+    to add to a live demo"): the three extension's city, which runs in
+    a browser by design -- `just ext three publish`
+    (`scripts/publish-three.sh`) builds it with trunk into
+    `pages/three/live`, which `just pages` keeps.
 13. Never capture the user's screen or open a window on their desktop
     without asking first, with an exact duration (the screen protocol
     agreed 2026-10-03); verify headlessly.
