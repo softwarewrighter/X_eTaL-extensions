@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-14
 
+- `fix` After the live city's push, what the full gate found: docs/status.md lists the three extension's recording; the spelling check passes over the vendored Three.js (it keeps the Web Audio API's own names, one spelled the British way).
 - `ext` three, a new extension: interactive 3D in a browser (the user: "interactive city first, with WASM plus Three.js"). A scene's calls -- the text Cycles.xtl writes for Blender -- are JavaScript too, and a player written with Three.js (`web/static/player.js`) defines the same functions: merged boxes, the facade, wet street (a mirror pass), screen and neon materials as shaders, signs, fleets, lamps, fog, steam, the flight, bloom. `th:s_how!` draws a scene in the page (wasm32), `th:p_age!` writes a directory to serve; Three.js 0.170.0 vendored. The live page (`web/`): X_eTaL as WebAssembly builds the city of a seed in a fraction of a second; ride, fly, walk (towers stop you); the program shown decorated. `demos/NeonCity.xtl` takes the seed as an argument (`nc:c_ity`, `nc:l_ots`, `nc:t_owers`, `nc:r_oofs`, `nc:b_ands`, `nc:s_creens`, `nc:c_ars`, `nc:f_liers`; seed 7 gives the same text as before). The shell: `install_with` (libraries beside the facades) and `source::markup`. `scripts/publish-three.sh` (pages/three/live), `scripts/three-ride.sh` (the ride recorded by headless Chrome). Goldens `three-list`, `three-tiny`, `three-outside`, `three-demo-city`. Saga: city-live inserted and done; city-screens (animated pictures on the screens) queued.
 
 ## 2026-11-13

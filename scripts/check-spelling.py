@@ -16,7 +16,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SKIP_DIRS = ("vendor/", "pages/", ".agentrail/", ".agentrail-archive/")
+SKIP_DIRS = ("vendor/", "pages/", ".agentrail/", ".agentrail-archive/",
+             # Three.js as its authors wrote it (the Web Audio API's own names)
+             "extensions/three/web/static/vendor/")
 SKIP_FILES = ("scripts/check-spelling.py",)  # its patterns and samples are British on purpose
 SKIP_SUFFIXES = (".png", ".ico", ".jpg", ".jpeg", ".gif", ".wasm", ".lock", ".tdb", ".ogg", ".mp3", ".wav", ".webm", ".webp", ".svg")
 
