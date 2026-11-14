@@ -386,6 +386,23 @@ Render stills at 24 samples while a scene is worked out.
     `tests/hex-build-quick.xtl` renders four stages in both shapes
     from an actual build; `blender-hex-build-quick` uses a small,
     stable fixture with LUTs and flip-flops sharing a tile.
+12. `demos/city.xtl` (`just demo blender city`, about five minutes:
+    four stills at 1280 by 720) and `demos/city-preview.xtl` (`just ext
+    blender city-preview`, about half an hour: the whole 15-second
+    flight, rough, at 640 by 360): a city at night after rain, flown
+    through, ray-traced by Cycles. The city is arrays
+    (`demos/NeonCity.xtl`, `nc:`): 240 lots along an avenue, each
+    tower's height, footprint and skin a hash of the lot's number and
+    `nc:seed`, so another seed is another city; a body, a narrower tier
+    and sometimes a spire are rows of a table, picked out for each skin
+    with a mask. Screens on the walls that face the avenue, bands of
+    neon, signs, lamps, steam, two bridges and a great screen at the
+    north end, 32 cars in four lanes and 37 fliers over the cross
+    streets and the avenue are tables too, written into Blender's
+    Python by Cycles.xtl. The camera comes down from over the skyline,
+    under the first bridge to the height of a car's roof over the
+    puddles, and rises to the great screen. Nothing is modeled by hand
+    and no texture is loaded.
 
 ## HEX1000 video families
 

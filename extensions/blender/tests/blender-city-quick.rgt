@@ -1,0 +1,3 @@
+command = 't=$(mktemp -d) && XETAL_BLENDER_ROOT=$t XETAL_PATH="$PWD/demos:$XETAL_PATH" xetal-x --ext .. run tests/city-quick.xtl && cd $t && ls work/cityquick/out'
+exit_code = 0
+desc = "the neon city (NeonCity.xtl) at 64 by 36, 4 samples on the processor, through Blender end to end: 240 lots, the tower boxes in each skin, the report (objects, faces, materials, the car and the flier) and a still"

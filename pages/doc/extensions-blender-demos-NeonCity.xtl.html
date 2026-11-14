@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>extensions/blender/demos/NeonCity.xtl - X_eTaL doc</title>
+<link rel="stylesheet" href="style.css">
+<script src="theme.js"></script>
+<script defer src="search-index.js"></script>
+<script defer src="search.js"></script>
+</head>
+<body>
+<nav class="side">
+<a class="home" href="index.html">X_eTaL doc</a>
+<input id="search" type="search" autocomplete="off" placeholder="Search: a name, or a type" title="A name (mean finds m_ean), or a type: Num a =&gt; a -&gt; a -&gt; a finds +, m_ax ...">
+<h2>Files</h2>
+<h3>lib/</h3>
+<ul>
+<li><a href="lib-Ffi.xtlm.html">Ffi.xtlm</a></li>
+</ul>
+<h3>extensions/audio/lib/</h3>
+<ul>
+<li><a href="extensions-audio-lib-Audio.xtl.html">Audio.xtl</a></li>
+</ul>
+<h3>extensions/audio/demos/</h3>
+<ul>
+<li><a href="extensions-audio-demos-Instruments.xtl.html">Instruments.xtl</a></li>
+<li><a href="extensions-audio-demos-scope.xtl.html">scope.xtl</a></li>
+<li><a href="extensions-audio-demos-spectrum.xtl.html">spectrum.xtl</a></li>
+<li><a href="extensions-audio-demos-synth.xtl.html">synth.xtl</a></li>
+</ul>
+<h3>extensions/canvas/lib/</h3>
+<ul>
+<li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
+</ul>
+<h3>extensions/scene/lib/</h3>
+<ul>
+<li><a href="extensions-scene-lib-Scene.xtl.html">Scene.xtl</a></li>
+</ul>
+<h3>std/</h3>
+<ul>
+<li><a href="std-Stats.xtl.html">Stats.xtl</a></li>
+<li><a href="std-System.xtlm.html">System.xtlm</a></li>
+</ul>
+<h3>extensions/blender/lib/</h3>
+<ul>
+<li><a href="extensions-blender-lib-Blender.xtl.html">Blender.xtl</a></li>
+<li><a href="extensions-blender-lib-Bpy.xtl.html">Bpy.xtl</a></li>
+<li><a href="extensions-blender-lib-Cycles.xtl.html">Cycles.xtl</a></li>
+<li><a href="extensions-blender-lib-Video.xtl.html">Video.xtl</a></li>
+</ul>
+<h3>extensions/blender/demos/</h3>
+<ul>
+<li><a href="extensions-blender-demos-CosyLogo.xtl.html">CosyLogo.xtl</a></li>
+<li><a href="extensions-blender-demos-GpuBuild.xtl.html">GpuBuild.xtl</a></li>
+<li><a href="extensions-blender-demos-GpuRun.xtl.html">GpuRun.xtl</a></li>
+<li><a href="extensions-blender-demos-HexBuild.xtl.html">HexBuild.xtl</a></li>
+<li><a href="extensions-blender-demos-HexRun.xtl.html">HexRun.xtl</a></li>
+<li><a href="extensions-blender-demos-Vcd.xtl.html">Vcd.xtl</a></li>
+<li><a href="extensions-blender-demos-KeysBuild.xtl.html">KeysBuild.xtl</a></li>
+<li><a href="extensions-blender-demos-KeysRun.xtl.html">KeysRun.xtl</a></li>
+<li><a href="extensions-blender-demos-Matmul.xtl.html">Matmul.xtl</a></li>
+<li><a href="extensions-blender-demos-MatmulFly.xtl.html">MatmulFly.xtl</a></li>
+<li><a href="extensions-blender-demos-NeonCity.xtl.html">NeonCity.xtl</a></li>
+<li><a href="extensions-blender-demos-PcWalk.xtl.html">PcWalk.xtl</a></li>
+<li><a href="extensions-blender-demos-ReluSoftmax.xtl.html">ReluSoftmax.xtl</a></li>
+<li><a href="extensions-blender-demos-Sizes.xtl.html">Sizes.xtl</a></li>
+<li><a href="extensions-blender-demos-Td.xtl.html">Td.xtl</a></li>
+<li><a href="extensions-blender-demos-city-preview.xtl.html">city-preview.xtl</a></li>
+<li><a href="extensions-blender-demos-city.xtl.html">city.xtl</a></li>
+<li><a href="extensions-blender-demos-cosy.xtl.html">cosy.xtl</a></li>
+<li><a href="extensions-blender-demos-cubes.xtl.html">cubes.xtl</a></li>
+<li><a href="extensions-blender-demos-game-assets.xtl.html">game-assets.xtl</a></li>
+<li><a href="extensions-blender-demos-gpu-build.xtl.html">gpu-build.xtl</a></li>
+<li><a href="extensions-blender-demos-gpu-run.xtl.html">gpu-run.xtl</a></li>
+<li><a href="extensions-blender-demos-hello.xtl.html">hello.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-build.xtl.html">hex-build.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-keys-leds-build.xtl.html">hex-keys-leds-build.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-keys-leds-run.xtl.html">hex-keys-leds-run.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-pc.xtl.html">hex-pc.xtl</a></li>
+<li><a href="extensions-blender-demos-hex-run.xtl.html">hex-run.xtl</a></li>
+<li><a href="extensions-blender-demos-matmul-fly.xtl.html">matmul-fly.xtl</a></li>
+<li><a href="extensions-blender-demos-matmul-steps.xtl.html">matmul-steps.xtl</a></li>
+<li><a href="extensions-blender-demos-relu-softmax.xtl.html">relu-softmax.xtl</a></li>
+<li><a href="extensions-blender-demos-td-models.xtl.html">td-models.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Hex1000/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Hex1000-src-Hex1000.xtl.html">Hex1000.xtl</a></li>
+</ul>
+<h3>work/libraries/libs/Strings/src/</h3>
+<ul>
+<li><a href="work-libraries-libs-Strings-src-Strings.xtl.html">Strings.xtl</a></li>
+</ul>
+<h3>work/fpga/libs/Radix/src/</h3>
+<ul>
+<li><a href="work-fpga-libs-Radix-src-Radix.xtl.html">Radix.xtl</a></li>
+</ul>
+<h3>work/hex1000/libs/Panel/src/</h3>
+<ul>
+<li><a href="work-hex1000-libs-Panel-src-Panel.xtl.html">Panel.xtl</a></li>
+</ul>
+<h3>work/hex1000/libs/Front/src/</h3>
+<ul>
+<li><a href="work-hex1000-libs-Front-src-Front.xtl.html">Front.xtl</a></li>
+</ul>
+<h3>work/gpu/libs/Accel/src/</h3>
+<ul>
+<li><a href="work-gpu-libs-Accel-src-Accel.xtl.html">Accel.xtl</a></li>
+</ul>
+<h3>extensions/digest/lib/</h3>
+<ul>
+<li><a href="extensions-digest-lib-Digest.xtl.html">Digest.xtl</a></li>
+</ul>
+<h3>extensions/canvas/demos/</h3>
+<ul>
+<li><a href="extensions-canvas-demos-life.xtl.html">life.xtl</a></li>
+</ul>
+<h3>extensions/clock/lib/</h3>
+<ul>
+<li><a href="extensions-clock-lib-Clock.xtl.html">Clock.xtl</a></li>
+</ul>
+<h3>extensions/clock/demos/</h3>
+<ul>
+<li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
+</ul>
+<h3>extensions/hello/lib/</h3>
+<ul>
+<li><a href="extensions-hello-lib-Hello.xtl.html">Hello.xtl</a></li>
+</ul>
+<h3>extensions/hello/demos/</h3>
+<ul>
+<li><a href="extensions-hello-demos-tour.xtl.html">tour.xtl</a></li>
+</ul>
+<h3>extensions/http/lib/</h3>
+<ul>
+<li><a href="extensions-http-lib-Http.xtl.html">Http.xtl</a></li>
+</ul>
+<h3>extensions/http/demos/</h3>
+<ul>
+<li><a href="extensions-http-demos-Seismic.xtl.html">Seismic.xtl</a></li>
+<li><a href="extensions-http-demos-quakes-live.xtl.html">quakes-live.xtl</a></li>
+<li><a href="extensions-http-demos-quakes.xtl.html">quakes.xtl</a></li>
+</ul>
+<h3>extensions/sqlite/lib/</h3>
+<ul>
+<li><a href="extensions-sqlite-lib-Sqlite.xtl.html">Sqlite.xtl</a></li>
+</ul>
+<h3>extensions/image/lib/</h3>
+<ul>
+<li><a href="extensions-image-lib-Image.xtl.html">Image.xtl</a></li>
+</ul>
+<h3>extensions/image/demos/</h3>
+<ul>
+<li><a href="extensions-image-demos-photo-lab.xtl.html">photo-lab.xtl</a></li>
+</ul>
+<h3>extensions/linalg/lib/</h3>
+<ul>
+<li><a href="extensions-linalg-lib-Linalg.xtl.html">Linalg.xtl</a></li>
+</ul>
+<h3>extensions/scene/demos/</h3>
+<ul>
+<li><a href="extensions-scene-demos-Endless.xtl.html">Endless.xtl</a></li>
+<li><a href="extensions-scene-demos-Voxels.xtl.html">Voxels.xtl</a></li>
+<li><a href="extensions-scene-demos-Play.xtl.html">Play.xtl</a></li>
+<li><a href="extensions-scene-demos-Rubik.xtl.html">Rubik.xtl</a></li>
+<li><a href="extensions-scene-demos-RubikPlay.xtl.html">RubikPlay.xtl</a></li>
+<li><a href="extensions-scene-demos-cube.xtl.html">cube.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-chunk.xtl.html">voxels-chunk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-dig.xtl.html">voxels-dig.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-endless.xtl.html">voxels-endless.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-faces.xtl.html">voxels-faces.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-fly.xtl.html">voxels-fly.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-game.xtl.html">voxels-game.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-light.xtl.html">voxels-light.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-buttons.xtl.html">voxels-rubik-buttons.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-solve.xtl.html">voxels-rubik-solve.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik-turn.xtl.html">voxels-rubik-turn.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-rubik.xtl.html">voxels-rubik.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-solid.xtl.html">voxels-solid.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-walk.xtl.html">voxels-walk.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-water.xtl.html">voxels-water.xtl</a></li>
+<li><a href="extensions-scene-demos-voxels-world.xtl.html">voxels-world.xtl</a></li>
+</ul>
+<h3>work/libraries/libs/Eigencube/src/</h3>
+<ul>
+<li><a href="work-libraries-libs-Eigencube-src-Eigencube.xtl.html">Eigencube.xtl</a></li>
+</ul>
+<h3>extensions/sqlite/demos/</h3>
+<ul>
+<li><a href="extensions-sqlite-demos-notebook.xtl.html">notebook.xtl</a></li>
+</ul>
+<h3>extensions/web/lib/</h3>
+<ul>
+<li><a href="extensions-web-lib-Web.xtl.html">Web.xtl</a></li>
+</ul>
+<h3>extensions/web/demos/</h3>
+<ul>
+<li><a href="extensions-web-demos-life.xtl.html">life.xtl</a></li>
+<li><a href="extensions-web-demos-todomvc.xtl.html">todomvc.xtl</a></li>
+</ul>
+<ul>
+<li><a href="builtins.html">built-ins</a></li>
+</ul>
+<h2>On this page</h2>
+<ul>
+<li><a href="#section-1">Numbers</a></li>
+<li class="item"><a href="#l.seed">ˡseed</a></li>
+<li class="item"><a href="#l.seconds">ˡseconds</a></li>
+<li class="item"><a href="#h.c_ols"><span class="c-libfunc">ʰc̲ols</span></a></li>
+<li class="item"><a href="#l.r_and"><span class="c-libfunc">ˡr̲and</span></a></li>
+<li class="item"><a href="#h.b_ox"><span class="c-libfunc">ʰb̲ox</span></a></li>
+<li class="item"><a href="#h.f_ill"><span class="c-libfunc">ʰf̲ill</span></a></li>
+<li><a href="#section-2">The lots</a></li>
+<li class="item"><a href="#cols">cols</a></li>
+<li class="item"><a href="#rows">rows</a></li>
+<li class="item"><a href="#per">per</a></li>
+<li class="item"><a href="#lots">lots</a></li>
+<li class="item"><a href="#id">id</a></li>
+<li class="item"><a href="#side">side</a></li>
+<li class="item"><a href="#col">col</a></li>
+<li class="item"><a href="#row">row</a></li>
+<li class="item"><a href="#lx">lx</a></li>
+<li class="item"><a href="#ly">ly</a></li>
+<li class="item"><a href="#u">u</a></li>
+<li class="item"><a href="#rough">rough</a></li>
+<li class="item"><a href="#high">high</a></li>
+<li class="item"><a href="#wide">wide</a></li>
+<li class="item"><a href="#deep">deep</a></li>
+<li class="item"><a href="#skin">skin</a></li>
+<li class="item"><a href="#tiered">tiered</a></li>
+<li class="item"><a href="#body">body</a></li>
+<li class="item"><a href="#spired">spired</a></li>
+<li class="item"><a href="#l.lots">ˡlots</a></li>
+<li class="item"><a href="#bodies">bodies</a></li>
+<li class="item"><a href="#tiers">tiers</a></li>
+<li class="item"><a href="#spires">spires</a></li>
+<li class="item"><a href="#tierSkin">tierSkin</a></li>
+<li class="item"><a href="#spireSkin">spireSkin</a></li>
+<li class="item"><a href="#l.t_owers"><span class="c-libfunc">ˡt̲owers</span></a></li>
+<li><a href="#section-3">On the towers</a></li>
+<li class="item"><a href="#top">top</a></li>
+<li class="item"><a href="#units">units</a></li>
+<li class="item"><a href="#aerial">aerial</a></li>
+<li class="item"><a href="#mast">mast</a></li>
+<li class="item"><a href="#masts">masts</a></li>
+<li class="item"><a href="#tip">tip</a></li>
+<li class="item"><a href="#tipX">tipX</a></li>
+<li class="item"><a href="#tipY">tipY</a></li>
+<li class="item"><a href="#beacons">beacons</a></li>
+<li class="item"><a href="#near">near</a></li>
+<li class="item"><a href="#foot">foot</a></li>
+<li class="item"><a href="#ledge">ledge</a></li>
+<li class="item"><a href="#hue">hue</a></li>
+<li class="item"><a href="#hue2">hue2</a></li>
+<li class="item"><a href="#l.b_ands"><span class="c-libfunc">ˡb̲ands</span></a></li>
+<li class="item"><a href="#first">first</a></li>
+<li class="item"><a href="#shown">shown</a></li>
+<li class="item"><a href="#sw">sw</a></li>
+<li class="item"><a href="#sh">sh</a></li>
+<li class="item"><a href="#sz">sz</a></li>
+<li class="item"><a href="#kind">kind</a></li>
+<li class="item"><a href="#panels">panels</a></li>
+<li class="item"><a href="#l.s_creens"><span class="c-libfunc">ˡs̲creens</span></a></li>
+<li><a href="#section-4">The street</a></li>
+<li class="item"><a href="#blocks">blocks</a></li>
+<li class="item"><a href="#bid">bid</a></li>
+<li class="item"><a href="#bside">bside</a></li>
+<li class="item"><a href="#bcol">bcol</a></li>
+<li class="item"><a href="#brow">brow</a></li>
+<li class="item"><a href="#bx">bx</a></li>
+<li class="item"><a href="#by">by</a></li>
+<li class="item"><a href="#slabs">slabs</a></li>
+<li class="item"><a href="#dashes">dashes</a></li>
+<li class="item"><a href="#dy">dy</a></li>
+<li class="item"><a href="#paint">paint</a></li>
+<li class="item"><a href="#posts">posts</a></li>
+<li class="item"><a href="#pside">pside</a></li>
+<li class="item"><a href="#py">py</a></li>
+<li class="item"><a href="#stems">stems</a></li>
+<li class="item"><a href="#arms">arms</a></li>
+<li class="item"><a href="#bulbs">bulbs</a></li>
+<li class="item"><a href="#glows">glows</a></li>
+<li class="item"><a href="#spans">spans</a></li>
+<li class="item"><a href="#strips">strips</a></li>
+<li class="item"><a href="#pylons">pylons</a></li>
+<li class="item"><a href="#great">great</a></li>
+<li class="item"><a href="#vents">vents</a></li>
+<li class="item"><a href="#vy">vy</a></li>
+<li class="item"><a href="#vx">vx</a></li>
+<li class="item"><a href="#plumes">plumes</a></li>
+<li><a href="#section-5">Traffic</a></li>
+<li class="item"><a href="#cars">cars</a></li>
+<li class="item"><a href="#cid">cid</a></li>
+<li class="item"><a href="#lane">lane</a></li>
+<li class="item"><a href="#north">north</a></li>
+<li class="item"><a href="#cx">cx</a></li>
+<li class="item"><a href="#cy0">cy0</a></li>
+<li class="item"><a href="#run">run</a></li>
+<li class="item"><a href="#l.cars">ˡcars</a></li>
+<li class="item"><a href="#fliers">fliers</a></li>
+<li class="item"><a href="#fid">fid</a></li>
+<li class="item"><a href="#street">street</a></li>
+<li class="item"><a href="#east">east</a></li>
+<li class="item"><a href="#fy">fy</a></li>
+<li class="item"><a href="#fz">fz</a></li>
+<li class="item"><a href="#fx0">fx0</a></li>
+<li class="item"><a href="#frun">frun</a></li>
+<li class="item"><a href="#high2">high2</a></li>
+<li class="item"><a href="#hid">hid</a></li>
+<li class="item"><a href="#hn">hn</a></li>
+<li class="item"><a href="#hy0">hy0</a></li>
+<li class="item"><a href="#hrun">hrun</a></li>
+<li class="item"><a href="#hz">hz</a></li>
+<li class="item"><a href="#l.fliers">ˡfliers</a></li>
+<li><a href="#section-6">The camera</a></li>
+<li class="item"><a href="#l.times">ˡtimes</a></li>
+<li class="item"><a href="#l.eyes">ˡeyes</a></li>
+<li class="item"><a href="#l.aims">ˡaims</a></li>
+<li><a href="#section-7">The scene</a></li>
+<li class="item"><a href="#h.s_kins"><span class="c-libfunc">ʰs̲kins</span></a></li>
+<li class="item"><a href="#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></li>
+<li class="item"><a href="#h.s_igns"><span class="c-libfunc">ʰs̲igns</span></a></li>
+<li class="item"><a href="#h.t_raffic"><span class="c-libfunc">ʰt̲raffic</span></a></li>
+<li class="item"><a href="#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></li>
+</ul>
+</nav>
+<main>
+<button class="theme" title="Light or dark">theme</button>
+<section id="results"></section>
+<h1><span class="kind">library</span>extensions/blender/demos/NeonCity.xtl</h1>
+<div class="doc">
+<p>NeonCity.xtl -- a city at night after rain, worked out as arrays and
+ray-traced (Cycles.xtl): an avenue running north between two walls
+of towers, six lots deep on each side, every lot's tower a few rows
+of a table -- a body, a narrower tier, sometimes a spire -- with a
+height, a footprint and a skin of its own from a hash of its number;
+screens on the walls that face the avenue, bands of neon, signs,
+lamps, steam, bridges across, cars on the ground and in the air, and
+a camera that comes down from the skyline to the puddles. Nothing is
+drawn by hand and nothing is loaded: change nc:seed and it is
+another city. Shared by the demo (demos/city.xtl: stills), its
+preview and film, and its test.
+Import: &quot;nc:&quot; u_se&lt; &quot;NeonCity&quot;</p>
+</div>
+<p class="meta"><a href="extensions-blender-demos-NeonCity.xtl.src.html">source</a> &middot; imports <code><span class="c-error">cy:</span></code> <a href="extensions-blender-lib-Cycles.xtl.html">extensions/blender/lib/Cycles.xtl</a></p>
+<h2 class="section" id="section-1">Numbers</h2>
+<div class="item" id="l.seed">
+<h3><a href="#l.seed">ˡseed</a> <span class="type">: Int</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L20">line 20</a></div>
+<div class="doc">
+<p>nc:seed: the city's number: every random choice is a hash of it and
+of the thing's own number, so the same seed is the same city</p>
+</div>
+<pre class="code">ˡseed ← <span class="c-number">7</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and"><span class="c-libfunc">ˡr̲and</span></a></div>
+</div>
+<div class="item" id="l.seconds">
+<h3><a href="#l.seconds">ˡseconds</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L23">line 23</a></div>
+<div class="doc">
+<p>nc:seconds: the film's length</p>
+</div>
+<pre class="code">ˡseconds ← <span class="c-number">15.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#run">run</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#frun">frun</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#hrun">hrun</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.c_ols">
+<h3><a href="#h.c_ols"><span class="c-libfunc">ʰc̲ols</span></a> <span class="type">: Any b =&gt; (Int, a) -&gt; b -&gt; a</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L26">line 26</a></div>
+<pre class="code"><span class="c-libfunc">ʰc̲ols</span> ← { (k, v) z → <span class="c-number">2</span> <span class="c-number">1</span> <a href="builtins.html#t_ranspose" class="c-builtin">t̲ranspose</a> (k <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#t_ally" class="c-builtin">t̲ally</a> v) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> k) <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> v }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox"><span class="c-libfunc">ʰb̲ox</span></a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.lots">ˡlots</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#glows">glows</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#plumes">plumes</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.cars">ˡcars</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.fliers">ˡfliers</a></div>
+</div>
+<div class="item" id="l.r_and">
+<h3><a href="#l.r_and"><span class="c-libfunc">ˡr̲and</span></a> <span class="type">: Any a =&gt; (Int, Int) -&gt; a -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L34">line 34</a></div>
+<div class="doc">
+<p>(numbers, salt) nc:r_and 0: a number from 0 to 1 for each whole
+number, the same every time: a hash of it, the salt (which choice
+this is) and nc:seed, in whole numbers, so every machine agrees</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-NeonCity.xtl.html" class="c-string">&quot;NeonCity&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> (<span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span>, <span class="c-number">1</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ⁿᶜr̲and</a> <span class="c-number">0</span>
+4</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡr̲and</span> ← { (i, salt) z →
+  a ← (i <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">17</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">7919</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (salt <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">13</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#l.seed">ˡseed</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">104729</span>
+  b ← i <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">31</span> <a href="builtins.html#-2b" class="c-symbol">+</a> salt
+  (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> ((a <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">65521</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> b <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">65521</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">65521</span>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">65521.0</span>
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#u">u</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#wide">wide</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#deep">deep</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#skin">skin</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#body">body</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#spired">spired</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#aerial">aerial</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#mast">mast</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#hue">hue</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#hue2">hue2</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#shown">shown</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#sw">sw</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#sh">sh</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#sz">sz</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#kind">kind</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#cy0">cy0</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#run">run</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#fz">fz</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#fx0">fx0</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#frun">frun</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#hy0">hy0</a></div>
+</div>
+<div class="item" id="h.b_ox">
+<h3><a href="#h.b_ox"><span class="c-libfunc">ʰb̲ox</span></a> <span class="type">: Any a =&gt; (Float, Float, Float, Float, Float, Float) -&gt; a -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L42">line 42</a></div>
+<pre class="code"><span class="c-libfunc">ʰb̲ox</span> ← { (x, y, e, w, d, h) z → (<span class="c-number">7</span>, x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> y <a href="builtins.html#c_at" class="c-builtin">c̲at</a> e <a href="builtins.html#c_at" class="c-builtin">c̲at</a> w <a href="builtins.html#c_at" class="c-builtin">c̲at</a> d <a href="builtins.html#c_at" class="c-builtin">c̲at</a> h <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> x) <a href="extensions-blender-demos-NeonCity.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> <span class="c-number">0</span> }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#bodies">bodies</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tiers">tiers</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#spires">spires</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#units">units</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#masts">masts</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#beacons">beacons</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#foot">foot</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ledge">ledge</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#panels">panels</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#slabs">slabs</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#paint">paint</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#stems">stems</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#arms">arms</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#bulbs">bulbs</a></div>
+</div>
+<div class="item" id="h.f_ill">
+<h3><a href="#h.f_ill"><span class="c-libfunc">ʰf̲ill</span></a> <span class="type">: Num a =&gt; (Int, a) -&gt; Float</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L45">line 45</a></div>
+<pre class="code"><span class="c-libfunc">ʰf̲ill</span> ← { (n, x) → n <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> x }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#units">units</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#masts">masts</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#beacons">beacons</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#foot">foot</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ledge">ledge</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#panels">panels</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#slabs">slabs</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#paint">paint</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#stems">stems</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#arms">arms</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#bulbs">bulbs</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#glows">glows</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#plumes">plumes</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.cars">ˡcars</a></div>
+</div>
+<h2 class="section" id="section-2">The lots</h2>
+<div class="item" id="cols">
+<h3><a href="#cols">cols</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L50">line 50</a></div>
+<pre class="code">cols ← <span class="c-number">6</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#per">per</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#blocks">blocks</a></div>
+</div>
+<div class="item" id="rows">
+<h3><a href="#rows">rows</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L51">line 51</a></div>
+<pre class="code">rows ← <span class="c-number">20</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#per">per</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#col">col</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#row">row</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#blocks">blocks</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#bcol">bcol</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#brow">brow</a></div>
+</div>
+<div class="item" id="per">
+<h3><a href="#per">per</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L52">line 52</a></div>
+<pre class="code">per ← <a href="extensions-blender-demos-NeonCity.xtl.html#cols">cols</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#rows">rows</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#lots">lots</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#side">side</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#col">col</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#row">row</a></div>
+</div>
+<div class="item" id="lots">
+<h3><a href="#lots">lots</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L53">line 53</a></div>
+<pre class="code">lots ← <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#per">per</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#units">units</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#masts">masts</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#beacons">beacons</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#foot">foot</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ledge">ledge</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#panels">panels</a></div>
+</div>
+<div class="item" id="id">
+<h3><a href="#id">id</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L55">line 55</a></div>
+<pre class="code">id ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="extensions-blender-demos-NeonCity.xtl.html#lots">lots</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#side">side</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#col">col</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#row">row</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#u">u</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#wide">wide</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#deep">deep</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#skin">skin</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#body">body</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#spired">spired</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#aerial">aerial</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#mast">mast</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#hue">hue</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#hue2">hue2</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#shown">shown</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#sw">sw</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#sh">sh</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#sz">sz</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#kind">kind</a></div>
+</div>
+<div class="item" id="side">
+<h3><a href="#side">side</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L56">line 56</a></div>
+<pre class="code">side ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <a href="extensions-blender-demos-NeonCity.xtl.html#per">per</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#lx">lx</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#panels">panels</a></div>
+</div>
+<div class="item" id="col">
+<h3><a href="#col">col</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L57">line 57</a></div>
+<pre class="code">col ← (<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <a href="extensions-blender-demos-NeonCity.xtl.html#per">per</a>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <a href="extensions-blender-demos-NeonCity.xtl.html#rows">rows</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#lx">lx</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#rough">rough</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#high">high</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.lots">ˡlots</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#near">near</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.b_ands"><span class="c-libfunc">ˡb̲ands</span></a>, <a href="extensions-blender-demos-NeonCity.xtl.html#first">first</a></div>
+</div>
+<div class="item" id="row">
+<h3><a href="#row">row</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L58">line 58</a></div>
+<pre class="code">row ← (<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <a href="extensions-blender-demos-NeonCity.xtl.html#per">per</a>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <a href="extensions-blender-demos-NeonCity.xtl.html#rows">rows</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#ly">ly</a></div>
+</div>
+<div class="item" id="lx">
+<h3><a href="#lx">lx</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L61">line 61</a></div>
+<pre class="code">lx ← <a href="extensions-blender-demos-NeonCity.xtl.html#side">side</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">19.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">17.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#col">col</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">12.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#col">col</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.lots">ˡlots</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#bodies">bodies</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tiers">tiers</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#spires">spires</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#units">units</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#masts">masts</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tipX">tipX</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#foot">foot</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ledge">ledge</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#panels">panels</a></div>
+</div>
+<div class="item" id="ly">
+<h3><a href="#ly">ly</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L62">line 62</a></div>
+<pre class="code">ly ← <span class="c-number">-234.5</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">19.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#row">row</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">12.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#row">row</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.lots">ˡlots</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#bodies">bodies</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tiers">tiers</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#spires">spires</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#units">units</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#masts">masts</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tipY">tipY</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#foot">foot</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ledge">ledge</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#panels">panels</a></div>
+</div>
+<div class="item" id="u">
+<h3><a href="#u">u</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L66">line 66</a></div>
+<pre class="code">u ← (<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">1</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#rough">rough</a></div>
+</div>
+<div class="item" id="rough">
+<h3><a href="#rough">rough</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L67">line 67</a></div>
+<pre class="code">rough ← (<span class="c-number">26.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">150.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#u">u</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#u">u</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.25</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.09</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#col">col</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#high">high</a></div>
+</div>
+<div class="item" id="high">
+<h3><a href="#high">high</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L68">line 68</a></div>
+<pre class="code">high ← <a href="extensions-blender-demos-NeonCity.xtl.html#rough">rough</a> <a href="builtins.html#m_ax" class="c-builtin">m̲ax</a> <span class="c-number">45.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#col">col</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#tiered">tiered</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#body">body</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.lots">ˡlots</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tiers">tiers</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#spires">spires</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#top">top</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tip">tip</a></div>
+</div>
+<div class="item" id="wide">
+<h3><a href="#wide">wide</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L69">line 69</a></div>
+<pre class="code">wide ← <span class="c-number">15.5</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">3.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">2</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.lots">ˡlots</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#bodies">bodies</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tiers">tiers</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#spires">spires</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#units">units</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#masts">masts</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tipX">tipX</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#foot">foot</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ledge">ledge</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#panels">panels</a></div>
+</div>
+<div class="item" id="deep">
+<h3><a href="#deep">deep</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L70">line 70</a></div>
+<pre class="code">deep ← <span class="c-number">17.5</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">3.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">3</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.lots">ˡlots</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#bodies">bodies</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tiers">tiers</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#spires">spires</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#units">units</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#masts">masts</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tipY">tipY</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#foot">foot</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ledge">ledge</a></div>
+</div>
+<div class="item" id="skin">
+<h3><a href="#skin">skin</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L71">line 71</a></div>
+<pre class="code">skin ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">3.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">4</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.lots">ˡlots</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tierSkin">tierSkin</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#spireSkin">spireSkin</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.t_owers"><span class="c-libfunc">ˡt̲owers</span></a></div>
+</div>
+<div class="item" id="tiered">
+<h3><a href="#tiered">tiered</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L75">line 75</a></div>
+<pre class="code">tiered ← <span class="c-number">1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#high">high</a> <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">60.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#body">body</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#spired">spired</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.lots">ˡlots</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tiers">tiers</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tierSkin">tierSkin</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.b_ands"><span class="c-libfunc">ˡb̲ands</span></a></div>
+</div>
+<div class="item" id="body">
+<h3><a href="#body">body</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L76">line 76</a></div>
+<pre class="code">body ← <a href="extensions-blender-demos-NeonCity.xtl.html#high">high</a> <a href="builtins.html#-2a" class="c-symbol">×</a> (<span class="c-number">1.0</span> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#tiered">tiered</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#tiered">tiered</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0.55</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">5</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#bodies">bodies</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tiers">tiers</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ledge">ledge</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#sz">sz</a></div>
+</div>
+<div class="item" id="spired">
+<h3><a href="#spired">spired</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L77">line 77</a></div>
+<pre class="code">spired ← <span class="c-number">1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#tiered">tiered</a> <a href="builtins.html#-26" class="c-symbol">∧</a> ((<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">6</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span>) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.7</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.lots">ˡlots</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#spires">spires</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#spireSkin">spireSkin</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#aerial">aerial</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tip">tip</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#beacons">beacons</a></div>
+</div>
+<div class="item" id="l.lots">
+<h3><a href="#l.lots">ˡlots</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L86">line 86</a></div>
+<div class="doc">
+<p>nc:l_ots: the lots as a table, a row each: x y (its middle), the
+tower's height, its width and depth, its skin (0 to 2), whether it
+has a tier and a spire (1 or 0), and how far back from the avenue
+it is (0 the first)</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-NeonCity.xtl.html" class="c-string">&quot;NeonCity&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="extensions-blender-demos-NeonCity.xtl.html#l.lots">ⁿᶜlots</a>
+240 9</pre>
+</div>
+<pre class="code">ˡlots ← (<span class="c-number">9</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#lx">lx</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#ly">ly</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#high">high</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#wide">wide</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#deep">deep</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#skin">skin</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#tiered">tiered</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#spired">spired</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#col">col</a>) <a href="extensions-blender-demos-NeonCity.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> <span class="c-number">0</span></pre>
+</div>
+<div class="item" id="bodies">
+<h3><a href="#bodies">bodies</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L89">line 89</a></div>
+<pre class="code">bodies ← (<a href="extensions-blender-demos-NeonCity.xtl.html#lx">lx</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ly">ly</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#body">body</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#wide">wide</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#deep">deep</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#body">body</a>) <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.t_owers"><span class="c-libfunc">ˡt̲owers</span></a></div>
+</div>
+<div class="item" id="tiers">
+<h3><a href="#tiers">tiers</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L90">line 90</a></div>
+<pre class="code">tiers ← <a href="extensions-blender-demos-NeonCity.xtl.html#tiered">tiered</a> <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate₁</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lx">lx</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ly">ly</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#body">body</a> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#high">high</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-blender-demos-NeonCity.xtl.html#body">body</a>) <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>, <span class="c-number">0.72</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#wide">wide</a>, <span class="c-number">0.72</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#deep">deep</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#high">high</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-blender-demos-NeonCity.xtl.html#body">body</a>) <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.t_owers"><span class="c-libfunc">ˡt̲owers</span></a></div>
+</div>
+<div class="item" id="spires">
+<h3><a href="#spires">spires</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L91">line 91</a></div>
+<pre class="code">spires ← <a href="extensions-blender-demos-NeonCity.xtl.html#spired">spired</a> <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate₁</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lx">lx</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ly">ly</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#high">high</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">1.14</span>, <span class="c-number">0.34</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#wide">wide</a>, <span class="c-number">0.34</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#deep">deep</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#high">high</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0.28</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.t_owers"><span class="c-libfunc">ˡt̲owers</span></a></div>
+</div>
+<div class="item" id="tierSkin">
+<h3><a href="#tierSkin">tierSkin</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L92">line 92</a></div>
+<pre class="code">tierSkin ← <a href="extensions-blender-demos-NeonCity.xtl.html#tiered">tiered</a> <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <a href="extensions-blender-demos-NeonCity.xtl.html#skin">skin</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.t_owers"><span class="c-libfunc">ˡt̲owers</span></a></div>
+</div>
+<div class="item" id="spireSkin">
+<h3><a href="#spireSkin">spireSkin</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L93">line 93</a></div>
+<pre class="code">spireSkin ← <a href="extensions-blender-demos-NeonCity.xtl.html#spired">spired</a> <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate</a> <a href="extensions-blender-demos-NeonCity.xtl.html#skin">skin</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.t_owers"><span class="c-libfunc">ˡt̲owers</span></a></div>
+</div>
+<div class="item" id="l.t_owers">
+<h3><a href="#l.t_owers"><span class="c-libfunc">ˡt̲owers</span></a> <span class="type">: Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L100">line 100</a></div>
+<div class="doc">
+<p>nc:t_owers k: the boxes of every tower wearing skin k (0 to 2):
+bodies, then tiers, then spires</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-NeonCity.xtl.html" class="c-string">&quot;NeonCity&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><span class="c-number">2</span> <a href="builtins.html#s_elect" class="c-builtin">s̲elect</a> <a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="extensions-blender-demos-NeonCity.xtl.html#l.t_owers" class="c-libfunc">ⁿᶜt̲owers</a> <span class="c-number">0</span>
+7</pre>
+</div>
+<pre class="code"><span class="c-libfunc">ˡt̲owers</span> ← { k → ((<a href="extensions-blender-demos-NeonCity.xtl.html#skin">skin</a> <a href="builtins.html#-3d" class="c-symbol">=</a> k) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate₁</a> <a href="extensions-blender-demos-NeonCity.xtl.html#bodies">bodies</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at₁</a> ((<a href="extensions-blender-demos-NeonCity.xtl.html#tierSkin">tierSkin</a> <a href="builtins.html#-3d" class="c-symbol">=</a> k) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate₁</a> <a href="extensions-blender-demos-NeonCity.xtl.html#tiers">tiers</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at₁</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#spireSkin">spireSkin</a> <a href="builtins.html#-3d" class="c-symbol">=</a> k) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate₁</a> <a href="extensions-blender-demos-NeonCity.xtl.html#spires">spires</a> }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<h2 class="section" id="section-3">On the towers</h2>
+<div class="item" id="top">
+<h3><a href="#top">top</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L105">line 105</a></div>
+<pre class="code">top ← <a href="extensions-blender-demos-NeonCity.xtl.html#high">high</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#units">units</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#masts">masts</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tip">tip</a></div>
+</div>
+<div class="item" id="units">
+<h3><a href="#units">units</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L108">line 108</a></div>
+<pre class="code">units ← (<a href="extensions-blender-demos-NeonCity.xtl.html#lx">lx</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#wide">wide</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ly">ly</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.15</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#deep">deep</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#top">top</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.8</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lots">lots</a>, <span class="c-number">3.2</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lots">lots</a>, <span class="c-number">2.2</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lots">lots</a>, <span class="c-number">1.6</span>)) <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<div class="item" id="aerial">
+<h3><a href="#aerial">aerial</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L109">line 109</a></div>
+<pre class="code">aerial ← <span class="c-number">1</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#n_ot" class="c-builtin">n̲ot</a> <a href="extensions-blender-demos-NeonCity.xtl.html#spired">spired</a>) <a href="builtins.html#-26" class="c-symbol">∧</a> ((<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">7</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span>) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.6</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#masts">masts</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tip">tip</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tipX">tipX</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tipY">tipY</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#beacons">beacons</a></div>
+</div>
+<div class="item" id="mast">
+<h3><a href="#mast">mast</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L110">line 110</a></div>
+<pre class="code">mast ← <span class="c-number">8.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">12.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">8</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#masts">masts</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tip">tip</a></div>
+</div>
+<div class="item" id="masts">
+<h3><a href="#masts">masts</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L111">line 111</a></div>
+<pre class="code">masts ← <a href="extensions-blender-demos-NeonCity.xtl.html#aerial">aerial</a> <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate₁</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lx">lx</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#wide">wide</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ly">ly</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#deep">deep</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#top">top</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-NeonCity.xtl.html#mast">mast</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lots">lots</a>, <span class="c-number">0.25</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lots">lots</a>, <span class="c-number">0.25</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#mast">mast</a>) <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<div class="item" id="tip">
+<h3><a href="#tip">tip</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L112">line 112</a></div>
+<pre class="code">tip ← <a href="extensions-blender-demos-NeonCity.xtl.html#top">top</a> <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#mast">mast</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#aerial">aerial</a>) <a href="builtins.html#-2b" class="c-symbol">+</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#high">high</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0.28</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#spired">spired</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#beacons">beacons</a></div>
+</div>
+<div class="item" id="tipX">
+<h3><a href="#tipX">tipX</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L113">line 113</a></div>
+<pre class="code">tipX ← <a href="extensions-blender-demos-NeonCity.xtl.html#lx">lx</a> <a href="builtins.html#-2d" class="c-symbol">−</a> (<span class="c-number">0.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#wide">wide</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#aerial">aerial</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#beacons">beacons</a></div>
+</div>
+<div class="item" id="tipY">
+<h3><a href="#tipY">tipY</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L114">line 114</a></div>
+<pre class="code">tipY ← <a href="extensions-blender-demos-NeonCity.xtl.html#ly">ly</a> <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">0.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#deep">deep</a>) <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#aerial">aerial</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#beacons">beacons</a></div>
+</div>
+<div class="item" id="beacons">
+<h3><a href="#beacons">beacons</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L115">line 115</a></div>
+<pre class="code">beacons ← (<a href="extensions-blender-demos-NeonCity.xtl.html#aerial">aerial</a> <a href="builtins.html#-7c" class="c-symbol">∨</a> <a href="extensions-blender-demos-NeonCity.xtl.html#spired">spired</a>) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate₁</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#tipX">tipX</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tipY">tipY</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#tip">tip</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lots">lots</a>, <span class="c-number">0.7</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lots">lots</a>, <span class="c-number">0.7</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lots">lots</a>, <span class="c-number">0.7</span>)) <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<div class="item" id="near">
+<h3><a href="#near">near</a> <span class="type">: Bool</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L119">line 119</a></div>
+<pre class="code">near ← <a href="extensions-blender-demos-NeonCity.xtl.html#col">col</a> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">2</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.b_ands"><span class="c-libfunc">ˡb̲ands</span></a></div>
+</div>
+<div class="item" id="foot">
+<h3><a href="#foot">foot</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L120">line 120</a></div>
+<pre class="code">foot ← (<a href="extensions-blender-demos-NeonCity.xtl.html#lx">lx</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ly">ly</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lots">lots</a>, <span class="c-number">5.0</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#wide">wide</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.4</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#deep">deep</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.4</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lots">lots</a>, <span class="c-number">0.3</span>)) <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.b_ands"><span class="c-libfunc">ˡb̲ands</span></a></div>
+</div>
+<div class="item" id="ledge">
+<h3><a href="#ledge">ledge</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L121">line 121</a></div>
+<pre class="code">ledge ← (<a href="extensions-blender-demos-NeonCity.xtl.html#lx">lx</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#ly">ly</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#body">body</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.15</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#wide">wide</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#deep">deep</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">0.3</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lots">lots</a>, <span class="c-number">0.3</span>)) <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.b_ands"><span class="c-libfunc">ˡb̲ands</span></a></div>
+</div>
+<div class="item" id="hue">
+<h3><a href="#hue">hue</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L122">line 122</a></div>
+<pre class="code">hue ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">3.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">9</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.b_ands"><span class="c-libfunc">ˡb̲ands</span></a></div>
+</div>
+<div class="item" id="hue2">
+<h3><a href="#hue2">hue2</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L123">line 123</a></div>
+<pre class="code">hue2 ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">3.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">10</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.b_ands"><span class="c-libfunc">ˡb̲ands</span></a></div>
+</div>
+<div class="item" id="l.b_ands">
+<h3><a href="#l.b_ands"><span class="c-libfunc">ˡb̲ands</span></a> <span class="type">: Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L127">line 127</a></div>
+<div class="doc">
+<p>nc:b_ands k: the neon bands of color k (0 to 2): round the foot of
+the towers by the avenue, and under the tier of the tall ones</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡb̲ands</span> ← { k → ((<a href="extensions-blender-demos-NeonCity.xtl.html#near">near</a> <a href="builtins.html#-26" class="c-symbol">∧</a> <a href="extensions-blender-demos-NeonCity.xtl.html#hue">hue</a> <a href="builtins.html#-3d" class="c-symbol">=</a> k) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate₁</a> <a href="extensions-blender-demos-NeonCity.xtl.html#foot">foot</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at₁</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#tiered">tiered</a> <a href="builtins.html#-26" class="c-symbol">∧</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#col">col</a> <a href="builtins.html#-3c" class="c-symbol">&lt;</a> <span class="c-number">3</span>) <a href="builtins.html#-26" class="c-symbol">∧</a> <a href="extensions-blender-demos-NeonCity.xtl.html#hue2">hue2</a> <a href="builtins.html#-3d" class="c-symbol">=</a> k) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate₁</a> <a href="extensions-blender-demos-NeonCity.xtl.html#ledge">ledge</a> }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<div class="item" id="first">
+<h3><a href="#first">first</a> <span class="type">: Bool</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L131">line 131</a></div>
+<pre class="code">first ← <a href="extensions-blender-demos-NeonCity.xtl.html#col">col</a> <a href="builtins.html#-3d" class="c-symbol">=</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#shown">shown</a></div>
+</div>
+<div class="item" id="shown">
+<h3><a href="#shown">shown</a> <span class="type">: Bool</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L132">line 132</a></div>
+<pre class="code">shown ← <a href="extensions-blender-demos-NeonCity.xtl.html#first">first</a> <a href="builtins.html#-26" class="c-symbol">∧</a> ((<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">11</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span>) <a href="builtins.html#-3e" class="c-symbol">&gt;</a> <span class="c-number">0.25</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_creens"><span class="c-libfunc">ˡs̲creens</span></a></div>
+</div>
+<div class="item" id="sw">
+<h3><a href="#sw">sw</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L133">line 133</a></div>
+<pre class="code">sw ← <span class="c-number">5.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">7.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">12</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#panels">panels</a></div>
+</div>
+<div class="item" id="sh">
+<h3><a href="#sh">sh</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L134">line 134</a></div>
+<pre class="code">sh ← <span class="c-number">5.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">11.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">13</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#panels">panels</a></div>
+</div>
+<div class="item" id="sz">
+<h3><a href="#sz">sz</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L135">line 135</a></div>
+<pre class="code">sz ← <span class="c-number">8.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> ((<a href="extensions-blender-demos-NeonCity.xtl.html#body">body</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">16.0</span>) <a href="builtins.html#m_in" class="c-builtin">m̲in</a> <span class="c-number">34.0</span>) <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">14</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#panels">panels</a></div>
+</div>
+<div class="item" id="kind">
+<h3><a href="#kind">kind</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L136">line 136</a></div>
+<pre class="code">kind ← <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <span class="c-number">4.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#id">id</a>, <span class="c-number">15</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_creens"><span class="c-libfunc">ˡs̲creens</span></a></div>
+</div>
+<div class="item" id="panels">
+<h3><a href="#panels">panels</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L137">line 137</a></div>
+<pre class="code">panels ← (<a href="extensions-blender-demos-NeonCity.xtl.html#lx">lx</a> <a href="builtins.html#-2d" class="c-symbol">−</a> <a href="extensions-blender-demos-NeonCity.xtl.html#side">side</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">0.3</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-NeonCity.xtl.html#wide">wide</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#ly">ly</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#sz">sz</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-NeonCity.xtl.html#sh">sh</a> <a href="builtins.html#-2f" class="c-symbol">÷</a> <span class="c-number">2.0</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#lots">lots</a>, <span class="c-number">0.4</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#sw">sw</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#sh">sh</a>) <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_creens"><span class="c-libfunc">ˡs̲creens</span></a></div>
+</div>
+<div class="item" id="l.s_creens">
+<h3><a href="#l.s_creens"><span class="c-libfunc">ˡs̲creens</span></a> <span class="type">: Int -&gt; Float</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L141">line 141</a></div>
+<div class="doc">
+<p>nc:s_creens k: the screens of kind k (0 bars, 1 rings, 2 rain, 3
+tiles) on the walls facing the avenue</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲creens</span> ← { k → (<a href="extensions-blender-demos-NeonCity.xtl.html#shown">shown</a> <a href="builtins.html#-26" class="c-symbol">∧</a> <a href="extensions-blender-demos-NeonCity.xtl.html#kind">kind</a> <a href="builtins.html#-3d" class="c-symbol">=</a> k) <a href="builtins.html#r_eplicate" class="c-builtin">r̲eplicate₁</a> <a href="extensions-blender-demos-NeonCity.xtl.html#panels">panels</a> }</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<h2 class="section" id="section-4">The street</h2>
+<div class="item" id="blocks">
+<h3><a href="#blocks">blocks</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L146">line 146</a></div>
+<pre class="code">blocks ← (<a href="extensions-blender-demos-NeonCity.xtl.html#cols">cols</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#rows">rows</a>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#bid">bid</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#bside">bside</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#bcol">bcol</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#brow">brow</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#slabs">slabs</a></div>
+</div>
+<div class="item" id="bid">
+<h3><a href="#bid">bid</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L147">line 147</a></div>
+<pre class="code">bid ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="extensions-blender-demos-NeonCity.xtl.html#blocks">blocks</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#bside">bside</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#bcol">bcol</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#brow">brow</a></div>
+</div>
+<div class="item" id="bside">
+<h3><a href="#bside">bside</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L148">line 148</a></div>
+<pre class="code">bside ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#bid">bid</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <a href="extensions-blender-demos-NeonCity.xtl.html#blocks">blocks</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#bx">bx</a></div>
+</div>
+<div class="item" id="bcol">
+<h3><a href="#bcol">bcol</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L149">line 149</a></div>
+<pre class="code">bcol ← (<a href="extensions-blender-demos-NeonCity.xtl.html#bid">bid</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <a href="extensions-blender-demos-NeonCity.xtl.html#blocks">blocks</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <a href="extensions-blender-demos-NeonCity.xtl.html#rows">rows</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#bx">bx</a></div>
+</div>
+<div class="item" id="brow">
+<h3><a href="#brow">brow</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L150">line 150</a></div>
+<pre class="code">brow ← (<a href="extensions-blender-demos-NeonCity.xtl.html#bid">bid</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <a href="extensions-blender-demos-NeonCity.xtl.html#blocks">blocks</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <a href="extensions-blender-demos-NeonCity.xtl.html#rows">rows</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#by">by</a></div>
+</div>
+<div class="item" id="bx">
+<h3><a href="#bx">bx</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L151">line 151</a></div>
+<pre class="code">bx ← <a href="extensions-blender-demos-NeonCity.xtl.html#bside">bside</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">28.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">46.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#bcol">bcol</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#slabs">slabs</a></div>
+</div>
+<div class="item" id="by">
+<h3><a href="#by">by</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L152">line 152</a></div>
+<pre class="code">by ← <span class="c-number">-225.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">50.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#brow">brow</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#slabs">slabs</a></div>
+</div>
+<div class="item" id="slabs">
+<h3><a href="#slabs">slabs</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L153">line 153</a></div>
+<pre class="code">slabs ← (<a href="extensions-blender-demos-NeonCity.xtl.html#bx">bx</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#by">by</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#blocks">blocks</a>, <span class="c-number">0.15</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#blocks">blocks</a>, <span class="c-number">37.0</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#blocks">blocks</a>, <span class="c-number">41.0</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#blocks">blocks</a>, <span class="c-number">0.3</span>)) <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<div class="item" id="dashes">
+<h3><a href="#dashes">dashes</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L156">line 156</a></div>
+<pre class="code">dashes ← <span class="c-number">62</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#dy">dy</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#paint">paint</a></div>
+</div>
+<div class="item" id="dy">
+<h3><a href="#dy">dy</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L157">line 157</a></div>
+<pre class="code">dy ← <span class="c-number">-244.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">8.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="extensions-blender-demos-NeonCity.xtl.html#dashes">dashes</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#paint">paint</a></div>
+</div>
+<div class="item" id="paint">
+<h3><a href="#paint">paint</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L158">line 158</a></div>
+<pre class="code">paint ← (<a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#dashes">dashes</a>, <span class="c-number">0.0</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#dy">dy</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#dashes">dashes</a>, <span class="c-number">0.012</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#dashes">dashes</a>, <span class="c-number">0.18</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#dashes">dashes</a>, <span class="c-number">3.0</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#dashes">dashes</a>, <span class="c-number">0.02</span>)) <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<div class="item" id="posts">
+<h3><a href="#posts">posts</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L161">line 161</a></div>
+<pre class="code">posts ← <span class="c-number">32</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#pside">pside</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#py">py</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#stems">stems</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#arms">arms</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#bulbs">bulbs</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#glows">glows</a></div>
+</div>
+<div class="item" id="pside">
+<h3><a href="#pside">pside</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L162">line 162</a></div>
+<pre class="code">pside ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> ((<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#stems">stems</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#arms">arms</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#bulbs">bulbs</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#glows">glows</a></div>
+</div>
+<div class="item" id="py">
+<h3><a href="#py">py</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L163">line 163</a></div>
+<pre class="code">py ← <span class="c-number">-232.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">30.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> ((<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#stems">stems</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#arms">arms</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#bulbs">bulbs</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#glows">glows</a></div>
+</div>
+<div class="item" id="stems">
+<h3><a href="#stems">stems</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L164">line 164</a></div>
+<pre class="code">stems ← (<a href="extensions-blender-demos-NeonCity.xtl.html#pside">pside</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">9.7</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#py">py</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">3.6</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">0.18</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">0.18</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">7.2</span>)) <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<div class="item" id="arms">
+<h3><a href="#arms">arms</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L165">line 165</a></div>
+<pre class="code">arms ← (<a href="extensions-blender-demos-NeonCity.xtl.html#pside">pside</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">8.9</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#py">py</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">7.2</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">1.8</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">0.2</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">0.14</span>)) <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<div class="item" id="bulbs">
+<h3><a href="#bulbs">bulbs</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L166">line 166</a></div>
+<pre class="code">bulbs ← (<a href="extensions-blender-demos-NeonCity.xtl.html#pside">pside</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">8.4</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#py">py</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">7.1</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">0.9</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">0.22</span>), <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">0.06</span>)) <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<div class="item" id="glows">
+<h3><a href="#glows">glows</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L167">line 167</a></div>
+<pre class="code">glows ← (<span class="c-number">8</span>, (<a href="extensions-blender-demos-NeonCity.xtl.html#pside">pside</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">8.4</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#py">py</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">6.8</span>)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">255</span>)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">190</span>)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">120</span>)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">450</span>)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#posts">posts</a>, <span class="c-number">0.15</span>)) <a href="extensions-blender-demos-NeonCity.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<div class="item" id="spans">
+<h3><a href="#spans">spans</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L171">line 171</a></div>
+<pre class="code">spans ← <span class="c-number">2</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">-28.0</span> <span class="c-number">15.5</span> <span class="c-number">27.0</span> <span class="c-number">5.0</span> <span class="c-number">3.4</span> <span class="c-number">0.0</span>  <span class="c-number">0.0</span> <span class="c-number">97.0</span> <span class="c-number">19.0</span> <span class="c-number">27.0</span> <span class="c-number">5.0</span> <span class="c-number">3.4</span> <span class="c-number">0.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<div class="item" id="strips">
+<h3><a href="#strips">strips</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L172">line 172</a></div>
+<pre class="code">strips ← <span class="c-number">2</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">-28.0</span> <span class="c-number">13.7</span> <span class="c-number">24.0</span> <span class="c-number">0.3</span> <span class="c-number">0.12</span> <span class="c-number">0.0</span>  <span class="c-number">0.0</span> <span class="c-number">97.0</span> <span class="c-number">17.2</span> <span class="c-number">24.0</span> <span class="c-number">0.3</span> <span class="c-number">0.12</span> <span class="c-number">0.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<div class="item" id="pylons">
+<h3><a href="#pylons">pylons</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L173">line 173</a></div>
+<pre class="code">pylons ← <span class="c-number">2</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-17.0</span> <span class="c-number">252.0</span> <span class="c-number">36.0</span> <span class="c-number">6.0</span> <span class="c-number">6.0</span> <span class="c-number">72.0</span> <span class="c-number">0.0</span>  <span class="c-number">17.0</span> <span class="c-number">252.0</span> <span class="c-number">36.0</span> <span class="c-number">6.0</span> <span class="c-number">6.0</span> <span class="c-number">72.0</span> <span class="c-number">0.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<div class="item" id="great">
+<h3><a href="#great">great</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L174">line 174</a></div>
+<pre class="code">great ← <span class="c-number">1</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">251.0</span> <span class="c-number">46.0</span> <span class="c-number">28.0</span> <span class="c-number">0.5</span> <span class="c-number">42.0</span> <span class="c-number">0.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a></div>
+</div>
+<div class="item" id="vents">
+<h3><a href="#vents">vents</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L177">line 177</a></div>
+<pre class="code">vents ← <span class="c-number">7</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#vy">vy</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#vx">vx</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#plumes">plumes</a></div>
+</div>
+<div class="item" id="vy">
+<h3><a href="#vy">vy</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L178">line 178</a></div>
+<pre class="code">vy ← <span class="c-number">-210.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">68.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="extensions-blender-demos-NeonCity.xtl.html#vents">vents</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#plumes">plumes</a></div>
+</div>
+<div class="item" id="vx">
+<h3><a href="#vx">vx</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L179">line 179</a></div>
+<pre class="code">vx ← <span class="c-number">7.2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> ((<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="extensions-blender-demos-NeonCity.xtl.html#vents">vents</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span>) <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#plumes">plumes</a></div>
+</div>
+<div class="item" id="plumes">
+<h3><a href="#plumes">plumes</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L180">line 180</a></div>
+<pre class="code">plumes ← (<span class="c-number">6</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#vx">vx</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#vy">vy</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#vents">vents</a>, <span class="c-number">5.5</span>)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#vents">vents</a>, <span class="c-number">5.0</span>)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#vents">vents</a>, <span class="c-number">5.0</span>)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#vents">vents</a>, <span class="c-number">11.0</span>)) <a href="extensions-blender-demos-NeonCity.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<h2 class="section" id="section-5">Traffic</h2>
+<div class="item" id="cars">
+<h3><a href="#cars">cars</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L186">line 186</a></div>
+<pre class="code">cars ← <span class="c-number">32</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#cid">cid</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.cars">ˡcars</a></div>
+</div>
+<div class="item" id="cid">
+<h3><a href="#cid">cid</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L187">line 187</a></div>
+<pre class="code">cid ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="extensions-blender-demos-NeonCity.xtl.html#cars">cars</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#lane">lane</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#cy0">cy0</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#run">run</a></div>
+</div>
+<div class="item" id="lane">
+<h3><a href="#lane">lane</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L188">line 188</a></div>
+<pre class="code">lane ← <a href="extensions-blender-demos-NeonCity.xtl.html#cid">cid</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">4</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#north">north</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#cx">cx</a></div>
+</div>
+<div class="item" id="north">
+<h3><a href="#north">north</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L189">line 189</a></div>
+<pre class="code">north ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#lane">lane</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#cx">cx</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#cy0">cy0</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#run">run</a></div>
+</div>
+<div class="item" id="cx">
+<h3><a href="#cx">cx</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L190">line 190</a></div>
+<pre class="code">cx ← <a href="extensions-blender-demos-NeonCity.xtl.html#north">north</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">2.6</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">3.6</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#lane">lane</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.cars">ˡcars</a></div>
+</div>
+<div class="item" id="cy0">
+<h3><a href="#cy0">cy0</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L191">line 191</a></div>
+<pre class="code">cy0 ← <a href="extensions-blender-demos-NeonCity.xtl.html#north">north</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">-250.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">64.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#cid">cid</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">4</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">30.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#cid">cid</a>, <span class="c-number">21</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.cars">ˡcars</a></div>
+</div>
+<div class="item" id="run">
+<h3><a href="#run">run</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L192">line 192</a></div>
+<pre class="code">run ← <a href="extensions-blender-demos-NeonCity.xtl.html#north">north</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#l.seconds">ˡseconds</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">9.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">9.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#cid">cid</a>, <span class="c-number">22</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.cars">ˡcars</a></div>
+</div>
+<div class="item" id="l.cars">
+<h3><a href="#l.cars">ˡcars</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L199">line 199</a></div>
+<div class="doc">
+<p>nc:cars: the cars on the avenue, a row each: from x y z to x y z in
+the film (what cy:f_leet takes)</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-NeonCity.xtl.html" class="c-string">&quot;NeonCity&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="extensions-blender-demos-NeonCity.xtl.html#l.cars">ⁿᶜcars</a>
+32 6</pre>
+</div>
+<pre class="code">ˡcars ← (<span class="c-number">6</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#cx">cx</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#cy0">cy0</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#cars">cars</a>, <span class="c-number">0.0</span>)) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#cx">cx</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#cy0">cy0</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-NeonCity.xtl.html#run">run</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#h.f_ill" class="c-libfunc">ʰf̲ill</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#cars">cars</a>, <span class="c-number">0.0</span>)) <a href="extensions-blender-demos-NeonCity.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.t_raffic"><span class="c-libfunc">ʰt̲raffic</span></a></div>
+</div>
+<div class="item" id="fliers">
+<h3><a href="#fliers">fliers</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L203">line 203</a></div>
+<pre class="code">fliers ← <span class="c-number">27</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#fid">fid</a></div>
+</div>
+<div class="item" id="fid">
+<h3><a href="#fid">fid</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L204">line 204</a></div>
+<pre class="code">fid ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="extensions-blender-demos-NeonCity.xtl.html#fliers">fliers</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#street">street</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#fz">fz</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#fx0">fx0</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#frun">frun</a></div>
+</div>
+<div class="item" id="street">
+<h3><a href="#street">street</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L205">line 205</a></div>
+<pre class="code">street ← <a href="extensions-blender-demos-NeonCity.xtl.html#fid">fid</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">9</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#east">east</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#fy">fy</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#fz">fz</a></div>
+</div>
+<div class="item" id="east">
+<h3><a href="#east">east</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L206">line 206</a></div>
+<pre class="code">east ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#street">street</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#fx0">fx0</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#frun">frun</a></div>
+</div>
+<div class="item" id="fy">
+<h3><a href="#fy">fy</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L207">line 207</a></div>
+<pre class="code">fy ← <span class="c-number">-200.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">50.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#street">street</a></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.fliers">ˡfliers</a></div>
+</div>
+<div class="item" id="fz">
+<h3><a href="#fz">fz</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L208">line 208</a></div>
+<pre class="code">fz ← <span class="c-number">26.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">11.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#street">street</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">3</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">4.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#fid">fid</a>, <span class="c-number">23</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.fliers">ˡfliers</a></div>
+</div>
+<div class="item" id="fx0">
+<h3><a href="#fx0">fx0</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L209">line 209</a></div>
+<pre class="code">fx0 ← <a href="extensions-blender-demos-NeonCity.xtl.html#east">east</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">-330.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">150.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#fid">fid</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">9</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">60.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#fid">fid</a>, <span class="c-number">24</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.fliers">ˡfliers</a></div>
+</div>
+<div class="item" id="frun">
+<h3><a href="#frun">frun</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L210">line 210</a></div>
+<pre class="code">frun ← <a href="extensions-blender-demos-NeonCity.xtl.html#east">east</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#l.seconds">ˡseconds</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">22.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">16.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#fid">fid</a>, <span class="c-number">25</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.fliers">ˡfliers</a></div>
+</div>
+<div class="item" id="high2">
+<h3><a href="#high2">high2</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L211">line 211</a></div>
+<pre class="code">high2 ← <span class="c-number">10</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#hid">hid</a></div>
+</div>
+<div class="item" id="hid">
+<h3><a href="#hid">hid</a> <span class="type">: Int</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L212">line 212</a></div>
+<pre class="code">hid ← (<a href="builtins.html#r_ange" class="c-builtin">r̲ange</a> <a href="extensions-blender-demos-NeonCity.xtl.html#high2">high2</a>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#hn">hn</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#hy0">hy0</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#hz">hz</a></div>
+</div>
+<div class="item" id="hn">
+<h3><a href="#hn">hn</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L213">line 213</a></div>
+<pre class="code">hn ← (<a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <span class="c-number">2</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#hid">hid</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span>) <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">1.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#hy0">hy0</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#hrun">hrun</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.fliers">ˡfliers</a></div>
+</div>
+<div class="item" id="hy0">
+<h3><a href="#hy0">hy0</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L214">line 214</a></div>
+<pre class="code">hy0 ← <a href="extensions-blender-demos-NeonCity.xtl.html#hn">hn</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">-300.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> (<span class="c-number">110.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#hid">hid</a> <a href="builtins.html#d_iv" class="c-builtin">d̲iv</a> <span class="c-number">2</span>) <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">40.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#hid">hid</a>, <span class="c-number">26</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.r_and" class="c-libfunc">ˡr̲and</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.fliers">ˡfliers</a></div>
+</div>
+<div class="item" id="hrun">
+<h3><a href="#hrun">hrun</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L215">line 215</a></div>
+<pre class="code">hrun ← <a href="extensions-blender-demos-NeonCity.xtl.html#hn">hn</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="extensions-blender-demos-NeonCity.xtl.html#l.seconds">ˡseconds</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">30.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.fliers">ˡfliers</a></div>
+</div>
+<div class="item" id="hz">
+<h3><a href="#hz">hz</a> <span class="type">: Float</span></h3>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L216">line 216</a></div>
+<pre class="code">hz ← <span class="c-number">62.0</span> <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">9.0</span> <a href="builtins.html#-2a" class="c-symbol">×</a> <a href="builtins.html#f_loat" class="c-builtin">f̲loat</a> <a href="extensions-blender-demos-NeonCity.xtl.html#hid">hid</a> <a href="builtins.html#m_od" class="c-builtin">m̲od</a> <span class="c-number">2</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.fliers">ˡfliers</a></div>
+</div>
+<div class="item" id="l.fliers">
+<h3><a href="#l.fliers">ˡfliers</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L223">line 223</a></div>
+<div class="doc">
+<p>nc:fliers: the fliers, rows as nc:cars: along the cross streets,
+then over the avenue</p>
+<pre class="example"><span class="prompt">      </span><span class="c-libfunc">ⁿᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-NeonCity.xtl.html" class="c-string">&quot;NeonCity&quot;</a></pre>
+<pre class="example"><span class="prompt">      </span><a href="builtins.html#s_hape" class="c-builtin">s̲hape</a> <a href="extensions-blender-demos-NeonCity.xtl.html#l.fliers">ⁿᶜfliers</a>
+37 6</pre>
+</div>
+<pre class="code">ˡfliers ← ((<span class="c-number">6</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#fx0">fx0</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#fy">fy</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#fz">fz</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#fx0">fx0</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-NeonCity.xtl.html#frun">frun</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#fy">fy</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#fz">fz</a>) <a href="extensions-blender-demos-NeonCity.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at₁</a> (<span class="c-number">6</span>, (<a href="extensions-blender-demos-NeonCity.xtl.html#hn">hn</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">5.5</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#hy0">hy0</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#hz">hz</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#hn">hn</a> <a href="builtins.html#-2a" class="c-symbol">×</a> <span class="c-number">5.5</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#hy0">hy0</a> <a href="builtins.html#-2b" class="c-symbol">+</a> <a href="extensions-blender-demos-NeonCity.xtl.html#hrun">hrun</a>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#hz">hz</a>) <a href="extensions-blender-demos-NeonCity.xtl.html#h.c_ols" class="c-libfunc">ʰc̲ols</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#h.t_raffic"><span class="c-libfunc">ʰt̲raffic</span></a></div>
+</div>
+<h2 class="section" id="section-6">The camera</h2>
+<div class="item" id="l.times">
+<h3><a href="#l.times">ˡtimes</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L232">line 232</a></div>
+<div class="doc">
+<p>nc:times: the times of the flight (cy:f_ly), with nc:eyes and
+nc:aims: from over the
+skyline at the south end, down between the towers, under the first
+bridge to the height of a car's roof, along the puddles, and up a
+little to the great screen at the north end</p>
+</div>
+<pre class="code">ˡtimes ← <span class="c-number">0.0</span> <span class="c-number">3.0</span> <span class="c-number">6.0</span> <span class="c-number">9.0</span> <span class="c-number">12.0</span> <span class="c-number">15.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.eyes">
+<h3><a href="#l.eyes">ˡeyes</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L234">line 234</a></div>
+<div class="doc">
+<p>nc:eyes: where the camera is at each of nc:times (6 by 3)</p>
+</div>
+<pre class="code">ˡeyes ← <span class="c-number">6</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">-330.0</span> <span class="c-number">150.0</span>  <span class="c-number">0.0</span> <span class="c-number">-255.0</span> <span class="c-number">78.0</span>  <span class="c-number">-2.0</span> <span class="c-number">-170.0</span> <span class="c-number">26.0</span>  <span class="c-number">1.6</span> <span class="c-number">-80.0</span> <span class="c-number">5.0</span>  <span class="c-number">-1.2</span> <span class="c-number">20.0</span> <span class="c-number">2.3</span>  <span class="c-number">0.0</span> <span class="c-number">120.0</span> <span class="c-number">5.5</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.aims">
+<h3><a href="#l.aims">ˡaims</a> <span class="type">: Float</span></h3>
+<div class="meta">value &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L236">line 236</a></div>
+<div class="doc">
+<p>nc:aims: what it looks at then (6 by 3)</p>
+</div>
+<pre class="code">ˡaims ← <span class="c-number">6</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">-150.0</span> <span class="c-number">40.0</span>  <span class="c-number">0.0</span> <span class="c-number">-90.0</span> <span class="c-number">26.0</span>  <span class="c-number">0.0</span> <span class="c-number">-40.0</span> <span class="c-number">10.0</span>  <span class="c-number">0.0</span> <span class="c-number">30.0</span> <span class="c-number">5.0</span>  <span class="c-number">0.0</span> <span class="c-number">130.0</span> <span class="c-number">8.0</span>  <span class="c-number">0.0</span> <span class="c-number">250.0</span> <span class="c-number">34.0</span></pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<h2 class="section" id="section-7">The scene</h2>
+<div class="item" id="h.s_kins">
+<h3><a href="#h.s_kins"><span class="c-libfunc">ʰs̲kins</span></a> <span class="type">: Any a =&gt; a -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L241">line 241</a></div>
+<pre class="code"><span class="c-libfunc">ʰs̲kins</span> ← { z →
+  t ← ((<span class="c-string">&quot;skin 0&quot;</span>, <span class="c-number">60</span> <span class="c-number">62</span> <span class="c-number">70</span>, <span class="c-number">255</span> <span class="c-number">220</span> <span class="c-number">170</span>, <span class="c-number">180</span> <span class="c-number">230</span> <span class="c-number">255</span>, <span class="c-number">1.6</span> <span class="c-number">3.2</span>, <span class="c-number">0.3</span>, <span class="c-number">2.5</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.f_acade" class="c-libfunc">ᶜʸf̲acade</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;skin 1&quot;</span>, <span class="c-number">80</span> <span class="c-number">60</span> <span class="c-number">60</span>, <span class="c-number">255</span> <span class="c-number">120</span> <span class="c-number">180</span>, <span class="c-number">255</span> <span class="c-number">230</span> <span class="c-number">160</span>, <span class="c-number">2.4</span> <span class="c-number">3.0</span>, <span class="c-number">0.2</span>, <span class="c-number">2.5</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.f_acade" class="c-libfunc">ᶜʸf̲acade</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;skin 2&quot;</span>, <span class="c-number">40</span> <span class="c-number">50</span> <span class="c-number">60</span>, <span class="c-number">120</span> <span class="c-number">255</span> <span class="c-number">230</span>, <span class="c-number">200</span> <span class="c-number">160</span> <span class="c-number">255</span>, <span class="c-number">1.2</span> <span class="c-number">3.6</span>, <span class="c-number">0.4</span>, <span class="c-number">2.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.f_acade" class="c-libfunc">ᶜʸf̲acade</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;street&quot;</span>, <span class="c-number">62</span> <span class="c-number">62</span> <span class="c-number">65</span>, <span class="c-number">0.45</span>, <span class="c-number">5.0</span>, <span class="c-number">0.25</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.w_et" class="c-libfunc">ᶜʸw̲et</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;walk&quot;</span>, <span class="c-number">70</span> <span class="c-number">70</span> <span class="c-number">74</span>, <span class="c-number">0.55</span>, <span class="c-number">0.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_urface" class="c-libfunc">ᶜʸs̲urface</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;dark&quot;</span>, <span class="c-number">46</span> <span class="c-number">46</span> <span class="c-number">50</span>, <span class="c-number">0.45</span>, <span class="c-number">0.7</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_urface" class="c-libfunc">ᶜʸs̲urface</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;paint&quot;</span>, <span class="c-number">200</span> <span class="c-number">200</span> <span class="c-number">190</span>, <span class="c-number">0.6</span>, <span class="c-number">0.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_urface" class="c-libfunc">ᶜʸs̲urface</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;shell&quot;</span>, <span class="c-number">30</span> <span class="c-number">34</span> <span class="c-number">44</span>, <span class="c-number">0.25</span>, <span class="c-number">0.9</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_urface" class="c-libfunc">ᶜʸs̲urface</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;neon 0&quot;</span>, <span class="c-number">255</span> <span class="c-number">13</span> <span class="c-number">102</span>, <span class="c-number">8.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.n_eon" class="c-libfunc">ᶜʸn̲eon</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;neon 1&quot;</span>, <span class="c-number">13</span> <span class="c-number">204</span> <span class="c-number">255</span>, <span class="c-number">8.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.n_eon" class="c-libfunc">ᶜʸn̲eon</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;neon 2&quot;</span>, <span class="c-number">255</span> <span class="c-number">128</span> <span class="c-number">13</span>, <span class="c-number">8.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.n_eon" class="c-libfunc">ᶜʸn̲eon</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;warm&quot;</span>, <span class="c-number">255</span> <span class="c-number">190</span> <span class="c-number">120</span>, <span class="c-number">20.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.n_eon" class="c-libfunc">ᶜʸn̲eon</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;head&quot;</span>, <span class="c-number">255</span> <span class="c-number">245</span> <span class="c-number">220</span>, <span class="c-number">40.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.n_eon" class="c-libfunc">ᶜʸn̲eon</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;tail&quot;</span>, <span class="c-number">255</span> <span class="c-number">5</span> <span class="c-number">5</span>, <span class="c-number">40.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.n_eon" class="c-libfunc">ᶜʸn̲eon</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;beacon&quot;</span>, <span class="c-number">255</span> <span class="c-number">20</span> <span class="c-number">10</span>, <span class="c-number">30.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.n_eon" class="c-libfunc">ᶜʸn̲eon</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;screen 0&quot;</span>, <span class="c-string">&quot;bars&quot;</span>, <span class="c-number">255</span> <span class="c-number">26</span> <span class="c-number">128</span>, <span class="c-number">26</span> <span class="c-number">230</span> <span class="c-number">255</span>, <span class="c-number">0.5</span>, <span class="c-number">5.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_creen" class="c-libfunc">ᶜʸs̲creen</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;screen 1&quot;</span>, <span class="c-string">&quot;rings&quot;</span>, <span class="c-number">255</span> <span class="c-number">153</span> <span class="c-number">26</span>, <span class="c-number">77</span> <span class="c-number">26</span> <span class="c-number">255</span>, <span class="c-number">0.4</span>, <span class="c-number">5.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_creen" class="c-libfunc">ᶜʸs̲creen</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;screen 2&quot;</span>, <span class="c-string">&quot;rain&quot;</span>, <span class="c-number">26</span> <span class="c-number">255</span> <span class="c-number">102</span>, <span class="c-number">204</span> <span class="c-number">255</span> <span class="c-number">230</span>, <span class="c-number">0.6</span>, <span class="c-number">6.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_creen" class="c-libfunc">ᶜʸs̲creen</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;screen 3&quot;</span>, <span class="c-string">&quot;tiles&quot;</span>, <span class="c-number">255</span> <span class="c-number">26</span> <span class="c-number">51</span>, <span class="c-number">26</span> <span class="c-number">102</span> <span class="c-number">255</span>, <span class="c-number">2.0</span>, <span class="c-number">5.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_creen" class="c-libfunc">ᶜʸs̲creen</a> <span class="c-number">0</span>)
+  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;great&quot;</span>, <span class="c-string">&quot;rain&quot;</span>, <span class="c-number">255</span> <span class="c-number">60</span> <span class="c-number">140</span>, <span class="c-number">40</span> <span class="c-number">220</span> <span class="c-number">255</span>, <span class="c-number">0.35</span>, <span class="c-number">5.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_creen" class="c-libfunc">ᶜʸs̲creen</a> <span class="c-number">0</span>)
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.b_uilt">
+<h3><a href="#h.b_uilt"><span class="c-libfunc">ʰb̲uilt</span></a> <span class="type">: Any a =&gt; a -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L254">line 254</a></div>
+<pre class="code"><span class="c-libfunc">ʰb̲uilt</span> ← { z →
+  t ← ((<span class="c-string">&quot;ground&quot;</span>, <span class="c-number">1</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">-0.5</span> <span class="c-number">1400.0</span> <span class="c-number">1400.0</span> <span class="c-number">1.0</span> <span class="c-number">0.0</span>, <span class="c-string">&quot;street&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;walks&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#slabs">slabs</a>, <span class="c-string">&quot;walk&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;dashes&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#paint">paint</a>, <span class="c-string">&quot;paint&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;towers 0&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.t_owers" class="c-libfunc">ˡt̲owers</a> <span class="c-number">0</span>, <span class="c-string">&quot;skin 0&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;towers 1&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.t_owers" class="c-libfunc">ˡt̲owers</a> <span class="c-number">1</span>, <span class="c-string">&quot;skin 1&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;towers 2&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.t_owers" class="c-libfunc">ˡt̲owers</a> <span class="c-number">2</span>, <span class="c-string">&quot;skin 2&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;units&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#units">units</a> <a href="builtins.html#c_at" class="c-builtin">c̲at₁</a> <a href="extensions-blender-demos-NeonCity.xtl.html#masts">masts</a>, <span class="c-string">&quot;dark&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;beacons&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#beacons">beacons</a>, <span class="c-string">&quot;beacon&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;bands 0&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.b_ands" class="c-libfunc">ˡb̲ands</a> <span class="c-number">0</span>, <span class="c-string">&quot;neon 0&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;bands 1&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.b_ands" class="c-libfunc">ˡb̲ands</a> <span class="c-number">1</span>, <span class="c-string">&quot;neon 1&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;bands 2&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.b_ands" class="c-libfunc">ˡb̲ands</a> <span class="c-number">2</span>, <span class="c-string">&quot;neon 2&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;screens 0&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_creens" class="c-libfunc">ˡs̲creens</a> <span class="c-number">0</span>, <span class="c-string">&quot;screen 0&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;screens 1&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_creens" class="c-libfunc">ˡs̲creens</a> <span class="c-number">1</span>, <span class="c-string">&quot;screen 1&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;screens 2&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_creens" class="c-libfunc">ˡs̲creens</a> <span class="c-number">2</span>, <span class="c-string">&quot;screen 2&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;screens 3&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_creens" class="c-libfunc">ˡs̲creens</a> <span class="c-number">3</span>, <span class="c-string">&quot;screen 3&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;posts&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#stems">stems</a> <a href="builtins.html#c_at" class="c-builtin">c̲at₁</a> <a href="extensions-blender-demos-NeonCity.xtl.html#arms">arms</a>, <span class="c-string">&quot;dark&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;bulbs&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#bulbs">bulbs</a>, <span class="c-string">&quot;warm&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;lamps&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#glows">glows</a>) <a href="extensions-blender-lib-Cycles.xtl.html#l.l_amps" class="c-libfunc">ᶜʸl̲amps</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;spans&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#spans">spans</a>, <span class="c-string">&quot;skin 0&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;strips&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#strips">strips</a>, <span class="c-string">&quot;neon 1&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>)
+  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;pylons&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#pylons">pylons</a>, <span class="c-string">&quot;dark&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;great&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#great">great</a>, <span class="c-string">&quot;great&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_oxes" class="c-libfunc">ᶜʸb̲oxes</a> <span class="c-number">0</span>)
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.s_igns">
+<h3><a href="#h.s_igns"><span class="c-libfunc">ʰs̲igns</span></a> <span class="type">: Any a =&gt; a -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L267">line 267</a></div>
+<pre class="code"><span class="c-libfunc">ʰs̲igns</span> ← { z →
+  t ← ((<span class="c-string">&quot;sign 1&quot;</span>, <span class="c-string">&quot;X_eTaL&quot;</span>, <span class="c-number">-10.4</span> <span class="c-number">-150.0</span> <span class="c-number">34.0</span>, <span class="c-number">2.6</span>, <span class="c-number">0</span>, <span class="c-number">1</span>, <span class="c-string">&quot;neon 0&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_ign" class="c-libfunc">ᶜʸs̲ign</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;sign 2&quot;</span>, <span class="c-string">&quot;ARRAYS&quot;</span>, <span class="c-number">10.4</span> <span class="c-number">-95.0</span> <span class="c-number">30.0</span>, <span class="c-number">2.4</span>, <span class="c-number">0</span>, <span class="c-number">1</span>, <span class="c-string">&quot;neon 1&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_ign" class="c-libfunc">ᶜʸs̲ign</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;sign 3&quot;</span>, <span class="c-string">&quot;RHO&quot;</span>, <span class="c-number">-10.4</span> <span class="c-number">-52.0</span> <span class="c-number">20.0</span>, <span class="c-number">2.2</span>, <span class="c-number">0</span>, <span class="c-number">1</span>, <span class="c-string">&quot;neon 2&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_ign" class="c-libfunc">ᶜʸs̲ign</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;sign 4&quot;</span>, <span class="c-string">&quot;OPEN 24H&quot;</span>, <span class="c-number">0.0</span> <span class="c-number">-30.8</span> <span class="c-number">15.5</span>, <span class="c-number">1.6</span>, <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-string">&quot;neon 0&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_ign" class="c-libfunc">ᶜʸs̲ign</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;sign 5&quot;</span>, <span class="c-string">&quot;IOTA&quot;</span>, <span class="c-number">10.4</span> <span class="c-number">14.0</span> <span class="c-number">22.0</span>, <span class="c-number">2.2</span>, <span class="c-number">0</span>, <span class="c-number">1</span>, <span class="c-string">&quot;neon 0&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_ign" class="c-libfunc">ᶜʸs̲ign</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;sign 6&quot;</span>, <span class="c-string">&quot;NOODLES&quot;</span>, <span class="c-number">-10.4</span> <span class="c-number">52.0</span> <span class="c-number">24.0</span>, <span class="c-number">2.0</span>, <span class="c-number">0</span>, <span class="c-number">1</span>, <span class="c-string">&quot;neon 1&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_ign" class="c-libfunc">ᶜʸs̲ign</a> <span class="c-number">0</span>)
+  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;sign 7&quot;</span>, <span class="c-string">&quot;KERNEL&quot;</span>, <span class="c-number">0.0</span> <span class="c-number">94.2</span> <span class="c-number">19.0</span>, <span class="c-number">1.6</span>, <span class="c-number">0</span>, <span class="c-number">0</span>, <span class="c-string">&quot;neon 2&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_ign" class="c-libfunc">ᶜʸs̲ign</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;sign 8&quot;</span>, <span class="c-string">&quot;HOTEL&quot;</span>, <span class="c-number">10.4</span> <span class="c-number">150.0</span> <span class="c-number">30.0</span>, <span class="c-number">2.6</span>, <span class="c-number">0</span>, <span class="c-number">1</span>, <span class="c-string">&quot;neon 2&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_ign" class="c-libfunc">ᶜʸs̲ign</a> <span class="c-number">0</span>)
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="h.t_raffic">
+<h3><a href="#h.t_raffic"><span class="c-libfunc">ʰt̲raffic</span></a> <span class="type">: Any a =&gt; a -&gt; Char</span></h3>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L275">line 275</a></div>
+<pre class="code"><span class="c-libfunc">ʰt̲raffic</span> ← { z →
+  t ← (<a href="extensions-blender-lib-Cycles.xtl.html#l.m_odel" class="c-libfunc">ᶜʸm̲odel</a> <span class="c-string">&quot;car&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;car body&quot;</span>, <span class="c-number">2</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.55</span> <span class="c-number">4.4</span> <span class="c-number">1.9</span> <span class="c-number">0.6</span> <span class="c-number">0.0</span>  <span class="c-number">-0.3</span> <span class="c-number">0.0</span> <span class="c-number">1.1</span> <span class="c-number">2.4</span> <span class="c-number">1.7</span> <span class="c-number">0.55</span> <span class="c-number">0.0</span>, <span class="c-string">&quot;shell&quot;</span>, <span class="c-string">&quot;car&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.p_arts" class="c-libfunc">ᶜʸp̲arts</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;car head&quot;</span>, <span class="c-number">2</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2.2</span> <span class="c-number">0.6</span> <span class="c-number">0.6</span> <span class="c-number">0.06</span> <span class="c-number">0.35</span> <span class="c-number">0.15</span> <span class="c-number">0.0</span>  <span class="c-number">2.2</span> <span class="c-number">-0.6</span> <span class="c-number">0.6</span> <span class="c-number">0.06</span> <span class="c-number">0.35</span> <span class="c-number">0.15</span> <span class="c-number">0.0</span>, <span class="c-string">&quot;head&quot;</span>, <span class="c-string">&quot;car&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.p_arts" class="c-libfunc">ᶜʸp̲arts</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;car tail&quot;</span>, <span class="c-number">1</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-2.2</span> <span class="c-number">0.0</span> <span class="c-number">0.72</span> <span class="c-number">0.06</span> <span class="c-number">1.6</span> <span class="c-number">0.1</span> <span class="c-number">0.0</span>, <span class="c-string">&quot;tail&quot;</span>, <span class="c-string">&quot;car&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.p_arts" class="c-libfunc">ᶜʸp̲arts</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-lib-Cycles.xtl.html#l.m_odel" class="c-libfunc">ᶜʸm̲odel</a> <span class="c-string">&quot;flier&quot;</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;flier body&quot;</span>, <span class="c-number">3</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">5.2</span> <span class="c-number">2.2</span> <span class="c-number">0.7</span> <span class="c-number">0.0</span>  <span class="c-number">-0.4</span> <span class="c-number">0.0</span> <span class="c-number">0.55</span> <span class="c-number">2.6</span> <span class="c-number">1.9</span> <span class="c-number">0.5</span> <span class="c-number">0.0</span>  <span class="c-number">-2.3</span> <span class="c-number">0.0</span> <span class="c-number">0.7</span> <span class="c-number">0.9</span> <span class="c-number">2.8</span> <span class="c-number">0.08</span> <span class="c-number">0.0</span>, <span class="c-string">&quot;shell&quot;</span>, <span class="c-string">&quot;flier&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.p_arts" class="c-libfunc">ᶜʸp̲arts</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;flier head&quot;</span>, <span class="c-number">1</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">2.6</span> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">0.06</span> <span class="c-number">1.5</span> <span class="c-number">0.12</span> <span class="c-number">0.0</span>, <span class="c-string">&quot;head&quot;</span>, <span class="c-string">&quot;flier&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.p_arts" class="c-libfunc">ᶜʸp̲arts</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;flier tail&quot;</span>, <span class="c-number">1</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">-2.6</span> <span class="c-number">0.0</span> <span class="c-number">0.1</span> <span class="c-number">0.06</span> <span class="c-number">1.9</span> <span class="c-number">0.12</span> <span class="c-number">0.0</span>, <span class="c-string">&quot;tail&quot;</span>, <span class="c-string">&quot;flier&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.p_arts" class="c-libfunc">ᶜʸp̲arts</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;flier under&quot;</span>, <span class="c-number">1</span> <span class="c-number">7</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">-0.4</span> <span class="c-number">4.0</span> <span class="c-number">1.6</span> <span class="c-number">0.05</span> <span class="c-number">0.0</span>, <span class="c-string">&quot;neon 1&quot;</span>, <span class="c-string">&quot;flier&quot;</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.p_arts" class="c-libfunc">ᶜʸp̲arts</a> <span class="c-number">0</span>)
+  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;cars&quot;</span>, <span class="c-string">&quot;car&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.cars">ˡcars</a>) <a href="extensions-blender-lib-Cycles.xtl.html#l.f_leet" class="c-libfunc">ᶜʸf̲leet</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;fliers&quot;</span>, <span class="c-string">&quot;flier&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.fliers">ˡfliers</a>) <a href="extensions-blender-lib-Cycles.xtl.html#l.f_leet" class="c-libfunc">ᶜʸf̲leet</a> <span class="c-number">0</span>)
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-NeonCity.xtl.html#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></div>
+</div>
+<div class="item" id="l.s_cene">
+<h3><a href="#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a> <span class="type">: Any e =&gt; (a, b, c, d, Char) -&gt; e -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-blender-demos-NeonCity.xtl.src.html#L290">line 290</a></div>
+<div class="doc">
+<p>(width, height, fps, samples, device) nc:s_cene 0: the whole script
+but its rendering: the picture (cy:s_tage) for nc:seconds, the sky,
+the materials, the city, its signs and traffic, haze over it all,
+steam, the camera's flight and the report. What to render is the
+caller's, added after: cy:s_till, or cy:f_rames and cy:e_ncode.</p>
+</div>
+<pre class="code"><span class="c-libfunc">ˡs̲cene</span> ← { (w, h, fps, samples, device) z →
+  t ← <a href="extensions-blender-lib-Cycles.xtl.html#l.head">ᶜʸhead</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((w, h, fps, <a href="extensions-blender-demos-NeonCity.xtl.html#l.seconds">ˡseconds</a>, samples, device) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_tage" class="c-libfunc">ᶜʸs̲tage</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;AgX - Punchy&quot;</span>, <span class="c-number">0.0</span>, <span class="c-number">0.5</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.l_ook" class="c-libfunc">ᶜʸl̲ook</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">30</span> <span class="c-number">14</span> <span class="c-number">40</span>, <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-number">8</span>, <span class="c-number">1.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_ky" class="c-libfunc">ᶜʸs̲ky</a> <span class="c-number">0</span>)
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#h.s_kins" class="c-libfunc">ʰs̲kins</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#h.b_uilt" class="c-libfunc">ʰb̲uilt</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> (<a href="extensions-blender-demos-NeonCity.xtl.html#h.s_igns" class="c-libfunc">ʰs̲igns</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-demos-NeonCity.xtl.html#h.t_raffic" class="c-libfunc">ʰt̲raffic</a> <span class="c-number">0</span>
+  t ← t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;haze&quot;</span>, <span class="c-number">1</span> <span class="c-number">6</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span> <span class="c-number">0.0</span> <span class="c-number">110.0</span> <span class="c-number">1300.0</span> <span class="c-number">1300.0</span> <span class="c-number">220.0</span>, <span class="c-number">150</span> <span class="c-number">165</span> <span class="c-number">255</span>, <span class="c-number">0.0012</span>, <span class="c-number">0.5</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.f_og" class="c-libfunc">ᶜʸf̲og</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-string">&quot;vent&quot;</span>, <a href="extensions-blender-demos-NeonCity.xtl.html#plumes">plumes</a>, <span class="c-number">255</span> <span class="c-number">255</span> <span class="c-number">255</span>, <span class="c-number">1.2</span>, <span class="c-number">1.5</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.s_team" class="c-libfunc">ᶜʸs̲team</a> <span class="c-number">0</span>)
+  t <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<a href="extensions-blender-demos-NeonCity.xtl.html#l.times">ˡtimes</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.eyes">ˡeyes</a>, <a href="extensions-blender-demos-NeonCity.xtl.html#l.aims">ˡaims</a>, <span class="c-number">24</span>, <span class="c-number">2.0</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.f_ly" class="c-libfunc">ᶜʸf̲ly</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> ((<span class="c-number">1.0</span>, <span class="c-number">0.6</span>, <span class="c-number">0.6</span>) <a href="extensions-blender-lib-Cycles.xtl.html#l.b_loom" class="c-libfunc">ᶜʸb̲loom</a> <span class="c-number">0</span>) <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-blender-lib-Cycles.xtl.html#l.report">ᶜʸreport</a>
+}</pre>
+<div class="uses">Used in: <a href="extensions-blender-demos-city-preview.xtl.html#script">script</a>, <a href="extensions-blender-demos-city.xtl.html#script">script</a></div>
+</div>
+</main>
+</body>
+</html>

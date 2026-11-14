@@ -1,0 +1,295 @@
+## NeonCity.xtl -- a city at night after rain, worked out as arrays and
+## ray-traced (Cycles.xtl): an avenue running north between two walls
+## of towers, six lots deep on each side, every lot's tower a few rows
+## of a table -- a body, a narrower tier, sometimes a spire -- with a
+## height, a footprint and a skin of its own from a hash of its number;
+## screens on the walls that face the avenue, bands of neon, signs,
+## lamps, steam, bridges across, cars on the ground and in the air, and
+## a camera that comes down from the skyline to the puddles. Nothing is
+## drawn by hand and nothing is loaded: change nc:seed and it is
+## another city. Shared by the demo (demos/city.xtl: stills), its
+## preview and film, and its test.
+## Import: "nc:" u_se< "NeonCity"
+
+"cy:" u_se< "Cycles"
+
+### Numbers
+
+## nc:seed: the city's number: every random choice is a hash of it and
+## of the thing's own number, so the same seed is the same city
+l:seed := 7
+
+## nc:seconds: the film's length
+l:seconds := 15.0
+
+# k vectors of one length, joined end to end, as a table of k columns
+h:c_ols := { (k, v) z -> 2 1 t_ranspose (k c_at (t_ally v) d_iv k) r_eshape v }
+
+## (numbers, salt) nc:r_and 0: a number from 0 to 1 for each whole
+## number, the same every time: a hash of it, the salt (which choice
+## this is) and nc:seed, in whole numbers, so every machine agrees
+## >> "nc:" u_se< "NeonCity"
+## >> s_hape (0 1 2 3, 1) nc:r_and 0
+## 4
+l:r_and := { (i, salt) z ->
+  a := (i + 17) * 7919 + (salt + 13 * l:seed) * 104729
+  b := i + 31 + salt
+  (f_loat ((a m_od 65521) * b m_od 65521) m_od 65521) / 65521.0
+}
+
+# boxes standing square: middles x y z and sizes w d h (vectors) as the
+# rows cy:b_oxes takes
+h:b_ox := { (x, y, e, w, d, h) z -> (7, x c_at y c_at e c_at w c_at d c_at h c_at 0.0 * x) h:c_ols 0 }
+
+# n copies of a number
+h:f_ill := { (n, x) -> n r_eshape f_loat x }
+
+### The lots
+
+# lots: columns back from the avenue and rows along it, on each side
+cols := 6
+rows := 20
+per := cols * rows
+lots := 2 * per
+# each lot's number from 0, its side (-1 west, 1 east), column and row
+id := (r_ange lots) - 1
+side := (f_loat 2 * id d_iv per) - 1.0
+col := (id m_od per) d_iv rows
+row := (id m_od per) m_od rows
+# a lot is 17 by 19; a cross street 12 wide after every second lot; the
+# avenue 18 wide with 2 of sidewalk each side
+lx := side * 19.5 + (17.0 * f_loat col) + 12.0 * f_loat col d_iv 2
+ly := -234.5 + (19.0 * f_loat row) + 12.0 * f_loat row d_iv 2
+
+# heights: most low, a few very tall; taller by the avenue; never
+# under 45 on it, so the avenue is a canyon
+u := (id, 1) l:r_and 0
+rough := (26.0 + 150.0 * u * u) * 1.25 - 0.09 * f_loat col
+high := rough m_ax 45.0 * f_loat 1 * col = 0
+wide := 15.5 - 3.0 * (id, 2) l:r_and 0
+deep := 17.5 - 3.0 * (id, 3) l:r_and 0
+skin := f_loor 3.0 * (id, 4) l:r_and 0
+# the body ends where the tier begins; low towers have no tier (masks
+# are made whole numbers, 1 or 0, where they are defined: a library's
+# Bool does not go into arithmetic)
+tiered := 1 * high > 60.0
+body := high * (1.0 - f_loat tiered) + (f_loat tiered) * 0.55 + 0.3 * (id, 5) l:r_and 0
+spired := 1 * tiered & ((id, 6) l:r_and 0) > 0.7
+
+## nc:l_ots: the lots as a table, a row each: x y (its middle), the
+## tower's height, its width and depth, its skin (0 to 2), whether it
+## has a tier and a spire (1 or 0), and how far back from the avenue
+## it is (0 the first)
+## >> "nc:" u_se< "NeonCity"
+## >> s_hape nc:lots
+## 240 9
+l:lots := (9, lx c_at ly c_at high c_at wide c_at deep c_at (f_loat skin) c_at (f_loat tiered) c_at (f_loat spired) c_at f_loat col) h:c_ols 0
+
+# the towers' boxes: bodies, tiers and spires, each with its lot's skin
+bodies := (lx, ly, body / 2.0, wide, deep, body) h:b_ox 0
+tiers := tiered r_eplicate_1 (lx, ly, body + (high - body) / 2.0, 0.72 * wide, 0.72 * deep, high - body) h:b_ox 0
+spires := spired r_eplicate_1 (lx, ly, high * 1.14, 0.34 * wide, 0.34 * deep, high * 0.28) h:b_ox 0
+tierSkin := tiered r_eplicate skin
+spireSkin := spired r_eplicate skin
+
+## nc:t_owers k: the boxes of every tower wearing skin k (0 to 2):
+## bodies, then tiers, then spires
+## >> "nc:" u_se< "NeonCity"
+## >> 2 s_elect s_hape nc:t_owers 0
+## 7
+l:t_owers := { k -> ((skin = k) r_eplicate_1 bodies) c_at_1 ((tierSkin = k) r_eplicate_1 tiers) c_at_1 (spireSkin = k) r_eplicate_1 spires }
+
+### On the towers
+
+# a tower's roof
+top := high
+# a machine on every roof, an aerial on some, a beacon on every aerial
+# and every spire
+units := (lx + 0.2 * wide, ly - 0.15 * deep, top + 0.8, h:f_ill (lots, 3.2), h:f_ill (lots, 2.2), h:f_ill (lots, 1.6)) h:b_ox 0
+aerial := 1 * (n_ot spired) & ((id, 7) l:r_and 0) > 0.6
+mast := 8.0 + 12.0 * (id, 8) l:r_and 0
+masts := aerial r_eplicate_1 (lx - 0.2 * wide, ly + 0.2 * deep, top + mast / 2.0, h:f_ill (lots, 0.25), h:f_ill (lots, 0.25), mast) h:b_ox 0
+tip := top + (mast * f_loat aerial) + (high * 0.28) * f_loat spired
+tipX := lx - (0.2 * wide) * f_loat aerial
+tipY := ly + (0.2 * deep) * f_loat aerial
+beacons := (aerial | spired) r_eplicate_1 (tipX, tipY, tip + 0.3, h:f_ill (lots, 0.7), h:f_ill (lots, 0.7), h:f_ill (lots, 0.7)) h:b_ox 0
+
+# a band of neon round the foot of the towers near the avenue, and
+# round the roof of a body under its tier; three colors
+near := col < 2
+foot := (lx, ly, h:f_ill (lots, 5.0), wide + 0.4, deep + 0.4, h:f_ill (lots, 0.3)) h:b_ox 0
+ledge := (lx, ly, body + 0.15, wide + 0.3, deep + 0.3, h:f_ill (lots, 0.3)) h:b_ox 0
+hue := f_loor 3.0 * (id, 9) l:r_and 0
+hue2 := f_loor 3.0 * (id, 10) l:r_and 0
+
+## nc:b_ands k: the neon bands of color k (0 to 2): round the foot of
+## the towers by the avenue, and under the tier of the tall ones
+l:b_ands := { k -> ((near & hue = k) r_eplicate_1 foot) c_at_1 (tiered & (col < 3) & hue2 = k) r_eplicate_1 ledge }
+
+# screens on the walls that face the avenue: on most of the first
+# towers, each of a kind (0 to 3)
+first := col = 0
+shown := first & ((id, 11) l:r_and 0) > 0.25
+sw := 5.0 + 7.0 * (id, 12) l:r_and 0
+sh := 5.0 + 11.0 * (id, 13) l:r_and 0
+sz := 8.0 + ((body - 16.0) m_in 34.0) * (id, 14) l:r_and 0
+kind := f_loor 4.0 * (id, 15) l:r_and 0
+panels := (lx - side * 0.3 + wide / 2.0, ly, sz + sh / 2.0, h:f_ill (lots, 0.4), sw, sh) h:b_ox 0
+
+## nc:s_creens k: the screens of kind k (0 bars, 1 rings, 2 rain, 3
+## tiles) on the walls facing the avenue
+l:s_creens := { k -> (shown & kind = k) r_eplicate_1 panels }
+
+### The street
+
+# blocks of two lots by two, each a slab of sidewalk
+blocks := (cols * rows) d_iv 2
+bid := (r_ange blocks) - 1
+bside := (f_loat 2 * bid d_iv blocks d_iv 2) - 1.0
+bcol := (bid m_od blocks d_iv 2) d_iv rows d_iv 2
+brow := (bid m_od blocks d_iv 2) m_od rows d_iv 2
+bx := bside * 28.0 + 46.0 * f_loat bcol
+by := -225.0 + 50.0 * f_loat brow
+slabs := (bx, by, h:f_ill (blocks, 0.15), h:f_ill (blocks, 37.0), h:f_ill (blocks, 41.0), h:f_ill (blocks, 0.3)) h:b_ox 0
+
+# the dashes down the middle of the avenue
+dashes := 62
+dy := -244.0 + 8.0 * f_loat (r_ange dashes) - 1
+paint := (h:f_ill (dashes, 0.0), dy, h:f_ill (dashes, 0.012), h:f_ill (dashes, 0.18), h:f_ill (dashes, 3.0), h:f_ill (dashes, 0.02)) h:b_ox 0
+
+# street lamps down both sides: a post, an arm, a light
+posts := 32
+pside := (f_loat 2 * ((r_ange posts) - 1) m_od 2) - 1.0
+py := -232.0 + 30.0 * f_loat ((r_ange posts) - 1) d_iv 2
+stems := (pside * 9.7, py, h:f_ill (posts, 3.6), h:f_ill (posts, 0.18), h:f_ill (posts, 0.18), h:f_ill (posts, 7.2)) h:b_ox 0
+arms := (pside * 8.9, py, h:f_ill (posts, 7.2), h:f_ill (posts, 1.8), h:f_ill (posts, 0.2), h:f_ill (posts, 0.14)) h:b_ox 0
+bulbs := (pside * 8.4, py, h:f_ill (posts, 7.1), h:f_ill (posts, 0.9), h:f_ill (posts, 0.22), h:f_ill (posts, 0.06)) h:b_ox 0
+glows := (8, (pside * 8.4) c_at py c_at (h:f_ill (posts, 6.8)) c_at (h:f_ill (posts, 255)) c_at (h:f_ill (posts, 190)) c_at (h:f_ill (posts, 120)) c_at (h:f_ill (posts, 450)) c_at h:f_ill (posts, 0.15)) h:c_ols 0
+
+# bridges across the avenue, lit rooms inside, a strip of neon under
+# each; and a gate at the north end carrying the great screen
+spans := 2 7 r_eshape 0.0 -28.0 15.5 27.0 5.0 3.4 0.0  0.0 97.0 19.0 27.0 5.0 3.4 0.0
+strips := 2 7 r_eshape 0.0 -28.0 13.7 24.0 0.3 0.12 0.0  0.0 97.0 17.2 24.0 0.3 0.12 0.0
+pylons := 2 7 r_eshape -17.0 252.0 36.0 6.0 6.0 72.0 0.0  17.0 252.0 36.0 6.0 6.0 72.0 0.0
+great := 1 7 r_eshape 0.0 251.0 46.0 28.0 0.5 42.0 0.0
+
+# steam from the street, a side and then the other
+vents := 7
+vy := -210.0 + 68.0 * f_loat (r_ange vents) - 1
+vx := 7.2 * (f_loat 2 * ((r_ange vents) - 1) m_od 2) - 1.0
+plumes := (6, vx c_at vy c_at (h:f_ill (vents, 5.5)) c_at (h:f_ill (vents, 5.0)) c_at (h:f_ill (vents, 5.0)) c_at h:f_ill (vents, 11.0)) h:c_ols 0
+
+### Traffic
+
+# cars on the avenue: four lanes, eight to a lane, north on the east
+# side; each goes at its own speed the whole film
+cars := 32
+cid := (r_ange cars) - 1
+lane := cid m_od 4
+north := (f_loat 2 * lane d_iv 2) - 1.0
+cx := north * 2.6 + 3.6 * f_loat lane m_od 2
+cy0 := north * -250.0 + (64.0 * f_loat cid d_iv 4) + 30.0 * (cid, 21) l:r_and 0
+run := north * l:seconds * 9.0 + 9.0 * (cid, 22) l:r_and 0
+
+## nc:cars: the cars on the avenue, a row each: from x y z to x y z in
+## the film (what cy:f_leet takes)
+## >> "nc:" u_se< "NeonCity"
+## >> s_hape nc:cars
+## 32 6
+l:cars := (6, cx c_at cy0 c_at (h:f_ill (cars, 0.0)) c_at cx c_at (cy0 + run) c_at h:f_ill (cars, 0.0)) h:c_ols 0
+
+# fliers along the cross streets, a level each street, a way each
+# level; and two streams high over the avenue
+fliers := 27
+fid := (r_ange fliers) - 1
+street := fid m_od 9
+east := (f_loat 2 * street m_od 2) - 1.0
+fy := -200.0 + 50.0 * f_loat street
+fz := 26.0 + (11.0 * f_loat street m_od 3) + 4.0 * (fid, 23) l:r_and 0
+fx0 := east * -330.0 + (150.0 * f_loat fid d_iv 9) + 60.0 * (fid, 24) l:r_and 0
+frun := east * l:seconds * 22.0 + 16.0 * (fid, 25) l:r_and 0
+high2 := 10
+hid := (r_ange high2) - 1
+hn := (f_loat 2 * hid m_od 2) - 1.0
+hy0 := hn * -300.0 + (110.0 * f_loat hid d_iv 2) + 40.0 * (hid, 26) l:r_and 0
+hrun := hn * l:seconds * 30.0
+hz := 62.0 + 9.0 * f_loat hid m_od 2
+
+## nc:fliers: the fliers, rows as nc:cars: along the cross streets,
+## then over the avenue
+## >> "nc:" u_se< "NeonCity"
+## >> s_hape nc:fliers
+## 37 6
+l:fliers := ((6, fx0 c_at fy c_at fz c_at (fx0 + frun) c_at fy c_at fz) h:c_ols 0) c_at_1 (6, (hn * 5.5) c_at hy0 c_at hz c_at (hn * 5.5) c_at (hy0 + hrun) c_at hz) h:c_ols 0
+
+### The camera
+
+## nc:times: the times of the flight (cy:f_ly), with nc:eyes and
+## nc:aims: from over the
+## skyline at the south end, down between the towers, under the first
+## bridge to the height of a car's roof, along the puddles, and up a
+## little to the great screen at the north end
+l:times := 0.0 3.0 6.0 9.0 12.0 15.0
+## nc:eyes: where the camera is at each of nc:times (6 by 3)
+l:eyes := 6 3 r_eshape 0.0 -330.0 150.0  0.0 -255.0 78.0  -2.0 -170.0 26.0  1.6 -80.0 5.0  -1.2 20.0 2.3  0.0 120.0 5.5
+## nc:aims: what it looks at then (6 by 3)
+l:aims := 6 3 r_eshape 0.0 -150.0 40.0  0.0 -90.0 26.0  0.0 -40.0 10.0  0.0 30.0 5.0  0.0 130.0 8.0  0.0 250.0 34.0
+
+### The scene
+
+# the materials
+h:s_kins := { z ->
+  t := (("skin 0", 60 62 70, 255 220 170, 180 230 255, 1.6 3.2, 0.3, 2.5) cy:f_acade 0) c_at (("skin 1", 80 60 60, 255 120 180, 255 230 160, 2.4 3.0, 0.2, 2.5) cy:f_acade 0)
+  t := t c_at (("skin 2", 40 50 60, 120 255 230, 200 160 255, 1.2 3.6, 0.4, 2.0) cy:f_acade 0)
+  t := t c_at (("street", 62 62 65, 0.45, 5.0, 0.25) cy:w_et 0) c_at (("walk", 70 70 74, 0.55, 0.0) cy:s_urface 0)
+  t := t c_at (("dark", 46 46 50, 0.45, 0.7) cy:s_urface 0) c_at (("paint", 200 200 190, 0.6, 0.0) cy:s_urface 0) c_at (("shell", 30 34 44, 0.25, 0.9) cy:s_urface 0)
+  t := t c_at (("neon 0", 255 13 102, 8.0) cy:n_eon 0) c_at (("neon 1", 13 204 255, 8.0) cy:n_eon 0) c_at (("neon 2", 255 128 13, 8.0) cy:n_eon 0)
+  t := t c_at (("warm", 255 190 120, 20.0) cy:n_eon 0) c_at (("head", 255 245 220, 40.0) cy:n_eon 0) c_at (("tail", 255 5 5, 40.0) cy:n_eon 0) c_at (("beacon", 255 20 10, 30.0) cy:n_eon 0)
+  t := t c_at (("screen 0", "bars", 255 26 128, 26 230 255, 0.5, 5.0) cy:s_creen 0) c_at (("screen 1", "rings", 255 153 26, 77 26 255, 0.4, 5.0) cy:s_creen 0)
+  t := t c_at (("screen 2", "rain", 26 255 102, 204 255 230, 0.6, 6.0) cy:s_creen 0) c_at (("screen 3", "tiles", 255 26 51, 26 102 255, 2.0, 5.0) cy:s_creen 0)
+  t c_at (("great", "rain", 255 60 140, 40 220 255, 0.35, 5.0) cy:s_creen 0)
+}
+
+# what stands: towers, what is on them, the street's furniture
+h:b_uilt := { z ->
+  t := (("ground", 1 7 r_eshape 0.0 0.0 -0.5 1400.0 1400.0 1.0 0.0, "street") cy:b_oxes 0) c_at (("walks", slabs, "walk") cy:b_oxes 0) c_at (("dashes", paint, "paint") cy:b_oxes 0)
+  t := t c_at (("towers 0", l:t_owers 0, "skin 0") cy:b_oxes 0) c_at (("towers 1", l:t_owers 1, "skin 1") cy:b_oxes 0) c_at (("towers 2", l:t_owers 2, "skin 2") cy:b_oxes 0)
+  t := t c_at (("units", units c_at_1 masts, "dark") cy:b_oxes 0) c_at (("beacons", beacons, "beacon") cy:b_oxes 0)
+  t := t c_at (("bands 0", l:b_ands 0, "neon 0") cy:b_oxes 0) c_at (("bands 1", l:b_ands 1, "neon 1") cy:b_oxes 0) c_at (("bands 2", l:b_ands 2, "neon 2") cy:b_oxes 0)
+  t := t c_at (("screens 0", l:s_creens 0, "screen 0") cy:b_oxes 0) c_at (("screens 1", l:s_creens 1, "screen 1") cy:b_oxes 0)
+  t := t c_at (("screens 2", l:s_creens 2, "screen 2") cy:b_oxes 0) c_at (("screens 3", l:s_creens 3, "screen 3") cy:b_oxes 0)
+  t := t c_at (("posts", stems c_at_1 arms, "dark") cy:b_oxes 0) c_at (("bulbs", bulbs, "warm") cy:b_oxes 0) c_at (("lamps", glows) cy:l_amps 0)
+  t := t c_at (("spans", spans, "skin 0") cy:b_oxes 0) c_at (("strips", strips, "neon 1") cy:b_oxes 0)
+  t c_at (("pylons", pylons, "dark") cy:b_oxes 0) c_at (("great", great, "great") cy:b_oxes 0)
+}
+
+# the signs that hang over the sidewalks, read from the south
+h:s_igns := { z ->
+  t := (("sign 1", "X_eTaL", -10.4 -150.0 34.0, 2.6, 0, 1, "neon 0") cy:s_ign 0) c_at (("sign 2", "ARRAYS", 10.4 -95.0 30.0, 2.4, 0, 1, "neon 1") cy:s_ign 0)
+  t := t c_at (("sign 3", "RHO", -10.4 -52.0 20.0, 2.2, 0, 1, "neon 2") cy:s_ign 0) c_at (("sign 4", "OPEN 24H", 0.0 -30.8 15.5, 1.6, 0, 0, "neon 0") cy:s_ign 0)
+  t := t c_at (("sign 5", "IOTA", 10.4 14.0 22.0, 2.2, 0, 1, "neon 0") cy:s_ign 0) c_at (("sign 6", "NOODLES", -10.4 52.0 24.0, 2.0, 0, 1, "neon 1") cy:s_ign 0)
+  t c_at (("sign 7", "KERNEL", 0.0 94.2 19.0, 1.6, 0, 0, "neon 2") cy:s_ign 0) c_at (("sign 8", "HOTEL", 10.4 150.0 30.0, 2.6, 0, 1, "neon 2") cy:s_ign 0)
+}
+
+# what moves: a car and a flier, made once, and their fleets
+h:t_raffic := { z ->
+  t := (cy:m_odel "car") c_at (("car body", 2 7 r_eshape 0.0 0.0 0.55 4.4 1.9 0.6 0.0  -0.3 0.0 1.1 2.4 1.7 0.55 0.0, "shell", "car") cy:p_arts 0)
+  t := t c_at (("car head", 2 7 r_eshape 2.2 0.6 0.6 0.06 0.35 0.15 0.0  2.2 -0.6 0.6 0.06 0.35 0.15 0.0, "head", "car") cy:p_arts 0)
+  t := t c_at (("car tail", 1 7 r_eshape -2.2 0.0 0.72 0.06 1.6 0.1 0.0, "tail", "car") cy:p_arts 0)
+  t := t c_at (cy:m_odel "flier") c_at (("flier body", 3 7 r_eshape 0.0 0.0 0.0 5.2 2.2 0.7 0.0  -0.4 0.0 0.55 2.6 1.9 0.5 0.0  -2.3 0.0 0.7 0.9 2.8 0.08 0.0, "shell", "flier") cy:p_arts 0)
+  t := t c_at (("flier head", 1 7 r_eshape 2.6 0.0 0.0 0.06 1.5 0.12 0.0, "head", "flier") cy:p_arts 0) c_at (("flier tail", 1 7 r_eshape -2.6 0.0 0.1 0.06 1.9 0.12 0.0, "tail", "flier") cy:p_arts 0)
+  t := t c_at (("flier under", 1 7 r_eshape 0.0 0.0 -0.4 4.0 1.6 0.05 0.0, "neon 1", "flier") cy:p_arts 0)
+  t c_at (("cars", "car", l:cars) cy:f_leet 0) c_at (("fliers", "flier", l:fliers) cy:f_leet 0)
+}
+
+## (width, height, fps, samples, device) nc:s_cene 0: the whole script
+## but its rendering: the picture (cy:s_tage) for nc:seconds, the sky,
+## the materials, the city, its signs and traffic, haze over it all,
+## steam, the camera's flight and the report. What to render is the
+## caller's, added after: cy:s_till, or cy:f_rames and cy:e_ncode.
+l:s_cene := { (w, h, fps, samples, device) z ->
+  t := cy:head c_at ((w, h, fps, l:seconds, samples, device) cy:s_tage 0) c_at (("AgX - Punchy", 0.0, 0.5) cy:l_ook 0) c_at ((30 14 40, 2 3 8, 1.0) cy:s_ky 0)
+  t := t c_at (h:s_kins 0) c_at (h:b_uilt 0) c_at (h:s_igns 0) c_at h:t_raffic 0
+  t := t c_at (("haze", 1 6 r_eshape 0.0 0.0 110.0 1300.0 1300.0 220.0, 150 165 255, 0.0012, 0.5) cy:f_og 0) c_at (("vent", plumes, 255 255 255, 1.2, 1.5) cy:s_team 0)
+  t c_at ((l:times, l:eyes, l:aims, 24, 2.0) cy:f_ly 0) c_at ((1.0, 0.6, 0.6) cy:b_loom 0) c_at cy:report
+}

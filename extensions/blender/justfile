@@ -168,6 +168,10 @@ uart-titles:
     HEX_RUN_VIDEO=work/uart-titles/hex-run.mp4 {{root}}/scripts/videos.sh blender hex-run
     HEX_BUILD_VIDEO=work/uart-titles/hex-build.mp4 {{root}}/scripts/videos.sh blender hex-build
 
+# The city's whole flight, rough and quick (demos/city-preview.xtl: 640 by 360, 12 samples; about half an hour; frames already rendered are kept)
+city-preview: build
+    XETAL_BLENDER_TIMEOUT=7200 XETAL_PATH="$({{root}}/scripts/libraries.sh)" {{root}}/target/debug/xetal-x --ext {{root}}/extensions run --draw work/draw demos/city-preview.xtl
+
 # Publish the tower defense pieces demos/game-assets.xtl made on the site (pages/blender/td)
 publish-td:
     {{root}}/scripts/publish-td.sh

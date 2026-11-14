@@ -1,0 +1,23 @@
+## Blender, ray-traced: the city's whole flight, rough and quick -- 640
+## by 360, 24 frames a second, 12 samples a pixel -- to judge the
+## camera's move, the traffic and the screens before the film is
+## rendered. The frames go to work/city/preview/frames (a frame already
+## there is not rendered again), the video to work/city/preview.
+## Run: just ext blender city-preview   (about half an hour)
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"cy:" u_se< "Cycles"
+"nc:" u_se< "NeonCity"
+
+script := ((640, 360, 24, 12, "GPU") nc:s_cene 0) c_at (("frames", 0, 0) cy:f_rames 0) c_at ("frames", "city-preview.mp4") cy:e_ncode 0
+n := "work/city/run.py" bl:w_rite! bp:launcher
+n := "work/city/preview.py" bl:w_rite! script
+"ray tracing 361 rough frames with Blender (Cycles) ..."
+r := "work/city/run.py" bl:r_un! "work/city/preview.py work/city/preview"
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+"what Blender made:"
+bl:r_ead "work/city/preview/report.txt"

@@ -72,6 +72,8 @@ just demo blender relu-softmax # ReLU and softmax on a tiny network's arrays: a 
 just demo blender matmul-steps # a matrix product a step at a time: a video from X_eTaL arrays (a few minutes)
 just demo blender matmul-fly   # a 512 x 512 matrix product flown through: a video from X_eTaL arrays (about ten minutes)
 just demo blender cosy         # the CoSy logo as fused magenta tubes turning once round, rendered with Cycles (several minutes)
+just demo blender city         # a city at night after rain, generated from arrays and ray-traced: four stills (about five minutes)
+just ext blender city-preview  # the whole 15-second flight through it, rough (about half an hour)
 just demo blender hex-pc       # HEX1000's program counter in shift-register order: a video and a Short, with a cue sheet (a few minutes)
 just ext blender hex-run       # HEX1000-UART computing C0DE+BEEF= from its board's simulated waveform (iverilog, headless Chrome; about 25 minutes)
 just ext blender hex-build     # HEX1000-UART synthesis, actual placement and routed wire tiles, bitstream to a schematic board (OSS CAD Suite)
