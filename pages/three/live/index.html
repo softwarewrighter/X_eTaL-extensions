@@ -29,37 +29,61 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
   #stat, #note { color: #c3c8d4; margin-top: 6px; font-variant-numeric: tabular-nums; }
   #err { color: #ff9a9a; white-space: pre-wrap; }
   #seed { display: none; margin-top: 8px; }
-  #about { margin-top: 6px; color: #c3c8d4; }
-  #about p { margin: 6px 0; }
-  #code { white-space: pre; overflow: auto; font: 14px/1.5 "JuliaMono", "DejaVu Sans Mono", Menlo, ui-monospace, monospace; color: #e8e6e3; background: #26292f; padding: 8px 10px; border-radius: 8px; margin: 6px 0; }
+  dialog { background: #141518; color: #e8e6e3; border: 1px solid #30333a; border-radius: 10px; padding: 18px 22px; width: min(64em, 92vw); max-height: 86vh; overflow: auto; font: 16px/1.5 system-ui, sans-serif; }
+  dialog::backdrop { background: rgba(0, 0, 0, 0.6); }
+  dialog h1 { font-size: 22px; margin: 0 0 8px; }
+  dialog p { margin: 8px 0; max-width: 72ch; }
+  dialog a { color: #8fb0ff; }
+  dialog summary { cursor: pointer; margin: 10px 0 6px; font-weight: 600; }
+  dialog footer { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 14px 0 10px; padding-top: 10px; border-top: 1px solid #30333a; color: #a0a4ab; font-size: 14px; }
+  dialog button { font: inherit; padding: 5px 14px; border-radius: 6px; border: 1px solid #56607a; background: #1a1f2e; color: #e8eaf0; cursor: pointer; }
+  .credit { color: #a0a4ab; }
+  .code { white-space: pre; overflow: auto; font: 14px/1.5 "JuliaMono", "DejaVu Sans Mono", Menlo, ui-monospace, monospace; color: #e8e6e3; background: #26292f; padding: 8px 10px; border-radius: 8px; margin: 6px 0; }
   .t-builtin { color: #8fb0ff; } .t-user { color: #8ce99a; } .t-arg { color: #f783ac; } .t-num { color: #ffd43b; } .t-sym { color: #66d9e8; } .t-comment { color: #a0a4ab; font-style: italic; }
 </style>
 <script type="importmap">{ "imports": { "three": "./static/vendor/three/three.module.min.js" } }</script>
-<link rel="modulepreload" href="./three-web.js" crossorigin="anonymous" integrity="sha384-SH2VhYvvLOekpsSsOh59zytYzNl6dTJs0hHRdutFWCB22WGwivTXEEhly+uvT4b0"><link rel="preload" href="./three-web_bg.wasm" crossorigin="anonymous" integrity="sha384-gz/oIA5T+45XoM6OFcenNPXpBauKVhJIKyb0ZK601zLXEq/EY3ITTE5cKkwHhjUC" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="./three-web.js" crossorigin="anonymous" integrity="sha384-xF2U8Kzjfv+UGEL/iuq5GGaGBoIOcAjwF2aPs6tL2RzcbPUlmJzAcGbAhRiGENgC"><link rel="preload" href="./three-web_bg.wasm" crossorigin="anonymous" integrity="sha384-LvoylFkJUeb38XQQmGVFva3V8FYc30EbsG5+hLJderEwpcISKNBQa5qD4REQyvUS" as="fetch" type="application/wasm"></head>
 <body>
 <div id="view"></div>
 <div id="hud">
-  <div><button id="ride">Ride</button><button id="fly">Fly</button><button id="walk">Walk</button></div>
+  <div><button id="ride">Ride</button><button id="fly">Fly</button><button id="walk">Walk</button><button id="open-about" type="button">About</button></div>
   <form id="seed"><label>Seed <input id="number" type="number" min="0" max="99999" value="7"></label><button>Build</button><button type="button" id="another">Another</button></form>
   <div id="stat"></div>
   <div id="note">Fly or walk: click the picture, then W A S D and the mouse; E and Q rise and sink; Shift is faster; Esc frees the mouse.</div>
-  <details id="about"><summary>What this is</summary>
-    <p>A city worked out as arrays by an X_eTaL program -- 240 lots, each tower's height, footprint and skin a hash of the lot's number and the seed -- and written as the calls of a player. Blender's player ray-traces the same calls into a film; this player draws them with Three.js as you move.</p>
-    <p>The program X_eTaL runs here, in this page, for the seed:</p>
-    <div id="code"></div>
-    <p>Against the film: the puddles mirror the city by drawing it a second time upside down, not by tracing rays, so screens and lamps do not light the walls; nothing casts a shadow; the haze is a fade with distance and the steam a few flat sheets; the windows and puddles are the same rules with other noise, so they fall in other places.</p>
-  </details>
   <div id="err"></div>
 </div>
+<dialog id="about">
+  <h1>Neon city, live</h1>
+  <p>A city worked out as arrays by an X_eTaL program -- 240 lots, each tower's height, footprint and skin a hash of the lot's number and the seed -- and written as the calls of a player. Blender's player ray-traces the same calls into a film; this player draws them with Three.js as you move. X_eTaL runs here, in this page, compiled to WebAssembly.</p>
+  <p>Against the film: the puddles mirror the city by drawing it a second time upside down, not by tracing rays, so screens and lamps do not light the walls; nothing casts a shadow; the haze is a fade with distance and the steam a few flat sheets; the windows and puddles are the same rules with other noise, so they fall in other places.</p>
+  <p>On the screens: slide shows and short videos from the author's blog and this repository's demos, and pictures worked out from the time. A video plays only while one of its screens is in view.</p>
+  <details open><summary>The program X_eTaL ran for this seed</summary><div class="code" id="code"></div></details>
+  <details id="city-source"><summary>NeonCity.xtl: the city as arrays</summary><div class="code" id="city-code"></div></details>
+  <details id="facade-source"><summary>Three.xtl: the extension's facade</summary><div class="code" id="facade-code"></div></details>
+  <p class="credit">Drawn with <a href="https://threejs.org/" target="_blank" rel="noopener">Three.js</a> 0.170.0 (MIT), kept with the page.</p>
+  <footer id="facts"></footer>
+  <form method="dialog"><button>Close</button></form>
+</dialog>
 <script type="module">
 import { start } from './static/live.js';
-const live = start();
+const live = start({ media: './static/media/' });
 // X_eTaL, compiled to WebAssembly, builds the city of a seed (trunk
 // starts it and says so)
-const ready = () => live.seeds((seed) => {
-  document.getElementById('code').innerHTML = window.wasmBindings.rendered(seed);
-  return window.wasmBindings.build(seed);
-}, 7);
+const ready = () => {
+  const w = window.wasmBindings;
+  document.getElementById('facts').innerHTML = w.about();
+  // a library is drawn when its section is first opened
+  for (const [section, code, name] of [['city-source', 'city-code', 'NeonCity'], ['facade-source', 'facade-code', 'Three']]) {
+    document.getElementById(section).addEventListener('toggle', (e) => {
+      const into = document.getElementById(code);
+      if (e.target.open && !into.innerHTML) into.innerHTML = w.library(name);
+    });
+  }
+  live.seeds((seed) => {
+    document.getElementById('code').innerHTML = w.rendered(seed);
+    return w.build(seed);
+  }, 7);
+};
 if (window.wasmBindings) ready(); else window.addEventListener('TrunkApplicationStarted', ready, { once: true });
 </script>
 </body>

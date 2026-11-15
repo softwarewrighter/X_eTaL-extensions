@@ -176,6 +176,21 @@ void main() {
   vec3 water = uColor * 0.25 * uAmbient + mirror * min(1.0, fres * 1.6 + 0.12);
   gl_FragColor = vec4(fogged(mix(damp, water, pool), vPos), 1.0);
 }`,
+  picture: `
+uniform sampler2D uA;
+uniform sampler2D uB;
+uniform float uMix;
+uniform float uStrength;
+uniform float uReady;
+varying vec3 vPos;
+varying vec2 vUv;
+void main() {
+  vec3 c = mix(texture2D(uA, vUv).rgb, texture2D(uB, vUv).rgb, uMix);
+  // until the picture has come: a dim, slow shimmer
+  vec3 wait = vec3(0.05, 0.07, 0.12) * (0.6 + 0.4 * sin(uTime * 2.0 + vUv.y * 9.0));
+  float lines = 0.86 + 0.14 * sin(vUv.y * 400.0);
+  gl_FragColor = vec4(fogged(mix(wait, c * uStrength * lines, uReady), vPos), 1.0);
+}`,
   sign: `
 uniform vec3 uColor;
 uniform float uStrength;
@@ -241,7 +256,8 @@ const NORMALS = [[0, -1, 0], [0, 1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0,
 
 // Draws the scene the calls describe into host (an element); options:
 // time (seconds: hold the flight there), mode ('ride', 'fly', 'walk'),
-// pixels (a cap on the device pixel ratio). Returns its controls.
+// pixels (a cap on the device pixel ratio), media (the folder of the
+// pictures, './media/' by default). Returns its controls.
 export function play(host, calls, options = {}) {
   const shared = {
     uFogColor: { value: new THREE.Color(0, 0, 0) },
@@ -256,7 +272,13 @@ export function play(host, calls, options = {}) {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(50, 16 / 9, 0.1, 5000);
   camera.up.set(0, 0, 1);
-  const mats = {}, models = {}, movers = [], solids = [], grounds = [], counts = {};
+  const mats = {}, models = {}, movers = [], solids = [], grounds = [], counts = {}, shows = [], videos = [], uploads = [];
+  // where the page keeps the pictures (the scene's own folder is for a
+  // player that reads files from a disk)
+  const folder = options.media || './media/';
+  const blank = new THREE.DataTexture(new Uint8Array([0, 0, 0, 255]), 1, 1);
+  blank.needsUpdate = true;
+  const picture = (strength) => ({ uA: { value: blank }, uB: { value: blank }, uMix: { value: 0 }, uStrength: { value: strength }, uReady: { value: 0 } });
   const film = { seconds: 15, times: [0, 1], eyes: [[0, -10, 5], [0, 0, 5]], aims: [[0, 0, 5], [0, 10, 5]], exposure: 0, bloom: null };
 
   const shader = (frag, uniforms, extra = {}) => new THREE.ShaderMaterial({
@@ -267,7 +289,7 @@ export function play(host, calls, options = {}) {
 
   const api = {
     nums(text, k) {
-      const v = text.trim().split(/\s+/).map(Number), rows = [];
+      const v = text.trim() ? text.trim().split(/\s+/).map(Number) : [], rows = [];
       for (let i = 0; i < v.length; i += k) rows.push(v.slice(i, i + k));
       return rows;
     },
@@ -306,7 +328,48 @@ export function play(host, calls, options = {}) {
         uSpeed: { value: speed }, uStrength: { value: strength },
       });
     },
-    reel(name, path, strength) { api.screen(name, 'tiles', [1, 0.2, 0.4], [0.2, 0.6, 1], 1.0, strength); },
+    media() {},
+    // a video on a screen: one decoder a material, however many screens
+    reel(name, path, strength) {
+      const u = picture(strength);
+      mats[name] = shader(FRAG.picture, u);
+      const v = document.createElement('video');
+      v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto'; v.crossOrigin = 'anonymous';
+      v.src = folder + path;
+      const t = new THREE.VideoTexture(v);
+      t.colorSpace = THREE.SRGBColorSpace;
+      const ready = () => { u.uA.value = t; u.uB.value = t; u.uReady.value = 1; };
+      if (options.time !== undefined) {
+        // a held moment (a still, a recording): the video's frame then
+        v.addEventListener('loadedmetadata', () => { v.currentTime = options.time % (v.duration || 1); }, { once: true });
+        v.addEventListener('seeked', ready, { once: true });
+      } else {
+        // its first frame as a still; it plays when a screen of it is in view (below)
+        v.addEventListener('loadeddata', ready, { once: true });
+      }
+      t.generateMipmaps = false;
+      t.minFilter = THREE.LinearFilter;
+      videos.push({ v, name, spheres: [], on: false });
+      count('videos');
+    },
+    // stills in turn, each faded into the next: no decoder at all
+    slides(name, stem, n, hold, strength) {
+      const u = picture(strength), loader = new THREE.TextureLoader();
+      mats[name] = shader(FRAG.picture, u);
+      const show = { u, hold, pictures: [] };
+      for (let i = 1; i <= n; i++) {
+        loader.load(`${folder}${stem}-${i}.jpg`, (t) => {
+          t.colorSpace = THREE.SRGBColorSpace;
+          t.generateMipmaps = false;
+          t.minFilter = THREE.LinearFilter;
+          // to the graphics card now, one a frame, so no slide change waits for it
+          uploads.push(t);
+          show.pictures[i - 1] = t;
+        });
+      }
+      shows.push(show);
+      count('slides', n);
+    },
     boxes(name, rows, material, into = '') {
       const pos = [], nor = [], uvs = [], idx = [];
       for (const r of rows) {
@@ -338,6 +401,8 @@ export function play(host, calls, options = {}) {
       const mesh = new THREE.Mesh(g, mats[material]);
       mesh.name = name;
       count('boxes', rows.length);
+      const video = into ? null : videos.find((x) => x.name === material);
+      if (video) for (const r of rows) video.spheres.push(new THREE.Sphere(new THREE.Vector3(r[0], r[1], r[2]), Math.hypot(r[3], r[4], r[5]) / 2));
       if (into) { models[into].push(mesh); return; }
       if (mats[material].userData.ground) grounds.push(mesh);
       scene.add(mesh);
@@ -480,6 +545,20 @@ export function play(host, calls, options = {}) {
   const el = renderer.domElement;
   el.tabIndex = 0;
   el.addEventListener('click', () => { el.focus(); if (state.mode !== 'ride' && el.requestPointerLock) el.requestPointerLock(); }, until);
+  // a browser that would not start the videos alone starts them at a click or a key
+  // (a browser that will not start a video alone starts it once there has been a click or a key)
+  const frustum = new THREE.Frustum(), seen = new THREE.Matrix4();
+  // a video plays only while a screen of it is in view and near; else it holds its frame
+  const watch = () => {
+    if (options.time !== undefined) return;
+    seen.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+    frustum.setFromProjectionMatrix(seen);
+    for (const x of videos) {
+      const on = x.spheres.some((sp) => sp.center.distanceTo(camera.position) < 260 && frustum.intersectsSphere(sp));
+      if (on && x.v.paused) x.v.play().catch(() => {});
+      if (!on && !x.v.paused) x.v.pause();
+    }
+  };
   document.addEventListener('mousemove', (e) => {
     if (document.pointerLockElement !== el || state.mode === 'ride') return;
     state.yaw -= e.movementX * 0.0022;
@@ -487,7 +566,7 @@ export function play(host, calls, options = {}) {
   }, until);
   const moving = ['KeyW', 'KeyA', 'KeyS', 'KeyD', 'KeyQ', 'KeyE', 'Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
   window.addEventListener('keydown', (e) => {
-    if (e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+    if ((e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) || document.querySelector('dialog[open]')) return;
     if (moving.includes(e.code)) {
       if (state.mode === 'ride') leave('fly');
       state.keys.add(e.code);
@@ -531,13 +610,26 @@ export function play(host, calls, options = {}) {
 
   const wrap = (c) => ((c + 420) % 840 + 840) % 840 - 420;
   const texel = new THREE.Matrix4().set(0.5, 0, 0, 0.5, 0, 0.5, 0, 0.5, 0, 0, 0.5, 0.5, 0, 0, 0, 1);
-  let last = performance.now(), running = true, shown = 0, rate = 0, since = last;
+  let last = performance.now(), running = true, shown = 0, rate = 0, since = last, ticks = 0, worst = 0, before = last, slowest = 0, slow = 0;
   const frame = (now) => {
     if (!running) return;
     const dt = Math.min(0.1, (now - last) / 1000);
     last = now;
     if (!state.held) state.time += dt;
     shared.uTime.value = state.time;
+    if (uploads.length) renderer.initTexture(uploads.shift());
+    if ((ticks += 1) % 6 === 0) watch();
+    worst = Math.max(worst, now - before);
+    before = now;
+    for (const show of shows) {
+      const got = show.pictures.filter(Boolean);
+      if (!got.length) continue;
+      const at = state.time / show.hold, i = Math.floor(at) % got.length;
+      show.u.uA.value = got[i];
+      show.u.uB.value = got[(i + 1) % got.length];
+      show.u.uMix.value = Math.min(1, Math.max(0, (at % 1 - 0.85) / 0.15));
+      show.u.uReady.value = 1;
+    }
     for (const m of movers) {
       const u = state.time / film.seconds, p = [0, 1, 2].map((k) => m.from[k] + (m.to[k] - m.from[k]) * u);
       const axis = Math.abs(m.to[0] - m.from[0]) > Math.abs(m.to[1] - m.from[1]) ? 0 : 1;
@@ -571,8 +663,17 @@ export function play(host, calls, options = {}) {
     for (const g of grounds) g.visible = true;
     composer.render();
     shown += 1;
-    if (now - since > 500) { rate = shown * 1000 / (now - since); shown = 0; since = now; }
-    if (options.onFrame) options.onFrame({ time: state.time, rate, mode: state.mode, eye: camera.position });
+    if (now - since > 500) {
+      rate = shown * 1000 / (now - since); shown = 0; since = now; slowest = worst; worst = 0;
+      // a machine that cannot keep up draws fewer pixels, not fewer frames
+      slow = rate < 40 ? slow + 1 : 0;
+      if (slow >= 4 && renderer.getPixelRatio() > 0.6 && options.time === undefined) {
+        renderer.setPixelRatio(renderer.getPixelRatio() * 0.8);
+        size();
+        slow = 0;
+      }
+    }
+    if (options.onFrame) options.onFrame({ time: state.time, rate, slowest, mode: state.mode, eye: camera.position });
     requestAnimationFrame(frame);
   };
   requestAnimationFrame(frame);
@@ -583,6 +684,8 @@ export function play(host, calls, options = {}) {
     stop() {
       running = false;
       gone.abort();
+      videos.forEach((x) => { x.v.pause(); x.v.removeAttribute('src'); x.v.load(); });
+      shows.forEach((show) => show.pictures.forEach((t) => t && t.dispose()));
       if (document.pointerLockElement === el) document.exitPointerLock();
       scene.traverse((o) => { if (o.geometry) o.geometry.dispose(); if (o.material) o.material.dispose(); });
       target.dispose();

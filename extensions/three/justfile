@@ -41,8 +41,13 @@ list: build
 demo name: build
     XETAL_PATH="{{root}}/extensions/blender/demos" {{root}}/target/debug/xetal-x --ext {{root}}/extensions run --draw work/draw "demos/$1.xtl"
 
-# The neon city as a directory to serve (work/city): demos/city.xtl
+# The neon city as a directory to serve (work/city): demos/city.xtl, and the screens' pictures beside it
 city: (demo "city")
+    mkdir -p work/city/media && cp web/static/media/* work/city/media/
+
+# The screens' pictures, made small from media.toml into web/static/media (commit them)
+media:
+    {{root}}/scripts/city-media.py
 
 # Serve a written scene: just serve city (work/city at http://127.0.0.1:8470/)
 serve name:

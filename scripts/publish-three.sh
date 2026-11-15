@@ -13,6 +13,9 @@ export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
 command -v trunk >/dev/null || { echo "publish-three: trunk not found" >&2; exit 127; }
 web="$root/extensions/three/web"
 dest="$root/pages/three/live"
+# the build stamp (host, commit, time) is made when the shell is built:
+# build it again, so the About dialog says this build
+touch "$root/web/shell/build.rs"
 # file names without hashes, so a new build writes over the last
 (cd "$web" && trunk build --release --filehash false --public-url ./ > /dev/null)
 mkdir -p "$dest"

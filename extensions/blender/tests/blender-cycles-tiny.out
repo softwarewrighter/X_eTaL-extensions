@@ -7,6 +7,7 @@ objects: 1 camera, 3 empty, 1 font, 2 light, 8 mesh
 faces: 54
 materials: bars glass haze pink rain rings steel street tiles vent
 models: car
+pictures: 0 played, 0 missing
 
 work/cycles/out/corner.mp4
 work/cycles/out/frames/0001.png

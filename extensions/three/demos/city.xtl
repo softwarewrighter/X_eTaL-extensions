@@ -11,7 +11,7 @@
 "th:" u_se< "Three"
 "nc:" u_se< "NeonCity"
 
-scene := (nc:seed, 1280, 720, 30, 24, "GPU") nc:c_ity 0
+scene := (nc:seed, "media", 1280, 720, 30, 24, "GPU") nc:c_ity 0
 "the calls of the scene, and the files written to work/city:"
 th:s_how! scene
 "work/city" th:p_age! scene

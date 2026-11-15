@@ -1,4 +1,21 @@
 /**
+ * What a footer says (HTML): copyright, license, repository, build.
+ * @returns {string}
+ */
+export function about() {
+    let deferred1_0;
+    let deferred1_1;
+    try {
+        const ret = wasm.about();
+        deferred1_0 = ret[0];
+        deferred1_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
+    }
+}
+
+/**
  * Builds and shows the city of a seed; what to say of it.
  *
  * # Errors
@@ -21,6 +38,26 @@ export function build(seed) {
         deferred2_0 = ptr1;
         deferred2_1 = len1;
         return getStringFromWasm0(ptr1, len1);
+    } finally {
+        wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * A library the program imports, drawn decorated (HTML).
+ * @param {string} name
+ * @returns {string}
+ */
+export function library(name) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const ptr0 = passStringToWasm0(name, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.library(ptr0, len0);
+        deferred2_0 = ret[0];
+        deferred2_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
     } finally {
         wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
     }

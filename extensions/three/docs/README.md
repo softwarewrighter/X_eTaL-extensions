@@ -32,7 +32,7 @@ Live: <https://softwarewrighter.github.io/X_eTaL-extensions/three/live/>
 ```
 "th:" u_se< "Three"
 "nc:" u_se< "NeonCity"
-scene := (7, 1280, 720, 30, 24, "GPU") nc:c_ity 0   # seed 7: the film's city
+scene := (7, "media", 1280, 720, 30, 24, "GPU") nc:c_ity 0   # seed 7: the film's city
 th:s_how! scene                                    # in a page: draw it
 "work/city" th:p_age! scene                        # from the command line: a directory to serve
 ```
@@ -65,8 +65,28 @@ nothing about the scene.
 | screens, signs and lamps light walls and street, with shadows | lamps light the street and plain surfaces; nothing casts a shadow; screens and neon glow (bloom) but do not light |
 | haze scatters light; steam is a volume | haze is a fade with distance; steam is a flat sheet facing you |
 | windows and puddles from Blender's noise | the same rules with other noise, so they fall in other places |
-| a video file on a screen (`cy:r_eel`) | tiles, for now |
+| a video on a screen (`cy:r_eel`), a slide show as a video (`cy:s_lides`) | the video (one decoder, however many screens show it); the slides as stills faded one into the next, no decoder |
 | depth of field, motion blur | neither |
+
+## The pictures on the screens
+
+About a third of the city's screens play pictures worked out from the
+time (bars, rings, rain, tiles). The rest show real ones, small copies
+kept in `web/static/media` (37 files, about 2 MB; nothing comes from
+another site):
+
+- two slide shows, each still held four seconds and faded into the
+  next: illustrations from the author's blog, and X_eTaL demos;
+- six short looping videos: a matrix product flown through (the great
+  screen), a voxel world, a Rubik's cube turning, the CoSy logo, Life
+  on a torus, a stone turning -- this repository's recordings and two
+  of the blog's animated pictures.
+
+`media.toml` lists the sources and `just ext three media`
+(`scripts/city-media.py`) makes the copies; `SOURCES.md` beside them
+says where each came from. NeonCity.xtl says which kind of screen
+plays what (`nc:s_creens`). A slide show costs a browser nothing to
+decode, and a video is decoded once however many screens show it.
 
 ## The page
 
@@ -77,10 +97,19 @@ nothing about the scene.
   walking.
 - **Seed**: Build makes the city of that number, Another a random one.
   X_eTaL runs in the page and takes a fraction of a second.
-- **What this is** shows the program that ran, as X_eTaL draws it.
+- **About** opens what a footer would say -- copyright, license, the
+  repository, the X_eTaL commit, and the build's host, commit and time -- with
+  the program that ran for the seed and, in sections that open, the
+  sources of NeonCity.xtl and Three.xtl, all drawn as X_eTaL draws
+  them, in color.
 - `?t=SECONDS` holds the flight at a moment, `?hud=0` hides the
   controls, `?seed=N` builds that city first, `?mode=fly` or `walk`
-  starts there.
+  starts there, `?about` opens About, `?bench` puts the frame rate and
+  the slowest frame in the page's title (to measure from outside).
+- A video plays only while one of its screens is in view and near,
+  and holds its frame otherwise; slide pictures go to the graphics
+  card as they arrive; a machine that falls under 40 frames a second
+  is given fewer pixels to draw.
 
 ## Demos
 
@@ -109,7 +138,7 @@ The Rust tests check the descriptor, that the player defines every
 call the vocabulary writes, and that the vendored Three.js is whole.
 The goldens: `three-list`; `three-tiny` (three calls counted, a page
 of 16 files written); `three-outside` (a path outside the working
-directory is refused); `three-demo-city` (the city: 69 calls). The
+directory is refused); `three-demo-city` (the city: 84 calls). The
 page's crate (`web/`) runs its program natively for two seeds and
 checks the decorated source. What the player draws is checked by eye,
 from headless Chrome's pictures.

@@ -21,6 +21,20 @@ pub fn rendered(seed: u32) -> String {
     three_web::rendered(seed)
 }
 
+/// What a footer says (HTML): copyright, license, repository, build.
+#[wasm_bindgen]
+#[must_use]
+pub fn about() -> String {
+    three_web::about()
+}
+
+/// A library the program imports, drawn decorated (HTML).
+#[wasm_bindgen]
+#[must_use]
+pub fn library(name: &str) -> String {
+    three_web::library(name)
+}
+
 fn main() {
     three_web::install();
 }

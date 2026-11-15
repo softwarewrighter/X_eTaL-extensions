@@ -28,7 +28,7 @@ fn the_player_defines_every_call_the_vocabulary_writes() {
     for call in [
         "stage", "look", "sky", "bloom", "surface", "neon", "facade", "wet", "screen", "reel",
         "boxes", "sign", "model", "fleet", "lamps", "spots", "fog", "steam", "fly", "still",
-        "frames", "encode", "report", "nums",
+        "frames", "encode", "report", "nums", "media", "slides",
     ] {
         assert!(
             xetal_ext_three::PLAYER.contains(&format!("    {call}(")),

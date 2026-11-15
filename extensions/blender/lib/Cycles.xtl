@@ -294,9 +294,17 @@ h:play5 := ("def wet(name, rgb, puddles, size, ripple):\n" c_at
   "\n")
 
 # the player, part 6: reel and after
-h:play6 := ("def reel(name, path, strength):\n" c_at
+h:play6 := ("def media(folder):\n" c_at
+  "    rig['media'] = folder\n" c_at
+  "\n" c_at
+  "def reel(name, path, strength):\n" c_at
+  "    file = os.path.abspath(os.path.join(rig.get('media', ''), path))\n" c_at
+  "    if not os.path.exists(file):\n" c_at
+  "        rig['missing'] = rig.get('missing', 0) + 1\n" c_at
+  "        return screen(name, 'tiles', (1.0, 0.2, 0.4), (0.2, 0.6, 1.0), 1.0, strength)\n" c_at
+  "    rig['played'] = rig.get('played', 0) + 1\n" c_at
   "    m, nt, o = fresh(name)\n" c_at
-  "    img = bpy.data.images.load(os.path.abspath(path), check_existing=True)\n" c_at
+  "    img = bpy.data.images.load(file, check_existing=True)\n" c_at
   "    t = node(nt, 'ShaderNodeTexImage', image=img)\n" c_at
   "    if img.source == 'MOVIE':\n" c_at
   "        t.image_user.frame_duration = max(1, img.frame_duration)\n" c_at
@@ -307,6 +315,9 @@ h:play6 := ("def reel(name, path, strength):\n" c_at
   "    p.inputs['Roughness'].default_value = 0.15\n" c_at
   "    nt.links.new(t.outputs[0], p.inputs['Emission Color'])\n" c_at
   "    p.inputs['Emission Strength'].default_value = strength\n" c_at
+  "\n" c_at
+  "def slides(name, stem, count, hold, strength):\n" c_at
+  "    reel(name, stem + '.webm', strength)\n" c_at
   "\n" c_at
   "def place(o, into):\n" c_at
   "    (models[into] if into else scene.collection).objects.link(o)\n" c_at
@@ -511,12 +522,13 @@ h:play10 := ("def report():\n" c_at
   "        f.write('faces: %d' % sum(len(o.data.polygons) for o in scene.objects if o.type == 'MESH') + chr(10))\n" c_at
   "        f.write('materials: ' + ' '.join(sorted(mats)) + chr(10))\n" c_at
   "        f.write('models: ' + ' '.join(sorted(models)) + chr(10))\n" c_at
+  "        f.write('pictures: %d played, %d missing' % (rig.get('played', 0), rig.get('missing', 0)) + chr(10))\n" c_at
   "    print('cycles device: %s' % (rig.get('device') or 'CPU'))\n")
 
 ## cy:head: the player, the start of every script: an empty scene, the
 ## output directory (the first argument after "--", made), and the
 ## functions the calls below use -- stage, look, sky and bloom; the
-## materials (surface, neon, facade, wet, screen, reel), each a graph of
+## materials (surface, neon, facade, wet, screen, reel, slides), each a graph of
 ## shader nodes built here; boxes (one mesh a group, each face mapped
 ## for a screen), sign, model and fleet; lamps and spots; fog and
 ## steam; fly (the camera keyed every frame along a curve through its
@@ -649,11 +661,33 @@ l:s_creen := { (name, kind, a, b, speed, strength) z ->
   "screen(" c_at (h:q_uote name) c_at ", " c_at (h:q_uote kind) c_at ", " c_at (h:r_gb a) c_at ", " c_at (h:r_gb b) c_at ", " c_at (f_ormat speed) c_at ", " c_at (f_ormat strength) c_at ")\n"
 }
 
-## (name, path, strength) cy:r_eel 0: Python making a screen that plays
-## a video file (or shows a picture), looping, on each face of a box,
-## glowing that strongly
+## cy:m_edia folder: Python saying where the files that cy:r_eel and
+## cy:s_lides name are: a folder, from where the player runs. Before
+## them.
+## >> "cy:" u_se< "Cycles"
+## >> cy:m_edia "media"
+## media('media')
+l:m_edia := { folder -> "media(" c_at (h:q_uote folder) c_at ")\n" }
+
+## (name, file, strength) cy:r_eel 0: Python making a screen that plays
+## a video file (or shows a picture) from the media folder, looping, on
+## each face of a box, glowing that strongly (1 the picture as it is).
+## When the file is not there the screen plays tiles in its place, and
+## the report counts it missing.
 l:r_eel := { (name, path, strength) z ->
   "reel(" c_at (h:q_uote name) c_at ", " c_at (h:q_uote path) c_at ", " c_at (f_ormat strength) c_at ")\n"
+}
+
+## (name, stem, count, hold, strength) cy:s_lides 0: Python making a
+## screen that shows still pictures in turn, each hold seconds, fading
+## into the next: STEM-1.jpg to STEM-count.jpg in the media folder. A
+## player that draws live shows the stills (cheaper than a video);
+## Blender's plays STEM.webm, the same slides made a video.
+## >> "cy:" u_se< "Cycles"
+## >> ("ads", "art", 16, 4.0, 1.5) cy:s_lides 0
+## slides('ads', 'art', 16, 4.0, 1.5)
+l:s_lides := { (name, stem, count, hold, strength) z ->
+  "slides(" c_at (h:q_uote name) c_at ", " c_at (h:q_uote stem) c_at ", " c_at (f_ormat count) c_at ", " c_at (f_ormat hold) c_at ", " c_at (f_ormat strength) c_at ")\n"
 }
 
 ### Things

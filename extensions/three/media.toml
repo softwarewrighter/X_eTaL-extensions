@@ -1,0 +1,68 @@
+# The pictures on the city's screens: what scripts/city-media.py makes
+# into extensions/three/web/static/media (small copies, committed, so
+# the page loads nothing from another site). Sources are the author's
+# own: "blog:" is software-wrighter-lab/blog's assets/images/posts,
+# "ext:" this repository's extensions (their recordings).
+#   just ext three media
+
+# Slide shows: stills, each cropped to the size, shown `hold` seconds
+# and faded into the next. STEM-1.jpg ... for the page, STEM.webm (the
+# same slides as a video) for Blender.
+[[slides]]
+name = "art"
+size = [512, 512]
+hold = 4
+sources = [
+  "blog:block-158.webp", "blog:block-3d-energy-landscape.webp", "blog:block-activation-curves.webp",
+  "blog:block-apl-lisp-forth.webp", "blog:block-aq-login.webp", "blog:block-asm-c-plsw.webp",
+  "blog:block-attention-need.webp", "blog:block-changed-mind.webp", "blog:block-checking.webp",
+  "blog:block-cracked-stone.webp", "blog:block-desk-books.webp", "blog:block-down-gpu-hole.webp",
+  "blog:block-27.webp", "blog:block-28.webp", "blog:block-car-lift.webp", "blog:block-armed-rabbit-with-bow.webp",
+]
+
+[[slides]]
+name = "xetal"
+size = [640, 400]
+hold = 4
+sources = [
+  "blog:xetal-ext-scene-voxels-game.webp", "blog:voxels-fly-xetal.webp", "blog:xetal-ext-scene-voxels-rubik-solve.webp",
+  "blog:xetal-blender-blender-arrays.webp", "blog:xetal-blender-gpu-arrays.webp", "blog:xetal-blender-fpga-arrays.webp",
+  "blog:xetal-ext-canvas-life.webp", "blog:xetal-ext-audio-spectrum.webp", "blog:xetal-games-2048.webp",
+  "blog:eigencube-xetal-solver.webp", "blog:xetal-demos-montage.webp", "blog:xetal-fpga-hex1000-browser.webp",
+]
+
+# Videos: a part of a recording, or an animated WebP, cropped to 480 by
+# 270, 12 frames a second, looping. NAME.webm.
+[[reels]]
+name = "matmul"
+source = "ext:blender/videos/matmul-fly.webm"
+start = 4
+length = 10
+
+[[reels]]
+name = "voxels"
+source = "ext:scene/videos/voxels-fly.webm"
+start = 6
+length = 10
+
+[[reels]]
+name = "rubik"
+source = "ext:scene/videos/voxels-rubik-turn.webm"
+start = 2
+length = 10
+
+[[reels]]
+name = "cosy"
+source = "ext:blender/videos/cosy.webm"
+start = 0
+length = 4
+
+[[reels]]
+name = "life"
+source = "blog:life-torus-animated.webp"
+fps = 6
+
+[[reels]]
+name = "stone"
+source = "blog:cnn-triplesum-stone-rotate.webp"
+fps = 12

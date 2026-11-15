@@ -23,6 +23,10 @@ l:seed := 7
 ## nc:seconds: the film's length
 l:seconds := 15.0
 
+## nc:media: where the film finds the screens' pictures, from the
+## blender extension's directory (where its demos run)
+l:media := "../three/web/static/media"
+
 # k vectors of one length, joined end to end, as a table of k columns
 h:c_ols := { (k, v) z -> 2 1 t_ranspose (k c_at (t_ally v) d_iv k) r_eshape v }
 
@@ -143,17 +147,23 @@ l:b_ands := { (t, seed, k) z ->
   (low r_eplicate_1 foot) c_at_1 up r_eplicate_1 ledge
 }
 
-## (lots, seed, k) nc:s_creens 0: the screens of kind k (0 bars, 1
-## rings, 2 rain, 3 tiles) on the walls facing the avenue: on most of
-## the first towers
+# a screen's height for its width, by kind: 0 for the four abstract
+# kinds (any shape); a slide show's or a video's own shape for the rest
+ratio := 0.0 0.0 0.0 0.0 1.0 0.625 0.5625 0.5625 0.5625 0.5625 0.5625
+
+## (lots, seed, k) nc:s_creens 0: the screens of kind k on the walls
+## facing the avenue, on most of the first towers: 0 bars, 1 rings, 2
+## rain, 3 tiles (pictures worked out from the time, any shape); 4 and
+## 5 slide shows, 6 to 10 videos, each the shape of its pictures
 l:s_creens := { (t, seed, k) z ->
   x := 1 s_elect_2 t
   y := 2 s_elect_2 t
   wide := 4 s_elect_2 t
   body := 10 s_elect_2 t
-  shown := (col = 0) & (((id, 11, seed) l:r_and 0) > 0.25) & k = f_loor 4.0 * (id, 15, seed) l:r_and 0
+  shown := (col = 0) & (((id, 11, seed) l:r_and 0) > 0.25) & k = f_loor 11.0 * (id, 20, seed) l:r_and 0
   sw := 5.0 + 7.0 * (id, 12, seed) l:r_and 0
-  sh := 5.0 + 11.0 * (id, 13, seed) l:r_and 0
+  r := (k + 1) s_elect ratio
+  sh := ((5.0 + 11.0 * (id, 13, seed) l:r_and 0) * f_loat 1 * r = 0.0) + sw * r
   sz := 8.0 + ((body - 16.0) m_in 34.0) * (id, 14, seed) l:r_and 0
   shown r_eplicate_1 (x - side * 0.3 + wide / 2.0, y, sz + sh / 2.0, h:f_ill (lots, 0.4), sw, sh) h:b_ox 0
 }
@@ -188,8 +198,8 @@ glows := (8, (pside * 8.4) c_at py c_at (h:f_ill (posts, 6.8)) c_at (h:f_ill (po
 # each; and a gate at the north end carrying the great screen
 spans := 2 7 r_eshape 0.0 -28.0 15.5 27.0 5.0 3.4 0.0  0.0 97.0 19.0 27.0 5.0 3.4 0.0
 strips := 2 7 r_eshape 0.0 -28.0 13.7 24.0 0.3 0.12 0.0  0.0 97.0 17.2 24.0 0.3 0.12 0.0
-pylons := 2 7 r_eshape -17.0 252.0 36.0 6.0 6.0 72.0 0.0  17.0 252.0 36.0 6.0 6.0 72.0 0.0
-great := 1 7 r_eshape 0.0 251.0 46.0 28.0 0.5 42.0 0.0
+pylons := 2 7 r_eshape -31.0 252.0 36.0 6.0 6.0 72.0 0.0  31.0 252.0 36.0 6.0 6.0 72.0 0.0
+great := 1 7 r_eshape 0.0 251.0 44.0 56.0 0.5 31.5 0.0
 
 # steam from the street, a side and then the other
 vents := 7
@@ -260,7 +270,7 @@ l:aims := 6 3 r_eshape 0.0 -150.0 40.0  0.0 -90.0 26.0  0.0 -40.0 10.0  0.0 30.0
 ### The scene
 
 # the materials
-h:s_kins := { z ->
+h:s_kins := { where ->
   t := (("skin 0", 60 62 70, 255 220 170, 180 230 255, 1.6 3.2, 0.3, 2.5) cy:f_acade 0) c_at (("skin 1", 80 60 60, 255 120 180, 255 230 160, 2.4 3.0, 0.2, 2.5) cy:f_acade 0)
   t := t c_at (("skin 2", 40 50 60, 120 255 230, 200 160 255, 1.2 3.6, 0.4, 2.0) cy:f_acade 0)
   t := t c_at (("street", 62 62 65, 0.45, 5.0, 0.25) cy:w_et 0) c_at (("walk", 70 70 74, 0.55, 0.0) cy:s_urface 0)
@@ -269,7 +279,11 @@ h:s_kins := { z ->
   t := t c_at (("warm", 255 190 120, 20.0) cy:n_eon 0) c_at (("head", 255 245 220, 40.0) cy:n_eon 0) c_at (("tail", 255 5 5, 40.0) cy:n_eon 0) c_at (("beacon", 255 20 10, 30.0) cy:n_eon 0)
   t := t c_at (("screen 0", "bars", 255 26 128, 26 230 255, 0.5, 5.0) cy:s_creen 0) c_at (("screen 1", "rings", 255 153 26, 77 26 255, 0.4, 5.0) cy:s_creen 0)
   t := t c_at (("screen 2", "rain", 26 255 102, 204 255 230, 0.6, 6.0) cy:s_creen 0) c_at (("screen 3", "tiles", 255 26 51, 26 102 255, 2.0, 5.0) cy:s_creen 0)
-  t c_at (("great", "rain", 255 60 140, 40 220 255, 0.35, 5.0) cy:s_creen 0)
+  # the pictures: two slide shows, five videos, and the great screen's
+  t := t c_at (cy:m_edia where) c_at (("screen 4", "art", 16, 4.0, 1.6) cy:s_lides 0) c_at (("screen 5", "xetal", 12, 4.0, 1.6) cy:s_lides 0)
+  t := t c_at (("screen 6", "voxels.webm", 1.6) cy:r_eel 0) c_at (("screen 7", "rubik.webm", 1.6) cy:r_eel 0) c_at (("screen 8", "life.webm", 1.6) cy:r_eel 0)
+  t := t c_at (("screen 9", "stone.webm", 1.6) cy:r_eel 0) c_at (("screen 10", "cosy.webm", 1.6) cy:r_eel 0)
+  t c_at (("great", "matmul.webm", 1.8) cy:r_eel 0)
 }
 
 # what stands: towers, what is on them, the street's furniture
@@ -282,6 +296,10 @@ h:b_uilt := { seed ->
   t := t c_at (("bands 0", (lt, seed, 0) l:b_ands 0, "neon 0") cy:b_oxes 0) c_at (("bands 1", (lt, seed, 1) l:b_ands 0, "neon 1") cy:b_oxes 0) c_at (("bands 2", (lt, seed, 2) l:b_ands 0, "neon 2") cy:b_oxes 0)
   t := t c_at (("screens 0", (lt, seed, 0) l:s_creens 0, "screen 0") cy:b_oxes 0) c_at (("screens 1", (lt, seed, 1) l:s_creens 0, "screen 1") cy:b_oxes 0)
   t := t c_at (("screens 2", (lt, seed, 2) l:s_creens 0, "screen 2") cy:b_oxes 0) c_at (("screens 3", (lt, seed, 3) l:s_creens 0, "screen 3") cy:b_oxes 0)
+  t := t c_at (("screens 4", (lt, seed, 4) l:s_creens 0, "screen 4") cy:b_oxes 0) c_at (("screens 5", (lt, seed, 5) l:s_creens 0, "screen 5") cy:b_oxes 0)
+  t := t c_at (("screens 6", (lt, seed, 6) l:s_creens 0, "screen 6") cy:b_oxes 0) c_at (("screens 7", (lt, seed, 7) l:s_creens 0, "screen 7") cy:b_oxes 0)
+  t := t c_at (("screens 8", (lt, seed, 8) l:s_creens 0, "screen 8") cy:b_oxes 0) c_at (("screens 9", (lt, seed, 9) l:s_creens 0, "screen 9") cy:b_oxes 0)
+  t := t c_at (("screens 10", (lt, seed, 10) l:s_creens 0, "screen 10") cy:b_oxes 0)
   t := t c_at (("posts", stems c_at_1 arms, "dark") cy:b_oxes 0) c_at (("bulbs", bulbs, "warm") cy:b_oxes 0) c_at (("lamps", glows) cy:l_amps 0)
   t := t c_at (("spans", spans, "skin 0") cy:b_oxes 0) c_at (("strips", strips, "neon 1") cy:b_oxes 0)
   t c_at (("pylons", pylons, "dark") cy:b_oxes 0) c_at (("great", great, "great") cy:b_oxes 0)
@@ -306,16 +324,19 @@ h:t_raffic := { seed ->
   t c_at (("cars", "car", l:c_ars seed) cy:f_leet 0) c_at (("fliers", "flier", l:f_liers seed) cy:f_leet 0)
 }
 
-## (seed, width, height, fps, samples, device) nc:c_ity 0: the city of
-## that seed as the calls of a player, without the player: the picture
+## (seed, media, width, height, fps, samples, device) nc:c_ity 0: the
+## city of that seed as the calls of a player, without the player;
+## media is the folder of the screens' pictures (slides and videos:
+## the three extension's web/static/media), from where the player
+## runs. The picture
 ## (cy:s_tage) for nc:seconds, the sky, the materials, the city, its
 ## signs and traffic, haze over it all, steam, the camera's flight and
 ## the report. Blender's player is cy:head (nc:s_cene); a player in
 ## another renderer that defines the same functions draws the same
 ## city from the same text (Three.xtl's, in a browser).
-l:c_ity := { (seed, w, h, fps, samples, device) z ->
+l:c_ity := { (seed, where, w, h, fps, samples, device) z ->
   t := ((w, h, fps, l:seconds, samples, device) cy:s_tage 0) c_at (("AgX - Punchy", 0.0, 0.5) cy:l_ook 0) c_at ((30 14 40, 2 3 8, 1.0) cy:s_ky 0)
-  t := t c_at (h:s_kins 0) c_at (h:b_uilt seed) c_at (h:s_igns 0) c_at h:t_raffic seed
+  t := t c_at (h:s_kins where) c_at (h:b_uilt seed) c_at (h:s_igns 0) c_at h:t_raffic seed
   t := t c_at (("haze", 1 6 r_eshape 0.0 0.0 110.0 1300.0 1300.0 220.0, 150 165 255, 0.0012, 0.5) cy:f_og 0) c_at (("vent", plumes, 255 255 255, 1.2, 1.5) cy:s_team 0)
   t c_at ((l:times, l:eyes, l:aims, 24, 2.0) cy:f_ly 0) c_at ((1.0, 0.6, 0.6) cy:b_loom 0) c_at cy:report
 }
@@ -324,4 +345,4 @@ l:c_ity := { (seed, w, h, fps, samples, device) z ->
 ## Blender runs but its rendering, for the film's city (nc:seed):
 ## cy:head, then nc:c_ity. What to render is the caller's, added after:
 ## cy:s_till, or cy:f_rames and cy:e_ncode.
-l:s_cene := { (w, h, fps, samples, device) z -> cy:head c_at (l:seed, w, h, fps, samples, device) l:c_ity 0 }
+l:s_cene := { (w, h, fps, samples, device) z -> cy:head c_at (l:seed, l:media, w, h, fps, samples, device) l:c_ity 0 }

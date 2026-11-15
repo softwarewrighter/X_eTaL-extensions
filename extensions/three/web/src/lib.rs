@@ -1,6 +1,7 @@
 //! The three page: what it links, the libraries its program imports,
 //! and the program that builds the city of a seed.
 
+use xetal_ext_shell::chrome::footer_markup;
 use xetal_ext_shell::run::{Linked, install_with, run};
 use xetal_ext_shell::source::markup;
 
@@ -36,7 +37,7 @@ pub fn install() -> usize {
 /// The program that works out the city of a seed and shows it.
 pub fn program(seed: u32) -> String {
     format!(
-        "\"th:\" u_se< \"Three\"\n\"nc:\" u_se< \"NeonCity\"\n\nth:s_how! ({seed}, 1280, 720, 30, 24, \"GPU\") nc:c_ity 0\n"
+        "\"th:\" u_se< \"Three\"\n\"nc:\" u_se< \"NeonCity\"\n\nth:s_how! ({seed}, \"media\", 1280, 720, 30, 24, \"GPU\") nc:c_ity 0\n"
     )
 }
 
@@ -63,4 +64,20 @@ pub fn build(seed: u32) -> Result<String, String> {
 /// spans classed by the kind of token.
 pub fn rendered(seed: u32) -> String {
     markup(&program(seed))
+}
+
+/// What a footer says, as HTML spans: copyright, license, repository,
+/// the catalog, the X_eTaL commit and the build (host, commit, time).
+pub fn about() -> String {
+    footer_markup("../../")
+}
+
+/// A library the program imports, drawn decorated (HTML): "NeonCity"
+/// is the city, "Three" the facade; nothing for another name.
+pub fn library(name: &str) -> String {
+    match name {
+        "NeonCity" => markup(LIBRARIES[1].1),
+        "Three" => markup(include_str!("../../lib/Three.xtl")),
+        _ => String::new(),
+    }
 }

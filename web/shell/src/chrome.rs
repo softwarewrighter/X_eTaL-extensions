@@ -47,3 +47,20 @@ pub fn footer() -> Html {
         </footer>
     }
 }
+
+/// The footer's facts as HTML text, a span each -- for a page that is
+/// not drawn by yew: copyright, license, the repository, the catalog
+/// (at `catalog`, from the page), the vendored X_eTaL commit, and the
+/// build as its host, commit and time, unlabeled.
+pub fn footer_markup(catalog: &str) -> String {
+    format!(
+        "<span>Copyright (c) 2026 Michael A Wright</span><span>MIT License</span>\
+         <a href=\"{REPO}\" target=\"_blank\" rel=\"noopener\">Repository</a>\
+         <a href=\"{catalog}\">All extensions</a>\
+         <span>X_eTaL {}</span><span class=\"stamp\">{} {} {}</span>",
+        env!("XETAL_SHA"),
+        env!("BUILD_HOST"),
+        env!("BUILD_SHA"),
+        env!("BUILD_TIMESTAMP")
+    )
+}

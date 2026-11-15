@@ -6,10 +6,11 @@ exit 0
 errors 0
 what Blender made:
 CYCLES, 64 by 36, 451 frames at 30 a second, 4 samples
-objects: 1 camera, 70 empty, 8 font, 32 light, 29 mesh
+objects: 1 camera, 70 empty, 8 font, 32 light, 36 mesh
 faces: 7644
-materials: beacon dark great haze head neon 0 neon 1 neon 2 paint screen 0 screen 1 screen 2 screen 3 shell skin 0 skin 1 skin 2 street tail vent walk warm
+materials: beacon dark great haze head neon 0 neon 1 neon 2 paint screen 0 screen 1 screen 10 screen 2 screen 3 screen 4 screen 5 screen 6 screen 7 screen 8 screen 9 shell skin 0 skin 1 skin 2 street tail vent walk warm
 models: car flier
+pictures: 0 played, 8 missing
 
 report.txt
 street.png

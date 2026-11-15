@@ -184,7 +184,7 @@ material from where it is, so a table of boxes is a city:
 | `cy:f_acade` | a building's skin: the wall cut into window bays and floors, dark glass panes, a share of them lit rooms of varying color and brightness, weathered walls |
 | `cy:w_et` | wet ground: rough where damp, a mirror where puddles stand, rippled by rain |
 | `cy:s_creen` | a screen playing a picture worked out from the time: `bars`, `rings`, `rain` or `tiles` |
-| `cy:r_eel` | a screen playing a video file, looping |
+| `cy:m_edia`, `cy:r_eel`, `cy:s_lides` | where the pictures are; a screen playing a video file, looping; a screen showing stills in turn (in Blender, the slides made a video). A file that is not there plays tiles and is counted missing in the report |
 | `cy:n_eon`, `cy:s_urface` | a material that only gives off light; a plain one (color, roughness, metal) |
 | `cy:b_oxes`, `cy:s_ign` | a group of boxes as one object (x y z, w d h, turn); a sign of solid letters, across or stacked |
 | `cy:m_odel`, `cy:p_arts`, `cy:f_leet` | a thing made once (a vehicle) and shown many times, each moving at an even speed from one place to another |
@@ -397,7 +397,8 @@ Render stills at 24 samples while a scene is worked out.
     and sometimes a spire are rows of a table, picked out for each skin
     with a mask. Screens on the walls that face the avenue, bands of
     neon, signs, lamps, steam, two bridges and a great screen at the
-    north end, 32 cars in four lanes and 37 fliers over the cross
+    north end (a third of the screens play abstract pictures, the rest
+    slide shows and videos from `../three/web/static/media`), 32 cars in four lanes and 37 fliers over the cross
     streets and the avenue are tables too, written into Blender's
     Python by Cycles.xtl. The camera comes down from over the skyline,
     under the first bridge to the height of a car's roof over the
