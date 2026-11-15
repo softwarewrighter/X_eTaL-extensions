@@ -6,6 +6,8 @@
 ## flight, 1280 by 720, ray-traced by Cycles (the graphics card when
 ## there is one), written to work/city/out.
 ## Run: just demo blender city   (about five minutes)
+## Title: The neon city, ray-traced: four stills
+## Link: three/live/ the same city, live: fly and walk through it
 
 "bl:" u_se< "Blender"
 "bp:" u_se< "Bpy"

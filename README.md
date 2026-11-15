@@ -10,6 +10,16 @@
 </p>
 
 <p align="center">
+  <b><a href="https://softwarewrighter.github.io/X_eTaL-extensions/three/live/">The neon city, live</a></b>
+  -- a city built from a seed by X_eTaL in your browser (WebAssembly), drawn with Three.js:
+  ride, fly or walk through it
+</p>
+
+<p align="center">
+  <a href="https://softwarewrighter.github.io/X_eTaL-extensions/three/live/"><img src="extensions/three/videos/city.webp" alt="The neon city: a ride between lit towers, screens and neon, down to the wet street" width="640"></a>
+</p>
+
+<p align="center">
   <b><a href="https://softwarewrighter.github.io/X_eTaL-extensions/literate/">The literate documents</a></b>
   -- the extensions explained with their code and its results: arrays to video
   (<a href="https://softwarewrighter.github.io/X_eTaL-extensions/literate/relu-softmax.html">ReLU and softmax</a>,

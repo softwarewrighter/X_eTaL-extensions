@@ -103,7 +103,7 @@ def what(demo):
         t = line.lstrip("# ").rstrip()
         if t.startswith("Run:") or not t:
             break
-        if t.startswith(("Page: ", "Cover: ", "Link: ", "Title: ", "Command: ")):
+        if t.startswith(("Page: ", "Cover: ", "Link: ", "Title: ", "Command: ", "Feature: ")):
             continue
         lines.append(t)
     return " ".join(lines)
@@ -127,8 +127,22 @@ def vendored():
     return (root / "XETAL_COMMIT").read_text().strip()[:7] or "unknown"
 
 
+def page_path(demo):
+    """The site path of a demo's `## Page: PATH TEXT` line, or ''."""
+    for line in demo.read_text().splitlines():
+        if not line.startswith("#"):
+            break
+        t = line.lstrip("# ").rstrip()
+        if t.startswith("Page: "):
+            return t[len("Page: "):].partition(" ")[0]
+    return ""
+
+
 sections = []
 toc = []
+# demos shown first, large: a demo whose header has `## Feature: TEXT`
+# (what the link says) and a `## Page:` to go to; its recording is the link
+features = []
 for ext_dir in sorted(p.parent for p in root.glob("extensions/*/extension.toml")):
     ext = ext_dir.name
     demos = []
@@ -142,6 +156,17 @@ for ext_dir in sorted(p.parent for p in root.glob("extensions/*/extension.toml")
                       f'controls preload="metadata"></video>')
         else:
             player = '<p class="note">(no recording yet)</p>'
+        feature = metadata(demo, "Feature", "")
+        if feature and page_path(demo):
+            go = html.escape(page_path(demo))
+            shown = (f'<a href="{go}"><video src="{ext}/{name}.webm" autoplay loop muted playsinline '
+                     f'preload="metadata"></video></a>' if video.exists() else "")
+            features.append(f"""  <section class="panel feature" id="feature-{ext}-{name}">
+    <h2><a href="{go}">{html.escape(title(demo, f'{ext} / {name}'))}</a></h2>
+    <p class="lede">{html.escape(what(demo))}</p>
+    {shown}
+    <p class="go"><a class="docs" href="{go}">{html.escape(feature)}</a></p>
+  </section>""")
         demos.append(f"""    <section class="panel demo" id="{ext}-{name}">
       <h3>{html.escape(title(demo, f'{ext} / {name}'))} <a class="docs" href="doc/extensions-{ext}-demos-{name}.xtl.html">source and docs</a>{lit_link(ext, name)}{page_link(demo)}{link_lines(demo)}</h3>
       {cover(ext, demo)}<p class="note">{html.escape(what(demo))}</p>
@@ -197,6 +222,7 @@ cargo build --workspace
 just demos                  # the demos; then: just demo EXT NAME</pre>
 </header>
 <main>
+{chr(10).join(features)}
 {chr(10).join(sections)}
 </main>
 <footer>

@@ -1,12 +1,19 @@
-## Three.js, live: the neon city to fly and walk through in a browser.
-## The city is the same arrays as the ray-traced film (blender's
-## demos/NeonCity.xtl), written as the same calls (Cycles.xtl); here
-## they go to a player written with Three.js. This writes a directory
-## to serve, work/city: the page, the player, Three.js and the calls.
+## Three.js, live: the neon city to ride, fly and walk through in a
+## browser. 240 lots worked out as arrays from a seed -- another seed is
+## another city -- built in the page by X_eTaL compiled to WebAssembly
+## and drawn by a player written with Three.js: lit towers, neon,
+## screens showing slides and videos, puddles that mirror it all, cars
+## and fliers. The same arrays and the same calls as the ray-traced
+## film (blender's demos/NeonCity.xtl, Cycles.xtl). From the command
+## line this writes a directory to serve, work/city: the page, the
+## player, Three.js and the calls.
 ## Run: just ext three city   (then just ext three serve city, and open
 ## http://127.0.0.1:8470/)
 ## Command: just ext three city && just ext three serve city
 ## Page: three/live/ fly and walk through it, live
+## Title: The neon city, live
+## Link: #blender-city the same city, ray-traced by Blender
+## Feature: Open the city: ride, fly or walk through it in your browser
 
 "th:" u_se< "Three"
 "nc:" u_se< "NeonCity"

@@ -92,3 +92,8 @@ section.demo, main h2 { scroll-margin-top: 12px; }
 a.docs { font-size: 0.8rem; font-weight: normal; margin-left: 10px; color: var(--accent); }
 nav.toc p.docs { font-weight: normal; margin-bottom: 10px; }
 nav.toc p.docs a { color: var(--accent); }
+/* a featured demo, first on the catalog: its recording is the link */
+.feature { text-align: center; }
+.feature h2 { margin-top: 0; }
+.feature video { width: 100%; max-width: 960px; border-radius: 8px; display: block; margin: 12px auto; }
+.feature .go a { font-size: 1.15em; font-weight: 600; }

@@ -212,30 +212,37 @@
 </ul>
 <h2>On this page</h2>
 <ul>
-<li class="item"><a href="#L14">scene</a></li>
+<li class="item"><a href="#L21">scene</a></li>
 </ul>
 </nav>
 <main>
 <button class="theme" title="Light or dark">theme</button>
 <section id="results"></section>
 <h1><span class="kind">source</span><a href="extensions-three-demos-city.xtl.html">extensions/three/demos/city.xtl</a></h1>
-<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment"># Three.js, live: the neon city to fly and walk through in a browser.</span></span>
-<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># The city is the same arrays as the ray-traced film (blender's</span></span>
-<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># demos/NeonCity.xtl), written as the same calls (Cycles.xtl); here</span></span>
-<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># they go to a player written with Three.js. This writes a directory</span></span>
-<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># to serve, work/city: the page, the player, Three.js and the calls.</span></span>
-<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># Run: just ext three city   (then just ext three serve city, and open</span></span>
-<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-comment">⍝</span><span class="c-comment"># http://127.0.0.1:8470/)</span></span>
-<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-comment">⍝</span><span class="c-comment"># Command: just ext three city &amp;&amp; just ext three serve city</span></span>
-<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-comment">⍝</span><span class="c-comment"># Page: three/live/ fly and walk through it, live</span></span>
-<span class="line" id="L10"><a class="ln" href="#L10">10</a></span>
-<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-libfunc">ᵗʰ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-three-lib-Three.xtl.html" class="c-string">&quot;Three&quot;</a></span>
-<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-libfunc">ⁿᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-NeonCity.xtl.html" class="c-string">&quot;NeonCity&quot;</a></span>
-<span class="line" id="L13"><a class="ln" href="#L13">13</a></span>
-<span class="line" id="L14"><a class="ln" href="#L14">14</a>scene ← (<a href="extensions-blender-demos-NeonCity.xtl.html#l.seed">ⁿᶜseed</a>, <span class="c-string">&quot;media&quot;</span>, <span class="c-number">1280</span>, <span class="c-number">720</span>, <span class="c-number">30</span>, <span class="c-number">24</span>, <span class="c-string">&quot;GPU&quot;</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.c_ity" class="c-libfunc">ⁿᶜc̲ity</a> <span class="c-number">0</span></span>
-<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-string">&quot;the calls of the scene, and the files written to work/city:&quot;</span></span>
-<span class="line" id="L16"><a class="ln" href="#L16">16</a><a href="extensions-three-lib-Three.xtl.html#l.s_how-21" class="c-libfunc">ᵗʰs̲how!</a> <a href="extensions-three-demos-city.xtl.html#scene">scene</a></span>
-<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-string">&quot;work/city&quot;</span> <a href="extensions-three-lib-Three.xtl.html#l.p_age-21" class="c-libfunc">ᵗʰp̲age!</a> <a href="extensions-three-demos-city.xtl.html#scene">scene</a></span>
+<div class="source"><span class="line" id="L1"><a class="ln" href="#L1">1</a><span class="c-comment">⍝</span><span class="c-comment"># Three.js, live: the neon city to ride, fly and walk through in a</span></span>
+<span class="line" id="L2"><a class="ln" href="#L2">2</a><span class="c-comment">⍝</span><span class="c-comment"># browser. 240 lots worked out as arrays from a seed -- another seed is</span></span>
+<span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-comment">⍝</span><span class="c-comment"># another city -- built in the page by X_eTaL compiled to WebAssembly</span></span>
+<span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-comment">⍝</span><span class="c-comment"># and drawn by a player written with Three.js: lit towers, neon,</span></span>
+<span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-comment">⍝</span><span class="c-comment"># screens showing slides and videos, puddles that mirror it all, cars</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-comment">⍝</span><span class="c-comment"># and fliers. The same arrays and the same calls as the ray-traced</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-comment">⍝</span><span class="c-comment"># film (blender's demos/NeonCity.xtl, Cycles.xtl). From the command</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-comment">⍝</span><span class="c-comment"># line this writes a directory to serve, work/city: the page, the</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-comment">⍝</span><span class="c-comment"># player, Three.js and the calls.</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-comment">⍝</span><span class="c-comment"># Run: just ext three city   (then just ext three serve city, and open</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-comment">⍝</span><span class="c-comment"># http://127.0.0.1:8470/)</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-comment">⍝</span><span class="c-comment"># Command: just ext three city &amp;&amp; just ext three serve city</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-comment">⍝</span><span class="c-comment"># Page: three/live/ fly and walk through it, live</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-comment">⍝</span><span class="c-comment"># Title: The neon city, live</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-comment">⍝</span><span class="c-comment"># Link: #blender-city the same city, ray-traced by Blender</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-comment">⍝</span><span class="c-comment"># Feature: Open the city: ride, fly or walk through it in your browser</span></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-libfunc">ᵗʰ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-three-lib-Three.xtl.html" class="c-string">&quot;Three&quot;</a></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-libfunc">ⁿᶜ⁼</span><a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="extensions-blender-demos-NeonCity.xtl.html" class="c-string">&quot;NeonCity&quot;</a></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a>scene ← (<a href="extensions-blender-demos-NeonCity.xtl.html#l.seed">ⁿᶜseed</a>, <span class="c-string">&quot;media&quot;</span>, <span class="c-number">1280</span>, <span class="c-number">720</span>, <span class="c-number">30</span>, <span class="c-number">24</span>, <span class="c-string">&quot;GPU&quot;</span>) <a href="extensions-blender-demos-NeonCity.xtl.html#l.c_ity" class="c-libfunc">ⁿᶜc̲ity</a> <span class="c-number">0</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-string">&quot;the calls of the scene, and the files written to work/city:&quot;</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><a href="extensions-three-lib-Three.xtl.html#l.s_how-21" class="c-libfunc">ᵗʰs̲how!</a> <a href="extensions-three-demos-city.xtl.html#scene">scene</a></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-string">&quot;work/city&quot;</span> <a href="extensions-three-lib-Three.xtl.html#l.p_age-21" class="c-libfunc">ᵗʰp̲age!</a> <a href="extensions-three-demos-city.xtl.html#scene">scene</a></span>
 </div>
 </main>
 </body>

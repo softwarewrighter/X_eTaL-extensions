@@ -13,7 +13,7 @@
   <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
   <ul>
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
-    <li><a href="#blender">blender</a><ul><li><a href="#blender-city-preview">city-preview</a></li><li><a href="#blender-city">city</a></li><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-gpu-build">X_eTaL GPU: build process</a></li><li><a href="#blender-gpu-run">X_eTaL GPU: execution</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-build">HEX1000-UART: build process</a></li><li><a href="#blender-hex-keys-leds-build">HEX1000-keys-leds: build process</a></li><li><a href="#blender-hex-keys-leds-run">HEX1000-keys-leds: execution</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-hex-run">HEX1000-UART: execution</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
+    <li><a href="#blender">blender</a><ul><li><a href="#blender-city-preview">The neon city, ray-traced: the whole flight, rough</a></li><li><a href="#blender-city">The neon city, ray-traced: four stills</a></li><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-gpu-build">X_eTaL GPU: build process</a></li><li><a href="#blender-gpu-run">X_eTaL GPU: execution</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-build">HEX1000-UART: build process</a></li><li><a href="#blender-hex-keys-leds-build">HEX1000-keys-leds: build process</a></li><li><a href="#blender-hex-keys-leds-run">HEX1000-keys-leds: execution</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-hex-run">HEX1000-UART: execution</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
     <li><a href="#clock">clock</a><ul><li><a href="#clock-bridge-cost">bridge-cost</a></li></ul></li>
     <li><a href="#digest">digest</a></li>
@@ -23,7 +23,7 @@
     <li><a href="#linalg">linalg</a></li>
     <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-dig">voxels-dig</a></li><li><a href="#scene-voxels-endless">voxels-endless</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-fly">voxels-fly</a></li><li><a href="#scene-voxels-game">voxels-game</a></li><li><a href="#scene-voxels-light">voxels-light</a></li><li><a href="#scene-voxels-rubik-buttons">voxels-rubik-buttons</a></li><li><a href="#scene-voxels-rubik-solve">voxels-rubik-solve</a></li><li><a href="#scene-voxels-rubik-turn">voxels-rubik-turn</a></li><li><a href="#scene-voxels-rubik">voxels-rubik</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-water">voxels-water</a></li><li><a href="#scene-voxels-world">voxels-world</a></li></ul></li>
     <li><a href="#sqlite">sqlite</a><ul><li><a href="#sqlite-notebook">notebook</a></li></ul></li>
-    <li><a href="#three">three</a><ul><li><a href="#three-city">city</a></li></ul></li>
+    <li><a href="#three">three</a><ul><li><a href="#three-city">The neon city, live</a></li></ul></li>
     <li><a href="#web">web</a><ul><li><a href="#web-life">life</a></li><li><a href="#web-todomvc">todomvc</a></li></ul></li>
   </ul>
 </nav>
@@ -44,6 +44,12 @@ cargo build --workspace
 just demos                  # the demos; then: just demo EXT NAME</pre>
 </header>
 <main>
+  <section class="panel feature" id="feature-three-city">
+    <h2><a href="three/live/">The neon city, live</a></h2>
+    <p class="lede">Three.js, live: the neon city to ride, fly and walk through in a browser. 240 lots worked out as arrays from a seed -- another seed is another city -- built in the page by X_eTaL compiled to WebAssembly and drawn by a player written with Three.js: lit towers, neon, screens showing slides and videos, puddles that mirror it all, cars and fliers. The same arrays and the same calls as the ray-traced film (blender&#x27;s demos/NeonCity.xtl, Cycles.xtl). From the command line this writes a directory to serve, work/city: the page, the player, Three.js and the calls.</p>
+    <a href="three/live/"><video src="three/city.webm" autoplay loop muted playsinline preload="metadata"></video></a>
+    <p class="go"><a class="docs" href="three/live/">Open the city: ride, fly or walk through it in your browser</a></p>
+  </section>
   <h2 id="audio"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/audio/docs/README.md">audio</a> <a class="docs" href="doc/extensions-audio-lib-Audio.xtl.html">facade docs</a></h2>
   <p class="lede">Audio files for X_eTaL: decode Ogg Vorbis, MP3 and WAV, play them on the sound device, and read what is playing as arrays -- the window of samples under the playhead, for analysis and pictures (the visualizer).</p>
   <div class="demos">
@@ -70,15 +76,15 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <p class="lede">Blender 3D in batch, driven from X_eTaL. An X_eTaL program writes the Python -- a launcher that runs Blender in the background, and the bpy script Blender runs inside -- runs the launcher, and reads back what it made: rendered pictures and videos, 3D files. The chain is X_eTaL, this extension, python3, Blender, Python inside Blender.</p>
   <div class="demos">
     <section class="panel demo" id="blender-city-preview">
-      <h3>blender / city-preview <a class="docs" href="doc/extensions-blender-demos-city-preview.xtl.html">source and docs</a></h3>
+      <h3>The neon city, ray-traced: the whole flight, rough <a class="docs" href="doc/extensions-blender-demos-city-preview.xtl.html">source and docs</a> <a class="docs" href="three/live/">the same city, live: fly and walk through it</a></h3>
       <p class="note">Blender, ray-traced: the city&#x27;s whole flight, rough and quick -- 640 by 360, 24 frames a second, 12 samples a pixel -- to judge the camera&#x27;s move, the traffic and the screens before the film is rendered. The frames go to work/city/preview/frames (a frame already there is not rendered again), the video to work/city/preview.</p>
-      <p class="note">(no recording yet)</p>
-      <pre class="source">just demo blender city-preview</pre>
+      <video src="blender/city-preview.webm" autoplay loop muted playsinline controls preload="metadata"></video>
+      <pre class="source">just ext blender city-preview</pre>
     </section>
     <section class="panel demo" id="blender-city">
-      <h3>blender / city <a class="docs" href="doc/extensions-blender-demos-city.xtl.html">source and docs</a></h3>
+      <h3>The neon city, ray-traced: four stills <a class="docs" href="doc/extensions-blender-demos-city.xtl.html">source and docs</a> <a class="docs" href="three/live/">the same city, live: fly and walk through it</a></h3>
       <p class="note">Blender, ray-traced: a city at night after rain, flown through. The city is arrays (NeonCity.xtl): 240 lots, each tower&#x27;s height, footprint and skin from a hash of its number; screens, neon, lamps, steam, bridges, cars and fliers, all rows of tables that Cycles.xtl writes into Blender&#x27;s Python. Here: four stills along the camera&#x27;s flight, 1280 by 720, ray-traced by Cycles (the graphics card when there is one), written to work/city/out.</p>
-      <p class="note">(no recording yet)</p>
+      <video src="blender/city.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo blender city</pre>
     </section>
     <section class="panel demo" id="blender-cosy">
@@ -352,8 +358,8 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <p class="lede">Interactive 3D in a browser. An X_eTaL program writes a scene as the calls of a player -- the same text the blender extension&#x27;s Cycles.xtl writes for a ray-traced film -- and here a player written with Three.js draws those calls in real time: ride the camera&#x27;s flight, fly, or walk. The first scene is the neon city: 240 lots worked out as arrays from a seed, so another seed is another city, built in the page by X_eTaL compiled to WebAssembly.</p>
   <div class="demos">
     <section class="panel demo" id="three-city">
-      <h3>three / city <a class="docs" href="doc/extensions-three-demos-city.xtl.html">source and docs</a> <a class="docs" href="three/live/">fly and walk through it, live</a></h3>
-      <p class="note">Three.js, live: the neon city to fly and walk through in a browser. The city is the same arrays as the ray-traced film (blender&#x27;s demos/NeonCity.xtl), written as the same calls (Cycles.xtl); here they go to a player written with Three.js. This writes a directory to serve, work/city: the page, the player, Three.js and the calls.</p>
+      <h3>The neon city, live <a class="docs" href="doc/extensions-three-demos-city.xtl.html">source and docs</a> <a class="docs" href="three/live/">fly and walk through it, live</a> <a class="docs" href="#blender-city">the same city, ray-traced by Blender</a></h3>
+      <p class="note">Three.js, live: the neon city to ride, fly and walk through in a browser. 240 lots worked out as arrays from a seed -- another seed is another city -- built in the page by X_eTaL compiled to WebAssembly and drawn by a player written with Three.js: lit towers, neon, screens showing slides and videos, puddles that mirror it all, cars and fliers. The same arrays and the same calls as the ray-traced film (blender&#x27;s demos/NeonCity.xtl, Cycles.xtl). From the command line this writes a directory to serve, work/city: the page, the player, Three.js and the calls.</p>
       <video src="three/city.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just ext three city &amp;&amp; just ext three serve city</pre>
     </section>
@@ -383,7 +389,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL d284a8c</span><span class="sep">&middot;</span>
-  <span>built at aa16ad0</span>
+  <span>built at 0eb2899</span>
 </footer>
 </body>
 </html>

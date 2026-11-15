@@ -4,6 +4,9 @@
 ## rendered. The frames go to work/city/preview/frames (a frame already
 ## there is not rendered again), the video to work/city/preview.
 ## Run: just ext blender city-preview   (about half an hour)
+## Command: just ext blender city-preview
+## Title: The neon city, ray-traced: the whole flight, rough
+## Link: three/live/ the same city, live: fly and walk through it
 
 "bl:" u_se< "Blender"
 "bp:" u_se< "Bpy"

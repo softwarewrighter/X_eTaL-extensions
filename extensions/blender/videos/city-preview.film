@@ -1,0 +1,12 @@
+# extensions/blender/videos/city-preview.webm and .webp: the neon city's
+# whole flight, ray-traced rough by Cycles (640 by 360, 12 samples) --
+# demos/city-preview.xtl, rendered 2026-11-13, before the screens showed
+# slides and videos (they play abstract pictures here). The render takes
+# about three quarters of an hour, more than the recorder's run allows:
+# make it with just ext blender city-preview, then just videos blender
+# city-preview. No finer film is planned: the city is shown live
+# (extensions/three), by the user's decision.
+demo=city-preview
+file=work/city/preview/city-preview.mp4
+scale=640
+fps=24

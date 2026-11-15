@@ -1,0 +1,8 @@
+# extensions/blender/videos/city.webm and .webp: the neon city's four
+# ray-traced stills in turn -- the skyline, the descent, the street,
+# the great screen (just videos blender city: Cycles renders them,
+# about five minutes; nothing on screen).
+demo=city
+pics=(work/city/out/skyline.png work/city/out/descent.png work/city/out/street.png work/city/out/screen.png)
+hold=3
+scale=900
