@@ -1,8 +1,9 @@
 number = 25
 slug = "neon-city-render"
-status = "pending"
+status = "completed"
 description = "SHELVED by the user, 2026-11-14: do NOT render the city's film. ('is there an..."
 role = "production"
 context_files = []
 created_at = "2026-11-13T13:44:42"
-commits = []
+completed_at = "2026-11-14T16:37:54"
+commits = ["c640dae2f1f9cc4a6009b6d75ddebba674417da5"]
