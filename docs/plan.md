@@ -615,15 +615,67 @@ extension runs the launcher and reports what happened. Renderer: EEVEE
 | 23 | city-screens | (done 2026-11-14: `cy:m_edia`, `cy:s_lides`, `cy:r_eel`; `media.toml`, `scripts/city-media.py`; the live player's slides are stills, its videos one decoder a material; Blender plays the same files; an animated WebP is not a texture a browser animates, so the two used were made videos) (the user, 2026-11-14: "Better live billboards/video-screens, showing actual animated gifs or webps") real moving pictures on the screens, live and in the film |
 | 24 | city-site | (the user, 2026-11-14: where is the link? a section with a video on the catalog, a link from the README; how do the three city sections relate?) a featured block first on the catalog (`## Feature:` in a demo's header), the README's headline link and animated thumbnail; recordings for blender/city (stills) and blender/city-preview (the rough flight of 2026-11-13); the three sections titled and linked to each other |
 | 25 | neon-city-render | (SHELVED by the user, 2026-11-14: no GPU hours for a fly-through that is not interactive when the live city can be recorded in minutes) the final ray-traced film is not rendered; Blender keeps four stills and the rough preview as the comparison. If asked for again: `cy:f_rames` takes a range and renders no frame twice, about 2 minutes a 1080p frame at 96 samples on an M1 Max, to split across machines |
-| 26 | snowflow-study | (meta; the user, 2026-11-13: "we want to be able to do this in X_eTaL instead of hand coding", of https://github.com/Noniv/snowflow_demo, a real-time WebGPU snow demo: Babylon.js and hand-written WGSL, a clipmap terrain from layered noise, deformable snow as a ping-ponged state buffer, a procedural character, PCSS shadows, a Nishita sky) read it, decide with the user what doing it in X_eTaL means (array programs lowered to the GPU pipeline, WGSL through the web extension, or Blender offline), write the asks, and rescope the two steps after |
-| 27 | winter-planet | (the user, 2026-11-13: "Procedurally generated open world winter planet, with realistic snow physics and semi realistic graphics") `demos/winter.xtl` and `demos/WinterPlanet.xtl`; scope set by step 23 |
-| 28 | winter-planet-render | its final render or release, as step 23 decides |
+| 26 | snowflow-study | (done 2026-11-14; meta; the user, 2026-11-13: "we want to be able to do this in X_eTaL instead of hand coding", of https://github.com/Noniv/snowflow_demo) the reference read in its source, not its README; the user then pointed at https://github.com/softwarewrighter/snowflow_demo-fork, which already is the snow world in X_eTaL (23 libraries, a Rust and WebGPU host, five spells, live). Decided with the user: this repository supports the fork and builds no snow demo of its own; steps 27 and 28 rescoped to the typed array path the fork asks for; ask E12 written, E1 given the fork's workload. See "The snowflow study" below |
+| 27 | winter-planet | (rescoped 2026-11-14 to typed-values; the slug is kept, a saga step is not renamed mid-saga) a shared crate the fork can pin: checked conversion between the evaluator's values and ABI V1 values in both directions with no text in between, for native and wasm32; the fork's workload as the test (an N by 3 Float and a T by 3 Int array as one mesh, malformed shapes and non-finite numbers refused with the caller named, an explicit f64 to f32 policy); measured against the text bridge (`work/bridge-bench.xtl` is the start). No snow demo and no Blender film here |
+| 28 | winter-planet-render | (rescoped 2026-11-14 to typed-values-use) the proof in this repository and the hand-over: the three extension's live city builds its scene from typed arrays through that crate instead of call text, with the build time before and after; docs/abi-v1.md and docs/bridge.md say what is typed and what is still text until E1; the fork told which commit to pin |
 | 29 | gpu-run-m1 | (inserted 2026-11-05) fresh M1 Max event and transfer measurements on the same artifacts, then update the execution media. Requires its SSH hostname/user or local access; do not infer zero-copy or fabricate a timing comparison from the unified-memory architecture |
 | 30 | explain-release | the goal of steps 11, 14 to 16, 18 to 20 (the user, 2026-10-14): X_eTaL driving a GPU, an FPGA and Blender, shown for a blog post and possibly a narrated YouTube video later. A 60 s trailer (one X_eTaL program, three targets), the blog's media (stills, short loops), YouTube masters and Shorts with their cue sheets, the recordings on the site, the extension's page, the retrospective |
 
 Steps 12 to 19 were added with their numbers before the insertions of
 blender-pipeline and cosy-logo; their slugs, not the numbers in their
 prompts, match the rows above.
+
+### The snowflow study (step 26, 2026-11-14)
+
+Two repositories were read at fixed commits: the reference,
+Noniv/snowflow_demo 5450397 (MIT, one commit, 94 source files: about
+11,900 lines of JavaScript and 7,500 of WGSL on Babylon.js), and the user's
+port, softwarewrighter/snowflow_demo-fork 94d75da (2026-11-14).
+
+What the reference is, by its code:
+
+| Part | How it is written | As an array program |
+| ---- | ----------------- | ------------------- |
+| The landform (`lib/noise.wgsl`, `lib/terrain.wgsl`) | gradient noise with analytic derivatives, derivative-damped sums of octaves, every layer rotated and stretched about one wind bearing, baked once to a 4096 square texture and read back so the character stands on the drawn ground | a pure function of an (x, z) grid: element-wise arithmetic, floor, a hash; X_eTaL says this today (the fork's SnowTerrain.xtl does, more simply) |
+| Deformable snow (`deformSim.fragment.wgsl`, 242 lines) | one pass a frame over a 2048 square, four-channel half-float state: scroll, relax (a five-point stencil, an upwind pull, a slump, decay), splat up to N brushes, clamp; addressed round a torus so nothing is copied when the player moves | a stencil over a state array plus an outer product of cells with brushes; rotate (`o_-`) and arithmetic say it; the cost is the count, 4.2 million cells a frame |
+| The clipmap (`clipmapMesh.js`, `lib/clipmap.wgsl`) | 8 rings of 161 by 161 vertices holding only (i, level, j); the vertex shader snaps each ring to twice its spacing and blends its outer band onto the next coarser grid | index arithmetic over three small integer arrays; the placing must run for every vertex every frame, so it is a kernel too |
+| The snow material, sky, shadows, post chain (most of the 7,500 lines of WGSL) | per-pixel shading: normals at several scales, back-scatter, glints, three shadow cascades, a Nishita sky, TAA, bloom, light shafts | per-pixel functions with texture reads and screen-space derivatives: a graphics-stage contract X_eTaL-gpu does not have |
+| The character, cloth, wake, five spells (about 7,400 lines of JavaScript) | procedural meshes, inverse kinematics, a swept ribbon, timelines | small arrays and timelines: the fork has ported all five spells to X_eTaL |
+
+What the fork has: X_eTaL libraries own terrain, footfalls, sounds,
+wind aging and the five spells (App.xtl and Spells.xtl compose them);
+Rust owns wgpu, input, audio and navigation; it is live on Pages. Its
+own queue holds the deformable snow layer, compaction, weather, sky,
+then a browser GPU saga (XIR to WGSL).
+
+The distance between the two is one of count, not of expression. The
+fork's terrain is a 17 by 17 vertex chunk at 2 m, 25 chunks resident
+(about 7,000 vertices), rebuilt by the evaluator on the main thread:
+16 ms for one cut, 39 ms with eight kept (its docs/evidence/sweep.json).
+The reference touches 4.2 million state cells and 207,000 vertices
+every frame on the GPU. Measured here at X_eTaL d284a8c on the M1 Max:
+one relaxation step over a 2048 square Float array (four rotates, an
+add, a scale) takes 1.1 s in the evaluator, about 65 frames at 60 a
+second; a 256 square takes about 10 ms (too
+short to time well from the command line). So the same X_eTaL text must
+run as a GPU kernel. That is ask E12, and it belongs to X_eTaL-gpu and
+the fork's third saga, not to an extension.
+
+Decided with the user (2026-11-14, "Support the fork"):
+
+- "Do this in X_eTaL" means the fork. This repository builds no snow
+  demo, no second renderer in the three extension and no Blender film
+  of snow.
+- What this repository owes it is the boundary. The fork reads typed
+  values out of the evaluator with an adapter of its own that depends
+  on the pinned runtime's representation, because the bridge here is
+  text only (A6) and E1 has not landed. ABI V1 already carries dense
+  Int and Float arrays (A3); what is missing is a shared, checked path
+  from the evaluator's values to ABI values. Steps 27 and 28 build
+  that and prove it on the live city.
+- Not taken: the reference's shaders as hand-written WGSL behind an
+  extension (that is hand coding again), and the web extension as a
+  route (it serves pages; it draws nothing).
 
 ### Retrospective, steps 1 to 4 (2026-10-11)
 

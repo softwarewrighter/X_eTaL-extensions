@@ -1,6 +1,6 @@
 number = 26
 slug = "snowflow-study"
-status = "pending"
+status = "in-progress"
 description = "Saga 15 (the user, 2026-11-13, a note for the winter planet: 'https://github...."
 role = "meta"
 context_files = []

@@ -23,6 +23,16 @@ and the workaround in use.
 | E9 | open (found 2026-10-09 at X_eTaL d284a8c) | bug | `xetal type` (and so `xetal doc`) infers different types for the same file from run to run: free type variables or `Int` for the same tuple part, extra `Num e` constraints. Integer literals' types are settled in an order that varies (a hash map's?), so a doc page and the search index change on every build | scene's shared demo libraries (Endless.xtl, Play.xtl) and the demos that use them | the masks made Int for certain (`f_loor f_loat`); `scripts/check-pages.sh` ignores lines that differ only in an inferred type (a renamed or new function still changes other lines) |
 | E10 | open (found 2026-10-09 at X_eTaL d284a8c) | bug | `xetal doc` lists the hidden value a top-level tuple pattern binds -- `(a, b) := pair` shows a value `%1` (drawn in the error color) beside `a` and `b`, on the file's page, its source page and the index; `xetal type` does not list it | the scene demos that unpacked their final state (voxels-dig, -water, -rubik-buttons, -rubik-solve) and the cube cross-check | top-level tuples unpacked by small accessor functions (`u:w_orldOf := { (s, _) -> s }`) |
 | E11 | open (found 2026-11-04 at X_eTaL d284a8c) | speed | scalar selection copies the entire array, making a clock-by-clock replay quadratic in trace length | blender physical Nano 1K execution | partition into 64-row chunks and select within each bounded chunk |
+| E12 | open (found 2026-11-14 at X_eTaL d284a8c; for X_eTaL-gpu as much as X_eTaL) | speed | array kernels on the browser's GPU: an element-wise program over a large array (a stencil by rotates, a function of a coordinate grid) lowered through XIR to WGSL, the array kept on the device between frames and shared with the renderer | none here; the snow world (snowflow_demo-fork), which this repository supports | the fork keeps its fields small (17 by 17 vertices a chunk) and plans a 256 square snow layer; nothing at the reference's 2048 square |
+
+2026-11-14, the snowflow study (plan, Saga 15 step 26): E12 added.
+E1 gains a concrete workload from snowflow_demo-fork
+(its docs/xetal-asks.md): an N by 3 Float coordinate array and a T by 3
+Int index array kept as one mesh, published from inside an event loop,
+with malformed shapes, non-finite numbers and bad indices refused and
+the caller named. Until E1 the fork reads typed values through its own
+adapter over the output hook; steps 27 and 28 here make that a shared
+crate, which is still a workaround and is named as one.
 
 2026-10-08, X_eTaL d284a8c pinned (the user: the newer doc site): E7 and E8 landed; `l:package` is kept in each facade, as it names the native package on the doc pages; libraries' private functions are now `h:` (`xetal migrate`). E1, E3 and E5 still open.
 
@@ -277,3 +287,35 @@ unrelated rows. Workaround: `keys-leds-replay.xtl` partitions once into
 64-row chunks, selects each chunk once, then selects rows within that
 bounded chunk. No upstream source is changed.
 
+### E12: array kernels on the browser's GPU
+
+The snow demo this family wants to write in X_eTaL
+(https://github.com/Noniv/snowflow_demo) keeps its deformable snow in a
+2048 square state array and rewrites every cell every frame: each cell
+relaxes toward its four neighbors, then brushes are added. As an array
+program that is rotates and arithmetic, which X_eTaL says directly:
+
+```xtl
+d := (2048 2048) r_eshape f_loat o_ffsets (2048 * 2048)
+lap := ((1 o_- d) + (-1 o_- d) + (1 o_-_2 d) + (-1 o_-_2 d)) - 4.0 * d
+next := d + 0.1 * lap
+s_hape next
+```
+
+At X_eTaL d284a8c on an M1 Max, `xetal run` takes 1.22 s for this and
+0.13 s for the first line alone: 1.1 s for one step, where a frame has
+16.7 ms. A 256 square array takes about 10 ms (too short to time well
+from the command line). The reference runs the same step as one WGSL
+pass every frame; its time was not measured here.
+
+Wanted: the element-wise subset (maps, rotates, reductions, lookups)
+lowered through X_eTaL-gpu's XIR to WGSL compute, run in the browser,
+with the array resident on the device from one frame to the next and
+readable by the renderer without a copy back. Numbers on the device are
+f32 and i32: the narrowing is explicit and refused where it would lose
+an Int. Results agree with the evaluator within a stated tolerance.
+Per-pixel shading (texture reads, screen-space derivatives) is a
+separate, later contract and is not part of this ask.
+
+Workaround: none at this size. The fork keeps fields small and runs
+them in the evaluator; its third planned saga is this ask.
