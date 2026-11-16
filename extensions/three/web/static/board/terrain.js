@@ -1,6 +1,6 @@
 // The board's terrain: ground that is ground, a mesh the program worked
 // out, and its material. A module of the board player (../board.js says
-// what a module is). Two calls, both kept by their line:
+// what a module is). Three calls, all kept by their line:
 //
 //   terrain(name, nums('x z y ...', 3), ints('a b c ...', 3), nums('r g b ...', 3))
 //     the terrain of that name: its corners (x east, z south, y up, in
@@ -42,7 +42,20 @@
 //       number of a made texture's pixel is its height). 0 and 1 are
 //       still wholly the first and wholly the second. Files fade evenly.
 //
-// The two calls may come in either order, and either may change alone.
+//   beyond(y, 'grass', '#8a9a70')
+//   beyond(y, 'grass', '#8a9a70', nums('x0 z0 x1 z1', 4)[0])
+//     ground that goes on to the horizon at that height, so a terrain
+//     does not end in the air: a named texture as ground's (covering
+//     TILES by TILES tiles, repeating) and a color that tints it. It is
+//     drawn round the eye, wherever the eye goes (round the camera's
+//     target for the board's own camera), a little behind anything at
+//     its own height, and takes shadows and fog. A terrain whose edge
+//     comes down to y meets it without a seam. The fourth argument is
+//     a rectangle left out (west, north, east, south): where the
+//     program's own terrain is, so a valley or a river bed in it lower
+//     than y is not covered. A scene may hold several.
+//
+// terrain and ground may come in either order, and either may change alone.
 // A changed `terrain` line replaces the mesh: when it has as many
 // corners and triangles as before (ground pressed down, snow deformed)
 // the numbers are written over the old ones, with no new buffers and no
@@ -147,7 +160,62 @@ export default function terrain(ctx) {
   // a '#rrggbb' part over 255, as the renderer's own (linear) number
   const linear = (c) => (c <= 0.04045 ? Math.max(c, 0) / 12.92 : Math.pow((Math.min(c, 1) + 0.055) / 1.055, 2.4));
 
+  // ground to the horizon: one square, kept round the eye in steps of a
+  // texture's repeat, so the texture stays where it is on the world
+  const WIDE = 1600;
+  const far = new Set();
+  const beyond = (y, name, color = '#ffffff', hole = null) => {
+    const l = look(name);
+    const g = new THREE.PlaneGeometry(WIDE, WIDE);
+    g.rotateX(-Math.PI / 2);
+    const at = g.attributes.position, uv = g.attributes.uv;
+    for (let i = 0; i < at.count; i++) uv.setXY(i, at.getX(i) / TILES, at.getZ(i) / TILES);
+    const material = new THREE.MeshStandardMaterial({
+      color, map: l.texture, roughness: 0.95, polygonOffset: true, polygonOffsetFactor: 2, polygonOffsetUnits: 2,
+    });
+    if (hole) {
+      // nothing is drawn inside the rectangle
+      const rect = { value: new THREE.Vector4(hole[0], hole[1], hole[2], hole[3]) };
+      material.onBeforeCompile = (shader) => {
+        shader.uniforms.beyondHole = rect;
+        shader.vertexShader = shader.vertexShader
+          .replace('#include <common>', '#include <common>\nvarying vec2 vBeyondAt;')
+          .replace('#include <begin_vertex>', '#include <begin_vertex>\nvBeyondAt = (modelMatrix * vec4(position, 1.0)).xz;');
+        shader.fragmentShader = shader.fragmentShader
+          .replace('#include <common>', '#include <common>\nuniform vec4 beyondHole;\nvarying vec2 vBeyondAt;')
+          .replace('#include <map_fragment>', 'if (vBeyondAt.x > beyondHole.x && vBeyondAt.x < beyondHole.z && vBeyondAt.y > beyondHole.y && vBeyondAt.y < beyondHole.w) discard;\n#include <map_fragment>');
+      };
+    }
+    const mesh = new THREE.Mesh(g, material);
+    mesh.name = 'beyond';
+    mesh.receiveShadow = true;
+    mesh.frustumCulled = false;
+    mesh.position.y = y;
+    scene.add(mesh);
+    const b = { mesh, material, l };
+    far.add(b);
+    return {
+      dispose() {
+        far.delete(b);
+        scene.remove(mesh);
+        g.dispose();
+        material.dispose();
+      },
+    };
+  };
+  const follow = () => {
+    for (const b of far) {
+      // a texture's file may have come since
+      if (b.material.map !== b.l.texture) { b.material.map = b.l.texture; b.material.needsUpdate = true; }
+      const flat = ctx.camera === ctx.flat;
+      const x = flat ? ctx.look.target[0] : ctx.camera.position.x, z = flat ? ctx.look.target[2] : ctx.camera.position.z;
+      b.mesh.position.x = Math.round(x / TILES) * TILES;
+      b.mesh.position.z = Math.round(z / TILES) * TILES;
+    }
+  };
+
   const kept = {
+    beyond(line, y, name, color, hole) { return beyond(y, name, color, hole); },
     terrain(line, name, corners, triangles, colors = []) {
       const n = corners.length, m = triangles.length;
       const position = new Float32Array(n * 3), color = new Float32Array(n * 3).fill(1);
@@ -293,10 +361,11 @@ export default function terrain(ctx) {
   return {
     kept,
     end() { for (const f of [...fields.values()]) settle(f); },
+    frame() { follow(); },
     count() {
       let terrains = 0, triangles = 0;
       for (const f of fields.values()) if (f.drawn) { terrains += 1; triangles += f.triangles; }
-      return { terrains, terrainTriangles: triangles };
+      return { terrains, terrainTriangles: triangles, beyond: far.size };
     },
     stop() {
       running = false;
@@ -305,6 +374,8 @@ export default function terrain(ctx) {
         if (f.material) f.material.dispose();
       }
       fields.clear();
+      for (const b of [...far]) { scene.remove(b.mesh); b.mesh.geometry.dispose(); b.material.dispose(); }
+      far.clear();
       for (const l of looks.values()) if (l.texture !== white) l.texture.dispose();
       looks.clear();
       white.dispose();

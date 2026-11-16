@@ -1,4 +1,4 @@
-## A board of fourteen calls: counted, and written as a page to serve. A
+## A board of fifteen calls: counted, and written as a page to serve. A
 ## scene whose first call is view is drawn by the board player.
 
 "th:" u_se< "Three"
@@ -8,6 +8,7 @@ road := "tiles('road', '#b9a37a', nums('1.5 1.5 0.0 2.5 0.5 0.5', 3))\n"
 wall := "tiles('wall', '#9aa0aa', nums('2.5 0.5 1.0 0.0 0.0 1.0', 6), 'wall')\n"
 hill := "terrain('hill', nums('0 2 0.2 1 2 0.3 0 3 0.1 1 3 0.5', 3), ints('1 3 2 2 3 4', 3), nums('1 1 1 1 1 1 0.8 0.75 0.7 1 1 1', 3))\n"
 snow := "ground('hill', 'grass', 'snow', nums('0 0 0 1', 1))\n"
+far := "beyond(0.1, 'grass', '#ffffff', nums('0 2 1 3', 4)[0])\\n"
 light := "sun(nums('-0.6 0.5 0.3', 3)[0], '#fff1dd', 2.5)\nsky('#9fb4c8', '#5e6b78', 0.8)\nfog('#aab4bd', 0.012)\n"
 pond := "water(nums('1 3 0.1 2 3 0.1 2 4 0.1 1 4 0.1', 3), ints('1 2 3 1 3 4', 3), nums('0.6 0.0', 2)[0], '#3f6f8f')\n"
 smoke := "particles('smoke', nums('0.5 1.5 0.2', 3)[0], 12, nums('0.25 0.1', 2)[0], 2)\n"
@@ -15,7 +16,7 @@ walker := "piece('walker', nums('0.5 0.5 0.0 1.0 0.0', 5)[0], 'walk', 0.0, nums(
 guard := "piece('guard', nums('2.5 1.5 0.5 0.0 -1.0', 5)[0], 'idle', 1.5, nums('2.5 1.5 0.5', 3)[0], 0.05)\n"
 scene := ("view(320, 200, '#1d1f2b')\n"
   c_at "camera(nums('1.5 0.0 1.0', 3)[0], nums('0.612 0.5 0.612', 3)[0], 56.569)\n"
-  c_at ground c_at road c_at wall c_at hill c_at snow c_at light c_at pond c_at smoke c_at walker c_at guard)
+  c_at ground c_at road c_at wall c_at hill c_at snow c_at far c_at light c_at pond c_at smoke c_at walker c_at guard)
 "the calls, and the files of the page:"
 th:s_how! scene
 "work/board" th:p_age! scene

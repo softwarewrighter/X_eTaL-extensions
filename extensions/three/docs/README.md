@@ -223,6 +223,14 @@ Ground that is ground: a mesh the program works out, and its material
 | `terrain(name, nums('x z y ...', 3), ints('a b c ...', 3), nums('r g b ...', 3))` | the terrain of that name: its corners, its triangles (three corners each, counted from 1 as X_eTaL counts: the first corner is 1) and a color a corner (0 to 1, the parts of a `#rrggbb` color over 255). Lit and shadowed, its normals smoothed over the triangles round a corner |
 | `ground(name, 'grass', 'snow', nums('w ...', 1))` | that terrain's material: two named textures and a blend a corner, 0 the first and 1 the second. The corner colors tint it (white shows the texture as it is) |
 
+- `beyond(y, 'grass', '#ffffff', nums('x0 z0 x1 z1', 4)[0])`: ground
+  that goes on to the horizon at height y, so a terrain does not end
+  in the air: a named texture as `ground`'s and a color that tints
+  it, kept round the eye wherever it goes, taking shadows and fog. The
+  fourth argument, which may be left out, is a rectangle not drawn
+  (west, north, east, south): where the program's own terrain is, so
+  a valley or a river bed there lower than y is not covered. A
+  terrain whose edge comes down to y meets it without a seam.
 - `ints(text, k)` reads whole numbers as `nums` reads numbers.
 - Either winding will do (both sides are drawn); keep one over a whole
   terrain. A triangle naming a corner that is not there is an error
@@ -398,7 +406,7 @@ just live       # the live page, with trunk, into web/dist
 The Rust tests check the descriptor, that each player defines every
 call its vocabulary writes, and that the vendored Three.js is whole.
 The goldens: `three-list`; `three-tiny` (three calls counted, a page
-of 26 files written); `three-board` (a board of fourteen calls counted and
+of 26 files written); `three-board` (a board of fifteen calls counted and
 written as a page); `three-outside` (a path outside the working
 directory is refused); `three-demo-city` (the city: 84 calls). The
 page's crate (`web/`) runs its program natively for two seeds and

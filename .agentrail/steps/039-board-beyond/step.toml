@@ -1,0 +1,8 @@
+number = 39
+slug = "board-beyond"
+status = "in-progress"
+description = "Saga 15 (the user, 2026-11-16, of the walking view: 'the walk UI shows a squa..."
+role = "production"
+context_files = []
+created_at = "2026-11-16T13:09:24"
+commits = []

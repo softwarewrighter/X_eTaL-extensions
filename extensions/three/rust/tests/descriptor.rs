@@ -73,6 +73,7 @@ fn the_board_player_defines_its_calls() {
     assert!(part("board/eye.js").contains("each: { eye: call }"));
     assert!(part("board/terrain.js").contains("    terrain(line, name, corners"));
     assert!(part("board/terrain.js").contains("    ground(line, name, "));
+    assert!(part("board/terrain.js").contains("    beyond(line, y, name, color, hole)"));
     assert!(part("board/terrain.js").contains("'./terrain-textures.js'"));
     for call in ["sun", "sky", "fog"] {
         assert!(
