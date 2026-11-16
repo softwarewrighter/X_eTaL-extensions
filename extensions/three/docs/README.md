@@ -107,6 +107,41 @@ piece('walker', nums('6.5 10.0 0.5 0.0 -1.0', 5)[0], 'walk', 10.6, nums('6.5 9.8
   is the program's to work out.
 - `?t=SECONDS` holds every piece that long after its tick (a still).
 
+### Terrain
+
+Ground that is ground: a mesh the program works out, and its material
+(`web/static/board/terrain.js`).
+
+| Call | What it draws |
+| ---- | ------------- |
+| `terrain(name, nums('x z y ...', 3), ints('a b c ...', 3), nums('r g b ...', 3))` | the terrain of that name: its corners, its triangles (three corners each, counted from 1 as X_eTaL counts: the first corner is 1) and a color a corner (0 to 1, the parts of a `#rrggbb` color over 255). Lit and shadowed, its normals smoothed over the triangles round a corner |
+| `ground(name, 'grass', 'snow', nums('w ...', 1))` | that terrain's material: two named textures and a blend a corner, 0 the first and 1 the second. The corner colors tint it (white shows the texture as it is) |
+
+- `ints(text, k)` reads whole numbers as `nums` reads numbers.
+- Either winding will do (both sides are drawn); keep one over a whole
+  terrain. A triangle naming a corner that is not there is an error
+  that says which.
+- A named texture is `textures/NAME.jpg` (or `.png`) beside the page
+  when there is such a file (`textures` in the page's setup names
+  another folder). Otherwise it is one the player makes: grass, snow,
+  dirt, stone, sand, mud. A name with neither is plain white.
+- A texture covers 4 by 4 tiles and repeats, laid on from above and,
+  where the ground is steep, from the side, so it does not stretch
+  down a slope. Between two of the player's own textures the edge is
+  ragged (the second lies first in the hollows of the first); files
+  fade evenly.
+- The two calls may come in either order and either may change alone.
+  A `terrain` line that is the same text costs nothing when a scene is
+  shown again; a changed one replaces the mesh, and when it has as
+  many corners and triangles as before the numbers are written over
+  the old ones (about 4 ms for 10 000 triangles on an M1 Max, nearly
+  all of it reading the line's numbers).
+- Without a `ground` line a terrain is its corner colors alone. A
+  terrain is a sheet with no skirt: at the board's edge you see under
+  it unless the program adds edge triangles.
+- Measured in headless Chrome on an M1 Max only (about 2 ms a frame at
+  10 000 triangles); not yet on integrated graphics.
+
 ### A camera that walks: `eye`
 
 `eye(nums('x z y', 3)[0], nums('hx hz pitch', 3)[0], 60)` in place of
@@ -220,7 +255,7 @@ just live       # the live page, with trunk, into web/dist
 The Rust tests check the descriptor, that each player defines every
 call its vocabulary writes, and that the vendored Three.js is whole.
 The goldens: `three-list`; `three-tiny` (three calls counted, a page
-of 24 files written); `three-board` (a board of seven calls counted and
+of 25 files written); `three-board` (a board of nine calls counted and
 written as a page); `three-outside` (a path outside the working
 directory is refused); `three-demo-city` (the city: 84 calls). The
 page's crate (`web/`) runs its program natively for two seeds and

@@ -8,7 +8,7 @@
 // there; ?seed=N builds that city first. For a board, ?t=SECONDS holds
 // every piece that long after its tick.
 // setup: media (the city's pictures' folder), models (the folder of a
-// board's .glb pieces), onPoint(x, y, event) (a click on a board, in
+// board's .glb pieces), textures (the folder of a board's ground textures), onPoint(x, y, event) (a click on a board, in
 // its view's units), onInput(input) (a board's keys and pointer, for the
 // program that moves its eye: board/eye.js says what input holds; with
 // it, a board seen through an eye says how to look round).
@@ -55,7 +55,7 @@ export function start(setup = {}) {
       if (city) city.stop();
       document.body.classList.add('board');
       const options = {
-        keep: q.has('t'), models: setup.models, onPoint: setup.onPoint, onInput: setup.onInput,
+        keep: q.has('t'), models: setup.models, textures: setup.textures, onPoint: setup.onPoint, onInput: setup.onInput,
         onFrame: (f) => {
           // through an eye: where it stands, and (when the page hears the keys) how to look round
           document.body.classList.toggle('eye', !!f.eye && !!setup.onInput);

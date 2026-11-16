@@ -27,6 +27,10 @@ pub const BOARD_PARTS: &[(&str, &str)] = &[
         include_str!("../../web/static/board/terrain.js"),
     ),
     (
+        "board/terrain-textures.js",
+        include_str!("../../web/static/board/terrain-textures.js"),
+    ),
+    (
         "board/water.js",
         include_str!("../../web/static/board/water.js"),
     ),

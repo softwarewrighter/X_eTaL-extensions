@@ -58,8 +58,10 @@ fn the_board_player_defines_its_calls() {
     assert!(xetal_ext_three::BOARD.contains("const tiles = ("));
     assert!(xetal_ext_three::BOARD.contains("const kept = { tiles }"));
     // its modules are whole, and the player names each
-    assert_eq!(xetal_ext_three::BOARD_PARTS.len(), 5);
-    for (path, body) in xetal_ext_three::BOARD_PARTS {
+    assert_eq!(xetal_ext_three::BOARD_PARTS.len(), 6);
+    for name in ["light", "terrain", "water", "particles", "eye"] {
+        let path = format!("board/{name}.js");
+        let body = part(&path);
         assert!(body.contains("export default function"), "{path}");
         assert!(
             xetal_ext_three::BOARD.contains(&format!("'./{path}'")),
@@ -69,6 +71,9 @@ fn the_board_player_defines_its_calls() {
     assert!(xetal_ext_three::BOARD.contains("const nums = ("));
     // the calls its modules draw, each a function of its module
     assert!(part("board/eye.js").contains("each: { eye: call }"));
+    assert!(part("board/terrain.js").contains("    terrain(line, name, corners"));
+    assert!(part("board/terrain.js").contains("    ground(line, name, "));
+    assert!(part("board/terrain.js").contains("'./terrain-textures.js'"));
     // the page chooses the player by the scene's first call
     assert!(xetal_ext_three::LIVE.contains("isBoard(calls)"));
 }

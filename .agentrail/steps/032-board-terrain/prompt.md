@@ -1,0 +1,1 @@
+Saga 15 (the user, 2026-11-16: the game's asks in parallel lanes, merged as each finishes). Land the terrain lane (branch worktree-agent-adf3ba4a1d17df733): terrain(name, corners, triangles, colors) and ground(name, textureA, textureB, blend) in board/terrain.js, triangles counted from 1. Review, merge, register its new file, docs, tests, pages, gate, push.
