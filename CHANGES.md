@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-16
 
+- `build` the farm's table: where the repository is on large12 (/disk1) and beast48 (/data2), for `farm collect`; the division is unchanged.
 - `ext` three, the board player: ground to the horizon (the user: the walking view showed a tile floating in space). `beyond(y, 'grass', '#ffffff'[, nums('x0 z0 x1 z1', 4)[0]])` in `board/terrain.js`: endless ground at a height with a named ground texture, following the eye, with a rectangle left out for the program's own terrain. Golden `three-board` fifteen calls. Saga: board-beyond inserted as step 39.
 - `fix` `scripts/farm-scene.sh` gives xetal-x the blender extension alone (`--ext extensions/blender`): it built only that library, and xetal-x fails on a directory holding an extension that is not built (found on beast48, the first Linux run).
 - `ext` blender, Bpy.xtl: the look (evolving-game's two asks; the bpy lane, merged). `bp:look` after `bp:head`, then: `bp:t_exture`, `bp:b_evel`, `bp:p_aint`, `bp:e_xportLook` (procedural textures baked into the `.glb`, bevels); `bp:a_rmature`, `bp:b_ind`, `bp:p_ose` (skinned figures, clips on bones); `bp:g_ridMesh`, `bp:c_loth`, `bp:w_ave` (cloth simulated, kept as shapes); `bp:c_ontents`. Existing functions' text unchanged (24 goldens as they were); five new goldens (`blender-look-wall`, `-figure`, `-banner`, `-script`, `-run`, the last runs Blender). `docs/bpy-look.md`. The merge commit went up with the farm's table before its gate. Saga: bpy-look inserted as step 38.

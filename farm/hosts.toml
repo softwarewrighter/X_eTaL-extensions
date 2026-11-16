@@ -16,11 +16,13 @@
 card = "RTX 5060 16 GB"
 speed = 1.6
 vram = 16
+path = "/disk1/github/softwarewrighter/X_eTaL-extensions"
 
 [hosts.beast48]
 card = "RTX 3060 12 GB"
 speed = 1.0
 vram = 12
+path = "/data2/github/softwarewrighter/X_eTaL-extensions"
 
 # The Mac (M1 Max, Metal): slower than the cards; its speed is a guess
 # from two minutes a frame of the city until the cards have been timed.
