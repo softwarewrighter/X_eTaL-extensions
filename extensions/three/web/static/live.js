@@ -9,7 +9,9 @@
 // every piece that long after its tick.
 // setup: media (the city's pictures' folder), models (the folder of a
 // board's .glb pieces), onPoint(x, y, event) (a click on a board, in
-// its view's units).
+// its view's units), onInput(input) (a board's keys and pointer, for the
+// program that moves its eye: board/eye.js says what input holds; with
+// it, a board seen through an eye says how to look round).
 import { play } from './player.js';
 import { board, isBoard } from './board.js';
 
@@ -30,7 +32,7 @@ export function start(setup = {}) {
     show(calls) {
       if (isBoard(calls)) { live.board(calls); return; }
       if (city) city.stop();
-      document.body.classList.remove('board');
+      document.body.classList.remove('board', 'eye');
       err.textContent = '';
       const options = {
         mode, keep: q.has('t'), media: setup.media,
@@ -53,8 +55,13 @@ export function start(setup = {}) {
       if (city) city.stop();
       document.body.classList.add('board');
       const options = {
-        keep: q.has('t'), models: setup.models, onPoint: setup.onPoint,
-        onFrame: (f) => { stat.textContent = `board  ${f.tiles} tiles  ${f.pieces} pieces  ${f.rate.toFixed(0)} frames a second`; },
+        keep: q.has('t'), models: setup.models, onPoint: setup.onPoint, onInput: setup.onInput,
+        onFrame: (f) => {
+          // through an eye: where it stands, and (when the page hears the keys) how to look round
+          document.body.classList.toggle('eye', !!f.eye && !!setup.onInput);
+          const stands = f.eye ? `  at ${f.eye.map((v) => v.toFixed(1)).join(' ')}` : '';
+          stat.textContent = `board  ${f.tiles} tiles  ${f.pieces} pieces  ${f.rate.toFixed(0)} frames a second${stands}`;
+        },
       };
       if (q.has('t')) options.time = Number(q.get('t'));
       city = board(view, calls, options);
