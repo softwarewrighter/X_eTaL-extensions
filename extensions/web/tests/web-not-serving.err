@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:web/next: not serving: call wb:s_erve! first at ./lib/Web.xtl:17:1
+error[io]: []N_GET: ext:web/next: not serving: call wb:s_erve! first
+  --> ./lib/Web.xtl:17:1
+   |
+17 | "n_ext! : float -> text"        ffi:b_ind< "web/next"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/not-serving.xtl:3:1
+   |
+ 3 | wb:n_ext! 0
+   | ----------- called from the program here

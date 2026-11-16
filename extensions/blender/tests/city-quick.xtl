@@ -12,8 +12,8 @@ lots := nc:l_ots nc:seed
 s_hape lots
 (1 s_elect s_hape (lots, 0) nc:t_owers 0) c_at (1 s_elect s_hape (lots, 1) nc:t_owers 0) c_at 1 s_elect s_hape (lots, 2) nc:t_owers 0
 script := ((64, 36, 30, 4, "CPU") nc:s_cene 0) c_at ("street.png", 10.5) cy:s_till 0
-n := "work/cityquick/run.py" bl:w_rite! bp:launcher
-n := "work/cityquick/scene.py" bl:w_rite! script
+_ := "work/cityquick/run.py" bl:w_rite! bp:launcher
+_ := "work/cityquick/scene.py" bl:w_rite! script
 r := "work/cityquick/run.py" bl:r_un! "work/cityquick/scene.py work/cityquick/out"
 "the run, and the error lines in Blender's log:"
 lines := (n_ot r = f_irst "\n") p_artition r

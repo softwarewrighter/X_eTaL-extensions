@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:web/reply: 42 is not an HTTP status (100 to 599) at ./lib/Web.xtl:37:1
+error[io]: []N_GET: ext:web/reply: 42 is not an HTTP status (100 to 599)
+  --> ./lib/Web.xtl:37:1
+   |
+37 | "r_eply! : int text -> int"     ffi:b_ind< "web/reply"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/bad-status.xtl:4:1
+   |
+ 4 | 42 wb:r_eply! "?"
+   | ----------------- called from the program here

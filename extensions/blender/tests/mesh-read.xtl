@@ -26,6 +26,6 @@ h:r_ead := { name ->
 
 "each piece's mesh, as X_eTaL reads it:"
 n := h:r_ead "arrow-1"
-n := h:r_ead "cannon-3"
-n := h:r_ead "frost-3"
-n := h:r_ead "runner"
+cannon := h:r_ead "cannon-3"
+frost := h:r_ead "frost-3"
+runner := h:r_ead "runner"

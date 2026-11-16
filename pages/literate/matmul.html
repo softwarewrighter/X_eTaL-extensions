@@ -9,6 +9,9 @@
 <meta name="author" content="Michael A Wright" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous"/>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () { if (typeof katex === 'undefined') return; document.querySelectorAll('.c-notation').forEach(function (el) { var tex = el.textContent; if (!tex) return; try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; } }); });</script>
 </head>
 <body>
 <div id="content" class="content">
@@ -107,9 +110,9 @@ player makes the objects and keys and EEVEE renders the MP4.</li>
 <h2 id="org69dcd29">1. The arrays, by Accel</h2>
 <div class="outline-text-2" id="text-org69dcd29">
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ᵐᵐ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Matmul&quot;</span>
-<span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Accel&quot;</span>
-<span class="c-libfunc">ᵛᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Video&quot;</span>
+<pre class="src src-xetal"><span class="c-string">&quot;mm:&quot;</span> <span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Matmul&quot;</span>
+<span class="c-string">&quot;ac:&quot;</span> <span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Accel&quot;</span>
+<span class="c-string">&quot;vd:&quot;</span> <span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Video&quot;</span>
 ᵐᵐa
 
 <span class="c-comment typed">⍝ typed:</span>
@@ -186,42 +189,42 @@ which item it belongs to and its i, j and k, as arrays:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡitemI ← ((<span class="c-builtin">r̲ange</span> <span class="c-number">6</span>) <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-builtin">d̲iv</span> <span class="c-number">2</span>
+<pre class="src src-xetal">ˡitemI ← <span class="c-depth0">(</span><span class="c-depth1">(</span><span class="c-builtin">r̲ange</span> <span class="c-number">6</span><span class="c-depth1">)</span> <span class="c-symbol">−</span> <span class="c-number">1</span><span class="c-depth0">)</span> <span class="c-builtin">d̲iv</span> <span class="c-number">2</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:itemI := ((r_ange 6) - 1) d_iv 2</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡitemJ ← ((<span class="c-builtin">r̲ange</span> <span class="c-number">6</span>) <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-builtin">m̲od</span> <span class="c-number">2</span>
+<pre class="src src-xetal">ˡitemJ ← <span class="c-depth0">(</span><span class="c-depth1">(</span><span class="c-builtin">r̲ange</span> <span class="c-number">6</span><span class="c-depth1">)</span> <span class="c-symbol">−</span> <span class="c-number">1</span><span class="c-depth0">)</span> <span class="c-builtin">m̲od</span> <span class="c-number">2</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:itemJ := ((r_ange 6) - 1) m_od 2</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡprodQ ← ((<span class="c-builtin">r̲ange</span> <span class="c-number">24</span>) <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-builtin">d̲iv</span> <span class="c-number">4</span>
+<pre class="src src-xetal">ˡprodQ ← <span class="c-depth0">(</span><span class="c-depth1">(</span><span class="c-builtin">r̲ange</span> <span class="c-number">24</span><span class="c-depth1">)</span> <span class="c-symbol">−</span> <span class="c-number">1</span><span class="c-depth0">)</span> <span class="c-builtin">d̲iv</span> <span class="c-number">4</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:prodQ := ((r_ange 24) - 1) d_iv 4</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡprodI ← (ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡitemI
+<pre class="src src-xetal">ˡprodI ← <span class="c-depth0">(</span>ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span><span class="c-depth0">)</span> <span class="c-builtin">s̲elect</span> ˡitemI
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:prodI := (l:prodQ + 1) s_elect l:itemI</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡprodJ ← (ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡitemJ
+<pre class="src src-xetal">ˡprodJ ← <span class="c-depth0">(</span>ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span><span class="c-depth0">)</span> <span class="c-builtin">s̲elect</span> ˡitemJ
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:prodJ := (l:prodQ + 1) s_elect l:itemJ</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡprodK ← ((<span class="c-builtin">r̲ange</span> <span class="c-number">24</span>) <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-builtin">m̲od</span> <span class="c-number">4</span>
+<pre class="src src-xetal">ˡprodK ← <span class="c-depth0">(</span><span class="c-depth1">(</span><span class="c-builtin">r̲ange</span> <span class="c-number">24</span><span class="c-depth1">)</span> <span class="c-symbol">−</span> <span class="c-number">1</span><span class="c-depth0">)</span> <span class="c-builtin">m̲od</span> <span class="c-number">4</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:prodK := ((r_ange 24) - 1) m_od 4</span></pre>
@@ -258,7 +261,7 @@ checks against Accel:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡproducts ← ((<span class="c-number">1</span> <span class="c-symbol">+</span> ˡprodK <span class="c-symbol">+</span> <span class="c-number">4</span> <span class="c-symbol">×</span> ˡprodI) <span class="c-builtin">s̲elect</span> <span class="c-builtin">r̲avel</span> ˡa) <span class="c-symbol">×</span> (<span class="c-number">1</span> <span class="c-symbol">+</span> ˡprodJ <span class="c-symbol">+</span> <span class="c-number">2</span> <span class="c-symbol">×</span> ˡprodK) <span class="c-builtin">s̲elect</span> <span class="c-builtin">r̲avel</span> ˡb
+<pre class="src src-xetal">ˡproducts ← <span class="c-depth0">(</span><span class="c-depth1">(</span><span class="c-number">1</span> <span class="c-symbol">+</span> ˡprodK <span class="c-symbol">+</span> <span class="c-number">4</span> <span class="c-symbol">×</span> ˡprodI<span class="c-depth1">)</span> <span class="c-builtin">s̲elect</span> <span class="c-builtin">r̲avel</span> ˡa<span class="c-depth0">)</span> <span class="c-symbol">×</span> <span class="c-depth0">(</span><span class="c-number">1</span> <span class="c-symbol">+</span> ˡprodJ <span class="c-symbol">+</span> <span class="c-number">2</span> <span class="c-symbol">×</span> ˡprodK<span class="c-depth0">)</span> <span class="c-builtin">s̲elect</span> <span class="c-builtin">r̲avel</span> ˡb
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:products := ((1 + l:prodK + 4 * l:prodI) s_elect r_avel l:a) * (1 + l:prodJ + 2 * l:prodK) s_elect r_avel l:b</span></pre>
@@ -284,7 +287,7 @@ checks against Accel:
 
 
 <div class="org-src-container">
-<pre class="src src-xetal">(<span class="c-builtin">r̲avel</span> ᵐᵐc) <span class="c-symbol">=</span> ᵐᵐsums
+<pre class="src src-xetal"><span class="c-depth0">(</span><span class="c-builtin">r̲avel</span> ᵐᵐc<span class="c-depth0">)</span> <span class="c-symbol">=</span> ᵐᵐsums
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   (r_avel mm:c) = mm:sums</span></pre>
@@ -340,7 +343,7 @@ before, and starts when it ends:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡtogether ← (<span class="c-number">0.3</span> <span class="c-symbol">+</span> ˡlast) <span class="c-builtin">c̲at</span> <span class="c-number">2.8</span> <span class="c-symbol">+</span> ˡlast
+<pre class="src src-xetal">ˡtogether ← <span class="c-depth0">(</span><span class="c-number">0.3</span> <span class="c-symbol">+</span> ˡlast<span class="c-depth0">)</span> <span class="c-builtin">c̲at</span> <span class="c-number">2.8</span> <span class="c-symbol">+</span> ˡlast
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:together := (0.3 + l:last) c_at 2.8 + l:last</span></pre>
@@ -384,21 +387,21 @@ lands at 88%:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡappear ← ((ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡstarts) <span class="c-symbol">+</span> ((ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡdurations) <span class="c-symbol">×</span> <span class="c-number">0.12</span> <span class="c-symbol">+</span> <span class="c-number">0.45</span> <span class="c-symbol">×</span> (<span class="c-builtin">f̲loat</span> ˡprodK) <span class="c-symbol">÷</span> <span class="c-number">4.0</span>
+<pre class="src src-xetal">ˡappear ← <span class="c-depth0">(</span><span class="c-depth1">(</span>ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span><span class="c-depth1">)</span> <span class="c-builtin">s̲elect</span> ˡstarts<span class="c-depth0">)</span> <span class="c-symbol">+</span> <span class="c-depth0">(</span><span class="c-depth1">(</span>ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span><span class="c-depth1">)</span> <span class="c-builtin">s̲elect</span> ˡdurations<span class="c-depth0">)</span> <span class="c-symbol">×</span> <span class="c-number">0.12</span> <span class="c-symbol">+</span> <span class="c-number">0.45</span> <span class="c-symbol">×</span> <span class="c-depth0">(</span><span class="c-builtin">f̲loat</span> ˡprodK<span class="c-depth0">)</span> <span class="c-symbol">÷</span> <span class="c-number">4.0</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:appear := ((l:prodQ + 1) s_elect l:starts) + ((l:prodQ + 1) s_elect l:durations) * 0.12 + 0.45 * (f_loat l:prodK) / 4.0</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡflies ← ((ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡstarts) <span class="c-symbol">+</span> <span class="c-number">0.68</span> <span class="c-symbol">×</span> (ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡdurations
+<pre class="src src-xetal">ˡflies ← <span class="c-depth0">(</span><span class="c-depth1">(</span>ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span><span class="c-depth1">)</span> <span class="c-builtin">s̲elect</span> ˡstarts<span class="c-depth0">)</span> <span class="c-symbol">+</span> <span class="c-number">0.68</span> <span class="c-symbol">×</span> <span class="c-depth0">(</span>ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span><span class="c-depth0">)</span> <span class="c-builtin">s̲elect</span> ˡdurations
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:flies := ((l:prodQ + 1) s_elect l:starts) + 0.68 * (l:prodQ + 1) s_elect l:durations</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡlands ← ((ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡstarts) <span class="c-symbol">+</span> <span class="c-number">0.88</span> <span class="c-symbol">×</span> (ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span>) <span class="c-builtin">s̲elect</span> ˡdurations
+<pre class="src src-xetal">ˡlands ← <span class="c-depth0">(</span><span class="c-depth1">(</span>ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span><span class="c-depth1">)</span> <span class="c-builtin">s̲elect</span> ˡstarts<span class="c-depth0">)</span> <span class="c-symbol">+</span> <span class="c-number">0.88</span> <span class="c-symbol">×</span> <span class="c-depth0">(</span>ˡprodQ <span class="c-symbol">+</span> <span class="c-number">1</span><span class="c-depth0">)</span> <span class="c-builtin">s̲elect</span> ˡdurations
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:lands := ((l:prodQ + 1) s_elect l:starts) + 0.88 * (l:prodQ + 1) s_elect l:durations</span></pre>
@@ -427,28 +430,28 @@ are, so each product sits where its row of A and its column of B meet:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡa̲t</span> ← { (i, k) z → (<span class="c-number">0.0</span> <span class="c-symbol">−</span> g, (<span class="c-builtin">f̲loat</span> k) <span class="c-symbol">+</span> <span class="c-number">0.5</span>, <span class="c-number">0.0</span> <span class="c-symbol">−</span> (<span class="c-builtin">f̲loat</span> i) <span class="c-symbol">+</span> <span class="c-number">0.5</span>) <span class="c-libfunc">ʰx̲yz</span> <span class="c-number">0</span> }
+<pre class="src src-xetal"><span class="c-libfunc">ˡa̲t</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>i, k<span class="c-depth1">)</span> z → <span class="c-depth1">(</span><span class="c-number">0.0</span> <span class="c-symbol">−</span> g, <span class="c-depth2">(</span><span class="c-builtin">f̲loat</span> k<span class="c-depth2">)</span> <span class="c-symbol">+</span> <span class="c-number">0.5</span>, <span class="c-number">0.0</span> <span class="c-symbol">−</span> <span class="c-depth2">(</span><span class="c-builtin">f̲loat</span> i<span class="c-depth2">)</span> <span class="c-symbol">+</span> <span class="c-number">0.5</span><span class="c-depth1">)</span> <span class="c-libfunc">ʰx̲yz</span> <span class="c-number">0</span> <span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:a_t := { (i, k) z -&gt; (0.0 - g, (f_loat k) + 0.5, 0.0 - (f_loat i) + 0.5) h:x_yz 0 }</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡb̲t</span> ← { (k, j) z → ((<span class="c-builtin">f̲loat</span> j) <span class="c-symbol">+</span> <span class="c-number">0.5</span>, (<span class="c-builtin">f̲loat</span> k) <span class="c-symbol">+</span> <span class="c-number">0.5</span>, g) <span class="c-libfunc">ʰx̲yz</span> <span class="c-number">0</span> }
+<pre class="src src-xetal"><span class="c-libfunc">ˡb̲t</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>k, j<span class="c-depth1">)</span> z → <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-builtin">f̲loat</span> j<span class="c-depth2">)</span> <span class="c-symbol">+</span> <span class="c-number">0.5</span>, <span class="c-depth2">(</span><span class="c-builtin">f̲loat</span> k<span class="c-depth2">)</span> <span class="c-symbol">+</span> <span class="c-number">0.5</span>, g<span class="c-depth1">)</span> <span class="c-libfunc">ʰx̲yz</span> <span class="c-number">0</span> <span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:b_t := { (k, j) z -&gt; ((f_loat j) + 0.5, (f_loat k) + 0.5, g) h:x_yz 0 }</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡc̲t</span> ← { (i, j) z → ((<span class="c-builtin">f̲loat</span> j) <span class="c-symbol">+</span> <span class="c-number">0.5</span>, <span class="c-number">4.0</span> <span class="c-symbol">+</span> g, <span class="c-number">0.0</span> <span class="c-symbol">−</span> (<span class="c-builtin">f̲loat</span> i) <span class="c-symbol">+</span> <span class="c-number">0.5</span>) <span class="c-libfunc">ʰx̲yz</span> <span class="c-number">0</span> }
+<pre class="src src-xetal"><span class="c-libfunc">ˡc̲t</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>i, j<span class="c-depth1">)</span> z → <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-builtin">f̲loat</span> j<span class="c-depth2">)</span> <span class="c-symbol">+</span> <span class="c-number">0.5</span>, <span class="c-number">4.0</span> <span class="c-symbol">+</span> g, <span class="c-number">0.0</span> <span class="c-symbol">−</span> <span class="c-depth2">(</span><span class="c-builtin">f̲loat</span> i<span class="c-depth2">)</span> <span class="c-symbol">+</span> <span class="c-number">0.5</span><span class="c-depth1">)</span> <span class="c-libfunc">ʰx̲yz</span> <span class="c-number">0</span> <span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:c_t := { (i, j) z -&gt; ((f_loat j) + 0.5, 4.0 + g, 0.0 - (f_loat i) + 0.5) h:x_yz 0 }</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡp̲t</span> ← { (i, j, k) z → ((<span class="c-builtin">f̲loat</span> j) <span class="c-symbol">+</span> <span class="c-number">0.5</span>, (<span class="c-builtin">f̲loat</span> k) <span class="c-symbol">+</span> <span class="c-number">0.5</span>, <span class="c-number">0.0</span> <span class="c-symbol">−</span> (<span class="c-builtin">f̲loat</span> i) <span class="c-symbol">+</span> <span class="c-number">0.5</span>) <span class="c-libfunc">ʰx̲yz</span> <span class="c-number">0</span> }
+<pre class="src src-xetal"><span class="c-libfunc">ˡp̲t</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>i, j, k<span class="c-depth1">)</span> z → <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-builtin">f̲loat</span> j<span class="c-depth2">)</span> <span class="c-symbol">+</span> <span class="c-number">0.5</span>, <span class="c-depth2">(</span><span class="c-builtin">f̲loat</span> k<span class="c-depth2">)</span> <span class="c-symbol">+</span> <span class="c-number">0.5</span>, <span class="c-number">0.0</span> <span class="c-symbol">−</span> <span class="c-depth2">(</span><span class="c-builtin">f̲loat</span> i<span class="c-depth2">)</span> <span class="c-symbol">+</span> <span class="c-number">0.5</span><span class="c-depth1">)</span> <span class="c-libfunc">ʰx̲yz</span> <span class="c-number">0</span> <span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:p_t := { (i, j, k) z -&gt; ((f_loat j) + 0.5, (f_loat k) + 0.5, 0.0 - (f_loat i) + 0.5) h:x_yz 0 }</span></pre>
@@ -459,7 +462,7 @@ The 24 products' places, and the places in C they fly to:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal">at ← (ᵐᵐprodI, ᵐᵐprodJ, ᵐᵐprodK) <span class="c-libfunc">ᵐᵐp̲t</span> <span class="c-number">0</span>
+<pre class="src src-xetal">at ← <span class="c-depth0">(</span>ᵐᵐprodI, ᵐᵐprodJ, ᵐᵐprodK<span class="c-depth0">)</span> <span class="c-libfunc">ᵐᵐp̲t</span> <span class="c-number">0</span>
 <span class="c-number">4</span> <span class="c-builtin">t̲ake</span> at
 
 <span class="c-comment typed">⍝ typed:</span>
@@ -488,14 +491,14 @@ from deep blue through cyan and yellow to orange:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡt̲one</span> ← { (v, lo, hi) z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡt̲one</span> ← <span class="c-unmatched">{</span> <span class="c-depth1">(</span>v, lo, hi<span class="c-depth1">)</span> z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:t_one := { (v, lo, hi) z -&gt;</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-number">4</span> <span class="c-builtin">t̲ake</span> (ᵐᵐproducts, <span class="c-number">-4.0</span>, <span class="c-number">12.0</span>) <span class="c-libfunc">ᵛᵈt̲one</span> <span class="c-number">0</span>
+<pre class="src src-xetal"><span class="c-number">4</span> <span class="c-builtin">t̲ake</span> <span class="c-depth0">(</span>ᵐᵐproducts, <span class="c-number">-4.0</span>, <span class="c-number">12.0</span><span class="c-depth0">)</span> <span class="c-libfunc">ᵛᵈt̲one</span> <span class="c-number">0</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   4 t_ake (mm:products, -4.0, 12.0) vd:t_one 0</span></pre>
@@ -515,7 +518,7 @@ name and shape:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡw̲alls</span> ← { z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡw̲alls</span> ← <span class="c-unmatched">{</span> z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:w_alls := { z -&gt;</span></pre>
@@ -529,7 +532,7 @@ outlined together at the end:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡi̲tems</span> ← { z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡi̲tems</span> ← <span class="c-unmatched">{</span> z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:i_tems := { z -&gt;</span></pre>
@@ -559,21 +562,21 @@ so each wall shows a pattern at every distance:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡl̲eft</span> ← { n z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡl̲eft</span> ← <span class="c-unmatched">{</span> n z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:l_eft := { n z -&gt;</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡr̲ight</span> ← { n z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡr̲ight</span> ← <span class="c-unmatched">{</span> n z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:r_ight := { n z -&gt;</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ᵐᶠ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;MatmulFly&quot;</span>
+<pre class="src src-xetal"><span class="c-string">&quot;mf:&quot;</span> <span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;MatmulFly&quot;</span>
 <span class="c-builtin">s̲hape</span> <span class="c-number">64</span> <span class="c-libfunc">ᵐᶠl̲eft</span> <span class="c-number">0</span>
 
 <span class="c-comment typed">⍝ typed:</span>
@@ -595,7 +598,7 @@ million characters:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡg̲rid</span> ← { (name, at, u, v, c, w, g) z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡg̲rid</span> ← <span class="c-unmatched">{</span> <span class="c-depth1">(</span>name, at, u, v, c, w, g<span class="c-depth1">)</span> z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:g_rid := { (name, at, u, v, c, w, g) z -&gt;</span></pre>
@@ -608,7 +611,7 @@ in the queue:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡf̲ill</span> ← { n z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡf̲ill</span> ← <span class="c-unmatched">{</span> n z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:f_ill := { n z -&gt;</span></pre>
@@ -616,7 +619,7 @@ in the queue:
 
 <div class="org-src-container">
 <pre class="src src-xetal">f ← <span class="c-number">64</span> <span class="c-libfunc">ᵐᶠf̲ill</span> <span class="c-number">0</span>
-(<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> f) <span class="c-builtin">c̲at</span> (<span class="c-number">17</span> <span class="c-builtin">s̲elect</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> f) <span class="c-builtin">c̲at</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> <span class="c-number">17</span> <span class="c-builtin">s̲elect</span> f
+<span class="c-depth0">(</span><span class="c-number">1</span> <span class="c-builtin">s̲elect</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> f<span class="c-depth0">)</span> <span class="c-builtin">c̲at</span> <span class="c-depth0">(</span><span class="c-number">17</span> <span class="c-builtin">s̲elect</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> f<span class="c-depth0">)</span> <span class="c-builtin">c̲at</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> <span class="c-number">17</span> <span class="c-builtin">s̲elect</span> f
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   f := 64 mf:f_ill 0</span>
@@ -633,14 +636,14 @@ The work-group and work-item the camera visits:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡw̲orkGroup</span> ← { n z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡw̲orkGroup</span> ← <span class="c-unmatched">{</span> n z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:w_orkGroup := { n z -&gt;</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡw̲orkItem</span> ← { n z → (n <span class="c-libfunc">ˡw̲orkGroup</span> <span class="c-number">0</span>) <span class="c-symbol">+</span> <span class="c-number">5</span> <span class="c-number">9</span> }
+<pre class="src src-xetal"><span class="c-libfunc">ˡw̲orkItem</span> ← <span class="c-depth0">{</span> n z → <span class="c-depth1">(</span>n <span class="c-libfunc">ˡw̲orkGroup</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-symbol">+</span> <span class="c-number">5</span> <span class="c-number">9</span> <span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:w_orkItem := { n z -&gt; (n l:w_orkGroup 0) + 5 9 }</span></pre>
@@ -668,9 +671,9 @@ near end, as the item of C (to within rounding: a billionth):
 <pre class="src src-xetal">a ← <span class="c-number">64</span> <span class="c-libfunc">ᵐᶠl̲eft</span> <span class="c-number">0</span>
 b ← <span class="c-number">64</span> <span class="c-libfunc">ᵐᶠr̲ight</span> <span class="c-number">0</span>
 w ← <span class="c-number">64</span> <span class="c-libfunc">ᵐᶠw̲orkItem</span> <span class="c-number">0</span>
-p ← ((<span class="c-number">1</span> <span class="c-symbol">+</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> w) <span class="c-builtin">s̲elect</span> a) <span class="c-symbol">×</span> (<span class="c-number">1</span> <span class="c-symbol">+</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> w) <span class="c-builtin">s̲elect₂</span> b
+p ← <span class="c-depth0">(</span><span class="c-depth1">(</span><span class="c-number">1</span> <span class="c-symbol">+</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> w<span class="c-depth1">)</span> <span class="c-builtin">s̲elect</span> a<span class="c-depth0">)</span> <span class="c-symbol">×</span> <span class="c-depth0">(</span><span class="c-number">1</span> <span class="c-symbol">+</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> w<span class="c-depth0">)</span> <span class="c-builtin">s̲elect₂</span> b
 partial ← <span class="c-builtin">r̲ev</span> <span class="c-symbol">'+</span> <span class="c-builtin">s̲\</span> <span class="c-builtin">r̲ev</span> p
-<span class="c-number">0.000000001</span> <span class="c-symbol">&gt;</span> <span class="c-builtin">a̲bs</span> (<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> partial) <span class="c-symbol">−</span> (<span class="c-number">1</span> <span class="c-symbol">+</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> w) <span class="c-builtin">s̲elect</span> (<span class="c-number">1</span> <span class="c-symbol">+</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> w) <span class="c-builtin">s̲elect</span> a <span class="c-libfunc">ᵃᶜm̲atmul</span> b
+<span class="c-number">0.000000001</span> <span class="c-symbol">&gt;</span> <span class="c-builtin">a̲bs</span> <span class="c-depth0">(</span><span class="c-number">1</span> <span class="c-builtin">s̲elect</span> partial<span class="c-depth0">)</span> <span class="c-symbol">−</span> <span class="c-depth0">(</span><span class="c-number">1</span> <span class="c-symbol">+</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> w<span class="c-depth0">)</span> <span class="c-builtin">s̲elect</span> <span class="c-depth0">(</span><span class="c-number">1</span> <span class="c-symbol">+</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> w<span class="c-depth0">)</span> <span class="c-builtin">s̲elect</span> a <span class="c-libfunc">ᵃᶜm̲atmul</span> b
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   a := 64 mf:l_eft 0</span>
@@ -687,7 +690,7 @@ partial ← <span class="c-builtin">r̲ev</span> <span class="c-symbol">'+</span
 
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡw̲ork</span> ← { n z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡw̲ork</span> ← <span class="c-unmatched">{</span> n z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:w_ork := { n z -&gt;</span></pre>
@@ -699,7 +702,7 @@ cell, along the beam, and back:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡc̲ameraKeys</span> ← { n z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡc̲ameraKeys</span> ← <span class="c-unmatched">{</span> n z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:c_ameraKeys := { n z -&gt;</span></pre>
@@ -750,14 +753,14 @@ Each scene is the stage, the parts, the captions and the camera:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡs̲teps</span> ← { (w, h) z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡs̲teps</span> ← <span class="c-unmatched">{</span> <span class="c-depth1">(</span>w, h<span class="c-depth1">)</span> z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:s_teps := { (w, h) z -&gt;</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡs̲cene</span> ← { (w, h, n) z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡs̲cene</span> ← <span class="c-unmatched">{</span> <span class="c-depth1">(</span>w, h, n<span class="c-depth1">)</span> z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:s_cene := { (w, h, n) z -&gt;</span></pre>
@@ -769,8 +772,8 @@ them (the first 160 characters):
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal">keys ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-number">3</span> <span class="c-builtin">t̲ranspose</span> <span class="c-number">2</span> <span class="c-number">24</span> <span class="c-number">6</span> <span class="c-builtin">r̲eshape</span> (at <span class="c-builtin">c̲at₂</span> <span class="c-number">24</span> <span class="c-number">3</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.5</span>) <span class="c-builtin">c̲at</span> ((ᵐᵐprodI, ᵐᵐprodJ) <span class="c-libfunc">ᵐᵐc̲t</span> <span class="c-number">0</span>) <span class="c-builtin">c̲at₂</span> <span class="c-number">24</span> <span class="c-number">3</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.05</span>
-<span class="c-number">160</span> <span class="c-builtin">t̲ake</span> (<span class="c-string">&quot;products&quot;</span>, <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> <span class="c-number">2</span> <span class="c-number">24</span> <span class="c-builtin">r̲eshape</span> ᵐᵐflies <span class="c-builtin">c̲at</span> ᵐᵐlands, keys) <span class="c-libfunc">ᵛᵈm̲ovesEach</span> <span class="c-number">0</span>
+<pre class="src src-xetal">keys ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-number">3</span> <span class="c-builtin">t̲ranspose</span> <span class="c-number">2</span> <span class="c-number">24</span> <span class="c-number">6</span> <span class="c-builtin">r̲eshape</span> <span class="c-depth0">(</span>at <span class="c-builtin">c̲at₂</span> <span class="c-number">24</span> <span class="c-number">3</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.5</span><span class="c-depth0">)</span> <span class="c-builtin">c̲at</span> <span class="c-depth0">(</span><span class="c-depth1">(</span>ᵐᵐprodI, ᵐᵐprodJ<span class="c-depth1">)</span> <span class="c-libfunc">ᵐᵐc̲t</span> <span class="c-number">0</span><span class="c-depth0">)</span> <span class="c-builtin">c̲at₂</span> <span class="c-number">24</span> <span class="c-number">3</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">0.05</span>
+<span class="c-number">160</span> <span class="c-builtin">t̲ake</span> <span class="c-depth0">(</span><span class="c-string">&quot;products&quot;</span>, <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> <span class="c-number">2</span> <span class="c-number">24</span> <span class="c-builtin">r̲eshape</span> ᵐᵐflies <span class="c-builtin">c̲at</span> ᵐᵐlands, keys<span class="c-depth0">)</span> <span class="c-libfunc">ᵛᵈm̲ovesEach</span> <span class="c-number">0</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   keys := 2 1 3 t_ranspose 2 24 6 r_eshape (at c_at_2 24 3 r_eshape 0.5) c_at ((mm:prodI, mm:prodJ) mm:c_t 0) c_at_2 24 3 r_eshape 0.05</span>
@@ -787,7 +790,7 @@ The whole steps script, the same every time:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-builtin">t̲ally</span> (<span class="c-number">1920</span>, <span class="c-number">1080</span>) <span class="c-libfunc">ᵐᵐs̲teps</span> <span class="c-number">0</span>
+<pre class="src src-xetal"><span class="c-builtin">t̲ally</span> <span class="c-depth0">(</span><span class="c-number">1920</span>, <span class="c-number">1080</span><span class="c-depth0">)</span> <span class="c-libfunc">ᵐᵐs̲teps</span> <span class="c-number">0</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   t_ally (1920, 1080) mm:s_teps 0</span></pre>

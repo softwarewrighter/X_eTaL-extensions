@@ -46,7 +46,7 @@ b := ((f_loat w) c_at 1.0 0.1 0.1 0.11) sc:q_uads! rb:bodies
 
 ## the stickers, one object of quads for each color
 u:d_raw := { c ->
-  sent := '{ ((f_loat w) c_at (10.0 + f_loat _r) c_at (_r + 1) s_elect rb:rgb) sc:q_uads! _r rb:c_olorSquares c } m_ap (r_ange 6) - 1
+  _ := '{ ((f_loat w) c_at (10.0 + f_loat _r) c_at (_r + 1) s_elect rb:rgb) sc:q_uads! _r rb:c_olorSquares c } m_ap (r_ange 6) - 1
   c
 }
 shown := u:d_raw s
@@ -64,7 +64,7 @@ letters := "uUdDrRlLfFbB"
 
 ## m u:t_ell st: m printed, the state unchanged
 u:t_ell := { m st ->
-  said := p_rint! m
+  _ := p_rint! m
   st
 }
 
@@ -73,24 +73,24 @@ u:s_ay := { st ->
   (c, h, _) := st
   0 = t_ally h ? "solved, no turns" u:t_ell st
   names := (n_ot rb:names = f_irst " ") p_artition rb:names
-  said := p_rint! "turns: " c_at d_isclose '{ e_nclose (d_isclose _l) c_at " " c_at d_isclose _r } r_/ h s_elect names
+  _ := p_rint! "turns: " c_at d_isclose '{ e_nclose (d_isclose _l) c_at " " c_at d_isclose _r } r_/ h s_elect names
   (c m_atch rb:solved) ? "solved" u:t_ell st
   st
 }
 
 ## i u:t_urnBy st: turn i made and remembered, the cube redrawn
 u:t_urnBy := { i (c, h, on) ->
-  c := i rb:t_urn c
-  shown := u:d_raw c
-  (c, h c_at i, on)
+  turned := i rb:t_urn c
+  shown := u:d_raw turned
+  (turned, h c_at i, on)
 }
 
 ## the last turn undone and forgotten
 u:u_ndoLast := { (c, h, on) ->
   0 = t_ally h ? (c, h, on)
-  c := (rb:u_ndo f_irst -1 t_ake h) rb:t_urn c
-  shown := u:d_raw c
-  (c, -1 d_rop h, on)
+  undone := (rb:u_ndo f_irst -1 t_ake h) rb:t_urn c
+  shown := u:d_raw undone
+  (undone, -1 d_rop h, on)
 }
 
 ## one random turn, never the same face as the one before, remembered
@@ -116,7 +116,7 @@ u:r_eset := { (_, _, on) ->
 }
 
 u:q_uit := { (c, h, _) ->
-  z := sc:c_lose! w
+  _ := sc:c_lose! w
   (c, h, 0)
 }
 
@@ -129,8 +129,7 @@ u:f_rame := { st ->
   (v m_atch "key z") ? u:s_ay u:u_ndoLast st
   (v m_atch "key Space") ? u:s_ay u:s_cramble st
   (v m_atch "key 0") ? u:s_ay u:r_eset st
-  ch := -1 t_ake v
-  i := letters i_ndexOf f_irst ch
+  i := letters i_ndexOf f_irst -1 t_ake v
   ((5 = t_ally v) * i <= 12) ? u:s_ay i u:t_urnBy st
   st
 }

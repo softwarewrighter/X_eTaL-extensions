@@ -50,5 +50,5 @@ u:a_nswer := { b ->
 port := wb:s_erve! 8470
 "serving http://127.0.0.1:" c_at f_ormat port
 last := 100000 'u:a_nswer p_ower u:s_eed 48
-port := wb:s_top! @
+_ := wb:s_top! @
 "bye"

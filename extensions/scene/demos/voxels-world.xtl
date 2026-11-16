@@ -16,16 +16,16 @@ h := vx:h_eights 64
 ('m_in r_/ r_avel h) c_at ('m_ax r_/ r_avel h) c_at (f_loor 0.5 + ('+ r_/ f_loat r_avel h) / 4096.0)
 b := vx:t_errain h
 ts := 12 2 r_eshape 3 + r_oll! 24 r_eshape 58
-b := ts vx:f_orest b
+wooded := ts vx:f_orest b
 "the world, and its blocks (air stone dirt grass sand water wood leaves):"
-s_hape b
-vx:c_ounts b
+s_hape wooded
+vx:c_ounts wooded
 
-f := vx:w_orldFaces b
+f := vx:w_orldFaces wooded
 "faces by direction, all of them, and 6 per solid block if none were hidden:"
 vx:c_ount f
 t_ally f
-6 * '+ r_/ r_avel vx:s_olid b
+6 * '+ r_/ r_avel vx:s_olid wooded
 c := vx:c_hunkOf f
 "faces per chunk, two layers of 4 by 4 (bottom, then top):"
 2 4 4 r_eshape '+ r_/_2 (r_ange 32) '= t_able c
@@ -41,7 +41,7 @@ u:p_ut := { i ->
   sel := key = (10 * c) + 5 s_elect_2 f
   head := (f_loat w c_at key) c_at (1 + key m_od 10) s_elect vx:colors
   q := vx:c_orners sel r_eplicate f
-  x := head sc:q_uads! (q - (s_hape q) r_eshape 32.0 12.0 32.0) / 32.0
+  _ := head sc:q_uads! (q - (s_hape q) r_eshape 32.0 12.0 32.0) / 32.0
   i + 1
 }
 put := (t_ally keys) 'u:p_ut p_ower 1
@@ -49,7 +49,7 @@ put := (t_ally keys) 'u:p_ut p_ower 1
 put - 1
 
 u:q_uit := { n ->
-  z := sc:c_lose! w
+  _ := sc:c_lose! w
   0
 }
 u:f_rame := { n ->

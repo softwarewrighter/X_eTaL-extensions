@@ -151,8 +151,8 @@ rule, a pass west, then a tick, then two ticks:
   (a − t) + 1 d̲rop t c̲at 0
 }
 pair ← 0 64
-said ← p̲rint! f̲ormat ᵘw̲estAll pair
-said ← p̲rint! f̲ormat ᵘe̲astAll ᵘw̲estAll pair
+_ ← p̲rint! f̲ormat ᵘw̲estAll pair
+_ ← p̲rint! f̲ormat ᵘe̲astAll ᵘw̲estAll pair
 ᵘe̲astAll ᵘw̲estAll ᵘe̲astAll ᵘw̲estAll pair
 #+end_example
 #+begin_src xetal
@@ -165,8 +165,8 @@ u:w_estAll := { a ->
   (a - t) + 1 d_rop t c_at 0
 }
 pair := 0 64
-said := p_rint! f_ormat u:w_estAll pair
-said := p_rint! f_ormat u:e_astAll u:w_estAll pair
+_ := p_rint! f_ormat u:w_estAll pair
+_ := p_rint! f_ormat u:e_astAll u:w_estAll pair
 u:e_astAll u:w_estAll u:e_astAll u:w_estAll pair
 #+end_src
 

@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:http/save: "../x.csv": give a path under the working directory (or XETAL_HTTP_ROOT), no .. at ./lib/Http.xtl:20:1
+error[io]: []N_GET: ext:http/save: "../x.csv": give a path under the working directory (or XETAL_HTTP_ROOT), no ..
+  --> ./lib/Http.xtl:20:1
+   |
+20 | "s_ave! : text text -> int"     ffi:b_ind< "http/save"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/save-outside.xtl:3:1
+   |
+ 3 | "http://127.0.0.1:9/x" ht:s_ave! "../x.csv"
+   | ------------------------------------------- called from the program here

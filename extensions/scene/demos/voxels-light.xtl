@@ -19,8 +19,8 @@
 
 w := "Voxels 14: light -- X_eTaL" sc:o_pen! 640 400
 g := w sc:f_og! 22.0 44.0
-k := w sc:s_ky! 0.55 0.72 0.92
-k := w sc:c_urve! 160.0
+_ := w sc:s_ky! 0.55 0.72 0.92
+_ := w sc:c_urve! 160.0
 
 pl:helpLit
 
@@ -51,13 +51,13 @@ row s_elect r_avel u:l_ampOf L
 
 hud := w pl:h_udLit 1
 s := en:l_ighting en:n_ew w
-s := (4 * (1 + 2 * en:reach) * 1 + 2 * en:reach) 'en:s_tream p_ower s
-last := 100000 'pl:f_rame p_ower (s, 1)
-z := sc:c_lose! w
+streamed := (4 * (1 + 2 * en:reach) * 1 + 2 * en:reach) 'en:s_tream p_ower s
+last := 100000 'pl:f_rame p_ower (streamed, 1)
+_ := sc:c_lose! w
 # (an accessor, not a top-level tuple pattern: ask E10)
 u:w_orldOf := { (s, _) -> s }
-s := u:w_orldOf last
+world := u:w_orldOf last
 "by day (1) or night (2) at the end, and the lamps placed:"
-en:l_it s
-'+ r_/ 8 = 4 s_elect_2 en:e_dits s
+en:l_it world
+'+ r_/ 8 = 4 s_elect_2 en:e_dits world
 "bye"

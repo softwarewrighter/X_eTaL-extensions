@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:sqlite/nums: "abc" is not a number (use sq:t_exts) at ./lib/Sqlite.xtl:15:1
+error[io]: []N_GET: ext:sqlite/nums: "abc" is not a number (use sq:t_exts)
+  --> ./lib/Sqlite.xtl:15:1
+   |
+15 | "n_ums : text text -> floats"   ffi:b_ind< "sqlite/nums"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/not-a-number.xtl:3:1
+   |
+ 3 | ":memory:" sq:n_ums "select 'abc'"
+   | ---------------------------------- called from the program here

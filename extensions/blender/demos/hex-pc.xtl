@@ -15,13 +15,13 @@
 "vd:" u_se< "Video"
 "pw:" u_se< "PcWalk"
 
-n := "work/hexpc/run.py" bl:w_rite! bp:launcher
-n := "work/hexpc/hex-pc.cues.toml" bl:w_rite! (pw:cueTexts, pw:cueTable) vd:c_ues 0
-n := "work/hexpc/hex-pc.srt" bl:w_rite! (pw:cueTexts, pw:cueTable) vd:s_rt 0
+_ := "work/hexpc/run.py" bl:w_rite! bp:launcher
+_ := "work/hexpc/hex-pc.cues.toml" bl:w_rite! (pw:cueTexts, pw:cueTable) vd:c_ues 0
+_ := "work/hexpc/hex-pc.srt" bl:w_rite! (pw:cueTexts, pw:cueTable) vd:s_rt 0
 "the cue sheet (work/hexpc/hex-pc.cues.toml):"
 bl:r_ead "work/hexpc/hex-pc.cues.toml"
-n := "work/hexpc/video.py" bl:w_rite! (pw:s_cene vd:landscape) c_at (vd:r_ender "hex-pc.mp4") c_at vd:report
-n := "work/hexpc/short.py" bl:w_rite! (pw:s_cene vd:shorts) c_at (vd:r_ender "hex-pc-short.mp4") c_at vd:report
+_ := "work/hexpc/video.py" bl:w_rite! (pw:s_cene vd:landscape) c_at (vd:r_ender "hex-pc.mp4") c_at vd:report
+_ := "work/hexpc/short.py" bl:w_rite! (pw:s_cene vd:shorts) c_at (vd:r_ender "hex-pc-short.mp4") c_at vd:report
 "rendering 586 frames at 1920 by 1080 with Blender (EEVEE) ..."
 r := "work/hexpc/run.py" bl:r_un! "work/hexpc/video.py work/hexpc/out"
 "the run, and the error lines in Blender's log:"
@@ -29,10 +29,10 @@ lines := (n_ot r = f_irst "\n") p_artition r
 d_isclose 1 s_elect lines
 d_isclose 2 s_elect lines
 "rendering the Short, 586 frames at 1080 by 1920 ..."
-r := "work/hexpc/run.py" bl:r_un! "work/hexpc/short.py work/hexpc/out-short"
-lines := (n_ot r = f_irst "\n") p_artition r
-d_isclose 1 s_elect lines
-d_isclose 2 s_elect lines
+shortRun := "work/hexpc/run.py" bl:r_un! "work/hexpc/short.py work/hexpc/out-short"
+shortLines := (n_ot shortRun = f_irst "\n") p_artition shortRun
+d_isclose 1 s_elect shortLines
+d_isclose 2 s_elect shortLines
 "what Blender made:"
 bl:r_ead "work/hexpc/out/report.txt"
 "the files (bytes, path):"

@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:scene/next: no scene 99 is open at ./lib/Scene.xtl:75:1
+error[io]: []N_GET: ext:scene/next: no scene 99 is open
+  --> ./lib/Scene.xtl:75:1
+   |
+75 | "n_ext! : float -> text"             ffi:b_ind< "scene/next"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/no-scene.xtl:3:1
+   |
+ 3 | sc:n_ext! 99
+   | ------------ called from the program here

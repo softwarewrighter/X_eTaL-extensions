@@ -78,15 +78,15 @@ ly := -234.5 + (19.0 * f_loat row) + 12.0 * f_loat row d_iv 2
 ## 240 10
 l:l_ots := { seed ->
   u := (id, 1, seed) l:r_and 0
-  rough := (26.0 + 150.0 * u * u) * 1.25 - 0.09 * f_loat col
-  high := rough m_ax 45.0 * f_loat 1 * col = 0
+  rough := (((26.0 + 150.0 * u * u) * 1.25 - 0.09 * f_loat col) m_ax
+    45.0 * f_loat 1 * col = 0)
   wide := 15.5 - 3.0 * (id, 2, seed) l:r_and 0
   deep := 17.5 - 3.0 * (id, 3, seed) l:r_and 0
   skin := f_loat f_loor 3.0 * (id, 4, seed) l:r_and 0
-  tiered := f_loat 1 * high > 60.0
-  body := high * (1.0 - tiered) + tiered * 0.55 + 0.3 * (id, 5, seed) l:r_and 0
+  tiered := f_loat 1 * rough > 60.0
+  body := rough * (1.0 - tiered) + tiered * 0.55 + 0.3 * (id, 5, seed) l:r_and 0
   spired := tiered * f_loat 1 * ((id, 6, seed) l:r_and 0) > 0.7
-  (10, lx c_at ly c_at high c_at wide c_at deep c_at skin c_at tiered c_at spired c_at (f_loat col) c_at body) h:c_ols 0
+  (10, lx c_at ly c_at rough c_at wide c_at deep c_at skin c_at tiered c_at spired c_at (f_loat col) c_at body) h:c_ols 0
 }
 
 ## (lots, k) nc:t_owers 0: the boxes of every tower wearing skin k (0 to
@@ -97,7 +97,7 @@ l:l_ots := { seed ->
 l:t_owers := { (t, k) z ->
   x := 1 s_elect_2 t
   y := 2 s_elect_2 t
-  high := 3 s_elect_2 t
+  rough := 3 s_elect_2 t
   wide := 4 s_elect_2 t
   deep := 5 s_elect_2 t
   body := 10 s_elect_2 t
@@ -105,8 +105,8 @@ l:t_owers := { (t, k) z ->
   tiered := worn & (7 s_elect_2 t) > 0.5
   spired := worn & (8 s_elect_2 t) > 0.5
   bodies := worn r_eplicate_1 (x, y, body / 2.0, wide, deep, body) h:b_ox 0
-  tiers := tiered r_eplicate_1 (x, y, body + (high - body) / 2.0, 0.72 * wide, 0.72 * deep, high - body) h:b_ox 0
-  bodies c_at_1 tiers c_at_1 spired r_eplicate_1 (x, y, high * 1.14, 0.34 * wide, 0.34 * deep, high * 0.28) h:b_ox 0
+  tiers := tiered r_eplicate_1 (x, y, body + (rough - body) / 2.0, 0.72 * wide, 0.72 * deep, rough - body) h:b_ox 0
+  bodies c_at_1 tiers c_at_1 spired r_eplicate_1 (x, y, rough * 1.14, 0.34 * wide, 0.34 * deep, rough * 0.28) h:b_ox 0
 }
 
 ### On the towers
@@ -117,15 +117,15 @@ l:t_owers := { (t, k) z ->
 l:r_oofs := { (t, seed) z ->
   x := 1 s_elect_2 t
   y := 2 s_elect_2 t
-  high := 3 s_elect_2 t
+  rough := 3 s_elect_2 t
   wide := 4 s_elect_2 t
   deep := 5 s_elect_2 t
   spired := 8 s_elect_2 t
-  units := (x + 0.2 * wide, y - 0.15 * deep, high + 0.8, h:f_ill (lots, 3.2), h:f_ill (lots, 2.2), h:f_ill (lots, 1.6)) h:b_ox 0
+  units := (x + 0.2 * wide, y - 0.15 * deep, rough + 0.8, h:f_ill (lots, 3.2), h:f_ill (lots, 2.2), h:f_ill (lots, 1.6)) h:b_ox 0
   aerial := (1.0 - spired) * f_loat 1 * ((id, 7, seed) l:r_and 0) > 0.6
   mast := 8.0 + 12.0 * (id, 8, seed) l:r_and 0
-  masts := (aerial > 0.5) r_eplicate_1 (x - 0.2 * wide, y + 0.2 * deep, high + mast / 2.0, h:f_ill (lots, 0.25), h:f_ill (lots, 0.25), mast) h:b_ox 0
-  tip := high + (mast * aerial) + (high * 0.28) * spired
+  masts := (aerial > 0.5) r_eplicate_1 (x - 0.2 * wide, y + 0.2 * deep, rough + mast / 2.0, h:f_ill (lots, 0.25), h:f_ill (lots, 0.25), mast) h:b_ox 0
+  tip := rough + (mast * aerial) + (rough * 0.28) * spired
   lit := (aerial + spired) > 0.5
   beacons := lit r_eplicate_1 (x - (0.2 * wide) * aerial, y + (0.2 * deep) * aerial, tip + 0.3, h:f_ill (lots, 0.7), h:f_ill (lots, 0.7), h:f_ill (lots, 0.7)) h:b_ox 0
   (units c_at_1 masts, beacons)
@@ -271,57 +271,57 @@ l:aims := 6 3 r_eshape 0.0 -150.0 40.0  0.0 -90.0 26.0  0.0 -40.0 10.0  0.0 30.0
 
 # the materials
 h:s_kins := { where ->
-  t := (("skin 0", 60 62 70, 255 220 170, 180 230 255, 1.6 3.2, 0.3, 2.5) cy:f_acade 0) c_at (("skin 1", 80 60 60, 255 120 180, 255 230 160, 2.4 3.0, 0.2, 2.5) cy:f_acade 0)
-  t := t c_at (("skin 2", 40 50 60, 120 255 230, 200 160 255, 1.2 3.6, 0.4, 2.0) cy:f_acade 0)
-  t := t c_at (("street", 62 62 65, 0.45, 5.0, 0.25) cy:w_et 0) c_at (("walk", 70 70 74, 0.55, 0.0) cy:s_urface 0)
-  t := t c_at (("dark", 46 46 50, 0.45, 0.7) cy:s_urface 0) c_at (("paint", 200 200 190, 0.6, 0.0) cy:s_urface 0) c_at (("shell", 30 34 44, 0.25, 0.9) cy:s_urface 0)
-  t := t c_at (("neon 0", 255 13 102, 8.0) cy:n_eon 0) c_at (("neon 1", 13 204 255, 8.0) cy:n_eon 0) c_at (("neon 2", 255 128 13, 8.0) cy:n_eon 0)
-  t := t c_at (("warm", 255 190 120, 20.0) cy:n_eon 0) c_at (("head", 255 245 220, 40.0) cy:n_eon 0) c_at (("tail", 255 5 5, 40.0) cy:n_eon 0) c_at (("beacon", 255 20 10, 30.0) cy:n_eon 0)
-  t := t c_at (("screen 0", "bars", 255 26 128, 26 230 255, 0.5, 5.0) cy:s_creen 0) c_at (("screen 1", "rings", 255 153 26, 77 26 255, 0.4, 5.0) cy:s_creen 0)
-  t := t c_at (("screen 2", "rain", 26 255 102, 204 255 230, 0.6, 6.0) cy:s_creen 0) c_at (("screen 3", "tiles", 255 26 51, 26 102 255, 2.0, 5.0) cy:s_creen 0)
   # the pictures: two slide shows, five videos, and the great screen's
-  t := t c_at (cy:m_edia where) c_at (("screen 4", "art", 16, 4.0, 1.6) cy:s_lides 0) c_at (("screen 5", "xetal", 12, 4.0, 1.6) cy:s_lides 0)
-  t := t c_at (("screen 6", "voxels.webm", 1.6) cy:r_eel 0) c_at (("screen 7", "rubik.webm", 1.6) cy:r_eel 0) c_at (("screen 8", "life.webm", 1.6) cy:r_eel 0)
-  t := t c_at (("screen 9", "stone.webm", 1.6) cy:r_eel 0) c_at (("screen 10", "cosy.webm", 1.6) cy:r_eel 0)
-  t c_at (("great", "matmul.webm", 1.8) cy:r_eel 0)
+  (((("skin 0", 60 62 70, 255 220 170, 180 230 255, 1.6 3.2, 0.3, 2.5) cy:f_acade 0) c_at (("skin 1", 80 60 60, 255 120 180, 255 230 160, 2.4 3.0, 0.2, 2.5) cy:f_acade 0)) c_at
+    ((("skin 2", 40 50 60, 120 255 230, 200 160 255, 1.2 3.6, 0.4, 2.0) cy:f_acade 0)) c_at
+    ((("street", 62 62 65, 0.45, 5.0, 0.25) cy:w_et 0) c_at (("walk", 70 70 74, 0.55, 0.0) cy:s_urface 0)) c_at
+    ((("dark", 46 46 50, 0.45, 0.7) cy:s_urface 0) c_at (("paint", 200 200 190, 0.6, 0.0) cy:s_urface 0) c_at (("shell", 30 34 44, 0.25, 0.9) cy:s_urface 0)) c_at
+    ((("neon 0", 255 13 102, 8.0) cy:n_eon 0) c_at (("neon 1", 13 204 255, 8.0) cy:n_eon 0) c_at (("neon 2", 255 128 13, 8.0) cy:n_eon 0)) c_at
+    ((("warm", 255 190 120, 20.0) cy:n_eon 0) c_at (("head", 255 245 220, 40.0) cy:n_eon 0) c_at (("tail", 255 5 5, 40.0) cy:n_eon 0) c_at (("beacon", 255 20 10, 30.0) cy:n_eon 0)) c_at
+    ((("screen 0", "bars", 255 26 128, 26 230 255, 0.5, 5.0) cy:s_creen 0) c_at (("screen 1", "rings", 255 153 26, 77 26 255, 0.4, 5.0) cy:s_creen 0)) c_at
+    ((("screen 2", "rain", 26 255 102, 204 255 230, 0.6, 6.0) cy:s_creen 0) c_at (("screen 3", "tiles", 255 26 51, 26 102 255, 2.0, 5.0) cy:s_creen 0)) c_at
+    ((cy:m_edia where) c_at (("screen 4", "art", 16, 4.0, 1.6) cy:s_lides 0) c_at (("screen 5", "xetal", 12, 4.0, 1.6) cy:s_lides 0)) c_at
+    ((("screen 6", "voxels.webm", 1.6) cy:r_eel 0) c_at (("screen 7", "rubik.webm", 1.6) cy:r_eel 0) c_at (("screen 8", "life.webm", 1.6) cy:r_eel 0)) c_at
+    ((("screen 9", "stone.webm", 1.6) cy:r_eel 0) c_at (("screen 10", "cosy.webm", 1.6) cy:r_eel 0)) c_at
+    (("great", "matmul.webm", 1.8) cy:r_eel 0))
 }
 
 # what stands: towers, what is on them, the street's furniture
 h:b_uilt := { seed ->
   lt := l:l_ots seed
   (units, beacons) := (lt, seed) l:r_oofs 0
-  t := (("ground", 1 7 r_eshape 0.0 0.0 -0.5 1400.0 1400.0 1.0 0.0, "street") cy:b_oxes 0) c_at (("walks", slabs, "walk") cy:b_oxes 0) c_at (("dashes", paint, "paint") cy:b_oxes 0)
-  t := t c_at (("towers 0", (lt, 0) l:t_owers 0, "skin 0") cy:b_oxes 0) c_at (("towers 1", (lt, 1) l:t_owers 0, "skin 1") cy:b_oxes 0) c_at (("towers 2", (lt, 2) l:t_owers 0, "skin 2") cy:b_oxes 0)
-  t := t c_at (("units", units, "dark") cy:b_oxes 0) c_at (("beacons", beacons, "beacon") cy:b_oxes 0)
-  t := t c_at (("bands 0", (lt, seed, 0) l:b_ands 0, "neon 0") cy:b_oxes 0) c_at (("bands 1", (lt, seed, 1) l:b_ands 0, "neon 1") cy:b_oxes 0) c_at (("bands 2", (lt, seed, 2) l:b_ands 0, "neon 2") cy:b_oxes 0)
-  t := t c_at (("screens 0", (lt, seed, 0) l:s_creens 0, "screen 0") cy:b_oxes 0) c_at (("screens 1", (lt, seed, 1) l:s_creens 0, "screen 1") cy:b_oxes 0)
-  t := t c_at (("screens 2", (lt, seed, 2) l:s_creens 0, "screen 2") cy:b_oxes 0) c_at (("screens 3", (lt, seed, 3) l:s_creens 0, "screen 3") cy:b_oxes 0)
-  t := t c_at (("screens 4", (lt, seed, 4) l:s_creens 0, "screen 4") cy:b_oxes 0) c_at (("screens 5", (lt, seed, 5) l:s_creens 0, "screen 5") cy:b_oxes 0)
-  t := t c_at (("screens 6", (lt, seed, 6) l:s_creens 0, "screen 6") cy:b_oxes 0) c_at (("screens 7", (lt, seed, 7) l:s_creens 0, "screen 7") cy:b_oxes 0)
-  t := t c_at (("screens 8", (lt, seed, 8) l:s_creens 0, "screen 8") cy:b_oxes 0) c_at (("screens 9", (lt, seed, 9) l:s_creens 0, "screen 9") cy:b_oxes 0)
-  t := t c_at (("screens 10", (lt, seed, 10) l:s_creens 0, "screen 10") cy:b_oxes 0)
-  t := t c_at (("posts", stems c_at_1 arms, "dark") cy:b_oxes 0) c_at (("bulbs", bulbs, "warm") cy:b_oxes 0) c_at (("lamps", glows) cy:l_amps 0)
-  t := t c_at (("spans", spans, "skin 0") cy:b_oxes 0) c_at (("strips", strips, "neon 1") cy:b_oxes 0)
-  t c_at (("pylons", pylons, "dark") cy:b_oxes 0) c_at (("great", great, "great") cy:b_oxes 0)
+  (((("ground", 1 7 r_eshape 0.0 0.0 -0.5 1400.0 1400.0 1.0 0.0, "street") cy:b_oxes 0) c_at (("walks", slabs, "walk") cy:b_oxes 0) c_at (("dashes", paint, "paint") cy:b_oxes 0)) c_at
+    ((("towers 0", (lt, 0) l:t_owers 0, "skin 0") cy:b_oxes 0) c_at (("towers 1", (lt, 1) l:t_owers 0, "skin 1") cy:b_oxes 0) c_at (("towers 2", (lt, 2) l:t_owers 0, "skin 2") cy:b_oxes 0)) c_at
+    ((("units", units, "dark") cy:b_oxes 0) c_at (("beacons", beacons, "beacon") cy:b_oxes 0)) c_at
+    ((("bands 0", (lt, seed, 0) l:b_ands 0, "neon 0") cy:b_oxes 0) c_at (("bands 1", (lt, seed, 1) l:b_ands 0, "neon 1") cy:b_oxes 0) c_at (("bands 2", (lt, seed, 2) l:b_ands 0, "neon 2") cy:b_oxes 0)) c_at
+    ((("screens 0", (lt, seed, 0) l:s_creens 0, "screen 0") cy:b_oxes 0) c_at (("screens 1", (lt, seed, 1) l:s_creens 0, "screen 1") cy:b_oxes 0)) c_at
+    ((("screens 2", (lt, seed, 2) l:s_creens 0, "screen 2") cy:b_oxes 0) c_at (("screens 3", (lt, seed, 3) l:s_creens 0, "screen 3") cy:b_oxes 0)) c_at
+    ((("screens 4", (lt, seed, 4) l:s_creens 0, "screen 4") cy:b_oxes 0) c_at (("screens 5", (lt, seed, 5) l:s_creens 0, "screen 5") cy:b_oxes 0)) c_at
+    ((("screens 6", (lt, seed, 6) l:s_creens 0, "screen 6") cy:b_oxes 0) c_at (("screens 7", (lt, seed, 7) l:s_creens 0, "screen 7") cy:b_oxes 0)) c_at
+    ((("screens 8", (lt, seed, 8) l:s_creens 0, "screen 8") cy:b_oxes 0) c_at (("screens 9", (lt, seed, 9) l:s_creens 0, "screen 9") cy:b_oxes 0)) c_at
+    ((("screens 10", (lt, seed, 10) l:s_creens 0, "screen 10") cy:b_oxes 0)) c_at
+    ((("posts", stems c_at_1 arms, "dark") cy:b_oxes 0) c_at (("bulbs", bulbs, "warm") cy:b_oxes 0) c_at (("lamps", glows) cy:l_amps 0)) c_at
+    ((("spans", spans, "skin 0") cy:b_oxes 0) c_at (("strips", strips, "neon 1") cy:b_oxes 0)) c_at
+    (("pylons", pylons, "dark") cy:b_oxes 0) c_at (("great", great, "great") cy:b_oxes 0))
 }
 
 # the signs that hang over the sidewalks, read from the south
 h:s_igns := { z ->
-  t := (("sign 1", "X_eTaL", -10.4 -150.0 34.0, 2.6, 0, 1, "neon 0") cy:s_ign 0) c_at (("sign 2", "ARRAYS", 10.4 -95.0 30.0, 2.4, 0, 1, "neon 1") cy:s_ign 0)
-  t := t c_at (("sign 3", "RHO", -10.4 -52.0 20.0, 2.2, 0, 1, "neon 2") cy:s_ign 0) c_at (("sign 4", "OPEN 24H", 0.0 -30.8 15.5, 1.6, 0, 0, "neon 0") cy:s_ign 0)
-  t := t c_at (("sign 5", "IOTA", 10.4 14.0 22.0, 2.2, 0, 1, "neon 0") cy:s_ign 0) c_at (("sign 6", "NOODLES", -10.4 52.0 24.0, 2.0, 0, 1, "neon 1") cy:s_ign 0)
-  t c_at (("sign 7", "KERNEL", 0.0 94.2 19.0, 1.6, 0, 0, "neon 2") cy:s_ign 0) c_at (("sign 8", "HOTEL", 10.4 150.0 30.0, 2.6, 0, 1, "neon 2") cy:s_ign 0)
+  (((("sign 1", "X_eTaL", -10.4 -150.0 34.0, 2.6, 0, 1, "neon 0") cy:s_ign 0) c_at (("sign 2", "ARRAYS", 10.4 -95.0 30.0, 2.4, 0, 1, "neon 1") cy:s_ign 0)) c_at
+    ((("sign 3", "RHO", -10.4 -52.0 20.0, 2.2, 0, 1, "neon 2") cy:s_ign 0) c_at (("sign 4", "OPEN 24H", 0.0 -30.8 15.5, 1.6, 0, 0, "neon 0") cy:s_ign 0)) c_at
+    ((("sign 5", "IOTA", 10.4 14.0 22.0, 2.2, 0, 1, "neon 0") cy:s_ign 0) c_at (("sign 6", "NOODLES", -10.4 52.0 24.0, 2.0, 0, 1, "neon 1") cy:s_ign 0)) c_at
+    (("sign 7", "KERNEL", 0.0 94.2 19.0, 1.6, 0, 0, "neon 2") cy:s_ign 0) c_at (("sign 8", "HOTEL", 10.4 150.0 30.0, 2.6, 0, 1, "neon 2") cy:s_ign 0))
 }
 
 # what moves: a car and a flier, made once, and their fleets
 h:t_raffic := { seed ->
-  t := (cy:m_odel "car") c_at (("car body", 2 7 r_eshape 0.0 0.0 0.55 4.4 1.9 0.6 0.0  -0.3 0.0 1.1 2.4 1.7 0.55 0.0, "shell", "car") cy:p_arts 0)
-  t := t c_at (("car head", 2 7 r_eshape 2.2 0.6 0.6 0.06 0.35 0.15 0.0  2.2 -0.6 0.6 0.06 0.35 0.15 0.0, "head", "car") cy:p_arts 0)
-  t := t c_at (("car tail", 1 7 r_eshape -2.2 0.0 0.72 0.06 1.6 0.1 0.0, "tail", "car") cy:p_arts 0)
-  t := t c_at (cy:m_odel "flier") c_at (("flier body", 3 7 r_eshape 0.0 0.0 0.0 5.2 2.2 0.7 0.0  -0.4 0.0 0.55 2.6 1.9 0.5 0.0  -2.3 0.0 0.7 0.9 2.8 0.08 0.0, "shell", "flier") cy:p_arts 0)
-  t := t c_at (("flier head", 1 7 r_eshape 2.6 0.0 0.0 0.06 1.5 0.12 0.0, "head", "flier") cy:p_arts 0) c_at (("flier tail", 1 7 r_eshape -2.6 0.0 0.1 0.06 1.9 0.12 0.0, "tail", "flier") cy:p_arts 0)
-  t := t c_at (("flier under", 1 7 r_eshape 0.0 0.0 -0.4 4.0 1.6 0.05 0.0, "neon 1", "flier") cy:p_arts 0)
-  t c_at (("cars", "car", l:c_ars seed) cy:f_leet 0) c_at (("fliers", "flier", l:f_liers seed) cy:f_leet 0)
+  (((cy:m_odel "car") c_at (("car body", 2 7 r_eshape 0.0 0.0 0.55 4.4 1.9 0.6 0.0  -0.3 0.0 1.1 2.4 1.7 0.55 0.0, "shell", "car") cy:p_arts 0)) c_at
+    ((("car head", 2 7 r_eshape 2.2 0.6 0.6 0.06 0.35 0.15 0.0  2.2 -0.6 0.6 0.06 0.35 0.15 0.0, "head", "car") cy:p_arts 0)) c_at
+    ((("car tail", 1 7 r_eshape -2.2 0.0 0.72 0.06 1.6 0.1 0.0, "tail", "car") cy:p_arts 0)) c_at
+    ((cy:m_odel "flier") c_at (("flier body", 3 7 r_eshape 0.0 0.0 0.0 5.2 2.2 0.7 0.0  -0.4 0.0 0.55 2.6 1.9 0.5 0.0  -2.3 0.0 0.7 0.9 2.8 0.08 0.0, "shell", "flier") cy:p_arts 0)) c_at
+    ((("flier head", 1 7 r_eshape 2.6 0.0 0.0 0.06 1.5 0.12 0.0, "head", "flier") cy:p_arts 0) c_at (("flier tail", 1 7 r_eshape -2.6 0.0 0.1 0.06 1.9 0.12 0.0, "tail", "flier") cy:p_arts 0)) c_at
+    ((("flier under", 1 7 r_eshape 0.0 0.0 -0.4 4.0 1.6 0.05 0.0, "neon 1", "flier") cy:p_arts 0)) c_at
+    (("cars", "car", l:c_ars seed) cy:f_leet 0) c_at (("fliers", "flier", l:f_liers seed) cy:f_leet 0))
 }
 
 ## (seed, media, width, height, fps, samples, device) nc:c_ity 0: the
@@ -335,10 +335,10 @@ h:t_raffic := { seed ->
 ## another renderer that defines the same functions draws the same
 ## city from the same text (Three.xtl's, in a browser).
 l:c_ity := { (seed, where, w, h, fps, samples, device) z ->
-  t := ((w, h, fps, l:seconds, samples, device) cy:s_tage 0) c_at (("AgX - Punchy", 0.0, 0.5) cy:l_ook 0) c_at ((30 14 40, 2 3 8, 1.0) cy:s_ky 0)
-  t := t c_at (h:s_kins where) c_at (h:b_uilt seed) c_at (h:s_igns 0) c_at h:t_raffic seed
-  t := t c_at (("haze", 1 6 r_eshape 0.0 0.0 110.0 1300.0 1300.0 220.0, 150 165 255, 0.0012, 0.5) cy:f_og 0) c_at (("vent", plumes, 255 255 255, 1.2, 1.5) cy:s_team 0)
-  t c_at ((l:times, l:eyes, l:aims, 24, 2.0) cy:f_ly 0) c_at ((1.0, 0.6, 0.6) cy:b_loom 0) c_at cy:report
+  ((((w, h, fps, l:seconds, samples, device) cy:s_tage 0) c_at (("AgX - Punchy", 0.0, 0.5) cy:l_ook 0) c_at ((30 14 40, 2 3 8, 1.0) cy:s_ky 0)) c_at
+    ((h:s_kins where) c_at (h:b_uilt seed) c_at (h:s_igns 0) c_at h:t_raffic seed) c_at
+    ((("haze", 1 6 r_eshape 0.0 0.0 110.0 1300.0 1300.0 220.0, 150 165 255, 0.0012, 0.5) cy:f_og 0) c_at (("vent", plumes, 255 255 255, 1.2, 1.5) cy:s_team 0)) c_at
+    ((l:times, l:eyes, l:aims, 24, 2.0) cy:f_ly 0) c_at ((1.0, 0.6, 0.6) cy:b_loom 0) c_at cy:report)
 }
 
 ## (width, height, fps, samples, device) nc:s_cene 0: the whole script

@@ -1,16 +1,28 @@
+/* JuliaMono, the one monospace font with every character the decorated
+   source uses (combining underline, raised letters, APL glyphs, box
+   drawing), from its own release on jsDelivr (SIL Open Font License), so
+   the page does not depend on it being installed. */
+@font-face {
+  font-family: JuliaMono;
+  src: url("https://cdn.jsdelivr.net/gh/cormullion/juliamono@v0.63.2/webfonts/JuliaMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* xetal doc: the site's stylesheet (written by `xetal doc --out`).
    Light and dark, following the system unless the reader picks one
    (the theme button, remembered in the browser). Token colors are the
    live demo's and the literate documents'. */
 :root {
-  --bg: #fdfdfb; --fg: #20242c; --dim: #626874; --code: #f2f2ee;
+  --bg: #fdfdfb; --fg: #20242c; --dim: #626874; --doc: #2f7a40; --code: #f2f2ee;
   --side: #f3f3ee; --rule: #deded6; --accent: #a67c00; --link: #1f5fbf;
   --builtin: #1f5fbf; --userfunc: #1e7a34; --libfunc: #0b7d8a;
   --lambdaarg: #9b2f9b; --number: #9a6a00; --string: #8a6d00;
   --symbol: #2c6fb8; --macro: #9a6a00; --error: #c62828;
 }
 :root[data-theme="dark"] {
-  --bg: #16181d; --fg: #d8dbe2; --dim: #8a90a0; --code: #1e2129;
+  --bg: #16181d; --fg: #d8dbe2; --dim: #8a90a0; --doc: #8fc79a; --code: #1e2129;
   --side: #1b1e24; --rule: #2c3038; --accent: #f5c518; --link: #7cb3ff;
   --builtin: #5b9cff; --userfunc: #3fbf5f; --libfunc: #22b8c8;
   --lambdaarg: #d25fd2; --number: #e0b400; --string: #e8d27a;
@@ -18,7 +30,7 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #16181d; --fg: #d8dbe2; --dim: #8a90a0; --code: #1e2129;
+    --bg: #16181d; --fg: #d8dbe2; --dim: #8a90a0; --doc: #8fc79a; --code: #1e2129;
     --side: #1b1e24; --rule: #2c3038; --accent: #f5c518; --link: #7cb3ff;
     --builtin: #5b9cff; --userfunc: #3fbf5f; --libfunc: #22b8c8;
     --lambdaarg: #d25fd2; --number: #e0b400; --string: #e8d27a;
@@ -74,7 +86,20 @@ div.source .ln { display: inline-block; width: 3.4rem; padding-right: .9rem; tex
 .c-number, .c-exponent { color: var(--number); } .c-string { color: var(--string); }
 .c-symbol { color: var(--symbol); } .c-quote { font-weight: bold; }
 .c-comment { color: var(--dim); } .c-macro { color: var(--macro); font-weight: bold; }
+/* Doc comments (##) and section headings (###): their own style, apart from remarks. */
+.c-doc { color: var(--doc); font-style: italic; } .c-heading { color: var(--doc); font-weight: bold; }
+.c-applied { text-decoration: underline; text-decoration-thickness: 0.14em; text-underline-offset: 0.18em; }
+/* Rainbow delimiters (D-12): a bracket colored by its depth. */
+.c-depth0 { color: #6b6b6b; } .c-depth1 { color: #c25e00; } .c-depth2 { color: #c2307a; } .c-depth3 { color: #20242c; }
+.c-unmatched { color: #c62828; text-decoration: underline wavy; }
+:root[data-theme="dark"] .c-depth0 { color: #9a9a9a; } :root[data-theme="dark"] .c-depth1 { color: #ff9a3c; } :root[data-theme="dark"] .c-depth2 { color: #ffa8d2; } :root[data-theme="dark"] .c-depth3 { color: #f4f4f4; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .c-depth0 { color: #9a9a9a; } :root:not([data-theme="light"]) .c-depth1 { color: #ff9a3c; }
+  :root:not([data-theme="light"]) .c-depth2 { color: #ffa8d2; } :root:not([data-theme="light"]) .c-depth3 { color: #f4f4f4; }
+}
 .c-error { color: var(--error); }
+/* A notation (MC32): the LaTeX a draws: macro wrote, typeset by KaTeX in place; as typed until then. */
+.c-notation { color: var(--string); font-style: italic; } .c-notation .katex { font-style: normal; font-size: 1.05em; }
 button.theme { float: right; background: none; color: var(--dim); border: 1px solid var(--rule); border-radius: 4px; cursor: pointer; font-size: .8rem; }
 @media (max-width: 760px) {
   body { display: block; }

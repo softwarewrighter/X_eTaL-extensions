@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:audio/open: tests/data/none.ogg: No such file or directory (os error 2) at ./lib/Audio.xtl:13:1
+error[io]: []N_GET: ext:audio/open: tests/data/none.ogg: No such file or directory (os error 2)
+  --> ./lib/Audio.xtl:13:1
+   |
+13 | "o_pen : text -> int"                ffi:b_ind< "audio/open"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/missing.xtl:3:1
+   |
+ 3 | au:o_pen "tests/data/none.ogg"
+   | ------------------------------ called from the program here

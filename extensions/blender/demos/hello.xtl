@@ -19,8 +19,8 @@ inside := "import bpy, sys\nout = sys.argv[sys.argv.index(\"--\") + 1]\nnames = 
 
 "Blender found:"
 0 < t_ally bl:b_lender @
-n := "work/hello/run.py" bl:w_rite! launcher
-n := "work/hello/hello.py" bl:w_rite! inside
+_ := "work/hello/run.py" bl:w_rite! launcher
+_ := "work/hello/hello.py" bl:w_rite! inside
 r := "work/hello/run.py" bl:r_un! "work/hello/hello.py work/hello/report.txt"
 "the run, and the error lines in Blender's log:"
 lines := (n_ot r = f_irst "\n") p_artition r

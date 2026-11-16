@@ -17,11 +17,11 @@ timingLabels := bl:r_ead "work/gpurun/timing-labels.txt"
 reduction := 9 256 r_eshape n_umbers bl:r_ead "work/gpurun/reduction.txt"
 reductionLabels := bl:r_ead "work/gpurun/reduction-labels.txt"
 hostLabels := bl:r_ead "work/gpurun/host-labels.txt"
-n := "work/gpurun/run.py" bl:w_rite! bp:launcher
-n := "work/gpurun/gpu-run.cues.toml" bl:w_rite! (gr:c_ues stats, gr:cueTable) vd:c_ues 0
-n := "work/gpurun/gpu-run.srt" bl:w_rite! (gr:c_ues stats, gr:cueTable) vd:s_rt 0
-n := "work/gpurun/video.py" bl:w_rite! ((vd:landscape, stats, timings, timingLabels, reduction, reductionLabels, hostLabels) gr:s_cene 0) c_at (vd:r_ender "gpu-run.mp4") c_at vd:report
-n := "work/gpurun/short.py" bl:w_rite! ((vd:shorts, stats, timings, timingLabels, reduction, reductionLabels, hostLabels) gr:s_cene 0) c_at (vd:r_ender "gpu-run-short.mp4") c_at vd:report
+_ := "work/gpurun/run.py" bl:w_rite! bp:launcher
+_ := "work/gpurun/gpu-run.cues.toml" bl:w_rite! (gr:c_ues stats, gr:cueTable) vd:c_ues 0
+_ := "work/gpurun/gpu-run.srt" bl:w_rite! (gr:c_ues stats, gr:cueTable) vd:s_rt 0
+_ := "work/gpurun/video.py" bl:w_rite! ((vd:landscape, stats, timings, timingLabels, reduction, reductionLabels, hostLabels) gr:s_cene 0) c_at (vd:r_ender "gpu-run.mp4") c_at vd:report
+_ := "work/gpurun/short.py" bl:w_rite! ((vd:shorts, stats, timings, timingLabels, reduction, reductionLabels, hostLabels) gr:s_cene 0) c_at (vd:r_ender "gpu-run-short.mp4") c_at vd:report
 "rendering GPU execution landscape ..."
 h:c_heck "work/gpurun/run.py" bl:r_un! "work/gpurun/video.py work/gpurun/out"
 "rendering GPU execution Short ..."

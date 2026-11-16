@@ -1,1 +1,5 @@
-error[io]: []N_GET: ext:hello/fail: hello was asked to fail at 76..100
+error[io]: []N_GET: ext:hello/fail: hello was asked to fail
+ --> tests/fail.xtl:2:1
+  |
+2 | []N_GET "ext:hello/fail"
+  | ^^^^^^^^^^^^^^^^^^^^^^^^

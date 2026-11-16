@@ -107,11 +107,11 @@ l:w_alls := { n z ->
   b := n l:r_ight 0
   c := a ac:m_atmul b
   zero := (n c_at n) r_eshape 0.0
-  t := ("A", (0.0 - gap) c_at 0.0 0.0, 0.0 0.0 c_at 0.0 - u, 0.0 c_at u c_at 0.0, (n c_at n c_at 3) r_eshape (a, 'm_in r_/ 'm_in r_/ a, 'm_ax r_/ 'm_ax r_/ a) vd:t_one 0, zero, 0.08) vd:g_rid 0
-  t := t c_at ("B", 0.0 0.0 c_at gap, 0.0 c_at u c_at 0.0, u c_at 0.0 0.0, (n c_at n c_at 3) r_eshape (b, 'm_in r_/ 'm_in r_/ b, 'm_ax r_/ 'm_ax r_/ b) vd:t_one 0, zero, 0.08) vd:g_rid 0
-  t := t c_at ("C", 0.0 c_at (0.0 - gap) c_at 0.0, 0.0 0.0 c_at 0.0 - u, u c_at 0.0 0.0, (n c_at n c_at 3) r_eshape (c, 'm_in r_/ 'm_in r_/ c, 'm_ax r_/ 'm_ax r_/ c) vd:t_one 0, n l:f_ill 0, 0.08) vd:g_rid 0
-  t := t c_at ("C empty", (1 6 r_eshape (0.5 * side) c_at ((0.0 - gap) + 0.01) c_at (-0.5 * side) c_at side c_at 0.005 c_at side, 40 48 60, 1.0) h:b_oxes 0) vd:g_lass 0
-  t := t c_at ("volume", (1 6 r_eshape (0.5 * side) c_at (0.5 * side) c_at (-0.5 * side) c_at side c_at side c_at side, edge, 1.0) h:b_oxes 0) vd:o_utlines 0
+  t := ((("A", (0.0 - gap) c_at 0.0 0.0, 0.0 0.0 c_at 0.0 - u, 0.0 c_at u c_at 0.0, (n c_at n c_at 3) r_eshape (a, 'm_in r_/ 'm_in r_/ a, 'm_ax r_/ 'm_ax r_/ a) vd:t_one 0, zero, 0.08) vd:g_rid 0) c_at
+    (("B", 0.0 0.0 c_at gap, 0.0 c_at u c_at 0.0, u c_at 0.0 0.0, (n c_at n c_at 3) r_eshape (b, 'm_in r_/ 'm_in r_/ b, 'm_ax r_/ 'm_ax r_/ b) vd:t_one 0, zero, 0.08) vd:g_rid 0) c_at
+    (("C", 0.0 c_at (0.0 - gap) c_at 0.0, 0.0 0.0 c_at 0.0 - u, u c_at 0.0 0.0, (n c_at n c_at 3) r_eshape (c, 'm_in r_/ 'm_in r_/ c, 'm_ax r_/ 'm_ax r_/ c) vd:t_one 0, n l:f_ill 0, 0.08) vd:g_rid 0) c_at
+    (("C empty", (1 6 r_eshape (0.5 * side) c_at ((0.0 - gap) + 0.01) c_at (-0.5 * side) c_at side c_at 0.005 c_at side, 40 48 60, 1.0) h:b_oxes 0) vd:g_lass 0) c_at
+    ("volume", (1 6 r_eshape (0.5 * side) c_at (0.5 * side) c_at (-0.5 * side) c_at side c_at side c_at side, edge, 1.0) h:b_oxes 0) vd:o_utlines 0)
   sh := "[" c_at (f_ormat n c_at n) c_at "]"
   names := "A " c_at sh c_at "|B " c_at sh c_at "|C " c_at sh
   at := 3 3 r_eshape ((0.0 - gap) - 0.05) c_at (0.5 * side) c_at 0.6 c_at (0.5 * side) c_at (side + 0.4) c_at (gap + 0.5) c_at (0.5 * side) c_at ((0.0 - gap) - 0.05) c_at 0.6
@@ -137,7 +137,6 @@ l:w_ork := { n z ->
   z0 := 0.0 - u * f_loat i0 + tile
   z1 := 0.0 - u * f_loat i0
   bands := 4 6 r_eshape ((x0 c_at ((0.0 - gap) - 0.03) c_at z0) h:b_ox x1 c_at ((0.0 - gap) - 0.01) c_at z1) c_at ((((0.0 - gap) - 0.03) c_at 0.0 c_at z0) h:b_ox ((0.0 - gap) - 0.01) c_at side c_at z1) c_at ((x0 c_at 0.0 c_at gap + 0.01) h:b_ox x1 c_at side c_at gap + 0.03) c_at (x0 c_at 0.0 c_at z0) h:b_ox x1 c_at side c_at z1
-  t := ("work-group", bands c_at_2 4 4 r_eshape 255.0 255.0 255.0 3.0 255.0 216.0 77.0 2.0 255.0 216.0 77.0 2.0 255.0 216.0 77.0 2.0) vd:o_utlines 0
   bx := u * 0.5 + f_loat wj
   bz := 0.0 - u * 0.5 + f_loat wi
   wx0 := u * f_loat wj
@@ -145,15 +144,12 @@ l:w_ork := { n z ->
   wz0 := 0.0 - u * f_loat wi + 1
   wz1 := 0.0 - u * f_loat wi
   item := 4 6 r_eshape ((wx0 c_at 0.0 c_at wz0) h:b_ox wx1 c_at side c_at wz1) c_at ((((0.0 - gap) - 0.03) c_at 0.0 c_at wz0) h:b_ox ((0.0 - gap) - 0.02) c_at side c_at wz1) c_at ((wx0 c_at 0.0 c_at gap + 0.02) h:b_ox wx1 c_at side c_at gap + 0.03) c_at (wx0 c_at ((0.0 - gap) - 0.04) c_at wz0) h:b_ox wx1 c_at ((0.0 - gap) - 0.02) c_at wz1
-  t := t c_at ("work-item", item c_at_2 4 4 r_eshape 255.0 122.0 61.0 4.0 255.0 122.0 61.0 4.0 255.0 122.0 61.0 4.0 255.0 255.0 255.0 6.0) vd:b_oxes 0
   p := ((wi + 1) s_elect a) * (wj + 1) s_elect_2 b
   ky := u * 0.5 + f_loat (r_ange n) - 1
   h := 0.06 * p
   bars := 2 1 t_ranspose (6 c_at n) r_eshape (n r_eshape bx) c_at ky c_at (bz + h / 2.0) c_at (n r_eshape 0.7 * u) c_at (n r_eshape 0.7 * u) c_at 0.002 m_ax a_bs h
   sign := f_loat p >= 0.0
   colors := (sign '* t_able f_loat l:plus) + (1.0 - sign) '* t_able f_loat l:minus
-  t := t c_at ("products", bars c_at_2 colors c_at_2 n r_eshape 1.5) vd:b_oxes 0
-  t := t c_at ("products", (n c_at 2) r_eshape ((1 s_elect l:sumTimes) - 0.72) c_at l:length) vd:s_hown 0
   partial := r_ev '+ s_\ r_ev p
   ks := ((n - 1) - 8 * (r_ange n d_iv 8) - 1) c_at 0
   m := t_ally ks
@@ -162,14 +158,18 @@ l:w_ork := { n z ->
   kk := 2 1 t_ranspose (6 c_at m) r_eshape (m r_eshape bx) c_at (u * 0.5 + f_loat ks) c_at (bz + ph / 2.0) c_at (m r_eshape 1.4 * u) c_at (m r_eshape 1.4 * u) c_at 0.002 m_ax a_bs ph
   st := l:sumTimes
   ts := (1 s_elect st) + ((2 s_elect st) - 1 s_elect st) * (f_loat (r_ange m) - 1) / f_loat m - 1
-  t := t c_at ("sum", (1 6 r_eshape 1 s_elect kk, white, 4.0) h:b_oxes 0) vd:b_oxes 0
-  t := t c_at ("sum", ts, (1 c_at m c_at 6) r_eshape kk) vd:m_oves 0
-  t := t c_at ("sum", 1 2 r_eshape st) vd:s_hown 0
   v := (wj + 1) s_elect (wi + 1) s_elect c
   rc := (v c_at ('m_in r_/ 'm_in r_/ c) c_at 'm_ax r_/ 'm_ax r_/ c, 'm_in r_/ 'm_in r_/ c, 'm_ax r_/ 'm_ax r_/ c) vd:t_one 0
   cell := (bx c_at ((0.0 - gap) - 0.03) c_at bz) c_at u c_at (0.028) c_at u
-  t := t c_at ("result", (1 6 r_eshape cell, 1 s_elect rc, 3.0) h:b_oxes 0) vd:b_oxes 0
-  t c_at ("result", 1 2 r_eshape (2 s_elect st) c_at l:length) vd:s_hown 0
+  ((("work-group", bands c_at_2 4 4 r_eshape 255.0 255.0 255.0 3.0 255.0 216.0 77.0 2.0 255.0 216.0 77.0 2.0 255.0 216.0 77.0 2.0) vd:o_utlines 0) c_at
+    (("work-item", item c_at_2 4 4 r_eshape 255.0 122.0 61.0 4.0 255.0 122.0 61.0 4.0 255.0 122.0 61.0 4.0 255.0 255.0 255.0 6.0) vd:b_oxes 0) c_at
+    (("products", bars c_at_2 colors c_at_2 n r_eshape 1.5) vd:b_oxes 0) c_at
+    (("products", (n c_at 2) r_eshape ((1 s_elect l:sumTimes) - 0.72) c_at l:length) vd:s_hown 0) c_at
+    (("sum", (1 6 r_eshape 1 s_elect kk, white, 4.0) h:b_oxes 0) vd:b_oxes 0) c_at
+    (("sum", ts, (1 c_at m c_at 6) r_eshape kk) vd:m_oves 0) c_at
+    (("sum", 1 2 r_eshape st) vd:s_hown 0) c_at
+    (("result", (1 6 r_eshape cell, 1 s_elect rc, 3.0) h:b_oxes 0) vd:b_oxes 0) c_at
+    ("result", 1 2 r_eshape (2 s_elect st) c_at l:length) vd:s_hown 0)
 }
 
 ## n mf:c_ameraKeys 0: the camera's path, eight keys (seconds, eyes,
@@ -214,7 +214,7 @@ l:c_aptionTable := { z ->
 ## output: the stage (a 35 mm lens), the walls, the work-group and
 ## work-item, the captions, the camera
 l:s_cene := { (w, h, n) z ->
-  t := vd:head c_at ((w, h, 30, l:length, l:sky, 35) vd:s_tage 0) c_at (n l:w_alls 0) c_at n l:w_ork 0
-  t := t c_at (n l:c_aptionTexts 0, l:c_aptionTable 0) vd:c_aptions 0
-  t c_at (n l:c_ameraKeys 0) vd:c_amera 0
+  ((vd:head c_at ((w, h, 30, l:length, l:sky, 35) vd:s_tage 0) c_at (n l:w_alls 0) c_at n l:w_ork 0) c_at
+    ((n l:c_aptionTexts 0, l:c_aptionTable 0) vd:c_aptions 0) c_at
+    (n l:c_ameraKeys 0) vd:c_amera 0)
 }

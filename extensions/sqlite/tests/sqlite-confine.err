@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:sqlite/exec: "../escape.db": a path may not leave its root (..) at ./lib/Sqlite.xtl:13:1
+error[io]: []N_GET: ext:sqlite/exec: "../escape.db": a path may not leave its root (..)
+  --> ./lib/Sqlite.xtl:13:1
+   |
+13 | "e_xec : text text -> int"      ffi:b_ind< "sqlite/exec"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/confine.xtl:3:1
+   |
+ 3 | "../escape.db" sq:e_xec "select 1"
+   | ---------------------------------- called from the program here

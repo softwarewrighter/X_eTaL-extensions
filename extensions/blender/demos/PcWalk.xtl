@@ -126,10 +126,10 @@ l:s_cene := { size ->
   d := (w, h, 35, 11.0, 15.0) vd:f_it 0
   aim := 0.0 0.0 -1.6
   eyes := (4 3 r_eshape aim) + h:camFrom * 4 3 r_eshape 1.0 c_at d c_at 1.0
-  t := vd:head c_at ((w, h, 30, l:length, h:sky, 35) vd:s_tage 0)
-  t := t c_at (("page", h:page) vd:o_utlines 0) c_at (("cells", h:cells) vd:b_oxes 0) c_at ("cells", h:glowTimes, h:glowAmounts) vd:g_lows 0
-  t := t c_at (("pc", 1 10 r_eshape (6 t_ake r_avel h:markerAt) c_at 255 255 255 2.0) vd:o_utlines 0) c_at ("pc", l:at, h:markerAt) vd:m_oves 0
-  t := t c_at (("path", h:path) vd:l_ines 0) c_at ("path", h:pathShown) vd:s_hown 0
-  t := t c_at ((l:map, h:camTimes) vd:r_etime 0, eyes, 4 3 r_eshape aim) vd:c_amera 0
-  t c_at ((l:title, l:subtitle, h:cardTable) vd:c_ards 0) c_at (l:captionTexts, l:captionTable) vd:c_aptions 0
+  ((vd:head c_at ((w, h, 30, l:length, h:sky, 35) vd:s_tage 0)) c_at
+    ((("page", h:page) vd:o_utlines 0) c_at (("cells", h:cells) vd:b_oxes 0) c_at ("cells", h:glowTimes, h:glowAmounts) vd:g_lows 0) c_at
+    ((("pc", 1 10 r_eshape (6 t_ake r_avel h:markerAt) c_at 255 255 255 2.0) vd:o_utlines 0) c_at ("pc", l:at, h:markerAt) vd:m_oves 0) c_at
+    ((("path", h:path) vd:l_ines 0) c_at ("path", h:pathShown) vd:s_hown 0) c_at
+    (((l:map, h:camTimes) vd:r_etime 0, eyes, 4 3 r_eshape aim) vd:c_amera 0) c_at
+    ((l:title, l:subtitle, h:cardTable) vd:c_ards 0) c_at (l:captionTexts, l:captionTable) vd:c_aptions 0)
 }

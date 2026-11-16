@@ -37,15 +37,14 @@ gy := sy + (1 o_-_2 sy) + -1 o_-_2 sy
 edge := 1.0 m_in 0.5 * ((gx ^ 2.0) + gy ^ 2.0) ^ 0.5
 "edge strength: mean, share of pixels on a strong edge (over 0.5):"
 u:r_ound (u:m_ean edge) c_at u:m_ean edge > 0.5
-n := (out c_at "filters.png") im:w_rite! p c_at_2 box c_at_2 sharp c_at_2 edge
+_ := (out c_at "filters.png") im:w_rite! p c_at_2 box c_at_2 sharp c_at_2 edge
 
 ### 3. color: a sepia toning, every pixel's red, green and blue times
 
 ## one 3 by 3 matrix (an inner product over the last axis)
 c := 240 246 im:r_esize im:r_ead src
-sepia := 3 3 r_eshape 0.393 0.349 0.272 0.769 0.686 0.534 0.189 0.168 0.131
-toned := 1.0 m_in c '+ '* i_nner sepia
-n := (out c_at "sepia.png") im:w_rite! c c_at_2 toned
+toned := 1.0 m_in c '+ '* i_nner 3 3 r_eshape 0.393 0.349 0.272 0.769 0.686 0.534 0.189 0.168 0.131
+_ := (out c_at "sepia.png") im:w_rite! c c_at_2 toned
 
 ### 4. the SVD: the photo as a sum of rank-1 pictures, largest first;
 
@@ -64,5 +63,5 @@ r50 := u:r_ank 50
 "rank, storage (share of the photo's numbers), error (root mean square):"
 u:e_rr := { r -> (u:m_ean (r - p) ^ 2.0) ^ 0.5 }
 u:r_ound 3 3 r_eshape (f_loat 5 20 50) c_at ((f_loat 5 20 50 * 487) / 59040.0) c_at (u:e_rr r5) c_at (u:e_rr r20) c_at u:e_rr r50
-n := (out c_at "svd.png") im:w_rite! p c_at_2 r50 c_at_2 r20 c_at_2 r5
+_ := (out c_at "svd.png") im:w_rite! p c_at_2 r50 c_at_2 r20 c_at_2 r5
 "written: work/photo-lab/filters.png, sepia.png, svd.png"

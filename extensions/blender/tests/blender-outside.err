@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:blender/write: "../outside.py": give a path under the working directory (or XETAL_BLENDER_ROOT), no .. at ./lib/Blender.xtl:18:1
+error[io]: []N_GET: ext:blender/write: "../outside.py": give a path under the working directory (or XETAL_BLENDER_ROOT), no ..
+  --> ./lib/Blender.xtl:18:1
+   |
+18 | "w_rite! : text text -> int"     ffi:b_ind< "blender/write"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/outside.xtl:2:1
+   |
+ 2 | "../outside.py" bl:w_rite! "print(1)"
+   | ------------------------------------- called from the program here

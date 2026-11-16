@@ -13,8 +13,8 @@
 "cy:" u_se< "CosyLogo"
 
 script := ((1280, 720, 120, 0.012, 32) cy:s_cene 0) c_at bp:v_ideo "cosy.mp4"
-n := "work/cosy/run.py" bl:w_rite! bp:launcher
-n := "work/cosy/scene.py" bl:w_rite! script
+_ := "work/cosy/run.py" bl:w_rite! bp:launcher
+_ := "work/cosy/scene.py" bl:w_rite! script
 "rendering 120 frames with Blender (Cycles) ..."
 r := "work/cosy/run.py" bl:r_un! "work/cosy/scene.py work/cosy/out"
 "the run, and the error lines in Blender's log:"

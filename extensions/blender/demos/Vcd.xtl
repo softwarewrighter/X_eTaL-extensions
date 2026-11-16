@@ -44,8 +44,7 @@ l:r_ead := { path ->
   keep := k m_ember? "#b01xz"
   body := keep r_eplicate lines
   isT := (keep r_eplicate k) = f_irst "#"
-  times := '{ f_irst n_umbers 1 d_rop d_isclose _r } e_ach isT r_eplicate body
-  at := (n_ot isT) r_eplicate ('+ s_\ isT) s_elect times
+  at := (n_ot isT) r_eplicate ('+ s_\ isT) s_elect '{ f_irst n_umbers 1 d_rop d_isclose _r } e_ach isT r_eplicate body
   ch := (n_ot isT) r_eplicate body
   sig := ids i_ndexOf '{ h:i_d d_isclose _r } m_ap ch
   v := '{ h:v_alue d_isclose _r } e_ach ch
@@ -82,7 +81,6 @@ l:a_t := { ((names, changes), name, ts) z ->
   # the changes and the times sorted together, a change before a time
   # it equals: how many changes come before a time is its last change
   order := g_rade (2 * ct) c_at 1 + 2 * ts
-  seen := '+ s_\ order <= n
-  k := (n d_rop g_rade order) s_elect seen
+  k := (n d_rop g_rade order) s_elect '+ s_\ order <= n
   (1 + k) s_elect 0 c_at 2 s_elect_2 c
 }

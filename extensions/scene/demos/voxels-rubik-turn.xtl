@@ -48,13 +48,13 @@ u:a_nnounce := { yes j ->
   k := 1 + (j - 1) m_od t_ally turns
   i := k s_elect turns
   said := (k = 1) u:s_ay "scrambling"
-  said := (k = 1 + t_ally scramble) u:s_ay "solving"
-  said := p_rint! "turn " c_at d_isclose i s_elect names
+  _ := (k = 1 + t_ally scramble) u:s_ay "solving"
+  _ := p_rint! "turn " c_at d_isclose i s_elect names
   0
 }
 u:s_ay := { yes m ->
   0 = yes ? 0
-  said := p_rint! m
+  _ := p_rint! m
   0
 }
 
@@ -64,10 +64,10 @@ u:s_how := { (c, j, f, on) ->
   i := (1 + (j - 1) m_od t_ally turns) s_elect turns
   said := (f = 0) u:a_nnounce j
   drawn := (c, i, f) u:p_aint 0
-  c := (i, f) u:a_fter c
+  turned := (i, f) u:a_fter c
   wait := rest + pause * (0 = (j m_od t_ally scramble))
-  f < frames + wait ? (c, j, f + 1, on)
-  (c, j + 1, 0, on)
+  f < frames + wait ? (turned, j, f + 1, on)
+  (turned, j + 1, 0, on)
 }
 
 u:f_rame := { st ->
@@ -78,7 +78,7 @@ u:f_rame := { st ->
   u:s_how st
 }
 u:q_uit := { (c, j, f, on) ->
-  z := sc:c_lose! w
+  _ := sc:c_lose! w
   (c, j, f, 0)
 }
 shown := (rb:solved, 0, 0.0) rb:d_raw w

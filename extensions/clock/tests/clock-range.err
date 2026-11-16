@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:clock/iso_of: time outside the years 0000 to 9999 at ./lib/Clock.xtl:14:1
+error[io]: []N_GET: ext:clock/iso_of: time outside the years 0000 to 9999
+  --> ./lib/Clock.xtl:14:1
+   |
+14 | "i_soOf : float -> text"        ffi:b_ind< "clock/iso_of"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/range.xtl:3:1
+   |
+ 3 | ck:i_soOf 300000000000
+   | ---------------------- called from the program here

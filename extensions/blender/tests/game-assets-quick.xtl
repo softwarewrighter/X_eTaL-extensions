@@ -8,10 +8,10 @@
 "bp:" u_se< "Bpy"
 "td:" u_se< "Td"
 
-script := bp:head c_at (bp:s_amples 1) c_at td:all c_at ((0.55 0.62 0.72, 3.0) bp:l_ights 0) c_at td:show
-script := script c_at (td:s_tills 32) c_at ((32, 24) td:s_heets 0) c_at ((0.0 0.0 0.0, 30.0, 0.042 0.205 0.058) bp:g_round 0) c_at ((160, 90, 6) td:c_loseups 0) c_at (bp:v_ideo "../closeups.mp4") c_at ((160, 90, 4) td:f_ilm 0) c_at bp:v_ideo "../lineup.mp4"
-n := "work/qtd/run.py" bl:w_rite! bp:launcher
-n := "work/qtd/assets.py" bl:w_rite! script
+script := ((bp:head c_at (bp:s_amples 1) c_at td:all c_at ((0.55 0.62 0.72, 3.0) bp:l_ights 0) c_at td:show) c_at
+  (td:s_tills 32) c_at ((32, 24) td:s_heets 0) c_at ((0.0 0.0 0.0, 30.0, 0.042 0.205 0.058) bp:g_round 0) c_at ((160, 90, 6) td:c_loseups 0) c_at (bp:v_ideo "../closeups.mp4") c_at ((160, 90, 4) td:f_ilm 0) c_at bp:v_ideo "../lineup.mp4")
+_ := "work/qtd/run.py" bl:w_rite! bp:launcher
+_ := "work/qtd/assets.py" bl:w_rite! script
 r := "work/qtd/run.py" bl:r_un! "work/qtd/assets.py work/qtd/site"
 "the run, and the error lines in Blender's log:"
 lines := (n_ot r = f_irst "\n") p_artition r

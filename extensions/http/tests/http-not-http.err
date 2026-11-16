@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:http/get: "file:///etc/passwd": only http:// and https:// URLs are fetched at ./lib/Http.xtl:13:1
+error[io]: []N_GET: ext:http/get: "file:///etc/passwd": only http:// and https:// URLs are fetched
+  --> ./lib/Http.xtl:13:1
+   |
+13 | "g_et : text -> text"           ffi:b_ind< "http/get"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/not-http.xtl:3:1
+   |
+ 3 | ht:g_et "file:///etc/passwd"
+   | ---------------------------- called from the program here

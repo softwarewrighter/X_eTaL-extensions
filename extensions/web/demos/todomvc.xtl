@@ -47,7 +47,7 @@ u:p_age := { s ->
 
 ## a change to the list, then back to the page (303 See Other)
 u:b_ack := { n ->
-  h := wb:h_eader! "Location: /"
+  _ := wb:h_eader! "Location: /"
   303 wb:r_eply! ""
 }
 
@@ -74,5 +74,5 @@ u:a_nswer := { k ->
 port := wb:s_erve! 8470
 "serving http://127.0.0.1:" c_at f_ormat port
 last := 100000 'u:a_nswer p_ower 1
-port := wb:s_top! @
+_ := wb:s_top! @
 "bye"

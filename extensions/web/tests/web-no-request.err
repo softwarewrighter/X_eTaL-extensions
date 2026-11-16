@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:web/reply: no request to reply to: call wb:n_ext! first at ./lib/Web.xtl:37:1
+error[io]: []N_GET: ext:web/reply: no request to reply to: call wb:n_ext! first
+  --> ./lib/Web.xtl:37:1
+   |
+37 | "r_eply! : int text -> int"     ffi:b_ind< "web/reply"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/no-request.xtl:4:1
+   |
+ 4 | 200 wb:r_eply! "to nobody"
+   | -------------------------- called from the program here

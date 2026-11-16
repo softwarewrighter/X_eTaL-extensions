@@ -200,9 +200,9 @@ l:d_raw := { (c, i, frac) w ->
   sm := turning * (2 s_elect sp) = ax s_elect_2 l:stickers
   bm := turning * (2 s_elect sp) = ax s_elect_2 bodyrows
   f := f_loat w
-  a := (f c_at 1.0 0.1 0.1 0.11) sc:q_uads! (h:c_orners bm = 0) s_elect l:bodies
-  b := (f c_at 2.0 0.1 0.1 0.11) sc:q_uads! r l:t_urned (h:c_orners bm) s_elect l:bodies
-  st := '{ (f c_at (10.0 + f_loat _r) c_at (_r + 1) s_elect l:rgb) sc:q_uads! (h:c_orners (c = _r) * sm = 0) s_elect l:squares } m_ap (r_ange 6) - 1
-  mv := '{ (f c_at (20.0 + f_loat _r) c_at (_r + 1) s_elect l:rgb) sc:q_uads! r l:t_urned (h:c_orners (c = _r) * sm) s_elect l:squares } m_ap (r_ange 6) - 1
+  _ := (f c_at 1.0 0.1 0.1 0.11) sc:q_uads! (h:c_orners bm = 0) s_elect l:bodies
+  _ := (f c_at 2.0 0.1 0.1 0.11) sc:q_uads! r l:t_urned (h:c_orners bm) s_elect l:bodies
+  _ := '{ (f c_at (10.0 + f_loat _r) c_at (_r + 1) s_elect l:rgb) sc:q_uads! (h:c_orners (c = _r) * sm = 0) s_elect l:squares } m_ap (r_ange 6) - 1
+  _ := '{ (f c_at (20.0 + f_loat _r) c_at (_r + 1) s_elect l:rgb) sc:q_uads! r l:t_urned (h:c_orners (c = _r) * sm) s_elect l:squares } m_ap (r_ange 6) - 1
   0
 }

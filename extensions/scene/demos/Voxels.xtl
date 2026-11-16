@@ -75,10 +75,10 @@ l:c_hunk := { h ->
   top := (1 + l:zs + 16 * l:xs) s_elect r_avel h
   d := top - l:ys
   b := (d = 1) * 3
-  b := b + (d > 1) * (d < 5) * 2
-  b := b + (d >= 5) * 1
-  b := b + (b = 3) * (l:ys <= 7) * 1
-  b := b + (b = 0) * (l:ys < 7) * 5
+  soil := b + (d > 1) * (d < 5) * 2
+  ground := soil + (d >= 5) * 1
+  shore := ground + (ground = 3) * (l:ys <= 7) * 1
+  sea := shore + (shore = 0) * (l:ys < 7) * 5
   # the tree: a trunk of 3 at (4, 4), leaves around its top
   t := (1 + 4 + 16 * 4) s_elect r_avel h
   up := t > 7
@@ -86,9 +86,9 @@ l:c_hunk := { h ->
   az := a_bs l:zs - 4
   trunk := up * (ax = 0) * (az = 0) * (l:ys >= t) * l:ys < t + 3
   crown := up * (ax <= 1) * (az <= 1) * (l:ys >= t + 2) * (l:ys <= t + 3) * 1 - trunk
-  b := b + trunk * 6 - b
-  b := b + crown * (b = 0) * 7
-  16 16 16 r_eshape b
+  trunked := sea + trunk * 6 - sea
+  grown := trunked + crown * (trunked = 0) * 7
+  16 16 16 r_eshape grown
 }
 
 ## vx:c_ounts b: how many of each block, air first
@@ -151,8 +151,8 @@ h:r_ows := { d mb ->
 l:f_aces := { b ->
   m := l:e_xposed b
   bb := 1 + r_avel b
-  r := (0 h:r_ows bb * 1 s_elect m) c_at_2 (1 h:r_ows bb * 2 s_elect m) c_at_2 (2 h:r_ows bb * 3 s_elect m)
-  r := r c_at_2 (3 h:r_ows bb * 4 s_elect m) c_at_2 (4 h:r_ows bb * 5 s_elect m) c_at_2 (5 h:r_ows bb * 6 s_elect m)
+  r := (((0 h:r_ows bb * 1 s_elect m) c_at_2 (1 h:r_ows bb * 2 s_elect m) c_at_2 (2 h:r_ows bb * 3 s_elect m)) c_at_2
+    (3 h:r_ows bb * 4 s_elect m) c_at_2 (4 h:r_ows bb * 5 s_elect m) c_at_2 (5 h:r_ows bb * 6 s_elect m))
   2 1 t_ranspose r c_at_2 3 h:r_ows bb * r_avel l:s_urface b
 }
 
@@ -180,8 +180,7 @@ l:e_dges := { f ->
   z8 := 8 r_eshape 0
   px := (d s_elect ox) + (1 s_elect_2 f) '+ t_able z8
   py := (d s_elect oy) + (2 s_elect_2 f) '+ t_able z8
-  pz := (d s_elect oz) + (3 s_elect_2 f) '+ t_able z8
-  p := 2 1 t_ranspose (3 c_at 8 * t_ally f) r_eshape (r_avel px) c_at (r_avel py) c_at r_avel pz
+  p := 2 1 t_ranspose (3 c_at 8 * t_ally f) r_eshape (r_avel px) c_at (r_avel py) c_at r_avel (d s_elect oz) + (3 s_elect_2 f) '+ t_able z8
   ((f_loat p) - 8.0) / 8.0
 }
 
@@ -255,11 +254,11 @@ l:t_errain := { h ->
   zs := 3 s_elect c
   d := ((1 + zs + nz * xs) s_elect r_avel h) - ys
   b := (d = 1) * 3
-  b := b + (d > 1) * (d < 5) * 2
-  b := b + (d >= 5) * 1
-  b := b + (b = 3) * (ys <= 14) * 1
-  b := b + (b = 0) * (ys < 14) * 5
-  (nx c_at 32 c_at nz) r_eshape b
+  soil := b + (d > 1) * (d < 5) * 2
+  ground := soil + (d >= 5) * 1
+  shore := ground + (ground = 3) * (ys <= 14) * 1
+  sea := shore + (shore = 0) * (ys < 14) * 5
+  (nx c_at 32 c_at nz) r_eshape sea
 }
 
 ## t vx:t_ree b: a tree at column t (x z) when it stands on grass: a
@@ -277,8 +276,8 @@ l:t_ree := { t b ->
   0 = '+ r_/ col = 3 ? b
   y0 := 1 + '+ r_/ (col = 3) * (r_ange ny) - 1
   ty := y0 + (r_ange 4) - 1
-  ty := (ty < ny) r_eplicate ty
-  trunk := 1 + tz + nz * ty + ny * tx
+  tyIn := (ty < ny) r_eplicate ty
+  trunk := 1 + tz + nz * tyIn + ny * tx
   d5 := (r_ange 5) - 3
   dx := r_avel d5 '{ _l + 0 * _r } t_able d5
   dz := r_avel d5 '{ _r + 0 * _l } t_able d5
@@ -290,9 +289,9 @@ l:t_ree := { t b ->
   }
   crown := ((y0 + 3) u_p wide) c_at ((y0 + 4) u_p wide) c_at (y0 + 5) u_p small
   n := t_ally v
-  v := v + ((r_ange n) m_ember? trunk) * 6 - v
-  v := v + ((r_ange n) m_ember? crown) * (v = 0) * 7
-  sh r_eshape v
+  trunked := v + ((r_ange n) m_ember? trunk) * 6 - v
+  grown := trunked + ((r_ange n) m_ember? crown) * (trunked = 0) * 7
+  sh r_eshape grown
 }
 
 ## vx:w_orldFaces b: every face of a world, one row each -- x y z
@@ -320,8 +319,8 @@ l:w_orldFaces := { b ->
     k := w_here m > 0
     (5 c_at t_ally k) r_eshape (k s_elect 1 s_elect c) c_at (k s_elect 2 s_elect c) c_at (k s_elect 3 s_elect c) c_at ((t_ally k) r_eshape d) c_at (k s_elect m) - 1
   }
-  r := (0 r_w bb * r_avel w) c_at_2 (1 r_w bb * r_avel e) c_at_2 (2 r_w bb * r_avel d) c_at_2 (3 r_w bb * r_avel u)
-  r := r c_at_2 (4 r_w bb * r_avel n) c_at_2 (5 r_w bb * r_avel so) c_at_2 3 r_w bb * r_avel top
+  r := (((0 r_w bb * r_avel w) c_at_2 (1 r_w bb * r_avel e) c_at_2 (2 r_w bb * r_avel d) c_at_2 (3 r_w bb * r_avel u)) c_at_2
+    (4 r_w bb * r_avel n) c_at_2 (5 r_w bb * r_avel so) c_at_2 3 r_w bb * r_avel top)
   2 1 t_ranspose r
 }
 
@@ -393,17 +392,16 @@ inner := 1 + (1 + cell m_od 16) + 18 * ((cell d_iv 16) m_od 32) + 32 * 1 + cell 
 l:p_atch := { c ->
   x0 := (16 * 1 s_elect c) - 1
   z0 := (16 * 2 s_elect c) - 1
-  h := l:h_eightsAt x0 c_at z0 c_at 18
-  b := l:t_errain h
+  b := l:t_errain l:h_eightsAt x0 c_at z0 c_at 18
   r := (1 s_elect c) l:h_ash 2 s_elect c
   q := (2 s_elect c) l:h_ash 1 s_elect c
   t := 4 + f_loor 10.0 * (r_avel r) c_at (r_avel q) c_at (r_avel r * q) c_at r_avel 1.0 - r * q
-  b := (2 2 r_eshape t) l:f_orest b
-  f := l:w_orldFaces b
+  wooded := (2 2 r_eshape t) l:f_orest b
+  f := l:w_orldFaces wooded
   keep := ((1 s_elect_2 f) >= 1) * ((1 s_elect_2 f) <= 16) * ((3 s_elect_2 f) >= 1) * (3 s_elect_2 f) <= 16
-  f := keep r_eplicate f
-  f := f + ((t_ally f) c_at 5) r_eshape x0 c_at 0 c_at z0 c_at 0 0
-  (e_nclose f) c_at e_nclose inner s_elect r_avel l:s_olid b
+  kept := keep r_eplicate f
+  moved := kept + ((t_ally kept) c_at 5) r_eshape x0 c_at 0 c_at z0 c_at 0 0
+  (e_nclose moved) c_at e_nclose inner s_elect r_avel l:s_olid wooded
 }
 
 ### Columns, quickly
@@ -430,15 +428,14 @@ l:c_olumnBlocks := { c ->
   h := l:h_eightsAt x0 c_at z0 c_at 18
   d := ((1 + cz18 + 18 * cx18) s_elect r_avel h) - cy18
   b := (d = 1) * 3
-  b := b + (d > 1) * (d < 5) * 2
-  b := b + (d >= 5) * 1
-  b := b + (b = 3) * (cy18 <= 14) * 1
-  b := b + (b = 0) * (cy18 < 14) * 5
-  b := 18 32 18 r_eshape b
+  soil := b + (d > 1) * (d < 5) * 2
+  ground := soil + (d >= 5) * 1
+  shore := ground + (ground = 3) * (cy18 <= 14) * 1
+  blocks := 18 32 18 r_eshape shore + (shore = 0) * (cy18 < 14) * 5
   r := (1 s_elect c) l:h_ash 2 s_elect c
   q := (2 s_elect c) l:h_ash 1 s_elect c
   t := 4 + f_loor 10.0 * (r_avel r) c_at (r_avel q) c_at (r_avel r * q) c_at r_avel 1.0 - r * q
-  (2 2 r_eshape t) l:f_orest b
+  (2 2 r_eshape t) l:f_orest blocks
 }
 
 ## vx:c_olumnMask b: the solid mask of a column's own cells (16 by 32
@@ -480,10 +477,10 @@ l:c_olumnFaces := { c b ->
     k := w_here m > 0
     (5 c_at t_ally k) r_eshape (x0 + k s_elect cx18) c_at (k s_elect cy18) c_at (z0 + k s_elect cz18) c_at ((t_ally k) r_eshape d) c_at (k s_elect m) - 1
   }
-  r := (0 r_w bb * r_avel w) c_at_2 (1 r_w bb * r_avel e) c_at_2 (2 r_w bb * r_avel d) c_at_2 (3 r_w bb * r_avel u)
-  r := r c_at_2 (4 r_w bb * r_avel n) c_at_2 (5 r_w bb * r_avel so) c_at_2 3 r_w bb * r_avel top
-  r := r c_at_2 (0 r_w bb * r_avel ww) c_at_2 (1 r_w bb * r_avel we) c_at_2 (2 r_w bb * r_avel wd)
-  r := r c_at_2 (4 r_w bb * r_avel wn) c_at_2 5 r_w bb * r_avel ws
+  r := (((0 r_w bb * r_avel w) c_at_2 (1 r_w bb * r_avel e) c_at_2 (2 r_w bb * r_avel d) c_at_2 (3 r_w bb * r_avel u)) c_at_2
+    ((4 r_w bb * r_avel n) c_at_2 (5 r_w bb * r_avel so) c_at_2 3 r_w bb * r_avel top) c_at_2
+    ((0 r_w bb * r_avel ww) c_at_2 (1 r_w bb * r_avel we) c_at_2 (2 r_w bb * r_avel wd)) c_at_2
+    (4 r_w bb * r_avel wn) c_at_2 5 r_w bb * r_avel ws)
   2 1 t_ranspose r
 }
 
@@ -514,8 +511,7 @@ ez1 := (Z18 < 17) * 1
 ## 15
 l:c_olumnLight := { b ->
   op := 1 - l:s_olid b
-  sky := r_ev_2 'm_in s_\_2 r_ev_2 op
-  sun := 5 '{ op h:g_low _r } p_ower 15 * sky
+  sun := 5 '{ op h:g_low _r } p_ower 15 * r_ev_2 'm_in s_\_2 r_ev_2 op
   glow := (15 * b = 8) m_ax 12 * b = 9
   0 = '+ r_/ r_avel glow ? (sun, 0 * sun)
   (sun, 5 '{ op h:g_low _r } p_ower glow)
@@ -524,12 +520,12 @@ l:c_olumnLight := { b ->
 # op h:g_low L: one round of light spreading: each open cell the
 # brightest of its six neighbors less 3, if that is brighter
 h:g_low := { op L ->
-  n := (-1 o_-_1 L) * ex0
-  n := n m_ax (1 o_-_1 L) * ex1
-  n := n m_ax (-1 o_-_2 L) * ey0
-  n := n m_ax (1 o_-_2 L) * ey1
-  n := n m_ax (-1 o_-_3 L) * ez0
-  n := n m_ax (1 o_-_3 L) * ez1
+  n := (((-1 o_-_1 L) * ex0) m_ax
+    ((1 o_-_1 L) * ex1) m_ax
+    ((-1 o_-_2 L) * ey0) m_ax
+    ((1 o_-_2 L) * ey1) m_ax
+    ((-1 o_-_3 L) * ez0) m_ax
+    (1 o_-_3 L) * ez1)
   L m_ax op * 0 m_ax n - 3
 }
 

@@ -46,7 +46,13 @@ fi
 [ "$(git -C "$libraries" rev-parse HEAD)" = "$libraries_commit" ] || {
     echo "hex1000: transitive library pin mismatch" >&2; exit 1;
 }
-cmp -s "$clone/XETAL_COMMIT" "$root/XETAL_COMMIT" || {
+# The models were written for the evaluator at the clone's XETAL_COMMIT.
+# Under another evaluator they are used only once that pair has been
+# reviewed (the keys-build and keys-leds goldens passing unchanged) and
+# recorded in HEX1000_REVIEWED as "<the clone's pin> <this pin>".
+theirs="$(tr -d '[:space:]' < "$clone/XETAL_COMMIT")"
+ours="$(tr -d '[:space:]' < "$root/XETAL_COMMIT")"
+[ "$theirs" = "$ours" ] || grep -qx "$theirs $ours" "$root/HEX1000_REVIEWED" 2>/dev/null || {
     echo "hex1000: evaluator pins differ; review compatibility before using the models" >&2; exit 1;
 }
 printf '%s\n' "$clone"

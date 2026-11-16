@@ -16,7 +16,7 @@ x := ((f_loat w c_at 1) c_at 0.4 0.8 1.0) sc:s_egments! (r_avel e) s_elect c
 y := ((f_loat w c_at 2) c_at 1.0 0.6 0.2) sc:d_ots! c
 
 u:q_uit := { n ->
-  z := sc:c_lose! w
+  _ := sc:c_lose! w
   0
 }
 u:f_rame := { n ->

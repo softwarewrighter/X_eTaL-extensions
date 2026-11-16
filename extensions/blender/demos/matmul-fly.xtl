@@ -18,8 +18,8 @@
 
 # five stills (the document's pictures), then every frame as the video
 script := ((1920, 1080, 512) mf:s_cene 0) c_at ((1.0 6.0 8.5 11.5 16.5, "matmul-fly") vd:s_tills 0) c_at (vd:r_ender "matmul-fly.mp4") c_at vd:report
-n := "work/explain/run.py" bl:w_rite! bp:launcher
-n := "work/explain/matmul-fly.py" bl:w_rite! script
+_ := "work/explain/run.py" bl:w_rite! bp:launcher
+_ := "work/explain/matmul-fly.py" bl:w_rite! script
 "rendering five stills and 18 seconds (541 frames) with Blender (EEVEE) ..."
 r := "work/explain/run.py" bl:r_un! "work/explain/matmul-fly.py work/explain/out"
 "the run, and the error lines in Blender's log:"

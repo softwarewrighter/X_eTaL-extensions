@@ -15,7 +15,7 @@ w := "Life -- X_eTaL" cv:o_pen! 512 512
 
 ## after quitting: close the window; an empty board ends the loop's work
 u:q_uit := { b ->
-  c := cv:c_lose! w
+  _ := cv:c_lose! w
   0 0 r_eshape 0
 }
 
@@ -25,7 +25,7 @@ u:f_rame := { b ->
   e := cv:n_ext! w
   ((e m_atch "close") + e m_atch "key q") > 0 ? u:q_uit b
   e m_atch "key Space" ? u:s_eed 96
-  s := w cv:s_how! b
+  _ := w cv:s_how! b
   u:l_ife b
 }
 

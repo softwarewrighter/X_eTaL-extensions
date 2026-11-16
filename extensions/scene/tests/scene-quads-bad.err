@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:scene/quads: quads are 4n by 3 points (four corners each), or 4n by 5 with light, not [6, 3] at ./lib/Scene.xtl:29:1
+error[io]: []N_GET: ext:scene/quads: quads are 4n by 3 points (four corners each), or 4n by 5 with light, not [6, 3]
+  --> ./lib/Scene.xtl:29:1
+   |
+29 | "q_uads! : float float -> int"       ffi:b_ind< "scene/quads"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/quads-bad.xtl:4:3
+   |
+ 4 | ((f_loat w c_at 1) c_at 1.0 1.0 1.0) sc:q_uads! 6 3 r_eshape 0.0
+   |   -------------------------------------------------------------- called from the program here

@@ -10,6 +10,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-15
+
+- `vendor` X_eTaL 8c49bd8 (from d284a8c, 2026-10-08; the user: October 30 or newer, then the latest) and X_eTaL-libraries 9132a1c. `xetal-x` uses X_eTaL's command line as a library (ask E3 landed; the copied CLI modules are gone). A name is bound once now (M1): 890 lines in 83 programs rewritten with no `!` variable -- a text grown line by line as one expression, steps on their own result as one composition, unread effect results as `_ :=`, 137 values named for what they hold; every program-output golden unchanged. 25 error goldens rebased (errors show the calling line, ask E5 landed). `HEX1000_REVIEWED` records that the HEX1000 models pass under the new evaluator. Asks swept: E3, E5, E10 landed, E9 appears fixed, E13 added (a fix for `rebind`). Pages and the live city rebuilt.
+
 ## 2026-11-14
 
 - `plan` The snowflow study (step 26): the reference read in its source (94 files; the snow buffer is one 242-line pass over a 2048 square state array), and the user's port, snowflow_demo-fork, which already is the snow world in X_eTaL. Decided with the user: this repository supports the fork and builds no snow demo; the two winter-planet steps become the typed array path the fork asks for and its proof on the live city. Ask E12 (array kernels on the browser's GPU; one 2048 square relaxation step takes 1.1 s in the evaluator); E1 given the fork's mesh workload.

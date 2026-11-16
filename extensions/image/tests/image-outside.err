@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:image/read: "../../images/modern-xetal-logo.jpg": give a path under the working directory (or XETAL_IMAGE_ROOT), no .. at ./lib/Image.xtl:13:1
+error[io]: []N_GET: ext:image/read: "../../images/modern-xetal-logo.jpg": give a path under the working directory (or XETAL_IMAGE_ROOT), no ..
+  --> ./lib/Image.xtl:13:1
+   |
+13 | "r_ead : text -> floats"         ffi:b_ind< "image/read"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/outside.xtl:3:1
+   |
+ 3 | im:r_ead "../../images/modern-xetal-logo.jpg"
+   | --------------------------------------------- called from the program here

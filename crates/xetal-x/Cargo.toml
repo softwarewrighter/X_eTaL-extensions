@@ -11,31 +11,21 @@ authors.workspace = true
 name = "xetal-x"
 path = "src/main.rs"
 
-# The vendored X_eTaL crates the CLI uses (vendor/xetal/, never edited).
+# X_eTaL's crates, from its clone at XETAL_COMMIT (work/xetal/, never
+# edited): the command line as a library (ask E3, landed) and what its
+# binary's main uses.
 [dependencies]
-xetal-base = { path = "../../work/xetal/components/base/crates/xetal-base" }
-xetal-lex = { path = "../../work/xetal/components/syntax/crates/xetal-lex" }
-xetal-render = { path = "../../work/xetal/components/render/crates/xetal-render" }
-xetal-view = { path = "../../work/xetal/components/view/crates/xetal-view" }
-xetal-edit = { path = "../../work/xetal/components/tui/crates/xetal-edit" }
-xetal-syntax = { path = "../../work/xetal/components/syntax/crates/xetal-syntax" }
-xetal-core = { path = "../../work/xetal/components/core/crates/xetal-core" }
-xetal-types = { path = "../../work/xetal/components/types/crates/xetal-types" }
-xetal-eval = { path = "../../work/xetal/components/eval/crates/xetal-eval" }
+xetal-command = { path = "../../work/xetal/components/cli/crates/xetal-command" }
+xetal-shell = { path = "../../work/xetal/components/cli/crates/xetal-shell" }
 xetal-repl = { path = "../../work/xetal/components/cli/crates/xetal-repl" }
-xetal-program = { path = "../../work/xetal/components/macro/crates/xetal-program" }
-xetal-lint = { path = "../../work/xetal/components/core/crates/xetal-lint" }
-xetal-sources = { path = "../../work/xetal/components/macro/crates/xetal-sources" }
-xetal-diagram = { path = "../../work/xetal/components/view/crates/xetal-diagram" }
+xetal-base = { path = "../../work/xetal/components/base/crates/xetal-base" }
 xetal-store = { path = "../../work/xetal/components/base/crates/xetal-store" }
+xetal-edit = { path = "../../work/xetal/components/tui/crates/xetal-edit" }
+xetal-keys = { path = "../../work/xetal/components/tui/crates/xetal-keys" }
 xetal-grid = { path = "../../work/xetal/components/view/crates/xetal-grid" }
 xetal-line = { path = "../../work/xetal/components/line/crates/xetal-line" }
 xetal-tty = { path = "../../work/xetal/components/console/crates/xetal-tty" }
 xetal-system = { path = "../../work/xetal/components/system/crates/xetal-system" }
-xetal-doc = { path = "../../work/xetal/components/doc/crates/xetal-doc" }
-xetal-names = { path = "../../work/xetal/components/macro/crates/xetal-names" }
-xetal-docsearch = { path = "../../work/xetal/components/docsearch/crates/xetal-docsearch" }
-xetal-doctest = { path = "../../work/xetal/components/doc/crates/xetal-doctest" }
 clap = { version = "4", features = ["derive"] }
 sigpipe = "0.1.3"
 xetal-ext-loader = { path = "../xetal-ext-loader" }

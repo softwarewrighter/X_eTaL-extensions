@@ -531,8 +531,7 @@ l:stops := 4 3 r_eshape 43 74 154  47 183 214  255 216 77  255 122 61
 ## 151.0 199.5 145.5
 ## 255.0 122.0  61.0
 l:t_one := { (v, lo, hi) z ->
-  t := 0.0 m_ax 1.0 m_in ((f_loat r_avel v) - lo) / 0.000000001 m_ax hi - lo
-  x := 3.0 * t
+  x := 3.0 * 0.0 m_ax 1.0 m_in ((f_loat r_avel v) - lo) / 0.000000001 m_ax hi - lo
   i := 2 m_in f_loor x
   u := x - f_loat i
   a := (i + 1) s_elect f_loat l:stops

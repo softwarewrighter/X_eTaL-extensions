@@ -1,8 +1,10 @@
 //! `xetal-x`: the vendored `xetal` CLI, unchanged, with one difference:
 //! its store sends paths starting `ext:` to native extensions (see
 //! `ext.rs`) and everything else where `xetal` sends it. Every
-//! subcommand, flag and message is the vendored CLI's: its modules are
-//! compiled here from X_eTaL's clone, `work/xetal/`, as they are.
+//! subcommand, flag and message is the CLI's own: X_eTaL's command line
+//! is a library, `xetal-command` (ask E3, landed), used here from
+//! X_eTaL's clone, `work/xetal/`; only its binary's short `main` is
+//! repeated, with the store wrapped.
 //!
 //! Extensions are packages (directories with an `extension.toml`) found
 //! through `--ext DIR` (repeatable, before the subcommand) and the
@@ -12,35 +14,12 @@
 //! package's `native/<platform>/`, then beside this executable (where
 //! Cargo builds the workspace's extensions).
 
-// The vendored CLI's modules, verbatim (main.rs below replaces its main).
-// rustfmt must not touch them: they live in X_eTaL's clone (work/xetal/).
-#[rustfmt::skip]
-#[path = "../../../work/xetal/components/cli/crates/xetal-cli/src/args.rs"]
-mod args;
-#[rustfmt::skip]
-#[path = "../../../work/xetal/components/cli/crates/xetal-cli/src/context.rs"]
-mod context;
-#[rustfmt::skip]
-#[path = "../../../work/xetal/components/cli/crates/xetal-cli/src/echo.rs"]
-mod echo;
-#[rustfmt::skip]
-#[path = "../../../work/xetal/components/cli/crates/xetal-cli/src/live.rs"]
-mod live;
-#[rustfmt::skip]
-#[path = "../../../work/xetal/components/cli/crates/xetal-cli/src/once.rs"]
-mod once;
-#[rustfmt::skip]
-#[path = "../../../work/xetal/components/cli/crates/xetal-cli/src/stages.rs"]
-mod stages;
-
 mod ext;
 
 use std::process::ExitCode;
 
-use clap::Parser;
-
-use crate::args::{Cli, Command};
-use crate::stages::run;
+use xetal_base::Diagnostic;
+use xetal_command::{Cli, Command, Host, Local};
 
 fn main() -> ExitCode {
     sigpipe::reset();
@@ -82,7 +61,8 @@ fn main() -> ExitCode {
     }
     // From here on, the vendored CLI's main.
     xetal_tty::install(std::sync::Arc::new(xetal_line::Terminal));
-    let cli = Cli::parse_from(argv);
+    let argv = argv.into_iter().map(|a| a.to_string_lossy().into_owned());
+    let cli = xetal_command::parse(argv).unwrap_or_else(|e| e.exit());
     let draw = cli.draw.clone();
     let events = cli.events.clone();
     xetal_grid::set_ascii(cli.ascii);
@@ -96,7 +76,14 @@ fn main() -> ExitCode {
     let done = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
     let finished = done.clone();
     let program = std::thread::spawn(move || {
-        let result = run(&command);
+        let (mut out, mut err) = (std::io::stdout(), std::io::stderr());
+        let mut host = Host {
+            files: &Local,
+            out: &mut out,
+            err: &mut err,
+            seed: None,
+        };
+        let result = run(&command, &mut host).map_err(|d| placed(d, &command, &host));
         finished.store(true, std::sync::atomic::Ordering::SeqCst);
         result
     });
@@ -116,6 +103,60 @@ fn main() -> ExitCode {
             eprintln!("error[internal]: the program's thread failed");
             ExitCode::FAILURE
         }
+    }
+}
+
+/// The interactive commands on this terminal; the rest through the
+/// library.
+fn run(command: &Command, host: &mut Host) -> Result<String, Diagnostic> {
+    match command {
+        Command::Repl => {
+            xetal_repl::stdio().map_err(|e| Diagnostic::new("io", e.to_string()))?;
+            Ok(String::new())
+        }
+        Command::Edit {
+            file,
+            screen: true,
+            keys,
+            size,
+        } => screen(file, keys.as_deref().unwrap_or(""), size),
+        Command::Edit { file, .. } => {
+            use std::io::IsTerminal;
+            if !(std::io::stdin().is_terminal() && std::io::stdout().is_terminal()) {
+                return Err(Diagnostic::new(
+                    "no-terminal",
+                    "xetal edit needs a terminal",
+                ));
+            }
+            xetal_edit::run(std::path::Path::new(file))
+                .map_err(|e| Diagnostic::new("io", e.to_string()))?;
+            Ok(String::new())
+        }
+        _ => xetal_command::run(command, host),
+    }
+}
+
+/// `xetal edit FILE --screen --keys KEYS --size COLSxROWS`: the
+/// editor's screen after the keys, as text.
+fn screen(file: &str, keys: &str, size: &str) -> Result<String, Diagnostic> {
+    let bad = |m: String| Diagnostic::new("bad-screen", m);
+    let size = size
+        .split_once('x')
+        .and_then(|(c, r)| Some((c.parse::<u16>().ok()?, r.parse::<u16>().ok()?)))
+        .filter(|(c, r)| *c > 0 && *r > 0)
+        .ok_or_else(|| bad(format!("--size must be COLSxROWS, as 100x32, got {size:?}")))?;
+    let keys = xetal_keys::keys(keys).map_err(bad)?;
+    let editor = xetal_edit::Editor::open(std::path::Path::new(file))
+        .map_err(|e| Diagnostic::new("io", format!("cannot read {file}: {e}")))?;
+    Ok(xetal_shell::screen(editor, &keys, size).join("\n"))
+}
+
+/// `d` with its file, line and column, if it has a span not yet placed
+/// (a stage that reads the source alone: lex, parse, render, ...).
+fn placed(d: Diagnostic, command: &Command, host: &Host) -> Diagnostic {
+    match (d.place(), d.span, command.source(host)) {
+        (None, Some(_), Some(Ok(text))) => d.placed_in(&command.origin(), &text),
+        _ => d,
     }
 }
 

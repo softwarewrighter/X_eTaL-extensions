@@ -23,6 +23,6 @@ vx:c_ounts b
 "seen from above (the top block of each column):"
 t := vx:t_op b
 t
-p := []S_HOW []G_RID t
-p := []S_HOW []G_RID r_ev (1 + 8 s_elect b)
+_ := []S_HOW []G_RID t
+_ := []S_HOW []G_RID r_ev (1 + 8 s_elect b)
 "drawn: the view from above, the slice at x = 8"

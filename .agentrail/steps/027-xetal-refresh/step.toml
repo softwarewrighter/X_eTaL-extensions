@@ -1,0 +1,8 @@
+number = 27
+slug = "xetal-refresh"
+status = "in-progress"
+description = 'Saga 15 (the user, 2026-11-15: "can we move the version of X_eTaL forward to ...'
+role = "production"
+context_files = []
+created_at = "2026-11-15T18:38:16"
+commits = []

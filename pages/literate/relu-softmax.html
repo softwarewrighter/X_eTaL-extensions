@@ -9,6 +9,9 @@
 <meta name="author" content="Michael A Wright" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous"/>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () { if (typeof katex === 'undefined') return; document.querySelectorAll('.c-notation').forEach(function (el) { var tex = el.textContent; if (!tex) return; try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; } }); });</script>
 </head>
 <body>
 <div id="content" class="content">
@@ -122,9 +125,9 @@ imports the library:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ʳˢ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;ReluSoftmax&quot;</span>
-<span class="c-libfunc">ᵃᶜ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Accel&quot;</span>
-<span class="c-libfunc">ᵛᵈ⁼</span><span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Video&quot;</span>
+<pre class="src src-xetal"><span class="c-string">&quot;rs:&quot;</span> <span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;ReluSoftmax&quot;</span>
+<span class="c-string">&quot;ac:&quot;</span> <span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Accel&quot;</span>
+<span class="c-string">&quot;vd:&quot;</span> <span class="c-macro">u̲se&lt;</span> <span class="c-string">&quot;Video&quot;</span>
 <span class="c-builtin">s̲hape</span> ʳˢx
 
 <span class="c-comment typed">⍝ typed:</span>
@@ -220,7 +223,7 @@ are untouched:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> (<span class="c-builtin">r̲avel</span> ʳˢz1) <span class="c-symbol">&lt;</span> <span class="c-number">0.0</span>
+<pre class="src src-xetal"><span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> <span class="c-depth0">(</span><span class="c-builtin">r̲avel</span> ʳˢz1<span class="c-depth0">)</span> <span class="c-symbol">&lt;</span> <span class="c-number">0.0</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   '+ r_/ (r_avel rs:z1) &lt; 0.0</span></pre>
@@ -232,7 +235,7 @@ are untouched:
 
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> <span class="c-builtin">r̲avel</span> <span class="c-builtin">a̲bs</span> (ʳˢz1 <span class="c-symbol">−</span> ʳˢh) <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> ʳˢz1 <span class="c-symbol">≥</span> <span class="c-number">0.0</span>
+<pre class="src src-xetal"><span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> <span class="c-builtin">r̲avel</span> <span class="c-builtin">a̲bs</span> <span class="c-depth0">(</span>ʳˢz1 <span class="c-symbol">−</span> ʳˢh<span class="c-depth0">)</span> <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> ʳˢz1 <span class="c-symbol">≥</span> <span class="c-number">0.0</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   '+ r_/ r_avel a_bs (rs:z1 - rs:h) * f_loat rs:z1 &gt;= 0.0</span></pre>
@@ -314,35 +317,35 @@ checks that they give <code>ac:s_oftmax</code>'s answer:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ʰa̲long</span> ← { v m → v <span class="c-builtin">'l̲eft</span> <span class="c-builtin">t̲able</span> <span class="c-builtin">o̲ffsets</span> <span class="c-builtin">f̲irst</span> <span class="c-number">-1</span> <span class="c-builtin">t̲ake</span> <span class="c-builtin">s̲hape</span> m }
+<pre class="src src-xetal"><span class="c-libfunc">ʰa̲long</span> ← <span class="c-depth0">{</span> v m → v <span class="c-builtin">'l̲eft</span> <span class="c-builtin">t̲able</span> <span class="c-builtin">o̲ffsets</span> <span class="c-builtin">f̲irst</span> <span class="c-number">-1</span> <span class="c-builtin">t̲ake</span> <span class="c-builtin">s̲hape</span> m <span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   h:a_long := { v m -&gt; v 'l_eft t_able o_ffsets f_irst -1 t_ake s_hape m }</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡs̲hifted</span> ← { m → m <span class="c-symbol">−</span> (<span class="c-libfunc">ᵃᶜr̲owMax</span> m) <span class="c-libfunc">ʰa̲long</span> m }
+<pre class="src src-xetal"><span class="c-libfunc">ˡs̲hifted</span> ← <span class="c-depth0">{</span> m → m <span class="c-symbol">−</span> <span class="c-depth1">(</span><span class="c-libfunc">ᵃᶜr̲owMax</span> m<span class="c-depth1">)</span> <span class="c-libfunc">ʰa̲long</span> m <span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:s_hifted := { m -&gt; m - (ac:r_owMax m) h:a_long m }</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡe̲xps</span> ← { m → <span class="c-builtin">e̲xp</span> <span class="c-libfunc">ˡs̲hifted</span> m }
+<pre class="src src-xetal"><span class="c-libfunc">ˡe̲xps</span> ← <span class="c-depth0">{</span> m → <span class="c-builtin">e̲xp</span> <span class="c-libfunc">ˡs̲hifted</span> m <span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:e_xps := { m -&gt; e_xp l:s_hifted m }</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡs̲ums</span> ← { m → <span class="c-libfunc">ᵃᶜr̲owSums</span> <span class="c-libfunc">ˡe̲xps</span> m }
+<pre class="src src-xetal"><span class="c-libfunc">ˡs̲ums</span> ← <span class="c-depth0">{</span> m → <span class="c-libfunc">ᵃᶜr̲owSums</span> <span class="c-libfunc">ˡe̲xps</span> m <span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:s_ums := { m -&gt; ac:r_owSums l:e_xps m }</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡshares ← (<span class="c-libfunc">ˡe̲xps</span> ˡz2) <span class="c-symbol">÷</span> (<span class="c-libfunc">ˡs̲ums</span> ˡz2) <span class="c-libfunc">ʰa̲long</span> ˡz2
+<pre class="src src-xetal">ˡshares ← <span class="c-depth0">(</span><span class="c-libfunc">ˡe̲xps</span> ˡz2<span class="c-depth0">)</span> <span class="c-symbol">÷</span> <span class="c-depth0">(</span><span class="c-libfunc">ˡs̲ums</span> ˡz2<span class="c-depth0">)</span> <span class="c-libfunc">ʰa̲long</span> ˡz2
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:shares := (l:e_xps l:z2) / (l:s_ums l:z2) h:a_long l:z2</span></pre>
@@ -481,14 +484,14 @@ camera can glide from one to the other):
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡcellX ← <span class="c-number">4</span> <span class="c-number">5</span> <span class="c-builtin">r̲eshape</span> ox <span class="c-symbol">+</span> gap <span class="c-symbol">×</span> (<span class="c-builtin">f̲loat</span> <span class="c-builtin">r̲ange</span> <span class="c-number">5</span>) <span class="c-symbol">−</span> <span class="c-number">3.0</span>
+<pre class="src src-xetal">ˡcellX ← <span class="c-number">4</span> <span class="c-number">5</span> <span class="c-builtin">r̲eshape</span> ox <span class="c-symbol">+</span> gap <span class="c-symbol">×</span> <span class="c-depth0">(</span><span class="c-builtin">f̲loat</span> <span class="c-builtin">r̲ange</span> <span class="c-number">5</span><span class="c-depth0">)</span> <span class="c-symbol">−</span> <span class="c-number">3.0</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:cellX := 4 5 r_eshape ox + gap * (f_loat r_ange 5) - 3.0</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡcellY ← (gap <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> (<span class="c-builtin">r̲ange</span> <span class="c-number">4</span>) <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-builtin">'l̲eft</span> <span class="c-builtin">t̲able</span> <span class="c-builtin">r̲ange</span> <span class="c-number">5</span>
+<pre class="src src-xetal">ˡcellY ← <span class="c-depth0">(</span>gap <span class="c-symbol">×</span> <span class="c-builtin">f̲loat</span> <span class="c-depth1">(</span><span class="c-builtin">r̲ange</span> <span class="c-number">4</span><span class="c-depth1">)</span> <span class="c-symbol">−</span> <span class="c-number">1</span><span class="c-depth0">)</span> <span class="c-builtin">'l̲eft</span> <span class="c-builtin">t̲able</span> <span class="c-builtin">r̲ange</span> <span class="c-number">5</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:cellY := (gap * f_loat (r_ange 4) - 1) 'l_eft t_able r_ange 5</span></pre>
@@ -517,14 +520,14 @@ library works out every bar at once, a row of six numbers each:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡb̲ars</span> ← { (bx, by, hh, w) z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡb̲ars</span> ← <span class="c-unmatched">{</span> <span class="c-depth1">(</span>bx, by, hh, w<span class="c-depth1">)</span> z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:b_ars := { (bx, by, hh, w) z -&gt;</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal">(<span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">2.0</span> <span class="c-number">-1.0</span>, <span class="c-number">0.5</span>) <span class="c-libfunc">ʳˢb̲ars</span> <span class="c-number">0</span>
+<pre class="src src-xetal"><span class="c-depth0">(</span><span class="c-number">0.0</span> <span class="c-number">1.0</span>, <span class="c-number">0.0</span> <span class="c-number">0.0</span>, <span class="c-number">2.0</span> <span class="c-number">-1.0</span>, <span class="c-number">0.5</span><span class="c-depth0">)</span> <span class="c-libfunc">ʳˢb̲ars</span> <span class="c-number">0</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   (0.0 1.0, 0.0 0.0, 2.0 -1.0, 0.5) rs:b_ars 0</span></pre>
@@ -544,15 +547,15 @@ by 6 numbers:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡk̲eyed</span> ← { k tabs →
+<pre class="src src-xetal"><span class="c-libfunc">ˡk̲eyed</span> ← <span class="c-unmatched">{</span> k tabs →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:k_eyed := { k tabs -&gt;</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal">p0 ← (<span class="c-builtin">r̲avel</span> ʳˢcellX, <span class="c-builtin">r̲avel</span> ʳˢcellY, <span class="c-number">2.2</span> <span class="c-symbol">×</span> <span class="c-builtin">r̲avel</span> ʳˢz1, <span class="c-number">0.62</span>) <span class="c-libfunc">ʳˢb̲ars</span> <span class="c-number">0</span>
-p1 ← (<span class="c-builtin">r̲avel</span> ʳˢcellX, <span class="c-builtin">r̲avel</span> ʳˢcellY, <span class="c-number">2.2</span> <span class="c-symbol">×</span> <span class="c-libfunc">ᵃᶜr̲elu</span> <span class="c-builtin">r̲avel</span> ʳˢz1, <span class="c-number">0.62</span>) <span class="c-libfunc">ʳˢb̲ars</span> <span class="c-number">0</span>
+<pre class="src src-xetal">p0 ← <span class="c-depth0">(</span><span class="c-builtin">r̲avel</span> ʳˢcellX, <span class="c-builtin">r̲avel</span> ʳˢcellY, <span class="c-number">2.2</span> <span class="c-symbol">×</span> <span class="c-builtin">r̲avel</span> ʳˢz1, <span class="c-number">0.62</span><span class="c-depth0">)</span> <span class="c-libfunc">ʳˢb̲ars</span> <span class="c-number">0</span>
+p1 ← <span class="c-depth0">(</span><span class="c-builtin">r̲avel</span> ʳˢcellX, <span class="c-builtin">r̲avel</span> ʳˢcellY, <span class="c-number">2.2</span> <span class="c-symbol">×</span> <span class="c-libfunc">ᵃᶜr̲elu</span> <span class="c-builtin">r̲avel</span> ʳˢz1, <span class="c-number">0.62</span><span class="c-depth0">)</span> <span class="c-libfunc">ʳˢb̲ars</span> <span class="c-number">0</span>
 keys ← <span class="c-number">3</span> <span class="c-libfunc">ʳˢk̲eyed</span> p0 <span class="c-builtin">c̲at</span> p0 <span class="c-builtin">c̲at</span> p1
 <span class="c-builtin">s̲hape</span> keys
 
@@ -594,8 +597,8 @@ one where the value is negative &#x2013; as arrays:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal">neg ← (<span class="c-builtin">r̲avel</span> ʳˢz1) <span class="c-symbol">&lt;</span> <span class="c-number">0.0</span>
-<span class="c-number">3</span> <span class="c-builtin">t̲ake</span> ((<span class="c-builtin">f̲loat</span> neg) <span class="c-symbol">'×</span> <span class="c-builtin">t̲able</span> <span class="c-builtin">f̲loat</span> ʳˢred) <span class="c-symbol">+</span> (<span class="c-number">1.0</span> <span class="c-symbol">−</span> <span class="c-builtin">f̲loat</span> neg) <span class="c-symbol">'×</span> <span class="c-builtin">t̲able</span> <span class="c-builtin">f̲loat</span> ʳˢorange
+<pre class="src src-xetal">neg ← <span class="c-depth0">(</span><span class="c-builtin">r̲avel</span> ʳˢz1<span class="c-depth0">)</span> <span class="c-symbol">&lt;</span> <span class="c-number">0.0</span>
+<span class="c-number">3</span> <span class="c-builtin">t̲ake</span> <span class="c-depth0">(</span><span class="c-depth1">(</span><span class="c-builtin">f̲loat</span> neg<span class="c-depth1">)</span> <span class="c-symbol">'×</span> <span class="c-builtin">t̲able</span> <span class="c-builtin">f̲loat</span> ʳˢred<span class="c-depth0">)</span> <span class="c-symbol">+</span> <span class="c-depth0">(</span><span class="c-number">1.0</span> <span class="c-symbol">−</span> <span class="c-builtin">f̲loat</span> neg<span class="c-depth0">)</span> <span class="c-symbol">'×</span> <span class="c-builtin">t̲able</span> <span class="c-builtin">f̲loat</span> ʳˢorange
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   neg := (r_avel rs:z1) &lt; 0.0</span>
@@ -617,7 +620,7 @@ after (6 to 11 s):
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡr̲eluScript</span> ← { z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡr̲eluScript</span> ← <span class="c-unmatched">{</span> z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:r_eluScript := { z -&gt;</span></pre>
@@ -639,14 +642,14 @@ apart, so no bar hides another:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡgroupX ← gw <span class="c-symbol">×</span> (<span class="c-builtin">f̲loat</span> <span class="c-builtin">r̲ange</span> <span class="c-number">4</span>) <span class="c-symbol">−</span> <span class="c-number">2.5</span>
+<pre class="src src-xetal">ˡgroupX ← gw <span class="c-symbol">×</span> <span class="c-depth0">(</span><span class="c-builtin">f̲loat</span> <span class="c-builtin">r̲ange</span> <span class="c-number">4</span><span class="c-depth0">)</span> <span class="c-symbol">−</span> <span class="c-number">2.5</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:groupX := gw * (f_loat r_ange 4) - 2.5</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡbarX ← (ˡgroupX <span class="c-symbol">−</span> <span class="c-number">0.9</span>) <span class="c-symbol">'+</span> <span class="c-builtin">t̲able</span> <span class="c-number">0.0</span> <span class="c-number">1.2</span>
+<pre class="src src-xetal">ˡbarX ← <span class="c-depth0">(</span>ˡgroupX <span class="c-symbol">−</span> <span class="c-number">0.9</span><span class="c-depth0">)</span> <span class="c-symbol">'+</span> <span class="c-builtin">t̲able</span> <span class="c-number">0.0</span> <span class="c-number">1.2</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:barX := (l:groupX - 0.9) '+ t_able 0.0 1.2</span></pre>
@@ -679,14 +682,14 @@ first on the floor, the second on top of it, so every column stands
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡs̲oftmaxScript</span> ← { z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡs̲oftmaxScript</span> ← <span class="c-unmatched">{</span> z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:s_oftmaxScript := { z -&gt;</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ʰv̲alues</span> ← { (name, v, i, j, less, bx) z →
+<pre class="src src-xetal"><span class="c-libfunc">ʰv̲alues</span> ← <span class="c-unmatched">{</span> <span class="c-depth1">(</span>name, v, i, j, less, bx<span class="c-depth1">)</span> z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   h:v_alues := { (name, v, i, j, less, bx) z -&gt;</span></pre>
@@ -715,19 +718,19 @@ cannot disagree with what it shows:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ʰs̲hape</span> ← { name a → name <span class="c-builtin">c̲at</span> <span class="c-string">&quot; [&quot;</span> <span class="c-builtin">c̲at</span> (<span class="c-builtin">f̲ormat</span> <span class="c-builtin">s̲hape</span> a) <span class="c-builtin">c̲at</span> <span class="c-string">&quot;]&quot;</span> }
+<pre class="src src-xetal"><span class="c-libfunc">ʰs̲hape</span> ← <span class="c-depth0">{</span> name a → name <span class="c-builtin">c̲at</span> <span class="c-string">&quot; [&quot;</span> <span class="c-builtin">c̲at</span> <span class="c-depth1">(</span><span class="c-builtin">f̲ormat</span> <span class="c-builtin">s̲hape</span> a<span class="c-depth1">)</span> <span class="c-builtin">c̲at</span> <span class="c-string">&quot;]&quot;</span> <span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   h:s_hape := { name a -&gt; name c_at " [" c_at (f_ormat s_hape a) c_at "]" }</span></pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ˡcaptionTexts ← ((<span class="c-string">&quot;z1&quot;</span> <span class="c-libfunc">ʰs̲hape</span> ˡz1) <span class="c-builtin">c̲at</span> <span class="c-string">&quot;: &quot;</span> <span class="c-builtin">c̲at</span> (<span class="c-builtin">f̲ormat</span> <span class="c-builtin">t̲ally</span> <span class="c-builtin">r̲avel</span> ˡz1) <span class="c-builtin">c̲at</span> <span class="c-string">&quot; values, &quot;</span> <span class="c-builtin">c̲at</span> (<span class="c-builtin">f̲ormat</span> <span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> (<span class="c-builtin">r̲avel</span> ˡz1) <span class="c-symbol">&lt;</span> <span class="c-number">0.0</span>) <span class="c-builtin">c̲at</span> <span class="c-string">&quot; of them negative|&quot;</span> <span class="c-builtin">c̲at</span>
+<pre class="src src-xetal">ˡcaptionTexts ← <span class="c-depth0">(</span><span class="c-depth1">(</span><span class="c-string">&quot;z1&quot;</span> <span class="c-libfunc">ʰs̲hape</span> ˡz1<span class="c-depth1">)</span> <span class="c-builtin">c̲at</span> <span class="c-string">&quot;: &quot;</span> <span class="c-builtin">c̲at</span> <span class="c-depth1">(</span><span class="c-builtin">f̲ormat</span> <span class="c-builtin">t̲ally</span> <span class="c-builtin">r̲avel</span> ˡz1<span class="c-depth1">)</span> <span class="c-builtin">c̲at</span> <span class="c-string">&quot; values, &quot;</span> <span class="c-builtin">c̲at</span> <span class="c-depth1">(</span><span class="c-builtin">f̲ormat</span> <span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> <span class="c-depth2">(</span><span class="c-builtin">r̲avel</span> ˡz1<span class="c-depth2">)</span> <span class="c-symbol">&lt;</span> <span class="c-number">0.0</span><span class="c-depth1">)</span> <span class="c-builtin">c̲at</span> <span class="c-string">&quot; of them negative|&quot;</span> <span class="c-builtin">c̲at</span>
   <span class="c-string">&quot;relu: every negative becomes 0|&quot;</span> <span class="c-builtin">c̲at</span>
-  (<span class="c-string">&quot;h&quot;</span> <span class="c-libfunc">ʰs̲hape</span> ˡh) <span class="c-builtin">c̲at</span> <span class="c-string">&quot;: the negatives are gone; the rest unchanged|&quot;</span> <span class="c-builtin">c̲at</span>
-  (<span class="c-string">&quot;z2&quot;</span> <span class="c-libfunc">ʰs̲hape</span> ˡz2) <span class="c-builtin">c̲at</span> <span class="c-string">&quot;: two scores in each row|&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-depth1">(</span><span class="c-string">&quot;h&quot;</span> <span class="c-libfunc">ʰs̲hape</span> ˡh<span class="c-depth1">)</span> <span class="c-builtin">c̲at</span> <span class="c-string">&quot;: the negatives are gone; the rest unchanged|&quot;</span> <span class="c-builtin">c̲at</span>
+  <span class="c-depth1">(</span><span class="c-string">&quot;z2&quot;</span> <span class="c-libfunc">ʰs̲hape</span> ˡz2<span class="c-depth1">)</span> <span class="c-builtin">c̲at</span> <span class="c-string">&quot;: two scores in each row|&quot;</span> <span class="c-builtin">c̲at</span>
   <span class="c-string">&quot;1. subtract each row's largest|2. exp: every value positive, the largest 1|3. add up each row|4. divide by the sum|&quot;</span> <span class="c-builtin">c̲at</span>
-  (<span class="c-string">&quot;p&quot;</span> <span class="c-libfunc">ʰs̲hape</span> ˡp) <span class="c-builtin">c̲at</span> <span class="c-string">&quot;: each row shares out 1&quot;</span>)
+  <span class="c-depth1">(</span><span class="c-string">&quot;p&quot;</span> <span class="c-libfunc">ʰs̲hape</span> ˡp<span class="c-depth1">)</span> <span class="c-builtin">c̲at</span> <span class="c-string">&quot;: each row shares out 1&quot;</span><span class="c-depth0">)</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:captionTexts := (("z1" h:s_hape l:z1) c_at ": " c_at (f_ormat t_ally r_avel l:z1) c_at " values, " c_at (f_ormat '+ r_/ (r_avel l:z1) &lt; 0.0) c_at " of them negative|" c_at</span>
@@ -739,7 +742,7 @@ cannot disagree with what it shows:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡc̲aptionTable</span> ← { z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡc̲aptionTable</span> ← <span class="c-unmatched">{</span> z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:c_aptionTable := { z -&gt;</span></pre>
@@ -764,7 +767,7 @@ enough for its four groups), and drifting until 30 s:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡc̲ameraKeys</span> ← { z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡc̲ameraKeys</span> ← <span class="c-unmatched">{</span> z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:c_ameraKeys := { z -&gt;</span></pre>
@@ -796,7 +799,7 @@ The scene is the stage, the two parts, the captions and the camera:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡs̲cene</span> ← { (w, h) z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡs̲cene</span> ← <span class="c-unmatched">{</span> <span class="c-depth1">(</span>w, h<span class="c-depth1">)</span> z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:s_cene := { (w, h) z -&gt;</span></pre>
@@ -809,7 +812,7 @@ number written out:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡm̲oves</span> ← { (name, ts, p) z →
+<pre class="src src-xetal"><span class="c-libfunc">ˡm̲oves</span> ← <span class="c-unmatched">{</span> <span class="c-depth1">(</span>name, ts, p<span class="c-depth1">)</span> z →
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:m_oves := { (name, ts, p) z -&gt;</span></pre>
@@ -820,7 +823,7 @@ The ReLU bars' keys, as the script has them (the first 160 characters):
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-number">160</span> <span class="c-builtin">t̲ake</span> (<span class="c-string">&quot;z1&quot;</span>, <span class="c-number">0.0</span> <span class="c-number">4.0</span> <span class="c-number">5.6</span>, keys) <span class="c-libfunc">ᵛᵈm̲oves</span> <span class="c-number">0</span>
+<pre class="src src-xetal"><span class="c-number">160</span> <span class="c-builtin">t̲ake</span> <span class="c-depth0">(</span><span class="c-string">&quot;z1&quot;</span>, <span class="c-number">0.0</span> <span class="c-number">4.0</span> <span class="c-number">5.6</span>, keys<span class="c-depth0">)</span> <span class="c-libfunc">ᵛᵈm̲oves</span> <span class="c-number">0</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   160 t_ake ("z1", 0.0 4.0 5.6, keys) vd:m_oves 0</span></pre>
@@ -837,7 +840,7 @@ characters and in lines, the same every time:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-builtin">t̲ally</span> (<span class="c-number">1920</span>, <span class="c-number">1080</span>) <span class="c-libfunc">ʳˢs̲cene</span> <span class="c-number">0</span>
+<pre class="src src-xetal"><span class="c-builtin">t̲ally</span> <span class="c-depth0">(</span><span class="c-number">1920</span>, <span class="c-number">1080</span><span class="c-depth0">)</span> <span class="c-libfunc">ʳˢs̲cene</span> <span class="c-number">0</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   t_ally (1920, 1080) rs:s_cene 0</span></pre>
@@ -849,7 +852,7 @@ characters and in lines, the same every time:
 
 
 <div class="org-src-container">
-<pre class="src src-xetal">lines ← (<span class="c-builtin">n̲ot</span> ((<span class="c-number">1920</span>, <span class="c-number">1080</span>) <span class="c-libfunc">ʳˢs̲cene</span> <span class="c-number">0</span>) <span class="c-symbol">=</span> <span class="c-builtin">f̲irst</span> <span class="c-string">&quot;\n&quot;</span>) <span class="c-builtin">p̲artition</span> (<span class="c-number">1920</span>, <span class="c-number">1080</span>) <span class="c-libfunc">ʳˢs̲cene</span> <span class="c-number">0</span>
+<pre class="src src-xetal">lines ← <span class="c-depth0">(</span><span class="c-builtin">n̲ot</span> <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-number">1920</span>, <span class="c-number">1080</span><span class="c-depth2">)</span> <span class="c-libfunc">ʳˢs̲cene</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-symbol">=</span> <span class="c-builtin">f̲irst</span> <span class="c-string">&quot;\n&quot;</span><span class="c-depth0">)</span> <span class="c-builtin">p̲artition</span> <span class="c-depth0">(</span><span class="c-number">1920</span>, <span class="c-number">1080</span><span class="c-depth0">)</span> <span class="c-libfunc">ʳˢs̲cene</span> <span class="c-number">0</span>
 <span class="c-builtin">t̲ally</span> lines
 
 <span class="c-comment typed">⍝ typed:</span>
@@ -875,7 +878,7 @@ the camera and the point it looks at:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal">ʰplayKeys ← (<span class="c-string">&quot;def span(o, a, b):\n&quot;</span> <span class="c-builtin">c̲at</span>
+<pre class="src src-xetal">ʰplayKeys ← <span class="c-depth0">(</span><span class="c-string">&quot;def span(o, a, b):\n&quot;</span> <span class="c-builtin">c̲at</span>
   <span class="c-string">&quot;    keys = {1: True, frame(a): False, frame(b) + 1: True} if a &gt; 0 else {1: False, frame(b) + 1: True}\n&quot;</span> <span class="c-builtin">c̲at</span>
   <span class="c-string">&quot;    for f in sorted(keys):\n&quot;</span> <span class="c-builtin">c̲at</span>
   <span class="c-string">&quot;        o.hide_render = keys[f]\n&quot;</span> <span class="c-builtin">c̲at</span>
@@ -914,7 +917,7 @@ the camera and the point it looks at:
   <span class="c-string">&quot;        rig['camera'].keyframe_insert('location', frame=frame(t))\n&quot;</span> <span class="c-builtin">c̲at</span>
   <span class="c-string">&quot;        rig['aim'].location = a\n&quot;</span> <span class="c-builtin">c̲at</span>
   <span class="c-string">&quot;        rig['aim'].keyframe_insert('location', frame=frame(t))\n&quot;</span> <span class="c-builtin">c̲at</span>
-  <span class="c-string">&quot;\n&quot;</span>)
+  <span class="c-string">&quot;\n&quot;</span><span class="c-depth0">)</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   h:playKeys := ("def span(o, a, b):\n" c_at</span>
@@ -982,7 +985,7 @@ made:
 
 <div class="org-src-container">
 <pre class="src src-xetal"><span class="c-comment">⍝ five stills (the documents' pictures), then every frame as the video</span>
-script ← ((<span class="c-number">1920</span>, <span class="c-number">1080</span>) <span class="c-libfunc">ʳˢs̲cene</span> <span class="c-number">0</span>) <span class="c-builtin">c̲at</span> ((<span class="c-number">2.0</span> <span class="c-number">8.0</span> <span class="c-number">14.0</span> <span class="c-number">23.0</span> <span class="c-number">28.0</span>, <span class="c-string">&quot;relu-softmax&quot;</span>) <span class="c-libfunc">ᵛᵈs̲tills</span> <span class="c-number">0</span>) <span class="c-builtin">c̲at</span> (<span class="c-libfunc">ᵛᵈr̲ender</span> <span class="c-string">&quot;relu-softmax.mp4&quot;</span>) <span class="c-builtin">c̲at</span> ᵛᵈreport
+script ← <span class="c-depth0">(</span><span class="c-depth1">(</span><span class="c-number">1920</span>, <span class="c-number">1080</span><span class="c-depth1">)</span> <span class="c-libfunc">ʳˢs̲cene</span> <span class="c-number">0</span><span class="c-depth0">)</span> <span class="c-builtin">c̲at</span> <span class="c-depth0">(</span><span class="c-depth1">(</span><span class="c-number">2.0</span> <span class="c-number">8.0</span> <span class="c-number">14.0</span> <span class="c-number">23.0</span> <span class="c-number">28.0</span>, <span class="c-string">&quot;relu-softmax&quot;</span><span class="c-depth1">)</span> <span class="c-libfunc">ᵛᵈs̲tills</span> <span class="c-number">0</span><span class="c-depth0">)</span> <span class="c-builtin">c̲at</span> <span class="c-depth0">(</span><span class="c-libfunc">ᵛᵈr̲ender</span> <span class="c-string">&quot;relu-softmax.mp4&quot;</span><span class="c-depth0">)</span> <span class="c-builtin">c̲at</span> ᵛᵈreport
 n ← <span class="c-string">&quot;work/explain/run.py&quot;</span> <span class="c-libfunc">ᵇˡw̲rite!</span> ᵇᵖlauncher
 n ← <span class="c-string">&quot;work/explain/relu-softmax.py&quot;</span> <span class="c-libfunc">ᵇˡw̲rite!</span> script
 

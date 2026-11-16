@@ -14,8 +14,8 @@
 "nc:" u_se< "NeonCity"
 
 script := ((640, 360, 24, 12, "GPU") nc:s_cene 0) c_at (("frames", 0, 0) cy:f_rames 0) c_at ("frames", "city-preview.mp4") cy:e_ncode 0
-n := "work/city/run.py" bl:w_rite! bp:launcher
-n := "work/city/preview.py" bl:w_rite! script
+_ := "work/city/run.py" bl:w_rite! bp:launcher
+_ := "work/city/preview.py" bl:w_rite! script
 "ray tracing 361 rough frames with Blender (Cycles) ..."
 r := "work/city/run.py" bl:r_un! "work/city/preview.py work/city/preview"
 "the run, and the error lines in Blender's log:"

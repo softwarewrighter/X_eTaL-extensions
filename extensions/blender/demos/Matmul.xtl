@@ -140,12 +140,12 @@ l:w_alls := { z ->
   ak := ((r_ange 12) - 1) m_od 4
   bk := ((r_ange 8) - 1) d_iv 2
   bj := ((r_ange 8) - 1) m_od 2
-  t := ("A", (ai, ak) l:a_t 0, 0.12 c_at d c_at d, (r_avel l:a, 0.0, 12.0) vd:t_one 0, 0.9) h:g_roup 0
-  t := t c_at ("A values", 0 vd:f_ixed f_loat l:a, ((ai, ak) l:a_t 0) + 12 h:o_f -0.14 0.0 0.0, 0.42, white) h:w_ords 0
-  t := t c_at ("B", (bk, bj) l:b_t 0, d c_at d c_at 0.12, (r_avel l:b, -1.0, 2.0) vd:t_one 0, 0.9) h:g_roup 0
-  t := t c_at ("B values", 0 vd:f_ixed f_loat l:b, ((bk, bj) l:b_t 0) + 8 h:o_f 0.0 0.0 0.14, 0.42, white) h:w_ords 0
-  t := t c_at ("C empty", (l:itemI, l:itemJ) l:c_t 0, d c_at 0.12 c_at d, 6 h:o_f empty, 1.0) h:g_roup 0
-  t := t c_at ("cube", 1 3 r_eshape 1.0 2.0 -1.5, 2.0 4.0 3.0, 1 h:o_f edge, 1.0) h:o_utlined 0
+  t := ((("A", (ai, ak) l:a_t 0, 0.12 c_at d c_at d, (r_avel l:a, 0.0, 12.0) vd:t_one 0, 0.9) h:g_roup 0) c_at
+    (("A values", 0 vd:f_ixed f_loat l:a, ((ai, ak) l:a_t 0) + 12 h:o_f -0.14 0.0 0.0, 0.42, white) h:w_ords 0) c_at
+    (("B", (bk, bj) l:b_t 0, d c_at d c_at 0.12, (r_avel l:b, -1.0, 2.0) vd:t_one 0, 0.9) h:g_roup 0) c_at
+    (("B values", 0 vd:f_ixed f_loat l:b, ((bk, bj) l:b_t 0) + 8 h:o_f 0.0 0.0 0.14, 0.42, white) h:w_ords 0) c_at
+    (("C empty", (l:itemI, l:itemJ) l:c_t 0, d c_at 0.12 c_at d, 6 h:o_f empty, 1.0) h:g_roup 0) c_at
+    ("cube", 1 3 r_eshape 1.0 2.0 -1.5, 2.0 4.0 3.0, 1 h:o_f edge, 1.0) h:o_utlined 0)
   names := ("A" h:s_hape l:a) c_at "|" c_at ("B" h:s_hape l:b) c_at "|" c_at "C" h:s_hape l:c
   t c_at ("names", names, 3 3 r_eshape (0.0 - g) c_at 2.0 0.7 1.0 4.6 1.5 3.6 5.3 -1.5, 0.5, yellow) h:w_ords 0
 }
@@ -161,36 +161,36 @@ l:i_tems := { z ->
   i := l:itemI
   j := l:itemJ
   ends := l:starts + l:durations
-  t := ("rows", (0.0 - g, 2.0, 0.0 - (f_loat i) + 0.5) h:x_yz 0, 0.2 c_at 4.0 c_at d + 0.08, 6 h:o_f white, 3.0) h:o_utlined 0
-  t := t c_at ("rows", l:starts, ends, 6) h:s_pans 0
-  t := t c_at ("columns", ((f_loat j) + 0.5, 2.0, g) h:x_yz 0, (d + 0.08) c_at 4.0 0.2, 6 h:o_f white, 3.0) h:o_utlined 0
-  t := t c_at ("columns", l:starts, ends, 6) h:s_pans 0
-  t := t c_at ("targets", (i, j) l:c_t 0, (d + 0.1) c_at 0.22 c_at d + 0.1, 6 h:o_f white, 3.0) h:o_utlined 0
-  t := t c_at ("targets", l:starts, ends, 6) h:s_pans 0
   pi := l:prodI
   pj := l:prodJ
   pk := l:prodK
   at := (pi, pj, pk) l:p_t 0
   into := (pi, pj) l:c_t 0
   colors := (l:products, -4.0, 12.0) vd:t_one 0
-  t := t c_at ("products", ((at, 0.5 0.5 0.5) h:s_ized 0) c_at_2 colors c_at_2 24 r_eshape 1.6) vd:b_oxes 0
   keys := 2 1 3 t_ranspose 2 24 6 r_eshape ((at, 0.5 0.5 0.5) h:s_ized 0) c_at (into, 0.05 0.05 0.05) h:s_ized 0
-  t := t c_at ("products", 2 1 t_ranspose 2 24 r_eshape l:flies c_at l:lands, keys) vd:m_ovesEach 0
-  t := t c_at ("products", l:appear, l:lands, 24) h:s_pans 0
-  t := t c_at ("product values", 0 vd:f_ixed f_loat l:products, at + 24 h:o_f 0.0 0.0 0.55, 0.36, white) h:w_ords 0
-  t := t c_at ("product values", l:appear, l:flies, 24) h:s_pans 0
   fa := (pi, pk) l:a_t 0
   fb := (pk, pj) l:b_t 0
   guides := ((fa c_at fb) c_at_2 at c_at at) c_at_2 (48 h:o_f f_loat yellow) c_at_2 48 r_eshape 0.015
-  t := t c_at ("guides", guides) vd:l_ines 0
-  t := t c_at ("guides", l:appear c_at l:appear, l:flies c_at l:flies, 48) h:s_pans 0
-  t := t c_at ("C", (i, j) l:c_t 0, (d * 1.001) c_at 0.14 c_at d * 1.001, (r_avel l:c, 0.0, 44.0) vd:t_one 0, 1.0) h:g_roup 0
   done := (4 * r_ange 6) s_elect l:lands
-  t := t c_at ("C", done, l:length, 6) h:s_pans 0
-  t := t c_at ("C values", 0 vd:f_ixed f_loat l:c, ((i, j) l:c_t 0) + 6 h:o_f 0.0 -0.14 0.0, 0.42, white) h:w_ords 0
-  t := t c_at ("C values", done, l:length, 6) h:s_pans 0
-  t := t c_at ("together", (i, j) l:c_t 0, (d + 0.1) c_at 0.22 c_at d + 0.1, 6 h:o_f yellow, 3.0) h:o_utlined 0
-  t c_at ("together", 1 s_elect l:together, 2 s_elect l:together, 6) h:s_pans 0
+  ((("rows", (0.0 - g, 2.0, 0.0 - (f_loat i) + 0.5) h:x_yz 0, 0.2 c_at 4.0 c_at d + 0.08, 6 h:o_f white, 3.0) h:o_utlined 0) c_at
+    (("rows", l:starts, ends, 6) h:s_pans 0) c_at
+    (("columns", ((f_loat j) + 0.5, 2.0, g) h:x_yz 0, (d + 0.08) c_at 4.0 0.2, 6 h:o_f white, 3.0) h:o_utlined 0) c_at
+    (("columns", l:starts, ends, 6) h:s_pans 0) c_at
+    (("targets", (i, j) l:c_t 0, (d + 0.1) c_at 0.22 c_at d + 0.1, 6 h:o_f white, 3.0) h:o_utlined 0) c_at
+    (("targets", l:starts, ends, 6) h:s_pans 0) c_at
+    (("products", ((at, 0.5 0.5 0.5) h:s_ized 0) c_at_2 colors c_at_2 24 r_eshape 1.6) vd:b_oxes 0) c_at
+    (("products", 2 1 t_ranspose 2 24 r_eshape l:flies c_at l:lands, keys) vd:m_ovesEach 0) c_at
+    (("products", l:appear, l:lands, 24) h:s_pans 0) c_at
+    (("product values", 0 vd:f_ixed f_loat l:products, at + 24 h:o_f 0.0 0.0 0.55, 0.36, white) h:w_ords 0) c_at
+    (("product values", l:appear, l:flies, 24) h:s_pans 0) c_at
+    (("guides", guides) vd:l_ines 0) c_at
+    (("guides", l:appear c_at l:appear, l:flies c_at l:flies, 48) h:s_pans 0) c_at
+    (("C", (i, j) l:c_t 0, (d * 1.001) c_at 0.14 c_at d * 1.001, (r_avel l:c, 0.0, 44.0) vd:t_one 0, 1.0) h:g_roup 0) c_at
+    (("C", done, l:length, 6) h:s_pans 0) c_at
+    (("C values", 0 vd:f_ixed f_loat l:c, ((i, j) l:c_t 0) + 6 h:o_f 0.0 -0.14 0.0, 0.42, white) h:w_ords 0) c_at
+    (("C values", done, l:length, 6) h:s_pans 0) c_at
+    (("together", (i, j) l:c_t 0, (d + 0.1) c_at 0.22 c_at d + 0.1, 6 h:o_f yellow, 3.0) h:o_utlined 0) c_at
+    ("together", 1 s_elect l:together, 2 s_elect l:together, 6) h:s_pans 0)
 }
 
 ## the captions, | between them, their shapes the arrays'
@@ -221,7 +221,7 @@ l:s_tepCamera := { z ->
 ## the stage (a 40 mm lens), the walls, the items, the captions, the
 ## camera
 l:s_teps := { (w, h) z ->
-  t := vd:head c_at ((w, h, 30, l:length, l:sky, 40) vd:s_tage 0) c_at (l:w_alls 0) c_at l:i_tems 0
-  t := t c_at (l:stepTexts, l:s_tepCaptions 0) vd:c_aptions 0
-  t c_at (l:s_tepCamera 0) vd:c_amera 0
+  ((vd:head c_at ((w, h, 30, l:length, l:sky, 40) vd:s_tage 0) c_at (l:w_alls 0) c_at l:i_tems 0) c_at
+    ((l:stepTexts, l:s_tepCaptions 0) vd:c_aptions 0) c_at
+    (l:s_tepCamera 0) vd:c_amera 0)
 }

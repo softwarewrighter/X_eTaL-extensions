@@ -15,8 +15,8 @@
 
 # five stills (the documents' pictures), then every frame as the video
 script := ((1920, 1080) rs:s_cene 0) c_at ((2.0 8.0 14.0 23.0 28.0, "relu-softmax") vd:s_tills 0) c_at (vd:r_ender "relu-softmax.mp4") c_at vd:report
-n := "work/explain/run.py" bl:w_rite! bp:launcher
-n := "work/explain/relu-softmax.py" bl:w_rite! script
+_ := "work/explain/run.py" bl:w_rite! bp:launcher
+_ := "work/explain/relu-softmax.py" bl:w_rite! script
 "rendering five stills and 30 seconds (901 frames) with Blender (EEVEE) ..."
 r := "work/explain/run.py" bl:r_un! "work/explain/relu-softmax.py work/explain/out"
 "the run, and the error lines in Blender's log:"

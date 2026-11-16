@@ -18,17 +18,17 @@
 
 w := "Voxels 6: endless -- X_eTaL" sc:o_pen! 640 400
 g := w sc:f_og! 22.0 44.0
-k := w sc:s_ky! 0.55 0.72 0.92
-k := w sc:c_urve! 160.0
+_ := w sc:s_ky! 0.55 0.72 0.92
+_ := w sc:c_urve! 160.0
 
 "keys: W A S D walk, Shift run, Space jump (in water: swim up, climb out), drag or arrows look, H home, q quit"
 
 ## the world around the start made before the first frame: each column
 ## takes three steps
 s := en:n_ew w
-s := (3 * (1 + 2 * en:reach) * 1 + 2 * en:reach) 'en:s_tream p_ower s
+streamed := (3 * (1 + 2 * en:reach) * 1 + 2 * en:reach) 'en:s_tream p_ower s
 "columns made at the start:"
-t_ally en:k_eys s
+t_ally en:k_eys streamed
 
 ## one frame: an event, then a third of a column's work, then the
 ## player
@@ -36,15 +36,14 @@ u:f_rame := { s ->
   en:s_topped s ? s
   v := sc:n_ext! w
   ((v m_atch "close") + (v m_atch "key q") + v m_atch "key Escape") > 0 ? en:s_top s
-  s := (v m_atch "key h") u:i_f s
-  s := en:s_tream s
-  s en:m_ove sc:c_ontrols w
+  stepped := en:s_tream (v m_atch "key h") u:i_f s
+  stepped en:m_ove sc:c_ontrols w
 }
 u:i_f := { yes s ->
   yes ? en:h_omeAgain s
   s
 }
-last := 100000 'u:f_rame p_ower s
+last := 100000 'u:f_rame p_ower streamed
 z := sc:c_lose! w
 "where the walk ended (x y z, blocks), the columns kept:"
 (f_loat f_loor 0.5 + en:p_osition last) c_at f_loat t_ally en:k_eys last

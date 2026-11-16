@@ -11,8 +11,8 @@ v := au:o_utput in:rate
 
 ## play eight bars, each made while the one before is sounding
 u:p_lay := { b ->
-  s := v au:q_ueue! in:b_ar b
-  w := v au:w_ait! 0.5
+  _ := v au:q_ueue! in:b_ar b
+  _ := v au:w_ait! 0.5
   b + 1
 }
 last := 8 'u:p_lay p_ower 1

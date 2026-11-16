@@ -19,8 +19,8 @@
 
 w := "Voxels 10: dig and build -- X_eTaL" sc:o_pen! 640 400
 g := w sc:f_og! 22.0 44.0
-k := w sc:s_ky! 0.55 0.72 0.92
-k := w sc:c_urve! 160.0
+_ := w sc:s_ky! 0.55 0.72 0.92
+_ := w sc:c_urve! 160.0
 
 pl:help
 
@@ -49,13 +49,13 @@ u:c_ell := { q m -> (1 + (3 s_elect q) + 18 * (2 s_elect q) + 32 * 1 s_elect q) 
 ## player, the chosen block).
 hud := w pl:h_ud 1
 s := en:n_ew w
-s := (3 * (1 + 2 * en:reach) * 1 + 2 * en:reach) 'en:s_tream p_ower s
-last := 100000 'pl:f_rame p_ower (s, 1)
+streamed := (3 * (1 + 2 * en:reach) * 1 + 2 * en:reach) 'en:s_tream p_ower s
+last := 100000 'pl:f_rame p_ower (streamed, 1)
 z := sc:c_lose! w
 # (an accessor, not a top-level tuple pattern: xetal doc would list a
 # hidden %N value for one, ask E10)
 u:w_orldOf := { (s, _) -> s }
-s := u:w_orldOf last
+world := u:w_orldOf last
 "the edits (x y z block), the newest first:"
-en:e_dits s
+en:e_dits world
 "bye"

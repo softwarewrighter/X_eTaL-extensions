@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:canvas/next: no canvas 99 is open at ./lib/Canvas.xtl:19:1
+error[io]: []N_GET: ext:canvas/next: no canvas 99 is open
+  --> ./lib/Canvas.xtl:19:1
+   |
+19 | "n_ext! : int -> text"          ffi:b_ind< "canvas/next"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/no-window.xtl:3:1
+   |
+ 3 | cv:n_ext! 99
+   | ------------ called from the program here

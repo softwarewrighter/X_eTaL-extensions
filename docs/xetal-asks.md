@@ -14,16 +14,27 @@ and the workaround in use.
 | - | ------ | ---- | --- | ---------- | ---------- |
 | E1 | filed (X_eTaL plan Saga 23, host bindings and native packages, which may start from this repo's ABI V1) | feature | a native hook: a way for X_eTaL code to call a function in a native library (`[]S_VO`, reserved in lang-choices QD4 / section 15), with the function's X_eTaL type from the library's descriptor | all | the bridge host `xetal-x` (plan A6): a store routing `ext:` paths of `[]N_PUT` / `[]N_GET` to native functions, text only |
 | E2 | landed (vendored X_eTaL f823212) | feature | `.xtlm` macro libraries (MC10-MC13, X_eTaL Saga 19); same as `../X_eTaL-libraries` ask X1 | the binding macro (`ffi:b_ind<`, Saga 8) | none needed now |
-| E3 | filed (X_eTaL queue item 6, after Saga 21) | feature | the CLI as a library: a host entry point (`xetal_cli::run_with(args, store)` or similar) so a host can be `xetal` with its own store | the bridge host `xetal-x` | `xetal-x` compiles the vendored CLI's source files as `#[path]` modules and repeats its 60-line `main` with a different store; breaks if the CLI's modules are reorganized |
+| E3 | landed (X_eTaL 8c49bd8: the crate `xetal-command`, steps 145 and 165) | feature | the CLI as a library: a host entry point (`xetal_cli::run_with(args, store)` or similar) so a host can be `xetal` with its own store | the bridge host `xetal-x` | none needed now: `xetal-x` parses and runs through `xetal-command` and repeats only the binary's short `main` with the store wrapped |
 | E4 | partly landed (X_eTaL v0.1.0: `[]TS`, the time as year month day hour minute second millisecond, and `[]D_L`, a delay; no monotonic or CPU clock yet) | feature | the time: a quad giving the current time (APL's quad TS) and a monotonic or CPU clock (quad AI) | clock (and anything timing itself) | the clock extension, through the bridge |
-| E5 | filed (X_eTaL queue item 9, Saga 27, readable type errors) | feature | an error raised inside a library function also names the program line that called it (a call trace) | every facade (errors point at the function's signature line in the facade, not the caller) | the extension's message names the function (`ext:sqlite/nums: ...`) |
+| E5 | landed (X_eTaL 8c49bd8, D166: the facade's line, then "called from the program here" with the program's line) | feature | an error raised inside a library function also names the program line that called it (a call trace) | every facade (errors point at the function's signature line in the facade, not the caller) | none needed now; the extension's message still names the function |
 | E6 | landed (vendored X_eTaL f823212) | bug | `xetal --draw DIR run FILE` fails (clap takes `run` as the SCRIPT argument and FILE as a subcommand); `xetal run --draw DIR FILE` works | the sqlite notebook's test and every demo recipe | `--draw` written after `run` |
 | E7 | landed (X_eTaL d284a8c; re-checked: a facade without `l:package` types as a library) | bug | `xetal type FILE` calls a library whose `l:` names all come from macro calls a program (`library-name-in-program`): it decides before expanding | every facade written with the binding macro | one literal export per facade, `l:package := "NAME"` |
 | E8 | landed (X_eTaL d284a8c; re-checked: `quakes.xtl` importing `Quakes` no longer finds itself) | bug | a program `quakes.xtl` importing a library `Quakes` (`"q:" u_se< "Quakes"`) on a case-insensitive file system (macOS) finds the program itself and reports `import-cycle: quakes.xtl -> quakes.xtl`; wanted: library lookup matches the name's case exactly, or the error says the library resolved to the importing file | demos with a library beside them (audio, http) | name the library differently (`Instruments.xtl`, `Seismic.xtl`) |
-| E9 | open (found 2026-10-09 at X_eTaL d284a8c) | bug | `xetal type` (and so `xetal doc`) infers different types for the same file from run to run: free type variables or `Int` for the same tuple part, extra `Num e` constraints. Integer literals' types are settled in an order that varies (a hash map's?), so a doc page and the search index change on every build | scene's shared demo libraries (Endless.xtl, Play.xtl) and the demos that use them | the masks made Int for certain (`f_loor f_loat`); `scripts/check-pages.sh` ignores lines that differ only in an inferred type (a renamed or new function still changes other lines) |
-| E10 | open (found 2026-10-09 at X_eTaL d284a8c) | bug | `xetal doc` lists the hidden value a top-level tuple pattern binds -- `(a, b) := pair` shows a value `%1` (drawn in the error color) beside `a` and `b`, on the file's page, its source page and the index; `xetal type` does not list it | the scene demos that unpacked their final state (voxels-dig, -water, -rubik-buttons, -rubik-solve) and the cube cross-check | top-level tuples unpacked by small accessor functions (`u:w_orldOf := { (s, _) -> s }`) |
-| E11 | open (found 2026-11-04 at X_eTaL d284a8c) | speed | scalar selection copies the entire array, making a clock-by-clock replay quadratic in trace length | blender physical Nano 1K execution | partition into 64-row chunks and select within each bounded chunk |
+| E9 | appears fixed (re-checked 2026-11-15 at X_eTaL 8c49bd8: Endless.xtl without its workaround types the same in 10 runs; not traced to a commit) | bug | `xetal type` (and so `xetal doc`) infers different types for the same file from run to run: free type variables or `Int` for the same tuple part, extra `Num e` constraints. Integer literals' types are settled in an order that varies (a hash map's?), so a doc page and the search index change on every build | scene's shared demo libraries (Endless.xtl, Play.xtl) and the demos that use them | kept until the doc pages have stayed stable: the masks made Int for certain, and `scripts/check-pages.sh` ignoring lines that differ only in an inferred type |
+| E10 | landed (re-checked 2026-11-15 at X_eTaL 8c49bd8: `xetal doc --json` of `(a, b) := pair` lists no `%1`) | bug | `xetal doc` lists the hidden value a top-level tuple pattern binds -- `(a, b) := pair` shows a value `%1` (drawn in the error color) beside `a` and `b`, on the file's page, its source page and the index; `xetal type` does not list it | the scene demos that unpacked their final state (voxels-dig, -water, -rubik-buttons, -rubik-solve) and the cube cross-check | none needed now; the accessor functions written for it stay, as they read well |
+| E11 | open (found 2026-11-04 at X_eTaL d284a8c; re-checked 2026-11-15 at 8c49bd8: the example below still takes 11.4 s) | speed | scalar selection copies the entire array, making a clock-by-clock replay quadratic in trace length | blender physical Nano 1K execution | partition into 64-row chunks and select within each bounded chunk |
 | E12 | open (found 2026-11-14 at X_eTaL d284a8c; for X_eTaL-gpu as much as X_eTaL) | speed | array kernels on the browser's GPU: an element-wise program over a large array (a stencil by rotates, a function of a coordinate grid) lowered through XIR to WGSL, the array kept on the device between frames and shared with the renderer | none here; the snow world (snowflow_demo-fork), which this repository supports | the fork keeps its fields small (17 by 17 vertices a chunk) and plans a 256 square snow layer; nothing at the reference's 2048 square |
+| E13 | open (found 2026-11-15 at X_eTaL 8c49bd8) | feature | a fix for `rebind` (a name is bound once, M1): `xetal lint --fix` or `xetal migrate` rewriting the sure cases -- an effect result nothing reads to `_ :=`, and a value grown line by line (`t := t c_at piece`) to one expression | every program written before M1: 890 lines in 83 files here | done by hand with three throwaway scripts; no `!` variable was needed |
+
+2026-11-15, X_eTaL 8c49bd8 pinned (the user: October 30 or newer, then
+the latest; from d284a8c, 283 commits): E3 and E5 landed and their
+workarounds are gone (`xetal-x` uses `xetal-command`; 25 error goldens
+now show the calling line). E10 landed. E9 appears fixed; its
+workaround stays for now. E1, E4's monotonic clock, E11 and E12 are
+still open. E13 added: M1 (a name is bound once, X_eTaL step 091) broke
+890 lines here and no tool rewrites them. The newer `xetal doc` also
+warns `doc-unattached` on 14 `##` blocks here that head a section and
+document no definition: not an ask, they should be `###` or comments.
 
 2026-11-14, the snowflow study (plan, Saga 15 step 26): E12 added.
 E1 gains a concrete workload from snowflow_demo-fork
@@ -127,6 +138,9 @@ private modules, so `xetal-x` compiles the vendored files
 as `#[path]` modules, unchanged, and repeats `main.rs` with
 `ExtStore` wrapping the `Drawing` store. `scripts/check-xetal-x.sh`
 checks that every vendored demo gives the same output under both.
+
+Landed as the crate `xetal-command` (X_eTaL 8c49bd8); `xetal-x` now uses
+it and the paragraph above describes the workaround that was.
 
 What would remove the workaround: a library target in `xetal-cli`
 exposing the CLI's run with a caller-supplied store, e.g.
@@ -319,3 +333,40 @@ separate, later contract and is not part of this ask.
 
 Workaround: none at this size. The fork keeps fields small and runs
 them in the evaluator; its third planned saga is this ask.
+
+### E13: a fix for rebind
+
+Since M1 a name without `!` is bound once in its scope, and a program
+written before it stops with `error[rebind]` at its first repeat. The
+message offers `a!`, which is right only for a variable that changes
+over time; in the 890 lines this repository had, none was one. They
+were four habits, each with a sure rewrite:
+
+```xtl
+t := "a"                    # a value grown line by line ...
+t := t c_at "b"
+t := t c_at "c"
+
+t := ("a" c_at              # ... is one expression
+  "b" c_at
+  "c")
+
+n := "f.py" bl:w_rite! t    # an effect's result nothing reads ...
+_ := "f.py" bl:w_rite! t    # ... is a discard (M3)
+
+s := f s                    # a step applied to its own result ...
+s := g s
+s := g f s0                 # ... is a composition
+
+w := a au:w_indow 1024      # one name for two things needs a second name
+```
+
+Wanted: `xetal lint --fix` (or `xetal migrate`) doing the first three,
+which need no judgment (`c_at`, `c_at_2`, `m_ax` and `m_in` are
+associative; the bindings moved are pure), and listing the fourth. The
+error could also say "or give the new value its own name" beside `a!`.
+The linter reports one `rebind` and stops; listing every one in the
+file would let a person see the size of the job.
+
+Workaround: scripts written for this move and thrown away; the goldens,
+unchanged, were the proof.

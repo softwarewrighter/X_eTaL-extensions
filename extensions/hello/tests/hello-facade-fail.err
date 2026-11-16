@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:hello/fail: hello was asked to fail at ./lib/Hello.xtl:21:1
+error[io]: []N_GET: ext:hello/fail: hello was asked to fail
+  --> ./lib/Hello.xtl:21:1
+   |
+21 | "f_ail : unit -> int"          ffi:b_ind< "hello/fail"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/facade-fail.xtl:3:1
+   |
+ 3 | hx:f_ail @
+   | ---------- called from the program here

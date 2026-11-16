@@ -13,8 +13,8 @@
 "bp:" u_se< "Bpy"
 "td:" u_se< "Td"
 
-n := "work/td/run.py" bl:w_rite! bp:launcher
-n := "work/td/models.py" bl:w_rite! bp:head c_at td:all c_at bp:report
+_ := "work/td/run.py" bl:w_rite! bp:launcher
+_ := "work/td/models.py" bl:w_rite! bp:head c_at td:all c_at bp:report
 "making the twelve pieces with Blender ..."
 r := "work/td/run.py" bl:r_un! "work/td/models.py work/td/out"
 "the run, and the error lines in Blender's log:"

@@ -26,7 +26,7 @@ e := n_umbers []N_GET "ext:hello/echo"
 (f_loor n_umbers []N_GET "ext:hello/echo?shape") r_eshape e
 
 # kinds: how the elements arrived (Bool, Int, Float, Char counts)
-k := (f_ormat r_avel 1 0 1 = 1) []N_PUT "ext:hello/kinds?bool=3"
+_ := (f_ormat r_avel 1 0 1 = 1) []N_PUT "ext:hello/kinds?bool=3"
 []N_GET "ext:hello/kinds"
-k := "ab\ncd" []N_PUT "ext:hello/kinds?chars=2 2"
+_ := "ab\ncd" []N_PUT "ext:hello/kinds?chars=2 2"
 []N_GET "ext:hello/kinds"

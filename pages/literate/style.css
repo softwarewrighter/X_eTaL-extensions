@@ -1,8 +1,20 @@
+/* JuliaMono, the one monospace font with every character the decorated
+   source uses (combining underline, raised letters, APL glyphs, box
+   drawing), from its own release on jsDelivr (SIL Open Font License), so
+   the page does not depend on it being installed. */
+@font-face {
+  font-family: JuliaMono;
+  src: url("https://cdn.jsdelivr.net/gh/cormullion/juliamono@v0.63.2/webfonts/JuliaMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* The literate documents' HTML (scripts/literate-html.sh): dark, like
    the live demo, with JuliaMono for code where it is installed. */
-:root { --bg: #16181d; --fg: #d8dbe2; --dim: #8a90a0; --code: #1e2129; --accent: #f5c518; --link: #7cb3ff; }
+:root { --bg: #16181d; --fg: #d8dbe2; --dim: #8a90a0; --doc: #8fc79a; --code: #1e2129; --accent: #f5c518; --link: #7cb3ff; }
 @media (prefers-color-scheme: light) {
-  :root { --bg: #fdfdfb; --fg: #20242c; --dim: #626874; --code: #f2f2ee; --accent: #a67c00; --link: #1f5fbf; }
+  :root { --bg: #fdfdfb; --fg: #20242c; --dim: #626874; --doc: #2f7a40; --code: #f2f2ee; --accent: #a67c00; --link: #1f5fbf; }
 }
 body { background: var(--bg); color: var(--fg); margin: 0; font: 17px/1.55 Georgia, "Times New Roman", serif; }
 #content, #postamble { max-width: 46rem; margin: 0 auto; padding: 0 16px; }
@@ -21,6 +33,17 @@ pre.example { border-left: 3px solid var(--dim); }
 .c-lambdaarg { color: #d25fd2; } .c-number, .c-exponent { color: #e0b400; }
 .c-string { color: #e8d27a; } .c-symbol { color: #7fbfff; } .c-quote { font-weight: bold; }
 .c-comment { color: var(--dim); } .c-macro { color: #e0b400; font-weight: bold; }
+.c-notation { color: #e8d27a; font-style: italic; } .c-notation .katex { font-style: normal; font-size: 1.05em; }
+/* Doc comments (##) and section headings (###): their own style, apart from remarks. */
+.c-doc { color: var(--doc); font-style: italic; } .c-heading { color: var(--doc); font-weight: bold; }
+.c-applied { text-decoration: underline; text-decoration-thickness: 0.14em; text-underline-offset: 0.18em; }
+/* Rainbow delimiters (D-12): a bracket colored by its depth. */
+.c-depth0 { color: #9a9a9a; } .c-depth1 { color: #ff9a3c; } .c-depth2 { color: #ffa8d2; } .c-depth3 { color: #f4f4f4; }
+.c-unmatched { color: #ff6b6b; text-decoration: underline wavy; }
+@media (prefers-color-scheme: light) {
+  .c-depth0 { color: #6b6b6b; } .c-depth1 { color: #c25e00; } .c-depth2 { color: #c2307a; } .c-depth3 { color: #20242c; }
+  .c-unmatched { color: #c62828; text-decoration: underline wavy; }
+}
 .c-error { color: #ff6b6b; } .typed { font-style: italic; }
 @media (prefers-color-scheme: light) {
   .c-builtin { color: #1f5fbf; } .c-userfunc { color: #1e7a34; } .c-libfunc { color: #0b7d8a; }

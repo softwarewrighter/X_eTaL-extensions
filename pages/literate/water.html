@@ -9,6 +9,9 @@
 <meta name="author" content="Michael A Wright" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.css" crossorigin="anonymous"/>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.18.10/dist/katex.min.js" crossorigin="anonymous"></script>
+<script>document.addEventListener('DOMContentLoaded', function () { if (typeof katex === 'undefined') return; document.querySelectorAll('.c-notation').forEach(function (el) { var tex = el.textContent; if (!tex) return; try { katex.render(tex, el, { throwOnError: false }); } catch (e) { el.textContent = tex; } }); });</script>
 </head>
 <body>
 <div id="content" class="content">
@@ -67,7 +70,7 @@ x y z, the amount, and the direction it last moved.
 </div>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ˡw̲ater</span> ← { (_, (_, _, _, _, _, _, W, _), _, _) → W }
+<pre class="src src-xetal"><span class="c-libfunc">ˡw̲ater</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>_, <span class="c-depth2">(</span>_, _, _, _, _, _, W, _<span class="c-depth2">)</span>, _, _<span class="c-depth1">)</span> → W <span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   l:w_ater := { (_, (_, _, _, _, _, _, W, _), _, _) -&gt; W }</span></pre>
@@ -104,15 +107,15 @@ difference, and why it is no more than half comes next.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-userfunc">ᵘe̲ast</span> ← { a →
-  t ← <span class="c-number">0</span> <span class="c-builtin">m̲ax</span> ((a <span class="c-symbol">−</span> <span class="c-number">1</span> <span class="c-builtin">d̲rop</span> a <span class="c-builtin">c̲at</span> <span class="c-number">0</span>) <span class="c-builtin">d̲iv</span> <span class="c-number">2</span>) <span class="c-symbol">×</span> (<span class="c-builtin">r̲ange</span> <span class="c-builtin">t̲ally</span> a) <span class="c-symbol">&lt;</span> <span class="c-builtin">t̲ally</span> a
-  (a <span class="c-symbol">−</span> t) <span class="c-symbol">+</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> t
-}
-<span class="c-userfunc">ᵘw̲est</span> ← { a →
-  t ← <span class="c-number">0</span> <span class="c-builtin">m̲ax</span> ((a <span class="c-symbol">−</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> a) <span class="c-builtin">d̲iv</span> <span class="c-number">2</span>) <span class="c-symbol">×</span> (<span class="c-builtin">r̲ange</span> <span class="c-builtin">t̲ally</span> a) <span class="c-symbol">&gt;</span> <span class="c-number">1</span>
-  (a <span class="c-symbol">−</span> t) <span class="c-symbol">+</span> <span class="c-number">1</span> <span class="c-builtin">d̲rop</span> t <span class="c-builtin">c̲at</span> <span class="c-number">0</span>
-}
-<span class="c-userfunc">ᵘt̲ick</span> ← { a → <span class="c-userfunc">ᵘe̲ast</span> <span class="c-userfunc">ᵘw̲est</span> a }
+<pre class="src src-xetal"><span class="c-userfunc">ᵘe̲ast</span> ← <span class="c-depth0">{</span> a →
+  t ← <span class="c-number">0</span> <span class="c-builtin">m̲ax</span> <span class="c-depth1">(</span><span class="c-depth2">(</span>a <span class="c-symbol">−</span> <span class="c-number">1</span> <span class="c-builtin">d̲rop</span> a <span class="c-builtin">c̲at</span> <span class="c-number">0</span><span class="c-depth2">)</span> <span class="c-builtin">d̲iv</span> <span class="c-number">2</span><span class="c-depth1">)</span> <span class="c-symbol">×</span> <span class="c-depth1">(</span><span class="c-builtin">r̲ange</span> <span class="c-builtin">t̲ally</span> a<span class="c-depth1">)</span> <span class="c-symbol">&lt;</span> <span class="c-builtin">t̲ally</span> a
+  <span class="c-depth1">(</span>a <span class="c-symbol">−</span> t<span class="c-depth1">)</span> <span class="c-symbol">+</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> t
+<span class="c-depth0">}</span>
+<span class="c-userfunc">ᵘw̲est</span> ← <span class="c-depth0">{</span> a →
+  t ← <span class="c-number">0</span> <span class="c-builtin">m̲ax</span> <span class="c-depth1">(</span><span class="c-depth2">(</span>a <span class="c-symbol">−</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> a<span class="c-depth2">)</span> <span class="c-builtin">d̲iv</span> <span class="c-number">2</span><span class="c-depth1">)</span> <span class="c-symbol">×</span> <span class="c-depth1">(</span><span class="c-builtin">r̲ange</span> <span class="c-builtin">t̲ally</span> a<span class="c-depth1">)</span> <span class="c-symbol">&gt;</span> <span class="c-number">1</span>
+  <span class="c-depth1">(</span>a <span class="c-symbol">−</span> t<span class="c-depth1">)</span> <span class="c-symbol">+</span> <span class="c-number">1</span> <span class="c-builtin">d̲rop</span> t <span class="c-builtin">c̲at</span> <span class="c-number">0</span>
+<span class="c-depth0">}</span>
+<span class="c-userfunc">ᵘt̲ick</span> ← <span class="c-depth0">{</span> a → <span class="c-userfunc">ᵘe̲ast</span> <span class="c-userfunc">ᵘw̲est</span> a <span class="c-depth0">}</span>
 <span class="c-userfunc">ᵘt̲ick</span> row
 
 <span class="c-comment typed">⍝ typed:</span>
@@ -139,11 +142,11 @@ and the water counted at the end:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-userfunc">ᵘs̲how</span> ← { n a →
+<pre class="src src-xetal"><span class="c-userfunc">ᵘs̲how</span> ← <span class="c-depth0">{</span> n a →
   said ← <span class="c-builtin">p̲rint!</span> <span class="c-builtin">f̲ormat</span> a
   n <span class="c-symbol">=</span> <span class="c-number">0</span> ? a
-  (n <span class="c-symbol">−</span> <span class="c-number">1</span>) <span class="c-userfunc">ᵘs̲how</span> <span class="c-userfunc">ᵘt̲ick</span> a
-}
+  <span class="c-depth1">(</span>n <span class="c-symbol">−</span> <span class="c-number">1</span><span class="c-depth1">)</span> <span class="c-userfunc">ᵘs̲how</span> <span class="c-userfunc">ᵘt̲ick</span> a
+<span class="c-depth0">}</span>
 z ← <span class="c-number">6</span> <span class="c-userfunc">ᵘs̲how</span> row
 <span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> z
 
@@ -186,17 +189,17 @@ rule, a pass west, then a tick, then two ticks:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-userfunc">ᵘe̲astAll</span> ← { a →
-  t ← <span class="c-number">0</span> <span class="c-builtin">m̲ax</span> (a <span class="c-symbol">−</span> <span class="c-number">1</span> <span class="c-builtin">d̲rop</span> a <span class="c-builtin">c̲at</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> (<span class="c-builtin">r̲ange</span> <span class="c-builtin">t̲ally</span> a) <span class="c-symbol">&lt;</span> <span class="c-builtin">t̲ally</span> a
-  (a <span class="c-symbol">−</span> t) <span class="c-symbol">+</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> t
-}
-<span class="c-userfunc">ᵘw̲estAll</span> ← { a →
-  t ← <span class="c-number">0</span> <span class="c-builtin">m̲ax</span> (a <span class="c-symbol">−</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> a) <span class="c-symbol">×</span> (<span class="c-builtin">r̲ange</span> <span class="c-builtin">t̲ally</span> a) <span class="c-symbol">&gt;</span> <span class="c-number">1</span>
-  (a <span class="c-symbol">−</span> t) <span class="c-symbol">+</span> <span class="c-number">1</span> <span class="c-builtin">d̲rop</span> t <span class="c-builtin">c̲at</span> <span class="c-number">0</span>
-}
+<pre class="src src-xetal"><span class="c-userfunc">ᵘe̲astAll</span> ← <span class="c-depth0">{</span> a →
+  t ← <span class="c-number">0</span> <span class="c-builtin">m̲ax</span> <span class="c-depth1">(</span>a <span class="c-symbol">−</span> <span class="c-number">1</span> <span class="c-builtin">d̲rop</span> a <span class="c-builtin">c̲at</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-symbol">×</span> <span class="c-depth1">(</span><span class="c-builtin">r̲ange</span> <span class="c-builtin">t̲ally</span> a<span class="c-depth1">)</span> <span class="c-symbol">&lt;</span> <span class="c-builtin">t̲ally</span> a
+  <span class="c-depth1">(</span>a <span class="c-symbol">−</span> t<span class="c-depth1">)</span> <span class="c-symbol">+</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> t
+<span class="c-depth0">}</span>
+<span class="c-userfunc">ᵘw̲estAll</span> ← <span class="c-depth0">{</span> a →
+  t ← <span class="c-number">0</span> <span class="c-builtin">m̲ax</span> <span class="c-depth1">(</span>a <span class="c-symbol">−</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">-1</span> <span class="c-builtin">d̲rop</span> a<span class="c-depth1">)</span> <span class="c-symbol">×</span> <span class="c-depth1">(</span><span class="c-builtin">r̲ange</span> <span class="c-builtin">t̲ally</span> a<span class="c-depth1">)</span> <span class="c-symbol">&gt;</span> <span class="c-number">1</span>
+  <span class="c-depth1">(</span>a <span class="c-symbol">−</span> t<span class="c-depth1">)</span> <span class="c-symbol">+</span> <span class="c-number">1</span> <span class="c-builtin">d̲rop</span> t <span class="c-builtin">c̲at</span> <span class="c-number">0</span>
+<span class="c-depth0">}</span>
 pair ← <span class="c-number">0</span> <span class="c-number">64</span>
-said ← <span class="c-builtin">p̲rint!</span> <span class="c-builtin">f̲ormat</span> <span class="c-userfunc">ᵘw̲estAll</span> pair
-said ← <span class="c-builtin">p̲rint!</span> <span class="c-builtin">f̲ormat</span> <span class="c-userfunc">ᵘe̲astAll</span> <span class="c-userfunc">ᵘw̲estAll</span> pair
+_ ← <span class="c-builtin">p̲rint!</span> <span class="c-builtin">f̲ormat</span> <span class="c-userfunc">ᵘw̲estAll</span> pair
+_ ← <span class="c-builtin">p̲rint!</span> <span class="c-builtin">f̲ormat</span> <span class="c-userfunc">ᵘe̲astAll</span> <span class="c-userfunc">ᵘw̲estAll</span> pair
 <span class="c-userfunc">ᵘe̲astAll</span> <span class="c-userfunc">ᵘw̲estAll</span> <span class="c-userfunc">ᵘe̲astAll</span> <span class="c-userfunc">ᵘw̲estAll</span> pair
 
 <span class="c-comment typed">⍝ typed:</span>
@@ -209,8 +212,8 @@ said ← <span class="c-builtin">p̲rint!</span> <span class="c-builtin">f̲orma
 <span class="c-comment typed">⍝     (a - t) + 1 d_rop t c_at 0</span>
 <span class="c-comment typed">⍝   }</span>
 <span class="c-comment typed">⍝   pair := 0 64</span>
-<span class="c-comment typed">⍝   said := p_rint! f_ormat u:w_estAll pair</span>
-<span class="c-comment typed">⍝   said := p_rint! f_ormat u:e_astAll u:w_estAll pair</span>
+<span class="c-comment typed">⍝   _ := p_rint! f_ormat u:w_estAll pair</span>
+<span class="c-comment typed">⍝   _ := p_rint! f_ormat u:e_astAll u:w_estAll pair</span>
 <span class="c-comment typed">⍝   u:e_astAll u:w_estAll u:e_astAll u:w_estAll pair</span></pre>
 </div>
 
@@ -237,21 +240,21 @@ does water spread.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ʰf̲all</span> ← { wo (P, A, D) →
+<pre class="src src-xetal"><span class="c-libfunc">ʰf̲all</span> ← <span class="c-depth0">{</span> wo <span class="c-depth1">(</span>P, A, D<span class="c-depth1">)</span> →
   n ← <span class="c-builtin">t̲ally</span> A
   keys ← <span class="c-libfunc">ʰc̲ellKey</span> P
   dn ← P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">-1</span> <span class="c-number">0</span>
   kd ← wo <span class="c-libfunc">ˡl̲ook</span> dn
   jd ← keys <span class="c-builtin">i̲ndexOf</span> <span class="c-libfunc">ʰc̲ellKey</span> dn
   bd ← jd <span class="c-builtin">s̲elect</span> A <span class="c-builtin">c̲at</span> <span class="c-number">0</span>
-  room ← (kd <span class="c-symbol">=</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> ˡfull <span class="c-symbol">−</span> bd
-  f ← ((kd <span class="c-symbol">=</span> <span class="c-number">2</span>) <span class="c-symbol">×</span> A) <span class="c-symbol">+</span> (kd <span class="c-symbol">≠</span> <span class="c-number">2</span>) <span class="c-symbol">×</span> A <span class="c-builtin">m̲in</span> room
+  room ← <span class="c-depth1">(</span>kd <span class="c-symbol">=</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-symbol">×</span> ˡfull <span class="c-symbol">−</span> bd
+  f ← <span class="c-depth1">(</span><span class="c-depth2">(</span>kd <span class="c-symbol">=</span> <span class="c-number">2</span><span class="c-depth2">)</span> <span class="c-symbol">×</span> A<span class="c-depth1">)</span> <span class="c-symbol">+</span> <span class="c-depth1">(</span>kd <span class="c-symbol">≠</span> <span class="c-number">2</span><span class="c-depth1">)</span> <span class="c-symbol">×</span> A <span class="c-builtin">m̲in</span> room
   ja ← keys <span class="c-builtin">i̲ndexOf</span> <span class="c-libfunc">ʰc̲ellKey</span> P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">0</span>
-  A ← (A <span class="c-symbol">−</span> f) <span class="c-symbol">+</span> (ja <span class="c-builtin">s̲elect</span> f <span class="c-builtin">c̲at</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> ja <span class="c-symbol">≤</span> n
-  new ← (f <span class="c-symbol">&gt;</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> (kd <span class="c-symbol">=</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> jd <span class="c-symbol">&gt;</span> n
+  A ← <span class="c-depth1">(</span>A <span class="c-symbol">−</span> f<span class="c-depth1">)</span> <span class="c-symbol">+</span> <span class="c-depth1">(</span>ja <span class="c-builtin">s̲elect</span> f <span class="c-builtin">c̲at</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-symbol">×</span> ja <span class="c-symbol">≤</span> n
+  new ← <span class="c-depth1">(</span>f <span class="c-symbol">&gt;</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-symbol">×</span> <span class="c-depth1">(</span>kd <span class="c-symbol">=</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-symbol">×</span> jd <span class="c-symbol">&gt;</span> n
   m ← <span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> new
-  (P <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> dn, A <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> f, D <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> D)
-}
+  <span class="c-depth1">(</span>P <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> dn, A <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> f, D <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> D<span class="c-depth1">)</span>
+<span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   h:f_all := { wo (P, A, D) -&gt;</span>
@@ -289,10 +292,10 @@ gentle slope.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ʰs̲pread</span> ← { woo (P, A, D) →
-  (wo, o) ← woo
+<pre class="src src-xetal"><span class="c-libfunc">ʰs̲pread</span> ← <span class="c-depth0">{</span> woo <span class="c-depth1">(</span>P, A, D<span class="c-depth1">)</span> →
+  <span class="c-depth1">(</span>wo, o<span class="c-depth1">)</span> ← woo
   n ← <span class="c-builtin">t̲ally</span> A
-  off ← (<span class="c-number">1</span> <span class="c-builtin">s̲elect</span> o) <span class="c-builtin">c̲at</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> o
+  off ← <span class="c-depth1">(</span><span class="c-number">1</span> <span class="c-builtin">s̲elect</span> o<span class="c-depth1">)</span> <span class="c-builtin">c̲at</span> <span class="c-number">0</span> <span class="c-builtin">c̲at</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> o
   keys ← <span class="c-libfunc">ʰc̲ellKey</span> P
   side ← P <span class="c-libfunc">ʰs̲hift</span> off
   ks ← wo <span class="c-libfunc">ˡl̲ook</span> side
@@ -300,27 +303,27 @@ gentle slope.
   bs ← js <span class="c-builtin">s̲elect</span> A <span class="c-builtin">c̲at</span> <span class="c-number">0</span>
   dn ← P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">-1</span> <span class="c-number">0</span>
   jd ← keys <span class="c-builtin">i̲ndexOf</span> <span class="c-libfunc">ʰc̲ellKey</span> dn
-  held ← ((wo <span class="c-libfunc">ˡl̲ook</span> dn) <span class="c-symbol">=</span> <span class="c-number">1</span>) <span class="c-symbol">+</span> ˡfull <span class="c-symbol">=</span> jd <span class="c-builtin">s̲elect</span> A <span class="c-builtin">c̲at</span> <span class="c-number">0</span>
+  held ← <span class="c-depth1">(</span><span class="c-depth2">(</span>wo <span class="c-libfunc">ˡl̲ook</span> dn<span class="c-depth2">)</span> <span class="c-symbol">=</span> <span class="c-number">1</span><span class="c-depth1">)</span> <span class="c-symbol">+</span> ˡfull <span class="c-symbol">=</span> jd <span class="c-builtin">s̲elect</span> A <span class="c-builtin">c̲at</span> <span class="c-number">0</span>
   drop ← <span class="c-number">0</span> <span class="c-symbol">=</span> wo <span class="c-libfunc">ˡl̲ook</span> side <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">-1</span> <span class="c-number">0</span>
-  ahead ← ((<span class="c-number">1</span> <span class="c-builtin">s̲elect₂</span> D) <span class="c-symbol">=</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> o) <span class="c-symbol">×</span> (<span class="c-number">2</span> <span class="c-builtin">s̲elect₂</span> D) <span class="c-symbol">=</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> o
-  wt ← <span class="c-number">4</span> <span class="c-builtin">m̲ax</span> (<span class="c-number">7</span> <span class="c-symbol">×</span> ahead) <span class="c-builtin">m̲ax</span> <span class="c-number">8</span> <span class="c-symbol">×</span> drop
-  go ← (ks <span class="c-symbol">=</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> (<span class="c-number">0</span> <span class="c-symbol">&lt;</span> held) <span class="c-symbol">×</span> A <span class="c-symbol">&gt;</span> bs
+  ahead ← <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-number">1</span> <span class="c-builtin">s̲elect₂</span> D<span class="c-depth2">)</span> <span class="c-symbol">=</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> o<span class="c-depth1">)</span> <span class="c-symbol">×</span> <span class="c-depth1">(</span><span class="c-number">2</span> <span class="c-builtin">s̲elect₂</span> D<span class="c-depth1">)</span> <span class="c-symbol">=</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> o
+  wt ← <span class="c-number">4</span> <span class="c-builtin">m̲ax</span> <span class="c-depth1">(</span><span class="c-number">7</span> <span class="c-symbol">×</span> ahead<span class="c-depth1">)</span> <span class="c-builtin">m̲ax</span> <span class="c-number">8</span> <span class="c-symbol">×</span> drop
+  go ← <span class="c-depth1">(</span>ks <span class="c-symbol">=</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-symbol">×</span> <span class="c-depth1">(</span><span class="c-number">0</span> <span class="c-symbol">&lt;</span> held<span class="c-depth1">)</span> <span class="c-symbol">×</span> A <span class="c-symbol">&gt;</span> bs
   <span class="c-comment">⍝ at most half the difference: neighbors even out, never trade places</span>
-  t ← go <span class="c-symbol">×</span> ((A <span class="c-symbol">−</span> bs) <span class="c-symbol">×</span> wt) <span class="c-builtin">d̲iv</span> <span class="c-number">16</span>
+  t ← go <span class="c-symbol">×</span> <span class="c-depth1">(</span><span class="c-depth2">(</span>A <span class="c-symbol">−</span> bs<span class="c-depth2">)</span> <span class="c-symbol">×</span> wt<span class="c-depth1">)</span> <span class="c-builtin">d̲iv</span> <span class="c-number">16</span>
   <span class="c-comment">⍝ a stream's front keeps going the way it moves, and over an edge,</span>
   <span class="c-comment">⍝ even by 1 (only into an empty cell, so water cannot circle)</span>
-  t ← t <span class="c-builtin">m̲ax</span> go <span class="c-symbol">×</span> ((A <span class="c-symbol">−</span> bs) <span class="c-symbol">≥</span> <span class="c-number">2</span>) <span class="c-symbol">+</span> (bs <span class="c-symbol">=</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> <span class="c-number">0</span> <span class="c-symbol">&lt;</span> ahead <span class="c-symbol">+</span> drop
-  t ← t <span class="c-builtin">m̲in</span> (ˡfull <span class="c-symbol">−</span> bs) <span class="c-builtin">m̲in</span> A
+  t ← t <span class="c-builtin">m̲ax</span> go <span class="c-symbol">×</span> <span class="c-depth1">(</span><span class="c-depth2">(</span>A <span class="c-symbol">−</span> bs<span class="c-depth2">)</span> <span class="c-symbol">≥</span> <span class="c-number">2</span><span class="c-depth1">)</span> <span class="c-symbol">+</span> <span class="c-depth1">(</span>bs <span class="c-symbol">=</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-symbol">×</span> <span class="c-number">0</span> <span class="c-symbol">&lt;</span> ahead <span class="c-symbol">+</span> drop
+  t ← t <span class="c-builtin">m̲in</span> <span class="c-depth1">(</span>ˡfull <span class="c-symbol">−</span> bs<span class="c-depth1">)</span> <span class="c-builtin">m̲in</span> A
   jf ← keys <span class="c-builtin">i̲ndexOf</span> <span class="c-libfunc">ʰc̲ellKey</span> P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-symbol">−</span> off
-  got ← (jf <span class="c-builtin">s̲elect</span> t <span class="c-builtin">c̲at</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> jf <span class="c-symbol">≤</span> n
-  A ← (A <span class="c-symbol">−</span> t) <span class="c-symbol">+</span> got
-  dx ← ((got <span class="c-symbol">&gt;</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> o) <span class="c-symbol">+</span> (got <span class="c-symbol">=</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect₂</span> D
-  dz ← ((got <span class="c-symbol">&gt;</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> o) <span class="c-symbol">+</span> (got <span class="c-symbol">=</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect₂</span> D
-  D ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> (<span class="c-number">2</span> <span class="c-builtin">c̲at</span> n) <span class="c-builtin">r̲eshape</span> dx <span class="c-builtin">c̲at</span> dz
-  new ← (t <span class="c-symbol">&gt;</span> <span class="c-number">0</span>) <span class="c-symbol">×</span> js <span class="c-symbol">&gt;</span> n
+  got ← <span class="c-depth1">(</span>jf <span class="c-builtin">s̲elect</span> t <span class="c-builtin">c̲at</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-symbol">×</span> jf <span class="c-symbol">≤</span> n
+  A ← <span class="c-depth1">(</span>A <span class="c-symbol">−</span> t<span class="c-depth1">)</span> <span class="c-symbol">+</span> got
+  dx ← <span class="c-depth1">(</span><span class="c-depth2">(</span>got <span class="c-symbol">&gt;</span> <span class="c-number">0</span><span class="c-depth2">)</span> <span class="c-symbol">×</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect</span> o<span class="c-depth1">)</span> <span class="c-symbol">+</span> <span class="c-depth1">(</span>got <span class="c-symbol">=</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-symbol">×</span> <span class="c-number">1</span> <span class="c-builtin">s̲elect₂</span> D
+  dz ← <span class="c-depth1">(</span><span class="c-depth2">(</span>got <span class="c-symbol">&gt;</span> <span class="c-number">0</span><span class="c-depth2">)</span> <span class="c-symbol">×</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect</span> o<span class="c-depth1">)</span> <span class="c-symbol">+</span> <span class="c-depth1">(</span>got <span class="c-symbol">=</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-symbol">×</span> <span class="c-number">2</span> <span class="c-builtin">s̲elect₂</span> D
+  D ← <span class="c-number">2</span> <span class="c-number">1</span> <span class="c-builtin">t̲ranspose</span> <span class="c-depth1">(</span><span class="c-number">2</span> <span class="c-builtin">c̲at</span> n<span class="c-depth1">)</span> <span class="c-builtin">r̲eshape</span> dx <span class="c-builtin">c̲at</span> dz
+  new ← <span class="c-depth1">(</span>t <span class="c-symbol">&gt;</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-symbol">×</span> js <span class="c-symbol">&gt;</span> n
   m ← <span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> new
-  (P <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> side, A <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> t, D <span class="c-builtin">c̲at</span> (m <span class="c-builtin">c̲at</span> <span class="c-number">2</span>) <span class="c-builtin">r̲eshape</span> o)
-}
+  <span class="c-depth1">(</span>P <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> side, A <span class="c-builtin">c̲at</span> new <span class="c-builtin">r̲eplicate</span> t, D <span class="c-builtin">c̲at</span> <span class="c-depth2">(</span>m <span class="c-builtin">c̲at</span> <span class="c-number">2</span><span class="c-depth2">)</span> <span class="c-builtin">r̲eshape</span> o<span class="c-depth1">)</span>
+<span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   h:s_pread := { woo (P, A, D) -&gt;</span>
@@ -371,14 +374,14 @@ fills &#x2013; while water falling into it becomes sea.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ʰr̲efill</span> ← { wo W →
+<pre class="src src-xetal"><span class="c-libfunc">ʰr̲efill</span> ← <span class="c-depth0">{</span> wo W →
   P ← <span class="c-number">1</span> <span class="c-number">2</span> <span class="c-number">3</span> <span class="c-builtin">s̲elect₂</span> W
   A ← <span class="c-number">4</span> <span class="c-builtin">s̲elect₂</span> W
   D ← <span class="c-number">5</span> <span class="c-number">6</span> <span class="c-builtin">s̲elect₂</span> W
-  sides ← (P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">-1</span> <span class="c-number">0</span> <span class="c-number">0</span>) <span class="c-builtin">c̲at</span> (P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">0</span>) <span class="c-builtin">c̲at</span> (P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">-1</span>) <span class="c-builtin">c̲at</span> (P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span>) <span class="c-builtin">c̲at</span> P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">0</span>
-  sea ← <span class="c-number">0</span> <span class="c-symbol">&lt;</span> <span class="c-symbol">'+</span> <span class="c-builtin">r̲/₁</span> (<span class="c-number">5</span> <span class="c-builtin">c̲at</span> <span class="c-builtin">t̲ally</span> A) <span class="c-builtin">r̲eshape</span> <span class="c-number">2</span> <span class="c-symbol">=</span> wo <span class="c-libfunc">ˡl̲ook</span> sides
-  (P, (ˡfull <span class="c-symbol">×</span> sea) <span class="c-symbol">+</span> (<span class="c-number">1</span> <span class="c-symbol">−</span> sea) <span class="c-symbol">×</span> A, D)
-}
+  sides ← <span class="c-depth1">(</span>P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">-1</span> <span class="c-number">0</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-builtin">c̲at</span> <span class="c-depth1">(</span>P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">1</span> <span class="c-number">0</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-builtin">c̲at</span> <span class="c-depth1">(</span>P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">-1</span><span class="c-depth1">)</span> <span class="c-builtin">c̲at</span> <span class="c-depth1">(</span>P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span><span class="c-depth1">)</span> <span class="c-builtin">c̲at</span> P <span class="c-libfunc">ʰs̲hift</span> <span class="c-number">0</span> <span class="c-number">1</span> <span class="c-number">0</span>
+  sea ← <span class="c-number">0</span> <span class="c-symbol">&lt;</span> <span class="c-symbol">'+</span> <span class="c-builtin">r̲/₁</span> <span class="c-depth1">(</span><span class="c-number">5</span> <span class="c-builtin">c̲at</span> <span class="c-builtin">t̲ally</span> A<span class="c-depth1">)</span> <span class="c-builtin">r̲eshape</span> <span class="c-number">2</span> <span class="c-symbol">=</span> wo <span class="c-libfunc">ˡl̲ook</span> sides
+  <span class="c-depth1">(</span>P, <span class="c-depth2">(</span>ˡfull <span class="c-symbol">×</span> sea<span class="c-depth2">)</span> <span class="c-symbol">+</span> <span class="c-depth2">(</span><span class="c-number">1</span> <span class="c-symbol">−</span> sea<span class="c-depth2">)</span> <span class="c-symbol">×</span> A, D<span class="c-depth1">)</span>
+<span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   h:r_efill := { wo W -&gt;</span>
@@ -399,22 +402,22 @@ column of the world made again.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-xetal"><span class="c-libfunc">ʰf̲low</span> ← { s →
-  (p, wo, jb, st) ← s
-  (ks, ns, ms, wm, ed, rq, W, fw) ← wo
-  (P, A, D) ← wo <span class="c-libfunc">ʰr̲efill</span> W
-  (P, A, D) ← wo <span class="c-libfunc">ʰf̲all</span> (P, A, D)
-  (P, A, D) ← (wo, <span class="c-number">-1</span> <span class="c-number">0</span>) <span class="c-libfunc">ʰs̲pread</span> (P, A, D)
-  (P, A, D) ← (wo, <span class="c-number">1</span> <span class="c-number">0</span>) <span class="c-libfunc">ʰs̲pread</span> (P, A, D)
-  (P, A, D) ← (wo, <span class="c-number">0</span> <span class="c-number">-1</span>) <span class="c-libfunc">ʰs̲pread</span> (P, A, D)
-  (P, A, D) ← (wo, <span class="c-number">0</span> <span class="c-number">1</span>) <span class="c-libfunc">ʰs̲pread</span> (P, A, D)
+<pre class="src src-xetal"><span class="c-libfunc">ʰf̲low</span> ← <span class="c-depth0">{</span> s →
+  <span class="c-depth1">(</span>p, wo, jb, st<span class="c-depth1">)</span> ← s
+  <span class="c-depth1">(</span>ks, ns, ms, wm, ed, rq, W, fw<span class="c-depth1">)</span> ← wo
+  <span class="c-depth1">(</span>P, A, D<span class="c-depth1">)</span> ← wo <span class="c-libfunc">ʰr̲efill</span> W
+  <span class="c-depth1">(</span>P, A, D<span class="c-depth1">)</span> ← wo <span class="c-libfunc">ʰf̲all</span> <span class="c-depth1">(</span>P, A, D<span class="c-depth1">)</span>
+  <span class="c-depth1">(</span>P, A, D<span class="c-depth1">)</span> ← <span class="c-depth1">(</span>wo, <span class="c-number">-1</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-libfunc">ʰs̲pread</span> <span class="c-depth1">(</span>P, A, D<span class="c-depth1">)</span>
+  <span class="c-depth1">(</span>P, A, D<span class="c-depth1">)</span> ← <span class="c-depth1">(</span>wo, <span class="c-number">1</span> <span class="c-number">0</span><span class="c-depth1">)</span> <span class="c-libfunc">ʰs̲pread</span> <span class="c-depth1">(</span>P, A, D<span class="c-depth1">)</span>
+  <span class="c-depth1">(</span>P, A, D<span class="c-depth1">)</span> ← <span class="c-depth1">(</span>wo, <span class="c-number">0</span> <span class="c-number">-1</span><span class="c-depth1">)</span> <span class="c-libfunc">ʰs̲pread</span> <span class="c-depth1">(</span>P, A, D<span class="c-depth1">)</span>
+  <span class="c-depth1">(</span>P, A, D<span class="c-depth1">)</span> ← <span class="c-depth1">(</span>wo, <span class="c-number">0</span> <span class="c-number">1</span><span class="c-depth1">)</span> <span class="c-libfunc">ʰs̲pread</span> <span class="c-depth1">(</span>P, A, D<span class="c-depth1">)</span>
   live ← A <span class="c-symbol">&gt;</span> <span class="c-number">0</span>
   n ← <span class="c-symbol">'+</span> <span class="c-builtin">r̲/</span> live
-  W2 ← (live <span class="c-builtin">r̲eplicate</span> P) <span class="c-builtin">c̲at₂</span> ((n <span class="c-builtin">c̲at</span> <span class="c-number">1</span>) <span class="c-builtin">r̲eshape</span> live <span class="c-builtin">r̲eplicate</span> A) <span class="c-builtin">c̲at₂</span> live <span class="c-builtin">r̲eplicate</span> D
+  W2 ← <span class="c-depth1">(</span>live <span class="c-builtin">r̲eplicate</span> P<span class="c-depth1">)</span> <span class="c-builtin">c̲at₂</span> <span class="c-depth1">(</span><span class="c-depth2">(</span>n <span class="c-builtin">c̲at</span> <span class="c-number">1</span><span class="c-depth2">)</span> <span class="c-builtin">r̲eshape</span> live <span class="c-builtin">r̲eplicate</span> A<span class="c-depth1">)</span> <span class="c-builtin">c̲at₂</span> live <span class="c-builtin">r̲eplicate</span> D
   still ← W2 <span class="c-builtin">m̲atch</span> W
-  z ← (wo, W2) <span class="c-libfunc">ʰd̲rawWater</span> <span class="c-libfunc">ˡw̲indow</span> s
-  (p, (ks, ns, ms, wm, ed, rq, W2, still <span class="c-libfunc">ʰn̲ext</span> <span class="c-number">0</span>), jb, st)
-}
+  z ← <span class="c-depth1">(</span>wo, W2<span class="c-depth1">)</span> <span class="c-libfunc">ʰd̲rawWater</span> <span class="c-libfunc">ˡw̲indow</span> s
+  <span class="c-depth1">(</span>p, <span class="c-depth2">(</span>ks, ns, ms, wm, ed, rq, W2, still <span class="c-libfunc">ʰn̲ext</span> <span class="c-number">0</span><span class="c-depth2">)</span>, jb, st<span class="c-depth1">)</span>
+<span class="c-depth0">}</span>
 
 <span class="c-comment typed">⍝ typed:</span>
 <span class="c-comment typed">⍝   h:f_low := { s -&gt;</span>

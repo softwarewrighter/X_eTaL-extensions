@@ -8,8 +8,7 @@
 "vx:" u_se< "Voxels"
 "sc:" u_se< "Scene"
 
-b := vx:c_hunk vx:h_ills 0.0
-f := vx:f_aces b
+f := vx:f_aces vx:c_hunk vx:h_ills 0.0
 "faces drawn, and the points sent for them (4 corners, 3 numbers each):"
 (t_ally f) c_at 12 * t_ally f
 
@@ -22,13 +21,13 @@ u:p_ut := { t ->
   sel := (5 s_elect_2 f) = t
   0 = '+ r_/ sel ? t + 1
   head := (f_loat w c_at t) c_at (t + 1) s_elect vx:colors
-  x := head sc:q_uads! vx:q_uads sel r_eplicate f
+  _ := head sc:q_uads! vx:q_uads sel r_eplicate f
   t + 1
 }
 put := 7 'u:p_ut p_ower 1
 
 u:q_uit := { n ->
-  z := sc:c_lose! w
+  _ := sc:c_lose! w
   0
 }
 u:f_rame := { n ->

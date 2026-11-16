@@ -93,7 +93,7 @@ h:t_rim := { s ->
   j := f_irst w_here far > 0
   n := j s_elect ns
   w := l:w_indow s
-  gone := '{ w sc:r_emove! (10 * n) + _r } m_ap r_ange 9
+  _ := '{ w sc:r_emove! (10 * n) + _r } m_ap r_ange 9
   keep := j != r_ange t_ally ks
   (p, (keep r_eplicate ks, keep r_eplicate ns, keep r_eplicate ms, keep r_eplicate wm, ed, rq, fl, fw), jb, st)
 }
@@ -120,13 +120,13 @@ h:s_endOne := { wnt f ->
 ## them to scene (part 2) -- about 12 ms (20 for light)
 ## at most; or, when it is time, a tick of moving water
 l:s_tream := { s ->
-  s := h:t_rim s
-  (_, (_, _, _, _, _, rq, fl, fw), (part, _, _, _), _) := s
-  part = 1 ? h:f_aces s
-  part = 2 ? h:s_end s
-  part = 3 ? h:l_ight s
-  ((fw <= 0) * 0 < t_ally fl) ? h:f_low s
-  h:b_locks h:w_ait s
+  trimmed := h:t_rim s
+  (_, (_, _, _, _, _, rq, fl, fw), (part, _, _, _), _) := trimmed
+  part = 1 ? h:f_aces trimmed
+  part = 2 ? h:s_end trimmed
+  part = 3 ? h:l_ight trimmed
+  ((fw <= 0) * 0 < t_ally fl) ? h:f_low trimmed
+  h:b_locks h:w_ait trimmed
 }
 
 # a frame less to wait for the water's next tick
@@ -164,10 +164,10 @@ h:r_emake := { (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, st) ->
   j > t_ally ks ? (p, (ks, ns, ms, wm, ed, rest, fl, fw), jb, st)
   c := (h:c_x k) c_at h:c_z k
   b := (ed, c) l:e_dited vx:c_olumnBlocks c
-  ms := ((j - 1) t_ake ms) c_at (e_nclose vx:c_olumnMask b) c_at j d_rop ms
-  wm := ((j - 1) t_ake wm) c_at (e_nclose vx:c_olumnWater b) c_at j d_rop wm
+  masks := ((j - 1) t_ake ms) c_at (e_nclose vx:c_olumnMask b) c_at j d_rop ms
+  waters := ((j - 1) t_ake wm) c_at (e_nclose vx:c_olumnWater b) c_at j d_rop wm
   # the column changed: the water wakes (its masks are new now)
-  (p, (ks, ns, ms, wm, ed, rest, fl, 0), (1, c, j s_elect ns, r_avel b), st)
+  (p, (ks, ns, masks, waters, ed, rest, fl, 0), (1, c, j s_elect ns, r_avel b), st)
 }
 
 ## (edits, c) en:e_dited b: the blocks b of column c (18 by 32 by 18,
@@ -202,8 +202,8 @@ h:f_aces := { (p, wo, (_, c, n, b), st) ->
 h:l_ight := { (p, wo, (_, c, n, v), st) ->
   b := 18 32 18 r_eshape 10368 t_ake v
   f := (((t_ally 10368 d_rop v) d_iv 5) c_at 5) r_eshape 10368 d_rop v
-  f := f c_at_2 (c, vx:c_olumnLight b) vx:f_aceLight f
-  (p, wo, (2, c, n, r_avel f), st)
+  shaded := f c_at_2 (c, vx:c_olumnLight b) vx:f_aceLight f
+  (p, wo, (2, c, n, r_avel shaded), st)
 }
 
 # part 2: the job's faces to scene, one object for each kind of block
@@ -240,11 +240,11 @@ l:h_it := { wo q ->
   cy := u_nique f_loor y c_at (y + 0.9) c_at y + 1.75
   cz := u_nique f_loor (z - 0.3) c_at z + 0.3
   0 < '+ r_/ cy < 0 ? 1.0
-  cy := (cy <= 31) r_eplicate cy
-  0 = t_ally cy ? 0.0
+  inside := (cy <= 31) r_eplicate cy
+  0 = t_ally inside ? 0.0
   px := r_avel cx '{ _l + 0 * _r } t_able cz
   pz := r_avel cx '{ _r + 0 * _l } t_able cz
-  hits := '{ wo h:c_ell (_r s_elect px) c_at (_r s_elect pz) c_at cy } e_ach r_ange t_ally px
+  hits := '{ wo h:c_ell (_r s_elect px) c_at (_r s_elect pz) c_at inside } e_ach r_ange t_ally px
   f_loat 0 < '+ r_/ hits
 }
 
@@ -267,8 +267,7 @@ l:p_ick := { (ks, _, ms, _, _, _, _, _) e ->
   keys := (10000 * 1000 + px d_iv 16) + 1000 + pz d_iv 16
   u := u_nique keys
   j := ks i_ndexOf u
-  none := e_nclose 0 * d_isclose f_irst ms
-  all := d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ j s_elect ms c_at none
+  all := d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ j s_elect ms c_at e_nclose 0 * d_isclose f_irst ms
   ok := (py >= 0) * py <= 31
   at := (8192 * (u i_ndexOf keys) - 1) + 1 + (pz m_od 16) + 16 * (0 m_ax 31 m_in py) + 32 * px m_od 16
   solid := ok * at s_elect all
@@ -293,12 +292,10 @@ l:p_ick := { (ks, _, ms, _, _, _, _, _) e ->
 l:s_et := { (q, t) s ->
   (_, wo, _, _) := s
   t = 5 ? (1 6 r_eshape q c_at l:full c_at 0 0) l:p_our s
-  s := (q, t) h:d_isplace s
-  s := ((1 3 r_eshape q), t) l:s_etAll s
-  nb := (5 3 r_eshape q) + 5 3 r_eshape 0 1 0  -1 0 0  1 0 0  0 0 -1  0 0 1
-  sea := (t = 0) * 0 < '+ r_/ 2 = wo l:l_ook nb
-  0 = sea ? s
-  (1 6 r_eshape q c_at l:full c_at 0 0) l:p_our s
+  placed := ((1 3 r_eshape q), t) l:s_etAll (q, t) h:d_isplace s
+  sea := (t = 0) * 0 < '+ r_/ 2 = wo l:l_ook (5 3 r_eshape q) + 5 3 r_eshape 0 1 0  -1 0 0  1 0 0  0 0 -1  0 0 1
+  0 = sea ? placed
+  (1 6 r_eshape q c_at l:full c_at 0 0) l:p_our placed
 }
 
 ## (cells, block) en:s_etAll s: the cells (n by 3, x y z) all set to the
@@ -306,14 +303,13 @@ l:s_et := { (q, t) s ->
 l:s_etAll := { (q, t) s ->
   (p, (ks, ns, ms, wm, ed, rq, fl, fw), jb, st) := s
   n := 1 s_elect s_hape q
-  ed := (q c_at_2 (n c_at 1) r_eshape t) c_at ed
+  edits := (q c_at_2 (n c_at 1) r_eshape t) c_at ed
   x := 1 s_elect_2 q
   z := 3 s_elect_2 q
   want := 2 1 t_ranspose (5 c_at n) r_eshape (n r_eshape 1) c_at ((x m_od 16) = 0) c_at ((x m_od 16) = 15) c_at ((z m_od 16) = 0) c_at (z m_od 16) = 15
   kx := (x d_iv 16) '+ t_able 0 -1 1 0 0
-  kz := (z d_iv 16) '+ t_able 0 0 0 -1 1
-  near := u_nique (r_avel want) r_eplicate r_avel (10000 * 1000 + kx) + 1000 + kz
-  (p, (ks, ns, ms, wm, ed, near c_at (0 = rq m_ember? near) r_eplicate rq, fl, fw), jb, st)
+  near := u_nique (r_avel want) r_eplicate r_avel (10000 * 1000 + kx) + 1000 + (z d_iv 16) '+ t_able 0 0 0 -1 1
+  (p, (ks, ns, ms, wm, edits, near c_at (0 = rq m_ember? near) r_eplicate rq, fl, fw), jb, st)
 }
 
 ## f en:p_our s: the cells f (n by 6: x y z, amount 1 to en:full, and the
@@ -398,12 +394,7 @@ h:s_hift := { q o -> q + ((1 s_elect s_hape q) c_at 3) r_eshape o }
 h:f_low := { s ->
   (p, wo, jb, st) := s
   (ks, ns, ms, wm, ed, rq, W, fw) := wo
-  (P, A, D) := wo h:r_efill W
-  (P, A, D) := wo h:f_all (P, A, D)
-  (P, A, D) := (wo, -1 0) h:s_pread (P, A, D)
-  (P, A, D) := (wo, 1 0) h:s_pread (P, A, D)
-  (P, A, D) := (wo, 0 -1) h:s_pread (P, A, D)
-  (P, A, D) := (wo, 0 1) h:s_pread (P, A, D)
+  (P, A, D) := (wo, 0 1) h:s_pread (wo, 0 -1) h:s_pread (wo, 1 0) h:s_pread (wo, -1 0) h:s_pread wo h:f_all wo h:r_efill W
   live := A > 0
   n := '+ r_/ live
   W2 := (live r_eplicate P) c_at_2 ((n c_at 1) r_eshape live r_eplicate A) c_at_2 live r_eplicate D
@@ -437,14 +428,13 @@ h:f_all := { wo (P, A, D) ->
   dn := P h:s_hift 0 -1 0
   kd := wo l:l_ook dn
   jd := keys i_ndexOf h:c_ellKey dn
-  bd := jd s_elect A c_at 0
-  room := (kd = 0) * l:full - bd
+  room := (kd = 0) * l:full - jd s_elect A c_at 0
   f := ((kd = 2) * A) + (kd != 2) * A m_in room
   ja := keys i_ndexOf h:c_ellKey P h:s_hift 0 1 0
-  A := (A - f) + (ja s_elect f c_at 0) * ja <= n
+  settled := (A - f) + (ja s_elect f c_at 0) * ja <= n
   new := (f > 0) * (kd = 0) * jd > n
   m := '+ r_/ new
-  (P c_at new r_eplicate dn, A c_at new r_eplicate f, D c_at new r_eplicate D)
+  (P c_at new r_eplicate dn, settled c_at new r_eplicate f, D c_at new r_eplicate D)
 }
 
 # (wo, o) h:s_pread (P, A, D): one pass of spreading toward o (dx dz):
@@ -467,20 +457,19 @@ h:s_pread := { woo (P, A, D) ->
   wt := 4 m_ax (7 * ahead) m_ax 8 * drop
   go := (ks = 0) * (0 < held) * A > bs
   # at most half the difference: neighbors even out, never trade places
-  t := go * ((A - bs) * wt) d_iv 16
   # a stream's front keeps going the way it moves, and over an edge,
   # even by 1 (only into an empty cell, so water cannot circle)
-  t := t m_ax go * ((A - bs) >= 2) + (bs = 0) * 0 < ahead + drop
-  t := t m_in (l:full - bs) m_in A
+  t := ((go * ((A - bs) * wt) d_iv 16) m_ax
+    go * ((A - bs) >= 2) + (bs = 0) * 0 < ahead + drop)
+  moved := t m_in (l:full - bs) m_in A
   jf := keys i_ndexOf h:c_ellKey P h:s_hift 0 - off
-  got := (jf s_elect t c_at 0) * jf <= n
-  A := (A - t) + got
+  got := (jf s_elect moved c_at 0) * jf <= n
+  after := (A - moved) + got
   dx := ((got > 0) * 1 s_elect o) + (got = 0) * 1 s_elect_2 D
-  dz := ((got > 0) * 2 s_elect o) + (got = 0) * 2 s_elect_2 D
-  D := 2 1 t_ranspose (2 c_at n) r_eshape dx c_at dz
-  new := (t > 0) * js > n
+  heading := 2 1 t_ranspose (2 c_at n) r_eshape dx c_at ((got > 0) * 2 s_elect o) + (got = 0) * 2 s_elect_2 D
+  new := (moved > 0) * js > n
   m := '+ r_/ new
-  (P c_at new r_eplicate side, A c_at new r_eplicate t, D c_at (m c_at 2) r_eshape o)
+  (P c_at new r_eplicate side, after c_at new r_eplicate moved, heading c_at (m c_at 2) r_eshape o)
 }
 
 # (wo, W) h:d_rawWater w: the moving water drawn as one translucent
@@ -499,12 +488,12 @@ h:d_rawWater := { woW w ->
   ht := y + (f_loat A) / f_loat l:full
   d_ry := { o -> (0 = wo l:l_ook P h:s_hift o) * n < keys i_ndexOf h:c_ellKey P h:s_hift o }
   top := (n < keys i_ndexOf h:c_ellKey P h:s_hift 0 1 0) * 2 != wo l:l_ook P h:s_hift 0 1 0
-  q := (top, (x, ht, z), (x + 1.0, ht, z), (x + 1.0, ht, z + 1.0), (x, ht, z + 1.0)) h:q_uads 0
-  q := q c_at (d_ry -1 0 0, (x, y, z), (x, y, z + 1.0), (x, ht, z + 1.0), (x, ht, z)) h:q_uads 0
-  q := q c_at (d_ry 1 0 0, (x + 1.0, y, z), (x + 1.0, y, z + 1.0), (x + 1.0, ht, z + 1.0), (x + 1.0, ht, z)) h:q_uads 0
-  q := q c_at (d_ry 0 0 -1, (x, y, z), (x + 1.0, y, z), (x + 1.0, ht, z), (x, ht, z)) h:q_uads 0
-  q := q c_at (d_ry 0 0 1, (x, y, z + 1.0), (x + 1.0, y, z + 1.0), (x + 1.0, ht, z + 1.0), (x, ht, z + 1.0)) h:q_uads 0
-  q := q c_at (d_ry 0 -1 0, (x, y, z), (x + 1.0, y, z), (x + 1.0, y, z + 1.0), (x, y, z + 1.0)) h:q_uads 0
+  q := (((top, (x, ht, z), (x + 1.0, ht, z), (x + 1.0, ht, z + 1.0), (x, ht, z + 1.0)) h:q_uads 0) c_at
+    ((d_ry -1 0 0, (x, y, z), (x, y, z + 1.0), (x, ht, z + 1.0), (x, ht, z)) h:q_uads 0) c_at
+    ((d_ry 1 0 0, (x + 1.0, y, z), (x + 1.0, y, z + 1.0), (x + 1.0, ht, z + 1.0), (x + 1.0, ht, z)) h:q_uads 0) c_at
+    ((d_ry 0 0 -1, (x, y, z), (x + 1.0, y, z), (x + 1.0, ht, z), (x, ht, z)) h:q_uads 0) c_at
+    ((d_ry 0 0 1, (x, y, z + 1.0), (x + 1.0, y, z + 1.0), (x + 1.0, ht, z + 1.0), (x, ht, z + 1.0)) h:q_uads 0) c_at
+    (d_ry 0 -1 0, (x, y, z), (x + 1.0, y, z), (x + 1.0, y, z + 1.0), (x, y, z + 1.0)) h:q_uads 0)
   0 = t_ally q ? w sc:r_emove! 9
   # in full sunlight: as bright as unlit by day, dimming at night
   ((f_loat w) c_at 9.0 c_at ((6 s_elect vx:colors) c_at 0.6)) sc:q_uads! q c_at_2 ((t_ally q) c_at 2) r_eshape 1.0 0.0
@@ -584,14 +573,14 @@ h:m_y := { wo (x, v, yaw, pitch, g, fly) ->
 ## down, 15 blocks a second, no gravity, the blocks still stopping it.
 l:m_ove := { s k ->
   ((x, v, yaw, pitch, g, fly), wo, jb, st) := s
-  yaw := yaw + (0.005 * 1 s_elect k) + 2.0 * l:dt * (10 s_elect k) - 9 s_elect k
-  pitch := -1.5 m_ax 1.5 m_in pitch + (-0.005 * 2 s_elect k) + 1.5 * l:dt * (11 s_elect k) - 12 s_elect k
+  turn := yaw + (0.005 * 1 s_elect k) + 2.0 * l:dt * (10 s_elect k) - 9 s_elect k
+  tilt := -1.5 m_ax 1.5 m_in pitch + (-0.005 * 2 s_elect k) + 1.5 * l:dt * (11 s_elect k) - 12 s_elect k
   fwd := (3 s_elect k) - 5 s_elect k
   side := (6 s_elect k) - 4 s_elect k
   wet := (1.0 - fly) * f_loat 14.0 > 0.9 + 2 s_elect x
   speed := (fly * 15.0) + (1.0 - fly) * (1.0 - 0.4 * wet) * 4.5 * 1.0 + 8 s_elect k
-  vx := speed * ((s_in yaw) * fwd) + (c_os yaw) * side
-  vz := speed * ((0.0 - c_os yaw) * fwd) + (s_in yaw) * side
+  vx := speed * ((s_in turn) * fwd) + (c_os turn) * side
+  vz := speed * ((0.0 - c_os turn) * fwd) + (s_in turn) * side
   surface := (1.0 - fly) * (f_loat 14.5 > 2 s_elect x) * f_loat 13.0 < 2 s_elect x
   jump := (1.0 - fly) * (1.0 m_in g + surface * 1.0 - wet) * 7 s_elect k
   swim := wet * 7 s_elect k
@@ -600,9 +589,9 @@ l:m_ove := { s k ->
   walkVy := (7.5 * jump) + (1.0 - jump) * (4.0 * swim) + (1.0 - swim) * (wet * sink) + (1.0 - wet) * fall
   flyVy := ((80.0 - 2 s_elect x) * 60.0) m_in 15.0 * (7 s_elect k) - 8 s_elect k
   vy := (fly * flyVy) + (1.0 - fly) * walkVy
-  p := wo h:m_y wo h:m_z wo h:m_x (x, vx c_at vy c_at vz, yaw, pitch, g, fly)
+  p := wo h:m_y wo h:m_z wo h:m_x (x, vx c_at vy c_at vz, turn, tilt, g, fly)
   (x2, _, _, _, _, _) := p
-  e := (l:w_indow s) sc:e_ye! (1 s_elect x2) c_at ((2 s_elect x2) + 1.6) c_at (3 s_elect x2) c_at yaw c_at pitch
+  _ := (l:w_indow s) sc:e_ye! (1 s_elect x2) c_at ((2 s_elect x2) + 1.6) c_at (3 s_elect x2) c_at turn c_at tilt
   (p, wo, jb, st)
 }
 
@@ -636,13 +625,13 @@ l:l_it := { (_, _, _, (_, _, _, _, lit)) -> lit }
 ## en:l_ighting s: the world lit (call it before columns are made), by
 ## day
 l:l_ighting := { (p, wo, jb, (w, nxt, x0, on, _)) ->
-  z := w sc:d_aylight! 1.0
+  _ := w sc:d_aylight! 1.0
   (p, wo, jb, (w, nxt, x0, on, 1))
 }
 
 ## en:n_ight s: day becomes night (the sunlight and the sky gone, the
 ## lamps left) and night day
 l:n_ight := { (p, wo, jb, (w, nxt, x0, on, lit)) ->
-  z := w sc:d_aylight! f_loat lit = 2
+  _ := w sc:d_aylight! f_loat lit = 2
   (p, wo, jb, (w, nxt, x0, on, 3 - lit))
 }

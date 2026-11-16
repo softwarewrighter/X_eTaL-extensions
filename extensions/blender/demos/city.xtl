@@ -14,10 +14,10 @@
 "cy:" u_se< "Cycles"
 "nc:" u_se< "NeonCity"
 
-script := (1280, 720, 30, 64, "GPU") nc:s_cene 0
-script := script c_at (("skyline.png", 0.5) cy:s_till 0) c_at (("descent.png", 6.0) cy:s_till 0) c_at (("street.png", 10.5) cy:s_till 0) c_at ("screen.png", 14.5) cy:s_till 0
-n := "work/city/run.py" bl:w_rite! bp:launcher
-n := "work/city/scene.py" bl:w_rite! script
+script := (((1280, 720, 30, 64, "GPU") nc:s_cene 0) c_at
+  (("skyline.png", 0.5) cy:s_till 0) c_at (("descent.png", 6.0) cy:s_till 0) c_at (("street.png", 10.5) cy:s_till 0) c_at ("screen.png", 14.5) cy:s_till 0)
+_ := "work/city/run.py" bl:w_rite! bp:launcher
+_ := "work/city/scene.py" bl:w_rite! script
 "ray tracing four stills with Blender (Cycles) ..."
 r := "work/city/run.py" bl:r_un! "work/city/scene.py work/city/out"
 "the run, and the error lines in Blender's log:"

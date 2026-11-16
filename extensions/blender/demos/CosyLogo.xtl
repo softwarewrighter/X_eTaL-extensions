@@ -138,8 +138,8 @@ h:c_ycles := { (w, h, samples) z -> "scene.render.engine = 'CYCLES'\nprefs = bpy
 ## size and samples; then the report. The video is left to the caller
 ## (bp:v_ideo or bp:s_till), added after.
 l:s_cene := { (w, h, frames, voxel, samples) z ->
-  t := bp:head c_at h:player c_at (("C", l:letterC, "False") h:t_ube 0) c_at (("o", l:letterO, "True") h:t_ube 0)
-  t := t c_at (("S", l:letterS, "False") h:t_ube 0) c_at (("y arm", l:yArm, "False") h:t_ube 0) c_at (("y stem", l:yStem, "False") h:t_ube 0)
-  t := t c_at "logo = fuse('CoSy', " c_at (f_ormat voxel) c_at ")\n\n" c_at h:plastic c_at (h:t_urntable frames) c_at h:studio
-  t c_at ((w, h, samples) h:c_ycles 0) c_at bp:report
+  ((bp:head c_at h:player c_at (("C", l:letterC, "False") h:t_ube 0) c_at (("o", l:letterO, "True") h:t_ube 0)) c_at
+    ((("S", l:letterS, "False") h:t_ube 0) c_at (("y arm", l:yArm, "False") h:t_ube 0) c_at (("y stem", l:yStem, "False") h:t_ube 0)) c_at
+    ("logo = fuse('CoSy', " c_at (f_ormat voxel) c_at ")\n\n" c_at h:plastic c_at (h:t_urntable frames) c_at h:studio) c_at
+    ((w, h, samples) h:c_ycles 0) c_at bp:report)
 }

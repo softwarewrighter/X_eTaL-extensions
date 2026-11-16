@@ -11,8 +11,8 @@
 "sz:" u_se< "Sizes"
 
 script := ((640, 360, 240) sz:s_cene 0) c_at bp:v_ideo "orbit.mp4"
-n := "work/cubes/run.py" bl:w_rite! bp:launcher
-n := "work/cubes/scene.py" bl:w_rite! script
+_ := "work/cubes/run.py" bl:w_rite! bp:launcher
+_ := "work/cubes/scene.py" bl:w_rite! script
 "rendering 240 frames with Blender (EEVEE) ..."
 r := "work/cubes/run.py" bl:r_un! "work/cubes/scene.py work/cubes/out"
 "the run, and the error lines in Blender's log:"

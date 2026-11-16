@@ -48,14 +48,13 @@ u:r_ound (s:m_ean k t_ake e) c_at (s:m_ean k t_ake k d_rop e) c_at s:m_ean (0 - 
 
 ## the yearly rise as a histogram: half-ppm bins, one column per bin,
 ## drawn as an APL bar chart (a 0/1 matrix, 1s dark)
-b := 1 + f_loor d / 0.5
-h := '+ r_/_2 (r_ange 8) '= t_able b
+h := '+ r_/_2 (r_ange 8) '= t_able 1 + f_loor d / 0.5
 "years with a rise in [0, 0.5), [0.5, 1), ... [3.5, 4) ppm:"
 h
-p := []S_HOW []G_RID (r_ev r_ange 'm_ax r_/ h) '<= t_able h
+_ := []S_HOW []G_RID (r_ev r_ange 'm_ax r_/ h) '<= t_able h
 
 ## the series as a line, years across and ppm up (scaled to a wide box)
 w := 3.0 * (y - 1959.0) / 66.0
 v := (c - 315.0) / 115.0
-p := []S_HOW []P_ATH (2 c_at t_ally y) r_eshape w c_at v
+_ := []S_HOW []P_ATH (2 c_at t_ally y) r_eshape w c_at v
 "drawn: the histogram and the curve"

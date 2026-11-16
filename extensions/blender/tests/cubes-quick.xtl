@@ -6,8 +6,8 @@
 "sz:" u_se< "Sizes"
 
 script := ((160, 90, 4) sz:s_cene 0) c_at bp:s_till "still.png"
-n := "work/quick/run.py" bl:w_rite! bp:launcher
-n := "work/quick/scene.py" bl:w_rite! script
+_ := "work/quick/run.py" bl:w_rite! bp:launcher
+_ := "work/quick/scene.py" bl:w_rite! script
 r := "work/quick/run.py" bl:r_un! "work/quick/scene.py work/quick/out"
 "the run, and the error lines in Blender's log:"
 lines := (n_ot r = f_irst "\n") p_artition r

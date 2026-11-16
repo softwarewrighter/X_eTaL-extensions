@@ -1,1 +1,9 @@
-error[io]: []N_GET: ext:digest/sha256_file: "../../README.md": give a path under the working directory (or XETAL_DIGEST_ROOT), no .. at ./lib/Digest.xtl:14:1
+error[io]: []N_GET: ext:digest/sha256_file: "../../README.md": give a path under the working directory (or XETAL_DIGEST_ROOT), no ..
+  --> ./lib/Digest.xtl:14:1
+   |
+14 | "s_ha256File : text -> text"    ffi:b_ind< "digest/sha256_file"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/outside.xtl:3:1
+   |
+ 3 | dg:s_ha256File "../../README.md"
+   | -------------------------------- called from the program here

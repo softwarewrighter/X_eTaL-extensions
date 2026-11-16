@@ -22,15 +22,15 @@ routes := (((t_ally rawroutes) d_iv 2) c_at 2) r_eshape rawroutes
 stats := f_loor n_umbers bl:r_ead "work/keysbuild/stats.txt"
 "the build (LUTs, flip-flops, cells, tiles, nets, bytes, ALUs, RAMs, I/O, clock evidence):"
 stats
-n := "work/keysbuild/run.py" bl:w_rite! bp:launcher
-n := "work/keysbuild/hex-keys-leds-build.cues.toml" bl:w_rite! (kb:c_ues stats, kb:cueTable) vd:c_ues 0
-n := "work/keysbuild/hex-keys-leds-build.srt" bl:w_rite! (kb:c_ues stats, kb:cueTable) vd:s_rt 0
-n := "work/keysbuild/video.py" bl:w_rite! ((vd:landscape, cells, routes, stats) kb:s_cene 0) c_at (vd:r_ender "hex-keys-leds-build.mp4") c_at vd:report
-n := "work/keysbuild/short.py" bl:w_rite! ((vd:shorts, cells, routes, stats) kb:s_cene 0) c_at (vd:r_ender "hex-keys-leds-build-short.mp4") c_at vd:report
+_ := "work/keysbuild/run.py" bl:w_rite! bp:launcher
+_ := "work/keysbuild/hex-keys-leds-build.cues.toml" bl:w_rite! (kb:c_ues stats, kb:cueTable) vd:c_ues 0
+_ := "work/keysbuild/hex-keys-leds-build.srt" bl:w_rite! (kb:c_ues stats, kb:cueTable) vd:s_rt 0
+_ := "work/keysbuild/video.py" bl:w_rite! ((vd:landscape, cells, routes, stats) kb:s_cene 0) c_at (vd:r_ender "hex-keys-leds-build.mp4") c_at vd:report
+_ := "work/keysbuild/short.py" bl:w_rite! ((vd:shorts, cells, routes, stats) kb:s_cene 0) c_at (vd:r_ender "hex-keys-leds-build-short.mp4") c_at vd:report
 "rendering the landscape video ..."
 r := "work/keysbuild/run.py" bl:r_un! "work/keysbuild/video.py work/keysbuild/out"
 h:c_heck r
 "rendering the Short ..."
-r := "work/keysbuild/run.py" bl:r_un! "work/keysbuild/short.py work/keysbuild/out-short"
-h:c_heck r
+shortRun := "work/keysbuild/run.py" bl:r_un! "work/keysbuild/short.py work/keysbuild/out-short"
+h:c_heck shortRun
 bl:r_ead "work/keysbuild/out/report.txt"

@@ -23,7 +23,7 @@
 w := "Voxels 11: water -- X_eTaL" sc:o_pen! 640 400
 g := w sc:f_og! 22.0 44.0
 k := w sc:s_ky! 0.55 0.72 0.92
-k := w sc:c_urve! 160.0
+_ := w sc:c_urve! 160.0
 
 pl:help
 
@@ -55,11 +55,11 @@ T
 
 ## the player on the rim, south of the lake, facing it (north)
 s := w en:n_ewAt 8.5 c_at (f_loat T + 1) c_at 11.5
-s := (u:c_ells fill, fill r_eplicate blk) en:s_etAll s
+banked := (u:c_ells fill, fill r_eplicate blk) en:s_etAll s
 lake := u:c_ells pool
-s := (lake c_at_2 ((t_ally lake) c_at 3) r_eshape en:full c_at 0 0) en:p_our s
+flooded := (lake c_at_2 ((t_ally lake) c_at 3) r_eshape en:full c_at 0 0) en:p_our banked
 "looking up no cells:"
-t_ally (en:w_orld s) en:l_ook 0 3 r_eshape 0
+t_ally (en:w_orld flooded) en:l_ook 0 3 r_eshape 0
 
 ### Measuring
 
@@ -73,7 +73,7 @@ u:m_easure := { s ->
   inlake := ((a_bs x - 8) m_ax a_bs z - 8) <= 2
   a := 4 s_elect_2 W
   t_oBlocks := { u -> f_ormat (f_loat f_loor 0.5 + 100.0 * (f_loat u) / f_loat en:full) / 100.0 }
-  said := p_rint! "lake: top layer " c_at (t_oBlocks '+ r_/ a * inlake * y = T) c_at " of 25 blocks, the layer below " c_at (t_oBlocks '+ r_/ a * inlake * y = T - 1) c_at " of 25; all the moving water " c_at t_oBlocks en:w_aterUnits s
+  _ := p_rint! "lake: top layer " c_at (t_oBlocks '+ r_/ a * inlake * y = T) c_at " of 25 blocks, the layer below " c_at (t_oBlocks '+ r_/ a * inlake * y = T - 1) c_at " of 25; all the moving water " c_at t_oBlocks en:w_aterUnits s
   s
 }
 u:m_easureIf := { yes sk ->
@@ -82,7 +82,7 @@ u:m_easureIf := { yes sk ->
   s
 }
 u:m_easureAt := { k s ->
-  said := p_rint! "after " c_at (f_ormat k) c_at " frames:"
+  _ := p_rint! "after " c_at (f_ormat k) c_at " frames:"
   u:m_easure s
 }
 
@@ -92,21 +92,20 @@ u:m_easureAt := { k s ->
 ## water was asleep, the frames so far); each time the water falls
 ## asleep after moving, the lake is measured.
 u:f_rame := { (s, sel, was, k) ->
-  (s, sel) := pl:f_rame (s, sel)
-  now := en:a_sleep s
-  s := (now * 1 - was) u:m_easureIf (s, k + 1)
-  (s, sel, now, k + 1)
+  (world, held) := pl:f_rame (s, sel)
+  now := en:a_sleep world
+  measured := (now * 1 - was) u:m_easureIf (world, k + 1)
+  (measured, held, now, k + 1)
 }
 
 hud := w pl:h_ud 1
-s := (3 * (1 + 2 * en:reach) * 1 + 2 * en:reach) 'en:s_tream p_ower s
-s := u:m_easure s
-last := 100000 'u:f_rame p_ower (s, 1, 1, 0)
+settled := u:m_easure (3 * (1 + 2 * en:reach) * 1 + 2 * en:reach) 'en:s_tream p_ower flooded
+last := 100000 'u:f_rame p_ower (settled, 1, 1, 0)
 z := sc:c_lose! w
 # (an accessor, not a top-level tuple pattern: xetal doc would list a
 # hidden %N value for one, ask E10)
 u:w_orldOf := { (s, _, _, _) -> s }
-s := u:w_orldOf last
+final := u:w_orldOf last
 "at the end:"
-s := u:m_easure s
+report := u:m_easure final
 "bye"

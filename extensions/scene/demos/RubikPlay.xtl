@@ -46,7 +46,7 @@ l:d_rawRow := { (w, names, top, wide, first, bw) lit ->
   ls := (n, wide, bw) l:l_efts 0
   on := f_loat lit = r_ange n
   rects := 2 1 t_ranspose (7 c_at n) r_eshape ls c_at (n r_eshape top) c_at (n r_eshape bw) c_at (n r_eshape l:bh) c_at (0.22 + 0.2 * on) c_at (0.24 + 0.3 * on) c_at 0.3 + 0.5 * on
-  put := '{ (h:l_abelHead (w, first + _r, _r s_elect ls, top, bw, t_ally d_isclose _r s_elect ws)) sc:l_abel! d_isclose _r s_elect ws } m_ap r_ange n
+  _ := '{ (h:l_abelHead (w, first + _r, _r s_elect ls, top, bw, t_ally d_isclose _r s_elect ws)) sc:l_abel! d_isclose _r s_elect ws } m_ap r_ange n
   rects
 }
 
@@ -95,11 +95,11 @@ l:a_dvance := { wf st ->
   (w, frames) := wf
   (i = 0) * 0 = t_ally q ? st
   i = 0 ? (c, h, 1 d_rop q, f_irst q, 0)
-  f := f + 1
-  f < frames ? (c, h, q, i, f) h:s_how w c_at frames
-  c := (a_bs i) rb:t_urn c
-  z := (c, 0, 0.0) rb:d_raw w
-  (c, h c_at (i > 0) r_eplicate i, q, 0, 0)
+  next := f + 1
+  next < frames ? (c, h, q, i, next) h:s_how w c_at frames
+  turned := (a_bs i) rb:t_urn c
+  z := (turned, 0, 0.0) rb:d_raw w
+  (turned, h c_at (i > 0) r_eplicate i, q, 0, 0)
 }
 
 # st h:s_how (w frames): the turn under way drawn that far

@@ -5,7 +5,15 @@ year,quakes
 200
 text/csv
 32
-error[io]: []N_GET: ext:http/get: GET BASE/missing.csv: 404 Not Found at ./lib/Http.xtl:13:1
+error[io]: []N_GET: ext:http/get: GET BASE/missing.csv: 404 Not Found
+  --> ./lib/Http.xtl:13:1
+   |
+13 | "g_et : text -> text"           ffi:b_ind< "http/get"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: fetch.xtl:11:1
+   |
+11 | ht:g_et base c_at "/missing.csv"
+   | -------------------------------- called from the program here
 exit: 1
 -- work/quakes.csv:
 year,quakes

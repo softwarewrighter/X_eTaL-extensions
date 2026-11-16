@@ -1,1 +1,7 @@
-error[type-mismatch]: expected a number, found Char at tests/facade-type.xtl:3:1
+error[type-mismatch]: expected a number, found Char
+ --> tests/facade-type.xtl:3:1
+  |
+3 | hx:s_um "abc"
+  | ^^^^^^^^^^^^^
+  |         ----- a string: a vector of Char
+  = help: a string is text, not a number: write a number without quotes

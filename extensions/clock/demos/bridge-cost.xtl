@@ -13,9 +13,9 @@ f_loor (1000.0 * f_loat n) / ms m_ax 0.001
 
 ## a 100,000-element Float array out to Rust and back (echo)
 v := 0.5 + f_loat r_ange 100000
-ms := 'hx:e_cho ck:t_ime v
+bridged := 'hx:e_cho ck:t_ime v
 "Floats per second, out and back:"
-f_loor (1000.0 * 100000.0) / ms m_ax 0.001
+f_loor (1000.0 * 100000.0) / bridged m_ax 0.001
 
 # the same sum in X_eTaL and in Rust
 "sum in X_eTaL (ms), in Rust over the bridge (ms):"

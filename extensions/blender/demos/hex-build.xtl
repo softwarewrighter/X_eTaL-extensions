@@ -22,15 +22,15 @@ routes := (((t_ally rawroutes) d_iv 2) c_at 2) r_eshape rawroutes
 stats := f_loor n_umbers bl:r_ead "work/hexbuild/stats.txt"
 "the build (LUTs, flip-flops, placed logic, route tiles, routed nets, bitstream bytes):"
 stats
-n := "work/hexbuild/run.py" bl:w_rite! bp:launcher
-n := "work/hexbuild/hex-build.cues.toml" bl:w_rite! (hb:c_ues stats, hb:cueTable) vd:c_ues 0
-n := "work/hexbuild/hex-build.srt" bl:w_rite! (hb:c_ues stats, hb:cueTable) vd:s_rt 0
-n := "work/hexbuild/video.py" bl:w_rite! ((vd:landscape, cells, routes, stats) hb:s_cene 0) c_at (vd:r_ender "hex-build.mp4") c_at vd:report
-n := "work/hexbuild/short.py" bl:w_rite! ((vd:shorts, cells, routes, stats) hb:s_cene 0) c_at (vd:r_ender "hex-build-short.mp4") c_at vd:report
+_ := "work/hexbuild/run.py" bl:w_rite! bp:launcher
+_ := "work/hexbuild/hex-build.cues.toml" bl:w_rite! (hb:c_ues stats, hb:cueTable) vd:c_ues 0
+_ := "work/hexbuild/hex-build.srt" bl:w_rite! (hb:c_ues stats, hb:cueTable) vd:s_rt 0
+_ := "work/hexbuild/video.py" bl:w_rite! ((vd:landscape, cells, routes, stats) hb:s_cene 0) c_at (vd:r_ender "hex-build.mp4") c_at vd:report
+_ := "work/hexbuild/short.py" bl:w_rite! ((vd:shorts, cells, routes, stats) hb:s_cene 0) c_at (vd:r_ender "hex-build-short.mp4") c_at vd:report
 "rendering the landscape video ..."
 r := "work/hexbuild/run.py" bl:r_un! "work/hexbuild/video.py work/hexbuild/out"
 h:c_heck r
 "rendering the Short ..."
-r := "work/hexbuild/run.py" bl:r_un! "work/hexbuild/short.py work/hexbuild/out-short"
-h:c_heck r
+shortRun := "work/hexbuild/run.py" bl:r_un! "work/hexbuild/short.py work/hexbuild/out-short"
+h:c_heck shortRun
 bl:r_ead "work/hexbuild/out/report.txt"

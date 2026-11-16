@@ -20,8 +20,7 @@ n := 1024
 f := 60.0 120.0 240.0 480.0 960.0 1920.0 3840.0 7680.0
 t := (f_loat r_ange n) / rate
 x := 6.283185307179586 * t '* t_able f
-hann := 0.5 - 0.5 * c_os 6.283185307179586 * (f_loat r_ange n) / f_loat n
-taper := (2 c_at n) r_eshape hann
+taper := (2 c_at n) r_eshape 0.5 - 0.5 * c_os 6.283185307179586 * (f_loat r_ange n) / f_loat n
 u:l_oudness := { w ->
   v := w * taper
   re := v '+ '* i_nner c_os x
@@ -64,9 +63,9 @@ ring := ((f_loat w c_at 4) c_at 0.25 0.27 0.33) sc:p_olyline! u:r_ows (0.3 * c_o
 ## one colored object per band: bass blue, mid green, high orange
 u:d_raw := { l ->
   m := u:s_pokes l
-  b := ((f_loat w c_at 1) c_at 0.25 0.55 1.0) sc:s_egments! 12 3 r_eshape r_avel (1 2 3 9 10 11) s_elect_1 m
-  d := ((f_loat w c_at 2) c_at 0.3 0.9 0.4) sc:s_egments! 12 3 r_eshape r_avel (4 5 6 12 13 14) s_elect_1 m
-  h := ((f_loat w c_at 3) c_at 1.0 0.6 0.2) sc:s_egments! 8 3 r_eshape r_avel (7 8 15 16) s_elect_1 m
+  _ := ((f_loat w c_at 1) c_at 0.25 0.55 1.0) sc:s_egments! 12 3 r_eshape r_avel (1 2 3 9 10 11) s_elect_1 m
+  _ := ((f_loat w c_at 2) c_at 0.3 0.9 0.4) sc:s_egments! 12 3 r_eshape r_avel (4 5 6 12 13 14) s_elect_1 m
+  _ := ((f_loat w c_at 3) c_at 1.0 0.6 0.2) sc:s_egments! 8 3 r_eshape r_avel (7 8 15 16) s_elect_1 m
   l
 }
 
@@ -75,8 +74,8 @@ u:d_raw := { l ->
 ## spokes ease toward the new loudness so they move smoothly
 p := au:p_lay! a
 u:q_uit := { l ->
-  x := sc:c_lose! w
-  y := au:c_lose! a
+  _ := sc:c_lose! w
+  _ := au:c_lose! a
   2 8 r_eshape -1.0
 }
 u:k_ey := { e ->

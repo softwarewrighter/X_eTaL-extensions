@@ -41,9 +41,9 @@ l:thousand := (f_loat h:c_ells 10 10 10) + 1000 3 r_eshape 11.5 -4.5 0.5
 l:s_cene := { (w, h, frames) z ->
   blue := 0.42 0.62 0.9
   ink := 0.08 0.08 0.1
-  t := bp:head c_at (("one", l:one, 0.9, blue) bp:c_ubes 0) c_at (("hundred", l:hundred, 0.9, blue) bp:c_ubes 0) c_at (("thousand", l:thousand, 0.9, blue) bp:c_ubes 0)
-  t := t c_at (("1", -10.0 -3.0 0.0, 1.6, ink) bp:l_abel 0) c_at (("100", 0.0 -7.5 0.0, 1.6, ink) bp:l_abel 0) c_at (("1000", 16.0 -7.5 0.0, 1.6, ink) bp:l_abel 0)
-  t := t c_at ((3.0 0.0 0.0, 200.0, 0.97 0.97 0.95) bp:g_round 0) c_at ((0.55 0.62 0.72, 3.0) bp:l_ights 0)
-  t := t c_at ((3.0 0.0 3.0, 42.0, 20.0, frames) bp:o_rbit 0) c_at ((w, h, 24) bp:s_etup 0)
-  t c_at (bp:e_xports "sizes") c_at bp:report
+  ((bp:head c_at (("one", l:one, 0.9, blue) bp:c_ubes 0) c_at (("hundred", l:hundred, 0.9, blue) bp:c_ubes 0) c_at (("thousand", l:thousand, 0.9, blue) bp:c_ubes 0)) c_at
+    ((("1", -10.0 -3.0 0.0, 1.6, ink) bp:l_abel 0) c_at (("100", 0.0 -7.5 0.0, 1.6, ink) bp:l_abel 0) c_at (("1000", 16.0 -7.5 0.0, 1.6, ink) bp:l_abel 0)) c_at
+    (((3.0 0.0 0.0, 200.0, 0.97 0.97 0.95) bp:g_round 0) c_at ((0.55 0.62 0.72, 3.0) bp:l_ights 0)) c_at
+    (((3.0 0.0 3.0, 42.0, 20.0, frames) bp:o_rbit 0) c_at ((w, h, 24) bp:s_etup 0)) c_at
+    (bp:e_xports "sizes") c_at bp:report)
 }

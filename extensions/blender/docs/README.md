@@ -636,7 +636,8 @@ The profile files' tested flags are upstream historical records.
 
 The compiler uses the GPU project's own known-good evaluator dependency,
 `27b3fd0`, in an isolated workspace under `work/gpu-tool/`. The animation
-runtime stays at this repository's `XETAL_COMMIT` (`d284a8c`); neither
+runtime stays at this repository's `XETAL_COMMIT` (`d284a8c` when the
+evidence was captured); neither
 pin nor pristine clone is changed. `scripts/gpu-video-tool.sh` copies
 compiler components outside the source clone and builds into the root's
 `work/gpu-video-target/`. The small `tools/gpu-core` adapter dumps the
