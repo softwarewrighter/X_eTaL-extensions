@@ -1,0 +1,3 @@
+command = 'XETAL_PATH="$PWD/tests:$XETAL_PATH" xetal-x --ext .. run tests/look-banner.xtl'
+exit_code = 0
+desc = "the look, cloth: the Python written for a banner (LookPieces.xtl): a sheet of 12 by 8 squares from arrays, painted, pinned along its pole and simulated in a wind, kept as the clip wave in 8 shapes"

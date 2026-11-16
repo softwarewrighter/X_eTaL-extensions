@@ -1,0 +1,3 @@
+command = 't=$(mktemp -d) && XETAL_BLENDER_ROOT=$t XETAL_PATH="$PWD/tests:$XETAL_PATH" xetal-x --ext .. run tests/look-run.xtl | sed -E "s/[0-9]+ (bytes|without)/N \1/g" && cd $t && ls work/look/out work/look/out/textures'
+exit_code = 0
+desc = "the look through Blender: the wall, the figure and the banner of LookPieces.xtl made and each .glb read back (byte counts masked): the textures and their pixels, the skin's nine bones, the flag's seven shapes, the clips walk 1 s, idle 2 s and wave 2 s by name"

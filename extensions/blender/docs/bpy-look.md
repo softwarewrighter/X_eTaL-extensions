@@ -135,3 +135,63 @@ its one texture.
   armature once bound.
 - Every bone is written in every clip (the exporter samples all of
   them), which is most of a small figure's bytes.
+
+## Cloth
+
+A cloth is a sheet of squares, some corners pinned, that Blender
+simulates in a wind. The loop found is kept as shapes of the mesh
+(shape keys: glTF morph targets) and a clip that passes from each to
+the next (an animation of the mesh's weights), which `AnimationMixer`
+plays by name as any clip.
+
+| Function | What it writes |
+| -------- | -------------- |
+| `(size, cuts) bp:g_ridMesh 0` | not Python: the corners and faces of an upright sheet `size` wide and tall, in `cuts` squares across and down; corners row by row from the top, each from -x to +x |
+| `(name, at, size, cuts, turn, rgb, emit) bp:c_loth 0` | a part that is such a sheet |
+| `(part, clip, pins, wind, seconds, shapes) bp:w_ave 0` | the part simulated and kept as the clip: `pins` the corners held (numbers from 0); `wind` x y z, meters a second; `seconds` the loop's length; `shapes` how many shapes it is kept as |
+
+```
+("banner flag", 0.475 0.0 1.68, 0.9 0.6, 12 8, 0.0 0.0 0.0, 0.75 0.22 0.17, 0.0) bp:c_loth 0
+("banner flag", "look cloth", 0) bp:p_aint 0
+("banner flag", "wave", 13 * (r_ange 9) - 1, 3.0 0.5 0.0, 2.0, 8) bp:w_ave 0
+```
+
+The simulation runs for 2 s to settle, then for the clip's length and
+half again; the extra half is faded into the start, so the clip ends
+where it begins. The first shape is the part's rest (so a banner
+that plays no clip hangs as cloth, not as a board); each of the others
+is a morph target.
+
+### What it costs
+
+A morph target is 12 bytes a corner for its positions and 12 for its
+normals. The banner's flag -- 117 corners, 8 shapes (7 targets) -- is
+7 x 117 x 24 = 19.7 KB of shapes, and its clip 61 keys of 7 weights;
+the whole banner, with its pole and two 128-pixel textures, is 43 KB
+(35 KB without its textures).
+
+### Limits
+
+- The wind's numbers are Blender's forces scaled to look right for a
+  light cloth at about 3 m/s; they are not a measured speed.
+- The cloth does not meet other parts (no collisions): keep the pole
+  out of its way.
+- Between shapes the corners move in straight lines; 8 shapes for 2 s
+  reads as cloth, fewer looks stiff.
+- Paint the cloth before waving it (the texture is laid on the flat
+  sheet).
+- A cloth is one clip: wave it once.
+
+## Checked
+
+- The Python written for each piece is pinned
+  (`tests/blender-look-wall.rgt`, `-figure`, `-banner`), and the
+  helpers themselves (`blender-look-script`).
+- `tests/look-run.xtl` makes the three pieces with Blender and reads
+  each `.glb` back (`blender-look-run`): textures and their pixels,
+  the skin's 9 bones, the flag's 7 shapes, the clips by name with
+  their spans.
+- Each was loaded in the three extension's board player (Three.js
+  0.170, `GLTFLoader`) and looked at: the wall as a `tiles` model and
+  as a `piece`; the figure in `walk` and the banner in `wave`, each at
+  two times.

@@ -1,0 +1,9 @@
+## The look's helpers: the Python of bp:look, which a script joins
+## after bp:head -- the textures and their baking, bevel and paint, the
+## armature, its skinning and its keys, the cloth and its shapes, the
+## export and the file read back -- pinned.
+
+"bp:" u_se< "Bpy"
+
+"the look:"
+bp:look
