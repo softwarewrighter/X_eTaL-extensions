@@ -19,6 +19,8 @@
   #about p { margin: 6px 0; }
   body.board { background: #1d1f2b; }
   body.board #ride, body.board #fly, body.board #walk, body.board #note, body.board #about { display: none; }
+  #look { display: none; color: #c3c8d4; margin-top: 6px; }
+  body.board.eye #look { display: block; }
   #code { white-space: pre; font: 13px/1.4 ui-monospace, Menlo, monospace; color: #e8eaf0; margin: 6px 0; }
 </style>
 <script type="importmap">{ "imports": { "three": "./vendor/three/three.module.min.js" } }</script>
@@ -30,6 +32,7 @@
   <form id="seed"><label>Seed <input id="number" type="number" min="0" max="99999" value="7"></label><button>Build</button><button type="button" id="another">Another</button></form>
   <div id="stat"></div>
   <div id="note">Fly or walk: click the picture, then W A S D and the mouse; E and Q rise and sink; Shift is faster; Esc frees the mouse.</div>
+  <div id="look">Click the picture, then the keys and the mouse go to the program, which moves you; Esc frees the mouse.</div>
   <details id="about"><summary>What this is</summary>
     <p>A city worked out as arrays by an X_eTaL program -- 240 lots, each tower's height, footprint and skin a hash of the lot's number and the seed -- and written as the calls of a player. Blender's player ray-traces the same calls into a film; this player draws them with Three.js as you move.</p>
     <p>Against the film: the puddles mirror the city by drawing it a second time upside down, not by tracing rays, so screens and lamps do not light the walls; nothing casts a shadow; the haze is a fade with distance and the steam a few flat sheets; the windows and puddles are the same rules with other noise, so they fall in other places.</p>

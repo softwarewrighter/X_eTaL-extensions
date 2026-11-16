@@ -1,0 +1,1 @@
+Saga 15 (the user, 2026-11-16: the game's asks in parallel lanes, merged as each finishes). Land the eye lane (branch worktree-agent-a9d727e4bd0a82f0d): eye(place, way, lens[, dt]), a camera with perspective that glides between ticks, and onInput (keys and pointer handed to the page; the program moves the eye). Review, merge, docs, tests, pages, gate, push.

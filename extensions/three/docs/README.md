@@ -107,6 +107,45 @@ piece('walker', nums('6.5 10.0 0.5 0.0 -1.0', 5)[0], 'walk', 10.6, nums('6.5 9.8
   is the program's to work out.
 - `?t=SECONDS` holds every piece that long after its tick (a still).
 
+### A camera that walks: `eye`
+
+`eye(nums('x z y', 3)[0], nums('hx hz pitch', 3)[0], 60)` in place of
+`camera` gives a view with perspective from where you stand
+(`web/static/board/eye.js`).
+
+| Argument | What it says |
+| -------- | ------------ |
+| `x z y` | where the eye is, in tiles: x east, z south, y up. y is the eye's own height; the program adds what it stands on |
+| `hx hz pitch` | the way it looks: a heading along x and z (any length; `0 -1` is north) and a pitch in degrees up from level. A heading of `0 0` keeps the way it faced |
+| lens | the field of view from the picture's bottom to its top, in degrees (60 is a walker's view) |
+| dt (optional) | the seconds the eye takes to come here from where it was: a tick's length, as `piece` has. Without it, the time between this scene and the one before (at most 0.25 s) |
+
+- A scene with an `eye` line is drawn through it; a `camera` line gives
+  the picture back to the board's own camera (the later line wins).
+  Near and far are 0.05 and 400 tiles.
+- Between ticks the eye glides from where it is drawn to where the new
+  line puts it, the heading turning the short way round, so a walk sent
+  20 times a second is smooth at the display's rate. The first scene
+  with an eye puts it there at once.
+- `?t=SECONDS` holds the eye that long into its glide over `dt`; with
+  no `dt` it is where the line says.
+- The program moves the eye; the player only looks. A page that gives
+  `onInput` (in `board`'s options, or `live.js`'s setup) is told what
+  is held and how far the pointer went, 20 times a second
+  (`inputRate`) while anything is held or moved:
+  `{ keys, pressed, released, look: [dx, dy], locked, eye, seconds }`.
+  `keys` are `KeyboardEvent.code` values held now (`KeyW`,
+  `ShiftLeft`; `Mouse0` for a button while the pointer is locked),
+  `pressed` and `released` what changed since the report before (a
+  short tap is in `pressed`), `look` the pointer's movement in pixels
+  while it is locked. A click on the picture locks the pointer; Esc
+  frees it. The page turns these into its program's event lines.
+- Through an eye `onPoint` is not called: a click with the pointer
+  locked is `Mouse0` in `pressed`, on the middle of the picture, along
+  the way the program said the eye looks.
+- Checked headlessly with made-up key and pointer events; a real
+  locked pointer has not been tried.
+
 `th:s_how!` and `th:p_age!` take a board as they take a city: the
 page's controls (`live.js`) choose the player by the scene's first
 call. `just ext three board` writes `tests/board.xtl`'s small board to

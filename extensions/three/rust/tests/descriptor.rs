@@ -37,6 +37,14 @@ fn the_player_defines_every_call_the_vocabulary_writes() {
     }
 }
 
+/// A module of the board player, by its path under the page.
+fn part(path: &str) -> &'static str {
+    xetal_ext_three::BOARD_PARTS
+        .iter()
+        .find(|(p, _)| *p == path)
+        .map_or("", |(_, body)| *body)
+}
+
 #[test]
 fn the_board_player_defines_its_calls() {
     // the calls a game's view writes: view, camera and piece are
@@ -59,6 +67,8 @@ fn the_board_player_defines_its_calls() {
         );
     }
     assert!(xetal_ext_three::BOARD.contains("const nums = ("));
+    // the calls its modules draw, each a function of its module
+    assert!(part("board/eye.js").contains("each: { eye: call }"));
     // the page chooses the player by the scene's first call
     assert!(xetal_ext_three::LIVE.contains("isBoard(calls)"));
 }
