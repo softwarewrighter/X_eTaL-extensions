@@ -1,0 +1,1 @@
+beyond(y, texture, color[, rectangle]) in board/terrain.js: endless ground following the eye, with the program's own terrain left out; docs, test, golden, pages; gate ok.
