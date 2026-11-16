@@ -1,0 +1,1 @@
+Saga 15 (the user, 2026-11-16: the game's asks in parallel lanes). Land the light lane: sun, sky and fog with shadows, AgX tone mapping and ambient occlusion. Merged, documented, tested and gated with the terrain step's batch (one gate for the four lanes together).

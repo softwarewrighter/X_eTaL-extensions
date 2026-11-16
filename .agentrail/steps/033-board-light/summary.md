@@ -1,0 +1,1 @@
+The light lane merged: sun, sky and fog with shadows, AgX tone mapping and ambient occlusion. Docs, tests and golden in the batch commit; the gate ran on the four lanes together.
