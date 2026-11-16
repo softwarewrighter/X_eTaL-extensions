@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-16
 
+- `build` the farm's table: max, the Mac, takes part (the user: three machines for now, large12, beast48 and max), with Blender 5.3.0 installed beside its 5.1.2.
 - `fix` the farm's table: it is big72 that does not boot, not beast48 (the user's correction); beast48 on, big72 off.
 - `build` the farm's table: beast48 off (the user: it does not boot, a memory fault), so large12 and big72 divide the work; Blender 5.3.0 is the farm's version (Arch's package; the user upgraded large12).
 - `build` a render farm (the user: three Arch machines with graphics cards, each with this repository and Claude, working by host name: large12, beast48, big72; queenbee later). `scripts/farm.py` (`just farm`): every machine reads `farm/hosts.toml` and `farm/jobs.toml`, works out the same division and does its own share -- a film's frames in consecutive runs, an each-job's items dealt, in proportion to speed, with video memory a job may ask for; `check`, `plan`, `run` (only what is left), `status`, `collect` (rsync), `encode`, `bench`, `--as HOST`, `--only`. `extensions/blender/tools/farm-range.py` runs a Cycles.xtl scene with its own rendering lines left out and renders a range, a still or the video; `farm-bench.py` lists Cycles' devices and times a standard picture. Jobs: `city-film` (the neon city, 450 frames, `farm/city-film.xtl` through `scripts/farm-scene.sh`) and `city-stills`. `docs/farm.md`; CLAUDE.md rule 20; the division's self-test in the gate. Saga: render-farm inserted as step 37.

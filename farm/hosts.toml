@@ -22,6 +22,15 @@ card = "RTX 3060 12 GB"
 speed = 1.0
 vram = 12
 
+# The Mac (M1 Max, Metal): slower than the cards; its speed is a guess
+# from two minutes a frame of the city until the cards have been timed.
+# Its Blender 5.3.0 is beside the 5.1.2 the extension's goldens name.
+[hosts.max]
+card = "Apple M1 Max"
+speed = 0.4
+vram = 32
+blender = "/Applications/Blender-5.3/Blender.app/Contents/MacOS/Blender"
+
 # off 2026-11-16: it does not boot (a memory fault); on again when it is repaired
 [hosts.big72]
 card = "RTX 3060 12 GB"
