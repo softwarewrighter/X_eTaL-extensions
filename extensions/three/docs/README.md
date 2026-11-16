@@ -107,6 +107,112 @@ piece('walker', nums('6.5 10.0 0.5 0.0 -1.0', 5)[0], 'walk', 10.6, nums('6.5 9.8
   is the program's to work out.
 - `?t=SECONDS` holds every piece that long after its tick (a still).
 
+### Light
+
+Three calls light a board (`web/static/board/light.js`); each is kept
+by its line, and a line gone puts that thing back to the board's
+default.
+
+```
+sun(nums('-0.6 0.5 0.3', 3)[0], '#fff1dd', 2.5)
+sky('#9fb4c8', '#5e6b78', 0.8)
+fog('#aab4bd', 0.012)
+```
+
+- `sun(direction, color, strength)`: the direction toward the sun (x
+  east, y up, z south), its color and how strong it is. The sun casts
+  shadows: tile columns, tile models, pieces and terrain cast and take
+  them.
+- `sky(top, horizon, strength)`: the sky's light, top from above and
+  horizon from below; a camera with perspective sees it behind the
+  scene, and the board's own camera keeps `view`'s background.
+- `fog(color, density)`: fog with distance; what is d tiles away keeps
+  exp(-(density d)^2) of itself. Under the board's own camera, which
+  has no eye, distance is from the front of the picture (the ground at
+  the bottom middle of the view).
+- With none of these lines a board has a sun from the west
+  (`-0.7 0.9 0.35`, `#fff4e6`, 2.6), a sky (`#cfdcf0`, `#7d7668`, 1.1)
+  and no fog. Of the same call twice, the later line counts.
+- Shadows (one 2048 map), tone mapping (AgX) and ambient occlusion are
+  always on, so a color a scene gives is recognizably itself but not
+  exactly its number (AgX takes some saturation; `view`'s background
+  is exact). The option `occlusion: false` of `board()` draws without
+  occlusion, straight to the screen: the cheap way.
+- Limits: under an eye, shadows reach 30 tiles; occlusion is worked
+  out from depth on the screen, needs WebGL2 with half-float targets,
+  and also darkens see-through things drawn over a corner.
+- Measured in headless Chrome on an M1 Max only: 2.8 ms a frame at
+  1280 by 800 against 1.2 ms before (1.7 ms without occlusion); not
+  yet on integrated graphics.
+
+### Water
+
+`water(nums('x z y ...', 3), ints('a b c ...', 3), nums('fx fz', 2)[0], '#3f6f8f')`
+(`web/static/board/water.js`): a water surface: its corners, its
+triangles as three corners each, counted from 1, its flow (tiles a
+second along x and along z) and its color.
+
+- Kept by its line: a scene shown again with the same line leaves the
+  water alone; a changed line replaces that surface. A scene may hold
+  several.
+- A triangle may be written either way round. An index that is 0, too
+  large or not whole is an error that names the triangle.
+- The surface ripples along its flow from the board's clock alone, so a
+  held clock gives the same picture every time and showing a scene
+  again restarts nothing. Still water (`0 0`) shimmers slowly.
+- It mirrors the sky's colors (the view's background at the horizon,
+  the sky light's color overhead), more at a glancing angle. Nothing
+  else is mirrored: the scene is not drawn a second time for it.
+- Foam is drawn where the water meets anything solid: a bank, a beam, a
+  piece standing in it, and downstream of what stands in the flow. The
+  player draws the scene once more each frame from straight above into
+  a small map (about 24 dots a tile), so the foam is the same with and
+  without perspective. Shallow water is clearer and lighter than deep.
+- Limits: water under other water as seen from above (a fall over a
+  pool) takes the higher surface's foam; a shape that is not closed,
+  seen from its back, reads as solid; see-through things, points and
+  lines make no foam. Water takes the board's lights, shadows, fog and
+  tone mapping as any other surface; it casts no shadow, is flat (its
+  ripples are light, not shape) and is not seen from below.
+
+### Particles
+
+```
+particles('smoke', nums('8.5 6.5 1.1', 3)[0], 12, nums('0.25 0.1', 2)[0], 7)
+```
+
+Smoke, dust, a splash, fire, embers (`web/static/board/particles.js`):
+the kind (`smoke`, `dust`, `splash`, `fire` or `embers`), the place
+they come from (`x z y`), how many a second, the wind (tiles a second
+along x and z) and a seed.
+
+- Smoke rises, spreads, fades and leans with the wind; dust is low,
+  short and pale; a splash throws drops up that fall back to the height
+  they came from; fire is bright and short and flickers upward; embers
+  are a few bright points that drift up and die.
+- Nothing is simulated: where a particle is depends only on the board's
+  clock, the emitter's seed and the particle's number, so a still at
+  `?t=5` is always the same picture, and a scene shown again with the
+  same line restarts nothing. Particles are born from the moment a
+  scene first holds an emitter (the clock's 0 for the first scene, and
+  for every scene of a still), so smoke builds over its first seconds.
+- A game moves or changes an emitter by changing its line, keeping the
+  kind and the seed (dust at a walker's feet: a new place each tick).
+  Particles already in the air keep the old place, rate and wind and
+  finish; the new numbers apply to those born from then on. An emitter
+  whose line is gone stops, and what it had in the air finishes. A
+  one-time splash is a line held for a few ticks. Give emitters of the
+  same kind different seeds.
+- All particles are one draw call. An emitter has at most 600 particles
+  alive (a higher rate is lowered to fit: smoke 119 a second, dust 532,
+  splash 642, fire 684, embers 184); a scene has at most 20000 in all,
+  beyond which the emitters made last draw nothing, with a warning on
+  the console.
+- Particles are not sorted by depth, cast no shadows, and do not soften
+  where they meet a wall; a splash does not know where the water is.
+  Fire and embers are part added, part covering (purely added they
+  washed out to white in daylight).
+
 ### Terrain
 
 Ground that is ground: a mesh the program works out, and its material
@@ -255,7 +361,7 @@ just live       # the live page, with trunk, into web/dist
 The Rust tests check the descriptor, that each player defines every
 call its vocabulary writes, and that the vendored Three.js is whole.
 The goldens: `three-list`; `three-tiny` (three calls counted, a page
-of 25 files written); `three-board` (a board of nine calls counted and
+of 25 files written); `three-board` (a board of fourteen calls counted and
 written as a page); `three-outside` (a path outside the working
 directory is refused); `three-demo-city` (the city: 84 calls). The
 page's crate (`web/`) runs its program natively for two seeds and

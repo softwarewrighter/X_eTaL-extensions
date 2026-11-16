@@ -74,6 +74,14 @@ fn the_board_player_defines_its_calls() {
     assert!(part("board/terrain.js").contains("    terrain(line, name, corners"));
     assert!(part("board/terrain.js").contains("    ground(line, name, "));
     assert!(part("board/terrain.js").contains("'./terrain-textures.js'"));
+    for call in ["sun", "sky", "fog"] {
+        assert!(
+            part("board/light.js").contains(&format!("    {call}(")),
+            "board/light.js has no {call}"
+        );
+    }
+    assert!(part("board/water.js").contains("water("));
+    assert!(part("board/particles.js").contains("particles("));
     // the page chooses the player by the scene's first call
     assert!(xetal_ext_three::LIVE.contains("isBoard(calls)"));
 }

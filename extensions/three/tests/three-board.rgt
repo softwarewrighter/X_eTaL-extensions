@@ -1,3 +1,3 @@
 command = "t=$(mktemp -d) && XETAL_THREE_ROOT=$t xetal-x --ext .. run tests/board.xtl && cd $t && find work/board -type f | sort | grep -v vendor && cat work/board/scene.calls.js"
 exit_code = 0
-desc = "a board of nine calls (view, camera, two kinds of tiles as columns and one drawn with a model, a terrain and its ground, two pieces): counted by th:s_how! and written by th:p_age! as a directory to serve, 25 files with board.js, the board player, among them; the calls are written as they were given"
+desc = "a board of fourteen calls (view, camera, two kinds of tiles as columns and one drawn with a model, a terrain and its ground, sun, sky and fog, a water, smoke, two pieces): counted by th:s_how! and written by th:p_age! as a directory to serve, 25 files with board.js, the board player, among them; the calls are written as they were given"
