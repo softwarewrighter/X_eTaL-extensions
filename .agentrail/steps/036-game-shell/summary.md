@@ -1,0 +1,1 @@
+The shell lane merged: xetal-ext-shell play and page (a game kept running, game_page!), game.js for the page side; th:p_age! writes 26 files; docs, tests, pages; gate ok.

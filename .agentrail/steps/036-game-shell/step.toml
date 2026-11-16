@@ -1,8 +1,9 @@
 number = 36
 slug = "game-shell"
-status = "in-progress"
+status = "completed"
 description = "Saga 15 (the user, 2026-11-16: the game's asks in parallel lanes). Land the s..."
 role = "production"
 context_files = []
 created_at = "2026-11-16T11:26:19"
-commits = []
+completed_at = "2026-11-16T11:36:16"
+commits = ["8bae420f18cfd92a1fc65a3ca204724161a15ef4"]
