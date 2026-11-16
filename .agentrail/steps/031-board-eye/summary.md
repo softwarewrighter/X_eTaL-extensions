@@ -1,0 +1,1 @@
+The eye lane merged: eye(place, way, lens[, dt]) with perspective, gliding between ticks; onInput hands keys and pointer to the page; docs, test, pages; gate ok.
