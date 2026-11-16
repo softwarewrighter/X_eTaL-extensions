@@ -17,10 +17,12 @@ card = "RTX 5060 16 GB"
 speed = 1.6
 vram = 16
 
+# off 2026-11-16: it does not boot (a memory fault); on again when it is repaired
 [hosts.beast48]
 card = "RTX 3060 12 GB"
 speed = 1.0
 vram = 12
+on = false
 
 [hosts.big72]
 card = "RTX 3060 12 GB"

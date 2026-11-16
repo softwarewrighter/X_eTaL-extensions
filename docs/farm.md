@@ -15,9 +15,11 @@ host name.
 - `extensions/blender/tools/farm-range.py` and `farm-bench.py`: what
   Blender runs.
 
-The machines now: large12 (RTX 5060, 16 GB), beast48 and big72 (RTX
-3060, 12 GB each), and queenbee (RTX 3090, 24 GB), which is off in the
-table until it is powered on.
+The machines: large12 (RTX 5060, 16 GB), beast48 and big72 (RTX 3060,
+12 GB each) and queenbee (RTX 3090, 24 GB). Off in the table as of
+2026-11-16: beast48 (it does not boot) and queenbee (powered down).
+Blender is 5.3.0 on all of them (Arch's package); the scripts were
+written against 5.1.2.
 
 ## On each machine, once
 
@@ -29,8 +31,8 @@ just farm check   # Blender, the card Cycles will use, the disk, this machine's 
 just farm bench   # about a minute: the seconds a standard picture takes
 ```
 
-Needed: Blender (5.1 or the version the other machines have: the same
-on all, or pictures differ), `uv`, `just`, a Rust toolchain (the
+Needed: Blender (5.3.0, Arch's `blender` package: the same on all, or
+pictures differ), `uv`, `just`, a Rust toolchain (the
 scene's script is written by an X_eTaL program, which `just farm run`
 builds the first time: some minutes), `rsync` and `ssh`.
 
