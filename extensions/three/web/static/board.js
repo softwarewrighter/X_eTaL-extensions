@@ -18,6 +18,37 @@
 // pieces are matched by model and order.
 import * as THREE from 'three';
 import { GLTFLoader } from './vendor/three/loaders/GLTFLoader.js';
+import light from './board/light.js';
+import terrain from './board/terrain.js';
+import water from './board/water.js';
+import particles from './board/particles.js';
+import eye from './board/eye.js';
+
+// What draws the calls this file does not: a module a group of calls.
+// A module is a function of the board's context giving any of
+//   kept:  { name(line, ...args) }  calls kept by their line: made once
+//          when a scene first holds that line of text, left alone while
+//          every later scene holds the same line, and disposed (the
+//          object returned, if it has dispose()) when a scene no longer
+//          does. Lines gone are disposed before new ones are made.
+//   each:  { name(...args) }        calls run every time a scene is shown
+//   begin(), end()                  round each scene shown
+//   frame(time, dt)                 before each picture: the board's
+//                                   clock in seconds (options.time when
+//                                   held) and the seconds since the last
+//   size(wide, high)                when the picture's size changes
+//   count()                         numbers to add to the board's count
+//   stop()                          the board is closed
+// The context: THREE, scene, renderer, host, options, look (the view's
+// and camera's numbers), nums, ints, folder, loader, source(model) (a
+// .glb's bytes, fetched once), flat (the board's own camera, without
+// perspective), view() (wide, high, fit: the element's size and the
+// pixels a view unit), until (an options object for addEventListener,
+// ended when the board closes), and three things a module may set:
+// camera (what the picture is taken with), render() (takes the
+// picture; by default renderer.render(scene, camera)), lights (sky and
+// sun, the board's two lights, there until a module changes them).
+const MODULES = [light, terrain, water, particles, eye];
 
 // how bright a tile's faces are against its top (+x -x +y -y +z -z):
 // the south face a little darker, the east face darker still
@@ -37,12 +68,12 @@ export function isBoard(calls) {
 export function board(host, calls, options = {}) {
   const scene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 2000);
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x555566, 1.6));
+  const sky = new THREE.HemisphereLight(0xffffff, 0x555566, 1.6);
   const sun = new THREE.DirectionalLight(0xffffff, 1.8);
   sun.position.set(0.3, 1.0, 0.8);
-  scene.add(sun);
+  scene.add(sky, sun);
   const look = { w: 0, h: 0, background: '#000000', target: [0, 0, 0], direction: [0.6124, 0.5, 0.6124], scale: 28.284 };
-  const ground = new Map(), pieces = [], sources = new Map(), loader = new GLTFLoader();
+  const ground = new Map(), pieces = [], sources = new Map(), loader = new GLTFLoader(), modules = [];
   const folder = options.models === undefined ? './models/' : options.models;
   const held = options.time !== undefined;
   const box = new THREE.BoxGeometry(1, 1, 1);
@@ -81,9 +112,8 @@ export function board(host, calls, options = {}) {
     mesh.name = kind;
     mesh.frustumCulled = false;
     scene.add(mesh);
-    const g = { mesh, kind, count: rows.length, shapes: null, gone: false };
-    ground.set(line, g);
-    if (!model || !rows.length) return;
+    const g = { mesh, kind, count: rows.length, shapes: null, gone: false, dispose() { clear(g); } };
+    if (!model || !rows.length) return g;
     source(model).then((bytes) => {
       if (!bytes || g.gone || !running) return;
       loader.parse(bytes.slice(0), folder, (gltf) => {
@@ -107,6 +137,7 @@ export function board(host, calls, options = {}) {
         columns(mesh, rows, base);
       }, () => {});
     });
+    return g;
   };
   const clear = (g) => {
     g.gone = true;
@@ -180,26 +211,34 @@ export function board(host, calls, options = {}) {
   };
 
   // the calls of one scene, in place of the one before
+  const wanted = [];
+  const each = {
+    view(w, h, background) { look.w = w; look.h = h; look.background = background; },
+    camera(target, direction, scale) { look.target = target; look.direction = direction; look.scale = scale; ctx.camera = camera; },
+    piece(model, from, clip, t, to, dt) { wanted.push({ model, from, clip, t, to, dt }); },
+  };
+  const kept = { tiles };
   const show = (text) => {
-    const wanted = [], kept = new Set(), rest = [];
-    for (const line of text.split('\n')) {
-      if (!line.trim()) continue;
-      if (!line.startsWith('tiles(')) { rest.push(line); continue; }
-      kept.add(line);
-      if (!ground.has(line)) new Function('nums', 'tiles', line)(nums, (kind, color, rows, model) => tiles(line, kind, color, rows, model));
-    }
-    for (const [line, g] of ground) {
-      if (kept.has(line)) continue;
-      clear(g);
+    const lines = text.split('\n').filter((l) => l.trim()), seen = new Set();
+    const name = (line) => line.slice(0, line.indexOf('(')).trim();
+    for (const line of lines) if (kept[name(line)]) seen.add(line);
+    for (const [line, made] of ground) {
+      if (seen.has(line)) continue;
+      if (made && made.dispose) made.dispose();
       ground.delete(line);
     }
-    const api = {
-      nums,
-      view(w, h, background) { look.w = w; look.h = h; look.background = background; },
-      camera(target, direction, scale) { look.target = target; look.direction = direction; look.scale = scale; },
-      piece(model, from, clip, t, to, dt) { wanted.push({ model, from, clip, t, to, dt }); },
-    };
-    new Function(...Object.keys(api), rest.join('\n'))(...Object.values(api));
+    wanted.length = 0;
+    for (const m of modules) if (m.begin) m.begin();
+    // a line is one call: a kept one is made only when its text is new
+    let current = '';
+    const api = { nums, ints: nums, ...each };
+    for (const k of Object.keys(kept)) api[k] = (...args) => { ground.set(current, kept[k](current, ...args) || {}); };
+    const names = Object.keys(api), values = Object.values(api);
+    for (const line of lines) {
+      if (ground.has(line)) continue;
+      current = line;
+      new Function(...names, line)(...values);
+    }
     // the i-th piece of a model is the piece it was in the scene before
     const had = new Map(), next = [];
     for (const p of pieces) { if (!had.has(p.model)) had.set(p.model, []); had.get(p.model).push(p); }
@@ -214,6 +253,7 @@ export function board(host, calls, options = {}) {
     pieces.length = 0;
     pieces.push(...next);
     scene.background = new THREE.Color(look.background);
+    for (const m of modules) if (m.end) m.end();
     size();
   };
 
@@ -222,6 +262,20 @@ export function board(host, calls, options = {}) {
   host.appendChild(renderer.domElement);
   const el = renderer.domElement;
   el.style.display = 'block';
+  const gone = new AbortController(), until = { signal: gone.signal };
+  const ctx = {
+    THREE, scene, renderer, host, options, look, nums, ints: nums, folder, loader, source, flat: camera, until,
+    view: () => ({ wide, high, fit }),
+    camera,
+    lights: { sky, sun },
+    render() { renderer.render(scene, ctx.camera); },
+  };
+  for (const m of MODULES) {
+    const made = m(ctx) || {};
+    for (const [k, f] of Object.entries(made.kept || {})) kept[k] = f;
+    for (const [k, f] of Object.entries(made.each || {})) each[k] = f;
+    modules.push(made);
+  }
   // the whole view, as large as the element lets it be; a view unit is fit pixels
   let fit = 1, wide = 1, high = 1;
   function size() {
@@ -235,8 +289,8 @@ export function board(host, calls, options = {}) {
     camera.position.set(tx + dx * 500, ty + dy * 500, tz + dz * 500);
     camera.lookAt(tx, ty, tz);
     camera.updateProjectionMatrix();
+    for (const m of modules) if (m.size) m.size(wide, high);
   }
-  const gone = new AbortController(), until = { signal: gone.signal };
   window.addEventListener('resize', size, until);
   // a click, in the view's units: what the program's own map turns back into a tile
   el.addEventListener('click', (e) => {
@@ -247,10 +301,13 @@ export function board(host, calls, options = {}) {
 
   show(calls);
 
-  let shown = 0, rate = 0, since = now;
+  let shown = 0, rate = 0, since = now, clock = 0, before = now;
   const frame = (at) => {
     if (!running) return;
+    const dt = Math.min(0.1, Math.max(0, (at - before) / 1000));
+    before = at;
     now = at;
+    clock = held ? options.time : clock + dt;
     for (const p of pieces) {
       // from where it is to where it will be, over dt seconds from its tick
       const passed = held ? options.time : (at - p.since) / 1000;
@@ -263,16 +320,20 @@ export function board(host, calls, options = {}) {
         p.mixer.update(0);
       }
     }
-    renderer.render(scene, camera);
+    for (const m of modules) if (m.frame) m.frame(clock, held ? 0 : dt);
+    ctx.render();
     shown += 1;
     if (at - since > 500) { rate = shown * 1000 / (at - since); shown = 0; since = at; }
     if (options.onFrame) options.onFrame({ rate, ...count() });
     requestAnimationFrame(frame);
   };
   const count = () => {
+    const kinds = [...ground.values()].filter((g) => g.mesh);
     let n = 0;
-    for (const g of ground.values()) n += g.count;
-    return { tiles: n, kinds: ground.size, modeled: [...ground.values()].filter((g) => g.shapes).length, pieces: pieces.length, models: pieces.filter((p) => p.mixer).length };
+    for (const g of kinds) n += g.count;
+    const all = { tiles: n, kinds: kinds.length, modeled: kinds.filter((g) => g.shapes).length, pieces: pieces.length, models: pieces.filter((p) => p.mixer).length };
+    for (const m of modules) if (m.count) Object.assign(all, m.count());
+    return all;
   };
   requestAnimationFrame(frame);
 
@@ -284,7 +345,8 @@ export function board(host, calls, options = {}) {
       running = false;
       gone.abort();
       pieces.forEach(drop);
-      for (const g of ground.values()) clear(g);
+      for (const m of modules) if (m.stop) m.stop();
+      for (const made of ground.values()) if (made && made.dispose) made.dispose();
       for (const g of [box, torso, head, nose]) g.dispose();
       skin.dispose();
       renderer.dispose();

@@ -43,11 +43,21 @@ fn the_board_player_defines_its_calls() {
     // functions of the board player, tiles is kept by its line
     for call in ["view", "camera", "piece"] {
         assert!(
-            xetal_ext_three::BOARD.contains(&format!("      {call}(")),
+            xetal_ext_three::BOARD.contains(&format!("    {call}(")),
             "the board player has no {call}"
         );
     }
     assert!(xetal_ext_three::BOARD.contains("const tiles = ("));
+    assert!(xetal_ext_three::BOARD.contains("const kept = { tiles }"));
+    // its modules are whole, and the player names each
+    assert_eq!(xetal_ext_three::BOARD_PARTS.len(), 5);
+    for (path, body) in xetal_ext_three::BOARD_PARTS {
+        assert!(body.contains("export default function"), "{path}");
+        assert!(
+            xetal_ext_three::BOARD.contains(&format!("'./{path}'")),
+            "{path}"
+        );
+    }
     assert!(xetal_ext_three::BOARD.contains("const nums = ("));
     // the page chooses the player by the scene's first call
     assert!(xetal_ext_three::LIVE.contains("isBoard(calls)"));

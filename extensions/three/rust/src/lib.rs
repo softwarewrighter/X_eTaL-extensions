@@ -15,6 +15,30 @@ use xetal_ext_sdk::{OwnedError, Value, text};
 pub const PLAYER: &str = include_str!("../../web/static/player.js");
 /// The board player: a game's board (view, camera, tiles, piece).
 pub const BOARD: &str = include_str!("../../web/static/board.js");
+/// The board player's modules, a group of calls each: the path under
+/// the page, the text.
+pub const BOARD_PARTS: &[(&str, &str)] = &[
+    (
+        "board/light.js",
+        include_str!("../../web/static/board/light.js"),
+    ),
+    (
+        "board/terrain.js",
+        include_str!("../../web/static/board/terrain.js"),
+    ),
+    (
+        "board/water.js",
+        include_str!("../../web/static/board/water.js"),
+    ),
+    (
+        "board/particles.js",
+        include_str!("../../web/static/board/particles.js"),
+    ),
+    (
+        "board/eye.js",
+        include_str!("../../web/static/board/eye.js"),
+    ),
+];
 /// The page's controls: riding, flying, walking, and showing a scene.
 pub const LIVE: &str = include_str!("../../web/static/live.js");
 /// The page `page` writes, which reads the calls from scene.calls.js.
@@ -93,7 +117,7 @@ mod place {
 
     use xetal_ext_sdk::OwnedError;
 
-    use super::{BOARD, INDEX, LIVE, PLAYER, VENDOR};
+    use super::{BOARD, BOARD_PARTS, INDEX, LIVE, PLAYER, VENDOR};
 
     fn failure(message: impl Into<String>) -> OwnedError {
         OwnedError::failure(message)
@@ -145,10 +169,10 @@ mod place {
         put(&dir, "board.js", BOARD)?;
         put(&dir, "live.js", LIVE)?;
         put(&dir, "scene.calls.js", scene)?;
-        for (name, body) in VENDOR {
+        for (name, body) in BOARD_PARTS.iter().chain(VENDOR) {
             put(&dir, name, body)?;
         }
-        Ok(i64::try_from(5 + VENDOR.len()).unwrap_or(i64::MAX))
+        Ok(i64::try_from(5 + BOARD_PARTS.len() + VENDOR.len()).unwrap_or(i64::MAX))
     }
 
     /// There is no page to draw in: nothing to do.

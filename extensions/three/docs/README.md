@@ -181,7 +181,7 @@ just live       # the live page, with trunk, into web/dist
 The Rust tests check the descriptor, that each player defines every
 call its vocabulary writes, and that the vendored Three.js is whole.
 The goldens: `three-list`; `three-tiny` (three calls counted, a page
-of 19 files written); `three-board` (a board of seven calls counted and
+of 24 files written); `three-board` (a board of seven calls counted and
 written as a page); `three-outside` (a path outside the working
 directory is refused); `three-demo-city` (the city: 84 calls). The
 page's crate (`web/`) runs its program natively for two seeds and

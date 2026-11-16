@@ -1,7 +1,12 @@
 the calls, and the files of the page:
 7
-19
+24
 work/board/board.js
+work/board/board/eye.js
+work/board/board/light.js
+work/board/board/particles.js
+work/board/board/terrain.js
+work/board/board/water.js
 work/board/index.html
 work/board/live.js
 work/board/player.js

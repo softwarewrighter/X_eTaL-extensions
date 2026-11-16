@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-16
 
+- `refactor` three, the board player: a core and modules (the user: do the game's asks in parallel, in worktrees). `board.js` keeps the view, the camera, tiles and pieces, and gives the rest to modules in `web/static/board/` (light, terrain, water, particles, eye; empty for now), each a group of calls: calls kept by their line (made once, disposed when a scene drops the line), calls run each scene, and hooks round a scene, a frame, a size and the end. `th:p_age!` writes 24 files. The same picture as before.
 - `ext` three, the board player: tiles from models (evolving-game's ask; the user: "go"). `tiles(kind, color, nums, model)` instances `models/NAME.glb` at each tile: a row `x z y base` puts the model's origin at `base` on a column from the ground, `x z y` stands it on the column's top, `x z y base hx hz` turns it; the column alone, to `y`, until the model has come and where there is none. Golden `three-board` now seven calls. Saga: board-tile-models inserted as step 29, later steps one later.
 
 ## 2026-11-15

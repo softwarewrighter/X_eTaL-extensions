@@ -1,7 +1,12 @@
 the calls, and the files of the page:
 3
-19
+24
 work/tiny/board.js
+work/tiny/board/eye.js
+work/tiny/board/light.js
+work/tiny/board/particles.js
+work/tiny/board/terrain.js
+work/tiny/board/water.js
 work/tiny/index.html
 work/tiny/live.js
 work/tiny/player.js
