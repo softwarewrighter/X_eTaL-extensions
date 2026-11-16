@@ -46,6 +46,40 @@ l:wall := (((bp:p_iece "look-wall") c_at (("look stone", "stone", stone, joint, 
   ((("wall merlon 1", -0.33 -0.38 2.13, 0.3 0.24 0.26, stone, "look stone") h:b_lock 0) c_at (("wall merlon 2", 0.33 -0.38 2.13, 0.3 0.24 0.26, stone, "look stone") h:b_lock 0)) c_at
   ("wall beam", 0.0 -0.56 1.4, 1.1 0.12 0.14, plank, "look wood") h:b_lock 0)
 
+### The figure
+
+# a bone's keys in a clip: each key is k * delta, for the k of each time
+h:k_ey := { (bone, clip, what, delta, times, ks) z -> ("figure rig", bone, clip, what, times, ks '* t_able delta) bp:p_ose 0 }
+
+# a limb turned from a profile, hanging from its top at at, len long,
+# skinned to its bones
+h:l_imb := { (name, at, len, r, rgb, bones) z ->
+  hs := len * 0.0 0.0 0.2 0.4 0.6 0.8 1.0 1.0
+  rs := r * 0.0 0.8 0.85 0.9 0.95 1.0 1.0 0.0
+  ((name, at - 0.0 0.0 c_at len, 2 1 t_ranspose 2 8 r_eshape rs c_at hs, 8, flat, rgb, 0.0) bp:l_athe 0) c_at (name, "figure rig", bones, 0.08) bp:b_ind 0
+}
+
+## The figure: an armature of nine bones (hips, chest, head, a thigh
+## and a shin each side, an arm each side), a tunic of woven cloth
+## shared between hips and chest, legs that bend at the knee (each
+## shared between its thigh and shin), and two clips keyed on the
+## bones: walk (1 s, a loop) and idle (2 s, a loop).
+l:figure := ((((bp:p_iece "look-figure") c_at (("look cloth", "weave", tunic, thread, 0.25, 128, 1) bp:t_exture 0)) c_at
+  (("figure rig", "hips chest head thighl shinl thighr shinr arml armr",
+    9 3 r_eshape 0.0 0.0 0.45  0.0 0.0 0.55  0.0 0.0 0.75  -0.06 0.0 0.45  -0.06 0.0 0.24  0.06 0.0 0.45  0.06 0.0 0.24  -0.15 0.0 0.72  0.15 0.0 0.72,
+    9 3 r_eshape 0.0 0.0 0.55  0.0 0.0 0.75  0.0 0.0 0.9  -0.06 0.0 0.24  -0.06 0.0 0.0  0.06 0.0 0.24  0.06 0.0 0.0  -0.15 0.0 0.45  0.15 0.0 0.45,
+    0 1 2 1 4 1 6 2 2) bp:a_rmature 0)) c_at
+  (((("figure tunic", 0.0 0.0 0.6, 0.24 0.15 0.34, flat, tunic, 0.0) bp:b_ox 0) c_at (("figure tunic", 0.02, 1) bp:b_evel 0) c_at (("figure tunic", "look cloth", 0) bp:p_aint 0)) c_at (("figure tunic", "figure rig", "hips chest", 0.1) bp:b_ind 0)) c_at
+  ((("figure head", 0.0 0.0 0.84, 0.075 0.075 0.08, flat, skin, 0.0) bp:s_phere 0) c_at (("figure head", "figure rig", "head", 0.0) bp:b_ind 0)) c_at
+  ((("figure hair", 0.0 0.012 0.875, 0.078 0.078 0.055, flat, hair, 0.0) bp:s_phere 0) c_at (("figure hair", "figure rig", "head", 0.0) bp:b_ind 0)) c_at
+  ((("figure leg left", -0.06 0.0 0.47, 0.47, 0.05, hose, "thighl shinl") h:l_imb 0) c_at (("figure leg right", 0.06 0.0 0.47, 0.47, 0.05, hose, "thighr shinr") h:l_imb 0)) c_at
+  ((("figure arm left", -0.15 0.0 0.73, 0.28, 0.035, tunic, "arml") h:l_imb 0) c_at (("figure arm right", 0.15 0.0 0.73, 0.28, 0.035, tunic, "armr") h:l_imb 0)) c_at
+  ((("thighl", "walk", "rotation", 28.0 0.0 0.0, walk, swing) h:k_ey 0) c_at (("thighr", "walk", "rotation", -28.0 0.0 0.0, walk, swing) h:k_ey 0)) c_at
+  ((("shinl", "walk", "rotation", 50.0 0.0 0.0, walk, lift) h:k_ey 0) c_at (("shinr", "walk", "rotation", 50.0 0.0 0.0, walk, land) h:k_ey 0)) c_at
+  ((("arml", "walk", "rotation", -24.0 0.0 0.0, walk, swing) h:k_ey 0) c_at (("armr", "walk", "rotation", 24.0 0.0 0.0, walk, swing) h:k_ey 0)) c_at
+  ((("hips", "walk", "location", 0.0 0.0 0.02, walk, bob) h:k_ey 0) c_at (("chest", "walk", "rotation", 0.0 0.0 8.0, walk, swing) h:k_ey 0)) c_at
+  ((("chest", "idle", "scale", 1.0 1.0 1.0, slow, 1.0 1.04 1.0) h:k_ey 0) c_at ("head", "idle", "rotation", 0.0 0.0 20.0, 0.0 0.5 1.0 1.5 2.0, swing) h:k_ey 0))
+
 ### Files
 
 ## lk:f_ile name: Python writing the piece NAME as out/NAME.glb, its

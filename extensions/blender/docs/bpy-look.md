@@ -92,3 +92,46 @@ of textures.
   distance, but use 0 (PNG) where it matters.
 - Opposite faces of a part show the texture mirrored.
 - `bp:m_eshToml` writes a painted part in the texture's first color.
+
+## Figures
+
+A figure is parts skinned to an armature, with clips keyed on its
+bones.
+
+| Function | What it writes |
+| -------- | -------------- |
+| `(name, bones, heads, tails, parents) bp:a_rmature 0` | the armature `name` in the piece (or group) being made: `bones` their names in one text, a space between; `heads` and `tails` n by 3, x y z in the piece; `parents` each bone's parent by number from 1, 0 for none |
+| `(part, rig, bones, reach) bp:b_ind 0` | the part skinned to the armature: one bone binds it rigidly; with several each corner follows the nearest bone and shares with the others within `reach` meters more |
+| `(rig, bone, clip, what, times, values) bp:p_ose 0` | the bone keyed in the clip: `what` is `rotation` (x y z degrees about the piece's axes, from its rest), `location` (meters from its rest) or `scale`; a row of values for each time |
+
+```
+("rig", "hips thigh shin", 3 3 r_eshape 0.0 0.0 0.45  0.0 0.0 0.45  0.0 0.0 0.24, 3 3 r_eshape 0.0 0.0 0.55  0.0 0.0 0.24  0.0 0.0 0.0, 0 1 2) bp:a_rmature 0
+("leg", "rig", "thigh shin", 0.08) bp:b_ind 0
+("rig", "thigh", "walk", "rotation", 0.0 0.5 1.0, 3 3 r_eshape 0.0 0.0 0.0  28.0 0.0 0.0  0.0 0.0 0.0) bp:p_ose 0
+```
+
+A rotation is given about the piece's axes, not the bone's own: a leg
+that hangs down swings about x whichever way its bone was drawn. A
+bone's keys carry its children, as a group's do. The clips are made as
+`bp:k_eys` makes them (an action for each clip, a track of its name at
+export), so a piece may have clips on bones and on parts under one
+name. In the file: one skin, each bone a node, each clip an animation
+of the bones' translation, rotation (quaternions) and scale, sampled a
+frame at a time (30 a second unless `bp:s_etup` changed it).
+
+The figure of `LookPieces.xtl` -- nine bones, seven parts, 828
+triangles, two clips (walk 1 s, idle 2 s) -- is 96 KB, 92 KB without
+its one texture.
+
+### Limits
+
+- Rotation keys must be less than half a turn apart (they are joined
+  the short way round).
+- The weights are worked out from distances to the bones, at most as
+  many bones as were named for the part; glTF keeps four a corner.
+- A part needs corners where it is to bend: a box bends only at its
+  ends, a turned limb (`bp:l_athe`) at each ring.
+- Key a skinned part's bones, not the part: it hangs from the
+  armature once bound.
+- Every bone is written in every clip (the exporter samples all of
+  them), which is most of a small figure's bytes.

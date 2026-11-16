@@ -10,8 +10,9 @@
 "lk:" u_se< "LookPieces"
 
 wall := lk:wall c_at lk:f_ile "look-wall"
+figure := lk:figure c_at lk:f_ile "look-figure"
 _ := "work/look/run.py" bl:w_rite! bp:launcher
-_ := "work/look/scene.py" bl:w_rite! bp:head c_at bp:look c_at wall c_at bp:report
+_ := "work/look/scene.py" bl:w_rite! bp:head c_at bp:look c_at wall c_at figure c_at bp:report
 r := "work/look/run.py" bl:r_un! "work/look/scene.py work/look/out"
 "the run, and the error lines in Blender's log:"
 lines := (n_ot r = f_irst "\n") p_artition r
@@ -19,5 +20,7 @@ d_isclose 1 s_elect lines
 d_isclose 2 s_elect lines
 "look-wall.glb:"
 bl:r_ead "work/look/out/look-wall-contents.txt"
+"look-figure.glb:"
+bl:r_ead "work/look/out/look-figure-contents.txt"
 "what Blender made:"
 bl:r_ead "work/look/out/report.txt"
