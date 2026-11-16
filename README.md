@@ -174,6 +174,9 @@ just ext-list                 # the extensions here and their functions
 just run-x prog.xtl           # xetal-x --ext extensions run prog.xtl
 ```
 
+Blender work divided between several machines with graphics cards,
+each doing its share by its host name: [docs/farm.md](docs/farm.md).
+
 How the channel works, and what its errors look like:
 [docs/bridge.md](docs/bridge.md). When X_eTaL gains the hook, the facades
 change and the programs do not.

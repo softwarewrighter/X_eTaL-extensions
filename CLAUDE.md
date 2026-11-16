@@ -408,6 +408,13 @@ Read before working:
     Never run `/usr/bin/python3` or Homebrew's python directly; ad hoc,
     use `.venv/bin/python3`.
 
+20. On a render machine (its `hostname -s` is a table in
+    `farm/hosts.toml`: large12, beast48, big72, queenbee) the work is
+    the farm's: read `docs/farm.md` ("For Claude on a farm machine")
+    and do this machine's share with `just farm`; the tables are
+    changed on one machine, committed, and pulled everywhere before a
+    job starts, never during one (the user, 2026-11-16).
+
 ## Every step ends with
 
 1. `just gate` passes. It checks what the changes since origin/main

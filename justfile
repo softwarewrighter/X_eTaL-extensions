@@ -110,6 +110,11 @@ serve-pages:
 walkthrough *url:
     scripts/walkthrough.sh "$@"
 
+# The render farm: this machine's share of Blender work, by its host name (docs/farm.md): just farm check | plan | run JOB | status | collect JOB | encode JOB | bench
+farm *args:
+    @scripts/venv.sh --check 2>/dev/null || scripts/venv.sh
+    @scripts/farm.py "$@"
+
 # docs/status.md, what works today, regenerated
 status-doc:
     scripts/status.py

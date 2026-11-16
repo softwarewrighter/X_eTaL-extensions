@@ -1,0 +1,34 @@
+# The machines of the render farm (scripts/farm.py; docs/farm.md).
+# A table a machine, named by its host name (`hostname -s`), in the
+# order frames are given out:
+#   speed    how fast it renders against the others (frames and items
+#            are divided in proportion): 1 / the seconds `just
+#            farm-bench` reports, scaled so the slowest is 1.0
+#   vram     its graphics card's memory in GB (a job may ask for some)
+#   on       false for a machine that is not taking part (it gets nothing)
+#   ssh      how the others reach it for `farm collect` (its name, if not given)
+#   path     where this repository is on it (~/github/softwarewrighter/X_eTaL-extensions, if not given)
+#   blender  its Blender, if not `blender` on PATH
+# The speeds here are guesses from the cards' names until each machine
+# has run the benchmark.
+
+[hosts.large12]
+card = "RTX 5060 16 GB"
+speed = 1.6
+vram = 16
+
+[hosts.beast48]
+card = "RTX 3060 12 GB"
+speed = 1.0
+vram = 12
+
+[hosts.big72]
+card = "RTX 3060 12 GB"
+speed = 1.0
+vram = 12
+
+[hosts.queenbee]
+card = "RTX 3090 24 GB"
+speed = 2.3
+vram = 24
+on = false

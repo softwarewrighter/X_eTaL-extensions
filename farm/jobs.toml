@@ -1,0 +1,29 @@
+# The work of the render farm (scripts/farm.py; docs/farm.md). A table a
+# job. Every machine reads this file and does its own share.
+#
+# A film:   kind = "film", scene (the script Blender runs, written by
+#           prepare), first and last (frames), video (the file encode
+#           writes). Frames are divided in consecutive runs.
+# An each:  kind = "each", items (a list), command (run from the
+#           repository's root once an item, with {item} and {out}, the
+#           item's own directory, filled in; BLENDER, FARM_ITEM,
+#           FARM_OUT and FARM_HOST are set), vram (GB a machine needs).
+# prepare:  a command run on each machine before its share (it writes
+#           the scene; the same text on every machine).
+
+# The neon city's film: 15 seconds, 450 frames, ray-traced.
+[jobs.city-film]
+kind = "film"
+prepare = "scripts/farm-scene.sh farm/city-film.xtl"
+scene = "work/farm/city/scene.py"
+first = 1
+last = 450
+video = "city.mp4"
+
+# Four stills of the same city, at these seconds of the flight: a short
+# job to try the farm with before the film.
+[jobs.city-stills]
+kind = "each"
+prepare = "scripts/farm-scene.sh farm/city-film.xtl"
+items = ["0.5", "6.0", "10.5", "14.5"]
+command = '"$BLENDER" --background -noaudio --factory-startup --python-exit-code 1 --python extensions/blender/tools/farm-range.py -- {out} work/farm/city/scene.py still at-{item}.png {item}'

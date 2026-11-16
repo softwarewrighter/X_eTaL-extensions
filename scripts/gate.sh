@@ -80,6 +80,7 @@ step "status, pages, docs, literate"
 "$root/scripts/literate.sh" --check
 step "spelling and markdown"
 "$root/scripts/check-spelling.py" --self-test
+"$root/scripts/farm.py" --self-test
 "$root/scripts/check-spelling.py"
 md=(README.md CHANGES.md docs/plan.md docs/xetal-asks.md)
 for f in docs/*.md extensions/*/docs/*.md web/*/README.md; do [ -e "$f" ] && md+=("$f"); done
