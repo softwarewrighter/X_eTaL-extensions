@@ -1,0 +1,1 @@
+The bpy lane merged: Bpy.xtl textures and bevels baked into the .glb, armatures with skinned parts and clips on bones, cloth simulated and kept as shapes; five goldens; docs, status, pages; gate ok.
