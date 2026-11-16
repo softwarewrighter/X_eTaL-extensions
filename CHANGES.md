@@ -10,6 +10,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-16
+
+- `ext` three, the board player: tiles from models (evolving-game's ask; the user: "go"). `tiles(kind, color, nums, model)` instances `models/NAME.glb` at each tile: a row `x z y base` puts the model's origin at `base` on a column from the ground, `x z y` stands it on the column's top, `x z y base hx hz` turns it; the column alone, to `y`, until the model has come and where there is none. Golden `three-board` now seven calls. Saga: board-tile-models inserted as step 29, later steps one later.
+
 ## 2026-11-15
 
 - `ext` three: a board player, asked for by sw-fun/evolving-game (the user: "look at ../../sw-fun/evolving-game/docs/xetal-extensions-asks.md"). `web/static/board.js` draws a scene whose first call is `view`: `view(w, h, background)`, `camera(target, direction, scale)` without perspective (a board point lands where the game's isometric picture maps it; a headless picture of its games/walk scene lies over its SVG), `tiles(kind, color, nums(.., 3))` instanced, `piece(model, from, clip, t, to, dt)` -- `models/NAME.glb` with its clip, moved between a program's ticks, a plain shape until the model has come or when there is none. Shown again, a board changes in place; a click comes back in the view's units (`onPoint`). `live.js` chooses the player; `th:p_age!` writes 19 files (board.js and Three.js 0.170.0's GLTFLoader and BufferGeometryUtils, vendored). Golden `three-board`, `just ext three board`; goldens `three-tiny`, `three-demo-city`, `three-list` and `three-outside` rebased (the file count, a description, the facade's line numbers). Saga: board-player inserted as step 28, later steps one later.

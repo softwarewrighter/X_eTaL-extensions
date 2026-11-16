@@ -73,7 +73,8 @@ nothing about the scene.
 A second player, `web/static/board.js`, draws a board: a scene whose
 first call is `view`. It was asked for by a game written in X_eTaL
 (sw-fun/evolving-game), whose view library writes these four calls,
-a line each, with x east, z south and y up, in tiles:
+a line each, with x east, z south and y up, in tiles (and `tiles`
+with a model, below):
 
 ```
 view(848, 527, '#1d1f2b')
@@ -87,6 +88,7 @@ piece('walker', nums('6.5 10.0 0.5 0.0 -1.0', 5)[0], 'walk', 10.6, nums('6.5 9.8
 | `view(w, h, background)` | the picture's size in its own units, and the color behind the board; the whole view is fitted into the page's element |
 | `camera(target, direction, scale)` | no perspective: looking at `target` from along `direction`, `scale` view units to a tile. With the direction 30 degrees up along the board's diagonal, a board point (x, z, y) is drawn where an isometric picture's map puts it, so a click goes back to a tile through that map's inverse |
 | `tiles(kind, color, nums(.., 3))` | every tile of a kind in one instanced call: `x z y` is a tile's middle and its top, and the tile is a column from the ground to that top, its south and east faces darker |
+| `tiles(kind, color, nums(.., 4), model)` | the same kind drawn with a model, `models/NAME.glb`, instanced at each tile. A row is `x z y base`: the model's origin goes to `base`, on a column from the ground to it; until the model has come, and when there is none, the column is drawn to `y` as before. A row of three stands the model on the column's top; a row of six, `x z y base hx hz`, turns it to face `hx hz` |
 | `piece(model, from, clip, t, to, dt)` | a piece: `from` is `x z y hx hz` (where it is, the way it faces), `clip` and `t` the model's animation and the time into it, `to` is `x z y` where it will be in `dt` seconds |
 
 - A piece's model is `models/NAME.glb` beside the page (`models` in
@@ -179,7 +181,7 @@ just live       # the live page, with trunk, into web/dist
 The Rust tests check the descriptor, that each player defines every
 call its vocabulary writes, and that the vendored Three.js is whole.
 The goldens: `three-list`; `three-tiny` (three calls counted, a page
-of 19 files written); `three-board` (a board of six calls counted and
+of 19 files written); `three-board` (a board of seven calls counted and
 written as a page); `three-outside` (a path outside the working
 directory is refused); `three-demo-city` (the city: 84 calls). The
 page's crate (`web/`) runs its program natively for two seeds and

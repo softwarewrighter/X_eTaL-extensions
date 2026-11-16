@@ -6,6 +6,8 @@
 //                                    along direction, scale view units a tile
 //   tiles(kind, color, nums('x z y ...', 3))
 //                                    every tile of a kind: its middle and top
+//   tiles(kind, color, nums('x z y base ...', 4), model)
+//                                    the same drawn with a model at each tile
 //   piece(model, nums('x z y hx hz', 5)[0], clip, t, nums('x z y', 3)[0], dt)
 //                                    a piece: where it is and the way it
 //                                    faces, its clip and the time into it,
@@ -58,20 +60,62 @@ export function board(host, calls, options = {}) {
     return rows;
   };
 
-  // one kind's tiles: a column each, from the ground to its top
-  const tiles = (line, kind, color, rows) => {
-    const material = new THREE.MeshBasicMaterial({ color, vertexColors: true });
-    const mesh = new THREE.InstancedMesh(box, material, rows.length);
+  // one kind's tiles: a column each, from the ground to its top (y); with
+  // a model, the model at each tile once it has come, on a column to its
+  // base (a row's fourth number; its top when there is none), turned to
+  // face a row's fifth and sixth
+  const columns = (mesh, rows, to) => {
     const m = new THREE.Matrix4(), at = new THREE.Vector3(), turn = new THREE.Quaternion(), tall = new THREE.Vector3();
     rows.forEach((r, i) => {
-      at.set(r[0], Math.max(r[2], 0), r[1]);
-      tall.set(1, Math.max(r[2], 0.001), 1);
+      const y = to(r);
+      at.set(r[0], Math.max(y, 0), r[1]);
+      tall.set(1, Math.max(y, 0.001), 1);
       mesh.setMatrixAt(i, m.compose(at, turn, tall));
     });
+    mesh.instanceMatrix.needsUpdate = true;
+  };
+  const tiles = (line, kind, color, rows, model) => {
+    const material = new THREE.MeshBasicMaterial({ color, vertexColors: true });
+    const mesh = new THREE.InstancedMesh(box, material, rows.length);
+    columns(mesh, rows, (r) => r[2]);
     mesh.name = kind;
     mesh.frustumCulled = false;
     scene.add(mesh);
-    ground.set(line, { mesh, kind, count: rows.length });
+    const g = { mesh, kind, count: rows.length, shapes: null, gone: false };
+    ground.set(line, g);
+    if (!model || !rows.length) return;
+    source(model).then((bytes) => {
+      if (!bytes || g.gone || !running) return;
+      loader.parse(bytes.slice(0), folder, (gltf) => {
+        if (g.gone || !running) return;
+        const base = (r) => (r.length > 3 ? r[3] : r[2]);
+        const place = new THREE.Matrix4(), at = new THREE.Vector3(), turn = new THREE.Quaternion(), one = new THREE.Vector3(1, 1, 1), up = new THREE.Vector3(0, 1, 0);
+        g.shapes = new THREE.Group();
+        gltf.scene.updateMatrixWorld(true);
+        gltf.scene.traverse((o) => {
+          if (!o.isMesh) return;
+          const part = new THREE.InstancedMesh(o.geometry, o.material, rows.length);
+          rows.forEach((r, i) => {
+            at.set(r[0], base(r), r[1]);
+            turn.setFromAxisAngle(up, r.length > 5 ? Math.atan2(r[4], r[5]) : 0);
+            part.setMatrixAt(i, place.compose(at, turn, one).multiply(o.matrixWorld));
+          });
+          part.frustumCulled = false;
+          g.shapes.add(part);
+        });
+        scene.add(g.shapes);
+        columns(mesh, rows, base);
+      }, () => {});
+    });
+  };
+  const clear = (g) => {
+    g.gone = true;
+    scene.remove(g.mesh);
+    g.mesh.material.dispose();
+    g.mesh.dispose();
+    if (!g.shapes) return;
+    scene.remove(g.shapes);
+    g.shapes.traverse((o) => { if (o.isMesh) { o.geometry.dispose(); [].concat(o.material).forEach((x) => x.dispose()); o.dispose(); } });
   };
 
   // a piece with no model (yet): a body, a head, and a nose the way it faces
@@ -142,13 +186,11 @@ export function board(host, calls, options = {}) {
       if (!line.trim()) continue;
       if (!line.startsWith('tiles(')) { rest.push(line); continue; }
       kept.add(line);
-      if (!ground.has(line)) new Function('nums', 'tiles', line)(nums, (kind, color, rows) => tiles(line, kind, color, rows));
+      if (!ground.has(line)) new Function('nums', 'tiles', line)(nums, (kind, color, rows, model) => tiles(line, kind, color, rows, model));
     }
     for (const [line, g] of ground) {
       if (kept.has(line)) continue;
-      scene.remove(g.mesh);
-      g.mesh.material.dispose();
-      g.mesh.dispose();
+      clear(g);
       ground.delete(line);
     }
     const api = {
@@ -230,7 +272,7 @@ export function board(host, calls, options = {}) {
   const count = () => {
     let n = 0;
     for (const g of ground.values()) n += g.count;
-    return { tiles: n, kinds: ground.size, pieces: pieces.length, models: pieces.filter((p) => p.mixer).length };
+    return { tiles: n, kinds: ground.size, modeled: [...ground.values()].filter((g) => g.shapes).length, pieces: pieces.length, models: pieces.filter((p) => p.mixer).length };
   };
   requestAnimationFrame(frame);
 
@@ -242,7 +284,7 @@ export function board(host, calls, options = {}) {
       running = false;
       gone.abort();
       pieces.forEach(drop);
-      for (const g of ground.values()) { g.mesh.material.dispose(); g.mesh.dispose(); }
+      for (const g of ground.values()) clear(g);
       for (const g of [box, torso, head, nose]) g.dispose();
       skin.dispose();
       renderer.dispose();
