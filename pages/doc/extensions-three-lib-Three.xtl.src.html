@@ -212,10 +212,10 @@
 </ul>
 <h2>On this page</h2>
 <ul>
-<li class="item"><a href="#L16"><span class="c-libfunc">ˡa̲bout</span></a></li>
-<li class="item"><a href="#L20"><span class="c-libfunc">ˡs̲how!</span></a></li>
-<li class="item"><a href="#L24"><span class="c-libfunc">ˡp̲age!</span></a></li>
-<li class="item"><a href="#L27">ˡpackage</a></li>
+<li class="item"><a href="#L20"><span class="c-libfunc">ˡa̲bout</span></a></li>
+<li class="item"><a href="#L24"><span class="c-libfunc">ˡs̲how!</span></a></li>
+<li class="item"><a href="#L28"><span class="c-libfunc">ˡp̲age!</span></a></li>
+<li class="item"><a href="#L31">ˡpackage</a></li>
 </ul>
 </nav>
 <main>
@@ -227,40 +227,44 @@
 <span class="line" id="L3"><a class="ln" href="#L3">3</a><span class="c-doc">⍝│</span><span class="c-doc"> functions write (cy:s_tage, cy:f_acade, cy:b_oxes, cy:f_leet, cy:f_ly</span></span>
 <span class="line" id="L4"><a class="ln" href="#L4">4</a><span class="c-doc">⍝│</span><span class="c-doc"> and the rest) without cy:head, Blender's player. Here the player is</span></span>
 <span class="line" id="L5"><a class="ln" href="#L5">5</a><span class="c-doc">⍝│</span><span class="c-doc"> written with Three.js and draws the same calls in real time: ride</span></span>
-<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-doc">⍝│</span><span class="c-doc"> the camera's flight, fly or walk. th:s_how! draws a scene in the</span></span>
-<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-doc">⍝│</span><span class="c-doc"> page the program runs in (X_eTaL as WebAssembly); th:p_age! writes a</span></span>
-<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-doc">⍝│</span><span class="c-doc"> directory to serve, from the command line.</span></span>
-<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-doc">⍝│</span><span class="c-doc"> Import: &quot;th:&quot; u_se&lt; &quot;Three&quot;</span></span>
-<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-doc">⍝│</span><span class="c-doc"> Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).</span></span>
-<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-doc">⍝│</span><span class="c-doc"> Each signature line is written out by the binding macro (lib/Ffi.xtlm).</span></span>
-<span class="line" id="L12"><a class="ln" href="#L12">12</a></span>
-<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-string">&quot;ffi:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="lib-Ffi.xtlm.html" class="c-string">&quot;Ffi&quot;</a></span>
-<span class="line" id="L14"><a class="ln" href="#L14">14</a></span>
-<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-doc">⍝│</span><span class="c-doc"> th:a_bout @: the extension's name and version.</span></span>
-<span class="line" id="L16"><a class="ln" href="#L16">16</a><span class="c-string">&quot;a_bout : unit -&gt; text&quot;</span>          <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;three/about&quot;</span></span>
+<span class="line" id="L6"><a class="ln" href="#L6">6</a><span class="c-doc">⍝│</span><span class="c-doc"> the camera's flight, fly or walk. A scene whose first call is view</span></span>
+<span class="line" id="L7"><a class="ln" href="#L7">7</a><span class="c-doc">⍝│</span><span class="c-doc"> is a game's board (view, camera, tiles, piece: a camera without</span></span>
+<span class="line" id="L8"><a class="ln" href="#L8">8</a><span class="c-doc">⍝│</span><span class="c-doc"> perspective, instanced tiles, each piece a model with its clip, moved</span></span>
+<span class="line" id="L9"><a class="ln" href="#L9">9</a><span class="c-doc">⍝│</span><span class="c-doc"> between a program's ticks), drawn by a second player and changed in</span></span>
+<span class="line" id="L10"><a class="ln" href="#L10">10</a><span class="c-doc">⍝│</span><span class="c-doc"> place when it is shown again. th:s_how! draws a scene in the</span></span>
+<span class="line" id="L11"><a class="ln" href="#L11">11</a><span class="c-doc">⍝│</span><span class="c-doc"> page the program runs in (X_eTaL as WebAssembly); th:p_age! writes a</span></span>
+<span class="line" id="L12"><a class="ln" href="#L12">12</a><span class="c-doc">⍝│</span><span class="c-doc"> directory to serve, from the command line.</span></span>
+<span class="line" id="L13"><a class="ln" href="#L13">13</a><span class="c-doc">⍝│</span><span class="c-doc"> Import: &quot;th:&quot; u_se&lt; &quot;Three&quot;</span></span>
+<span class="line" id="L14"><a class="ln" href="#L14">14</a><span class="c-doc">⍝│</span><span class="c-doc"> Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).</span></span>
+<span class="line" id="L15"><a class="ln" href="#L15">15</a><span class="c-doc">⍝│</span><span class="c-doc"> Each signature line is written out by the binding macro (lib/Ffi.xtlm).</span></span>
+<span class="line" id="L16"><a class="ln" href="#L16">16</a></span>
+<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-string">&quot;ffi:&quot;</span> <a href="std-System.xtlm.html#s.u_se-3c" class="c-macro">u̲se&lt;</a> <a href="lib-Ffi.xtlm.html" class="c-string">&quot;Ffi&quot;</a></span>
+<span class="line" id="L18"><a class="ln" href="#L18">18</a></span>
+<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-doc">⍝│</span><span class="c-doc"> th:a_bout @: the extension's name and version.</span></span>
+<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-string">&quot;a_bout : unit -&gt; text&quot;</span>          <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;three/about&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡa̲bout</span> ← <span class="c-depth0">{</span> @ →
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:three/about&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L17"><a class="ln" href="#L17">17</a><span class="c-doc">⍝│</span><span class="c-doc"> th:s_how! scene: draws the scene in the page, in place of the one</span></span>
-<span class="line" id="L18"><a class="ln" href="#L18">18</a><span class="c-doc">⍝│</span><span class="c-doc"> shown before; how many calls it holds. From the command line there</span></span>
-<span class="line" id="L19"><a class="ln" href="#L19">19</a><span class="c-doc">⍝│</span><span class="c-doc"> is no page and nothing is drawn (the count is still given).</span></span>
-<span class="line" id="L20"><a class="ln" href="#L20">20</a><span class="c-string">&quot;s_how! : text -&gt; int&quot;</span>           <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;three/show&quot;</span></span>
+<span class="line" id="L21"><a class="ln" href="#L21">21</a><span class="c-doc">⍝│</span><span class="c-doc"> th:s_how! scene: draws the scene in the page, in place of the one</span></span>
+<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-doc">⍝│</span><span class="c-doc"> shown before; how many calls it holds. From the command line there</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-doc">⍝│</span><span class="c-doc"> is no page and nothing is drawn (the count is still given).</span></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-string">&quot;s_how! : text -&gt; int&quot;</span>           <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;three/show&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡs̲how!</span> ← <span class="c-depth0">{</span> a →
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:three/show?text&quot;</span>
   <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:three/show&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L21"><a class="ln" href="#L21">21</a><span class="c-doc">⍝│</span><span class="c-doc"> dir th:p_age! scene: writes a directory to serve (under the working</span></span>
-<span class="line" id="L22"><a class="ln" href="#L22">22</a><span class="c-doc">⍝│</span><span class="c-doc"> directory, or XETAL_THREE_ROOT) -- index.html, the player, Three.js</span></span>
-<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-doc">⍝│</span><span class="c-doc"> and the scene's calls -- made whole each time; how many files.</span></span>
-<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-string">&quot;p_age! : text text -&gt; int&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;three/page&quot;</span></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-doc">⍝│</span><span class="c-doc"> dir th:p_age! scene: writes a directory to serve (under the working</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-doc">⍝│</span><span class="c-doc"> directory, or XETAL_THREE_ROOT) -- index.html, the players, Three.js</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a><span class="c-doc">⍝│</span><span class="c-doc"> and the scene's calls -- made whole each time; how many files.</span></span>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-string">&quot;p_age! : text text -&gt; int&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;three/page&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡp̲age!</span> ← <span class="c-depth0">{</span> a b →
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:three/page?text&quot;</span>
   pb ← b <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:three/page?text&quot;</span>
   <a href="builtins.html#f_loor" class="c-builtin">f̲loor</a> <a href="builtins.html#f_irst" class="c-builtin">f̲irst</a> <a href="builtins.html#n_umbers" class="c-builtin">n̲umbers</a> <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:three/page&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L25"><a class="ln" href="#L25">25</a></span>
-<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-doc">⍝│</span><span class="c-doc"> The native package behind these functions.</span></span>
-<span class="line" id="L27"><a class="ln" href="#L27">27</a>ˡpackage ← <span class="c-string">&quot;three&quot;</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-doc">⍝│</span><span class="c-doc"> The native package behind these functions.</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a>ˡpackage ← <span class="c-string">&quot;three&quot;</span></span>
 </div>
 </main>
 </body>

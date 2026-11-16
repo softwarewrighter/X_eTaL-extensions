@@ -927,7 +927,11 @@ browser. A scene is the calls of a player -- the text Cycles.xtl's
 functions write (cy:s_tage, cy:f_acade, cy:b_oxes, cy:f_leet, cy:f_ly
 and the rest) without cy:head, Blender's player. Here the player is
 written with Three.js and draws the same calls in real time: ride
-the camera's flight, fly or walk. th:s_how! draws a scene in the
+the camera's flight, fly or walk. A scene whose first call is view
+is a game's board (view, camera, tiles, piece: a camera without
+perspective, instanced tiles, each piece a model with its clip, moved
+between a program's ticks), drawn by a second player and changed in
+place when it is shown again. th:s_how! draws a scene in the
 page the program runs in (X_eTaL as WebAssembly); th:p_age! writes a
 directory to serve, from the command line.
 Import: &quot;th:&quot; u_se&lt; &quot;Three&quot;

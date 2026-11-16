@@ -38,8 +38,24 @@ fn the_player_defines_every_call_the_vocabulary_writes() {
 }
 
 #[test]
+fn the_board_player_defines_its_calls() {
+    // the calls a game's view writes: view, camera and piece are
+    // functions of the board player, tiles is kept by its line
+    for call in ["view", "camera", "piece"] {
+        assert!(
+            xetal_ext_three::BOARD.contains(&format!("      {call}(")),
+            "the board player has no {call}"
+        );
+    }
+    assert!(xetal_ext_three::BOARD.contains("const tiles = ("));
+    assert!(xetal_ext_three::BOARD.contains("const nums = ("));
+    // the page chooses the player by the scene's first call
+    assert!(xetal_ext_three::LIVE.contains("isBoard(calls)"));
+}
+
+#[test]
 fn the_vendored_three_is_whole() {
-    assert_eq!(xetal_ext_three::VENDOR.len(), 12);
+    assert_eq!(xetal_ext_three::VENDOR.len(), 14);
     assert!(
         xetal_ext_three::VENDOR
             .iter()

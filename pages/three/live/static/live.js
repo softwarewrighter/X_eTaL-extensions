@@ -1,10 +1,17 @@
-// The page's controls round the player: riding the flight, flying,
+// The page's controls round the players: riding the flight, flying,
 // walking; showing a scene in place of the one before; and, when the
-// page can build scenes (X_eTaL linked in as WebAssembly), a seed.
+// page can build scenes (X_eTaL linked in as WebAssembly), a seed. A
+// scene whose first call is view is a game's board (board.js): no
+// flight, and shown again it changes in place.
 // ?t=SECONDS holds the flight at a moment (a still, for a test or a
 // recording); ?hud=0 hides the controls; ?mode=fly or walk starts
-// there; ?seed=N builds that city first.
+// there; ?seed=N builds that city first. For a board, ?t=SECONDS holds
+// every piece that long after its tick.
+// setup: media (the city's pictures' folder), models (the folder of a
+// board's .glb pieces), onPoint(x, y, event) (a click on a board, in
+// its view's units).
 import { play } from './player.js';
+import { board, isBoard } from './board.js';
 
 export function start(setup = {}) {
   const q = new URLSearchParams(location.search);
@@ -21,7 +28,9 @@ export function start(setup = {}) {
   let city = null, mode = q.get('mode') || 'ride', built = '', high = 0;
   const live = {
     show(calls) {
+      if (isBoard(calls)) { live.board(calls); return; }
       if (city) city.stop();
+      document.body.classList.remove('board');
       err.textContent = '';
       const options = {
         mode, keep: q.has('t'), media: setup.media,
@@ -35,6 +44,20 @@ export function start(setup = {}) {
       if (q.has('t')) options.time = Number(q.get('t'));
       city = play(view, calls, options);
       mark(mode);
+      document.title = document.title.replace(/: (ready|error)$/, '') + ': ready';
+    },
+    // a board: made once, then each scene changes it in place
+    board(calls) {
+      err.textContent = '';
+      if (city && city.board) { city.show(calls); return; }
+      if (city) city.stop();
+      document.body.classList.add('board');
+      const options = {
+        keep: q.has('t'), models: setup.models, onPoint: setup.onPoint,
+        onFrame: (f) => { stat.textContent = `board  ${f.tiles} tiles  ${f.pieces} pieces  ${f.rate.toFixed(0)} frames a second`; },
+      };
+      if (q.has('t')) options.time = Number(q.get('t'));
+      city = board(view, calls, options);
       document.title = document.title.replace(/: (ready|error)$/, '') + ': ready';
     },
     fail(e) {
@@ -59,7 +82,7 @@ export function start(setup = {}) {
       make(q.has('seed') ? Number(q.get('seed')) : first);
     },
   };
-  buttons.forEach((b) => b.addEventListener('click', () => { if (city) city.mode(b.id); }));
+  buttons.forEach((b) => b.addEventListener('click', () => { if (city && city.mode) city.mode(b.id); }));
   globalThis.xetalThree = { show: live.show };
   return live;
 }

@@ -15,9 +15,9 @@ Live: <https://softwarewrighter.github.io/X_eTaL-extensions/three/live/>
 - Facade: `lib/Three.xtl`, recommended alias `th:`
 - Native crates: none beyond the SDK (in a browser, `js-sys` and
   `wasm-bindgen` to reach the page)
-- Vendored: Three.js 0.170.0 (MIT) and the passes the player uses, in
-  `web/static/vendor/three/` with its license; nothing is loaded from
-  another site
+- Vendored: Three.js 0.170.0 (MIT), the passes the player uses and
+  its glTF loader, in `web/static/vendor/three/` with its license;
+  nothing is loaded from another site
 
 ## Functions
 
@@ -25,7 +25,7 @@ Live: <https://softwarewrighter.github.io/X_eTaL-extensions/three/live/>
 | ----------- | ----- | ----------- | ---- |
 | `about` | 0 | `Unit -> Char` | the extension's name and version |
 | `show` | 1 | `Char -> Int` | draw a scene in the page, in place of the one before; how many calls it holds. From the command line there is no page and nothing is drawn |
-| `page` | 2 | `Char Char -> Int` | write a directory to serve -- the page, the player, Three.js and the scene's calls; how many files. Under the working directory (or `XETAL_THREE_ROOT`) |
+| `page` | 2 | `Char Char -> Int` | write a directory to serve -- the page, the players, Three.js and the scene's calls; how many files. Under the working directory (or `XETAL_THREE_ROOT`) |
 
 ## From X_eTaL
 
@@ -67,6 +67,48 @@ nothing about the scene.
 | windows and puddles from Blender's noise | the same rules with other noise, so they fall in other places |
 | a video on a screen (`cy:r_eel`), a slide show as a video (`cy:s_lides`) | the video (one decoder, however many screens show it); the slides as stills faded one into the next, no decoder |
 | depth of field, motion blur | neither |
+
+## A game's board
+
+A second player, `web/static/board.js`, draws a board: a scene whose
+first call is `view`. It was asked for by a game written in X_eTaL
+(sw-fun/evolving-game), whose view library writes these four calls,
+a line each, with x east, z south and y up, in tiles:
+
+```
+view(848, 527, '#1d1f2b')
+camera(nums('9.525 0.0 9.525', 3)[0], nums('0.612 0.5 0.612', 3)[0], 28.284)
+tiles('road', '#b9a37a', nums('10.5 4.5 0.5 10.5 5.5 0.5 ...', 3))
+piece('walker', nums('6.5 10.0 0.5 0.0 -1.0', 5)[0], 'walk', 10.6, nums('6.5 9.875 0.5', 3)[0], 0.05)
+```
+
+| Call | What it draws |
+| ---- | ------------- |
+| `view(w, h, background)` | the picture's size in its own units, and the color behind the board; the whole view is fitted into the page's element |
+| `camera(target, direction, scale)` | no perspective: looking at `target` from along `direction`, `scale` view units to a tile. With the direction 30 degrees up along the board's diagonal, a board point (x, z, y) is drawn where an isometric picture's map puts it, so a click goes back to a tile through that map's inverse |
+| `tiles(kind, color, nums(.., 3))` | every tile of a kind in one instanced call: `x z y` is a tile's middle and its top, and the tile is a column from the ground to that top, its south and east faces darker |
+| `piece(model, from, clip, t, to, dt)` | a piece: `from` is `x z y hx hz` (where it is, the way it faces), `clip` and `t` the model's animation and the time into it, `to` is `x z y` where it will be in `dt` seconds |
+
+- A piece's model is `models/NAME.glb` beside the page (`models` in
+  the page's setup names another folder). Until it has come, and when
+  there is none, the piece is a plain shape: a body, a head, and a
+  nose the way it faces.
+- Between a program's ticks the player moves each piece from `from` to
+  `to` over `dt` seconds and runs its clip on from `t`, at the
+  display's rate: the program runs at its own tick, not once a frame.
+- A scene shown again changes the board in place: a `tiles` line that
+  is the same text is kept as it is, and pieces are matched by model
+  and order (the second `walker` is the second `walker` of the scene
+  before), so a tick costs only what moved.
+- A click is given to the page's `onPoint(x, y, event)` in the view's
+  units. The player decides nothing about the game: which tile that is
+  is the program's to work out.
+- `?t=SECONDS` holds every piece that long after its tick (a still).
+
+`th:s_how!` and `th:p_age!` take a board as they take a city: the
+page's controls (`live.js`) choose the player by the scene's first
+call. `just ext three board` writes `tests/board.xtl`'s small board to
+`work/board`; `just ext three serve board` serves it.
 
 ## The pictures on the screens
 
@@ -134,10 +176,11 @@ just list       # the functions as xetal-x sees them
 just live       # the live page, with trunk, into web/dist
 ```
 
-The Rust tests check the descriptor, that the player defines every
-call the vocabulary writes, and that the vendored Three.js is whole.
+The Rust tests check the descriptor, that each player defines every
+call its vocabulary writes, and that the vendored Three.js is whole.
 The goldens: `three-list`; `three-tiny` (three calls counted, a page
-of 16 files written); `three-outside` (a path outside the working
+of 19 files written); `three-board` (a board of six calls counted and
+written as a page); `three-outside` (a path outside the working
 directory is refused); `three-demo-city` (the city: 84 calls). The
 page's crate (`web/`) runs its program natively for two seeds and
 checks the decorated source. What the player draws is checked by eye,

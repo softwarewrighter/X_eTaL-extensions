@@ -1,0 +1,15 @@
+## A board of six calls: counted, and written as a page to serve. A
+## scene whose first call is view is drawn by the board player.
+
+"th:" u_se< "Three"
+
+ground := "tiles('ground', '#5f9550', nums('0.5 0.5 0.0 1.5 0.5 0.0 0.5 1.5 0.0 2.5 1.5 0.5', 3))\n"
+road := "tiles('road', '#b9a37a', nums('1.5 1.5 0.0 2.5 0.5 0.5', 3))\n"
+walker := "piece('walker', nums('0.5 0.5 0.0 1.0 0.0', 5)[0], 'walk', 0.0, nums('1.5 0.5 0.0', 3)[0], 0.05)\n"
+guard := "piece('guard', nums('2.5 1.5 0.5 0.0 -1.0', 5)[0], 'idle', 1.5, nums('2.5 1.5 0.5', 3)[0], 0.05)\n"
+scene := ("view(320, 200, '#1d1f2b')\n"
+  c_at "camera(nums('1.5 0.0 1.0', 3)[0], nums('0.612 0.5 0.612', 3)[0], 56.569)\n"
+  c_at ground c_at road c_at walker c_at guard)
+"the calls, and the files of the page:"
+th:s_how! scene
+"work/board" th:p_age! scene

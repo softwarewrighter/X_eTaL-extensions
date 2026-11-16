@@ -1,9 +1,10 @@
 //! three: interactive 3D in a browser. An X_eTaL program writes a scene
 //! as the calls of a player (the calls Cycles.xtl writes for Blender);
 //! here they go to a player written with Three.js, which draws them in
-//! real time. In a browser (wasm32) `show` hands the calls to the page
+//! real time; a second player draws a game's board (view, camera,
+//! tiles, piece). In a browser (wasm32) `show` hands the calls to the page
 //! this code is linked into; natively `page` writes a directory to
-//! serve: the page, the player, Three.js and the calls.
+//! serve: the page, the players, Three.js and the calls.
 //!
 //! Paths are confined to the working directory (or `XETAL_THREE_ROOT`),
 //! as the blender extension's are.
@@ -12,12 +13,15 @@ use xetal_ext_sdk::{OwnedError, Value, text};
 
 /// The player: the functions a scene's calls use, drawn with Three.js.
 pub const PLAYER: &str = include_str!("../../web/static/player.js");
+/// The board player: a game's board (view, camera, tiles, piece).
+pub const BOARD: &str = include_str!("../../web/static/board.js");
 /// The page's controls: riding, flying, walking, and showing a scene.
 pub const LIVE: &str = include_str!("../../web/static/live.js");
 /// The page `page` writes, which reads the calls from scene.calls.js.
 pub const INDEX: &str = include_str!("../../web/static/standalone.html");
 
-/// Three.js 0.170.0 (MIT) and the passes the player uses, as vendored
+/// Three.js 0.170.0 (MIT), the passes the player uses and the glTF
+/// loader the board player reads its pieces with, as vendored
 /// in web/static/vendor/three: the path under the page, the text.
 pub const VENDOR: &[(&str, &str)] = &[
     (
@@ -27,6 +31,14 @@ pub const VENDOR: &[(&str, &str)] = &[
     (
         "vendor/three/three.module.min.js",
         include_str!("../../web/static/vendor/three/three.module.min.js"),
+    ),
+    (
+        "vendor/three/loaders/GLTFLoader.js",
+        include_str!("../../web/static/vendor/three/loaders/GLTFLoader.js"),
+    ),
+    (
+        "vendor/three/utils/BufferGeometryUtils.js",
+        include_str!("../../web/static/vendor/three/utils/BufferGeometryUtils.js"),
     ),
     (
         "vendor/three/postprocessing/EffectComposer.js",
@@ -81,7 +93,7 @@ mod place {
 
     use xetal_ext_sdk::OwnedError;
 
-    use super::{INDEX, LIVE, PLAYER, VENDOR};
+    use super::{BOARD, INDEX, LIVE, PLAYER, VENDOR};
 
     fn failure(message: impl Into<String>) -> OwnedError {
         OwnedError::failure(message)
@@ -124,18 +136,19 @@ mod place {
         std::fs::write(&path, body.as_bytes()).map_err(|e| failure(format!("{name}: {e}")))
     }
 
-    /// Writes the page, the player, Three.js and the scene's calls into
+    /// Writes the page, the players, Three.js and the scene's calls into
     /// the directory (made); how many files.
     pub fn page(dir: &str, scene: &str) -> Result<i64, OwnedError> {
         let dir = confine(dir)?;
         put(&dir, "index.html", INDEX)?;
         put(&dir, "player.js", PLAYER)?;
+        put(&dir, "board.js", BOARD)?;
         put(&dir, "live.js", LIVE)?;
         put(&dir, "scene.calls.js", scene)?;
         for (name, body) in VENDOR {
             put(&dir, name, body)?;
         }
-        Ok(i64::try_from(4 + VENDOR.len()).unwrap_or(i64::MAX))
+        Ok(i64::try_from(5 + VENDOR.len()).unwrap_or(i64::MAX))
     }
 
     /// There is no page to draw in: nothing to do.
@@ -198,7 +211,7 @@ fn show(args: &[Value]) -> Result<Value, OwnedError> {
     Ok(Value::Int(calls(&scene)))
 }
 
-/// Writes a directory to serve: the page, the player, Three.js and the
+/// Writes a directory to serve: the page, the players, Three.js and the
 /// scene's calls. How many files.
 fn page(args: &[Value]) -> Result<Value, OwnedError> {
     let dir = text(&args[0])?;
@@ -212,6 +225,6 @@ xetal_ext_sdk::xetal_extension! {
     functions: {
         about: 0, "Unit -> Char", "The extension's name and version.";
         show: 1, "Char -> Int", "Draw a scene (the calls of a player) in the page; how many calls. Natively nothing is drawn.";
-        page: 2, "Char Char -> Int", "Write a directory to serve -- the page, the player, Three.js, the scene's calls; how many files.";
+        page: 2, "Char Char -> Int", "Write a directory to serve -- the page, the players, Three.js, the scene's calls; how many files.";
     }
 }

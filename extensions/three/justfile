@@ -45,6 +45,10 @@ demo name: build
 city: (demo "city")
     mkdir -p work/city/media && cp web/static/media/* work/city/media/
 
+# A small board as a directory to serve (work/board): tests/board.xtl, drawn by the board player
+board: build
+    {{root}}/target/debug/xetal-x --ext {{root}}/extensions run tests/board.xtl
+
 # The screens' pictures, made small from media.toml into web/static/media (commit them)
 media:
     {{root}}/scripts/city-media.py

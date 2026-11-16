@@ -228,7 +228,11 @@ browser. A scene is the calls of a player -- the text Cycles.xtl's
 functions write (cy:s_tage, cy:f_acade, cy:b_oxes, cy:f_leet, cy:f_ly
 and the rest) without cy:head, Blender's player. Here the player is
 written with Three.js and draws the same calls in real time: ride
-the camera's flight, fly or walk. th:s_how! draws a scene in the
+the camera's flight, fly or walk. A scene whose first call is view
+is a game's board (view, camera, tiles, piece: a camera without
+perspective, instanced tiles, each piece a model with its clip, moved
+between a program's ticks), drawn by a second player and changed in
+place when it is shown again. th:s_how! draws a scene in the
 page the program runs in (X_eTaL as WebAssembly); th:p_age! writes a
 directory to serve, from the command line.
 Import: &quot;th:&quot; u_se&lt; &quot;Three&quot;
@@ -238,7 +242,7 @@ Each signature line is written out by the binding macro (lib/Ffi.xtlm).</p>
 <p class="meta"><a href="extensions-three-lib-Three.xtl.src.html">source</a> &middot; imports <code><span class="c-error">ffi:</span></code> <a href="lib-Ffi.xtlm.html">lib/Ffi.xtlm</a></p>
 <div class="item" id="l.a_bout">
 <h3><a href="#l.a_bout"><span class="c-libfunc">ˡa̲bout</span></a> <span class="type">: Unit -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-three-lib-Three.xtl.src.html#L16">line 16</a></div>
+<div class="meta">function &middot; <a href="extensions-three-lib-Three.xtl.src.html#L20">line 20</a></div>
 <div class="doc">
 <p>th:a_bout @: the extension's name and version.</p>
 </div>
@@ -249,7 +253,7 @@ Each signature line is written out by the binding macro (lib/Ffi.xtlm).</p>
 </div>
 <div class="item" id="l.s_how-21">
 <h3><a href="#l.s_how-21"><span class="c-libfunc">ˡs̲how!</span></a> <span class="type">: Char -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-three-lib-Three.xtl.src.html#L20">line 20</a></div>
+<div class="meta">function &middot; <a href="extensions-three-lib-Three.xtl.src.html#L24">line 24</a></div>
 <div class="doc">
 <p>th:s_how! scene: draws the scene in the page, in place of the one
 shown before; how many calls it holds. From the command line there
@@ -264,10 +268,10 @@ is no page and nothing is drawn (the count is still given).</p>
 </div>
 <div class="item" id="l.p_age-21">
 <h3><a href="#l.p_age-21"><span class="c-libfunc">ˡp̲age!</span></a> <span class="type">: Char -&gt; Char -&gt; Int</span></h3>
-<div class="meta">function &middot; <a href="extensions-three-lib-Three.xtl.src.html#L24">line 24</a></div>
+<div class="meta">function &middot; <a href="extensions-three-lib-Three.xtl.src.html#L28">line 28</a></div>
 <div class="doc">
 <p>dir th:p_age! scene: writes a directory to serve (under the working
-directory, or XETAL_THREE_ROOT) -- index.html, the player, Three.js
+directory, or XETAL_THREE_ROOT) -- index.html, the players, Three.js
 and the scene's calls -- made whole each time; how many files.</p>
 </div>
 <pre class="code"><span class="c-string">&quot;p_age! : text text -&gt; int&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;three/page&quot;</span></pre>
@@ -280,7 +284,7 @@ and the scene's calls -- made whole each time; how many files.</p>
 </div>
 <div class="item" id="l.package">
 <h3><a href="#l.package">ˡpackage</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-three-lib-Three.xtl.src.html#L27">line 27</a></div>
+<div class="meta">value &middot; <a href="extensions-three-lib-Three.xtl.src.html#L31">line 31</a></div>
 <div class="doc">
 <p>The native package behind these functions.</p>
 </div>

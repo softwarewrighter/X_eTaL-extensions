@@ -1,7 +1,7 @@
 error[io]: []N_GET: ext:three/page: "../elsewhere": give a path under the working directory (or XETAL_THREE_ROOT), no ..
-  --> ../three/lib/Three.xtl:24:1
+  --> ../three/lib/Three.xtl:28:1
    |
-24 | "p_age! : text text -> int"      ffi:b_ind< "three/page"
+28 | "p_age! : text text -> int"      ffi:b_ind< "three/page"
    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   ::: tests/outside.xtl:5:1
    |
