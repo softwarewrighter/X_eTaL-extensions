@@ -1,0 +1,9 @@
+number = 34
+slug = "board-water"
+status = "completed"
+description = "Saga 15 (the user, 2026-11-16: the game's asks in parallel lanes). Land the w..."
+role = "production"
+context_files = []
+created_at = "2026-11-16T11:25:22"
+completed_at = "2026-11-16T11:25:22"
+commits = ["7754f0a0559e2197f962770a8f51615cd0140bae"]

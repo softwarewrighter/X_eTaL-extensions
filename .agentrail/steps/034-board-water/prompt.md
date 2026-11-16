@@ -1,0 +1,1 @@
+Saga 15 (the user, 2026-11-16: the game's asks in parallel lanes). Land the water lane: water with flow, the sky mirrored and foam from a top-down map. Merged, documented, tested and gated with the terrain step's batch (one gate for the four lanes together).

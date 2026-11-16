@@ -1,0 +1,1 @@
+The water lane merged: water with flow, the sky mirrored and foam from a top-down map. Docs, tests and golden in the batch commit; the gate ran on the four lanes together.
