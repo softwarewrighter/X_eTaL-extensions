@@ -101,6 +101,35 @@ Every part is placed (`at`), turned (`turn`, degrees about x y z),
 colored (`rgb`) and may glow (`emit`, the strength of its emission; 0
 for none).
 
+## The look: textures, figures and cloth
+
+`Bpy.xtl` can give a piece materials, a skeleton and cloth; a script
+joins `bp:look` after `bp:head` to use them (the whole note:
+[bpy-look.md](bpy-look.md)).
+
+- Textures: `bp:t_exture` makes a named procedural material (stone,
+  wood, weave, grass, thatch, snow) from shader nodes, baked into
+  images (base color; roughness and normals by choice) packed in the
+  `.glb`; `bp:b_evel` bevels a part, `bp:p_aint` lays a texture on it
+  in meters; `bp:e_xportLook` writes the file with JPEG textures. A
+  256-pixel stone texture with all three maps is 26 KB.
+- Figures: `bp:a_rmature` (bones as arrays: names, heads, tails,
+  parents), `bp:b_ind` (a part to one bone, or shared between several),
+  `bp:p_ose` (a bone keyed in a clip). Exported as a glTF skin and
+  animations played by name.
+- Cloth: `bp:c_loth` (a sheet of squares), `bp:w_ave` (pinned corners,
+  a wind, simulated by Blender, kept as shapes and a clip that loops).
+  A 12 by 8 flag in 8 shapes is 20 KB of shapes.
+- `bp:c_ontents` reads a `.glb` back: bytes, textures, skins, shapes,
+  clips.
+
+`tests/LookPieces.xtl` describes a wall, a walking figure and a banner;
+`tests/look-run.xtl` makes them (54, 96 and 43 KB), and the three
+extension's board player draws them: the wall as tiles from a model,
+the figure and the banner as pieces playing `walk` and `wave`. Tried
+with Blender 5.1.2; only a walking person has been rigged (no horse,
+no crow), and only a flag pinned along one side simulated.
+
 ## Arrays to video: Video.xtl
 
 `lib/Video.xtl` (alias `vd:`) turns X_eTaL arrays into an animated
