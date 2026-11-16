@@ -1,0 +1,3 @@
+command = 'XETAL_PATH="$PWD/tests:$XETAL_PATH" xetal-x --ext .. run tests/look-wall.xtl'
+exit_code = 0
+desc = "the look, materials: the Python written for a wall block (LookPieces.xtl): a stone texture (color, roughness, normals) and a wood one baked and shared, five boxes beveled and painted, the export with JPEG textures and the file read back"

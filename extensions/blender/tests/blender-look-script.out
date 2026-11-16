@@ -1,0 +1,477 @@
+the look:
+import mathutils, numpy
+
+looks = {}
+
+def calc(t, op, *xs):
+    n = t.nodes.new("ShaderNodeMath")
+    n.operation = op
+    for i, x in enumerate(xs):
+        if isinstance(x, (int, float)):
+            n.inputs[i].default_value = x
+        else:
+            t.links.new(x, n.inputs[i])
+    return n.outputs[0]
+
+def ramp(t, x, lo, hi, smooth=False):
+    n = t.nodes.new("ShaderNodeMapRange")
+    n.interpolation_type = "SMOOTHSTEP" if smooth else "LINEAR"
+    t.links.new(x, n.inputs[0])
+    n.inputs[1].default_value = lo
+    n.inputs[2].default_value = hi
+    return n.outputs[0]
+
+def tiled_noise(t, u, v, fu, fv, detail, seed):
+    tau = 2 * math.pi
+    au = calc(t, "MULTIPLY", u, tau)
+    av = calc(t, "MULTIPLY", v, tau)
+    at = t.nodes.new("ShaderNodeCombineXYZ")
+    t.links.new(calc(t, "ADD", calc(t, "MULTIPLY", calc(t, "COSINE", au), fu / tau), 17.3 * seed), at.inputs[0])
+    t.links.new(calc(t, "MULTIPLY", calc(t, "SINE", au), fu / tau), at.inputs[1])
+    t.links.new(calc(t, "MULTIPLY", calc(t, "COSINE", av), fv / tau), at.inputs[2])
+    n = t.nodes.new("ShaderNodeTexNoise")
+    n.noise_dimensions = "4D"
+    n.inputs["Scale"].default_value = 1.0
+    n.inputs["Detail"].default_value = detail
+    t.links.new(at.outputs[0], n.inputs["Vector"])
+    t.links.new(calc(t, "MULTIPLY", calc(t, "SINE", av), fv / tau), n.inputs["W"])
+    return n.outputs[0]
+
+def each_cell(t, a, b):
+    at = t.nodes.new("ShaderNodeCombineXYZ")
+    for i, x in enumerate((a, b)):
+        if isinstance(x, (int, float)):
+            at.inputs[i].default_value = x
+        else:
+            t.links.new(x, at.inputs[i])
+    n = t.nodes.new("ShaderNodeTexWhiteNoise")
+    n.noise_dimensions = "2D"
+    t.links.new(at.outputs[0], n.inputs["Vector"])
+    return n.outputs[0]
+
+def look_stone(t, u, v):
+    y = calc(t, "MULTIPLY", v, 4.0)
+    row = calc(t, "FLOOR", y)
+    fv = calc(t, "FRACT", y)
+    x = calc(t, "ADD", calc(t, "MULTIPLY", u, 2.0), calc(t, "MULTIPLY", calc(t, "MODULO", row, 2.0), 0.5))
+    col = calc(t, "MODULO", calc(t, "FLOOR", x), 2.0)
+    fu = calc(t, "FRACT", x)
+    eu = calc(t, "MULTIPLY", calc(t, "MINIMUM", fu, calc(t, "SUBTRACT", 1.0, fu)), 0.5)
+    ev = calc(t, "MULTIPLY", calc(t, "MINIMUM", fv, calc(t, "SUBTRACT", 1.0, fv)), 0.25)
+    grain = tiled_noise(t, u, v, 20.0, 20.0, 5.0, 1)
+    edge = calc(t, "ADD", calc(t, "MINIMUM", eu, ev), calc(t, "MULTIPLY", calc(t, "SUBTRACT", grain, 0.5), 0.03))
+    face = ramp(t, edge, 0.006, 0.03, True)
+    block = each_cell(t, col, row)
+    shade = calc(t, "ADD", calc(t, "ADD", 0.6, calc(t, "MULTIPLY", block, 0.46)), calc(t, "MULTIPLY", grain, 0.36))
+    height = calc(t, "MULTIPLY", face, calc(t, "ADD", 0.7, calc(t, "MULTIPLY", grain, 0.6)))
+    rough = calc(t, "SUBTRACT", 0.98, calc(t, "MULTIPLY", face, 0.16))
+    return face, shade, height, rough
+
+def look_wood(t, u, v):
+    y = calc(t, "MULTIPLY", v, 4.0)
+    plank = calc(t, "FLOOR", y)
+    fv = calc(t, "FRACT", y)
+    one = each_cell(t, plank, 3.0)
+    grain = tiled_noise(t, calc(t, "ADD", u, calc(t, "MULTIPLY", one, 3.7)), v, 3.0, 56.0, 3.0, 2)
+    lines = ramp(t, grain, 0.3, 0.7)
+    gap = ramp(t, calc(t, "MULTIPLY", calc(t, "MINIMUM", fv, calc(t, "SUBTRACT", 1.0, fv)), 0.25), 0.003, 0.012, True)
+    shade = calc(t, "MULTIPLY", calc(t, "ADD", 0.8, calc(t, "MULTIPLY", one, 0.35)), calc(t, "ADD", 0.35, calc(t, "MULTIPLY", gap, 0.65)))
+    height = calc(t, "MULTIPLY", gap, calc(t, "ADD", 0.8, calc(t, "MULTIPLY", lines, 0.2)))
+    rough = calc(t, "ADD", 0.62, calc(t, "MULTIPLY", lines, 0.2))
+    return lines, shade, height, rough
+
+def look_weave(t, u, v):
+    x = calc(t, "MULTIPLY", u, 16.0)
+    y = calc(t, "MULTIPLY", v, 16.0)
+    over = calc(t, "MODULO", calc(t, "ADD", calc(t, "FLOOR", x), calc(t, "FLOOR", y)), 2.0)
+    hu = calc(t, "SINE", calc(t, "MULTIPLY", calc(t, "FRACT", x), math.pi))
+    hv = calc(t, "SINE", calc(t, "MULTIPLY", calc(t, "FRACT", y), math.pi))
+    warp = calc(t, "MULTIPLY", hu, calc(t, "ADD", 0.5, calc(t, "MULTIPLY", hv, 0.5)))
+    weft = calc(t, "MULTIPLY", hv, calc(t, "ADD", 0.5, calc(t, "MULTIPLY", hu, 0.5)))
+    height = calc(t, "ADD", weft, calc(t, "MULTIPLY", over, calc(t, "SUBTRACT", warp, weft)))
+    fuzz = tiled_noise(t, u, v, 90.0, 90.0, 1.0, 3)
+    tone = ramp(t, height, 0.1, 0.75)
+    shade = calc(t, "ADD", calc(t, "ADD", 0.74, calc(t, "MULTIPLY", over, 0.14)), calc(t, "MULTIPLY", fuzz, 0.3))
+    rough = calc(t, "ADD", 0.86, calc(t, "MULTIPLY", fuzz, 0.1))
+    return tone, shade, height, rough
+
+def look_grass(t, u, v):
+    patch = tiled_noise(t, u, v, 5.0, 5.0, 3.0, 4)
+    blade = tiled_noise(t, u, v, 150.0, 40.0, 2.0, 5)
+    tone = ramp(t, calc(t, "ADD", calc(t, "MULTIPLY", patch, 0.6), calc(t, "MULTIPLY", blade, 0.4)), 0.35, 0.65)
+    shade = calc(t, "ADD", 0.6, calc(t, "MULTIPLY", blade, 0.8))
+    height = ramp(t, blade, 0.25, 0.75)
+    rough = calc(t, "ADD", 0.8, calc(t, "MULTIPLY", blade, 0.15))
+    return tone, shade, height, rough
+
+def look_thatch(t, u, v):
+    fv = calc(t, "FRACT", calc(t, "MULTIPLY", v, 3.0))
+    reed = ramp(t, tiled_noise(t, u, v, 140.0, 5.0, 2.0, 6), 0.3, 0.7)
+    lip = ramp(t, fv, 0.0, 0.3, True)
+    shade = calc(t, "MULTIPLY", calc(t, "ADD", 0.45, calc(t, "MULTIPLY", lip, 0.55)), calc(t, "ADD", 0.75, calc(t, "MULTIPLY", reed, 0.5)))
+    height = calc(t, "ADD", calc(t, "MULTIPLY", calc(t, "SUBTRACT", 1.0, fv), 0.7), calc(t, "MULTIPLY", reed, 0.3))
+    rough = calc(t, "ADD", 0.84, calc(t, "MULTIPLY", reed, 0.1))
+    return reed, shade, height, rough
+
+def look_snow(t, u, v):
+    drift = tiled_noise(t, u, v, 3.0, 3.0, 3.0, 7)
+    grit = tiled_noise(t, u, v, 70.0, 70.0, 1.0, 8)
+    tone = ramp(t, calc(t, "ADD", calc(t, "MULTIPLY", drift, 0.8), calc(t, "MULTIPLY", grit, 0.2)), 0.3, 0.7, True)
+    shade = calc(t, "ADD", 0.94, calc(t, "MULTIPLY", grit, 0.12))
+    height = calc(t, "ADD", calc(t, "MULTIPLY", ramp(t, drift, 0.25, 0.75, True), 0.9), calc(t, "MULTIPLY", grit, 0.1))
+    rough = calc(t, "ADD", 0.5, calc(t, "MULTIPLY", grit, 0.25))
+    return tone, shade, height, rough
+
+LOOKS = {"stone": (look_stone, 0.02, 0.9), "wood": (look_wood, 0.006, 0.7), "weave": (look_weave, 0.003, 0.9), "grass": (look_grass, 0.03, 0.9), "thatch": (look_thatch, 0.04, 0.9), "snow": (look_snow, 0.05, 0.6)}
+
+def texture_image(name, pixels, data, deep=False):
+    i = bpy.data.images.new(name, pixels, pixels, alpha=False, float_buffer=deep)
+    if data:
+        i.colorspace_settings.name = "Non-Color"
+    return i
+
+def keep_image(i):
+    os.makedirs(os.path.join(out, "textures"), exist_ok=True)
+    i.filepath_raw = os.path.join(out, "textures", i.name.replace(" ", "-") + ".png")
+    i.file_format = "PNG"
+    i.save()
+
+def texture(name, kind, rgb, rgb2, meters, pixels, maps):
+    if name in looks:
+        return looks[name][0]
+    make, relief, plain = LOOKS[kind]
+    src = bpy.data.materials.new(name + " source")
+    src.use_nodes = True
+    t = src.node_tree
+    t.nodes.clear()
+    co = t.nodes.new("ShaderNodeTexCoord")
+    uv = t.nodes.new("ShaderNodeSeparateXYZ")
+    t.links.new(co.outputs["UV"], uv.inputs[0])
+    tone, shade, height, rough = make(t, uv.outputs[0], uv.outputs[1])
+    mix = t.nodes.new("ShaderNodeMix")
+    mix.data_type = "RGBA"
+    t.links.new(tone, mix.inputs[0])
+    mix.inputs[6].default_value = rgb2 + (1.0,)
+    mix.inputs[7].default_value = rgb + (1.0,)
+    gray = t.nodes.new("ShaderNodeCombineXYZ")
+    for i in range(3):
+        t.links.new(shade, gray.inputs[i])
+    lit = t.nodes.new("ShaderNodeMix")
+    lit.data_type = "RGBA"
+    lit.blend_type = "MULTIPLY"
+    lit.inputs[0].default_value = 1.0
+    t.links.new(mix.outputs[2], lit.inputs[6])
+    t.links.new(gray.outputs[0], lit.inputs[7])
+    glow = t.nodes.new("ShaderNodeEmission")
+    end = t.nodes.new("ShaderNodeOutputMaterial")
+    t.links.new(glow.outputs[0], end.inputs[0])
+    to = t.nodes.new("ShaderNodeTexImage")
+    t.nodes.active = to
+    swatch = mesh_object(name + " swatch", [(0, 0, 0), (1, 0, 0), (1, 1, 0), (0, 1, 0)], [(0, 1, 2, 3)])
+    layer = swatch.data.uv_layers.new(name="UVMap")
+    for l in swatch.data.loops:
+        layer.data[l.index].uv = swatch.data.vertices[l.vertex_index].co[:2]
+    swatch.data.materials.append(src)
+    engine = scene.render.engine
+    scene.render.engine = "CYCLES"
+    scene.cycles.device = "CPU"
+    scene.cycles.samples = 16
+    bpy.ops.object.select_all(action="DESELECT")
+    swatch.select_set(True)
+    bpy.context.view_layer.objects.active = swatch
+    def bake(socket, image):
+        to.image = image
+        t.links.new(socket, glow.inputs[0])
+        bpy.ops.object.bake(type="EMIT", margin=0, use_clear=True)
+        return image
+    m = bpy.data.materials.new(name)
+    m.use_nodes = True
+    mt = m.node_tree
+    p = mt.nodes["Principled BSDF"]
+    p.inputs["Base Color"].default_value = rgb + (1.0,)
+    p.inputs["Roughness"].default_value = plain
+    def use(image, socket):
+        keep_image(image)
+        n = mt.nodes.new("ShaderNodeTexImage")
+        n.image = image
+        if socket:
+            mt.links.new(n.outputs[0], p.inputs[socket])
+        return n
+    use(bake(lit.outputs[2], texture_image(name + " color", pixels, False)), "Base Color")
+    if maps >= 2:
+        use(bake(rough, texture_image(name + " roughness", pixels, True)), "Roughness")
+    if maps >= 3:
+        deep = bake(height, texture_image(name + " height", pixels, True, True))
+        h = numpy.empty(pixels * pixels * 4, dtype=numpy.float32)
+        deep.pixels.foreach_get(h)
+        h = h.reshape(pixels, pixels, 4)[:, :, 0] * (relief * pixels / meters)
+        dx = (numpy.roll(h, -1, 1) - numpy.roll(h, 1, 1)) / 2
+        dy = (numpy.roll(h, -1, 0) - numpy.roll(h, 1, 0)) / 2
+        size = numpy.sqrt(dx * dx + dy * dy + 1)
+        px = numpy.ones((pixels, pixels, 4), dtype=numpy.float32)
+        px[:, :, 0] = 0.5 - 0.5 * dx / size
+        px[:, :, 1] = 0.5 - 0.5 * dy / size
+        px[:, :, 2] = 0.5 + 0.5 / size
+        bump = texture_image(name + " normal", pixels, True)
+        bump.pixels.foreach_set(px.ravel())
+        bpy.data.images.remove(deep)
+        turn = mt.nodes.new("ShaderNodeNormalMap")
+        mt.links.new(use(bump, None).outputs[0], turn.inputs["Color"])
+        mt.links.new(turn.outputs[0], p.inputs["Normal"])
+    scene.render.engine = engine
+    mesh = swatch.data
+    bpy.data.objects.remove(swatch)
+    bpy.data.meshes.remove(mesh)
+    bpy.data.materials.remove(src)
+    looks[name] = (m, meters)
+    return m
+
+def bevel(name, width, segments):
+    o = bpy.data.objects[name]
+    s = o.scale.copy()
+    bm = bmesh.new()
+    bm.from_mesh(o.data)
+    for v in bm.verts:
+        v.co = v.co * s
+    bm.normal_update()
+    sharp = [e for e in bm.edges if len(e.link_faces) == 2 and e.calc_face_angle() > math.radians(40)]
+    bmesh.ops.bevel(bm, geom=sharp, offset=width, offset_type="OFFSET", segments=segments, profile=0.5, affect="EDGES", clamp_overlap=True)
+    bm.normal_update()
+    normals = []
+    for v in bm.verts:
+        n = mathutils.Vector((0.0, 0.0, 0.0))
+        for f in v.link_faces:
+            n += f.normal * f.calc_area()
+        normals.append((n * s).normalized())
+        v.co = mathutils.Vector((v.co.x / s.x, v.co.y / s.y, v.co.z / s.z))
+    for f in bm.faces:
+        f.smooth = True
+    bm.to_mesh(o.data)
+    bm.free()
+    o.data.update()
+    o.data.normals_split_custom_set_from_vertices(normals)
+
+def paint(name, look, turn):
+    o = bpy.data.objects[name]
+    m, meters = looks[look]
+    mesh = o.data
+    s = o.scale
+    layer = mesh.uv_layers.active or mesh.uv_layers.new(name="UVMap")
+    for p in mesh.polygons:
+        n = [abs(p.normal[i] / s[i]) for i in range(3)]
+        k = n.index(max(n))
+        for li in p.loop_indices:
+            c = mesh.vertices[mesh.loops[li].vertex_index].co * s
+            a, b = ((c.y, c.z), (c.x, c.z), (c.x, c.y))[k]
+            if turn:
+                a, b = b, -a
+            layer.data[li].uv = (a / meters, b / meters)
+    mesh.materials.clear()
+    mesh.materials.append(m)
+
+def armature(name, owner, bones, heads, tails, parents):
+    a = bpy.data.armatures.new(name)
+    o = bpy.data.objects.new(name, a)
+    scene.collection.objects.link(o)
+    o.parent = owner
+    bpy.context.view_layer.objects.active = o
+    bpy.ops.object.mode_set(mode="EDIT")
+    made = []
+    for b, h, t, p in zip(bones, heads, tails, parents):
+        e = a.edit_bones.new(b)
+        e.head = h
+        e.tail = t
+        if int(p[0]):
+            e.parent = made[int(p[0]) - 1]
+        made.append(e)
+    bpy.ops.object.mode_set(mode="OBJECT")
+    for b in o.pose.bones:
+        b.rotation_mode = "QUATERNION"
+    return o
+
+def bind(name, rig, bones, reach):
+    o = bpy.data.objects[name]
+    r = bpy.data.objects[rig]
+    bpy.context.view_layer.update()
+    world = o.matrix_world.copy()
+    o.parent = r
+    o.matrix_parent_inverse = mathutils.Matrix.Identity(4)
+    o.matrix_world = world
+    bpy.context.view_layer.update()
+    to = r.matrix_world.inverted() @ world
+    ends = [(r.data.bones[b].head_local, r.data.bones[b].tail_local) for b in bones]
+    groups = [o.vertex_groups.new(name=b) for b in bones]
+    for v in o.data.vertices:
+        p = to @ v.co
+        d = []
+        for h, t in ends:
+            along = t - h
+            k = min(1.0, max(0.0, (p - h).dot(along) / along.length_squared))
+            d.append((p - h - k * along).length)
+        near = min(d)
+        w = [max(0.0, 1.0 - (x - near) / reach) ** 2 if reach > 0 else float(x == near) for x in d]
+        for g, x in zip(groups, w):
+            if x / sum(w) > 0.01:
+                g.add([v.index], x / sum(w), "REPLACE")
+    o.modifiers.new("rig", "ARMATURE").object = r
+
+def pose_keys(rig, bone, clip, path, times, values):
+    o = bpy.data.objects[rig]
+    b = o.pose.bones[bone]
+    if o.animation_data is None:
+        o.animation_data_create()
+    act = actions.get((rig, clip))
+    if act is None:
+        act = bpy.data.actions.new(rig + " " + clip)
+        actions[(rig, clip)] = act
+    o.animation_data.action = act
+    rest = b.bone.matrix_local.to_3x3()
+    back = rest.inverted()
+    last = None
+    for t, v in zip(times, values):
+        frame = round(t * scene.render.fps)
+        if path == "rotation":
+            q = (back @ mathutils.Euler([math.radians(a) for a in v], "XYZ").to_matrix() @ rest).to_quaternion()
+            if last is not None and q.dot(last) < 0:
+                q.negate()
+            last = q.copy()
+            b.rotation_quaternion = q
+            b.keyframe_insert("rotation_quaternion", frame=frame)
+        elif path == "location":
+            b.location = back @ mathutils.Vector(v)
+            b.keyframe_insert("location", frame=frame)
+        else:
+            b.scale = v
+            b.keyframe_insert("scale", frame=frame)
+    o.animation_data.action = None
+    b.rotation_quaternion = (1.0, 0.0, 0.0, 0.0)
+    b.location = (0.0, 0.0, 0.0)
+    b.scale = (1.0, 1.0, 1.0)
+
+def wave(name, clip, pins, wind, seconds, count):
+    o = bpy.data.objects[name]
+    mesh = o.data
+    n = round(seconds * scene.render.fps)
+    lead = 2 * scene.render.fps
+    over = n // 2
+    o.vertex_groups.new(name="pins").add([int(i) for i in pins], 1.0, "REPLACE")
+    c = o.modifiers.new("cloth", "CLOTH")
+    c.settings.vertex_group_mass = "pins"
+    c.settings.quality = 8
+    c.settings.mass = 0.05
+    c.settings.air_damping = 2.0
+    c.settings.tension_stiffness = 12.0
+    c.settings.compression_stiffness = 12.0
+    c.settings.shear_stiffness = 4.0
+    c.settings.bending_stiffness = 0.05
+    c.point_cache.frame_start = 1
+    c.point_cache.frame_end = lead + n + over
+    blow = mathutils.Vector(wind)
+    fields = []
+    for kind, strength in (("WIND", 400.0), ("TURBULENCE", 300.0)):
+        bpy.ops.object.effector_add(type=kind)
+        f = bpy.context.active_object
+        f.field.strength = strength * blow.length
+        f.field.flow = 0.0
+        if kind == "WIND":
+            f.field.noise = 2.0 * blow.length
+            f.rotation_euler = blow.to_track_quat("Z", "Y").to_euler() if blow.length else (0.0, 0.0, 0.0)
+        else:
+            f.field.size = 0.6
+        fields.append(f)
+    first, last = scene.frame_start, scene.frame_end
+    scene.frame_start = 1
+    scene.frame_end = lead + n + over
+    seen = []
+    for frame in range(1, lead + n + over + 1):
+        scene.frame_set(frame)
+        if frame > lead:
+            e = o.evaluated_get(bpy.context.evaluated_depsgraph_get())
+            co = numpy.empty(len(mesh.vertices) * 3, dtype=numpy.float32)
+            e.data.vertices.foreach_get("co", co)
+            seen.append(co)
+    o.modifiers.remove(c)
+    for f in fields:
+        bpy.data.objects.remove(f)
+    scene.frame_start, scene.frame_end = first, last
+    scene.frame_set(first)
+    def at(i):
+        if i >= over:
+            return seen[i]
+        k = i / over
+        return k * seen[i] + (1.0 - k) * seen[n + i]
+    mesh.vertices.foreach_set("co", at(0))
+    mesh.update()
+    for p in mesh.polygons:
+        p.use_smooth = True
+    o.shape_key_add(name="Basis")
+    made = []
+    for k in range(1, count):
+        s = o.shape_key_add(name="%s %d" % (clip, k))
+        s.data.foreach_set("co", at(round(k * n / count)))
+        made.append(s)
+    keyed = mesh.shape_keys
+    if keyed.animation_data is None:
+        keyed.animation_data_create()
+    act = bpy.data.actions.new(name + " " + clip + " shape")
+    keyed.animation_data.action = act
+    for k, s in enumerate(made, 1):
+        for j, x in ((k - 1, 0.0), (k, 1.0), (k + 1, 0.0)):
+            s.value = x
+            s.keyframe_insert("value", frame=round(j * n / count))
+        s.value = 0.0
+    keyed.animation_data.action = None
+    track = keyed.animation_data.nla_tracks.new()
+    track.name = clip
+    track.strips.new(clip, 0, act)
+
+def export_look(owner, path, quality):
+    clips()
+    bpy.ops.object.select_all(action="DESELECT")
+    owner.select_set(True)
+    for c in owner.children_recursive:
+        c.select_set(True)
+    bpy.context.view_layer.objects.active = owner
+    bpy.ops.export_scene.gltf(filepath=path, export_format="GLB", use_selection=True, export_animations=True, export_animation_mode="NLA_TRACKS", export_image_format="JPEG" if quality else "AUTO", export_image_quality=quality or 75, export_morph_normal=True)
+
+def picture_size(b):
+    import struct
+    if b[:4] == b"\x89PNG":
+        return struct.unpack(">II", b[16:24])
+    i = 2
+    while i < len(b):
+        if 0xC0 <= b[i + 1] <= 0xC3:
+            return struct.unpack(">HH", b[i + 5:i + 9])[::-1]
+        i += 2 + struct.unpack(">H", b[i + 2:i + 4])[0]
+    return (0, 0)
+
+def glb_look(path):
+    import json, struct
+    data = open(path, "rb").read()
+    n = struct.unpack("<I", data[12:16])[0]
+    g = json.loads(data[20:20 + n])
+    found, held = [], 0
+    for i in g.get("images", []):
+        v = g["bufferViews"][i["bufferView"]]
+        b = data[28 + n + v.get("byteOffset", 0):][:v["byteLength"]]
+        held += len(b)
+        found.append("texture %s: %s, %d by %d, %d bytes" % ((i.get("name", ""), i["mimeType"]) + tuple(picture_size(b)) + (len(b),)))
+    def named(x):
+        return g["images"][g["textures"][x["index"]]["source"]].get("name", "") if x else "none"
+    for m in g.get("materials", []):
+        p = m.get("pbrMetallicRoughness", {})
+        if "baseColorTexture" in p:
+            found.append("material %s: color %s, roughness %s, normal %s" % (m["name"], named(p["baseColorTexture"]), named(p.get("metallicRoughnessTexture")), named(m.get("normalTexture"))))
+    for s in g.get("skins", []):
+        found.append("skin %s: %d bones" % (s.get("name", ""), len(s["joints"])))
+    for m in g.get("meshes", []):
+        a = m["primitives"][0]
+        found.append("mesh %s: %d corners%s%s" % (m["name"], g["accessors"][a["attributes"]["POSITION"]]["count"], ", skinned" if "JOINTS_0" in a["attributes"] else "", ", %d shapes" % len(a["targets"]) if "targets" in a else ""))
+    for a in g.get("animations", []):
+        times = [g["accessors"][s["input"]] for s in a["samplers"]]
+        paths = sorted(set(c["target"]["path"] for c in a["channels"]))
+        nodes = set(c["target"]["node"] for c in a["channels"])
+        found.append("clip %s %.2f-%.2f s: %s of %d nodes, %d keys" % (a["name"], min(t["min"][0] for t in times), max(t["max"][0] for t in times), " ".join(paths), len(nodes), max(t["count"] for t in times)))
+    return ["file: %d bytes, %d without its textures" % (len(data), len(data) - held)] + found
+
+

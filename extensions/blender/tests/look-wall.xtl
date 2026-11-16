@@ -1,0 +1,9 @@
+## The look, materials: the Python Bpy.xtl writes for a wall block
+## (LookPieces.xtl) -- two textures (stone: color, roughness and
+## normals; wood: color and roughness), boxes beveled and painted, the
+## export with its textures as JPEG and the file read back -- pinned.
+
+"lk:" u_se< "LookPieces"
+
+"the wall:"
+lk:wall c_at lk:f_ile "look-wall"

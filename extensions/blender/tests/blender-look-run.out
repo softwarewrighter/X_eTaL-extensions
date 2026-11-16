@@ -1,0 +1,81 @@
+the run, and the error lines in Blender's log:
+exit 0
+errors 0
+look-wall.glb:
+file: N bytes, N without its textures
+texture look-wood-color: image/jpeg, 128 by 128, N bytes
+texture look-wood-roughness: image/jpeg, 128 by 128, N bytes
+texture look-stone-normal: image/jpeg, 256 by 256, N bytes
+texture look-stone-color: image/jpeg, 256 by 256, N bytes
+texture look-stone-roughness: image/jpeg, 256 by 256, N bytes
+material look wood: color look-wood-color, roughness look-wood-roughness, normal none
+material look stone: color look-stone-color, roughness look-stone-roughness, normal look-stone-normal
+mesh wall beam: 96 corners
+mesh wall block: 88 corners
+mesh wall course: 88 corners
+mesh wall merlon 1: 96 corners
+mesh wall merlon 2: 96 corners
+
+look-figure.glb:
+file: N bytes, N without its textures
+texture look-cloth-color: image/jpeg, 128 by 128, N bytes
+material look cloth: color look-cloth-color, roughness none, normal none
+skin figure rig: 9 bones
+mesh figure arm left: 144 corners, skinned
+mesh figure arm right: 144 corners, skinned
+mesh figure hair: 360 corners, skinned
+mesh figure head: 360 corners, skinned
+mesh figure leg left: 144 corners, skinned
+mesh figure leg right: 144 corners, skinned
+mesh figure tunic: 52 corners, skinned
+clip walk 0.00-1.00 s: rotation scale translation of 9 nodes, 31 keys
+clip idle 0.00-2.00 s: rotation scale translation of 9 nodes, 61 keys
+
+look-banner.glb:
+file: N bytes, N without its textures
+texture look-cloth-color: image/jpeg, 128 by 128, N bytes
+texture look-pole-color: image/jpeg, 128 by 128, N bytes
+material look cloth: color look-cloth-color, roughness none, normal none
+material look pole: color look-pole-color, roughness none, normal none
+mesh banner flag: 117 corners, 7 shapes
+mesh banner pole: 72 corners
+clip wave 0.00-2.00 s: weights of 1 nodes, 61 keys
+
+what Blender made:
+mesh banner flag: 117 vertices, 96 faces
+mesh banner pole: 24 vertices, 14 faces
+mesh figure arm left: 64 vertices, 56 faces
+mesh figure arm right: 64 vertices, 56 faces
+mesh figure hair: 86 vertices, 96 faces
+mesh figure head: 86 vertices, 96 faces
+mesh figure leg left: 64 vertices, 56 faces
+mesh figure leg right: 64 vertices, 56 faces
+mesh figure tunic: 24 vertices, 26 faces
+mesh wall beam: 56 vertices, 54 faces
+mesh wall block: 56 vertices, 54 faces
+mesh wall course: 56 vertices, 54 faces
+mesh wall merlon 1: 56 vertices, 54 faces
+mesh wall merlon 2: 56 vertices, 54 faces
+piece look-banner: 2 parts, 236 triangles
+piece look-figure: 7 parts, 828 triangles
+piece look-wall: 5 parts, 540 triangles
+objects: banner flag banner pole figure arm left figure arm right figure hair figure head figure leg left figure leg right figure rig figure tunic look-banner look-figure look-wall wall beam wall block wall course wall merlon 1 wall merlon 2
+
+work/look/out:
+look-banner-contents.txt
+look-banner.glb
+look-figure-contents.txt
+look-figure.glb
+look-wall-contents.txt
+look-wall.glb
+report.txt
+textures
+
+work/look/out/textures:
+look-cloth-color.png
+look-pole-color.png
+look-stone-color.png
+look-stone-normal.png
+look-stone-roughness.png
+look-wood-color.png
+look-wood-roughness.png

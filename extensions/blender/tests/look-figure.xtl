@@ -1,0 +1,10 @@
+## The look, figures: the Python Bpy.xtl writes for a walking figure
+## (LookPieces.xtl) -- an armature of nine bones from arrays, parts
+## skinned to its bones (the head rigidly, the tunic and the legs shared
+## between two bones), the clips walk and idle keyed on the bones, the
+## export and the file read back -- pinned.
+
+"lk:" u_se< "LookPieces"
+
+"the figure:"
+lk:figure c_at lk:f_ile "look-figure"

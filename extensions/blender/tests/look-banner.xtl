@@ -1,0 +1,10 @@
+## The look, cloth: the Python Bpy.xtl writes for a banner
+## (LookPieces.xtl) -- a pole, a flag that is a sheet of 12 by 8 squares
+## worked out as arrays, painted with a weave, pinned along the pole and
+## simulated in a wind, kept as the clip wave (2 s, 8 shapes), the export
+## and the file read back -- pinned.
+
+"lk:" u_se< "LookPieces"
+
+"the banner:"
+lk:banner c_at lk:f_ile "look-banner"
