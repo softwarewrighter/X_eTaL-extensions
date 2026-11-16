@@ -1,0 +1,39 @@
+the wall:
+pc = piece("look-wall")
+top = pc
+texture("look stone", "stone", nums("0.6 0.63 0.67", 3)[0], nums("0.3 0.3 0.32", 3)[0], 1.0, 256, 3)
+texture("look wood", "wood", nums("0.61 0.48 0.3", 3)[0], nums("0.36 0.26 0.15", 3)[0], 0.5, 128, 2)
+bpy.ops.mesh.primitive_cube_add(size=1.0)
+o = made("wall block")
+o.scale = nums("1.0 1.0 2.0", 3)[0]
+attach(o, pc, material("wall block", nums("0.6 0.63 0.67", 3)[0], 0.0), nums("0.0 0.0 1.0", 3)[0], nums("0.0 0.0 0.0", 3)[0])
+bevel("wall block", 0.03, 2)
+paint("wall block", "look stone", 0)
+bpy.ops.mesh.primitive_cube_add(size=1.0)
+o = made("wall course")
+o.scale = nums("1.06 1.06 0.1", 3)[0]
+attach(o, pc, material("wall course", nums("0.6 0.63 0.67", 3)[0], 0.0), nums("0.0 0.0 1.96", 3)[0], nums("0.0 0.0 0.0", 3)[0])
+bevel("wall course", 0.03, 2)
+paint("wall course", "look stone", 0)
+bpy.ops.mesh.primitive_cube_add(size=1.0)
+o = made("wall merlon 1")
+o.scale = nums("0.3 0.24 0.26", 3)[0]
+attach(o, pc, material("wall merlon 1", nums("0.6 0.63 0.67", 3)[0], 0.0), nums("-0.33 -0.38 2.13", 3)[0], nums("0.0 0.0 0.0", 3)[0])
+bevel("wall merlon 1", 0.03, 2)
+paint("wall merlon 1", "look stone", 0)
+bpy.ops.mesh.primitive_cube_add(size=1.0)
+o = made("wall merlon 2")
+o.scale = nums("0.3 0.24 0.26", 3)[0]
+attach(o, pc, material("wall merlon 2", nums("0.6 0.63 0.67", 3)[0], 0.0), nums("0.33 -0.38 2.13", 3)[0], nums("0.0 0.0 0.0", 3)[0])
+bevel("wall merlon 2", 0.03, 2)
+paint("wall merlon 2", "look stone", 0)
+bpy.ops.mesh.primitive_cube_add(size=1.0)
+o = made("wall beam")
+o.scale = nums("1.1 0.12 0.14", 3)[0]
+attach(o, pc, material("wall beam", nums("0.61 0.48 0.3", 3)[0], 0.0), nums("0.0 -0.56 1.4", 3)[0], nums("0.0 0.0 0.0", 3)[0])
+bevel("wall beam", 0.03, 2)
+paint("wall beam", "look wood", 0)
+export_look(bpy.data.objects["look-wall"], os.path.join(out, "look-wall.glb"), 85)
+with open(os.path.join(out, "look-wall-contents.txt"), "w") as f:
+    f.write("".join(c + "\n" for c in glb_look(os.path.join(out, "look-wall.glb"))))
+

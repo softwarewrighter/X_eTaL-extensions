@@ -1,0 +1,54 @@
+## LookPieces.xtl -- three pieces that try the look of Bpy.xtl
+## (docs/bpy-look.md): a wall block of beveled, textured stone under a
+## wooden beam; a figure skinned to an armature that walks; and a banner
+## of cloth that waves on its pole. Each stands on a 1 by 1 tile, its
+## base at z 0, its front toward -y. The tests print each piece's Python
+## (look-wall.xtl, look-figure.xtl, look-banner.xtl) and make all three
+## with Blender (look-run.xtl).
+## Import: "lk:" u_se< "LookPieces"
+
+"bp:" u_se< "Bpy"
+
+### Colors (red green blue, 0 to 1) and keys
+
+stone := 0.6 0.63 0.67
+joint := 0.3 0.3 0.32
+plank := 0.61 0.48 0.3
+grain := 0.36 0.26 0.15
+tunic := 0.75 0.22 0.17
+thread := 0.4 0.1 0.08
+hose := 0.3 0.24 0.2
+skin := 0.95 0.79 0.65
+hair := 0.3 0.2 0.12
+flat := 0.0 0.0 0.0
+
+walk := 0.0 0.25 0.5 0.75 1.0
+swing := 0.0 1.0 0.0 -1.0 0.0
+bob := 0.0 1.0 0.0 1.0 0.0
+lift := 0.0 0.3 1.0 0.3 0.0
+land := 1.0 0.3 0.0 0.3 1.0
+slow := 0.0 1.0 2.0
+breathe := 0.0 1.0 0.0
+
+### The wall
+
+# a beveled box painted with a texture
+h:b_lock := { (name, at, size, rgb, texture) z ->
+  ((name, at, size, flat, rgb, 0.0) bp:b_ox 0) c_at ((name, 0.03, 2) bp:b_evel 0) c_at (name, texture, 0) bp:p_aint 0
+}
+
+## The wall: a block two tiles' steps high, a course round its top and
+## two merlons, all of one stone texture (256 pixels: color, roughness
+## and normals), and a beam of wood (128 pixels: color and roughness)
+## along its front.
+l:wall := (((bp:p_iece "look-wall") c_at (("look stone", "stone", stone, joint, 1.0, 256, 3) bp:t_exture 0) c_at (("look wood", "wood", plank, grain, 0.5, 128, 2) bp:t_exture 0)) c_at
+  ((("wall block", 0.0 0.0 1.0, 1.0 1.0 2.0, stone, "look stone") h:b_lock 0) c_at (("wall course", 0.0 0.0 1.96, 1.06 1.06 0.1, stone, "look stone") h:b_lock 0)) c_at
+  ((("wall merlon 1", -0.33 -0.38 2.13, 0.3 0.24 0.26, stone, "look stone") h:b_lock 0) c_at (("wall merlon 2", 0.33 -0.38 2.13, 0.3 0.24 0.26, stone, "look stone") h:b_lock 0)) c_at
+  ("wall beam", 0.0 -0.56 1.4, 1.1 0.12 0.14, plank, "look wood") h:b_lock 0)
+
+### Files
+
+## lk:f_ile name: Python writing the piece NAME as out/NAME.glb, its
+## textures JPEG (quality 85), and what the file holds, read back, as
+## out/NAME-contents.txt.
+l:f_ile := { name -> ((name, 85) bp:e_xportLook 0) c_at bp:c_ontents name }

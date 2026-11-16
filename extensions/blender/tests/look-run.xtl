@@ -1,0 +1,23 @@
+## The look, through Blender: the pieces of LookPieces.xtl written as
+## one bpy script (bp:head, bp:look, each piece and its export), run by
+## Blender, and each .glb read back: its bytes with and without its
+## textures, each texture's kind, pixels and bytes, the skin's bones,
+## the cloth's shapes, the clips by name with their spans.
+## Run: XETAL_PATH=tests xetal-x --ext .. run tests/look-run.xtl (about 15 s)
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"lk:" u_se< "LookPieces"
+
+wall := lk:wall c_at lk:f_ile "look-wall"
+_ := "work/look/run.py" bl:w_rite! bp:launcher
+_ := "work/look/scene.py" bl:w_rite! bp:head c_at bp:look c_at wall c_at bp:report
+r := "work/look/run.py" bl:r_un! "work/look/scene.py work/look/out"
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+"look-wall.glb:"
+bl:r_ead "work/look/out/look-wall-contents.txt"
+"what Blender made:"
+bl:r_ead "work/look/out/report.txt"
