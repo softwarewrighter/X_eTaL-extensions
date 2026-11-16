@@ -17,7 +17,7 @@ host name.
 
 The machines: large12 (RTX 5060, 16 GB), beast48 and big72 (RTX 3060,
 12 GB each) and queenbee (RTX 3090, 24 GB). Off in the table as of
-2026-11-16: beast48 (it does not boot) and queenbee (powered down).
+2026-11-16: big72 (it does not boot) and queenbee (powered down).
 Blender is 5.3.0 on all of them (Arch's package); the scripts were
 written against 5.1.2.
 
