@@ -1,4 +1,4 @@
-number = 38
+number = 39
 slug = "gpu-run-m1"
 status = "pending"
 description = "Finish the M1 Max portion of the GPU execution video when its SSH hostname/us..."

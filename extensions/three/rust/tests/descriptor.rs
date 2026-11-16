@@ -82,6 +82,8 @@ fn the_board_player_defines_its_calls() {
     }
     assert!(part("board/water.js").contains("water("));
     assert!(part("board/particles.js").contains("particles("));
+    // a game's page side draws through the board player
+    assert!(xetal_ext_three::GAME.contains("from './board.js'"));
     // the page chooses the player by the scene's first call
     assert!(xetal_ext_three::LIVE.contains("isBoard(calls)"));
 }

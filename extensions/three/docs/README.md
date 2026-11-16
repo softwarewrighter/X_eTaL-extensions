@@ -287,6 +287,43 @@ Ground that is ground: a mesh the program works out, and its material
 - Checked headlessly with made-up key and pointer events; a real
   locked pointer has not been tried.
 
+### A game's page
+
+`web/static/game.js` plays a game: an X_eTaL program kept running in
+the page (the shell's `play` and `page` modules, `web/shell/README.md`),
+given a line an event and drawn by the board player after each. The
+page gives every choice of the game's as setup; `game.js` knows no
+game.
+
+```
+import { game, named } from './game.js';
+const play = game(window.wasmBindings, {
+  view, flat,                          // the board's element, the picture's
+  tick: 0.05, tickLine: (s) => `tick ${s}`,
+  keyLine: named({ ' ': 'space' }, (name) => `key ${name}`),
+  clickLine: (x, y) => `click ${x.toFixed(1)} ${y.toFixed(1)}`,
+  board: { models: './models/' },
+  onPrinted: (text) => {}, onOver: (error) => {},
+});
+play.start();
+```
+
+- The clock gives a tick's line every `tick` seconds; a late timer is
+  caught up `catchUp` ticks at most (4), a hidden tab gets none.
+- A click is in the view's units, from the board (`onPoint`) or from
+  the flat picture (the SVG's own map).
+- Each picture the program shows (`[]S_HOW`) is put into `flat`; its
+  `<metadata id="scene">` is drawn by the board into `view`, and `flat`
+  then has the class `solid` (hide there what the board draws:
+  `#flat.solid .flat { display: none }`). With no WebGL, or no scene
+  in a picture, the flat picture is shown whole.
+- The page's Rust is a `Page` (program, files, linked extensions) and
+  `xetal_ext_shell::game_page!(PAGE)`, which exports `start`, `event`,
+  `picture`, `printed`, `error`, `over`, `stop`, `files` and
+  `rendered` to the page.
+- Tried end to end in headless Chrome from a page outside this
+  repository; no page here uses it yet.
+
 `th:s_how!` and `th:p_age!` take a board as they take a city: the
 page's controls (`live.js`) choose the player by the scene's first
 call. `just ext three board` writes `tests/board.xtl`'s small board to
@@ -361,7 +398,7 @@ just live       # the live page, with trunk, into web/dist
 The Rust tests check the descriptor, that each player defines every
 call its vocabulary writes, and that the vendored Three.js is whole.
 The goldens: `three-list`; `three-tiny` (three calls counted, a page
-of 25 files written); `three-board` (a board of fourteen calls counted and
+of 26 files written); `three-board` (a board of fourteen calls counted and
 written as a page); `three-outside` (a path outside the working
 directory is refused); `three-demo-city` (the city: 84 calls). The
 page's crate (`web/`) runs its program natively for two seeds and

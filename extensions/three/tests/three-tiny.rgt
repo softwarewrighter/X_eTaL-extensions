@@ -1,3 +1,3 @@
 command = "t=$(mktemp -d) && XETAL_THREE_ROOT=$t xetal-x --ext .. run tests/tiny.xtl && cd $t && find work/tiny -type f | sort"
 exit_code = 0
-desc = "a scene of three calls: counted by th:s_how! (nothing is drawn from the command line) and written by th:p_age! as a directory to serve: the page, the two players, the controls, the calls and Three.js with its glTF loader, 25 files"
+desc = "a scene of three calls: counted by th:s_how! (nothing is drawn from the command line) and written by th:p_age! as a directory to serve: the page, the two players, the controls, the calls and Three.js with its glTF loader, 26 files"
