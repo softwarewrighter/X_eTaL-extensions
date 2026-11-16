@@ -1,8 +1,9 @@
 number = 29
 slug = "board-tile-models"
-status = "in-progress"
+status = "completed"
 description = "Saga 15 (the user, 2026-11-16: 'go', of evolving-game's nine new asks in its ..."
 role = "production"
 context_files = []
 created_at = "2026-11-16T09:19:18"
-commits = []
+completed_at = "2026-11-16T09:25:23"
+commits = ["2d8516e508cb3930ae1caac913297376a0ece58a"]

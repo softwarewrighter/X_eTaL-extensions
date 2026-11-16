@@ -1,0 +1,1 @@
+Tiles from models, evolving-game's ask: tiles(kind, color, nums, model) instances models/NAME.glb at each tile on a column to its base (rows x z y, x z y base, x z y base hx hz); the column alone until the model has come. Golden three-board seven calls; gate ok.
