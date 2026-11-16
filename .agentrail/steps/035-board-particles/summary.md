@@ -1,0 +1,1 @@
+The particles lane merged: smoke, dust, splash, fire and embers from the board's clock. Docs, tests and golden in the batch commit; the gate ran on the four lanes together.
