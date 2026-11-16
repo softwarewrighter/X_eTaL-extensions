@@ -16,4 +16,6 @@ cd "$root"
 cargo build -q --release -p xetal-x -p xetal-ext-blender
 XETAL_PATH="$root/extensions/blender/demos:$("$root/scripts/libraries.sh")"
 export XETAL_PATH
-exec "$root/target/release/xetal-x" --ext "$root/extensions" run "$file"
+# only the blender extension: xetal-x fails on an extension directory
+# whose library is not built, and only blender's is built here
+exec "$root/target/release/xetal-x" --ext "$root/extensions/blender" run "$file"

@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-16
 
+- `fix` `scripts/farm-scene.sh` gives xetal-x the blender extension alone (`--ext extensions/blender`): it built only that library, and xetal-x fails on a directory holding an extension that is not built (found on beast48, the first Linux run).
 - `ext` blender, Bpy.xtl: the look (evolving-game's two asks; the bpy lane, merged). `bp:look` after `bp:head`, then: `bp:t_exture`, `bp:b_evel`, `bp:p_aint`, `bp:e_xportLook` (procedural textures baked into the `.glb`, bevels); `bp:a_rmature`, `bp:b_ind`, `bp:p_ose` (skinned figures, clips on bones); `bp:g_ridMesh`, `bp:c_loth`, `bp:w_ave` (cloth simulated, kept as shapes); `bp:c_ontents`. Existing functions' text unchanged (24 goldens as they were); five new goldens (`blender-look-wall`, `-figure`, `-banner`, `-script`, `-run`, the last runs Blender). `docs/bpy-look.md`. The merge commit went up with the farm's table before its gate. Saga: bpy-look inserted as step 38.
 - `build` the farm's table: max, the Mac, takes part (the user: three machines for now, large12, beast48 and max), with Blender 5.3.0 installed beside its 5.1.2.
 - `fix` the farm's table: it is big72 that does not boot, not beast48 (the user's correction); beast48 on, big72 off.
