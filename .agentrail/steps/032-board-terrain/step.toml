@@ -1,8 +1,9 @@
 number = 32
 slug = "board-terrain"
-status = "in-progress"
+status = "completed"
 description = "Saga 15 (the user, 2026-11-16: the game's asks in parallel lanes, merged as e..."
 role = "production"
 context_files = []
 created_at = "2026-11-16T10:07:23"
-commits = []
+completed_at = "2026-11-16T11:25:22"
+commits = ["a703193f8db04a7a6899341f208ba2a2386ebd18"]

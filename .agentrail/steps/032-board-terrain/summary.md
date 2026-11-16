@@ -1,0 +1,1 @@
+The terrain lane merged: terrain and ground (triangles from 1), six procedural textures, registered and documented; gate ok with light, water and particles merged too.
