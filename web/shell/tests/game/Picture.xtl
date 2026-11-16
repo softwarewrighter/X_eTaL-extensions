@@ -1,0 +1,11 @@
+## The picture the counting game shows, for the shell's tests: an SVG
+## document whose metadata is a scene (the board player's calls, a
+## line each) and whose flat drawing is one square.
+##
+## Import: "pc:" u_se< "Picture"
+
+## The picture of a count: the scene says the count as a call.
+l:p_icture := { n ->
+  scene := "view(4, 3, '#101010')\ncount(" c_at (f_ormat n) c_at ")"
+  "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 4 3\"><metadata id=\"scene\">" c_at scene c_at "</metadata><g class=\"flat\"><rect width=\"1\" height=\"1\"/></g></svg>"
+}

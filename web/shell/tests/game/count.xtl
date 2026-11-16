@@ -1,0 +1,18 @@
+## A game as small as one can be, for the shell's tests: it counts the
+## events it is given. It waits for an event, prints its kind and the
+## count, shows a picture whose metadata is a scene of two calls, and
+## waits again; the event `end` ends it, and an `up` event is an error
+## (the tests need one).
+"pc:" u_se< "Picture"
+
+u:l_oop! := { n ->
+  e := []E_VENT @
+  kind := []E_KIND e
+  kind m_atch "end" ? n
+  _ := p_rint! kind c_at " " c_at f_ormat n
+  c"n_ot kind m_atch \"up\"" u_nless< c"[]E_KEY e"
+  _ := []S_HOW pc:p_icture n
+  u:l_oop! n + 1
+}
+_ := p_rint! "ready"
+_ := p_rint! "counted " c_at f_ormat u:l_oop! 0

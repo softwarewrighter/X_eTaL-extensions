@@ -5,6 +5,10 @@
 //! answered by `xetal-ext-bridge`.
 //!
 //! - `run`: install extensions, run a program, time it
+//! - `play`: a game kept running -- its files, events in, what it
+//!   printed and the picture it showed out
+//! - `page`: one game for a page, and `game_page!`, the exports that
+//!   `extensions/three/web/static/game.js` drives
 //! - `source`: decorated X_eTaL source (as X_eTaL renders it)
 //! - `chrome`: header, panels, footer
 //! - `playground`: the page body
@@ -13,6 +17,8 @@
 //! X_eTaL-demos' shared/microscope (same author, MIT), copied.
 
 pub mod chrome;
+pub mod page;
+pub mod play;
 pub mod playground;
 pub mod run;
 pub mod source;

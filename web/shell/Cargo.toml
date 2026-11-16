@@ -15,6 +15,8 @@ yew = { version = "0.21", features = ["csr"] }
 web-sys = { version = "0.3", features = ["Window", "Performance", "HtmlTextAreaElement"] }
 
 [dev-dependencies]
+# game_page! writes a page's exports: expanded natively in tests/page.rs
+wasm-bindgen = "0.2"
 xetal-ext-hello = { path = "../../extensions/hello/rust", features = ["static"] }
 
 # Its own workspace: pages link extensions with their `static` feature,

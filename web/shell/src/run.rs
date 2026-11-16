@@ -5,7 +5,7 @@ use std::sync::Arc;
 use xetal_ext_bridge::ExtStore;
 use xetal_ext_loader::abi::ExtensionDescriptorV1;
 use xetal_ext_loader::{FunctionInfo, Registry};
-use xetal_store::Memory;
+use xetal_store::{Memory, Store};
 
 /// One statically linked extension: its descriptor function and its
 /// facade (file name and source).
@@ -36,6 +36,23 @@ pub fn install_with(
     linked: &[Linked],
     libraries: &[(&'static str, &'static str)],
 ) -> Vec<FunctionInfo> {
+    let (store, functions) = store_over(Memory::default(), linked, libraries);
+    xetal_store::install(Arc::new(store));
+    functions
+}
+
+/// The store [`install_with`] installs, over a host's own store
+/// (`inner`: its files, where its pictures go), not yet installed, and
+/// every function: for a host that keeps its store (`play`).
+///
+/// # Panics
+///
+/// When a linked descriptor is invalid: a build error, not a user's.
+pub fn store_over<S: Store>(
+    inner: S,
+    linked: &[Linked],
+    libraries: &[(&str, &str)],
+) -> (ExtStore<S>, Vec<FunctionInfo>) {
     let mut registry = Registry::new();
     let mut facades = Vec::new();
     for l in linked {
@@ -50,13 +67,12 @@ pub fn install_with(
         .flat_map(|e| registry.functions(e))
         .collect();
     // the binding macro every facade is written with (lib/Ffi.xtlm)
-    let mut store = ExtStore::new(Memory::default(), registry)
+    let mut store = ExtStore::new(inner, registry)
         .with_facade("Ffi.xtlm", include_str!("../../../lib/Ffi.xtlm"));
     for (name, source) in facades.into_iter().chain(libraries.iter().copied()) {
         store = store.with_facade(name, source);
     }
-    xetal_store::install(Arc::new(store));
-    functions
+    (store, functions)
 }
 
 /// What a run printed, its error, and how long it took.
