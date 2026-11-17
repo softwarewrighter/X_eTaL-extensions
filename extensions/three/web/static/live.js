@@ -60,7 +60,8 @@ export function start(setup = {}) {
           // through an eye: where it stands, and (when the page hears the keys) how to look round
           document.body.classList.toggle('eye', !!f.eye && !!setup.onInput);
           const stands = f.eye ? `  at ${f.eye.map((v) => v.toFixed(1)).join(' ')}` : '';
-          stat.textContent = `board  ${f.tiles} tiles  ${f.pieces} pieces  ${f.rate.toFixed(0)} frames a second${stands}`;
+          const skipped = f.unknown ? `  ${f.unknown} unknown calls skipped` : '';
+          stat.textContent = `board  ${f.tiles} tiles  ${f.pieces} pieces  ${f.rate.toFixed(0)} frames a second${stands}${skipped}`;
         },
       };
       if (q.has('t')) options.time = Number(q.get('t'));

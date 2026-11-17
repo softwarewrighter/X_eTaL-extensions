@@ -10,6 +10,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-17
+
+- `fix` three: a scene's call the board player does not know is skipped and counted (`count().unknown`; the page's status line says how many) and the rest of the scene drawn, where the unknown name threw and nothing was shown (evolving-game's ask). Checked headlessly: the walk's board with two unknown calls added draws whole.
+
 ## 2026-11-16
 
 - `build` the farm's first film: the neon city, 450 frames, by large12 (290 frames, 29 s each), beast48 (150, 66 s) and the Mac (10), collected and encoded on the Mac (`work/farm/city-film/city.mp4`, not tracked). Measured speeds in `farm/hosts.toml` (large12 2.3, beast48 1.0, max 0.55). `farm plan` and `run` print a mark of the two tables, to compare across machines: this film was divided from two different tables, pulled minutes apart.

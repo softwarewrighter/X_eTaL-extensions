@@ -102,6 +102,10 @@ piece('walker', nums('6.5 10.0 0.5 0.0 -1.0', 5)[0], 'walk', 10.6, nums('6.5 9.8
   is the same text is kept as it is, and pieces are matched by model
   and order (the second `walker` is the second `walker` of the scene
   before), so a tick costs only what moved.
+- A call the player does not know is skipped and every other line
+  drawn, so a scene written for a newer player is still shown by an
+  older one; `count().unknown` is how many the last scene had, and the
+  page's status line says so.
 - A click is given to the page's `onPoint(x, y, event)` in the view's
   units. The player decides nothing about the game: which tile that is
   is the program's to work out.

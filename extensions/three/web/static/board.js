@@ -217,6 +217,7 @@ export function board(host, calls, options = {}) {
 
   // the calls of one scene, in place of the one before
   const wanted = [];
+  let unknown = 0;
   const each = {
     view(w, h, background) { look.w = w; look.h = h; look.background = background; },
     camera(target, direction, scale) { look.target = target; look.direction = direction; look.scale = scale; ctx.camera = camera; },
@@ -239,8 +240,12 @@ export function board(host, calls, options = {}) {
     const api = { nums, ints: nums, ...each };
     for (const k of Object.keys(kept)) api[k] = (...args) => { ground.set(current, kept[k](current, ...args) || {}); };
     const names = Object.keys(api), values = Object.values(api);
+    // a call this player does not know (a scene written for a newer
+    // one) is skipped and counted, and every other line is drawn
+    unknown = 0;
     for (const line of lines) {
       if (ground.has(line)) continue;
+      if (!Object.hasOwn(api, name(line))) { unknown += 1; continue; }
       current = line;
       new Function(...names, line)(...values);
     }
@@ -342,7 +347,7 @@ export function board(host, calls, options = {}) {
     const kinds = [...ground.values()].filter((g) => g.mesh);
     let n = 0;
     for (const g of kinds) n += g.count;
-    const all = { tiles: n, kinds: kinds.length, modeled: kinds.filter((g) => g.shapes).length, pieces: pieces.length, models: pieces.filter((p) => p.mixer).length };
+    const all = { tiles: n, kinds: kinds.length, modeled: kinds.filter((g) => g.shapes).length, pieces: pieces.length, models: pieces.filter((p) => p.mixer).length, unknown };
     for (const m of modules) if (m.count) Object.assign(all, m.count());
     return all;
   };

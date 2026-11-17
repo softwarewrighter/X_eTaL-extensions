@@ -1,0 +1,1 @@
+Saga 15 (evolving-game's asks file, 2026-11-17, an open bug): a scene with a call the board player does not know is not drawn at all (each line is run with only the known names, so the unknown one throws and show stops). Skip an unknown call, count it (count().unknown), draw every other line; docs, gate, push.
