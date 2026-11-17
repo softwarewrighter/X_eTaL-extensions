@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-16
 
+- `build` the farm's first film: the neon city, 450 frames, by large12 (290 frames, 29 s each), beast48 (150, 66 s) and the Mac (10), collected and encoded on the Mac (`work/farm/city-film/city.mp4`, not tracked). Measured speeds in `farm/hosts.toml` (large12 2.3, beast48 1.0, max 0.55). `farm plan` and `run` print a mark of the two tables, to compare across machines: this film was divided from two different tables, pulled minutes apart.
 - `build` the farm's table: where the repository is on large12 (/disk1) and beast48 (/data2), for `farm collect`; the division is unchanged.
 - `ext` three, the board player: ground to the horizon (the user: the walking view showed a tile floating in space). `beyond(y, 'grass', '#ffffff'[, nums('x0 z0 x1 z1', 4)[0]])` in `board/terrain.js`: endless ground at a height with a named ground texture, following the eye, with a rectangle left out for the program's own terrain. Golden `three-board` fifteen calls. Saga: board-beyond inserted as step 39.
 - `fix` `scripts/farm-scene.sh` gives xetal-x the blender extension alone (`--ext extensions/blender`): it built only that library, and xetal-x fails on a directory holding an extension that is not built (found on beast48, the first Linux run).

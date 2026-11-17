@@ -223,7 +223,14 @@ class Farm:
             return self.frame_file(name, thing).is_file()
         return (self.out(name) / str(thing) / ".done").is_file()
 
+    def tables(self):
+        """A short mark of the two tables: the same on machines that will divide the work the same way."""
+        import hashlib
+        mark = hashlib.sha256(Path(self.args.hosts).read_bytes() + b"\0" + Path(self.args.jobs).read_bytes()).hexdigest()[:8]
+        return f"tables {mark} (every machine must say the same)"
+
     def plan(self, names):
+        print(self.tables())
         for name in names:
             job = self.job(name)
             split = self.split(name)
@@ -272,7 +279,7 @@ class Farm:
                     runs.append((start, a))
                     start = b
             for first, last in runs:
-                print(f"farm: {name}: {self.me} renders frames {first} to {last}; log {log.relative_to(ROOT)}")
+                print(f"farm: {name}: {self.me} renders frames {first} to {last} ({self.tables()}); log {log.relative_to(ROOT)}")
                 code = blender_run(blender or "blender", RANGE, [out, scene, "frames", first, last], log, self.args.dry)
                 if code != 0:
                     fail(f"{name}: Blender ended with {code}; see {log.relative_to(ROOT)}")

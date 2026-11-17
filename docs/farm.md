@@ -46,7 +46,11 @@ the slowest machine's seconds divided by this machine's. Commit and
 push the table, and pull it everywhere: **every machine must have the
 same tables**, or two machines will render the same frames and some
 frames will be nobody's. `just farm plan` on two machines must print
-the same thing.
+the same thing: its first line is a mark of the two tables (`tables
+1a2b3c4d`), which `run` prints too, so comparing that one word across
+the machines is enough. (The first film was divided from two
+different tables, pulled a few minutes apart: no frame was missed,
+but 37 would have been rendered twice.)
 
 ## A job
 
@@ -145,11 +149,20 @@ printed, the log's last lines if it failed
 another machine's share unless asked (`--as`), and do not run the
 repository's gate beside a render.
 
+## The first film
+
+The neon city, 450 frames at 1920 by 1080 and 128 samples, on
+2026-11-16: large12 rendered 290 frames at 29 seconds each, beast48
+150 at 66 seconds, the Mac 10 at about two minutes; `collect` fetched
+them to the Mac over ssh and `encode` made the video, 25 MB. About an
+hour and a half from start to video; the Mac alone would have taken
+fifteen hours. Across the joins between machines, consecutive frames
+are as alike as they are elsewhere in the film (measured), so a
+change of machine does not show.
+
 ## What has and has not been tried
 
-The division, the Blender helpers and the whole of a small film (three
-frames by three pretended machines, then encoded) and a still were
-run on one Mac. The Arch machines' first `just farm check` and `just
-farm bench` are the first runs on Linux, and `collect` between
-machines has not been run at all: expect to correct paths, the speeds
-and perhaps Blender's options (`XETAL_BLENDER_ARGS`) there.
+Run for real: a film on two Arch machines (Blender 5.3.0, RTX cards)
+and a Mac, `collect` and `encode`. Not yet run: `farm bench` and an
+each-job on the Arch machines, a job that asks for video memory, and
+another repository's tables (`--hosts`, `--jobs`).
