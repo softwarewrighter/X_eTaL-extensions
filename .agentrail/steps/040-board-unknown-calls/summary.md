@@ -1,0 +1,1 @@
+The board player skips and counts a scene call it does not know (count().unknown, on the status line) and draws the rest; docs, plan, CHANGES; verified by a headless shot of a board with two unknown calls; just gate passed
