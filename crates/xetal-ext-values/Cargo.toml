@@ -1,0 +1,25 @@
+[package]
+name = "xetal-ext-values"
+version = "0.1.0"
+description = "Checked conversion between the X_eTaL evaluator's values and ABI V1 values, with no text between: arrays, a mesh, f32 narrowing, values a program published"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[dependencies]
+xetal-ext-abi = { path = "../xetal-ext-abi" }
+# X_eTaL's crates, from its clone at XETAL_COMMIT (work/xetal/, never
+# edited): this crate depends on that runtime's representation.
+xetal-value = { path = "../../work/xetal/components/eval/crates/xetal-value" }
+xetal-array = { path = "../../work/xetal/components/eval/crates/xetal-array" }
+
+[dev-dependencies]
+xetal-core = { path = "../../work/xetal/components/core/crates/xetal-core" }
+xetal-step = { path = "../../work/xetal/components/step/crates/xetal-step" }
+xetal-arith = { path = "../../work/xetal/components/eval/crates/xetal-arith" }
+xetal-ext-loader = { path = "../xetal-ext-loader", default-features = false }
+xetal-ext-hello = { path = "../../extensions/hello/rust" }
+
+[lints]
+workspace = true

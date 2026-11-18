@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-17
 
+- `feat` `crates/xetal-ext-values`: checked conversion between the evaluator's values and ABI V1 values with no text between (`to_abi`, `from_abi`), an N by 3 Float and T by 3 Int array as one mesh (`mesh`, corners from 0 or 1), Floats to `f32` only under a named policy (`f32s`), and values a running program published read through the output hook (`Published`, a workaround for E1); every refusal names its caller. Seven tests against the real evaluator; builds for wasm32. A 65536 by 3 Float array to hello's echo and back: 1.4 to 1.8 ms typed, 117 to 148 ms as text (`docs/bridge.md`). For snowflow_demo-fork.
 - `fix` three: a scene's call the board player does not know is skipped and counted (`count().unknown`; the page's status line says how many) and the rest of the scene drawn, where the unknown name threw and nothing was shown (evolving-game's ask). Checked headlessly: the walk's board with two unknown calls added draws whole.
 
 ## 2026-11-16

@@ -94,3 +94,41 @@ call on the same thread; the host copies them before calling again.
   2, a missing trampoline, a duplicate function name, an unknown tag or
   dtype, a Bool other than 0 or 1, a Char that is not a scalar value, a
   rank above 9, a shape whose product disagrees with the data.
+
+## Evaluator values: `crates/xetal-ext-values`
+
+A host that holds a value of the X_eTaL evaluator (`xetal_value::Value`
+at `XETAL_COMMIT`) gives it to an extension, and takes the reply back,
+with no text in between:
+
+| Function | What it does |
+| -------- | ------------ |
+| `to_abi(caller, &value)` | the evaluator's value as an ABI value: Int, Float and Bool scalars as they are, a Char vector as text, any other array dense (all Int, all Float, all Bool or all Char), row-major, its shape kept |
+| `from_abi(caller, &value)` | the other way: text is a Char vector, an array of rank 0 its one item |
+| `mesh(caller, &positions, &triangles, base)` | an N by 3 Float array and a T by 3 Int array as one `Mesh` (corners as `f64`, triangles as `u32` from 0); `Base::One` when the triangles count corners from 1, as X_eTaL does. `mesh_of` takes the evaluator's values |
+| `f32s(caller, &numbers, policy)` | Floats as `f32`, only when asked: `Narrow::Rounded` (nearest; refused when not finite, beyond `f32`, or not zero and rounding to zero) or `Narrow::Exact` (only numbers an `f32` holds). `Mesh::positions_f32` is the same for a mesh |
+| `Published` | values a running program left for its host: `hook()` goes to the evaluator's output hook, `last()` is the last top-level value, `named(caller, "frame!")` a variable where the last top-level function was made |
+
+Every refusal begins with the caller the host gave, then says what and
+where: `snow/chunk: triangles: triangle 2 names corner 3; the corners
+are 1 to 2`, `snow/chunk: positions have shape 3 2, not rows of 3`,
+`snow/chunk: positions: corner 2 has a coordinate that is not finite
+(NaN)`, `Game.xtl draw: a function does not cross the extension
+boundary`. Refused by `to_abi`: functions, tuples, boxes, tags, events
+and errors, and an array whose items are not all of one kind (an Int
+among Floats is named by its place, never converted). An empty array of
+numbers crosses as Floats: the evaluator does not say which number an
+empty array holds.
+
+Limits, said plainly:
+
+- This is the host's side. A call written in X_eTaL still crosses as
+  text (`docs/bridge.md`) until X_eTaL has a native hook
+  (`docs/xetal-asks.md`, E1).
+- The crate reads the evaluator's own representation, and `Published`
+  its environment: neither is an interface X_eTaL promises. Pin this
+  repository and X_eTaL together (this repository's `XETAL_COMMIT`), and
+  expect `Published` to go when E1 lands.
+- Values are copied, once each way; nothing here is zero-copy.
+- It builds for `wasm32-unknown-unknown`; it has been run natively
+  only.

@@ -1,0 +1,10 @@
+# The same array as typed_echo.rs, through the ext: channel as text:
+# a 65536 by 3 Float array to hello's echo and back, ten times; the
+# milliseconds one round trip takes. Run with xetal-x (just run-x).
+"hx:" u_se< "Hello"
+x := 65536 3 r_eshape f_loat r_ange 196608
+u:r_ound := { k -> k + t_ally hx:e_cho x }
+t0 := []TS
+k := 10 'u:r_ound p_ower 0
+t1 := []TS
+(f_loat '+ r_/ 3600000 60000 1000 1 * -4 t_ake t1 - t0) / 10.0

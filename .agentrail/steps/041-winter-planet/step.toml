@@ -1,6 +1,6 @@
 number = 41
 slug = "winter-planet"
-status = "pending"
+status = "in-progress"
 description = 'Saga 15, rescoped 2026-11-14 by the snowflow study (step 26; the user: "Suppo...'
 role = "production"
 context_files = []

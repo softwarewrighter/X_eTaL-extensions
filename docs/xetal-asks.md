@@ -36,6 +36,13 @@ still open. E13 added: M1 (a name is bound once, X_eTaL step 091) broke
 warns `doc-unattached` on 14 `##` blocks here that head a section and
 document no definition: not an ask, they should be `###` or comments.
 
+2026-11-17: E1's host side is built here as `crates/xetal-ext-values` (
+evaluator values to ABI values and back, the mesh check, the fork's
+output-hook reading as `Published`; typed 1.5 ms against text 120 to
+150 ms for a 65536 by 3 Float array, `docs/bridge.md`). It is a
+workaround that reads the pinned runtime's representation; the ask
+itself, a call from X_eTaL code, is unchanged.
+
 2026-11-14, the snowflow study (plan, Saga 15 step 26): E12 added.
 E1 gains a concrete workload from snowflow_demo-fork
 (its docs/xetal-asks.md): an N by 3 Float coordinate array and a T by 3

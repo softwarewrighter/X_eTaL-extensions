@@ -5007,6 +5007,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "xetal-ext-values"
+version = "0.1.0"
+dependencies = [
+ "xetal-arith",
+ "xetal-array",
+ "xetal-core",
+ "xetal-ext-abi",
+ "xetal-ext-hello",
+ "xetal-ext-loader",
+ "xetal-step",
+ "xetal-value",
+]
+
+[[package]]
 name = "xetal-ext-web"
 version = "0.1.0"
 dependencies = [

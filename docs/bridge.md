@@ -92,6 +92,26 @@ live page, Chrome) the channel is slower -- about 16,000 calls and 1.7
 million Floats per second -- and X_eTaL's own sum faster (about 14 ms). Values are bounded by
 ABI V1 (64 Mi elements).
 
+## Typed, from a host
+
+A host that runs the evaluator itself (a game's page, an application)
+need not use text: `crates/xetal-ext-values` (`docs/abi-v1.md`,
+Evaluator values) turns the evaluator's values into ABI values and
+back. The same array both ways, a 65536 by 3 Float array to hello's
+`echo` and back, release builds on an Apple M1 Max, 2026-11-17, three
+runs each:
+
+| Path | One round trip | Run with |
+| ---- | -------------- | -------- |
+| text, `ext:` paths | 117 to 148 ms | `xetal-x --ext extensions/hello run crates/xetal-ext-values/examples/text-echo.xtl` |
+| typed, ABI values | 1.4 to 1.8 ms | `cargo run --release -p xetal-ext-values --example typed_echo` |
+
+About eighty times less. The two are not the same program: the text
+figure is what an X_eTaL program pays today (it includes the
+evaluator's own `f_ormat` and `n_umbers`), the typed one what a Rust
+host pays for a value it already holds. X_eTaL code cannot make the
+typed call until E1.
+
 ## In code
 
 The channel is `crates/xetal-ext-bridge`: `ExtStore` wraps a host's
