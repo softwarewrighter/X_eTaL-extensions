@@ -1,0 +1,1 @@
+crates/xetal-ext-values: to_abi/from_abi between evaluator and ABI V1 values, mesh check (N by 3 Float, T by 3 Int, base 0 or 1), opt-in f32 narrowing, Published (output-hook reading, an E1 workaround); 7 tests on the real evaluator, wasm32 build; typed 1.4-1.8 ms vs text 117-148 ms for 65536x3 Floats; docs abi-v1, bridge, asks, plan, CHANGES; gate passed
