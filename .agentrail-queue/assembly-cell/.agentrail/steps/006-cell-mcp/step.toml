@@ -1,0 +1,8 @@
+number = 6
+slug = "cell-mcp"
+status = "pending"
+description = "Saga 17 step 6: extensions/cell/mcp, the binary xetal-cell-mcp (rmcp, stdio):..."
+role = "production"
+context_files = []
+created_at = "2026-11-24T11:00:31"
+commits = []

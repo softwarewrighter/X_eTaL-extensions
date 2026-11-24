@@ -1,0 +1,8 @@
+number = 8
+slug = "cell-weld"
+status = "pending"
+description = "Saga 17 step 8: capacitor-discharge spot welding: E = C V^2 / 2, an energy wi..."
+role = "production"
+context_files = []
+created_at = "2026-11-24T11:00:31"
+commits = []

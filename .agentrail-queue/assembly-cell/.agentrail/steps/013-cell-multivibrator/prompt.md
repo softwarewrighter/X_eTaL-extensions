@@ -1,0 +1,1 @@
+Saga 17 step 13: the second circuit: a two-transistor astable multivibrator (two TO-92 that need heatsink clips under lead-free heat, four resistors, two capacitors, two LEDs), a small ground-plane PCB tile as a subassembly, wire jumpers; built by the planner and separately by an agent over MCP, both recorded and compared.

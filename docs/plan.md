@@ -179,6 +179,7 @@ Extensions:
 | http | `Http`, `ht:` | bounded GET (size, time, redirects limited) of text | `ureq` | 6 |
 | digest | `Digest`, `dg:` | SHA-256 and CRC-32 (supporting: content checks of fetched data) | `sha2`, `crc32fast` | 6 |
 | regex | `Regex`, `rx:` | match?, find, captures, replace, split (supporting: parsing text) | `regex` | later |
+| cell (planned) | `Cell`, `ce:` | a robot assembly cell simulated: arms, tools, heat, solder, wire, a microscope; one command at a time from X_eTaL or an agent over MCP (docs/cell-design.md) | `parry3d`, `rmcp` | 17 |
 
 Held back: a native window for live animation (macOS wants windows on
 the main thread, which the bridge does not give) and a tokenizer
@@ -631,9 +632,10 @@ extension runs the launcher and reports what happened. Renderer: EEVEE
 | 39 | board-beyond | (done 2026-11-16; inserted, the user: the walking view 'shows a square ... a tile floating in space') `beyond(y, texture, color[, rectangle])` in `board/terrain.js`: ground to the horizon at a height, a named ground texture tinted, one square kept round the eye in steps of the texture's repeat, taking shadows and fog; a rectangle left out where the program's own terrain is, so its valleys and river bed are not covered |
 | 40 | board-unknown-calls | (done 2026-11-17; inserted, a bug in evolving-game's asks) a scene's call the board player does not know is skipped and counted (`count().unknown`, on the page's status line) and every other line drawn, so a scene written for a newer player is drawn by an older one; before, the unknown name threw and nothing of the scene was shown |
 | 41 | winter-planet | (done 2026-11-17: `crates/xetal-ext-values`, seven tests against the real evaluator, built for wasm32; a 65536 by 3 Float array out and back in about 1.5 ms typed against 120 to 150 ms as text; rescoped 2026-11-14 to typed-values; the slug is kept, a saga step is not renamed mid-saga) a shared crate the fork can pin: checked conversion between the evaluator's values and ABI V1 values in both directions with no text in between, for native and wasm32; the fork's workload as the test (an N by 3 Float and a T by 3 Int array as one mesh, malformed shapes and non-finite numbers refused with the caller named, an explicit f64 to f32 policy); measured against the text bridge (`work/bridge-bench.xtl` is the start). No snow demo and no Blender film here |
-| 42 | winter-planet-render | (rescoped 2026-11-14 to typed-values-use) the proof in this repository and the hand-over: the three extension's live city builds its scene from typed arrays through that crate instead of call text, with the build time before and after; docs/abi-v1.md and docs/bridge.md say what is typed and what is still text until E1; the fork told which commit to pin |
-| 43 | gpu-run-m1 | (inserted 2026-11-05) fresh M1 Max event and transfer measurements on the same artifacts, then update the execution media. Requires its SSH hostname/user or local access; do not infer zero-copy or fabricate a timing comparison from the unified-memory architecture |
-| 44 | explain-release | the goal of steps 11, 14 to 16, 18 to 20 (the user, 2026-10-14): X_eTaL driving a GPU, an FPGA and Blender, shown for a blog post and possibly a narrated YouTube video later. A 60 s trailer (one X_eTaL program, three targets), the blog's media (stills, short loops), YouTube masters and Shorts with their cue sheets, the recordings on the site, the extension's page, the retrospective |
+| 42 | cell-plan | (done 2026-11-24; inserted, meta, the user: a programmable robot cell assembling circuits in 3D, driven by an agent over MCP) docs/cell-design.md and Saga 17, queued at `.agentrail-queue/assembly-cell/` (14 steps); no code |
+| 43 | winter-planet-render | (rescoped 2026-11-14 to typed-values-use) the proof in this repository and the hand-over: the three extension's live city builds its scene from typed arrays through that crate instead of call text, with the build time before and after; docs/abi-v1.md and docs/bridge.md say what is typed and what is still text until E1; the fork told which commit to pin |
+| 44 | gpu-run-m1 | (inserted 2026-11-05) fresh M1 Max event and transfer measurements on the same artifacts, then update the execution media. Requires its SSH hostname/user or local access; do not infer zero-copy or fabricate a timing comparison from the unified-memory architecture |
+| 45 | explain-release | the goal of steps 11, 14 to 16, 18 to 20 (the user, 2026-10-14): X_eTaL driving a GPU, an FPGA and Blender, shown for a blog post and possibly a narrated YouTube video later. A 60 s trailer (one X_eTaL program, three targets), the blog's media (stills, short loops), YouTube masters and Shorts with their cue sheets, the recordings on the site, the extension's page, the retrospective |
 
 Steps 12 to 19 were added with their numbers before the insertions of
 blender-pipeline and cosy-logo; their slugs, not the numbers in their
@@ -789,6 +791,73 @@ When working this saga, use that same `--saga` argument for begin,
 complete and other state commands. Keep source changes and both saga
 records committed in this repository; do not hand-edit or delete the
 queued record. The planning session does not render or rename videos.
+
+## Saga 17 -- the assembly cell
+
+Requested 2026-11-24 (the user): a programmable robot, virtual first,
+that assembles electronic circuits in 3D from the center outward --
+no layers, no multilayer board: arms hold two parts so two contacts
+touch, another arm solders (preferred: semiconductors and chips take
+transients badly) or spot welds (passives, grounded leads), another
+feeds solder or clips a heatsink, so lead-free heat neither damages a
+part nor melts a neighbor joint. Through-hole parts first (DIPs,
+transistors, leaded parts), then SMD joined by spools of ever finer
+solid wire, air cooled by spacing; PCBs only as subassemblies (ground
+planes, high current). Feedback by a simulated USB microscope, stereo
+perhaps, that pans, zooms and turns, or the work turns to it. The
+immediate ask: an interactive 3D environment, semi-authentic and
+respecting physics, where an LLM agent gives every movement and
+operation as commands (perhaps over MCP) and a user watches the
+circuit built step by step, like a slicer's preview of a printer's
+moves; 3D models animated through an API, as in ../console-3D.
+
+The design is docs/cell-design.md. Decisions taken in planning (the
+user may overturn any; each is the first step's to confirm):
+
+| # | Decision | Why |
+| - | -------- | --- |
+| C1 | A new extension, `cell` (`ce:`): the simulator in Rust is the one authority on state; X_eTaL plans and describes; Three.js and Blender only draw | physics wants speed and determinism; planning is arrays; the players already exist |
+| C2 | Arms are kinematic (position controlled, speed and acceleration limited), not dynamic | real arms are; dynamics would cost much and change no plan |
+| C3 | One command table is the source of the parser, the MCP schemas and the docs | a command added appears everywhere at once |
+| C4 | A command that cannot start is refused and changes nothing; one that collides stops there; `dry=1` and `rewind` are the simulation's privileges | an agent must be able to try safely and see real failures |
+| C5 | The rig file Blender exports is the file the simulator reads | one source for shape and kinematics (console-3D's mechanism.json) |
+| C6 | A third player in the three extension, chosen by the scene's first call `cell`, with `window.cell` | as the board player came beside the city's |
+| C7 | MCP by `rmcp` in its own binary, serving the page on 8470 | live viewing of an agent's session; the image tool needs a page |
+| C8 | Recordings on the site; a live page only if the user asks (rule 12) | the user's decision of 2026-10-03; the city is the one exception |
+| C9 | First circuit a 555 LED blinker, freeform (one DIP-8 dead-bug at the center, 7 parts around it, battery leads); second a two-transistor multivibrator with heatsinks | a DIP at the center is the user's picture; the second needs the heat management |
+
+| # | Step slug | Delivers |
+| - | --------- | -------- |
+| 1 | cell-ext | `just new-ext cell ce "..."`; the simulator's skeleton: world, the parts library (`parts/*.toml`: DIP-8/14/16, TO-92, axial resistor and diode, radial electrolytic, ceramic disc, 5 mm LED, battery leads; pins as frames, grasp frames, thermal data with sources), the command table, text and JSON parsing, state as JSON; `ce:about`, `ce:p_arts`; Rust tests; C1 to C9 confirmed with the user |
+| 2 | cell-arms | a six-axis arm from DH parameters: forward kinematics, closed-form inverse kinematics (nearest solution), limits, trapezoidal profiles, straight Cartesian moves; `joints`, `move`, `stage`, `vise`; the timeline; tests (FK of IK round trips, every limit refused) |
+| 3 | cell-models | `CellModels.xtl` (`cm:`) through Bpy.xtl: the arm (pivots per the asset contract), the seven tools, rack, trays, stage and vise, the microscope on its gantry, every part kind (resistor bands from the value); `.glb` and `.rig.json` each; a check reading the `.glb` back against the rig; turntable stills |
+| 4 | cell-player | `three/web/static/cell.js`: `cell`, `rig`, `part`, `track`, `attach`, `step`; the scrubber, the steps list, speed, ghosts of the finished circuit; `window.cell` (play, seek, state, stop); checked headlessly; `ce:s_cene` writes a timeline as calls |
+| 5 | cell-grip | collision along every motion (`parry3d`), tool changes at the rack, `pick`, `place`, `align` as expanded motions, grasp, attach, release, falling; protective stop on collision; `dry=1`, `rewind` |
+| 6 | cell-mcp | `extensions/cell/mcp`, `xetal-cell-mcp`: the generic and typed tools from the command table, the page on 8470 with each result pushed to it, sessions saved as programs; a scripted MCP client in the tests; Claude Code given the server places the DIP and a resistor lead to lead |
+| 7 | cell-heat | the thermal network, the iron (set point, limited heater), solder alloys (SAC305, Sn63Pb37), feeding, wetting, joint results, heatsink clips, part damage, remelting of neighbors; `heat` and `joint` calls and a color ramp in the player; tests against analytic RC decay |
+| 8 | cell-weld | capacitor-discharge spot welds: energy window by material, the current's path, the transient risk to semiconductors refused unless allowed, grounding clips |
+| 9 | cell-wire | the wire feeder and spools (AWG 22 to 34 as data), feed, hold, bend by motion with a minimum radius, cut, strip enamel by heat; wires as parts; sag of unsupported spans; `wire` calls drawn as tubes |
+| 10 | cell-scope | the microscope: pan, tilt, zoom, focus, rotate, depth of field, stereo; its picture beside the cell; `snap` as a PNG from the page or headless Chrome; `inspect` and `probe`; oracle and sensed modes |
+| 11 | cell-planner | `CellPlan.xtl` (`cp:`): a netlist as text to a placement worked out as arrays (the core at the origin, each neighbor out along its pin, spans and clearances checked) to a command program; `just ext cell preview NAME` is the slicer |
+| 12 | cell-blinker | the 555 blinker built end to end from its netlist; `cell_check` passes (connections equal the netlist, nothing damaged); a recording of the preview and stills from the scope; the extension's page |
+| 13 | cell-multivibrator | two TO-92s that need heatsinks, a small ground-plane PCB tile as a subassembly, wire jumpers; the agent's own build over MCP recorded beside the planner's |
+| 14 | cell-release | docs, README catalog, recordings on the site, the site checked online, a retrospective, `just gate --full`; the SMD saga proposed |
+
+Later (a saga of its own): SMD (0805, SOT-23, SOIC-8) joined by
+30 to 34 AWG wire, spacing for air cooling, sensed mode as the
+default, and what a physical cell's controller would need.
+
+Asks of X_eTaL: none known. The simulator's state crosses ABI V1 as a
+path to a JSON file (A15) until handles are needed.
+
+The executable saga is queued at `.agentrail-queue/assembly-cell/`:
+
+```sh
+agentrail --saga .agentrail-queue/assembly-cell next
+```
+
+Use that `--saga` argument for begin, complete and the other state
+commands; commit both saga records in this repository.
 
 ## Saga 12 -- native hook (blocked)
 

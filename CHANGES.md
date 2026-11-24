@@ -10,6 +10,10 @@ saga planning and reordering, `release` milestone release, `chore`
 agentrail bookkeeping (step complete, saga archive), `vendor` a
 refresh of the vendored X_eTaL.
 
+## 2026-11-24
+
+- `plan` the assembly cell (the user: a programmable robot, virtual first, that builds circuits in free air from the center outward -- arms hold parts lead to lead while others solder, spot weld, clip heatsinks and run fine wire, under a simulated stereo microscope -- driven command by command by an LLM agent over MCP and previewed like a slicer). `docs/cell-design.md`: the cell, parts, command language, physics (kinematic arms, collision, gravity and sag, a thermal network, SAC305 and Sn63Pb37 solder and joint results, spot-weld transients, wire gauges), microscope with oracle and sensed modes, timeline and player, asset contract, MCP tools. `docs/plan.md` Saga 17 (decisions C1-C9, 14 steps) queued at `.agentrail-queue/assembly-cell/`; the catalog's planned `cell`. Saga: cell-plan inserted as step 42.
+
 ## 2026-11-17
 
 - `feat` `crates/xetal-ext-values`: checked conversion between the evaluator's values and ABI V1 values with no text between (`to_abi`, `from_abi`), an N by 3 Float and T by 3 Int array as one mesh (`mesh`, corners from 0 or 1), Floats to `f32` only under a named policy (`f32s`), and values a running program published read through the output hook (`Published`, a workaround for E1); every refusal names its caller. Seven tests against the real evaluator; builds for wasm32. A 65536 by 3 Float array to hello's echo and back: 1.4 to 1.8 ms typed, 117 to 148 ms as text (`docs/bridge.md`). For snowflow_demo-fork.

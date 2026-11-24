@@ -1,0 +1,8 @@
+number = 11
+slug = "cell-planner"
+status = "pending"
+description = "Saga 17 step 11: extensions/cell/lib/CellPlan.xtl (cp:): a netlist as text to..."
+role = "production"
+context_files = []
+created_at = "2026-11-24T11:00:31"
+commits = []
