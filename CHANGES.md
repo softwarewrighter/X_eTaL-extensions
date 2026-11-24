@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-24
 
+- `chore` saga: complete assembly-cell step 2 (cell-ext).
 - `fix` the loader's hello tests look for the built libraries in every directory above the test binary: newer cargo (1.100 on super) builds test binaries under target/debug/build/PACKAGE/HASH/out instead of beside the libraries in target/debug/deps, and eight of the nine tests failed there.
 - `ext` cell, the assembly cell's simulator (Saga 17 step 2): `just new-ext cell ce`; a skeleton with no threads, files or clocks that builds for wasm32 (`scripts/check-rust.sh` now checks every crate marked `wasm = true` in `[package.metadata.xetal]`); the parts library `parts/*.toml` (DIP-8, -14, -16, TO-92, axial resistor and diode, radial electrolytic, ceramic disc, 5 mm LED, battery snap: bodies, pins as leads, grasp frames, thermal data each number sourced or illustrative, checked when read); one command table (24 commands) from which the text and JSON parsers, the command list, the MCP schemas and the extension page's table are made; the cell's state as JSON, deterministic, refusals changing nothing, dry runs; `reset` and `wait s=` run, the rest refused as not simulated yet. Facade `Cell.xtl`: `ce:a_bout`, `ce:p_arts`, `ce:p_art`, `ce:c_ommands`, `ce:p_arse`. 28 Rust tests, 6 reg-rs tests, the extension's page.
 - `build` the farm's table: super on, set up and benchmarked (5.0 s against max's 12.5 s on the same picture, speed 1.4); a Mac's first Cycles render compiles its Metal kernels (super's first benchmark took 169 s), noted in `docs/farm.md`.
