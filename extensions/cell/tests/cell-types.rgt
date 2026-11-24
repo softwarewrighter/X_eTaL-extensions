@@ -1,0 +1,3 @@
+command = "xetal-x type lib/Cell.xtl"
+exit_code = 0
+desc = "pins the type of every Cell facade export"

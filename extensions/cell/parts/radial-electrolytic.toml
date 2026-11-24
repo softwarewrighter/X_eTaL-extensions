@@ -1,0 +1,41 @@
+# A radial aluminum electrolytic capacitor standing on its leads, 2.0 mm
+# apart: pin 1 positive (the longer lead), pin 2 negative (the striped
+# side). Heat sensitive: its plastic sleeve shrinks and splits first.
+kind = "radial-electrolytic"
+title = "radial electrolytic capacitor"
+example = "10 uF 25 V"
+heat_sensitive = true
+
+[body]
+shape = "cylinder"
+diameter = 5.0
+length = 11.0
+axis = "z"
+material = "aluminum"
+
+[[pin]]
+name = "1"
+role = "+"
+lead = [[-1.0, 0, -5.5], [-1.0, 0, -22.5]]
+diameter = 0.5
+material = "copper-clad-steel"
+
+[[pin]]
+name = "2"
+role = "-"
+lead = [[1.0, 0, -5.5], [1.0, 0, -20.5]]
+diameter = 0.5
+material = "copper-clad-steel"
+
+[[grasp]]
+name = "body"
+at = [0, 0, 0]
+rpy = [0, 0, 90]
+width = 5.0
+
+[thermal]
+mass_g = 0.4
+heat_capacity_j_per_k = 0.3
+body_limit_c = 230
+body_limit_s = 5
+illustrative = ["mass_g", "heat_capacity_j_per_k", "body_limit_c", "body_limit_s"]

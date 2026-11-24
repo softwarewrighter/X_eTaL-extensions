@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/part-unknown.xtl"
+exit_code = 1
+desc = "a part kind the library does not have is an error listing the kinds it has"

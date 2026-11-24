@@ -1,0 +1,39 @@
+# A 9 V battery snap and its two leads, the circuit's power, held in the
+# vise: pin 1 positive (red), pin 2 negative (black). The leads are
+# tinned stranded wire; their insulation is not modeled.
+kind = "battery-snap"
+title = "9 V battery snap"
+example = "9 V snap, 100 mm leads"
+heat_sensitive = true
+
+[body]
+shape = "box"
+size = [26.0, 17.0, 7.0]
+material = "plastic"
+
+[[pin]]
+name = "1"
+role = "+"
+lead = [[-4.0, -8.5, 0], [-4.0, -108.5, 0]]
+diameter = 0.6
+material = "copper"
+
+[[pin]]
+name = "2"
+role = "-"
+lead = [[4.0, -8.5, 0], [4.0, -108.5, 0]]
+diameter = 0.6
+material = "copper"
+
+[[grasp]]
+name = "body"
+at = [0, 0, 0]
+rpy = [0, 0, 0]
+width = 26.0
+
+[thermal]
+mass_g = 2.0
+heat_capacity_j_per_k = 2.0
+body_limit_c = 200
+body_limit_s = 10
+illustrative = ["mass_g", "heat_capacity_j_per_k", "body_limit_c", "body_limit_s"]

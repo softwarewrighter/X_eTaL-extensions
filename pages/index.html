@@ -15,6 +15,7 @@
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
     <li><a href="#blender">blender</a><ul><li><a href="#blender-city-preview">The neon city, ray-traced: the whole flight, rough</a></li><li><a href="#blender-city">The neon city, ray-traced: four stills</a></li><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-gpu-build">X_eTaL GPU: build process</a></li><li><a href="#blender-gpu-run">X_eTaL GPU: execution</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-build">HEX1000-UART: build process</a></li><li><a href="#blender-hex-keys-leds-build">HEX1000-keys-leds: build process</a></li><li><a href="#blender-hex-keys-leds-run">HEX1000-keys-leds: execution</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-hex-run">HEX1000-UART: execution</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
+    <li><a href="#cell">cell</a></li>
     <li><a href="#clock">clock</a><ul><li><a href="#clock-bridge-cost">bridge-cost</a></li></ul></li>
     <li><a href="#digest">digest</a></li>
     <li><a href="#hello">hello</a><ul><li><a href="#hello-tour">tour</a></li></ul></li>
@@ -187,6 +188,11 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <video src="canvas/life.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo canvas life</pre>
     </section>
+  </div>
+  <h2 id="cell"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/cell/docs/README.md">cell</a> <a class="docs" href="doc/extensions-cell-lib-Cell.xtl.html">facade docs</a></h2>
+  <p class="lede">A robot assembly cell, simulated: four arms, a tool rack, trays of parts and a microscope that build electronic circuits in free air, in 3D, from the center outward -- two arms hold two parts so that a lead touches a lead, a third solders them, and the next part comes in. A program or an LLM agent drives it one command at a time (the design: docs/cell-design.md in the repository).</p>
+  <div class="demos">
+    <p class="note">No demo yet.</p>
   </div>
   <h2 id="clock"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/clock/docs/README.md">clock</a> <a class="docs" href="doc/extensions-clock-lib-Clock.xtl.html">facade docs</a></h2>
   <p class="lede">Wall-clock and monotonic time: timestamps for programs (as Unix seconds or ISO 8601 text), and timing for benchmarks -- including the cost of the bridge itself. X_eTaL itself now has the time of day ([]TS) and a delay ([]D_L), but no monotonic clock yet (docs/xetal-asks.md in the repository, E4).</p>
@@ -389,7 +395,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 8c49bd8</span><span class="sep">&middot;</span>
-  <span>built at a74c58a</span>
+  <span>built at 58154f3</span>
 </footer>
 </body>
 </html>

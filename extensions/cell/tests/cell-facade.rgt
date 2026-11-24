@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/facade.xtl"
+exit_code = 0
+desc = "every Cell facade export as a program uses it: the version, the parts library, the command list, a program of text, comments, a dry run and a JSON line parsed to JSON"

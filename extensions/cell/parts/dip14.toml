@@ -1,0 +1,46 @@
+# A dual in-line package of 14 pins, 2.54 mm pitch, rows 7.62 mm apart.
+# Units: mm, degrees, grams, J/K, C, s. The body's center is the origin,
+# Z up, the leads down (as it lies in a tray); pin 1 is at -x on the -y
+# row and the pins count counterclockwise seen from above.
+kind = "dip14"
+title = "DIP-14"
+example = "74HC00 quad NAND"
+heat_sensitive = false
+
+[body]
+shape = "box"
+size = [19.3, 6.35, 3.3]
+material = "epoxy"
+
+# The pins worked out from the pattern: one lead a pin, out from the
+# side near the underside, then down.
+[pin_pattern]
+pattern = "dip"
+count = 14
+pitch = 2.54
+row_spacing = 7.62
+drop = 3.4
+diameter = 0.46
+material = "copper"
+
+# Jaws close along the grasp frame's x, approaching along its -z.
+[[grasp]]
+name = "ends"
+at = [0, 0, 0]
+rpy = [0, 0, 0]
+width = 19.3
+
+[[grasp]]
+name = "sides"
+at = [0, 0, 0]
+rpy = [0, 0, 90]
+width = 6.35
+
+[thermal]
+mass_g = 1.0
+heat_capacity_j_per_k = 1.0
+body_limit_c = 260
+body_limit_s = 10
+sourced = ["body_limit_c", "body_limit_s"]
+source = "IEC 60068-2-20 (resistance to soldering heat): 260 C for 10 s, the rating leaded parts commonly carry"
+illustrative = ["mass_g", "heat_capacity_j_per_k"]

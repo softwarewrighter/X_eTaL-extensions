@@ -9,9 +9,11 @@ heat, solder, wire), driven one command at a time by a program or an
 LLM agent, and drawn as it goes -- or previewed as a whole, the way a
 slicer previews a 3D printer's moves before the printer runs them.
 
-Status: planned (docs/plan.md, Saga 17; decisions accepted
-2026-11-24). Nothing here is built yet;
-names below are proposals.
+Status: being built (docs/plan.md, Saga 17; decisions accepted
+2026-11-24). Built so far: the extension `cell` with the parts
+library, the command table, text and JSON parsing and the state as
+JSON (extensions/cell/docs/README.md); the rest below is the design,
+its names proposals.
 
 ## What is built where
 

@@ -1,0 +1,31 @@
+[package]
+name = "xetal-ext-cell"
+version = "0.1.0"
+description = "a robot assembly cell, simulated: arms, tools and parts that build circuits in free air"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[lib]
+name = "xetal_ext_cell"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+toml = "0.8"
+xetal-ext-sdk = { path = "../../../crates/xetal-ext-sdk" }
+
+[features]
+# Link statically beside other extensions (a browser page): no unmangled
+# entry point. Never enabled inside the root workspace.
+static = []
+
+# The simulator has no threads, files or clocks, so the same crate runs
+# natively and in a browser: scripts/check-rust.sh builds it for wasm32.
+[package.metadata.xetal]
+wasm = true
+
+[lints]
+workspace = true

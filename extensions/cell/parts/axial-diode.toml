@@ -1,0 +1,54 @@
+# A small-signal diode in a glass body (DO-35): pin 1 the anode, pin 2
+# the cathode (the banded end).
+kind = "axial-diode"
+title = "axial diode, DO-35"
+example = "1N4148"
+heat_sensitive = false
+
+[body]
+shape = "cylinder"
+diameter = 1.9
+length = 4.0
+axis = "x"
+material = "glass"
+
+[[pin]]
+name = "1"
+role = "anode"
+lead = [[-2.0, 0, 0], [-28.0, 0, 0]]
+diameter = 0.5
+material = "copper-clad-steel"
+
+[[pin]]
+name = "2"
+role = "cathode"
+lead = [[2.0, 0, 0], [28.0, 0, 0]]
+diameter = 0.5
+material = "copper-clad-steel"
+
+[[grasp]]
+name = "body"
+at = [0, 0, 0]
+rpy = [0, 0, 90]
+width = 1.9
+
+[[grasp]]
+name = "lead1"
+at = [-7.0, 0, 0]
+rpy = [0, 0, 90]
+width = 0.5
+
+[[grasp]]
+name = "lead2"
+at = [7.0, 0, 0]
+rpy = [0, 0, 90]
+width = 0.5
+
+[thermal]
+mass_g = 0.13
+heat_capacity_j_per_k = 0.1
+body_limit_c = 260
+body_limit_s = 10
+sourced = ["body_limit_c", "body_limit_s"]
+source = "IEC 60068-2-20 (resistance to soldering heat): 260 C for 10 s, the rating leaded parts commonly carry"
+illustrative = ["mass_g", "heat_capacity_j_per_k"]

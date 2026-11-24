@@ -1,0 +1,40 @@
+# A ceramic disc capacitor: a disc standing edge down, its leads 5.08 mm
+# apart. Not polarized.
+kind = "ceramic-disc"
+title = "ceramic disc capacitor"
+example = "100 nF"
+heat_sensitive = false
+
+[body]
+shape = "cylinder"
+diameter = 5.0
+length = 2.5
+axis = "y"
+material = "ceramic"
+
+[[pin]]
+name = "1"
+lead = [[-1.5, 0, -2.0], [-2.54, 0, -4.0], [-2.54, 0, -22.0]]
+diameter = 0.5
+material = "copper-clad-steel"
+
+[[pin]]
+name = "2"
+lead = [[1.5, 0, -2.0], [2.54, 0, -4.0], [2.54, 0, -22.0]]
+diameter = 0.5
+material = "copper-clad-steel"
+
+[[grasp]]
+name = "body"
+at = [0, 0, 0]
+rpy = [0, 0, 90]
+width = 2.5
+
+[thermal]
+mass_g = 0.3
+heat_capacity_j_per_k = 0.25
+body_limit_c = 260
+body_limit_s = 10
+sourced = ["body_limit_c", "body_limit_s"]
+source = "IEC 60068-2-20 (resistance to soldering heat): 260 C for 10 s, the rating leaded parts commonly carry"
+illustrative = ["mass_g", "heat_capacity_j_per_k"]

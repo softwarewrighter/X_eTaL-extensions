@@ -75,6 +75,10 @@
 <ul>
 <li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
 </ul>
+<h3>extensions/cell/lib/</h3>
+<ul>
+<li><a href="extensions-cell-lib-Cell.xtl.html">Cell.xtl</a></li>
+</ul>
 <h3>extensions/clock/demos/</h3>
 <ul>
 <li><a href="extensions-clock-demos-bridge-cost.xtl.html">bridge-cost.xtl</a></li>
@@ -629,6 +633,14 @@ Run: just demo blender td-models   (about half a minute)</li>
 <li>program <a href="extensions-canvas-demos-life.xtl.html">extensions/canvas/demos/life.xtl</a>: Conway's Life in a native window: the board is an X_eTaL array, each
 generation one array expression, drawn by Rust with every frame.
 Run: just demo canvas life   (Space: a new board; q or close: quit)</li>
+<li>library <a href="extensions-cell-lib-Cell.xtl.html">extensions/cell/lib/Cell.xtl</a>: Cell.xtl -- the facade of the cell extension: a robot assembly cell,
+simulated -- four arms, a tool rack, trays of parts and a microscope
+that build circuits in free air, one command at a time
+(docs/cell-design.md).
+Import: &quot;ce:&quot; u_se&lt; &quot;Cell&quot;
+Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+Each signature line is written out by the binding macro (lib/Ffi.xtlm,
+docs/ffi-macro.md).</li>
 <li>library <a href="extensions-clock-lib-Clock.xtl.html">extensions/clock/lib/Clock.xtl</a>: Clock.xtl -- the facade of the clock extension: wall-clock and
 monotonic time, which X_eTaL does not have, for timestamps and timing.
 Import: &quot;ck:&quot; u_se&lt; &quot;Clock&quot;
@@ -2002,6 +2014,12 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-canvas-demos-life.xtl.html#u.q_uit"><span class="c-userfunc">ᵘq̲uit</span></a></td><td>function</td><td><code>(Any a, Num b) =&gt; a -&gt; b</code></td></tr>
 <tr><td><a href="extensions-canvas-demos-life.xtl.html#u.f_rame"><span class="c-userfunc">ᵘf̲rame</span></a></td><td>function</td><td><code>(Num a, Truthy a) =&gt; a -&gt; a</code></td></tr>
 <tr><td><a href="extensions-canvas-demos-life.xtl.html#last">last</a></td><td>value</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.a_bout"><span class="c-libfunc">ˡa̲bout</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.p_arts"><span class="c-libfunc">ˡp̲arts</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.p_art"><span class="c-libfunc">ˡp̲art</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.c_ommands"><span class="c-libfunc">ˡc̲ommands</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.p_arse"><span class="c-libfunc">ˡp̲arse</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.n_ow"><span class="c-libfunc">ˡn̲ow</span></a></td><td>function</td><td><code>Unit -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.i_so"><span class="c-libfunc">ˡi̲so</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.i_soOf"><span class="c-libfunc">ˡi̲soOf</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>

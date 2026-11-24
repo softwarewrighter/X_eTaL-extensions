@@ -1,0 +1,9 @@
+error[io]: []N_GET: ext:cell/parse: line 2: touch: dwell: 99 is outside 0 to 30 s
+  --> ./lib/Cell.xtl:33:1
+   |
+33 | "p_arse : text -> text"         ffi:b_ind< "cell/parse"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/parse-error.xtl:3:1
+   |
+ 3 | ce:p_arse "tool A iron temp=350\ntouch C at=U1.3+R1.1 dwell=99"
+   | --------------------------------------------------------------- called from the program here

@@ -1,0 +1,43 @@
+cell 0.1.0
+dip8 8 pins: DIP-8 (NE555 timer)
+dip14 14 pins: DIP-14 (74HC00 quad NAND)
+dip16 16 pins: DIP-16 (CD4017 decade counter)
+to92 3 pins: TO-92 (2N3904 NPN transistor), heat sensitive
+axial-resistor 2 pins: axial resistor, 1/4 W (10 kilohm)
+axial-diode 2 pins: axial diode, DO-35 (1N4148)
+radial-electrolytic 2 pins: radial electrolytic capacitor (10 uF 25 V), heat sensitive
+ceramic-disc 2 pins: ceramic disc capacitor (100 nF)
+led-5mm 2 pins: 5 mm LED (red), heat sensitive
+battery-snap 2 pins: 9 V battery snap (9 V snap, 100 mm leads), heat sensitive
+
+reset [circuit=NAME] -- the cell as it starts: arms home, tools in the rack, the trays filled for a circuit
+tool ARM TOOL [temp=C] -- change the arm's tool at the rack
+joints ARM J1 J2 J3 J4 J5 J6 [speed=N] -- move the arm to absolute joint angles, all joints arriving together
+move ARM to=X,Y,Z [rpy=R,P,Y] [speed=MM/S] -- move the tool to a pose, by inverse kinematics, in a straight line
+lift ARM [mm=MM] -- move the tool straight up
+grip ARM open|close [force=N] -- open or close the tweezers
+pick ARM PART grasp=NAME -- approach a part, close on a grasp frame, lift it
+place ARM PART at=X,Y,Z [rpy=R,P,Y] -- carry the held part to a pose
+align ARM FRAME to=FRAME [gap=MM] -- bring a frame of the held part to another frame, a gap apart
+release ARM PART -- open the tweezers and let the part go
+clip ARM on=PIN at=MM -- clip a heatsink on a lead, between the body and the joint
+touch ARM at=JOINT [dwell=S] -- put the iron's tip on a joint and hold it there
+feed ARM mm=MM [rate=MM/S] -- feed solder wire into the joint the iron is on
+weld ARM at=JOINT energy=J [risky=refuse|allow] -- spot weld a lap of two leads by a capacitor discharge
+wire ARM awg=N mm=MM -- feed bare or enameled wire from a spool out of the nozzle
+cut ARM -- cut the wire or the lead in the cutter's jaws
+stage turn=DEG -- turn the rotary stage by an angle
+vise open|close -- open or close the vise on the stage
+wait [s=S] [until=TARGET] [below=C] -- let time pass, or wait until a pin or joint cools
+scope [pan=DEG] [tilt=DEG] [zoom=N] [focus=MM] [rotate=DEG] [aim=TARGET] -- move the microscope: pan, tilt, zoom, focus, rotate, or aim it at a target
+snap [stereo=N] -- take the microscope's picture
+inspect TARGET -- report a joint's gap, fillet and result, or a pin's temperature
+probe PIN PIN -- measure continuity and resistance between two pins
+rewind t=S -- put the cell back as it was at a time (the timeline keeps both branches)
+
+{"op":"tool","arm":"A","tool":"tweezers"}
+{"op":"pick","arm":"A","part":"U1","grasp":"ends"}
+{"op":"place","arm":"A","part":"U1","at":[0.0,0.0,0.0],"rpy":[180.0,0.0,0.0]}
+{"op":"align","arm":"B","frame":"R1.1.tip","to":"U1.3.tip","gap":0.1,"dry":true}
+{"op":"joints","arm":"A","angles":[0.0,-90.0,90.0,0.0,45.0,0.0]}
+

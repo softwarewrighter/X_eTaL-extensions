@@ -1,6 +1,6 @@
 number = 2
 slug = "cell-ext"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 2 (docs/plan.md, docs/cell-design.md). Decisions C1-C11 accepted..."
 role = "production"
 context_files = []

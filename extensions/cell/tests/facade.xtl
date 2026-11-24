@@ -1,0 +1,8 @@
+# The Cell facade: every export, as a program would use it.
+"ce:" u_se< "Cell"
+
+ce:a_bout @
+ce:p_arts @
+ce:c_ommands @
+# a program: commands split by ; and lines, a comment, a dry run, a JSON line
+ce:p_arse "tool A tweezers ; pick A U1 grasp=ends  # take the DIP\nplace A U1 at=0,0,0 rpy=180,0,0\nalign B R1.1.tip to=U1.3.tip gap=0.1 dry=1\n{\"op\": \"joints\", \"arm\": \"A\", \"angles\": [0, -90, 90, 0, 45, 0]}"

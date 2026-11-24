@@ -1,0 +1,9 @@
+error[io]: []N_GET: ext:cell/part: no part kind sot23 (kinds: dip8 dip14 dip16 to92 axial-resistor axial-diode radial-electrolytic ceramic-disc led-5mm battery-snap)
+  --> ./lib/Cell.xtl:22:1
+   |
+22 | "p_art : text -> text"          ffi:b_ind< "cell/part"
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ::: tests/part-unknown.xtl:3:1
+   |
+ 3 | ce:p_art "sot23"
+   | ---------------- called from the program here

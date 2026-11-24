@@ -32,4 +32,14 @@ cargo clippy -q "${which[@]}" --all-targets -- -D warnings
 # the tests once: their summaries, or everything when one fails
 out="$(cargo test -q "${which[@]}" ${kinds[@]+"${kinds[@]}"} 2>&1)" || { echo "$out"; exit 1; }
 echo "$out" | grep -E '^(test result|error|failures)' | grep -v ' 0 passed; 0 failed' || true
+# a crate whose Cargo.toml says `wasm = true` ([package.metadata.xetal]:
+# no threads, files or clocks) must build for the browser too
+for toml in crates/*/Cargo.toml extensions/*/rust/Cargo.toml; do
+  grep -q '^wasm = true' "$toml" || continue
+  pkg="$(sed -n 's/^name = "\(.*\)"/\1/p' "$toml" | head -1)"
+  if [ $# = 0 ] || printf '%s\n' "$@" | grep -qx "$pkg"; then
+    cargo check -q -p "$pkg" --lib --target wasm32-unknown-unknown
+    echo "check-rust: $pkg builds for wasm32"
+  fi
+done
 echo "check-rust: ok (${*:-the workspace})"

@@ -1,0 +1,41 @@
+# A 5 mm LED: a clear dome on a short cylinder, leads 2.54 mm apart:
+# pin 1 the anode (the longer lead), pin 2 the cathode (the flat side).
+# Heat sensitive: the lens and the die's bond.
+kind = "led-5mm"
+title = "5 mm LED"
+example = "red"
+heat_sensitive = true
+
+[body]
+shape = "cylinder"
+diameter = 5.0
+length = 8.6
+axis = "z"
+material = "epoxy"
+
+[[pin]]
+name = "1"
+role = "anode"
+lead = [[-1.27, 0, -4.3], [-1.27, 0, -31.3]]
+diameter = 0.5
+material = "steel"
+
+[[pin]]
+name = "2"
+role = "cathode"
+lead = [[1.27, 0, -4.3], [1.27, 0, -29.3]]
+diameter = 0.5
+material = "steel"
+
+[[grasp]]
+name = "body"
+at = [0, 0, 0]
+rpy = [0, 0, 90]
+width = 5.0
+
+[thermal]
+mass_g = 0.35
+heat_capacity_j_per_k = 0.35
+body_limit_c = 260
+body_limit_s = 5
+illustrative = ["mass_g", "heat_capacity_j_per_k", "body_limit_c", "body_limit_s"]

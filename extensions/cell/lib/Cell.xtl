@@ -1,0 +1,37 @@
+## Cell.xtl -- the facade of the cell extension: a robot assembly cell,
+## simulated -- four arms, a tool rack, trays of parts and a microscope
+## that build circuits in free air, one command at a time
+## (docs/cell-design.md).
+## Import: "ce:" u_se< "Cell"
+## Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
+## Each signature line is written out by the binding macro (lib/Ffi.xtlm,
+## docs/ffi-macro.md).
+
+"ffi:" u_se< "Ffi"
+
+## ce:a_bout @: the extension's name and version, "cell 0.1.0".
+"a_bout : unit -> text"         ffi:b_ind< "cell/about"
+## ce:p_arts @: the parts library, one line a kind -- its name, how many
+## pins, a title, an example part, and "heat sensitive" for the kinds
+## that need a heatsink clip between body and joint:
+## "dip8 8 pins: DIP-8 (NE555 timer)".
+"p_arts : unit -> text"         ffi:b_ind< "cell/parts"
+## ce:p_art kind: one part kind as JSON -- its body, its pins worked out
+## (each a name, a lead as a polyline from the body, its diameter and
+## material), its grasp frames and its thermal data; ce:p_art "dip8".
+"p_art : text -> text"          ffi:b_ind< "cell/part"
+## ce:c_ommands @: the command language, one line a command -- its
+## synopsis (positional arguments in capitals, optional ones in
+## brackets) and what it does: "lift ARM [mm=MM] -- move the tool
+## straight up".
+"c_ommands : unit -> text"      ffi:b_ind< "cell/commands"
+## ce:p_arse program: a program checked against the command table, each
+## command as JSON, one a line, its arguments in the table's order. The
+## program is text -- one command a line, ";" between commands on a
+## line, "#" a comment -- or a line holding one JSON command. A wrong
+## command is an error naming its line and what is wrong.
+"p_arse : text -> text"         ffi:b_ind< "cell/parse"
+
+## The native package behind these functions (a literal l: name also
+## makes this file a library to `xetal type`: ask E7).
+l:package := "cell"

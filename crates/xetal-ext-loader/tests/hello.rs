@@ -9,9 +9,14 @@ use xetal_ext_loader::{
 };
 
 /// Where Cargo put hello's cdylib: beside this test binary.
+/// Where cargo put the test's libraries: the test binary's directory and
+/// those above it. Cargo up to 1.9x keeps test binaries in
+/// target/debug/deps beside the libraries; newer cargo builds them under
+/// target/debug/build/PACKAGE/HASH/out, so the libraries in
+/// target/debug are found among the ancestors.
 fn build_dirs() -> Vec<PathBuf> {
     let exe = std::env::current_exe().unwrap();
-    vec![exe.parent().unwrap().to_owned()]
+    exe.ancestors().skip(1).map(PathBuf::from).collect()
 }
 
 fn hello_package() -> Package {
@@ -247,7 +252,8 @@ fn manifest_problems() {
     match err {
         LoadError::NoLibrary { extension, tried } => {
             assert_eq!(extension, "hello");
-            assert_eq!(tried.len(), 2);
+            // the packaged place, then each build directory
+            assert_eq!(tried.len(), 1 + build_dirs().len());
         }
         e => panic!("{e}"),
     }

@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/parse-error.xtl"
+exit_code = 1
+desc = "a wrong command is an error naming its line, the argument and its limits"

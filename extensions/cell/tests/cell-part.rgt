@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/part.xtl"
+exit_code = 0
+desc = "one part kind as JSON: the TO-92's body, its three pins worked out, its grasp frame and its thermal data, sourced and illustrative"

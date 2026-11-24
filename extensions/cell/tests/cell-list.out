@@ -1,0 +1,6 @@
+cell 0.1.0
+  cell/about : Unit -> Char    # The extension's name and version.
+  cell/parts : Unit -> Char    # The parts library, one line a kind: kind, pins, title, example.
+  cell/part : Char -> Char    # One part kind, its pins worked out, as JSON.
+  cell/commands : Unit -> Char    # The command list, one line a command: its synopsis and what it does.
+  cell/parse : Char -> Char    # A program (text, or JSON lines) checked against the command table: each command as JSON, one a line.
