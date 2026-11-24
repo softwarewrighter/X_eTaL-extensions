@@ -1,0 +1,1 @@
+Planned the assembly cell: docs/cell-design.md, Saga 17 in docs/plan.md (C1-C9, 14 steps), queued at .agentrail-queue/assembly-cell; no code. Open questions for the user: C1-C9, live page or recordings, first circuit.
