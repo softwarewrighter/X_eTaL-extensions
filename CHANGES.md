@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-24
 
+- `chore` saga: complete assembly-cell step 3 (cell-arms).
 - `ext` cell, the arms (Saga 17 step 3): a generic six-axis arm with a spherical wrist from classic DH parameters (`rigs/arm.toml`: limits, speeds, accelerations, a home with the wrist pitched down, all illustrative); forward kinematics; inverse kinematics in closed form, up to eight solutions, the one nearest the current pose; trapezoidal joint moves with every joint arriving together within its limits; straight Cartesian moves sampled every 1 mm and 1 degree, slowed where a joint would be too fast, refused near a singularity; `joints`, `move`, `lift`, `stage`, `vise` run, each motion recorded in a track every 50 ms; four arms on the 450 mm ring, 200 mm below the work zone; times kept to the microsecond. Facade: `ce:r_un`, `ce:s_tate`, `ce:r_ig`. Tests: 500 forward-of-inverse round trips, straightness, speeds, every joint limit refused with nothing changed; 46 Rust tests, 10 reg-rs tests.
 - `chore` saga: complete assembly-cell step 2 (cell-ext).
 - `fix` the loader's hello tests look for the built libraries in every directory above the test binary: newer cargo (1.100 on super) builds test binaries under target/debug/build/PACKAGE/HASH/out instead of beside the libraries in target/debug/deps, and eight of the nine tests failed there.
