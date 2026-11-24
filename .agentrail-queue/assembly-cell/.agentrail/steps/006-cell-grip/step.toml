@@ -1,0 +1,8 @@
+number = 6
+slug = "cell-grip"
+status = "pending"
+description = "Saga 17 step 6: collision along every motion with parry3d (links capsules, bo..."
+role = "production"
+context_files = []
+created_at = "2026-11-24T11:00:31"
+commits = []

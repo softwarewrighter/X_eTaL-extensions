@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-24
 
+- `plan` the assembly cell, the user's answers: decisions C1-C9 accepted; C8 revised, interactive first and videos too (a live page with the simulator as WebAssembly, the site's second, CLAUDE.md rule 12 amended; Three.js recordings); C10, a core with no threads, files or clocks; C11, no Cycles renders by default but a render bundle (a directory and zip needing only Blender) for a render node, and a farm job kind for it. Steps cell-decisions, cell-live and cell-render-bundle inserted into the queued saga (17 steps); `docs/cell-design.md` gains the live page and the bundle.
 - `plan` the assembly cell (the user: a programmable robot, virtual first, that builds circuits in free air from the center outward -- arms hold parts lead to lead while others solder, spot weld, clip heatsinks and run fine wire, under a simulated stereo microscope -- driven command by command by an LLM agent over MCP and previewed like a slicer). `docs/cell-design.md`: the cell, parts, command language, physics (kinematic arms, collision, gravity and sag, a thermal network, SAC305 and Sn63Pb37 solder and joint results, spot-weld transients, wire gauges), microscope with oracle and sensed modes, timeline and player, asset contract, MCP tools. `docs/plan.md` Saga 17 (decisions C1-C9, 14 steps) queued at `.agentrail-queue/assembly-cell/`; the catalog's planned `cell`. Saga: cell-plan inserted as step 42.
 
 ## 2026-11-17

@@ -1,8 +1,0 @@
-number = 3
-slug = "cell-models"
-status = "pending"
-description = "Saga 17 step 3: extensions/cell/lib/CellModels.xtl (cm:) writing bpy through ..."
-role = "production"
-context_files = []
-created_at = "2026-11-24T11:00:31"
-commits = []

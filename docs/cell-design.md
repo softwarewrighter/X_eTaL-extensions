@@ -9,7 +9,8 @@ heat, solder, wire), driven one command at a time by a program or an
 LLM agent, and drawn as it goes -- or previewed as a whole, the way a
 slicer previews a 3D printer's moves before the printer runs them.
 
-Status: planned (docs/plan.md, Saga 17). Nothing here is built yet;
+Status: planned (docs/plan.md, Saga 17; decisions accepted
+2026-11-24). Nothing here is built yet;
 names below are proposals.
 
 ## What is built where
@@ -22,7 +23,8 @@ names below are proposals.
 | The models | `extensions/cell/lib/CellModels.xtl`, alias `cm:` | X_eTaL writing bpy through Bpy.xtl; Blender | arms, tools, trays, stage, microscope, components as `.glb`, each with a rig file |
 | The player | `extensions/three/web/static/cell.js` | Three.js, beside the city's and the board's players | draws a cell scene, plays a timeline with a scrubber, exposes `window.cell` |
 | The agent's door | `extensions/cell/mcp` (a binary, `xetal-cell-mcp`) | Rust, `rmcp` (the MCP Rust SDK) | MCP tools over the simulator; serves the page on port 8470 and pushes each result to it |
-| The film (optional) | blender, Cycles.xtl's player | Blender | the same scene calls ray-traced |
+| The live page | `pages/cell/live` | the simulator as WebAssembly, the player, X_eTaL in the page | the cell driven in a browser, nothing installed |
+| The render bundle | `just ext cell bundle NAME` | Cycles.xtl's player, Blender | a directory and zip a render node runs with only Blender |
 
 The split: X_eTaL decides what (the plan, the shapes, the scene); Rust
 decides what is possible (the physics); Three.js and Blender only
@@ -274,6 +276,42 @@ Two ways to fill it:
   played: `just ext cell preview blinker`. This is the slicer.
 - **Live**: the MCP server runs commands as they come and pushes each
   result's piece of timeline to the open page, which plays it.
+
+## Driving it in a browser
+
+Interactive first: the live page runs the simulator, compiled to
+WebAssembly, beside the player, with nothing installed. The core has
+no threads, files or clocks (time is the simulation's own), so the
+same crate is the extension, the MCP server's engine and the page's.
+The page has a control for every arm and tool, a command box that
+takes the command language above, each result or refusal as it
+comes, dry runs, rewind and the scrubber. It is published at
+`pages/cell/live`, the site's second live page beside the city.
+
+Videos are recordings of the player from headless Chrome, not
+ray-traced renders.
+
+## A render bundle
+
+When a ray-traced film is wanted, `just ext cell bundle NAME` writes
+a scene as a job for a Blender render node, a directory and its zip:
+
+```
+NAME/
+  README.txt     what it is and how to run it
+  job.toml       frames, fps, size, samples, engine, the Blender it
+                 was made for, a sha256 a file
+  scene.py       Cycles.xtl's player and the timeline's calls
+  models/*.glb   the cell's and the parts' models
+  render.sh      render.sh FIRST LAST [DEVICE]: frames to frames/,
+                 skipping those already there; a log
+  encode.sh      frames/ to NAME.mp4 (ffmpeg)
+```
+
+The node needs Blender, and ffmpeg to encode; not this repository,
+Rust or X_eTaL. Several nodes take a range each; the farm
+(docs/farm.md) gets a job kind `bundle` that divides a bundle's frames
+over its machines as it divides a film's.
 
 ## The asset contract
 

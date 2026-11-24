@@ -1,8 +1,0 @@
-number = 14
-slug = "cell-release"
-status = "pending"
-description = "Saga 17 step 14: docs (README catalog, the extension's page, docs/cell-design..."
-role = "production"
-context_files = []
-created_at = "2026-11-24T11:00:31"
-commits = []

@@ -811,8 +811,9 @@ operation as commands (perhaps over MCP) and a user watches the
 circuit built step by step, like a slicer's preview of a printer's
 moves; 3D models animated through an API, as in ../console-3D.
 
-The design is docs/cell-design.md. Decisions taken in planning (the
-user may overturn any; each is the first step's to confirm):
+The design is docs/cell-design.md. Decisions taken in planning,
+accepted by the user on 2026-11-24 ("ok for now"), C8 revised and
+C10, C11 added that day:
 
 | # | Decision | Why |
 | - | -------- | --- |
@@ -823,25 +824,30 @@ user may overturn any; each is the first step's to confirm):
 | C5 | The rig file Blender exports is the file the simulator reads | one source for shape and kinematics (console-3D's mechanism.json) |
 | C6 | A third player in the three extension, chosen by the scene's first call `cell`, with `window.cell` | as the board player came beside the city's |
 | C7 | MCP by `rmcp` in its own binary, serving the page on 8470 | live viewing of an agent's session; the image tool needs a page |
-| C8 | Recordings on the site; a live page only if the user asks (rule 12) | the user's decision of 2026-10-03; the city is the one exception |
+| C8 | Interactive first, and videos too (the user, 2026-11-24, revising the plan's recordings-only default): a live page on the site, the simulator as WebAssembly with the player (rule 12 amended: the site's second live page), and Three.js recordings from headless Chrome | an agent's playground is something to drive, not only to watch |
 | C9 | First circuit a 555 LED blinker, freeform (one DIP-8 dead-bug at the center, 7 parts around it, battery leads); second a two-transistor multivibrator with heatsinks | a DIP at the center is the user's picture; the second needs the heat management |
+| C10 | The simulator's core has no threads, files or clocks: the same crate runs native (the extension, MCP) and as WebAssembly (the live page) | the live page is a build, not a port |
+| C11 | Videos are Three.js recordings, not Cycles renders; a scene can still be written as a render bundle -- a directory and zip needing only Blender -- for a render node, and the farm can divide one (the user, 2026-11-24: four always-on servers) | cheap videos by default, the farm's capacity on hand when a ray-traced film is wanted |
 
 | # | Step slug | Delivers |
 | - | --------- | -------- |
-| 1 | cell-ext | `just new-ext cell ce "..."`; the simulator's skeleton: world, the parts library (`parts/*.toml`: DIP-8/14/16, TO-92, axial resistor and diode, radial electrolytic, ceramic disc, 5 mm LED, battery leads; pins as frames, grasp frames, thermal data with sources), the command table, text and JSON parsing, state as JSON; `ce:about`, `ce:p_arts`; Rust tests; C1 to C9 confirmed with the user |
-| 2 | cell-arms | a six-axis arm from DH parameters: forward kinematics, closed-form inverse kinematics (nearest solution), limits, trapezoidal profiles, straight Cartesian moves; `joints`, `move`, `stage`, `vise`; the timeline; tests (FK of IK round trips, every limit refused) |
-| 3 | cell-models | `CellModels.xtl` (`cm:`) through Bpy.xtl: the arm (pivots per the asset contract), the seven tools, rack, trays, stage and vise, the microscope on its gantry, every part kind (resistor bands from the value); `.glb` and `.rig.json` each; a check reading the `.glb` back against the rig; turntable stills |
-| 4 | cell-player | `three/web/static/cell.js`: `cell`, `rig`, `part`, `track`, `attach`, `step`; the scrubber, the steps list, speed, ghosts of the finished circuit; `window.cell` (play, seek, state, stop); checked headlessly; `ce:s_cene` writes a timeline as calls |
-| 5 | cell-grip | collision along every motion (`parry3d`), tool changes at the rack, `pick`, `place`, `align` as expanded motions, grasp, attach, release, falling; protective stop on collision; `dry=1`, `rewind` |
-| 6 | cell-mcp | `extensions/cell/mcp`, `xetal-cell-mcp`: the generic and typed tools from the command table, the page on 8470 with each result pushed to it, sessions saved as programs; a scripted MCP client in the tests; Claude Code given the server places the DIP and a resistor lead to lead |
-| 7 | cell-heat | the thermal network, the iron (set point, limited heater), solder alloys (SAC305, Sn63Pb37), feeding, wetting, joint results, heatsink clips, part damage, remelting of neighbors; `heat` and `joint` calls and a color ramp in the player; tests against analytic RC decay |
-| 8 | cell-weld | capacitor-discharge spot welds: energy window by material, the current's path, the transient risk to semiconductors refused unless allowed, grounding clips |
-| 9 | cell-wire | the wire feeder and spools (AWG 22 to 34 as data), feed, hold, bend by motion with a minimum radius, cut, strip enamel by heat; wires as parts; sag of unsupported spans; `wire` calls drawn as tubes |
-| 10 | cell-scope | the microscope: pan, tilt, zoom, focus, rotate, depth of field, stereo; its picture beside the cell; `snap` as a PNG from the page or headless Chrome; `inspect` and `probe`; oracle and sensed modes |
-| 11 | cell-planner | `CellPlan.xtl` (`cp:`): a netlist as text to a placement worked out as arrays (the core at the origin, each neighbor out along its pin, spans and clearances checked) to a command program; `just ext cell preview NAME` is the slicer |
-| 12 | cell-blinker | the 555 blinker built end to end from its netlist; `cell_check` passes (connections equal the netlist, nothing damaged); a recording of the preview and stills from the scope; the extension's page |
-| 13 | cell-multivibrator | two TO-92s that need heatsinks, a small ground-plane PCB tile as a subassembly, wire jumpers; the agent's own build over MCP recorded beside the planner's |
-| 14 | cell-release | docs, README catalog, recordings on the site, the site checked online, a retrospective, `just gate --full`; the SMD saga proposed |
+| 1 | cell-decisions | (done 2026-11-24; meta) the user's answers recorded: C1-C9 accepted, C8 revised, C10 and C11; cell-live and cell-render-bundle inserted |
+| 2 | cell-ext | `just new-ext cell ce "..."`; the simulator's skeleton: world, the parts library (`parts/*.toml`: DIP-8/14/16, TO-92, axial resistor and diode, radial electrolytic, ceramic disc, 5 mm LED, battery leads; pins as frames, grasp frames, thermal data with sources), the command table, text and JSON parsing, state as JSON; `ce:about`, `ce:p_arts`; Rust tests; C1 to C9 confirmed with the user |
+| 3 | cell-arms | a six-axis arm from DH parameters: forward kinematics, closed-form inverse kinematics (nearest solution), limits, trapezoidal profiles, straight Cartesian moves; `joints`, `move`, `stage`, `vise`; the timeline; tests (FK of IK round trips, every limit refused) |
+| 4 | cell-models | `CellModels.xtl` (`cm:`) through Bpy.xtl: the arm (pivots per the asset contract), the seven tools, rack, trays, stage and vise, the microscope on its gantry, every part kind (resistor bands from the value); `.glb` and `.rig.json` each; a check reading the `.glb` back against the rig; turntable stills |
+| 5 | cell-player | `three/web/static/cell.js`: `cell`, `rig`, `part`, `track`, `attach`, `step`; the scrubber, the steps list, speed, ghosts of the finished circuit; `window.cell` (play, seek, state, stop); checked headlessly; `ce:s_cene` writes a timeline as calls |
+| 6 | cell-grip | collision along every motion (`parry3d`), tool changes at the rack, `pick`, `place`, `align` as expanded motions, grasp, attach, release, falling; protective stop on collision; `dry=1`, `rewind` |
+| 7 | cell-live | the live page: the simulator as WebAssembly, the player, X_eTaL in the page; every arm and tool driven from controls and a command box (the same command text), results, refusals, dry runs, rewind, the scrubber; `just ext cell publish` to `pages/cell/live`; a Three.js recording of a session |
+| 8 | cell-mcp | `extensions/cell/mcp`, `xetal-cell-mcp`: the generic and typed tools from the command table, the page on 8470 with each result pushed to it, sessions saved as programs; a scripted MCP client in the tests; Claude Code given the server places the DIP and a resistor lead to lead |
+| 9 | cell-heat | the thermal network, the iron (set point, limited heater), solder alloys (SAC305, Sn63Pb37), feeding, wetting, joint results, heatsink clips, part damage, remelting of neighbors; `heat` and `joint` calls and a color ramp in the player; tests against analytic RC decay |
+| 10 | cell-weld | capacitor-discharge spot welds: energy window by material, the current's path, the transient risk to semiconductors refused unless allowed, grounding clips |
+| 11 | cell-wire | the wire feeder and spools (AWG 22 to 34 as data), feed, hold, bend by motion with a minimum radius, cut, strip enamel by heat; wires as parts; sag of unsupported spans; `wire` calls drawn as tubes |
+| 12 | cell-scope | the microscope: pan, tilt, zoom, focus, rotate, depth of field, stereo; its picture beside the cell; `snap` as a PNG from the page or headless Chrome; `inspect` and `probe`; oracle and sensed modes |
+| 13 | cell-planner | `CellPlan.xtl` (`cp:`): a netlist as text to a placement worked out as arrays (the core at the origin, each neighbor out along its pin, spans and clearances checked) to a command program; `just ext cell preview NAME` is the slicer |
+| 14 | cell-blinker | the 555 blinker built end to end from its netlist; `cell_check` passes (connections equal the netlist, nothing damaged); the live page's first circuit; a Three.js recording of the preview and stills from the scope; the extension's page |
+| 15 | cell-render-bundle | `just ext cell bundle NAME`: a directory and zip a render node runs with only Blender -- scene.py, the `.glb` assets, job.toml with hashes, render.sh (a frame range, resumable), encode.sh, README.txt; a farm job kind `bundle`; tried with a few stills, no film unless asked |
+| 16 | cell-multivibrator | two TO-92s that need heatsinks, a small ground-plane PCB tile as a subassembly, wire jumpers; the agent's own build over MCP recorded beside the planner's |
+| 17 | cell-release | docs, README catalog, recordings on the site, the live page and the site checked online, a retrospective, `just gate --full`; the SMD saga proposed |
 
 Later (a saga of its own): SMD (0805, SOT-23, SOIC-8) joined by
 30 to 34 AWG wire, spacing for air cooling, sensed mode as the

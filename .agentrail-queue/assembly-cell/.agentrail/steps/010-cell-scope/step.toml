@@ -1,8 +1,0 @@
-number = 10
-slug = "cell-scope"
-status = "pending"
-description = "Saga 17 step 10: the microscope: pan, tilt, zoom, focus, rotate; field of vie..."
-role = "production"
-context_files = []
-created_at = "2026-11-24T11:00:31"
-commits = []

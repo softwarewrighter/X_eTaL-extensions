@@ -1,1 +1,0 @@
-Saga 17 step 14: docs (README catalog, the extension's page, docs/cell-design.md as built), recordings on the site and checked online, a retrospective in docs/plan.md, just gate --full; propose the SMD saga (0805, SOT-23, SOIC-8 joined by 30 to 34 AWG wire, sensed mode by default). Complete with --done and archive this queued saga.

@@ -1,0 +1,8 @@
+number = 11
+slug = "cell-wire"
+status = "pending"
+description = "Saga 17 step 11: the wire feeder and spools (AWG 22 to 34 as data: diameter, ..."
+role = "production"
+context_files = []
+created_at = "2026-11-24T11:00:31"
+commits = []

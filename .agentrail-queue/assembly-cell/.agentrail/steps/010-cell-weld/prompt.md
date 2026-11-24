@@ -1,0 +1,1 @@
+Saga 17 step 10: capacitor-discharge spot welding: E = C V^2 / 2, an energy window per lead material (nickel, steel well; copper poorly), blow-out above it; the current's path traced through the assembly; a semiconductor in the path or without a grounding clip is a transient risk, refused unless risky=allow, then damaged. Tests for each outcome.

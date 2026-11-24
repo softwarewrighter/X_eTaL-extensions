@@ -361,6 +361,9 @@ Read before working:
     a browser by design -- `just ext three publish`
     (`scripts/publish-three.sh`) builds it with trunk into
     `pages/three/live`, which `just pages` keeps.
+    A second, by the user's decision of 2026-11-24 ("interactive first
+    and also videos"): the assembly cell's (Saga 17), in `pages/cell/live`
+    once built.
 13. Never capture the user's screen or open a window on their desktop
     without asking first, with an exact duration (the screen protocol
     agreed 2026-10-03); verify headlessly.
