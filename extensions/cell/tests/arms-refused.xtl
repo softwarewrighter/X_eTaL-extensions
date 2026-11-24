@@ -1,0 +1,6 @@
+# A move the arm cannot make is refused, naming why, and the program
+# stops there: the wait after it never runs.
+"ce:" u_se< "Cell"
+ce:r_un "joints A 0 0 0 0 130 0\nwait s=1"
+ce:r_un "move A to=900,0,0\nwait s=1"
+ce:r_un "move C to=0,-800,100 rpy=180,0,0"

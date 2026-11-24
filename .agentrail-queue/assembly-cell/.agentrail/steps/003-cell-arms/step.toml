@@ -1,6 +1,6 @@
 number = 3
 slug = "cell-arms"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 3: a generic six-axis arm from DH parameters (spherical wrist): ..."
 role = "production"
 context_files = []

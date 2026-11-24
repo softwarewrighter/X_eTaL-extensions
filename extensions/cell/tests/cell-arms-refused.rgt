@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/arms-refused.xtl"
+exit_code = 0
+desc = "a joint beyond its limit, a point out of reach and a line over the base's axis (a singularity) are refused with why, and each program stops there"

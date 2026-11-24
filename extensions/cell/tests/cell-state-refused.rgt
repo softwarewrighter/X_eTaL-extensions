@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/state-refused.xtl"
+exit_code = 1
+desc = "ce:s_tate of a program with a refused command is an error naming the command and why"

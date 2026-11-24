@@ -4,3 +4,6 @@ cell 0.1.0
   cell/part : Char -> Char    # One part kind, its pins worked out, as JSON.
   cell/commands : Unit -> Char    # The command list, one line a command: its synopsis and what it does.
   cell/parse : Char -> Char    # A program (text, or JSON lines) checked against the command table: each command as JSON, one a line.
+  cell/run : Char -> Char    # A program run on a new cell: each command's outcome as JSON, one a line, stopping after the first not ok.
+  cell/state : Char -> Char    # A program run on a new cell: its state after, as JSON; a command not ok is an error.
+  cell/rig : Unit -> Char    # The arm's rig as JSON: its joints' DH parameters, limits, speeds and home.

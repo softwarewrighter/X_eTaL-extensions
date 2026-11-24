@@ -31,6 +31,21 @@
 ## line, "#" a comment -- or a line holding one JSON command. A wrong
 ## command is an error naming its line and what is wrong.
 "p_arse : text -> text"         ffi:b_ind< "cell/parse"
+## ce:r_un program: the program run on a new cell -- arms home, the
+## stage at 0, the vise open, the time 0 -- each command's outcome as
+## JSON, one a line: ok, the command, its start and end times, what it
+## did, why it was refused or where it stopped, events and warnings. It
+## stops after the first command that is not ok.
+"r_un : text -> text"           ffi:b_ind< "cell/run"
+## ce:s_tate program: the program run on a new cell, the cell's state
+## after it as JSON -- the time, the arms (base, joints, tool, track:
+## rows of the time and j1 to j6), the stage and its track, the vise,
+## the parts and the timeline. A command not ok is an error naming it.
+"s_tate : text -> text"         ffi:b_ind< "cell/state"
+## ce:r_ig @: the arm's rig as JSON -- each joint's DH parameters
+## (alpha, a, d, offset), its limits, top speed and acceleration, and
+## the home pose; every arm in the cell is this arm.
+"r_ig : unit -> text"           ffi:b_ind< "cell/rig"
 
 ## The native package behind these functions (a literal l: name also
 ## makes this file a library to `xetal type`: ask E7).

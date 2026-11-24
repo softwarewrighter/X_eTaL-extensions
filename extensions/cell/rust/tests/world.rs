@@ -65,7 +65,8 @@ fn a_refused_command_changes_nothing() {
     w.apply(&parse_line("wait s=3").unwrap());
     let before = w.clone();
     for line in [
-        "move A to=0,0,10",
+        "move A to=2000,0,10",
+        "grip A close",
         "reset circuit=blinker",
         "wait until=U1.3 below=100",
         "wait",
@@ -81,7 +82,7 @@ fn a_refused_command_changes_nothing() {
         Some("no circuit blinker (circuits: none)")
     );
     // a program stops at the first command that is not ok
-    let out = w.apply_all(&parse_program("wait s=1\nlift A\nwait s=1").unwrap());
+    let out = w.apply_all(&parse_program("wait s=1\ngrip A close\nwait s=1").unwrap());
     assert_eq!(out.len(), 2);
     assert_eq!(w.t, 4.0);
 }

@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/arms.xtl"
+exit_code = 0
+desc = "the arms, the stage and the vise through ce:r_un: a straight move down to the work zone, a lift, a joint move, the stage turned, the vise closed, a dry run, each outcome with its times and the joint angles it ended at"

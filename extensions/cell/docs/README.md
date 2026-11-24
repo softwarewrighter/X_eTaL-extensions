@@ -7,12 +7,14 @@ touches a lead, a third solders them, and the next part comes in. A
 program or an LLM agent drives it one command at a time (the design:
 docs/cell-design.md in the repository).
 
-Status: the simulator's skeleton. The parts library, the command
-language (text and JSON, checked against one table) and the cell's
-state as JSON are in place; of the commands, `reset` and `wait s=`
-run, and every other is parsed and checked, then refused as not
-simulated yet. Arms, grasping, heat, solder, welding, wire and the
-microscope come next.
+Status: the arms move. The parts library, the command language (text
+and JSON, checked against one table), the cell's state as JSON and
+four six-axis arms with the stage and the vise are in place: `reset`,
+`wait s=`, `joints`, `move`, `lift`, `stage` and `vise` run; every
+other command is parsed and checked, then refused as not simulated
+yet. Grasping and collision, heat, solder, welding, wire and the
+microscope come next; until collision is simulated, arms pass through
+each other and the parts.
 
 - Package: `extensions/cell/` (`extension.toml`; library
   `xetal_ext_cell`: `libxetal_ext_cell.dylib` on macOS, `.so` on
@@ -32,6 +34,9 @@ microscope come next.
 | `part` | 1 | `Char -> Char` | one part kind, its pins worked out, as JSON |
 | `commands` | 0 | `Unit -> Char` | the command language, one line a command |
 | `parse` | 1 | `Char -> Char` | a program checked against the command table, each command as JSON |
+| `run` | 1 | `Char -> Char` | a program run on a new cell, each command's outcome as JSON |
+| `state` | 1 | `Char -> Char` | a program run on a new cell, the cell's state after it as JSON |
+| `rig` | 0 | `Unit -> Char` | the arm's rig as JSON |
 
 ## From X_eTaL
 
@@ -42,10 +47,20 @@ ce:p_arts @                    # dip8 8 pins: DIP-8 (NE555 timer) ...
 ce:p_art "dip8"                # its body, pins, grasp frames, heat data
 ce:c_ommands @                 # lift ARM [mm=MM] -- move the tool straight up ...
 ce:p_arse "place A U1 at=0,0,0 rpy=180,0,0"
+ce:r_un "move A to=0,0,20 rpy=180,0,0\nlift A mm=30"
+ce:s_tate "stage turn=90"          # the time, arms, tracks, stage, timeline
+ce:r_ig @                          # the arm's joints, limits, home
 ```
 
-The last prints
-`{"op":"place","arm":"A","part":"U1","at":[0.0,0.0,0.0],"rpy":[180.0,0.0,0.0]}`.
+`ce:p_arse` there prints
+`{"op":"place","arm":"A","part":"U1","at":[0.0,0.0,0.0],"rpy":[180.0,0.0,0.0]}`,
+and `ce:r_un` one outcome a command:
+
+```
+{"ok":true,"command":"move A to=0,0,20 rpy=180,0,0","t0":0.0,"t1":3.932754,"did":["line A to=0,0,20 rpy=180,0,0 in 3.933 s","joints A 0 43.296 17.674 0 29.029 -90"],"events":[],"warnings":[]}
+{"ok":true,"command":"lift A mm=30","t0":3.932754,"t1":4.332754,"did":["line A to=0,0,50 rpy=180,0,0 in 0.4 s","joints A 0 39.044 17.584 0 33.372 -90"],"events":[],"warnings":[]}
+```
+
 Run with `xetal-x --ext extensions/cell run PROGRAM` (see the
 repository's docs/bridge.md).
 
@@ -53,14 +68,56 @@ repository's docs/bridge.md).
 
 Millimeters, degrees, seconds, grams, watts and degrees Celsius; Z up,
 right handed. Four arms, A to D, stand on a ring of 450 mm around the
-work zone (A at +y, B at -x, C at -y, D at +x), each facing the
-center. A new cell (`reset`) has every arm home with no tool, the
-rotary stage at 0, the vise open, the time 0.
+work zone and 200 mm below it (A at +y, B at -x, C at -y, D at +x),
+each facing the center. A new cell (`reset`) has every arm home with
+no tool, the rotary stage at 0, the vise open, the time 0.
 
 The state is plain data and round-trips through JSON exactly: the
-time, the circuit, the arms (base, joint angles, tool), the stage, the
-vise, the parts and the timeline of every command that ran. The same
-program always gives the same state.
+time, the circuit, the arms (base, joint angles, tool, track), the
+stage and its track, the vise, the parts and the timeline of every
+command that ran, its start and end times. Times are kept to the
+microsecond. The same program always gives the same state.
+
+## The arms
+
+Every arm is the same generic six-axis arm, `rigs/arm.toml`: base yaw,
+shoulder, elbow, and a spherical wrist (roll, pitch, flange roll),
+given as classic Denavit-Hartenberg parameters with each joint's
+limits, top speed and acceleration, all illustrative. It reaches about
+650 mm; at all joints 0 the upper arm stands up and the forearm points
+out. Home is that with the wrist pitched 90 degrees, the flange
+pointing straight down 100 mm in from the ring and 390 mm above the
+work zone -- not a straight wrist, a singularity.
+
+Arms are moved by position, as industrial arms are: kinematic, not
+dynamic.
+
+- `joints ARM J1 ... J6` goes to joint angles. Every joint follows a
+  trapezoidal profile (accelerate, cruise, decelerate; a triangle
+  when the move is short) scaled so that all of them arrive together
+  and none passes its speed or acceleration; `speed=` is the fraction
+  of each joint's top speed (0.5 if not given).
+- `move ARM to=X,Y,Z [rpy=R,P,Y]` takes the flange (the tool point,
+  while the arm holds no tool) along a straight line, turning evenly to
+  the new orientation (kept if not given), at `speed=` mm a second (100
+  if not given; accelerating at 1000). The line is sampled every 1 mm
+  and 1 degree; each sample's joint angles come from the inverse
+  kinematics, in closed form, the solution nearest the sample before.
+  The move is slowed where a joint would pass its top speed. `lift ARM
+  mm=` is a move straight up (10 mm if not given).
+- Orientation is roll, pitch, yaw in degrees: Rz(yaw) Ry(pitch)
+  Rx(roll); a tool's approach is its z axis, so `rpy=180,0,0` points it
+  straight down.
+- `stage turn=DEG` turns the rotary stage (90 degrees a second,
+  accelerating at 360); `vise open|close` takes 0.5 s.
+
+A move that cannot start is refused and changes nothing, saying why: a
+joint angle beyond its limits, a point out of reach, every way to
+reach it beyond a limit, or a joint that would turn suddenly on the
+line (it passes near a singularity: the wrist straight, or the wrist
+over the base's axis), each with how far along. Every motion is
+recorded in the arm's track, rows of the time and the six angles,
+every 50 ms, for a player to draw.
 
 ## Parts
 

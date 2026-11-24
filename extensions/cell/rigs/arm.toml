@@ -1,0 +1,88 @@
+# A generic six-axis arm with a spherical wrist: base yaw, shoulder,
+# elbow, wrist roll, wrist pitch, flange roll. No commercial arm's
+# shape; every number is illustrative, sized for a bench cell (a reach
+# of about 650 mm, the work zone 450 mm away).
+#
+# Classic Denavit-Hartenberg parameters, one row a joint: each link is
+# Rz(theta) Tz(d) Tx(a) Rx(alpha), theta = the joint's angle + offset.
+# Units: mm and degrees; speed degrees a second, accel degrees a second
+# squared. At all joints 0 the upper arm stands up, the forearm points
+# straight out and the flange faces forward.
+name = "arm"
+illustrative = true
+# Home: the upper arm up, the forearm out, the wrist pitched to point
+# the flange straight down -- not at a straight wrist, a singularity
+# where a move's first step would spin the wrist.
+home = [0, 0, 0, 0, 90, 0]
+
+[[joint]]
+name = "j1"
+does = "base yaw"
+alpha = -90
+a = 50
+d = 300
+offset = 0
+min = -170
+max = 170
+speed = 120
+accel = 400
+
+[[joint]]
+name = "j2"
+does = "shoulder"
+alpha = 0
+a = 320
+d = 0
+offset = -90
+min = -100
+max = 110
+speed = 120
+accel = 400
+
+[[joint]]
+name = "j3"
+does = "elbow"
+alpha = -90
+a = 40
+d = 0
+offset = 0
+min = -130
+max = 150
+speed = 150
+accel = 500
+
+[[joint]]
+name = "j4"
+does = "wrist roll"
+alpha = 90
+a = 0
+d = 300
+offset = 0
+min = -185
+max = 185
+speed = 300
+accel = 1000
+
+[[joint]]
+name = "j5"
+does = "wrist pitch"
+alpha = -90
+a = 0
+d = 0
+offset = 0
+min = -125
+max = 125
+speed = 300
+accel = 1000
+
+[[joint]]
+name = "j6"
+does = "flange roll"
+alpha = 0
+a = 0
+d = 70
+offset = 0
+min = -360
+max = 360
+speed = 400
+accel = 1500

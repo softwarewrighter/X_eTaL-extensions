@@ -3,17 +3,35 @@
 //! own, `t`, seconds), so the same code runs natively and in a browser.
 //! The state is plain data and round-trips through JSON exactly.
 
-use crate::command::{Command, num};
+use crate::command::{Command, Value, num};
+use crate::kin::{self, Pose};
+use crate::motion;
+use crate::rig::Rig;
 use serde::{Deserialize, Serialize};
 
-/// The arms' bases: on a ring of 450 mm around the work zone, each
-/// facing the center (x, y, z mm; roll, pitch, yaw degrees).
+/// The arms' bases: on a ring of 450 mm around the work zone, 200 mm
+/// below it, each facing the center (x, y, z mm; roll, pitch, yaw
+/// degrees).
 pub const ARM_BASES: [(&str, [f64; 6]); 4] = [
-    ("A", [0.0, 450.0, 0.0, 0.0, 0.0, -90.0]),
-    ("B", [-450.0, 0.0, 0.0, 0.0, 0.0, 0.0]),
-    ("C", [0.0, -450.0, 0.0, 0.0, 0.0, 90.0]),
-    ("D", [450.0, 0.0, 0.0, 0.0, 0.0, 180.0]),
+    ("A", [0.0, 450.0, -200.0, 0.0, 0.0, -90.0]),
+    ("B", [-450.0, 0.0, -200.0, 0.0, 0.0, 0.0]),
+    ("C", [0.0, -450.0, -200.0, 0.0, 0.0, 90.0]),
+    ("D", [450.0, 0.0, -200.0, 0.0, 0.0, 180.0]),
 ];
+
+/// The rotary stage's top speed (degrees a second) and acceleration
+/// (degrees a second squared); illustrative.
+pub const STAGE_SPEED: f64 = 90.0;
+/// See `STAGE_SPEED`.
+pub const STAGE_ACCEL: f64 = 360.0;
+/// How long the vise takes to open or close, seconds; illustrative.
+pub const VISE_TIME: f64 = 0.5;
+/// A joint move's speed when not given: half of each joint's top speed.
+pub const JOINT_SPEED: f64 = 0.5;
+/// A straight move's speed when not given, mm a second.
+pub const LINE_SPEED: f64 = 100.0;
+/// How far `lift` goes when not told, mm.
+pub const LIFT_MM: f64 = 10.0;
 
 /// The circuits whose trays a reset can fill. `none`: empty trays.
 pub const CIRCUITS: [&str; 1] = ["none"];
@@ -30,6 +48,30 @@ pub struct Arm {
     pub joints: [f64; 6],
     /// The tool on its flange, if any.
     pub tool: Option<String>,
+    /// Where it has been: rows of the time, then j1 to j6.
+    pub track: Vec<[f64; 7]>,
+}
+
+impl Arm {
+    /// The arm's base as a pose in the cell's frame.
+    #[must_use]
+    pub fn base_pose(&self) -> Pose {
+        let b = self.base;
+        Pose::from_xyz_rpy([b[0], b[1], b[2]], [b[3], b[4], b[5]])
+    }
+
+    fn record(&mut self, t0: f64, samples: &[(f64, [f64; 6])]) {
+        for (t, q) in samples {
+            let t = micro(t0 + t);
+            if self.track.last().is_some_and(|r| r[0] >= t) {
+                continue;
+            }
+            self.track.push([t, q[0], q[1], q[2], q[3], q[4], q[5]]);
+        }
+        if let Some((_, q)) = samples.last() {
+            self.joints = *q;
+        }
+    }
 }
 
 /// A part in the cell.
@@ -70,6 +112,8 @@ pub struct World {
     pub arms: Vec<Arm>,
     /// The rotary stage's angle, degrees.
     pub stage: f64,
+    /// Where the stage has been: rows of the time and the angle.
+    pub stage_track: Vec<[f64; 2]>,
     /// The vise: `open` or `closed`.
     pub vise: String,
     /// The parts in the cell.
@@ -113,10 +157,11 @@ impl Default for World {
 }
 
 impl World {
-    /// The cell as it starts: arms home with no tool, the stage at 0,
+    /// The cell as it starts: arms home (the rig's) with no tool, the stage at 0,
     /// the vise open, the trays filled for `circuit`, the time 0.
     #[must_use]
     pub fn new(circuit: &str) -> Self {
+        let home = Rig::arm().map_or([0.0; 6], |r| r.home);
         Self {
             t: 0.0,
             circuit: circuit.to_string(),
@@ -125,11 +170,13 @@ impl World {
                 .map(|(name, base)| Arm {
                     name: (*name).to_string(),
                     base: *base,
-                    joints: [0.0; 6],
+                    joints: home,
                     tool: None,
+                    track: vec![[0.0, home[0], home[1], home[2], home[3], home[4], home[5]]],
                 })
                 .collect(),
             stage: 0.0,
+            stage_track: vec![[0.0; 2]],
             vise: "open".into(),
             parts: Vec::new(),
             timeline: Vec::new(),
@@ -182,6 +229,29 @@ impl World {
         out
     }
 
+    /// An arm by name.
+    #[must_use]
+    pub fn arm(&self, name: &str) -> Option<&Arm> {
+        self.arms.iter().find(|a| a.name == name)
+    }
+
+    /// An arm's flange (its tool point while it holds no tool) in the
+    /// cell's frame.
+    ///
+    /// # Errors
+    ///
+    /// No such arm, or the rig compiled in is wrong.
+    pub fn flange(&self, name: &str) -> Result<Pose, String> {
+        let rig = Rig::arm()?;
+        let arm = self.arm(name).ok_or_else(|| format!("no arm {name}"))?;
+        Ok(arm.base_pose().then(&kin::forward(&rig, &arm.joints)))
+    }
+
+    fn arm_index(&self, c: &Command) -> usize {
+        let name = c.word("arm").unwrap_or("A");
+        self.arms.iter().position(|a| a.name == name).unwrap_or(0)
+    }
+
     fn run(&mut self, c: &Command) -> Outcome {
         let mut text = c.clone();
         text.dry = false;
@@ -216,8 +286,137 @@ impl World {
                 let Some(s) = c.number("s") else {
                     return refuse("wait: give s=".into());
                 };
-                self.t += s;
+                self.t = micro(self.t + s);
                 did.push(format!("wait {} s", num(s)));
+            }
+            "joints" => {
+                let rig = match Rig::arm() {
+                    Ok(r) => r,
+                    Err(e) => return refuse(e),
+                };
+                let Some(Value::Numbers(a)) = c.get("angles") else {
+                    return refuse("joints: give six angles".into());
+                };
+                let to: [f64; 6] = std::array::from_fn(|i| a[i]);
+                if let Some(why) = rig.beyond_limit(&to) {
+                    return refuse(why);
+                }
+                let i = self.arm_index(c);
+                let from = self.arms[i].joints;
+                let speed = c.number("speed").unwrap_or(JOINT_SPEED);
+                let (dt, samples) = motion::joint_move(&rig, &from, &to, speed);
+                self.arms[i].record(t0, &samples);
+                self.t = micro(self.t + dt);
+                did.push(format!(
+                    "joints {} {} in {} s",
+                    self.arms[i].name,
+                    nums(&to),
+                    num(round3(dt))
+                ));
+            }
+            "move" | "lift" => {
+                let rig = match Rig::arm() {
+                    Ok(r) => r,
+                    Err(e) => return refuse(e),
+                };
+                let i = self.arm_index(c);
+                let arm = &self.arms[i];
+                let base = arm.base_pose();
+                let now = base.then(&kin::forward(&rig, &arm.joints));
+                let target = if c.op == "lift" {
+                    let mm = c.number("mm").unwrap_or(LIFT_MM);
+                    Pose {
+                        p: kin::add(now.p, [0.0, 0.0, mm]),
+                        r: now.r,
+                    }
+                } else {
+                    let Some(Value::Numbers(to)) = c.get("to") else {
+                        return refuse("move: give to=".into());
+                    };
+                    let r = match c.get("rpy") {
+                        Some(Value::Numbers(rpy)) => kin::rpy_to_r([rpy[0], rpy[1], rpy[2]]),
+                        _ => now.r,
+                    };
+                    Pose {
+                        p: [to[0], to[1], to[2]],
+                        r,
+                    }
+                };
+                let speed = c.number("speed").unwrap_or(LINE_SPEED);
+                let in_base = base.inverse().then(&target);
+                let (dt, samples) = match motion::line_move(&rig, &arm.joints, &in_base, speed) {
+                    Ok(m) => m,
+                    Err(e) => {
+                        return refuse(format!(
+                            "{} cannot go there in a straight line: {e}",
+                            arm.name
+                        ));
+                    }
+                };
+                let name = arm.name.clone();
+                self.arms[i].record(t0, &samples);
+                self.t = micro(self.t + dt);
+                let rpy = target.rpy();
+                did.push(format!(
+                    "line {name} to={} rpy={} in {} s",
+                    nums_c(&target.p.map(round3)),
+                    nums_c(&rpy.map(round3)),
+                    num(round3(dt))
+                ));
+                did.push(format!(
+                    "joints {name} {}",
+                    nums(&self.arms[i].joints.map(round3))
+                ));
+            }
+            "stage" => {
+                let turn = c.number("turn").unwrap_or(0.0);
+                let d = turn.abs();
+                let from = self.stage;
+                let dt = if d > 0.0 {
+                    let p = motion::Profile::new(STAGE_SPEED / d, STAGE_ACCEL / d);
+                    for t in motion::times(p.t) {
+                        self.stage_track
+                            .push([micro(t0 + t), kin::clean(from + turn * p.at(t))]);
+                    }
+                    p.t
+                } else {
+                    0.0
+                };
+                self.stage = kin::clean(from + turn);
+                self.t = micro(self.t + dt);
+                did.push(format!(
+                    "stage to {} in {} s",
+                    num(self.stage),
+                    num(round3(dt))
+                ));
+            }
+            "vise" => {
+                let want = if c.word("action") == Some("close") {
+                    "closed"
+                } else {
+                    "open"
+                };
+                let mut warnings = Vec::new();
+                if self.vise == want {
+                    warnings.push(format!("the vise was already {want}"));
+                }
+                self.vise = want.into();
+                self.t = micro(self.t + VISE_TIME);
+                did.push(format!("vise {want} in {} s", num(VISE_TIME)));
+                self.timeline.push(Entry {
+                    t0,
+                    t1: self.t,
+                    command: command.clone(),
+                });
+                return Outcome {
+                    ok: true,
+                    command,
+                    t0,
+                    t1: self.t,
+                    did,
+                    warnings,
+                    ..Outcome::default()
+                };
             }
             op => return refuse(format!("{op} is not simulated yet")),
         }
@@ -241,4 +440,22 @@ impl World {
 #[must_use]
 pub fn outcome_json(o: &Outcome) -> String {
     serde_json::to_string(o).unwrap_or_default()
+}
+
+/// Times are kept to the microsecond: outcomes and tracks read cleanly
+/// and stay the same on every machine.
+fn micro(t: f64) -> f64 {
+    (t * 1e6).round() / 1e6
+}
+
+fn round3(x: f64) -> f64 {
+    kin::clean((x * 1000.0).round() / 1000.0)
+}
+
+fn nums(xs: &[f64]) -> String {
+    xs.iter().map(|x| num(*x)).collect::<Vec<_>>().join(" ")
+}
+
+fn nums_c(xs: &[f64]) -> String {
+    xs.iter().map(|x| num(*x)).collect::<Vec<_>>().join(",")
 }

@@ -1,0 +1,3 @@
+# The arms, the stage and the vise: a program run, each outcome as JSON.
+"ce:" u_se< "Cell"
+ce:r_un "move A to=0,0,20 rpy=180,0,0\nlift A mm=30\njoints B 20 10 0 0 80 0 speed=0.8\nstage turn=90 ; vise close\nmove C to=0,0,30 rpy=180,0,0 dry=1\nwait s=0.5"

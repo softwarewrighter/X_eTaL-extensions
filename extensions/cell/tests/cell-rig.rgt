@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/rig.xtl"
+exit_code = 0
+desc = "the arm's rig as JSON: six joints' DH parameters, limits, speeds and accelerations, and the home pose"

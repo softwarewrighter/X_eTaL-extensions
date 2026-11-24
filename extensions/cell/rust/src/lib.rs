@@ -1,13 +1,17 @@
 //! cell: a robot assembly cell, simulated -- arms, tools and parts that
 //! build circuits in free air (docs/cell-design.md).
 //!
-//! The simulator (`world`, `command`, `parts`) has no threads, files or
+//! The simulator (`world`, `command`, `parts`, `rig`, `kin`, `motion`)
+//! has no threads, files or
 //! clocks, so this crate is the extension, the MCP server's engine and,
 //! compiled to WebAssembly, the live page's. The functions below are the
 //! extension's: what the facade `lib/Cell.xtl` calls.
 
 pub mod command;
+pub mod kin;
+pub mod motion;
 pub mod parts;
+pub mod rig;
 pub mod world;
 
 use xetal_ext_sdk::{OwnedError, Value, text};
@@ -48,6 +52,36 @@ fn parse(args: &[Value]) -> Result<Value, OwnedError> {
     ))
 }
 
+/// A program run on a new cell: each command's outcome as JSON, one a
+/// line, stopping after the first that is not ok.
+fn run(args: &[Value]) -> Result<Value, OwnedError> {
+    let program = command::parse_program(&text(&args[0])?).map_err(OwnedError::invalid_argument)?;
+    let mut w = world::World::default();
+    let out = w.apply_all(&program);
+    Ok(Value::Text(
+        out.iter().map(|o| world::outcome_json(o) + "\n").collect(),
+    ))
+}
+
+/// A program run on a new cell: the cell's state after it, as JSON. A
+/// command not ok is an error.
+fn state(args: &[Value]) -> Result<Value, OwnedError> {
+    let program = command::parse_program(&text(&args[0])?).map_err(OwnedError::invalid_argument)?;
+    let mut w = world::World::default();
+    if let Some(o) = w.apply_all(&program).into_iter().find(|o| !o.ok) {
+        let why = o.refused.or(o.stopped).unwrap_or_default();
+        return Err(OwnedError::failure(format!("{}: {why}", o.command)));
+    }
+    Ok(Value::Text(w.to_json()))
+}
+
+/// The arm's rig as JSON.
+fn rig(_: &[Value]) -> Result<Value, OwnedError> {
+    Ok(Value::Text(
+        rig::Rig::arm().map_err(OwnedError::failure)?.to_json(),
+    ))
+}
+
 xetal_ext_sdk::xetal_extension! {
     name: "cell",
     version: env!("CARGO_PKG_VERSION"),
@@ -57,5 +91,8 @@ xetal_ext_sdk::xetal_extension! {
         part: 1, "Char -> Char", "One part kind, its pins worked out, as JSON.";
         commands: 0, "Unit -> Char", "The command list, one line a command: its synopsis and what it does.";
         parse: 1, "Char -> Char", "A program (text, or JSON lines) checked against the command table: each command as JSON, one a line.";
+        run: 1, "Char -> Char", "A program run on a new cell: each command's outcome as JSON, one a line, stopping after the first not ok.";
+        state: 1, "Char -> Char", "A program run on a new cell: its state after, as JSON; a command not ok is an error.";
+        rig: 0, "Unit -> Char", "The arm's rig as JSON: its joints' DH parameters, limits, speeds and home.";
     }
 }

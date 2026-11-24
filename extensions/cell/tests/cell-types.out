@@ -3,4 +3,7 @@ l:p_arts : Unit -> Char
 l:p_art : Char -> Char
 l:c_ommands : Unit -> Char
 l:p_arse : Char -> Char
+l:r_un : Char -> Char
+l:s_tate : Char -> Char
+l:r_ig : Unit -> Char
 l:package : Char
