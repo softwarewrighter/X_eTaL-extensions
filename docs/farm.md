@@ -19,7 +19,11 @@ The machines: large12 (RTX 5060, 16 GB), beast48 and big72 (RTX 3060,
 12 GB each), queenbee (RTX 3090, 24 GB), max (the Mac, an M1 Max) and
 super (a Mac Studio, M1 Ultra, 64 GB unified). Always on from
 2026-11-24: beast48, large12, queenbee and super. Off in the table:
-big72 (it does not boot) and super until it is set up (below).
+big72 (it does not boot).
+
+A Metal (Mac) machine's first Cycles render compiles its kernels
+first: super's first `just farm bench` took 169 seconds, its second 5.0.
+Run the benchmark twice on a new Mac and keep the second.
 Blender is 5.3.0 on all of them (Arch's package); the scripts were
 written against 5.1.2.
 
