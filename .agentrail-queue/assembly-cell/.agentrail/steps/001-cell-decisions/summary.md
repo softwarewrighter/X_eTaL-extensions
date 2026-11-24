@@ -1,0 +1,1 @@
+Recorded the user's answers: C1-C9 accepted, C8 revised (live page + Three.js recordings), C10 (wasm-ready core), C11 (render bundle for render nodes, farm job kind); inserted cell-live and cell-render-bundle; 17 steps. Open: which four servers are always on (farm/hosts.toml), and whether to narrow check-busy.sh to this repository's trunk serves.
