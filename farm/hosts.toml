@@ -11,7 +11,7 @@
 #   blender  its Blender, if not `blender` on PATH
 # large12's, beast48's and max's speeds are measured: the city film's
 # frames took 29, 66 and about 120 seconds on them (2026-11-16). big72's
-# and queenbee's are guesses from the cards' names.
+# and queenbee's are guesses from the cards' names; super's from max's.
 
 [hosts.large12]
 card = "RTX 5060 16 GB"
@@ -40,8 +40,20 @@ speed = 1.0
 vram = 12
 on = false
 
+# always on from 2026-11-24 (the user); its speed is still a guess:
+# run `just farm bench` on it
 [hosts.queenbee]
 card = "RTX 3090 24 GB"
 speed = 2.3
 vram = 24
+
+# The Mac Studio (M1 Ultra, 64 GB unified memory, Metal), always on from
+# 2026-11-24 but not yet set up (no git, Rust, uv, just or Blender): on
+# when `just farm check` passes there. speed is a guess (about twice
+# max's GPU); vram is the part of the unified memory Metal lets the GPU
+# use (about three quarters). blender: set it if Blender is not on PATH.
+[hosts.super]
+card = "Apple M1 Ultra"
+speed = 1.1
+vram = 48
 on = false
