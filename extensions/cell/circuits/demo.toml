@@ -1,0 +1,28 @@
+# demo: four parts in the tray for trying the arms -- nothing to build
+# yet. Each part: its id, its kind in the parts library, the tray
+# pocket it lies in (1 to 8) and its turn about z (degrees).
+title = "four parts to try the arms with"
+
+[[part]]
+id = "U1"
+kind = "dip8"
+pocket = 1
+yaw = 90
+
+[[part]]
+id = "R1"
+kind = "axial-resistor"
+pocket = 3
+yaw = 90
+
+[[part]]
+id = "D1"
+kind = "led-5mm"
+pocket = 6
+yaw = 0
+
+[[part]]
+id = "C1"
+kind = "ceramic-disc"
+pocket = 8
+yaw = 0

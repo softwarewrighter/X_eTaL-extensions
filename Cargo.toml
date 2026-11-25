@@ -20,3 +20,17 @@ unsafe_op_in_unsafe_fn = "deny"
 
 [workspace.lints.clippy]
 all = { level = "deny", priority = -1 }
+
+# The cell's collision checks run hundreds of thousands of shape tests a
+# program: optimized even in dev builds (tests), with the geometry they use.
+[profile.dev.package.xetal-ext-cell]
+opt-level = 2
+
+[profile.dev.package.parry3d-f64]
+opt-level = 3
+
+[profile.dev.package.glam]
+opt-level = 3
+
+[profile.dev.package.glamx]
+opt-level = 3

@@ -255,6 +255,28 @@ pub fn forward_all(rig: &Rig, q: &[f64; 6]) -> (Pose, [V3; 7]) {
     (pose, origins)
 }
 
+/// Every frame of the arm in its base frame for joint angles (degrees):
+/// the base (0) and the frames after each joint (1 to 6, the flange).
+/// Joint i turns about frame i-1's z.
+#[must_use]
+pub fn frames(rig: &Rig, q: &[f64; 6]) -> [Pose; 7] {
+    let mut out = [Pose::IDENTITY; 7];
+    for (i, j) in rig.joints.iter().enumerate() {
+        let theta = (q[i] + j.offset).to_radians();
+        out[i + 1] = out[i].then(&dh(theta, j.d, j.a, j.alpha.to_radians()));
+    }
+    out
+}
+
+/// A move along a frame's own z (a tool's length from the flange).
+#[must_use]
+pub fn tz(len: f64) -> Pose {
+    Pose {
+        p: [0.0, 0.0, len],
+        r: I3,
+    }
+}
+
 /// The flange's pose in the arm's base frame.
 #[must_use]
 pub fn forward(rig: &Rig, q: &[f64; 6]) -> Pose {

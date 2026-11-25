@@ -69,6 +69,8 @@ check name:
     {{root}}/scripts/cell-preview.sh "$1" --write
     {{root}}/.venv/bin/python3 {{root}}/scripts/cell-check.py "$1"
 
-# The page's preview picture, docs/preview.jpg, from just check arms (work/preview/arms/check.png)
+# The page's preview picture, docs/preview.jpg: programs/pick at 17 s (arm A carrying the DIP), checked headlessly
 preview-picture:
-    ffmpeg -loglevel error -y -i work/preview/arms/check.png -vf scale=960:-1 -q:v 4 docs/preview.jpg
+    {{root}}/scripts/cell-preview.sh pick --write
+    {{root}}/.venv/bin/python3 {{root}}/scripts/cell-check.py pick --at 17
+    ffmpeg -loglevel error -y -i work/preview/pick/check.png -vf scale=960:-1 -q:v 4 docs/preview.jpg

@@ -23,7 +23,7 @@ fn a_scene_of_a_program() {
     let lines: Vec<&str> = calls.lines().collect();
     assert_eq!(lines[0], "cell('demo', 1280, 720)");
     let count = |p: &str| lines.iter().filter(|l| l.starts_with(p)).count();
-    assert_eq!(count("fixture("), 4);
+    assert_eq!(count("fixture("), 7);
     assert_eq!(count("rig("), 4);
     assert_eq!(count("track("), 5);
     assert_eq!(count("step("), 3);
@@ -57,7 +57,7 @@ fn joints_between_rows_are_interpolated() {
 
 #[test]
 fn every_expect_is_the_simulators_flange() {
-    let w = world("joints B 30 10 -20 0 60 0\nmove B to=-20,10,30 rpy=180,0,0\nlift B mm=40");
+    let w = world("joints B -30 -20 10 0 60 0\nmove B to=-150,10,30 rpy=180,0,0\nlift B mm=40");
     let rig = Rig::arm().unwrap();
     let calls = scene::calls("x", &w).unwrap();
     let mut n = 0;

@@ -7,8 +7,12 @@
 //   track(id, rows)                     an arm's joints over time: rows of
 //                                       t j1 .. j6; id 'stage': t angle
 //   part(id, kind, pose)                a part where it starts
-//   attach(id, arm, t0, t1)             the part moves with the arm's
-//                                       flange from t0 to t1, then stays
+//   attach(id, arm, t0, t1)             the part (or tool) moves with the
+//                                       arm's flange from t0 to t1, then
+//                                       stays; arm 'stage': the vise holds
+//                                       it, turning with the stage
+//   place(id, t, pose)                  from t the part is there (where a
+//                                       fall ended)
 //   ghost(id, kind, pose)               where a part ends: drawn faint,
 //                                       before it is there
 //   step(n, label, t0, t1)              a command, for the list of steps
@@ -77,7 +81,7 @@ export function cellPlayer(host, calls, options = {}) {
   scene.add(root);
   const folder = options.models || './models/';
   const s = {
-    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], attaches: [], ghosts: [], steps: [], expects: [],
+    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], attaches: [], places: [], ghosts: [], steps: [], expects: [],
   };
   const api = {
     nums,
@@ -87,12 +91,13 @@ export function cellPlayer(host, calls, options = {}) {
     track(id, rows) { s.tracks[id] = rows; },
     part(id, kind, pose) { s.parts.push({ id, kind, pose }); },
     attach(id, arm, t0, t1) { s.attaches.push({ id, arm, t0, t1 }); },
+    place(id, t, pose) { s.places.push({ id, t, pose }); },
     ghost(id, kind, pose) { s.ghosts.push({ id, kind, pose }); },
     step(n, label, t0, t1) { s.steps.push({ n, label, t0, t1 }); },
     expect(arm, t, xyz) { s.expects.push({ arm, t, xyz }); },
   };
   new Function(...Object.keys(api), calls)(...Object.values(api));
-  const duration = Math.max(0, ...s.steps.map((x) => x.t1), ...Object.values(s.tracks).map((r) => (r.length ? r[r.length - 1][0] : 0)));
+  const duration = Math.max(0, ...s.steps.map((x) => x.t1), ...s.places.map((x) => x.t), ...Object.values(s.tracks).map((r) => (r.length ? r[r.length - 1][0] : 0)));
 
   // light, floor, camera
   scene.add(new THREE.HemisphereLight('#dfe6f0', '#3a3530', 1.6));
@@ -204,23 +209,44 @@ export function cellPlayer(host, calls, options = {}) {
     return inv.multiply(arms[arm].flange.matrixWorld.clone());
   };
   // a part's matrix at t: where it starts, or carried by an arm
+  // what carries a part at time u: an arm's flange, or the stage's top
+  const carrier = (by, u) => {
+    if (by === 'stage') {
+      turnStage(u);
+      root.updateMatrixWorld(true);
+      return new THREE.Matrix4().copy(root.matrixWorld).invert().multiply(fixtures.stage.turn.matrixWorld.clone());
+    }
+    pose(by, at(s.tracks[by], u));
+    return flangeIn(by);
+  };
+  // a part's matrix at t: where it starts, carried while held, put
+  // where a fall ended -- each event in time order
   const partAt = (id, t) => {
     let m = parts[id].start.clone();
-    for (const a of s.attaches.filter((x) => x.id === id && x.t0 <= t).sort((x, y) => x.t0 - y.t0)) {
-      pose(a.arm, at(s.tracks[a.arm], a.t0));
-      const offset = flangeIn(a.arm).invert().multiply(m);
-      pose(a.arm, at(s.tracks[a.arm], Math.min(t, a.t1)));
-      m = flangeIn(a.arm).multiply(offset);
+    const events = [
+      ...s.attaches.filter((x) => x.id === id && x.t0 <= t).map((a) => ({ t: a.t0, a })),
+      ...s.places.filter((x) => x.id === id && x.t <= t).map((p) => ({ t: p.t, p })),
+    ].sort((x, y) => x.t - y.t);
+    for (const e of events) {
+      if (e.p) { m = poseMatrix(e.p.pose); continue; }
+      const a = e.a;
+      if (a.arm !== 'stage' && !arms[a.arm]) continue;
+      if (a.arm === 'stage' && !(fixtures.stage && fixtures.stage.turn)) continue;
+      const offset = carrier(a.arm, a.t0).invert().multiply(m);
+      m = carrier(a.arm, Math.min(t, a.t1)).multiply(offset);
     }
     return m;
+  };
+  const turnStage = (u) => {
+    const st = fixtures.stage;
+    if (st && st.turn) st.turn.quaternion.copy(st.rest).multiply(new THREE.Quaternion().setFromAxisAngle(Y, (at(s.tracks.stage, u) || [0])[0] * D));
   };
   let now = 0;
   const seek = (t) => {
     now = Math.max(0, Math.min(duration, t));
     for (const id of Object.keys(parts)) parts[id].g.matrix.copy(partAt(id, now));
     for (const id of Object.keys(arms)) pose(id, at(s.tracks[id], now) || [0, 0, 0, 0, 90, 0]);
-    const st = fixtures.stage;
-    if (st && st.turn) st.turn.quaternion.copy(st.rest).multiply(new THREE.Quaternion().setFromAxisAngle(Y, (at(s.tracks.stage, now) || [0])[0] * D));
+    turnStage(now);
     ui.show();
     draw();
   };
@@ -340,7 +366,8 @@ export function cellPlayer(host, calls, options = {}) {
       });
       seek(options.time !== undefined ? options.time : 0);
       const out = document.getElementById('check') || document.body.appendChild(Object.assign(document.createElement('pre'), { id: 'check' }));
-      out.textContent = JSON.stringify({ expects: rows.length, worst: worst === Infinity ? 1e9 : +worst.toFixed(4), ghosts: s.ghosts.length, steps: s.steps.length, duration, arms: Object.keys(arms), fixtures: Object.keys(fixtures), parts: Object.keys(parts), state: controls.state });
+      const off = rows.filter((r) => r.off > 0.01).sort((a, b) => b.off - a.off).slice(0, 8);
+      out.textContent = JSON.stringify({ off, expects: rows.length, worst: worst === Infinity ? 1e9 : +worst.toFixed(4), ghosts: s.ghosts.length, steps: s.steps.length, duration, arms: Object.keys(arms), fixtures: Object.keys(fixtures), parts: Object.keys(parts), state: controls.state });
     }
     document.title = document.title.replace(/: (ready|error)$/, '') + ': ready';
   }).catch((e) => {

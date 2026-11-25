@@ -134,7 +134,27 @@ fn lerp6(a: &[f64; 6], b: &[f64; 6], s: f64) -> [f64; 6] {
 /// A sample out of reach or beyond a limit, or a jump of a joint (near a
 /// singularity) on the way, saying how far along.
 pub fn line_move(rig: &Rig, from: &[f64; 6], to: &Pose, speed: f64) -> Result<Samples, String> {
-    let start = kin::forward(rig, from);
+    tool_line(rig, from, to, 0.0, speed)
+}
+
+/// A straight move of a tool's tip -- `tool` mm out along the flange's
+/// z -- from where joints `from` put it to `to` (in the arm's base
+/// frame), at `speed` mm a second: its duration and samples. The tip
+/// goes straight and turns evenly; each sample is solved for the
+/// flange, nearest the one before.
+///
+/// # Errors
+///
+/// As `line_move`.
+pub fn tool_line(
+    rig: &Rig,
+    from: &[f64; 6],
+    to: &Pose,
+    tool: f64,
+    speed: f64,
+) -> Result<Samples, String> {
+    let back = kin::tz(-tool);
+    let start = kin::forward(rig, from).then(&kin::tz(tool));
     let dist = kin::norm(kin::sub(to.p, start.p));
     let turn = kin::angle_between(&start.r, &to.r);
     #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
@@ -148,7 +168,8 @@ pub fn line_move(rig: &Rig, from: &[f64; 6], to: &Pose, speed: f64) -> Result<Sa
         let pose = Pose {
             p: lerp3(start.p, to.p, s),
             r: kin::slerp(&start.r, &to.r, s),
-        };
+        }
+        .then(&back);
         let along = |what: &str| format!("{what} {:.0}% of the way", s * 100.0);
         let next = kin::inverse(rig, &pose, &q).map_err(|e| along(&e))?;
         if let Some((j, _)) = next

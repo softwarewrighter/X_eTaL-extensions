@@ -31,14 +31,19 @@ fn arms_start_home_pointing_down() {
 #[test]
 fn a_move_arrives_where_it_was_sent() {
     let mut w = World::default();
-    for arm in ["A", "B", "C", "D"] {
-        run(&mut w, &format!("move {arm} to=10,-5,20 rpy=180,0,30"));
-        let f = w.flange(arm).unwrap();
-        assert!(
-            kin::norm(kin::sub(f.p, [10.0, -5.0, 20.0])) < 1e-6,
-            "{arm}: {:?}",
-            f.p
+    // each its own corner of the work zone, apart enough not to touch
+    for (arm, at) in [
+        ("A", [70.0, 70.0, 20.0]),
+        ("B", [-70.0, 70.0, 20.0]),
+        ("C", [-70.0, -70.0, 20.0]),
+        ("D", [70.0, -70.0, 20.0]),
+    ] {
+        run(
+            &mut w,
+            &format!("move {arm} to={},{},{} rpy=180,0,30", at[0], at[1], at[2]),
         );
+        let f = w.flange(arm).unwrap();
+        assert!(kin::norm(kin::sub(f.p, at)) < 1e-6, "{arm}: {:?}", f.p);
         let want = kin::rpy_to_r([180.0, 0.0, 30.0]);
         assert!(kin::angle_between(&f.r, &want) < 1e-4, "{arm}");
     }
@@ -79,8 +84,8 @@ fn a_joint_move_respects_speeds_and_arrives_together() {
     let rig = Rig::arm().unwrap();
     let mut w = World::default();
     let from = w.arm("B").unwrap().joints;
-    let to = [60.0, 30.0, -40.0, 90.0, 45.0, -120.0];
-    run(&mut w, "joints B 60 30 -40 90 45 -120 speed=0.8");
+    let to = [-30.0, -20.0, 10.0, 90.0, 45.0, -120.0];
+    run(&mut w, "joints B -30 -20 10 90 45 -120 speed=0.8");
     let arm = w.arm("B").unwrap();
     assert_eq!(arm.joints, to);
     let rows = &arm.track;

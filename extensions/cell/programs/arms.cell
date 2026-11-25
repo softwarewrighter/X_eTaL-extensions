@@ -1,15 +1,15 @@
-# arms: the four arms reach into the work zone in turn, the stage turns
-# under them, and they go home. Nothing is held yet: a preview of the
-# arms, the stage and the vise.
-move A to=0,30,40 rpy=180,0,0
-move B to=-30,0,40 rpy=180,0,0
-move C to=0,-30,40 rpy=180,0,0 ; move D to=30,0,40 rpy=180,0,0
+# arms: the four arms reach into the work zone in turn, apart enough
+# not to touch, the stage turns under them, and they go home. Nothing
+# is held: a preview of the arms, the stage and the vise.
+move A to=0,90,40 rpy=180,0,0
+move B to=-90,0,40 rpy=180,0,0
+move C to=0,-90,40 rpy=180,0,0 ; move D to=90,0,40 rpy=180,0,0
 vise close
 stage turn=180
 lift A mm=60 ; lift C mm=60
-move B to=-60,0,-20 rpy=180,-30,0 speed=60
-move D to=60,0,-20 rpy=180,30,0 speed=60
+move B to=-110,0,-10 rpy=180,-30,0 speed=60
+move D to=110,0,-10 rpy=180,30,0 speed=60
 stage turn=-90
 vise open
-joints A 0 0 0 0 90 0
-joints B 0 0 0 0 90 0 ; joints C 0 0 0 0 90 0 ; joints D 0 0 0 0 90 0
+joints C 0 0 0 0 90 0 ; joints A 0 0 0 0 90 0
+joints B 0 0 0 0 90 0 ; joints D 0 0 0 0 90 0

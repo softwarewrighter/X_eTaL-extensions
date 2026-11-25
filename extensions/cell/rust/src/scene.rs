@@ -10,7 +10,8 @@
 //! track('A', nums('t j1 j2 j3 j4 j5 j6 ...', 7))
 //! track('stage', nums('t angle ...', 2))
 //! part('U1', 'dip8', nums('x y z r p y', 6)[0])
-//! attach('U1', 'A', t0, t1)
+//! attach('U1', 'A', t0, t1)          (an arm's hold; 'stage': the vise's)
+//! place('U1', t, nums('x y z r p y', 6)[0])   (where a fall ended)
 //! ghost('U1', 'dip8', nums('x y z r p y', 6)[0])
 //! step(1, 'move A to=0,0,20 rpy=180,0,0', t0, t1)
 //! expect('A', t, nums('x y z', 3)[0])
@@ -22,8 +23,9 @@
 
 use crate::command::num;
 use crate::kin;
+use crate::layout::fixtures;
 use crate::rig::Rig;
-use crate::world::{FIXTURES, World};
+use crate::world::{Part, World};
 use std::fmt::Write as _;
 
 /// How many expect lines at most, over all arms.
@@ -69,12 +71,12 @@ pub fn joints_at(track: &[[f64; 7]], t: f64) -> [f64; 6] {
 pub fn calls(name: &str, w: &World) -> Result<String, String> {
     let rig = Rig::arm()?;
     let mut out = format!("cell({}, 1280, 720)\n", quote(name));
-    for (id, model, pose) in FIXTURES {
+    for (id, model, pose) in fixtures() {
         let _ = writeln!(
             out,
             "fixture({}, {}, {})",
-            quote(id),
-            quote(model),
+            quote(&id),
+            quote(&model),
             row(&pose)
         );
     }
@@ -85,15 +87,8 @@ pub fn calls(name: &str, w: &World) -> Result<String, String> {
     }
     let rows: Vec<Vec<f64>> = w.stage_track.iter().map(|r| r.to_vec()).collect();
     let _ = writeln!(out, "track('stage', {})", table(&rows, 2));
-    for p in &w.parts {
-        let pose = [p.at[0], p.at[1], p.at[2], p.rpy[0], p.rpy[1], p.rpy[2]];
-        let _ = writeln!(
-            out,
-            "part({}, {}, {})",
-            quote(&p.id),
-            quote(&p.kind),
-            row(&pose)
-        );
+    for p in w.tools.iter().chain(&w.parts) {
+        thing(&mut out, p);
     }
     for (n, e) in w.timeline.iter().enumerate() {
         let _ = writeln!(
@@ -123,5 +118,52 @@ pub fn calls(name: &str, w: &World) -> Result<String, String> {
             let _ = writeln!(out, "expect({}, {}, {})", quote(&a.name), num(t), row(&r));
         }
     }
+    // and where every part and tool ends
+    let end = w
+        .timeline
+        .iter()
+        .filter(|e| !e.rewound)
+        .map(|e| e.t1)
+        .fold(w.t, f64::max);
+    // after the last fall has landed too
+    let end = w
+        .parts
+        .iter()
+        .flat_map(|p| p.moves.iter().map(|m| m.t))
+        .fold(end, f64::max);
+    for p in w.parts.iter().chain(&w.tools) {
+        let at = [p.at[0], p.at[1], p.at[2]].map(|x| kin::clean((x * 1000.0).round() / 1000.0));
+        let _ = writeln!(out, "expect({}, {}, {})", quote(&p.id), num(end), row(&at));
+    }
     Ok(out)
+}
+
+/// A part or a tool: where it starts, each hold (an arm's, or the
+/// vise's, which turns with the stage) and each fall.
+fn thing(out: &mut String, p: &Part) {
+    let _ = writeln!(
+        out,
+        "part({}, {}, {})",
+        quote(&p.id),
+        quote(&p.kind),
+        row(&p.start)
+    );
+    for h in &p.holds {
+        let by = if h.by == "vise" {
+            "stage"
+        } else {
+            h.by.as_str()
+        };
+        let t1 = h.t1.map_or_else(|| "Infinity".to_string(), num);
+        let _ = writeln!(
+            out,
+            "attach({}, {}, {}, {t1})",
+            quote(&p.id),
+            quote(by),
+            num(h.t0)
+        );
+    }
+    for m in &p.moves {
+        let _ = writeln!(out, "place({}, {}, {})", quote(&p.id), num(m.t), row(&m.at));
+    }
 }

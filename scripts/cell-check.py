@@ -74,7 +74,9 @@ def main():
         httpd.shutdown()
     print(f"cell-check: {a.name}: {report['steps']} steps, {report['duration']:.3f} s; "
           f"arms {' '.join(report['arms'])}; fixtures {' '.join(report['fixtures'])}")
-    print(f"cell-check: {report['expects']} flange positions, the worst {report['worst']} mm from the simulator's")
+    print(f"cell-check: {report['expects']} positions (arms' flanges, parts, tools), the worst {report['worst']} mm from the simulator's")
+    for r in report.get("off", []):
+        print(f"cell-check:   {r['arm']} at {r['t']} s: drawn at {r['got']}, the simulator says {r['want']} ({r['off']} mm)")
     if report["expects"] == 0 or report["worst"] > 0.01:
         sys.exit("cell-check: the drawing is not the simulator's")
     print(f"cell-check: ok (picture at {at:.2f} s: extensions/cell/work/preview/{a.name}/check.png)")

@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/grip.xtl"
+exit_code = 0
+desc = "grasping: a tool taken at the rack, a part picked from the tray and put in the vise, which holds it when let go; a part let go over nothing falls and is lost; an arm reaching where another is stops at the touch, saying what touched what"

@@ -7,17 +7,18 @@ touches a lead, a third solders them, and the next part comes in. A
 program or an LLM agent drives it one command at a time (the design:
 docs/cell-design.md in the repository).
 
-Status: the arms move, the cell has its 3D models, and a program can
-be previewed in a browser, played with a scrubber. The parts
-library, the command language (text and JSON, checked against one
-table), the cell's state as JSON, four six-axis arms with the stage
-and the vise, and a model of every piece (built through Blender,
-checked against the simulator) are in place: `reset`,
-`wait s=`, `joints`, `move`, `lift`, `stage` and `vise` run; every
-other command is parsed and checked, then refused as not simulated
-yet. Grasping and collision, heat, solder, welding, wire and the
-microscope come next; until collision is simulated, arms pass through
-each other and the parts.
+Status: the arms move, change tools, pick, place, align and let go of
+parts, and stop where they touch; the cell has its 3D models, and a
+program can be previewed in a browser, played with a scrubber. The
+parts library, the command language (text and JSON, checked against
+one table), the cell's state as JSON, four six-axis arms with the
+stage and the vise, collision along every motion, and a model of
+every piece (built through Blender, checked against the simulator)
+are in place: `reset`, `wait s=`, `joints`, `move`, `lift`, `stage`,
+`vise`, `tool`, `grip`, `pick`, `place`, `align`, `release` and
+`rewind` run; every other command is parsed and checked, then refused
+as not simulated yet. Heat and solder, welding, wire, the microscope,
+reading and testing parts come next.
 
 - Package: `extensions/cell/` (`extension.toml`; library
   `xetal_ext_cell`: `libxetal_ext_cell.dylib` on macOS, `.so` on
@@ -77,7 +78,23 @@ Millimeters, degrees, seconds, grams, watts and degrees Celsius; Z up,
 right handed. Four arms, A to D, stand on a ring of 450 mm around the
 work zone and 200 mm below it (A at +y, B at -x, C at -y, D at +x),
 each facing the center. A new cell (`reset`) has every arm home with
-no tool, the rotary stage at 0, the vise open, the time 0.
+no tool, every rack full, the rotary stage at 0, the vise open, the
+time 0; `reset circuit=demo` lays four parts in the tray
+(`circuits/demo.toml`: a DIP-8, a resistor, an LED, a ceramic disc).
+
+Around the arms (`layout.rs`, every number illustrative):
+
+- the rotary stage under the work zone, its top 60 mm below the
+  origin, with the vise on it: a part whose origin is within 15 mm of
+  the vise's middle when it closes (or when an arm lets go of it while
+  it is closed) is held, and turns with the stage;
+- the microscope on its gantry, turned 135 degrees so its posts stand
+  between arms A and B and arms C and D, its lens 330 mm above the
+  work zone, clear of the arms' wrists;
+- a tool rack beside each arm, each with all seven tools, on the side
+  away from the nearer gantry post (one shared rack cannot be reached
+  by four arms 900 mm apart: decision C14 in docs/plan.md);
+- the parts tray between arms A and D, which only they reach.
 
 The state is plain data and round-trips through JSON exactly: the
 time, the circuit, the arms (base, joint angles, tool, track), the
@@ -126,23 +143,76 @@ over the base's axis), each with how far along. Every motion is
 recorded in the arm's track, rows of the time and the six angles,
 every 50 ms, for a player to draw.
 
+## Grasping and collision
+
+Every motion is checked for collision as it goes, at steps short
+enough that no point of the arm moves more than 0.2 mm between two
+checks. The cell is solids (`collide.rs`, tested with parry3d): an
+arm's links and joint housings as capsules (the sizes CellModels.xtl
+draws), its tool as two capsules, a part's body as a box or a
+cylinder and each lead as a thin capsule, the fixtures as boxes and
+cylinders, and the floor. A motion that meets something stops there,
+as a real arm's protective stop does: the motion up to the last clear
+step is kept, and the outcome says what touched what, and when --
+`collision: arm C link 6 with arm A joint 6 at 53.622 s`. An arm does
+not collide with itself (not simulated). Allowed contacts: tweezers
+with a part whose grasp frame their tip is on, a part being picked
+with what it lay on, a part placed into the vise with the stage, a
+lead with the lead it is aligned to, and a tool with its own rack.
+
+- `tool ARM TOOL`: the arm puts back the tool it holds (above its
+  slot, down, let go, up) and takes the new one the same way. A tool's
+  tip is its model's `tool_tip`, its length out along the flange's z;
+  `move` and `lift` move the tip.
+- `pick ARM PART grasp=NAME` (tweezers): above the grasp frame, down
+  along it, close, lift 30 mm. The tip goes to the frame with the
+  tool's z along the frame's -z and its x (the jaws' closing) along
+  the frame's x.
+- `place ARM PART at= [rpy=]`: the part carried until it is there,
+  coming down the last 30 mm slowly.
+- `align ARM FRAME to=FRAME [gap=]`: the held part's frame (`R1.1.tip`)
+  brought to another part's (`U1.3.tip`) along the line between them,
+  stopping `gap` mm short (0.1 if not given), the last 5 mm slowly.
+- `release ARM PART` (or `grip ARM open`): the tweezers open. A part
+  the vise can hold stays; one held by nothing falls straight down to
+  the floor (no tumbling), landing after the time gravity takes, and
+  is lost: a warning says how far it fell.
+- `grip ARM close`: the tweezers close, taking the part one of whose
+  grasp frames is at their tip, if any.
+- A command of several motions (`tool`, `pick`, `place`, `align`) is
+  planned whole first: if one of its motions cannot be made (out of
+  reach, a joint limit, a singularity) the command is refused and
+  nothing changes; a collision stops it where it happens.
+- `dry=1` runs a command on a copy: the outcome, nothing changed.
+- `rewind t=SECONDS` puts the cell back as it was then: the commands
+  since the last reset that ended by then run again (the simulation is
+  deterministic), and those after stay on the timeline, marked
+  `rewound`, so both branches are kept.
+
+A part's and a tool's state is where it started, where it is, what
+holds it (an arm, the vise, nothing), whether it is lost, every hold
+and every fall: the scene a player draws comes from them, a hold as
+`attach` (the vise's riding on the stage) and a fall's landing as
+`place`.
+
 ## The preview
 
-![The arms program at 16 s, drawn by headless Chrome](preview.jpg)
+![The pick program at 17 s, arm A picking the DIP from the tray, drawn by headless Chrome (just preview-picture)](preview.jpg)
 
 A program is previewed the way a slicer previews a printer's moves:
 the simulator runs it whole, `ce:s_cene` writes its timeline as a
 scene, and the three extension's cell player plays it in a browser.
 
 ```sh
-just preview arms         # programs/arms.cell at http://127.0.0.1:8470/
-just check arms           # the same, checked headlessly
+just preview pick         # programs/pick.cell at http://127.0.0.1:8470/
+just check pick           # the same, checked headlessly
 ```
 
-`programs/NAME.cell` is a program in the command language;
-`programs/NAME.scene`, if there is one, holds calls added to the scene
-for the player -- parts, ghosts and their expectations, until the
-simulator places parts itself. The page shows the cell from a camera
+`programs/NAME.cell` is a program in the command language: `arms`
+(the arms, the stage and the vise) and `pick` (tools taken, parts
+picked, put in the vise, turned, let fall); `programs/NAME.scene`, if
+there is one, holds calls added to the scene for the player (ghosts,
+say). The page shows the cell from a camera
 you turn by dragging and bring closer with the wheel, a play button,
 the time, a scrubber, a speed, the list of steps (click one to go
 there) and the ghosts of where parts will end; `window.cell` plays,
@@ -153,9 +223,11 @@ window, a throwaway profile) draw it with `?check`: at every `expect`
 line -- each arm's flange at the middle and end of steps, from the
 simulator's forward kinematics -- the page poses the models and
 measures where the flange is drawn. It fails beyond 0.01 mm. For
-`arms`, all 49 expectations (44 flanges, 5 positions of a part carried
-by arm A) are drawn exactly where the simulator says; turning a
-joint about the wrong axis puts the flange 552 mm off and fails. It
+`pick`, all 72 expectations -- the arms' flanges at the middle and end
+of steps, and where every part and tool ends: carried, held by the
+vise as the stage turns, fallen -- are drawn where the simulator says;
+turning a joint about the wrong axis puts a flange 552 mm off and
+fails. It
 also keeps a picture, `work/preview/NAME/check.png`.
 
 ## Models

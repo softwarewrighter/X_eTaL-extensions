@@ -79,7 +79,7 @@ fn a_refused_command_changes_nothing() {
     let o = w.apply(&parse_line("reset circuit=blinker").unwrap());
     assert_eq!(
         o.refused.as_deref(),
-        Some("no circuit blinker (circuits: none)")
+        Some("no circuit blinker (circuits: none demo)")
     );
     // a program stops at the first command that is not ok
     let out = w.apply_all(&parse_program("wait s=1\ngrip A close\nwait s=1").unwrap());
@@ -102,8 +102,16 @@ fn reset_starts_over() {
     let mut w = World::default();
     w.apply_all(&parse_program("wait s=9\nreset").unwrap());
     assert_eq!(w.t, 0.0);
-    assert_eq!(w.timeline.len(), 1);
-    assert_eq!(w.timeline[0].command, "reset");
+    // the clock starts again; what came before stays on the timeline
+    assert_eq!(w.timeline.len(), 2);
+    assert_eq!(
+        (
+            w.timeline[1].command.as_str(),
+            w.timeline[1].t0,
+            w.timeline[1].t1
+        ),
+        ("reset", 0.0, 0.0)
+    );
 }
 
 #[test]
