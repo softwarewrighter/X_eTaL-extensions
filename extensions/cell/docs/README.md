@@ -11,7 +11,9 @@ Status: the arms move, change tools, pick, place, align and let go of
 parts, stop where they touch, and solder: heat flows in leads and
 bodies, an iron heats a joint, solder fed into it melts, wets and
 freezes into a joint judged good or not, and a good joint holds two
-parts as one; the cell has its 3D models, and a
+parts as one; leads spot weld; tool stations work on joints the
+positioner (the stage, turning, tilting and moving) presents to them;
+the cell has its 3D models, and a
 program can be previewed in a browser, played with a scrubber. The
 parts library, the command language (text and JSON, checked against
 one table), the cell's state as JSON, four six-axis arms with the
@@ -19,7 +21,8 @@ stage and the vise, collision along every motion, and a model of
 every piece (built through Blender, checked against the simulator)
 are in place: `reset`, `wait s=`, `joints`, `move`, `lift`, `stage`,
 `vise`, `tool`, `grip`, `pick`, `place`, `align`, `release`, `back`,
-`touch`, `feed`, `clip`, `wait until=`, `inspect` and `rewind` run;
+`touch`, `feed`, `clip`, `weld`, `present`, `wait until=`, `inspect`
+and `rewind` run;
 every other command is parsed and checked, then refused as not
 simulated yet. Welding, wire, forming leads, the microscope, reading
 and testing parts come next.
@@ -333,6 +336,75 @@ joint as a ball of solder that grows as it is fed, glows while molten
 and takes its result's color when it freezes; Close up shows the work
 zone.
 
+## Tool stations and the positioner
+
+Tools need not ride on arms. A tool station is a tool on a linear
+actuator -- a telescoping pole -- fixed in the cell along a line toward
+a working point (`stations.toml`): extended, its tip is at the point;
+retracted, 120 mm back. The work comes to the station instead: the
+stage is a positioner that turns, tilts (about x, up to 90 degrees) and
+moves (60 mm in x and y, -30 to 70 mm in z), carrying the vise and what
+it holds. The arms still pick, place and hold parts to each other.
+
+| Station | Tool | Comes from |
+| ------- | ---- | ---------- |
+| S1 | iron (350 C) | between arms B and C, slightly below the work |
+| S2 | solder feeder | between arms C and D, slightly below the work |
+| S3 | welder | below, between arms A and B |
+
+```
+stage turn=30 tilt=-20 at=10,0,30   # the positioner: turn by, tilt to, move to
+present U1.3.tip at=S1 and=S2        # pin 3's tip to the stations' point
+touch S1 at=U1.3+R1.1 dwell=2        # the iron station extends onto the joint
+feed S2 mm=2 rate=1                  # the feeder station feeds solder into it
+back S1                              # the iron station retracts
+weld S3 at=C1.2+C2.1 energy=8        # the welder station, from below
+```
+
+- `present TARGET at=STATION [and=STATION] [turn=] [tilt=]` moves the
+  positioner so a pin's frame (`U1.3.tip`, `C1.2.6`) or a joint is at
+  the station's point. Without `turn` and `tilt` it tries orientations
+  nearest the stage's own first (turns of 15 degrees, tilts of 30) and
+  keeps the first that is in reach, clear of the arms and fixtures, and
+  whose station line -- and the `and` station's, for a second tool at
+  the same joint -- is clear of the work. Only what the vise holds is
+  presented.
+- `touch`, `feed`, `weld` and `back` take a station where they take an
+  arm; a station works only on a joint at its point ("present it there
+  first"), and only with its own tool.
+- A station's pole and tool are checked for collision as they move,
+  and the arms, the positioner and the other stations against them; a
+  tool's tapered last 8 mm is left out of its solid, so two stations'
+  tools meet at one joint.
+
+![The solder-stations program, recorded from the live page (just ext cell record solder-stations, just videos cell solder-stations)](../videos/solder-stations.webp)
+
+`programs/solder-stations.cell` solders the resistor to the DIP at
+stations: arm A picks the resistor while the positioner turns the
+stage to present pin 3's tip, arm A brings the lead to it, S1's iron
+and S2's feeder make a good joint. `programs/weld-stations.cell` welds
+a disc's lead to another's at S3, from below (the positioner tilts the
+stage 60 degrees for it).
+
+The layout was chosen by trying candidates on every program (`arms`,
+`pick`, `solder`, `weld`, `claude`, `solder-stations`,
+`weld-stations`), S3 from below in each (`tests/stations.rs`,
+`layouts`):
+
+| S1 and S2 come from | Programs that run | What failed |
+| ------------------- | ----------------- | ----------- |
+| above (30 and 20 degrees down) | 5 of 7 | arm B meets S1's housing (weld); no orientation clears the iron and feeder over the work |
+| the tray's side (S2) | 2 of 7 | arm A's tweezers meet S2's housing on the way to the tray |
+| level | 7 of 7 | |
+| slightly below (chosen) | 7 of 7 | |
+| below (45 degrees up) | 7 of 7 | |
+| under the arms (from -y and +x, below) | 7 of 7 | |
+
+Of the four that run everything, slightly below keeps the housings
+under the space the arms work in while the iron and feeder come in
+near level, which suits leads that point down; from further below the
+stage must tilt further.
+
 ## Spot welding
 
 `weld ARM at=LAP energy=J [risky=allow]`: the welder's electrodes on a
@@ -575,19 +647,20 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `joints ARM J1 J2 J3 J4 J5 J6 [speed=N]` | arm | move the arm to absolute joint angles, all joints arriving together |
 | `move ARM to=X,Y,Z [rpy=R,P,Y] [speed=MM/S]` | arm | move the tool to a pose, by inverse kinematics, in a straight line |
 | `lift ARM [mm=MM]` | arm | move the tool straight up |
-| `back ARM [mm=MM]` | arm | move the tool straight back along its own axis, away from what it touches |
+| `back ARM\|STATION [mm=MM]` | arm | move the tool straight back along its own axis, away from what it touches |
 | `grip ARM open\|close [force=N]` | tweezers | open or close the tweezers |
 | `pick ARM PART grasp=NAME` | tweezers | approach a part, close on a grasp frame, lift it |
 | `place ARM PART at=X,Y,Z [rpy=R,P,Y]` | tweezers | carry the held part to a pose |
 | `align ARM FRAME to=FRAME [gap=MM]` | tweezers | bring a frame of the held part to another frame, a gap apart |
 | `release ARM PART` | tweezers | open the tweezers and let the part go |
 | `clip ARM on=PIN at=MM` | clip | clip a heatsink on a lead, between the body and the joint |
-| `touch ARM at=JOINT [dwell=S]` | iron | put the iron's tip on a joint and hold it there |
-| `feed ARM mm=MM [rate=MM/S]` | solder | feed solder wire into the joint the iron is on |
-| `weld ARM at=JOINT energy=J [risky=refuse\|allow]` | welder | spot weld a lap of two leads by a capacitor discharge |
+| `touch ARM\|STATION at=JOINT [dwell=S]` | iron | put the iron's tip on a joint and hold it there |
+| `feed ARM\|STATION mm=MM [rate=MM/S]` | solder | feed solder wire into the joint the iron is on |
+| `weld ARM\|STATION at=JOINT energy=J [risky=refuse\|allow]` | welder | spot weld a lap of two leads by a capacitor discharge |
 | `wire ARM awg=N mm=MM` | wire | feed bare or enameled wire from a spool out of the nozzle |
 | `cut ARM` | cutter | cut the wire or the lead in the cutter's jaws |
-| `stage turn=DEG` | stage | turn the rotary stage by an angle |
+| `stage [turn=DEG] [tilt=DEG] [at=X,Y,Z]` | stage | move the positioner: turn the stage by an angle, tilt it, move it |
+| `present FRAME\|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG]` | stage | move the positioner so a pin's frame or a joint is at a tool station's point |
 | `vise open\|close` | stage | open or close the vise on the stage |
 | `wait [s=S] [until=TARGET] [below=C]` | cell | let time pass, or wait until a pin or joint cools |
 | `scope [pan=DEG] [tilt=DEG] [zoom=N] [focus=MM] [rotate=DEG] [aim=TARGET]` | scope | move the microscope: pan, tilt, zoom, focus, rotate, or aim it at a target |

@@ -24,6 +24,8 @@ pub use crate::layout::fixtures;
 pub const STAGE_SPEED: f64 = 90.0;
 /// See `STAGE_SPEED`.
 pub const STAGE_ACCEL: f64 = 360.0;
+/// How fast the positioner moves along x, y and z, mm/s.
+pub const STAGE_MM_SPEED: f64 = 40.0;
 /// How long the vise takes to open or close, seconds; illustrative.
 pub const VISE_TIME: f64 = 0.5;
 /// How long tweezers take to open or close, seconds.
@@ -239,8 +241,18 @@ pub struct World {
     pub arms: Vec<Arm>,
     /// The rotary stage's angle, degrees.
     pub stage: f64,
-    /// Where the stage has been: rows of the time and the angle.
-    pub stage_track: Vec<[f64; 2]>,
+    /// Where the stage has been: rows of the time, the turn, the tilt and
+    /// the offset x y z (the positioner, `layout::positioner`).
+    pub stage_track: Vec<[f64; 6]>,
+    /// The positioner's tilt about x, degrees.
+    #[serde(default)]
+    pub tilt: f64,
+    /// The positioner's offset from the stage's place at rest, x y z mm.
+    #[serde(default)]
+    pub offset: [f64; 3],
+    /// The tool stations: how far each is extended.
+    #[serde(default = "crate::stations::fresh")]
+    pub stations: Vec<crate::stations::StationState>,
     /// The vise: `open` or `closed`.
     pub vise: String,
     /// The parts in the cell.
@@ -384,7 +396,10 @@ impl World {
                 })
                 .collect(),
             stage: 0.0,
-            stage_track: vec![[0.0; 2]],
+            stage_track: vec![[0.0; 6]],
+            tilt: 0.0,
+            offset: [0.0; 3],
+            stations: crate::stations::fresh(),
             vise: "open".into(),
             parts,
             tools,
@@ -520,18 +535,13 @@ impl World {
 
     // -- collision -------------------------------------------------------
 
-    fn fixture_groups(&self) -> Vec<Group> {
+    pub(crate) fn fixture_groups(&self) -> Vec<Group> {
         let mut out = Vec::new();
         for (id, model, p) in layout::fixtures() {
             let f = pose6(p);
             let solids = match model.as_str() {
-                "stage" => vec![collide::fixture_cylinder(
-                    "the stage's base",
-                    &f,
-                    [0.0, 0.0, -35.0],
-                    62.0,
-                    50.0,
-                )],
+                // the stage's base rides on the positioner: in its group
+                "stage" => Vec::new(),
                 "scope" => vec![
                     collide::fixture_box(
                         "the gantry's post",
@@ -581,24 +591,57 @@ impl World {
         out
     }
 
-    /// The stage's turning top -- table, vise, its jaws -- and what the
-    /// vise holds, at an angle.
-    fn stage_group(&self, angle: f64) -> Group {
-        let f = layout::stage_frame(angle);
+    /// Whether the positioner may go to a tilt and an offset.
+    pub(crate) fn check_positioner_at(&self, tilt: f64, at: [f64; 3]) -> Result<(), String> {
+        if tilt.abs() > layout::POSITIONER_TILT {
+            return Err(format!(
+                "the positioner tilts at most {} degrees",
+                num(layout::POSITIONER_TILT)
+            ));
+        }
+        let (lo, hi) = layout::POSITIONER_Z;
+        if at[0].abs() > layout::POSITIONER_XY
+            || at[1].abs() > layout::POSITIONER_XY
+            || at[2] < lo
+            || at[2] > hi
+        {
+            return Err(format!(
+                "the positioner moves at most {} mm in x and y, {} to {} mm in z",
+                num(layout::POSITIONER_XY),
+                num(lo),
+                num(hi)
+            ));
+        }
+        Ok(())
+    }
+
+    /// The positioner's frame now: the stage's top, turned, tilted and
+    /// moved.
+    #[must_use]
+    pub fn stage_pose(&self) -> Pose {
+        layout::positioner(self.stage, self.tilt, self.offset)
+    }
+
+    /// The stage -- its base, its turning top, the vise, its jaws -- and
+    /// what the vise holds, the positioner at `turn`, `tilt`, `at`.
+    pub(crate) fn stage_group_at(&self, turn: f64, tilt: f64, at: [f64; 3]) -> Group {
+        let f = layout::positioner(turn, tilt, at);
+        let base = layout::positioner_base(tilt, at);
         let mut solids = vec![
+            collide::fixture_cylinder("the stage's base", &base, [0.0, 0.0, -35.0], 62.0, 50.0),
             collide::fixture_cylinder("the stage", &f, [0.0, 0.0, -5.0], 55.0, 10.0),
             collide::fixture_box("the vise", &f, [0.0, 0.0, 6.0], [60.0, 40.0, 12.0]),
             collide::fixture_box("the vise's jaw", &f, [0.0, -14.0, 20.0], [40.0, 6.0, 16.0]),
             collide::fixture_box("the vise's jaw", &f, [0.0, 14.0, 20.0], [40.0, 6.0, 16.0]),
         ];
-        let turn = Pose::from_xyz_rpy([0.0; 3], [0.0, 0.0, angle - self.stage]);
+        let moved = f.then(&self.stage_pose().inverse());
         for p in self
             .parts
             .iter()
             .filter(|p| p.holder.as_deref() == Some("vise"))
         {
             if let Ok(k) = parts::kind(&p.kind) {
-                solids.extend(collide::part(&p.id, &k, &turn.then(&p.pose())));
+                solids.extend(collide::part(&p.id, &k, &moved.then(&p.pose())));
             }
         }
         Group {
@@ -609,7 +652,13 @@ impl World {
 
     /// An arm's group at joint angles: its links, its tool, and the part
     /// it holds (carried at `offset` from its flange).
-    fn arm_group(&self, i: usize, rig: &Rig, q: &[f64; 6], held: &[(usize, Pose)]) -> Group {
+    pub(crate) fn arm_group(
+        &self,
+        i: usize,
+        rig: &Rig,
+        q: &[f64; 6],
+        held: &[(usize, Pose)],
+    ) -> Group {
         let a = &self.arms[i];
         let len = a.tool.as_deref().map(layout::tool_length);
         let mut solids: Vec<Solid> = collide::arm(&a.name, &a.base_pose(), rig, q, len);
@@ -629,7 +678,7 @@ impl World {
     /// Everything but arm `i` and what it holds, as it is now.
     fn others(&self, i: usize, rig: &Rig) -> Vec<Group> {
         let mut out = self.fixture_groups();
-        out.push(self.stage_group(self.stage));
+        out.push(self.stage_group_at(self.stage, self.tilt, self.offset));
         for (j, a) in self.arms.iter().enumerate() {
             if j == i {
                 continue;
@@ -637,20 +686,34 @@ impl World {
             let held = self.carried(j, rig);
             out.push(self.arm_group(j, rig, &a.joints, &held));
         }
-        for p in self.parts.iter().filter(|p| p.holder.is_none() && !p.lost) {
-            if let Ok(k) = parts::kind(&p.kind) {
-                out.push(Group {
+        out.extend(self.free_part_groups());
+        out.extend(self.station_groups(None));
+        out
+    }
+
+    /// The stage as it stands, and what the vise holds.
+    pub(crate) fn stage_now(&self) -> Group {
+        self.stage_group_at(self.stage, self.tilt, self.offset)
+    }
+
+    /// The parts nothing holds, each its own group.
+    pub(crate) fn free_part_groups(&self) -> Vec<Group> {
+        self.parts
+            .iter()
+            .filter(|p| p.holder.is_none() && !p.lost)
+            .filter_map(|p| {
+                let k = parts::kind(&p.kind).ok()?;
+                Some(Group {
                     name: format!("part:{}", p.id),
                     solids: collide::part(&p.id, &k, &p.pose()),
-                });
-            }
-        }
-        out
+                })
+            })
+            .collect()
     }
 
     /// The parts arm `i` carries (gripped, or soldered to the one it
     /// grips), each with where it sits relative to the flange.
-    fn carried(&self, i: usize, rig: &Rig) -> Vec<(usize, Pose)> {
+    pub(crate) fn carried(&self, i: usize, rig: &Rig) -> Vec<(usize, Pose)> {
         let name = &self.arms[i].name;
         (0..self.parts.len())
             .filter(|&k| self.parts[k].holder.as_ref() == Some(name) && !self.parts[k].lost)
@@ -804,7 +867,8 @@ impl World {
     /// vise's middle; then whatever carries nothing now -- it, and parts
     /// soldered to it -- falls to the floor and is lost.
     fn let_go_of(&mut self, k: usize) {
-        let center = layout::stage_frame(self.stage)
+        let center = self
+            .stage_pose()
             .then(&Pose::from_xyz_rpy(
                 layout::vise_center_on_stage(),
                 [0.0; 3],
@@ -926,6 +990,10 @@ impl World {
     ) -> Result<(), Halt> {
         let refuse = |why: String| Err(Halt::Refused(why));
         let rig = Rig::arm().map_err(Halt::Refused)?;
+        // a station's command
+        if let Some(si) = c.word("arm").and_then(|n| self.station_index(n)) {
+            return self.station_step(si, c, did, events, warnings);
+        }
         let i = self.arm_index(c);
         let arm = self.arms[i].name.clone();
         match c.op.as_str() {
@@ -1038,7 +1106,39 @@ impl World {
                     nums(&self.arms[i].joints.map(round3))
                 ));
             }
-            "stage" => self.turn_stage(c.number("turn").unwrap_or(0.0), &rig, did)?,
+            "present" => {
+                let target = c.word("target").unwrap_or("");
+                let station = c.word("at").unwrap_or("");
+                let and = c.word("and");
+                self.present(
+                    target,
+                    station,
+                    and,
+                    c.number("turn"),
+                    c.number("tilt"),
+                    did,
+                    events,
+                )?;
+            }
+            "stage" => {
+                let (turn, tilt, at) = (c.number("turn"), c.number("tilt"), c.get("at"));
+                if turn.is_none() && tilt.is_none() && at.is_none() {
+                    return refuse("stage: give turn=, tilt= or at=".into());
+                }
+                let at = match at {
+                    Some(Value::Numbers(v)) => [v[0], v[1], v[2]],
+                    _ => self.offset,
+                };
+                self.check_positioner_at(self.tilt.max(tilt.unwrap_or(self.tilt)), at)
+                    .map_err(Halt::Refused)?;
+                self.move_stage_to(
+                    turn.unwrap_or(0.0),
+                    tilt.unwrap_or(self.tilt),
+                    at,
+                    &rig,
+                    did,
+                )?;
+            }
             "vise" => {
                 let close = c.word("action") == Some("close");
                 let want = if close { "closed" } else { "open" };
@@ -1048,7 +1148,8 @@ impl World {
                 self.vise = want.into();
                 self.advance(VISE_TIME, None);
                 did.push(format!("vise {want} in {} s", num(VISE_TIME)));
-                let center = layout::stage_frame(self.stage)
+                let center = self
+                    .stage_pose()
                     .then(&Pose::from_xyz_rpy(
                         layout::vise_center_on_stage(),
                         [0.0; 3],
@@ -1222,67 +1323,108 @@ impl World {
         }
     }
 
-    fn turn_stage(&mut self, turn: f64, rig: &Rig, did: &mut Vec<String>) -> Result<(), Halt> {
-        let from = self.stage;
+    /// The positioner from where it is to `turn` (by), `tilt` and `at`
+    /// (to), in one profiled motion, the stage and what the vise holds
+    /// checked against the arms, what they hold and the fixtures.
+    pub(crate) fn move_stage_to(
+        &mut self,
+        turn: f64,
+        tilt: f64,
+        at: [f64; 3],
+        rig: &Rig,
+        did: &mut Vec<String>,
+    ) -> Result<(), Halt> {
+        let (from, from_tilt, from_at) = (self.stage, self.tilt, self.offset);
         let t0 = self.t;
-        let d = turn.abs();
-        if d == 0.0 {
+        let dtilt = tilt - from_tilt;
+        let dat = kin::sub(at, from_at);
+        let dist = kin::norm(dat);
+        if turn == 0.0 && dtilt == 0.0 && dist == 0.0 {
             did.push(format!("stage at {}", num(from)));
             return Ok(());
         }
-        let p = motion::Profile::new(STAGE_SPEED / d, STAGE_ACCEL / d);
-        // collision: the turning top against the arms and what they hold
-        let mut arms = Vec::new();
+        // the longest of the three, each at its own speed, sets the time
+        let span = (turn.abs() / STAGE_SPEED)
+            .max(dtilt.abs() / STAGE_SPEED)
+            .max(dist / STAGE_MM_SPEED);
+        let p = motion::Profile::new(1.0 / span, 4.0 / span);
+        let at_s = |s: f64| {
+            (
+                from + turn * s,
+                from_tilt + dtilt * s,
+                kin::add(from_at, kin::scale(dat, s)),
+            )
+        };
+        let mut others = self.fixture_groups();
         for (j, a) in self.arms.iter().enumerate() {
             let held = self.carried(j, rig);
-            arms.push(self.arm_group(j, rig, &a.joints, &held));
+            others.push(self.arm_group(j, rig, &a.joints, &held));
         }
-        // the edge of the vise is at most 40 mm out: steps of CHECK_STEP there
+        others.extend(self.station_groups(None));
+        // a point of the vise up to 100 mm from the axes: steps of CHECK_STEP there
+        let travel = (turn.abs().to_radians() + dtilt.abs().to_radians()) * 100.0 + dist;
         #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
-        let n = ((d.to_radians() * 40.0 / CHECK_STEP).ceil() as usize).max(1);
+        let n = ((travel / CHECK_STEP).ceil() as usize).max(1);
         let mut reached = 1.0;
         let mut stop = None;
         for k in 1..=n {
             #[allow(clippy::cast_precision_loss)]
             let s = k as f64 / n as f64;
-            let g = self.stage_group(from + turn * s);
-            if let Some(what) = collide::first_hit(&g, &arms, &[]) {
-                reached = (k - 1) as f64 / n as f64;
+            let (a, b, c) = at_s(s);
+            let g = self.stage_group_at(a, b, c);
+            if let Some(what) = collide::first_hit(&g, &others, &[]) {
+                #[allow(clippy::cast_precision_loss)]
+                let back = (k - 1) as f64 / n as f64;
+                reached = back;
                 let t = micro(t0 + p.t * s);
                 stop = Some(format!(
                     "collision: {} at {} s",
-                    what.replace("the stage", "the stage's top"),
+                    what.replace("the stage,", "the stage's top,"),
                     num(round3(t))
                 ));
                 break;
             }
         }
-        let end = turn * reached;
         let mut dt = p.t;
         for t in motion::times(p.t) {
-            let a = turn * p.at(t);
-            if a.abs() > end.abs() + 1e-12 {
+            let s = p.at(t);
+            if s > reached + 1e-12 {
                 dt = t;
                 break;
             }
-            self.stage_track.push([micro(t0 + t), kin::clean(from + a)]);
+            let (a, b, c) = at_s(s);
+            self.stage_track.push([
+                micro(t0 + t),
+                kin::clean(a),
+                kin::clean(b),
+                kin::clean(c[0]),
+                kin::clean(c[1]),
+                kin::clean(c[2]),
+            ]);
         }
-        // what the vise holds turns with the stage
-        let spin = Pose::from_xyz_rpy([0.0; 3], [0.0, 0.0, end]);
+        // what the vise holds moves with the stage
+        let before = self.stage_pose();
+        let (a, b, c) = at_s(reached);
+        self.stage = kin::clean(a);
+        self.tilt = kin::clean(b);
+        self.offset = c.map(kin::clean);
+        let moved = self.stage_pose().then(&before.inverse());
         for part in self
             .parts
             .iter_mut()
             .filter(|x| x.holder.as_deref() == Some("vise"))
         {
-            part.at = layout::six(&spin.then(&part.pose()));
+            part.at = layout::six(&moved.then(&part.pose()));
         }
-        self.stage = kin::clean(from + end);
         self.advance(dt, None);
-        did.push(format!(
-            "stage to {} in {} s",
-            num(self.stage),
-            num(round3(dt))
-        ));
+        let mut said = format!("stage to {}", num(self.stage));
+        if self.tilt != 0.0 || from_tilt != 0.0 {
+            said += &format!(" tilt {}", num(self.tilt));
+        }
+        if self.offset != [0.0; 3] || from_at != [0.0; 3] {
+            said += &format!(" at {}", nums(&self.offset));
+        }
+        did.push(format!("{said} in {} s", num(round3(dt))));
         match stop {
             Some(why) => Err(Halt::Stopped(why)),
             None => Ok(()),
@@ -1574,7 +1716,8 @@ impl World {
             .map(|e| json!({ "t0": e.t0, "t1": e.t1, "command": e.command, "rewound": e.rewound }))
             .collect();
         // where things are, for an agent planning a motion
-        let vise = layout::stage_frame(self.stage)
+        let vise = self
+            .stage_pose()
             .then(&kin::Pose::from_xyz_rpy(
                 layout::vise_center_on_stage(),
                 [0.0; 3],
@@ -1591,7 +1734,12 @@ impl World {
             "floor_z": layout::FLOOR,
             "tray_pockets": pockets.iter().map(|p| p.map(|x| (x * 1000.0).round() / 1000.0)).collect::<Vec<_>>(),
             "fixtures": fixtures,
-            "note": "a part's `at` is its origin (x y z mm, roll pitch yaw degrees); placed with its origin at vise_center and closed, the vise holds it (place ARM PART at=<vise_center>); a part's pins' tips are frames for align (U1.3.tip)",
+            "stations": crate::stations::data().unwrap_or_default().iter().map(|s| {
+                let ext = self.stations.iter().find(|x| x.name == s.name).map_or(0.0, |x| x.ext);
+                json!({ "name": s.name, "tool": s.tool, "point": s.point, "from": s.from.map(|x| (x * 1000.0).round() / 1000.0), "stroke": s.stroke, "extended": ext })
+            }).collect::<Vec<_>>(),
+            "positioner": { "turn": self.stage, "tilt": self.tilt, "at": self.offset, "xy_mm": layout::POSITIONER_XY, "z_mm": [layout::POSITIONER_Z.0, layout::POSITIONER_Z.1], "tilt_deg": layout::POSITIONER_TILT },
+            "note": "a part's `at` is its origin (x y z mm, roll pitch yaw degrees); placed with its origin at vise_center and closed, the vise holds it (place ARM PART at=<vise_center>); a part's pins' tips are frames for align (U1.3.tip), and points along a lead (U1.3.6); the tool stations (S1 iron, S2 solder feeder, S3 welder) reach their point: present a pin or joint there (present U1.3.tip at=S1 and=S2), bring the other lead to it with an arm, then touch, feed or weld with the station",
         });
         json!({ "t": self.t, "circuit": self.circuit, "arms": arms, "parts": parts, "joints": joints, "stage": self.stage, "vise": self.vise, "places": places, "timeline": timeline })
     }
@@ -1623,11 +1771,11 @@ pub(crate) fn num1(x: f64) -> String {
     num(kin::clean((x * 10.0).round() / 10.0))
 }
 
-fn round3(x: f64) -> f64 {
+pub(crate) fn round3(x: f64) -> f64 {
     kin::clean((x * 1000.0).round() / 1000.0)
 }
 
-fn nums(xs: &[f64]) -> String {
+pub(crate) fn nums(xs: &[f64]) -> String {
     xs.iter().map(|x| num(*x)).collect::<Vec<_>>().join(" ")
 }
 

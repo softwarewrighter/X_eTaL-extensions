@@ -359,7 +359,11 @@ ghost is drawn faint where a part will end. `heat(id, rows)` gives a
 part's temperatures over time (its body, each pin's hottest lead
 segment), drawn as a glow from 100 C, and `joint(name, part, xyz,
 rows, result, t)` a joint's solder, a ball on its part that grows,
-glows while molten and takes its result's color once frozen (a weld: a small nugget, gold when welded, dull when weak, dark when blown out). Close up
+glows while molten and takes its result's color once frozen (a weld: a small nugget, gold when welded, dull when weak, dark when blown out). `station(id, tool, housing,
+rows)` draws a tool station: its housing (a box), its tool's model at
+the mount's pose over time, and a pole between them. The stage's track
+is the positioner's: turn, tilt and offset (an older track, the turn
+alone). Close up
 switches the camera to the work zone and back (`?view=close` starts
 there).
 

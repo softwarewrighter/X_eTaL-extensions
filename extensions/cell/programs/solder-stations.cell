@@ -1,0 +1,24 @@
+# Soldering at tool stations (decision C17): the DIP into the vise; arm
+# A picks a resistor while the positioner brings pin 3's tip to the
+# stations' working point, turned and tilted so the iron's and the
+# feeder's lines are clear; arm A brings the resistor's lead to it; station S1's iron extends onto the
+# joint, station S2 feeds solder into it, the iron backs away and the
+# joint freezes; the resistor stays, soldered on.
+reset circuit=demo
+tool A tweezers
+pick A U1 grasp=ends
+place A U1 at=0,0,-32 rpy=0,0,90
+vise close
+release A U1
+lift A mm=60
+pick A R1 grasp=body
+present U1.3.tip at=S1 and=S2
+move A to=40,60,60
+align A R1.1.tip to=U1.3.tip gap=0.1
+touch S1 at=U1.3+R1.1 dwell=2
+feed S2 mm=2 rate=1
+back S1
+wait until=U1.3+R1.1 below=100
+inspect U1.3+R1.1
+release A R1
+lift A mm=40

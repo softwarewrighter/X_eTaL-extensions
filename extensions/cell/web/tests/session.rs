@@ -47,7 +47,14 @@ fn a_session() {
 
 #[test]
 fn the_offered_programs_run_clean() {
-    for name in ["solder", "weld", "pick", "arms"] {
+    for name in [
+        "solder",
+        "solder-stations",
+        "weld",
+        "weld-stations",
+        "pick",
+        "arms",
+    ] {
         let _ = cell_web::reset("none");
         let o = json(&cell_web::command(&cell_web::program(name)));
         for x in o["outcomes"].as_array().unwrap() {

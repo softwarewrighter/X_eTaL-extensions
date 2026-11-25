@@ -15,19 +15,20 @@ tool ARM TOOL [temp=C] -- change the arm's tool at the rack
 joints ARM J1 J2 J3 J4 J5 J6 [speed=N] -- move the arm to absolute joint angles, all joints arriving together
 move ARM to=X,Y,Z [rpy=R,P,Y] [speed=MM/S] -- move the tool to a pose, by inverse kinematics, in a straight line
 lift ARM [mm=MM] -- move the tool straight up
-back ARM [mm=MM] -- move the tool straight back along its own axis, away from what it touches
+back ARM|STATION [mm=MM] -- move the tool straight back along its own axis, away from what it touches
 grip ARM open|close [force=N] -- open or close the tweezers
 pick ARM PART grasp=NAME -- approach a part, close on a grasp frame, lift it
 place ARM PART at=X,Y,Z [rpy=R,P,Y] -- carry the held part to a pose
 align ARM FRAME to=FRAME [gap=MM] -- bring a frame of the held part to another frame, a gap apart
 release ARM PART -- open the tweezers and let the part go
 clip ARM on=PIN at=MM -- clip a heatsink on a lead, between the body and the joint
-touch ARM at=JOINT [dwell=S] -- put the iron's tip on a joint and hold it there
-feed ARM mm=MM [rate=MM/S] -- feed solder wire into the joint the iron is on
-weld ARM at=JOINT energy=J [risky=refuse|allow] -- spot weld a lap of two leads by a capacitor discharge
+touch ARM|STATION at=JOINT [dwell=S] -- put the iron's tip on a joint and hold it there
+feed ARM|STATION mm=MM [rate=MM/S] -- feed solder wire into the joint the iron is on
+weld ARM|STATION at=JOINT energy=J [risky=refuse|allow] -- spot weld a lap of two leads by a capacitor discharge
 wire ARM awg=N mm=MM -- feed bare or enameled wire from a spool out of the nozzle
 cut ARM -- cut the wire or the lead in the cutter's jaws
-stage turn=DEG -- turn the rotary stage by an angle
+stage [turn=DEG] [tilt=DEG] [at=X,Y,Z] -- move the positioner: turn the stage by an angle, tilt it, move it
+present FRAME|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG] -- move the positioner so a pin's frame or a joint is at a tool station's point
 vise open|close -- open or close the vise on the stage
 wait [s=S] [until=TARGET] [below=C] -- let time pass, or wait until a pin or joint cools
 scope [pan=DEG] [tilt=DEG] [zoom=N] [focus=MM] [rotate=DEG] [aim=TARGET] -- move the microscope: pan, tilt, zoom, focus, rotate, or aim it at a target

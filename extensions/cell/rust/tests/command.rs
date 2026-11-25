@@ -43,9 +43,12 @@ cut D
 probe U1.3 R1.2
 rewind t=12.5
 back C mm=20
+stage tilt=-30 at=0,10,40
+present U1.3.tip at=S1 and=S2 turn=45
+touch S1 at=U1.3+R1.1 dwell=2
 ";
     let p = parse_program(program).unwrap();
-    assert_eq!(p.len(), 28);
+    assert_eq!(p.len(), 31);
     for c in &p {
         round_trip(&c.to_text());
     }
@@ -62,8 +65,8 @@ fn every_command_has_an_example() {
     // the examples above cover the whole table
     let covered = [
         "reset", "tool", "joints", "move", "lift", "back", "grip", "pick", "place", "align",
-        "release", "clip", "touch", "feed", "weld", "wire", "cut", "stage", "vise", "wait",
-        "scope", "snap", "inspect", "probe", "rewind",
+        "release", "clip", "touch", "feed", "weld", "wire", "cut", "stage", "present", "vise",
+        "wait", "scope", "snap", "inspect", "probe", "rewind",
     ];
     let ops: Vec<&str> = COMMANDS.iter().map(|s| s.op).collect();
     assert_eq!(ops, covered);

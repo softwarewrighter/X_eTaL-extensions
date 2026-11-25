@@ -5,7 +5,8 @@
 //   fixture(id, model, pose)            a fixture's model at a pose
 //   rig(id, model, base)                an arm's model at its base
 //   track(id, rows)                     an arm's joints over time: rows of
-//                                       t j1 .. j6; id 'stage': t angle
+//                                       t j1 .. j6; id 'stage': t turn tilt
+//                                       x y z (the positioner)
 //   part(id, kind, pose)                a part where it starts
 //   attach(id, arm, t0, t1)             the part (or tool) moves with the
 //                                       arm's flange from t0 to t1, then
@@ -25,6 +26,9 @@
 //   ghost(id, kind, pose)               where a part ends: drawn faint,
 //                                       before it is there
 //   step(n, label, t0, t1)              a command, for the list of steps
+//   station(id, tool, housing, rows)    a tool station: its housing's pose,
+//                                       its tool's mount over time (t x y z
+//                                       r p y): drawn with a pole between
 //   expect(id, t, xyz)                  where an arm's flange (or a part's
 //                                       origin) is at t, for the check
 //                                       (?check)
@@ -99,7 +103,7 @@ export function cellPlayer(host, calls, options = {}) {
   scene.add(root);
   const folder = options.models || './models/';
   const s = {
-    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
+    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], stations: [], attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
   };
   const api = {
     nums,
@@ -115,6 +119,7 @@ export function cellPlayer(host, calls, options = {}) {
     ghost(id, kind, pose) { s.ghosts.push({ id, kind, pose }); },
     step(n, label, t0, t1) { s.steps.push({ n, label, t0, t1 }); },
     expect(arm, t, xyz) { s.expects.push({ arm, t, xyz }); },
+    station(id, tool, housing, rows) { s.stations.push({ id, tool, housing, rows }); },
   };
   new Function(...Object.keys(api), calls)(...Object.values(api));
   const duration = Math.max(0, ...s.steps.map((x) => x.t1), ...s.places.map((x) => x.t), ...Object.values(s.tracks).map((r) => (r.length ? r[r.length - 1][0] : 0)));
@@ -184,7 +189,7 @@ export function cellPlayer(host, calls, options = {}) {
     g.add(inner);
     return g;
   };
-  const arms = {}, fixtures = {}, parts = {};
+  const arms = {}, fixtures = {}, parts = {}, stations = {};
   const Y = new THREE.Vector3(0, 1, 0);
   const ready = Promise.all([
     ...s.fixtures.map(async (f) => {
@@ -192,7 +197,7 @@ export function cellPlayer(host, calls, options = {}) {
       g.matrixAutoUpdate = false;
       g.matrix.copy(poseMatrix(f.pose));
       root.add(g);
-      fixtures[f.id] = { g, turn: g.getObjectByName('stage_turn') };
+      fixtures[f.id] = { g, base: g.matrix.clone(), turn: g.getObjectByName('stage_turn') };
       if (fixtures[f.id].turn) fixtures[f.id].rest = fixtures[f.id].turn.quaternion.clone();
     }),
     ...s.rigs.map(async (r) => {
@@ -218,6 +223,21 @@ export function cellPlayer(host, calls, options = {}) {
         if (m) (glow.pins[m[1]] ||= []).push(o.material); else glow.body.push(o.material);
       });
       parts[p.id] = { g, start: poseMatrix(p.pose), glow };
+    }),
+    // a tool station: its housing, its pole, its tool on the pole's end
+    ...s.stations.map(async (st) => {
+      const tool = holder((await load(st.tool)).clone(true));
+      tool.matrixAutoUpdate = false;
+      root.add(tool);
+      const steel = new THREE.MeshStandardMaterial({ color: '#8a9098', metalness: 0.6, roughness: 0.4 });
+      const housing = new THREE.Mesh(new THREE.BoxGeometry(40, 40, 60), new THREE.MeshStandardMaterial({ color: '#4a5260', roughness: 0.7 }));
+      housing.matrixAutoUpdate = false;
+      housing.matrix.copy(poseMatrix(st.housing));
+      root.add(housing);
+      const pole = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 1, 16), steel);
+      pole.matrixAutoUpdate = false;
+      root.add(pole);
+      stations[st.id] = { tool, pole, rows: st.rows, front: new THREE.Vector3(0, 0, -30).applyMatrix4(poseMatrix(st.housing)) };
     }),
     ...s.ghosts.map(async (p) => {
       const g = holder((await load(p.kind)).clone(true));
@@ -269,9 +289,28 @@ export function cellPlayer(host, calls, options = {}) {
     }
     return m;
   };
+  // the positioner: the stage turned about its own z, tilted about x
+  // and moved (a track's row: turn, tilt, x, y, z; an older one: turn)
   const turnStage = (u) => {
     const st = fixtures.stage;
-    if (st && st.turn) st.turn.quaternion.copy(st.rest).multiply(new THREE.Quaternion().setFromAxisAngle(Y, (at(s.tracks.stage, u) || [0])[0] * D));
+    if (!st) return;
+    const [turn = 0, tilt = 0, x = 0, y = 0, z = 0] = at(s.tracks.stage, u) || [];
+    if (st.turn) st.turn.quaternion.copy(st.rest).multiply(new THREE.Quaternion().setFromAxisAngle(Y, turn * D));
+    st.g.matrix.makeTranslation(x, y, z).multiply(st.base).multiply(new THREE.Matrix4().makeRotationX(tilt * D));
+    st.g.matrixWorldNeedsUpdate = true;
+  };
+  // the stations: each tool at its mount, the pole from the housing to it
+  const stationsAt = (u) => {
+    for (const st of Object.values(stations)) {
+      const m = poseMatrix(at(st.rows, u));
+      st.tool.matrix.copy(m);
+      const end = new THREE.Vector3().setFromMatrixPosition(m);
+      const len = Math.max(0.01, end.distanceTo(st.front));
+      const mid = end.clone().add(st.front).multiplyScalar(0.5);
+      const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), st.front.clone().sub(end).normalize());
+      st.pole.matrix.compose(mid, q, new THREE.Vector3(1, len, 1));
+      st.pole.visible = len > 0.5;
+    }
   };
   // heat as a glow from 100 C: dull red, orange, yellow white at the
   // iron's temperature (a part only warm keeps its own color)
@@ -321,6 +360,7 @@ export function cellPlayer(host, calls, options = {}) {
     heatAt(now);
     jointAt(now);
     turnStage(now);
+    stationsAt(now);
     ui.show();
     draw();
   };
@@ -364,6 +404,11 @@ export function cellPlayer(host, calls, options = {}) {
       out.parts = {};
       for (const id of Object.keys(parts)) {
         const p = new THREE.Vector3().setFromMatrixPosition(parts[id].g.matrix);
+        out.parts[id] = [p.x, p.y, p.z].map((x) => +x.toFixed(3));
+      }
+      // a station's tool mount, checked as a part's place is
+      for (const id of Object.keys(stations)) {
+        const p = new THREE.Vector3().setFromMatrixPosition(stations[id].tool.matrix);
         out.parts[id] = [p.x, p.y, p.z].map((x) => +x.toFixed(3));
       }
       return out;

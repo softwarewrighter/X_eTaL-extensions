@@ -1,0 +1,21 @@
+# Welding at a tool station (decision C17): a ceramic disc into the
+# vise; arm A picks a second disc while the positioner brings a point
+# 6 mm down the first's lead 2 to the stations' working point; arm A
+# lays the second disc's lead there;
+# station S3's welder extends onto the lap and discharges; the second
+# disc stays, welded on.
+reset circuit=weld
+tool A tweezers
+pick A C1 grasp=body
+place A C1 at=0,0,-32
+vise close
+release A C1
+lift A mm=60
+pick A C2 grasp=body
+present C1.2.6 at=S3
+move A to=0,40,40 rpy=-90,0,90
+align A C2.1.tip to=C1.2.6 gap=0.1
+weld S3 at=C1.2+C2.1 energy=8
+inspect C1.2+C2.1
+release A C2
+lift A mm=40

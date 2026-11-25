@@ -127,6 +127,17 @@ fn the_tools_come_from_the_command_table() {
     assert_eq!(schema["required"], json!(["arm", "to"]));
     assert!(schema["properties"].get("op").is_none());
     assert_eq!(schema["properties"]["speed"]["maximum"], 500.0);
+    // the stations: an arm or a station touches; present names a station
+    let touch = tools.iter().find(|t| t["name"] == "cell_touch").unwrap();
+    assert_eq!(
+        touch["inputSchema"]["properties"]["arm"]["enum"],
+        json!(["A", "B", "C", "D", "S1", "S2", "S3"])
+    );
+    let present = tools.iter().find(|t| t["name"] == "cell_present").unwrap();
+    assert_eq!(
+        present["inputSchema"]["properties"]["at"]["enum"],
+        json!(["S1", "S2", "S3"])
+    );
 }
 
 #[test]

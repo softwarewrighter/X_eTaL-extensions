@@ -1,0 +1,39 @@
+# Tool stations (decision C17): a tool on a linear actuator -- a
+# telescoping pole -- fixed in the cell along a line toward a working
+# point. Extended, its tool's tip is at the point; retracted, `stroke` mm
+# back along the line. The work comes to the station: the positioner
+# turns, tilts and moves the stage so a joint is at the point
+# (`present`). Units: mm, C. Every number is illustrative.
+#
+# The layout was chosen by trying candidates on every program (the
+# cell's page, "Tool stations"): lines from the side slightly below the
+# work keep clear of the arms, which work from above.
+#
+# `from` is the direction from the point back toward the station's
+# housing (it need not be a unit vector); `point` the working point, the
+# cell's work zone if not given.
+
+point = [0.0, 0.0, 0.0]
+
+# the iron, from between arms B and C, coming up slightly from below
+[[station]]
+name = "S1"
+tool = "iron"
+from = [-1.0, -1.0, -0.4]
+stroke = 120.0
+temp = 350.0
+
+# the solder feeder, from between arms C and D, coming up slightly
+# from below (under the gantry's post)
+[[station]]
+name = "S2"
+tool = "solder"
+from = [1.0, -1.0, -0.4]
+stroke = 120.0
+
+# the welder, from below, between arms A and B
+[[station]]
+name = "S3"
+tool = "welder"
+from = [-1.0, 1.0, -1.2]
+stroke = 120.0

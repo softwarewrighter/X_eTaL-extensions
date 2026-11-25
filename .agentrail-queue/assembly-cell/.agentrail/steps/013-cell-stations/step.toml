@@ -1,6 +1,6 @@
 number = 13
 slug = "cell-stations"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 13 (inserted 2026-11-24, decision C17, the user's idea: tools on..."
 role = "production"
 context_files = []

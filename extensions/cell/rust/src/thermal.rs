@@ -67,7 +67,7 @@ fn area_mm2(kind: &PartKind) -> f64 {
 
 /// A tool touching leads: its arm, `iron` or `clip`, its tip, and the
 /// lead nodes it touches (part, pin, node).
-type Touch<'a> = (usize, &'a str, V3, Vec<(usize, usize, usize)>);
+type Touch<'a> = (f64, &'a str, V3, Vec<(usize, usize, usize)>);
 
 /// A joint in the network: its index, its solder's node, and the nodes
 /// of its two leads at it.
@@ -254,8 +254,29 @@ impl World {
                     }
                 }
                 if !near.is_empty() {
-                    touches.push((i, if tool == "iron" { "iron" } else { "clip" }, tip, near));
+                    let set = a.iron.unwrap_or(th.iron.set_c);
+                    touches.push((set, if tool == "iron" { "iron" } else { "clip" }, tip, near));
                 }
+            }
+        }
+        // the stations' irons, extended
+        for (name, tip) in self.station_tips("iron") {
+            let mut near = Vec::new();
+            for (k, pins) in where_.iter().enumerate() {
+                if self.parts[k].lost {
+                    continue;
+                }
+                for (pi, nodes) in pins.iter().enumerate() {
+                    for (ni, (at, _)) in nodes.iter().enumerate() {
+                        if kin::norm(kin::sub(*at, tip)) <= TOUCH_MM {
+                            near.push((k, pi, ni));
+                        }
+                    }
+                }
+            }
+            if !near.is_empty() {
+                let set = crate::stations::temp(&name).unwrap_or(th.iron.set_c);
+                touches.push((set, "iron", tip, near));
             }
         }
         let warm = |p: &crate::world::Part| p.temps.iter().any(|t| (t - amb).abs() > COOL);
@@ -388,9 +409,9 @@ impl World {
         }
         // the tools that touch: an iron held at its set point by its
         // heater, a clip drawing heat away
-        for (i, tool, tip, near) in &touches {
+        for (set, tool, tip, near) in &touches {
             if *tool == "iron" {
-                let set = self.arms[*i].iron.unwrap_or(th.iron.set_c);
+                let set = *set;
                 let n = net.node(th.iron.tip_heat_capacity, set, 0.0);
                 net.heater[n] = Some(Heater {
                     set,
@@ -890,7 +911,7 @@ impl World {
 
     /// The parts of a joint, and whatever carries them, which a tool at
     /// the joint may touch.
-    fn touching(&self, j: &Joint) -> Vec<String> {
+    pub(crate) fn touching(&self, j: &Joint) -> Vec<String> {
         let mut out = Vec::new();
         for pin in [&j.a, &j.b] {
             if let Some(id) = pin.split('.').next() {
@@ -965,28 +986,7 @@ impl World {
         warnings: &mut Vec<String>,
     ) -> Result<(), Halt> {
         self.need(i, "solder")?;
-        // the joint an iron is on
-        let mut on = None;
-        for (a, arm) in self.arms.iter().enumerate() {
-            if a == i || arm.tool.as_deref() != Some("iron") {
-                continue;
-            }
-            let tip = arm
-                .base_pose()
-                .then(&kin::forward(rig, &arm.joints))
-                .then(&kin::tz(layout::tool_length("iron")))
-                .p;
-            for (ji, j) in self.joints.iter().enumerate() {
-                if self
-                    .joint_point(j)
-                    .is_some_and(|p| kin::norm(kin::sub(p, tip)) <= TOUCH_MM * 1.5)
-                {
-                    on = Some((ji, arm.name.clone()));
-                }
-            }
-        }
-        let (ji, iron_arm) =
-            on.ok_or_else(|| Halt::Refused("no iron is on a joint: touch one first".into()))?;
+        let (ji, iron_arm) = self.iron_on_joint(rig, &self.arms[i].name.clone())?;
         let at = self.joint_point(&self.joints[ji]).unwrap_or([0.0; 3]);
         let r = approach(&self.arms[i].base_pose(), at);
         let z = [r[0][2], r[1][2], r[2][2]];
@@ -999,9 +999,64 @@ impl World {
             r,
         };
         let mut allowed = self.touching(&self.joints[ji]);
-        allowed.push(format!("arm:{iron_arm}"));
+        allowed.push(crate::stations::group_name(&iron_arm));
         self.line(i, rig, &back, LINE_SPEED, &[], did)?;
         self.line(i, rig, &target, CAREFUL, &allowed, did)?;
+        self.feed_melt(ji, mm, rate, did, events, warnings)?;
+        self.line(i, rig, &back, LINE_SPEED, &allowed, did)
+    }
+
+    /// Every iron on a joint: the joint's index and the arm's or
+    /// station's name, but `not` (the feeder's own).
+    pub(crate) fn iron_on_joint(&self, rig: &Rig, not: &str) -> Result<(usize, String), Halt> {
+        let mut on = None;
+        for (name, tip) in self.irons(rig) {
+            if name == not {
+                continue;
+            }
+            for (ji, j) in self.joints.iter().enumerate() {
+                if self
+                    .joint_point(j)
+                    .is_some_and(|p| kin::norm(kin::sub(p, tip)) <= TOUCH_MM * 1.5)
+                {
+                    on = Some((ji, name.clone()));
+                }
+            }
+        }
+        on.ok_or_else(|| Halt::Refused("no iron is on a joint: touch one first".into()))
+    }
+
+    /// The irons' tips: each arm holding one, each station's extended.
+    pub(crate) fn irons(&self, rig: &Rig) -> Vec<(String, V3)> {
+        let mut out: Vec<(String, V3)> = self
+            .arms
+            .iter()
+            .filter(|a| a.tool.as_deref() == Some("iron"))
+            .map(|a| {
+                (
+                    a.name.clone(),
+                    a.base_pose()
+                        .then(&kin::forward(rig, &a.joints))
+                        .then(&kin::tz(layout::tool_length("iron")))
+                        .p,
+                )
+            })
+            .collect();
+        out.extend(self.station_tips("iron"));
+        out
+    }
+
+    /// Solder wire fed into joint `ji`, `mm` at `rate` mm/s: it melts
+    /// where the joint is above the liquidus.
+    pub(crate) fn feed_melt(
+        &mut self,
+        ji: usize,
+        mm: f64,
+        rate: f64,
+        did: &mut Vec<String>,
+        events: &mut Vec<String>,
+        warnings: &mut Vec<String>,
+    ) -> Result<(), Halt> {
         let th = solder::data().map_err(Halt::Refused)?;
         let per_s = std::f64::consts::PI * th.wire.diameter * th.wire.diameter / 4.0 * rate;
         let total = mm / rate;
@@ -1033,7 +1088,7 @@ impl World {
                 num1(cold)
             ));
         }
-        self.line(i, rig, &back, LINE_SPEED, &allowed, did)
+        Ok(())
     }
 
     /// `clip ARM on=PIN at=MM`: a heatsink clip on the pin's lead, `at` mm
@@ -1264,6 +1319,36 @@ impl World {
         warnings: &mut Vec<String>,
     ) -> Result<(), Halt> {
         self.need(i, "welder")?;
+        let plan = self.weld_plan(rig, name, energy, allow)?;
+        // the electrodes onto the lap, as the iron comes
+        let at = self
+            .joint_point(&self.joints[plan.ji])
+            .ok_or_else(|| Halt::Refused(format!("{name}: its part is gone")))?;
+        let r = approach(&self.arms[i].base_pose(), at);
+        let target = Pose { p: at, r };
+        let back = Pose {
+            p: kin::sub(at, kin::scale(target.z(), STANDOFF)),
+            r,
+        };
+        let allowed = self.touching(&self.joints[plan.ji]);
+        self.line(i, rig, &back, LINE_SPEED, &[], did)?;
+        self.line(i, rig, &target, CAREFUL, &allowed, did)?;
+        let who = self.arms[i].name.clone();
+        self.weld_fire(&plan, &who, did, events, warnings);
+        let leave = self.near_tip(at);
+        self.line(i, rig, &back, CAREFUL, &leave, did)
+    }
+
+    /// A weld's checks before any motion: the welder's most, the lap
+    /// (bare, not joined), the metals' judgment, the semiconductors at
+    /// risk (refused unless `allow`).
+    pub(crate) fn weld_plan(
+        &mut self,
+        rig: &Rig,
+        name: &str,
+        energy: f64,
+        allow: bool,
+    ) -> Result<WeldPlan, Halt> {
         let w = crate::weld::data().map_err(Halt::Refused)?;
         let most = w.welder.capacitance_f * w.welder.max_v * w.welder.max_v / 2.0;
         if energy > most {
@@ -1313,38 +1398,51 @@ impl World {
                 why.join("; ")
             )));
         }
-        // the electrodes onto the lap, as the iron comes
-        let at = self
-            .joint_point(&self.joints[ji])
-            .ok_or_else(|| Halt::Refused(format!("{name}: its part is gone")))?;
-        let r = approach(&self.arms[i].base_pose(), at);
-        let target = Pose { p: at, r };
-        let back = Pose {
-            p: kin::sub(at, kin::scale(target.z(), STANDOFF)),
-            r,
-        };
-        let allowed = self.touching(&self.joints[ji]);
-        self.line(i, rig, &back, LINE_SPEED, &[], did)?;
-        self.line(i, rig, &target, CAREFUL, &allowed, did)?;
-        let arm = self.arms[i].name.clone();
+        Ok(WeldPlan {
+            ji,
+            energy,
+            volts: crate::weld::volts(&w, energy),
+            farads: w.welder.capacitance_f,
+            ma,
+            mb,
+            fused,
+            window,
+            risk,
+        })
+    }
+
+    /// The discharge, the electrodes on the lap: what it came to, the
+    /// damage, a moment's hold.
+    pub(crate) fn weld_fire(
+        &mut self,
+        plan: &WeldPlan,
+        who: &str,
+        did: &mut Vec<String>,
+        events: &mut Vec<String>,
+        warnings: &mut Vec<String>,
+    ) {
+        let ji = plan.ji;
+        let energy = plan.energy;
         let jname = self.joints[ji].name.clone();
         events.push(format!(
-            "{arm} discharges {} J ({} V on {} F) through {jname}",
+            "{who} discharges {} J ({} V on {} F) through {jname}",
             num1(energy),
-            num1(crate::weld::volts(&w, energy)),
-            w.welder.capacitance_f
+            num1(plan.volts),
+            plan.farads
         ));
         let amb = solder::data().map_or(25.0, |t| t.ambient_c);
         let t = self.t;
         let in_window = |lo: f64, hi: f64| format!("{} to {} J", num1(lo), num1(hi));
+        let (ma, mb) = (&plan.ma, &plan.mb);
         let pair = if ma == mb {
             format!("{ma} to {ma}")
         } else {
             format!("{ma} to {mb}")
         };
+        let window = plan.window;
         {
             let j = &mut self.joints[ji];
-            match fused {
+            match plan.fused {
                 crate::weld::Fused::Welded(q) => {
                     j.result = Some(q.to_string());
                     j.weld = Some(energy);
@@ -1385,7 +1483,7 @@ impl World {
                 }
             }
         }
-        if fused == crate::weld::Fused::Blown {
+        if plan.fused == crate::weld::Fused::Blown {
             for pin in [self.joints[ji].a.clone(), self.joints[ji].b.clone()] {
                 let id = pin.split('.').next().unwrap_or("").to_string();
                 if let Some(p) = self.parts.iter_mut().find(|p| p.id == id) {
@@ -1394,19 +1492,36 @@ impl World {
                 warnings.push(format!("{id} is damaged: {pin}'s lead burned through"));
             }
         }
-        for (k, why) in risk {
-            self.parts[k].damaged = true;
+        for (k, why) in &plan.risk {
+            self.parts[*k].damaged = true;
             warnings.push(format!(
                 "{} is damaged by the transient (allowed): {why}",
-                self.parts[k].id
+                self.parts[*k].id
             ));
         }
-        // a moment's hold, then the electrodes back
         self.advance(WELD_HOLD, None);
         did.push(format!("hold {} s", num1(WELD_HOLD)));
-        let leave = self.near_tip(at);
-        self.line(i, rig, &back, CAREFUL, &leave, did)
     }
+}
+
+impl WeldPlan {
+    /// The lap's joint.
+    pub(crate) fn joint(&self) -> usize {
+        self.ji
+    }
+}
+
+/// A weld checked and judged, ready to fire.
+pub(crate) struct WeldPlan {
+    ji: usize,
+    energy: f64,
+    volts: f64,
+    farads: f64,
+    ma: String,
+    mb: String,
+    fused: crate::weld::Fused,
+    window: Option<(f64, f64)>,
+    risk: Vec<(usize, String)>,
 }
 
 /// How long the electrodes stay on the lap, s.

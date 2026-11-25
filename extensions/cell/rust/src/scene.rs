@@ -8,7 +8,8 @@
 //! fixture('stage', 'stage', nums('0 0 -60 0 0 0', 6)[0])
 //! rig('A', 'arm', nums('0 450 -200 0 0 -90', 6)[0])
 //! track('A', nums('t j1 j2 j3 j4 j5 j6 ...', 7))
-//! track('stage', nums('t angle ...', 2))
+//! track('stage', nums('t turn tilt x y z ...', 6))
+//! station('S1', 'iron', nums('housing x y z r p y', 6)[0], nums('t x y z r p y ...', 7))
 //! part('U1', 'dip8', nums('x y z r p y', 6)[0])
 //! attach('U1', 'A', t0, t1)          (an arm's hold; 'stage': the vise's)
 //! place('U1', t, nums('x y z r p y', 6)[0])   (where a fall ended)
@@ -88,7 +89,34 @@ pub fn calls(name: &str, w: &World) -> Result<String, String> {
         let _ = writeln!(out, "track({}, {})", quote(&a.name), table(&rows, 7));
     }
     let rows: Vec<Vec<f64>> = w.stage_track.iter().map(|r| r.to_vec()).collect();
-    let _ = writeln!(out, "track('stage', {})", table(&rows, 2));
+    let _ = writeln!(out, "track('stage', {})", table(&rows, 6));
+    // the tool stations: the housing, and the tool's mount over time
+    let all = crate::stations::data().unwrap_or_default();
+    for st in &w.stations {
+        let Some(s) = all.iter().find(|s| s.name == st.name) else {
+            continue;
+        };
+        let rows: Vec<Vec<f64>> = st
+            .track
+            .iter()
+            .map(|r| {
+                let m = crate::layout::six(&s.mount(r[1]));
+                std::iter::once(r[0])
+                    .chain(m.iter().map(|x| kin::clean((x * 1000.0).round() / 1000.0)))
+                    .collect()
+            })
+            .collect();
+        let housing =
+            crate::layout::six(&s.housing()).map(|x| kin::clean((x * 1000.0).round() / 1000.0));
+        let _ = writeln!(
+            out,
+            "station({}, {}, {}, {})",
+            quote(&s.name),
+            quote(&s.tool),
+            row(&housing),
+            table(&rows, 7)
+        );
+    }
     for p in w.tools.iter().chain(&w.parts) {
         thing(&mut out, p);
     }
@@ -144,6 +172,21 @@ pub fn calls(name: &str, w: &World) -> Result<String, String> {
             let _ = writeln!(out, "expect({}, {}, {})", quote(&a.name), num(t), row(&r));
         }
     }
+    // each station's tool mount, at the same times
+    let all = crate::stations::data().unwrap_or_default();
+    for st in &w.stations {
+        let Some(s) = all.iter().find(|s| s.name == st.name) else {
+            continue;
+        };
+        for &t in times.iter().step_by(step) {
+            let ext = ext_at(&st.track, t);
+            let r = s
+                .mount(ext)
+                .p
+                .map(|x| kin::clean((x * 1000.0).round() / 1000.0));
+            let _ = writeln!(out, "expect({}, {}, {})", quote(&s.name), num(t), row(&r));
+        }
+    }
     // and where every part and tool ends
     let end = w
         .timeline
@@ -191,5 +234,18 @@ fn thing(out: &mut String, p: &Part) {
     }
     for m in &p.moves {
         let _ = writeln!(out, "place({}, {}, {})", quote(&p.id), num(m.t), row(&m.at));
+    }
+}
+
+/// A station's extension at time `t`, from its track (linear between
+/// rows, held at the ends).
+fn ext_at(track: &[[f64; 2]], t: f64) -> f64 {
+    match track.iter().position(|r| r[0] > t) {
+        None => track.last().map_or(0.0, |r| r[1]),
+        Some(0) => track[0][1],
+        Some(k) => {
+            let (a, b) = (track[k - 1], track[k]);
+            a[1] + (b[1] - a[1]) * (t - a[0]) / (b[0] - a[0]).max(1e-12)
+        }
     }
 }

@@ -24,6 +24,12 @@ pub const TOOLS: [&str; 7] = [
 pub enum Kind {
     /// An arm: `A` to `D`.
     Arm,
+    /// An arm or a tool station (`S1`).
+    Actor,
+    /// A tool station: `S1`.
+    Station,
+    /// A frame or a joint: what the positioner presents.
+    Spot,
     /// A tool in the rack.
     Tool,
     /// A part's id: a capital letter, then letters, digits or `_`: `U1`.
@@ -97,6 +103,7 @@ const fn opt(name: &'static str, kind: Kind, doc: &'static str) -> Arg {
 }
 
 const ARM: Arg = req("arm", Kind::Arm, "the arm");
+const ACTOR: Arg = req("arm", Kind::Actor, "the arm, or a tool station");
 const OPEN_CLOSE: &[&str] = &["open", "close"];
 
 /// The command table: the one source of the language.
@@ -164,7 +171,7 @@ pub const COMMANDS: &[Spec] = &[
         op: "back",
         family: "arm",
         summary: "move the tool straight back along its own axis, away from what it touches",
-        positional: &[ARM],
+        positional: &[ACTOR],
         named: &[opt(
             "mm",
             Kind::Number("mm", 0.0, 100.0),
@@ -245,7 +252,7 @@ pub const COMMANDS: &[Spec] = &[
         op: "touch",
         family: "iron",
         summary: "put the iron's tip on a joint and hold it there",
-        positional: &[ARM],
+        positional: &[ACTOR],
         named: &[
             req("at", Kind::Joint, "the joint"),
             opt(
@@ -259,7 +266,7 @@ pub const COMMANDS: &[Spec] = &[
         op: "feed",
         family: "solder",
         summary: "feed solder wire into the joint the iron is on",
-        positional: &[ARM],
+        positional: &[ACTOR],
         named: &[
             req("mm", Kind::Number("mm", 0.0, 20.0), "of solder wire"),
             opt(
@@ -273,7 +280,7 @@ pub const COMMANDS: &[Spec] = &[
         op: "weld",
         family: "welder",
         summary: "spot weld a lap of two leads by a capacitor discharge",
-        positional: &[ARM],
+        positional: &[ACTOR],
         named: &[
             req("at", Kind::Joint, "the lap"),
             req(
@@ -308,13 +315,49 @@ pub const COMMANDS: &[Spec] = &[
     Spec {
         op: "stage",
         family: "stage",
-        summary: "turn the rotary stage by an angle",
+        summary: "move the positioner: turn the stage by an angle, tilt it, move it",
         positional: &[],
-        named: &[req(
-            "turn",
-            Kind::Number("deg", -360.0, 360.0),
-            "counterclockwise seen from above",
+        named: &[
+            opt(
+                "turn",
+                Kind::Number("deg", -360.0, 360.0),
+                "by, counterclockwise seen from above",
+            ),
+            opt("tilt", Kind::Number("deg", -90.0, 90.0), "to, about x"),
+            opt(
+                "at",
+                Kind::Vec3("mm"),
+                "to, the stage's top from its place at rest",
+            ),
+        ],
+    },
+    Spec {
+        op: "present",
+        family: "stage",
+        summary: "move the positioner so a pin's frame or a joint is at a tool station's point",
+        positional: &[req(
+            "target",
+            Kind::Spot,
+            "a frame (U1.3.tip) or a joint (U1.3+R1.1) on the stage",
         )],
+        named: &[
+            req("at", Kind::Station, "the station"),
+            opt(
+                "and",
+                Kind::Station,
+                "a second station that works there too (its line kept clear)",
+            ),
+            opt(
+                "turn",
+                Kind::Number("deg", -360.0, 360.0),
+                "the stage's turn (searched if not given)",
+            ),
+            opt(
+                "tilt",
+                Kind::Number("deg", -90.0, 90.0),
+                "the stage's tilt (searched if not given)",
+            ),
+        ],
     },
     Spec {
         op: "vise",
@@ -543,6 +586,9 @@ fn is_pin(t: &str) -> bool {
 fn check_word(kind: Kind, t: &str) -> Result<(), String> {
     let ok = match kind {
         Kind::Arm => ARMS.contains(&t),
+        Kind::Actor => ARMS.contains(&t) || crate::stations::names().iter().any(|n| n == t),
+        Kind::Station => crate::stations::names().iter().any(|n| n == t),
+        Kind::Spot => check_word(Kind::Frame, t).is_ok() || check_word(Kind::Joint, t).is_ok(),
         Kind::Tool => TOOLS.contains(&t),
         Kind::Part => is_id(t),
         Kind::Pin => is_pin(t),
@@ -571,6 +617,16 @@ fn check_word(kind: Kind, t: &str) -> Result<(), String> {
     }
     Err(match kind {
         Kind::Arm => format!("no arm {t} (arms: {})", ARMS.join(" ")),
+        Kind::Actor => format!(
+            "no arm or station {t} (arms: {}; stations: {})",
+            ARMS.join(" "),
+            crate::stations::names().join(" ")
+        ),
+        Kind::Station => format!(
+            "no station {t} (stations: {})",
+            crate::stations::names().join(" ")
+        ),
+        Kind::Spot => format!("{t} is not a frame or a joint (U1.3.tip, U1.3+R1.1)"),
         Kind::Tool => format!("no tool {t} (tools: {})", TOOLS.join(" ")),
         Kind::Part => format!("{t} is not a part id (U1, R2, ...)"),
         Kind::Pin => format!("{t} is not a pin (U1.3)"),
@@ -830,6 +886,9 @@ pub fn parse_program(text: &str) -> Result<Vec<Command>, String> {
 fn placeholder(a: &Arg) -> String {
     match a.kind {
         Kind::Arm => "ARM".into(),
+        Kind::Actor => "ARM|STATION".into(),
+        Kind::Station => "STATION".into(),
+        Kind::Spot => "FRAME|JOINT".into(),
         Kind::Tool => "TOOL".into(),
         Kind::Part => "PART".into(),
         Kind::Pin => "PIN".into(),
@@ -897,6 +956,15 @@ pub fn markdown() -> String {
 fn arg_schema(a: &Arg) -> Json {
     let mut j = match a.kind {
         Kind::Arm => json!({"type": "string", "enum": ARMS}),
+        Kind::Actor => {
+            let mut all: Vec<String> = ARMS.iter().map(|a| (*a).to_string()).collect();
+            all.extend(crate::stations::names());
+            json!({"type": "string", "enum": all})
+        }
+        Kind::Station => json!({"type": "string", "enum": crate::stations::names()}),
+        Kind::Spot => {
+            json!({"type": "string", "pattern": "^[A-Z][A-Za-z0-9_]*\\.[A-Za-z0-9_]+(\\.(tip|[0-9.]+))?(\\+[A-Z][A-Za-z0-9_]*\\.[A-Za-z0-9_]+)?$"})
+        }
         Kind::Tool => json!({"type": "string", "enum": TOOLS}),
         Kind::Choice(w) => json!({"type": "string", "enum": w}),
         Kind::Part => json!({"type": "string", "pattern": "^[A-Z][A-Za-z0-9_]*$"}),

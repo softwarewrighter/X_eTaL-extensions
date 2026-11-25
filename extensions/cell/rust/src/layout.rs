@@ -172,11 +172,39 @@ pub fn vise_center_on_stage() -> V3 {
     node(STAGE, "vise_center").unwrap_or([0.0, 0.0, 28.0])
 }
 
-/// The stage's turning frame in the cell at an angle (degrees).
+/// The stage's turning frame in the cell at an angle (degrees), the
+/// positioner at rest.
 #[must_use]
 pub fn stage_frame(angle: f64) -> Pose {
-    Pose::from_xyz_rpy([0.0, 0.0, -60.0], [0.0, 0.0, angle])
+    positioner(angle, 0.0, [0.0; 3])
 }
+
+/// The stage's top at rest, z mm: the positioner's origin.
+pub const STAGE_TOP: f64 = -60.0;
+
+/// The positioner's frame: the stage's top center moved by `at` (x y z
+/// mm), tilted by `tilt` degrees about x, and turned by `turn` degrees
+/// about its own (tilted) z. Everything on the stage -- its base, the
+/// vise, what the vise holds -- rides in it.
+#[must_use]
+pub fn positioner(turn: f64, tilt: f64, at: [f64; 3]) -> Pose {
+    positioner_base(tilt, at).then(&Pose::from_xyz_rpy([0.0; 3], [0.0, 0.0, turn]))
+}
+
+/// The positioner's frame before the turn: what does not turn with the
+/// top (the stage's base).
+#[must_use]
+pub fn positioner_base(tilt: f64, at: [f64; 3]) -> Pose {
+    Pose::from_xyz_rpy([at[0], at[1], STAGE_TOP + at[2]], [tilt, 0.0, 0.0])
+}
+
+/// How far the positioner moves: x and y, z (from the stage's top at
+/// rest), the tilt, mm and degrees.
+pub const POSITIONER_XY: f64 = 60.0;
+/// See `POSITIONER_XY`.
+pub const POSITIONER_Z: (f64, f64) = (-30.0, 70.0);
+/// See `POSITIONER_XY`.
+pub const POSITIONER_TILT: f64 = 90.0;
 
 /// One part of a circuit's tray.
 #[derive(Clone, Debug, Deserialize, PartialEq)]

@@ -18,6 +18,7 @@ pub mod parts;
 pub mod rig;
 pub mod scene;
 pub mod solder;
+pub mod stations;
 mod thermal;
 pub mod weld;
 pub mod world;
