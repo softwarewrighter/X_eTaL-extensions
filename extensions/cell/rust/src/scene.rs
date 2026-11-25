@@ -10,6 +10,7 @@
 //! track('A', nums('t j1 j2 j3 j4 j5 j6 ...', 7))
 //! track('stage', nums('t turn tilt x y z ...', 6))
 //! pincer('P1', 'clip', nums('t housing x y z r p y, mount x y z r p y ...', 13))
+//! lead('R1', '2', t, diameter, nums('x y z ...', 3))   a lead re-formed
 //! station('S1', 'iron', nums('housing x y z r p y', 6)[0], nums('t x y z r p y ...', 7))
 //! part('U1', 'dip8', nums('x y z r p y', 6)[0])
 //! attach('U1', 'A', t0, t1)          (an arm's hold; 'stage': the vise's)
@@ -269,6 +270,29 @@ fn thing(out: &mut String, p: &Part) {
     }
     for m in &p.moves {
         let _ = writeln!(out, "place({}, {}, {})", quote(&p.id), num(m.t), row(&m.at));
+    }
+    // each lead re-formed: from then on, drawn as this polyline
+    if !p.reformed.is_empty() {
+        let kind = p.kind_of().ok();
+        for (t, pin, lead) in &p.reformed {
+            let d = kind
+                .as_ref()
+                .and_then(|k| k.pin(pin))
+                .map_or(0.5, |x| x.diameter);
+            let pts: Vec<f64> = lead
+                .iter()
+                .flat_map(|q| q.iter().map(|x| kin::clean((x * 1000.0).round() / 1000.0)))
+                .collect();
+            let _ = writeln!(
+                out,
+                "lead({}, {}, {}, {}, {})",
+                quote(&p.id),
+                quote(pin),
+                num(*t),
+                num(d),
+                table(&[pts], 3)
+            );
+        }
     }
 }
 

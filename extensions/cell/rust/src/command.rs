@@ -383,6 +383,45 @@ pub const COMMANDS: &[Spec] = &[
         named: &[],
     },
     Spec {
+        op: "bend",
+        family: "pincer",
+        summary: "a pincer bends a lead round a mandrel, the rest of it toward a direction",
+        positional: &[req("pincer", Kind::Pincer, "the pincer")],
+        named: &[
+            req("on", Kind::Pin, "the pin whose lead it bends"),
+            req(
+                "at",
+                Kind::Number("mm", 0.0, 40.0),
+                "from the body, along the lead",
+            ),
+            req("angle", Kind::Number("deg", -180.0, 180.0), "how far"),
+            req(
+                "toward",
+                Kind::Vec3("dir"),
+                "the direction the rest turns toward (the cell's frame)",
+            ),
+            opt(
+                "radius",
+                Kind::Number("mm", 0.1, 10.0),
+                "the mandrel's (the lead's diameter if not given)",
+            ),
+        ],
+    },
+    Spec {
+        op: "trim",
+        family: "cutter",
+        summary: "a cutter station cuts a lead, what is past the cut falling into the bin",
+        positional: &[req("arm", Kind::Station, "the cutter station")],
+        named: &[
+            req("on", Kind::Pin, "the pin whose lead it cuts"),
+            req(
+                "at",
+                Kind::Number("mm", 0.0, 40.0),
+                "from the body, along the lead",
+            ),
+        ],
+    },
+    Spec {
         op: "vise",
         family: "stage",
         summary: "open or close the vise on the stage",

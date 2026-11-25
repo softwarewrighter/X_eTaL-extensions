@@ -1,0 +1,30 @@
+# leads: forming and trimming at the bench (decision C15). The DIP in
+# the vise; the arm brings the resistor's lead 1 to pin 3 and pincer P1
+# holds it there; the iron station solders the joint; pincer P2 bends
+# the resistor's other lead down, round a mandrel 3 mm from its body,
+# toward where its next part will be; the turntable presents that lead
+# to the cutter station S4, which trims it to 8 mm -- the rest falls
+# into the bin; P1 lets go and the resistor stays, soldered on.
+reset circuit=demo
+tool A tweezers
+pick A U1 grasp=ends
+place A U1 at=0,0,-24 rpy=0,0,90
+vise close
+release A U1
+pick A R1 grasp=body
+lift A mm=80
+move A to=0,60,60 rpy=180,0,90
+move A to=34.81,1.27,-14.05
+align A R1.1.tip to=U1.3.tip gap=0.1
+pinch P1 on=R1.1 at=6
+release A R1
+lift A mm=60
+present U1.3+R1.1 at=S1
+touch S1 at=U1.3+R1.1 dwell=2
+feed S1 mm=2 rate=1
+back S1
+wait until=U1.3+R1.1 below=100
+bend P2 on=R1.2 at=3 angle=90 toward=0,0,-1
+present R1.2.8 at=S4
+trim S4 on=R1.2 at=8
+unpinch P1

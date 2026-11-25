@@ -364,6 +364,29 @@ and pincers on the turntable. Built so far:
 The four large arms are gone: the arm that remains picks, places and
 brings leads together; a slender model of it comes next.
 
+### Forming and trimming leads
+
+- `bend PINCER on=PIN at=MM angle=DEG toward=X,Y,Z [radius=MM]`: a
+  pincer grips the lead just past `at` mm from the body and swings it
+  `angle` degrees round a mandrel (radius the lead's diameter if not
+  given, never less), the rest of the lead turning toward a direction
+  in the cell's frame. The bend is an arc; the lead keeps its length.
+  The part must be held (the vise, a pincer, an arm) and the lead not
+  yet joined. A lead bent three times within a millimeter: a warning
+  that it may crack (work hardening).
+- `trim STATION on=PIN at=MM`: the cutter station S4 cuts the lead
+  `at` mm from the body; the point is presented to it first (`present
+  R1.2.8 at=S4`); what is past the cut falls into the bin. A cut at or
+  before a joint on the lead is refused: it would cut the joint off.
+- A part's re-formed leads are its own from then on (its state; its
+  kind's stay as they were): collision, heat, joints, frames like
+  `R1.2.tip` and the drawing all see them. The player draws a
+  re-formed lead as a tube in place of the model's.
+
+`programs/leads.cell`: the resistor soldered to pin 3 at the bench;
+then P2 bends its other lead down round a mandrel 3 mm from the body,
+and S4 trims it to 8 mm (20 mm falls into the bin).
+
 ## Tool stations and the positioner
 
 Tools need not ride on arms. A tool station is a tool on a linear
@@ -378,6 +401,7 @@ it holds. The arms still pick, place and hold parts to each other.
 | ------- | ---- | ---------- |
 | S1 | iron (350 C) with its own solder feeder | -x -y, slightly below the work |
 | S3 | welder | -x +y, below |
+| S4 | flush cutter | +x -y, slightly below the work |
 
 ```
 stage turn=30 tilt=-20 at=10,0,30   # the positioner: turn by, tilt to, move to
@@ -709,6 +733,8 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `present FRAME\|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG]` | stage | move the positioner so a pin's frame or a joint is at a tool station's point |
 | `pinch PINCER on=PIN [at=MM]` | pincer | a pincer on the turntable grips a lead from the side: it holds the part there, and sinks heat |
 | `unpinch PINCER` | pincer | a pincer lets go and draws back |
+| `bend PINCER on=PIN at=MM angle=DEG toward=X,Y,Z [radius=MM]` | pincer | a pincer bends a lead round a mandrel, the rest of it toward a direction |
+| `trim STATION on=PIN at=MM` | cutter | a cutter station cuts a lead, what is past the cut falling into the bin |
 | `vise open\|close` | stage | open or close the vise on the stage |
 | `wait [s=S] [until=TARGET] [below=C]` | cell | let time pass, or wait until a pin or joint cools |
 | `scope [pan=DEG] [tilt=DEG] [zoom=N] [focus=MM] [rotate=DEG] [aim=TARGET]` | scope | move the microscope: pan, tilt, zoom, focus, rotate, or aim it at a target |

@@ -8,7 +8,7 @@ use crate::collide;
 use crate::heat::{Heater, Network};
 use crate::kin::{self, M3, Pose, V3};
 use crate::layout::{self, FLOOR};
-use crate::parts::{self, PartKind};
+use crate::parts::PartKind;
 use crate::rig::Rig;
 use crate::solder::{self, Joint, Thermal};
 use crate::world::{GRAVITY, HeatTrack, World, micro, num1};
@@ -164,7 +164,7 @@ impl World {
             }
             let mut low = f64::INFINITY;
             for &g in &group {
-                if let Ok(kind) = parts::kind(&self.parts[g].kind) {
+                if let Ok(kind) = self.parts[g].kind_of() {
                     let l = collide::part(&self.parts[g].id, &kind, &self.parts[g].pose())
                         .iter()
                         .map(|s| s.shape.lowest())
@@ -215,7 +215,7 @@ impl World {
         let mut where_: Vec<Vec<Vec<(V3, f64)>>> = Vec::new();
         let mut kinds: Vec<Option<PartKind>> = Vec::new();
         for p in &self.parts {
-            let kind = parts::kind(&p.kind).ok();
+            let kind = p.kind_of().ok();
             let pose = p.pose();
             where_.push(kind.as_ref().map_or_else(Vec::new, |k| {
                 k.pins
@@ -636,7 +636,7 @@ impl World {
         let r = &th.joint;
         if let Some(at) = self.joint_point(j) {
             for p in self.parts.iter().filter(|p| !p.lost) {
-                let Ok(kind) = parts::kind(&p.kind) else {
+                let Ok(kind) = p.kind_of() else {
                     continue;
                 };
                 for pin in &kind.pins {
@@ -698,7 +698,7 @@ impl World {
             if part.lost {
                 return Err(format!("{pid} is lost"));
             }
-            let kind = parts::kind(&part.kind)?;
+            let kind = part.kind_of()?;
             let p = kind
                 .pin(pn)
                 .ok_or_else(|| format!("{pid} has no pin {pn}"))?;
@@ -756,7 +756,7 @@ impl World {
             .split_once('.')
             .ok_or_else(|| format!("{target} is not a pin"))?;
         let p = self.part(pid).ok_or_else(|| format!("no part {pid}"))?;
-        let kind = parts::kind(&p.kind)?;
+        let kind = p.kind_of()?;
         let pi = kind
             .pins
             .iter()
@@ -789,7 +789,7 @@ impl World {
             let Some(p) = w.part(pid) else {
                 return th.ambient_c;
             };
-            let Ok(kind) = parts::kind(&p.kind) else {
+            let Ok(kind) = p.kind_of() else {
                 return th.ambient_c;
             };
             let Some(pi) = kind.pins.iter().position(|x| x.name == pn) else {
@@ -818,7 +818,7 @@ impl World {
             let Some(k) = self.parts.iter().position(|p| p.id == pid) else {
                 continue;
             };
-            let Ok(kind) = parts::kind(&self.parts[k].kind) else {
+            let Ok(kind) = self.parts[k].kind_of() else {
                 continue;
             };
             let Some(pi) = kind.pins.iter().position(|x| x.name == pn) else {
@@ -916,7 +916,7 @@ impl World {
     pub(crate) fn near_tip(&self, tip: V3) -> Vec<String> {
         let mut out = vec!["stage".to_string()];
         for p in self.parts.iter().filter(|p| !p.lost) {
-            let Ok(kind) = parts::kind(&p.kind) else {
+            let Ok(kind) = p.kind_of() else {
                 continue;
             };
             if kind.pins.iter().any(|pin| {
@@ -1129,7 +1129,7 @@ impl World {
         let part = self
             .part(pid)
             .ok_or_else(|| Halt::Refused(format!("no part {pid}")))?;
-        let kind = parts::kind(&part.kind).map_err(Halt::Refused)?;
+        let kind = part.kind_of().map_err(Halt::Refused)?;
         let p = kind
             .pin(pn)
             .ok_or_else(|| Halt::Refused(format!("{pid} has no pin {pn}")))?;
@@ -1230,7 +1230,7 @@ impl World {
     fn grounded(&self, rig: &Rig, pin: &str, upto: usize) -> Option<String> {
         let (pid, pn) = pin.split_once('.')?;
         let part = self.part(pid)?;
-        let kind = parts::kind(&part.kind).ok()?;
+        let kind = part.kind_of().ok()?;
         let p = kind.pin(pn)?;
         let nodes = nodes_in(&part.pose(), &p.lead);
         let on = |tip: V3| {
@@ -1259,7 +1259,7 @@ impl World {
     /// (conservatively: anywhere on the parts that join them).
     pub(crate) fn weld_risk(&self, ji: usize, rig: &Rig) -> Vec<(usize, String)> {
         let j = &self.joints[ji];
-        let semi = |k: usize| parts::kind(&self.parts[k].kind).is_ok_and(|kind| kind.semiconductor);
+        let semi = |k: usize| self.parts[k].kind_of().is_ok_and(|kind| kind.semiconductor);
         let index = |pin: &str| {
             let id = pin.split('.').next().unwrap_or("");
             self.parts.iter().position(|p| p.id == id)
@@ -1402,7 +1402,7 @@ impl World {
                 .split_once('.')
                 .ok_or_else(|| format!("{pin} is not a pin"))?;
             let part = self.part(pid).ok_or_else(|| format!("no part {pid}"))?;
-            let kind = parts::kind(&part.kind)?;
+            let kind = part.kind_of()?;
             Ok(kind
                 .pin(pn)
                 .ok_or_else(|| format!("{pid} has no pin {pn}"))?

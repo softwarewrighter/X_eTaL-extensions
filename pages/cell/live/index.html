@@ -49,7 +49,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
   dialog button { font: inherit; padding: 5px 14px; border-radius: 6px; border: 1px solid #56607a; background: #1a1f2e; color: #e8eaf0; cursor: pointer; }
 </style>
 <script type="importmap">{ "imports": { "three": "./static/vendor/three/three.module.min.js" } }</script>
-<link rel="modulepreload" href="./cell-web.js" crossorigin="anonymous" integrity="sha384-K4SnHn0TpSZjuBF2NVtqDt5/hT58MovRU2U0ecs1SkKpt+Q0BSpJC6xHROkmiRaB"><link rel="preload" href="./cell-web_bg.wasm" crossorigin="anonymous" integrity="sha384-V0/OzZzhtjKvNWW4MqhSQnghSZVb/I+3SvALhTL6ySX9AYBeQITSVBUrjCRd+tNZ" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="./cell-web.js" crossorigin="anonymous" integrity="sha384-K4SnHn0TpSZjuBF2NVtqDt5/hT58MovRU2U0ecs1SkKpt+Q0BSpJC6xHROkmiRaB"><link rel="preload" href="./cell-web_bg.wasm" crossorigin="anonymous" integrity="sha384-PnoD0NNTQMXP5OdmiqxidqcXi5UlMi901YYSTZvpAnZGFZMPFMwta2hPg6AHUVqg" as="fetch" type="application/wasm"></head>
 <body>
 <div id="view"></div>
 <div id="panel">
@@ -57,7 +57,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
   <p id="hint">The solder program is loaded: a resistor soldered to a chip, then the pair lifted out of the vise. Step through it with <b>Next step</b> (or the right arrow key) below the picture, <b>Close up</b> to see the joint, click a step in the list to go there, or drive the arms yourself.</p>
   <fieldset><legend>Cell</legend>
     <select id="circuit"><option value="demo">demo tray</option><option value="weld">weld tray</option><option value="none">empty tray</option></select><button id="reset">Reset</button><br>
-    <select id="program"><option value="solder">solder</option><option value="solder-stations">solder at the bench</option><option value="weld">weld</option><option value="weld-stations">weld at a station</option><option value="pick">pick</option><option value="arms">arms</option></select><button id="run-program">Run program</button>
+    <select id="program"><option value="solder">solder</option><option value="solder-stations">solder at the bench</option><option value="weld">weld</option><option value="leads">form and trim leads</option><option value="weld-stations">weld at a station</option><option value="pick">pick</option><option value="arms">arms</option></select><button id="run-program">Run program</button>
   </fieldset>
   <fieldset><legend>Arm</legend>
     <select id="arm"><option>A</option></select>

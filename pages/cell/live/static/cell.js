@@ -103,7 +103,7 @@ export function cellPlayer(host, calls, options = {}) {
   scene.add(root);
   const folder = options.models || './models/';
   const s = {
-    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], stations: [], attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
+    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], stations: [], leads: [], attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
   };
   const api = {
     nums,
@@ -120,6 +120,7 @@ export function cellPlayer(host, calls, options = {}) {
     step(n, label, t0, t1) { s.steps.push({ n, label, t0, t1 }); },
     expect(arm, t, xyz) { s.expects.push({ arm, t, xyz }); },
     station(id, tool, housing, rows) { s.stations.push({ id, tool, housing, rows }); },
+    lead(id, pin, t, d, rows) { s.leads.push({ id, pin, t, d, points: rows }); },
     // a pincer: a station whose housing moves too (rows: t, housing's
     // x y z r p y, the jaws' mount's x y z r p y)
     pincer(id, tool, rows) { s.stations.push({ id, tool, housing: rows[0].slice(1, 7), rows: rows.map((r) => [r[0], ...r.slice(7)]), housings: rows.map((r) => r.slice(0, 7)) }); },
@@ -219,13 +220,29 @@ export function cellPlayer(host, calls, options = {}) {
       // each mesh its own material, so heat tints it alone: the body's,
       // and each pin's lead by its name (KIND_leadPIN_N)
       const glow = { body: [], pins: {} };
+      const meshes = {};
       g.traverse((o) => {
         if (!o.isMesh) return;
         o.material = o.material.clone();
         const m = /_lead([^_]+)_\d+$/.exec(o.name);
-        if (m) (glow.pins[m[1]] ||= []).push(o.material); else glow.body.push(o.material);
+        if (m) { (glow.pins[m[1]] ||= []).push(o.material); (meshes[m[1]] ||= []).push(o); } else glow.body.push(o.material);
       });
-      parts[p.id] = { g, start: poseMatrix(p.pose), glow };
+      // a lead re-formed (bent, trimmed): a tube in the part's frame from
+      // its time on, the model's lead hidden then
+      const reformed = {};
+      for (const L of s.leads.filter((x) => x.id === p.id)) {
+        const path = new THREE.CurvePath();
+        for (let i = 0; i + 1 < L.points.length; i++) {
+          path.add(new THREE.LineCurve3(new THREE.Vector3(...L.points[i]), new THREE.Vector3(...L.points[i + 1])));
+        }
+        const material = (glow.pins[L.pin] && glow.pins[L.pin][0] ? glow.pins[L.pin][0] : new THREE.MeshStandardMaterial({ color: '#c0c4c8', metalness: 0.8, roughness: 0.3 })).clone();
+        (glow.pins[L.pin] ||= []).push(material);
+        const tube = new THREE.Mesh(new THREE.TubeGeometry(path, Math.max(8, L.points.length * 6), L.d / 2, 8, false), material);
+        tube.visible = false;
+        g.add(tube);
+        (reformed[L.pin] ||= []).push({ t: L.t, tube });
+      }
+      parts[p.id] = { g, start: poseMatrix(p.pose), glow, meshes, reformed };
     }),
     // a tool station: its housing, its pole, its tool on the pole's end
     ...s.stations.map(async (st) => {
@@ -303,6 +320,17 @@ export function cellPlayer(host, calls, options = {}) {
     st.g.matrix.makeTranslation(x, y, z).multiply(st.base).multiply(new THREE.Matrix4().makeRotationX(tilt * D));
     st.g.matrixWorldNeedsUpdate = true;
   };
+  // re-formed leads: the latest form by time u, else the model's own
+  const leadsAt = (u) => {
+    for (const p of Object.values(parts)) {
+      for (const [pin, forms] of Object.entries(p.reformed || {})) {
+        let shown = null;
+        for (const f of forms) { f.tube.visible = false; if (f.t <= u) shown = f; }
+        if (shown) shown.tube.visible = true;
+        for (const m of p.meshes[pin] || []) m.visible = !shown;
+      }
+    }
+  };
   // the stations: each tool at its mount, the pole from the housing to it
   const stationsAt = (u) => {
     for (const st of Object.values(stations)) {
@@ -372,6 +400,7 @@ export function cellPlayer(host, calls, options = {}) {
     jointAt(now);
     turnStage(now);
     stationsAt(now);
+    leadsAt(now);
     ui.show();
     draw();
   };

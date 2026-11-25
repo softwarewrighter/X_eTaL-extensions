@@ -48,9 +48,11 @@ present U1.3.tip at=S1 turn=45
 touch S1 at=U1.3+R1.1 dwell=2
 pinch P1 on=R1.1 at=6
 unpinch P1
+bend P2 on=R1.2 at=3 angle=90 toward=0,0,-1
+trim S4 on=R1.2 at=8
 ";
     let p = parse_program(program).unwrap();
-    assert_eq!(p.len(), 33);
+    assert_eq!(p.len(), 35);
     for c in &p {
         round_trip(&c.to_text());
     }
@@ -68,7 +70,7 @@ fn every_command_has_an_example() {
     let covered = [
         "reset", "tool", "joints", "move", "lift", "back", "grip", "pick", "place", "align",
         "release", "clip", "touch", "feed", "weld", "wire", "cut", "stage", "present", "pinch",
-        "unpinch", "vise", "wait", "scope", "snap", "inspect", "probe", "rewind",
+        "unpinch", "bend", "trim", "vise", "wait", "scope", "snap", "inspect", "probe", "rewind",
     ];
     let ops: Vec<&str> = COMMANDS.iter().map(|s| s.op).collect();
     assert_eq!(ops, covered);

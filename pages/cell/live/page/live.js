@@ -176,6 +176,7 @@ export function start(local) {
       'solder-stations': 'the bench: an arm brings a resistor lead to a chip pin, a pincer on the turntable grips it so the arm can go, the turntable presents the joint to the iron station, which feeds its own solder',
       'weld-stations': 'the stage brings a disc lead to the welder station, which comes up from below; an arm lays a second disc lead on it, and it is welded',
       pick: 'a chip picked from the tray and put in the vise',
+      leads: 'a resistor soldered to a chip pin at the bench, then its other lead bent down round a mandrel by a pincer and trimmed to 8 mm by the cutter station',
       arms: 'each arm taking a tool and moving',
     }[name];
     if (what) $('hint').innerHTML = $('hint').innerHTML.replace(/The solder program is loaded: [^.]*\./, `The ${name} program is loaded: ${what}.`);

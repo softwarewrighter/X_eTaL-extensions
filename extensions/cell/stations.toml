@@ -31,3 +31,11 @@ name = "S3"
 tool = "welder"
 from = [-1.0, 1.0, -1.2]
 stroke = 160.0
+
+# the flush cutter, from between arms C and D's old places, slightly
+# below the work: trims excess leads (decision C15)
+[[station]]
+name = "S4"
+tool = "cutter"
+from = [1.0, -1.0, -0.4]
+stroke = 160.0

@@ -703,6 +703,12 @@ impl World {
                 let leave = self.near_tip(s.point);
                 self.extend(si, 0.0, STATION_SPEED, &leave, did)?;
             }
+            "trim" => {
+                need("cutter")?;
+                let pin = c.word("on").unwrap_or("").to_string();
+                let at = c.number("at").unwrap_or(0.0);
+                self.trim(si, &s, &pin, at, did, events)?;
+            }
             "back" => {
                 let leave = self.near_tip(s.tip(self.stations[si].ext));
                 self.extend(si, 0.0, STATION_SPEED, &leave, did)?;
@@ -719,4 +725,110 @@ impl World {
 
 fn plan_joint(plan: &crate::thermal::WeldPlan) -> usize {
     plan.joint()
+}
+
+impl World {
+    /// `trim STATION on=PIN at=MM`: the cutter station cuts the lead `at`
+    /// mm from the body, the point presented at its point first; what is
+    /// past the cut falls into the bin. A cut at or before a joint on the
+    /// lead is refused: it would cut the joint off.
+    fn trim(
+        &mut self,
+        si: usize,
+        s: &Station,
+        pin: &str,
+        at: f64,
+        did: &mut Vec<String>,
+        events: &mut Vec<String>,
+    ) -> Result<(), Halt> {
+        let (pid, pn) = pin
+            .split_once('.')
+            .ok_or_else(|| Halt::Refused(format!("{pin} is not a pin")))?;
+        let pk = self
+            .parts
+            .iter()
+            .position(|x| x.id == pid)
+            .ok_or_else(|| Halt::Refused(format!("no part {pid}")))?;
+        let kind = self.parts[pk].kind_of().map_err(Halt::Refused)?;
+        let p = kind
+            .pin(pn)
+            .ok_or_else(|| Halt::Refused(format!("{pid} has no pin {pn}")))?
+            .clone();
+        let total = crate::leads::length(&p.lead);
+        if at <= 0.0 || at >= total {
+            return Err(Halt::Refused(format!(
+                "{pin}'s lead is {} mm long: cut it within that",
+                num1(total)
+            )));
+        }
+        let pose = self.parts[pk].pose();
+        let point = pose
+            .then(&Pose::from_xyz_rpy(
+                crate::world::along(&p.lead, at),
+                [0.0; 3],
+            ))
+            .p;
+        let d = kin::norm(kin::sub(point, s.point));
+        if d > TOUCH_MM {
+            return Err(Halt::Refused(format!(
+                "{pin} at {} mm is {} mm from {}'s point: present it there first (present {pin}.{} at={})",
+                num1(at),
+                num1(d),
+                s.name,
+                num1(at),
+                s.name
+            )));
+        }
+        // a joint on this lead at or past the cut would be cut off
+        let lead_world = crate::solder::lead_in(&pose, &p.lead);
+        for j in self.joints.iter().filter(|j| j.a == pin || j.b == pin) {
+            let Some(jp) = self.joint_point(j) else {
+                continue;
+            };
+            let along = along_to(&lead_world, jp);
+            if along >= at - 0.5 {
+                return Err(Halt::Refused(format!(
+                    "{} is {} mm along {pin}: a cut at {} mm would cut it off (cut past it)",
+                    j.name,
+                    num1(along),
+                    num1(at)
+                )));
+            }
+        }
+        let allowed = vec![format!("part:{pid}")];
+        self.extend(si, s.stroke - 10.0, STATION_SPEED, &[], did)?;
+        self.extend(si, s.stroke, STATION_CAREFUL, &allowed, did)?;
+        let (kept, cut) = crate::leads::split(&p.lead, at);
+        let off = crate::leads::length(&cut);
+        self.reform(pk, pn, kept);
+        events.push(format!(
+            "{} cuts {pin} at {} mm: {} mm of lead falls into the bin",
+            s.name,
+            num1(at),
+            num1(off)
+        ));
+        self.advance(0.2, None);
+        let leave = self.near_tip(s.point);
+        self.extend(si, 0.0, STATION_SPEED, &leave, did)
+    }
+}
+
+/// How far along a polyline (from its start) its nearest point to `p` is.
+fn along_to(line: &[V3], p: V3) -> f64 {
+    let (mut best, mut at, mut run) = (f64::INFINITY, 0.0, 0.0);
+    for w in line.windows(2) {
+        let d = kin::sub(w[1], w[0]);
+        let l = kin::norm(d).max(1e-12);
+        let t =
+            ((p[0] - w[0][0]) * d[0] + (p[1] - w[0][1]) * d[1] + (p[2] - w[0][2]) * d[2]) / (l * l);
+        let t = t.clamp(0.0, 1.0);
+        let q = kin::add(w[0], kin::scale(d, t));
+        let dist = kin::norm(kin::sub(p, q));
+        if dist < best {
+            best = dist;
+            at = run + t * l;
+        }
+        run += l;
+    }
+    at
 }

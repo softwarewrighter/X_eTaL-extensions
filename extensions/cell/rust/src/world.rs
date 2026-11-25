@@ -150,6 +150,16 @@ pub struct Part {
     /// A pincer on the turntable grips one of its leads: the pincer.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub pinched: Option<String>,
+    /// Its leads re-formed (bent, trimmed), by pin, in its frame: these,
+    /// not its kind's.
+    #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
+    pub leads: std::collections::BTreeMap<String, Vec<V3>>,
+    /// Where each lead has been bent, mm from the body: work hardening.
+    #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
+    pub bends: std::collections::BTreeMap<String, Vec<f64>>,
+    /// Each re-forming: the time, the pin and its new lead, for players.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub reformed: Vec<(f64, String, Vec<V3>)>,
     /// It fell to the floor and is lost.
     pub lost: bool,
     /// Its thermal nodes' temperatures, C: the body, then each pin's
@@ -180,6 +190,9 @@ impl Part {
             holder: None,
             in_vise: false,
             pinched: None,
+            leads: std::collections::BTreeMap::new(),
+            bends: std::collections::BTreeMap::new(),
+            reformed: Vec::new(),
             lost: false,
             temps: Vec::new(),
             hot: 0.0,
@@ -187,6 +200,21 @@ impl Part {
             holds: Vec::new(),
             moves: Vec::new(),
         }
+    }
+
+    /// Its kind, with its own leads where they have been re-formed.
+    ///
+    /// # Errors
+    ///
+    /// No such kind in the library.
+    pub fn kind_of(&self) -> Result<PartKind, String> {
+        let mut k = parts::kind(&self.kind)?;
+        for pin in &mut k.pins {
+            if let Some(lead) = self.leads.get(&pin.name) {
+                pin.lead.clone_from(lead);
+            }
+        }
+        Ok(k)
     }
 
     /// Its pose now.
@@ -360,6 +388,9 @@ impl World {
                     holder: None,
                     in_vise: false,
                     pinched: None,
+                    leads: std::collections::BTreeMap::new(),
+                    bends: std::collections::BTreeMap::new(),
+                    reformed: Vec::new(),
                     lost: false,
                     temps: Vec::new(),
                     hot: 0.0,
@@ -520,7 +551,7 @@ impl World {
         let Some(pin) = it.next() else {
             return Ok(part.pose());
         };
-        let kind = parts::kind(&part.kind)?;
+        let kind = part.kind_of()?;
         let p = kind
             .pin(pin)
             .ok_or_else(|| format!("{id} has no pin {pin}"))?;
@@ -655,7 +686,7 @@ impl World {
             .iter()
             .filter(|p| p.holder.as_deref() == Some("vise"))
         {
-            if let Ok(k) = parts::kind(&p.kind) {
+            if let Ok(k) = p.kind_of() {
                 solids.extend(collide::part(&p.id, &k, &moved.then(&p.pose())));
             }
         }
@@ -680,7 +711,7 @@ impl World {
         let flange = a.base_pose().then(&kin::forward(rig, q));
         for (k, offset) in held {
             let p = &self.parts[*k];
-            if let Ok(kind) = parts::kind(&p.kind) {
+            if let Ok(kind) = p.kind_of() {
                 solids.extend(collide::part(&p.id, &kind, &flange.then(offset)));
             }
         }
@@ -731,7 +762,7 @@ impl World {
                 at_tip.extend(self.near_tip(tip.p).into_iter().filter(|a| a != "stage"));
                 if self.arms[i].tool.as_deref() == Some("tweezers") {
                     for p in self.parts.iter().filter(|p| !p.lost) {
-                        if parts::kind(&p.kind).is_ok_and(|k| {
+                        if p.kind_of().is_ok_and(|k| {
                             k.grasps.iter().any(|gr| {
                                 kin::norm(kin::sub(
                                     p.pose().then(&Pose::from_xyz_rpy(gr.at, gr.rpy)).p,
@@ -754,7 +785,7 @@ impl World {
             let mut joined: Vec<String> = Vec::new();
             for (k, _) in &held {
                 let p = &self.parts[*k];
-                if let Ok(kind) = parts::kind(&p.kind) {
+                if let Ok(kind) = p.kind_of() {
                     solids.extend(collide::part(&p.id, &kind, &p.pose()));
                 }
                 for j in &self.joints {
@@ -835,7 +866,7 @@ impl World {
             .iter()
             .filter(|p| p.holder.as_deref() == Some("vise") && !p.lost)
         {
-            if let Ok(kind) = parts::kind(&p.kind) {
+            if let Ok(kind) = p.kind_of() {
                 let g = Group {
                     name: format!("part:{}", p.id),
                     solids: collide::part(&p.id, &kind, &p.pose()),
@@ -855,7 +886,7 @@ impl World {
     pub fn leads_near(&self, mm: f64) -> Vec<(String, String, f64)> {
         let mut leads: Vec<(String, f64, Vec<V3>)> = Vec::new();
         for p in self.parts.iter().filter(|p| !p.lost) {
-            if let Ok(k) = parts::kind(&p.kind) {
+            if let Ok(k) = p.kind_of() {
                 for pin in &k.pins {
                     leads.push((
                         format!("{}.{}", p.id, pin.name),
@@ -885,7 +916,7 @@ impl World {
     fn leads_meet(&self, a: &str, b: &str) -> bool {
         let leads = |id: &str| -> Vec<Vec<V3>> {
             self.part(id)
-                .and_then(|p| parts::kind(&p.kind).ok().map(|k| (p.pose(), k)))
+                .and_then(|p| p.kind_of().ok().map(|k| (p.pose(), k)))
                 .map(|(pose, k)| {
                     k.pins
                         .iter()
@@ -899,6 +930,17 @@ impl World {
             .any(|x| lb.iter().any(|y| crate::solder::nearest(x, y).0 <= 0.5))
     }
 
+    /// Part `k`'s lead of pin `pin` re-formed: its own from now on, and
+    /// recorded for players.
+    pub(crate) fn reform(&mut self, k: usize, pin: &str, lead: Vec<V3>) {
+        let t = self.t;
+        let p = &mut self.parts[k];
+        p.leads.insert(pin.to_string(), lead.clone());
+        p.reformed.push((t, pin.to_string(), lead));
+        // its heat is laid out again (its leads' nodes may have changed)
+        p.temps.clear();
+    }
+
     /// The stage as it stands, and what the vise holds.
     pub(crate) fn stage_now(&self) -> Group {
         self.stage_group_at(self.stage, self.tilt, self.offset)
@@ -910,7 +952,7 @@ impl World {
             .iter()
             .filter(|p| p.holder.is_none() && !p.lost)
             .filter_map(|p| {
-                let k = parts::kind(&p.kind).ok()?;
+                let k = p.kind_of().ok()?;
                 Some(Group {
                     name: format!("part:{}", p.id),
                     solids: collide::part(&p.id, &k, &p.pose()),
@@ -1058,7 +1100,7 @@ impl World {
                 .iter()
                 .filter(|p| !p.lost && p.holder.as_deref() != Some(name.as_str()))
             {
-                if parts::kind(&p.kind).is_ok_and(|k| {
+                if p.kind_of().is_ok_and(|k| {
                     k.grasps.iter().any(|g| {
                         kin::norm(kin::sub(
                             p.pose().then(&Pose::from_xyz_rpy(g.at, g.rpy)).p,
@@ -1265,6 +1307,23 @@ impl World {
                 );
             }
             "unpinch" => return self.unpinch(c.word("pincer").unwrap_or(""), did, events),
+            "bend" => {
+                let toward = match c.get("toward") {
+                    Some(Value::Numbers(v)) => [v[0], v[1], v[2]],
+                    _ => [0.0, 0.0, -1.0],
+                };
+                return self.bend(
+                    c.word("pincer").unwrap_or(""),
+                    c.word("on").unwrap_or(""),
+                    c.number("at").unwrap_or(0.0),
+                    c.number("angle").unwrap_or(0.0),
+                    toward,
+                    c.number("radius"),
+                    did,
+                    events,
+                    warnings,
+                );
+            }
             _ => {}
         }
         // a station's command
@@ -1808,7 +1867,7 @@ impl World {
             !p.lost
                 && p.holder.as_deref().is_none_or(|h| h == "vise" || h == arm)
                 && only.is_none_or(|o| o == p.id)
-                && parts::kind(&p.kind).is_ok_and(|k| {
+                && p.kind_of().is_ok_and(|k| {
                     k.grasps.iter().any(|g| {
                         kin::norm(kin::sub(
                             p.pose().then(&Pose::from_xyz_rpy(g.at, g.rpy)).p,
@@ -1871,7 +1930,7 @@ impl World {
         if let Some(h) = p.holder.as_deref().filter(|h| *h != "vise") {
             return Err(Halt::Refused(format!("{h} holds {id}")));
         }
-        let kind: PartKind = parts::kind(&p.kind).map_err(Halt::Refused)?;
+        let kind: PartKind = p.kind_of().map_err(Halt::Refused)?;
         let g = kind.grasp(grasp).ok_or_else(|| {
             let names: Vec<&str> = kind.grasps.iter().map(|g| g.name.as_str()).collect();
             Halt::Refused(format!(
@@ -1985,7 +2044,7 @@ impl World {
             .parts
             .iter()
             .map(|p| {
-                let grasps: Vec<String> = parts::kind(&p.kind).map(|k| k.grasps.iter().map(|g| g.name.clone()).collect()).unwrap_or_default();
+                let grasps: Vec<String> = p.kind_of().map(|k| k.grasps.iter().map(|g| g.name.clone()).collect()).unwrap_or_default();
                 json!({ "id": p.id, "kind": p.kind, "at": p.at, "holder": p.holder, "lost": p.lost, "damaged": p.damaged, "grasps": grasps })
             })
             .collect();

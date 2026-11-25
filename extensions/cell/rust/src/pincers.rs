@@ -10,7 +10,7 @@ use crate::collide::{self, Group, Solid};
 use crate::command::num;
 use crate::kin::{self, Pose, V3};
 use crate::layout;
-use crate::parts;
+
 use crate::rig::Rig;
 use crate::world::{CHECK_STEP, Halt, World, micro, num1, round3};
 use serde::{Deserialize, Serialize};
@@ -276,10 +276,13 @@ impl World {
             }
             let dt = span / SPEED;
             let t0 = self.t;
-            // where it starts, then ten points along: drawings and
-            // checks hold it still until this move begins
-            for i in 0..=10 {
-                let s = f64::from(i) / 10.0 * reached;
+            // where it starts, then a point every 2 mm of the way (ten at
+            // least): drawings hold it still until this move begins, and
+            // their chords stay on its arc round the ring
+            #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
+            let rows = ((span / 2.0).ceil() as u32).max(10);
+            for i in 0..=rows {
+                let s = f64::from(i) / f64::from(rows) * reached;
                 let c = at(s);
                 self.pincers[k]
                     .track
@@ -333,7 +336,7 @@ impl World {
         let part = self
             .part(pid)
             .ok_or_else(|| Halt::Refused(format!("no part {pid}")))?;
-        let kind = parts::kind(&part.kind).map_err(Halt::Refused)?;
+        let kind = part.kind_of().map_err(Halt::Refused)?;
         let p = kind
             .pin(pn)
             .ok_or_else(|| Halt::Refused(format!("{pid} has no pin {pn}")))?;
@@ -343,35 +346,52 @@ impl World {
                 num1(p.length())
             )));
         }
-        // the point, and the lead's direction there, in the turntable's frame
-        let world = part
-            .pose()
-            .then(&Pose::from_xyz_rpy(
-                crate::world::along(&p.lead, at),
-                [0.0; 3],
-            ))
-            .p;
-        let ahead = part
-            .pose()
-            .then(&Pose::from_xyz_rpy(
-                crate::world::along(&p.lead, (at + 0.5).min(p.length())),
-                [0.0; 3],
-            ))
-            .p;
+        let at_world = |mm: f64| {
+            part.pose()
+                .then(&Pose::from_xyz_rpy(
+                    crate::world::along(&p.lead, mm),
+                    [0.0; 3],
+                ))
+                .p
+        };
+        let world = at_world(at);
+        let lead = kin::sub(at_world((at + 0.5).min(p.length())), world);
+        let allowed = vec![format!("part:{pid}")];
+        let to = self
+            .reach(k, world, lead, &allowed)
+            .map_err(|e| Halt::Refused(format!("{name} cannot reach {pin} at {at} mm: {e}")))?;
+        self.pincer_go(k, to, &allowed, did)?;
+        self.pincers[k].on = Some(pin.to_string());
+        if let Some(pk) = self.parts.iter().position(|x| x.id == pid) {
+            self.parts[pk].pinched = Some(name.to_string());
+        }
+        self.sync_carriers();
+        events.push(format!(
+            "{name} grips {pin}, {} mm from its body: the turntable holds {pid}",
+            num1(at)
+        ));
+        Ok(())
+    }
+
+    /// Where pincer `k` reaches a point (the cell's frame) with its
+    /// jaws, coming in level from the side of the ring whose line is
+    /// clear of everything (`allowed` excepted), as nearly square to
+    /// `lead` (the lead's direction there) as it can: phi, z, psi, reach.
+    fn reach(&self, k: usize, world: V3, lead: V3, allowed: &[String]) -> Result<[f64; 4], String> {
+        let name = self.pincers[k].name.clone();
         let inv = self.stage_pose().inverse();
         let q = inv.then(&Pose::from_xyz_rpy(world, [0.0; 3])).p;
-        let lead = kin::sub(inv.then(&Pose::from_xyz_rpy(ahead, [0.0; 3])).p, q);
+        let lead = kin::mv(&inv.r, lead);
         let z = q[2];
         if z < HEIGHT.0 || z > HEIGHT.1 {
-            return Err(Halt::Refused(format!(
-                "{pin} at {at} mm is {} mm above the stage's top: a pincer reaches {} to {} mm",
+            return Err(format!(
+                "it is {} mm above the stage's top: a pincer reaches {} to {} mm",
                 num1(z),
                 num1(HEIGHT.0),
                 num1(HEIGHT.1)
-            )));
+            ));
         }
         let len = layout::tool_length(TOOL);
-        // round the ring, the clearest line first: nearest square to the lead
         let mut tries: Vec<(f64, f64, f64, f64)> = Vec::new();
         for i in 0..72 {
             let phi = f64::from(i) * 5.0;
@@ -393,7 +413,7 @@ impl World {
         }
         tries.sort_by(|a, b| a.0.total_cmp(&b.0));
         let frame = self.stage_pose();
-        let rig = Rig::arm().map_err(Halt::Refused)?;
+        let rig = Rig::arm()?;
         let mut others = self.fixture_groups();
         let mut stage = self.stage_now();
         stage
@@ -406,35 +426,121 @@ impl World {
         }
         others.extend(self.free_part_groups());
         others.extend(self.station_groups(None));
-        let allowed = vec![format!("part:{pid}")];
-        let mut chosen = None;
         let mut why = String::from("no point of the ring in reach");
         for (_, phi, psi, reach) in tries {
             let g = Group {
                 name: format!("pincer:{name}"),
-                solids: solids(name, &frame, phi, z, psi, reach),
+                solids: solids(&name, &frame, phi, z, psi, reach),
             };
-            match collide::first_hit(&g, &others, &allowed) {
-                None => {
-                    chosen = Some([phi, z, psi, reach]);
-                    break;
-                }
+            match collide::first_hit(&g, &others, allowed) {
+                None => return Ok([phi, z, psi, reach]),
                 Some(hit) => why = format!("at {} degrees: {hit}", num(phi)),
             }
         }
-        let to = chosen
-            .ok_or_else(|| Halt::Refused(format!("{name} cannot reach {pin} at {at} mm: {why}")))?;
-        self.pincer_go(k, to, &allowed, did)?;
-        self.pincers[k].on = Some(pin.to_string());
-        if let Some(pk) = self.parts.iter().position(|x| x.id == pid) {
-            self.parts[pk].pinched = Some(name.to_string());
+        Err(why)
+    }
+
+    /// `bend PINCER on=PIN at=MM angle=DEG toward=X,Y,Z [radius=MM]`: the
+    /// pincer grips the lead just past the bend and swings it `angle`
+    /// degrees toward a direction (the cell's frame) round a mandrel at
+    /// `at` mm from the body; the lead is the part's own from then on.
+    /// The part must be held (the vise, a pincer, an arm), and the lead
+    /// not yet joined.
+    #[allow(clippy::too_many_arguments)]
+    pub(crate) fn bend(
+        &mut self,
+        name: &str,
+        pin: &str,
+        at: f64,
+        angle: f64,
+        toward: V3,
+        radius: Option<f64>,
+        did: &mut Vec<String>,
+        events: &mut Vec<String>,
+        warnings: &mut Vec<String>,
+    ) -> Result<(), Halt> {
+        let k = self
+            .pincer_index(name)
+            .ok_or_else(|| Halt::Refused(format!("no pincer {name}")))?;
+        if self.pincers[k].on.is_some() {
+            return Err(Halt::Refused(format!(
+                "{name} grips a lead: unpinch {name} first"
+            )));
         }
-        self.sync_carriers();
+        let (pid, pn) = pin
+            .split_once('.')
+            .ok_or_else(|| Halt::Refused(format!("{pin} is not a pin")))?;
+        let pk = self
+            .parts
+            .iter()
+            .position(|x| x.id == pid)
+            .ok_or_else(|| Halt::Refused(format!("no part {pid}")))?;
+        if self.parts[pk].holder.is_none() {
+            return Err(Halt::Refused(format!(
+                "nothing holds {pid}: put it in the vise or have a pincer grip it first"
+            )));
+        }
+        if let Some(j) = self.joints.iter().find(|j| j.a == pin || j.b == pin) {
+            return Err(Halt::Refused(format!(
+                "{pin} is in {}: form a lead before it is joined",
+                j.name
+            )));
+        }
+        let kind = self.parts[pk].kind_of().map_err(Halt::Refused)?;
+        let p = kind
+            .pin(pn)
+            .ok_or_else(|| Halt::Refused(format!("{pid} has no pin {pn}")))?
+            .clone();
+        let r = radius.unwrap_or(p.diameter * crate::leads::MIN_RADIUS);
+        let pose = self.parts[pk].pose();
+        let toward_local = kin::mv(&kin::transpose(&pose.r), toward);
+        let new = crate::leads::bend(&p.lead, at, angle, toward_local, r, p.diameter)
+            .map_err(|e| Halt::Refused(format!("{pin}: {e}")))?;
+        // the jaws grip just past the bend: there, then where it goes
+        let arc = r * angle.to_radians().abs();
+        let grip = (at + arc + 2.0).min(crate::leads::length(&new) - 0.5);
+        let at_world = |line: &[V3], mm: f64| {
+            pose.then(&Pose::from_xyz_rpy(crate::world::along(line, mm), [0.0; 3]))
+                .p
+        };
+        let allowed = vec![format!("part:{pid}")];
+        let before = at_world(&p.lead, grip);
+        let dir_before = kin::sub(at_world(&p.lead, grip + 0.5), before);
+        let to = self.reach(k, before, dir_before, &allowed).map_err(|e| {
+            Halt::Refused(format!(
+                "{name} cannot reach {pin} at {} mm: {e}",
+                num1(grip)
+            ))
+        })?;
+        self.pincer_go(k, to, &allowed, did)?;
+        // the bend
+        self.reform(pk, pn, new.clone());
+        let after = at_world(&new, grip);
+        let dir_after = kin::sub(
+            at_world(&new, (grip + 0.5).min(crate::leads::length(&new))),
+            after,
+        );
         events.push(format!(
-            "{name} grips {pin}, {} mm from its body: the turntable holds {pid}",
-            num1(at)
+            "{name} bends {pin} {} degrees at {} mm, round {} mm",
+            num1(angle),
+            num1(at),
+            num1(r)
         ));
-        Ok(())
+        let bends = self.parts[pk].bends.entry(pn.to_string()).or_default();
+        bends.push(at);
+        let here = bends.iter().filter(|b| (**b - at).abs() <= 1.0).count();
+        if here >= crate::leads::CRACK_BENDS {
+            warnings.push(format!(
+                "{pin} has been bent {here} times at {} mm: it may crack",
+                num1(at)
+            ));
+        }
+        if let Ok(to) = self.reach(k, after, dir_after, &allowed) {
+            self.pincer_go(k, to, &allowed, did)?;
+        }
+        let p = &self.pincers[k];
+        let to = [p.phi, p.z, p.psi, 0.0];
+        self.pincer_go(k, to, &allowed, did)
     }
 
     /// `unpinch PINCER`: the jaws open and the pole goes in; what it held

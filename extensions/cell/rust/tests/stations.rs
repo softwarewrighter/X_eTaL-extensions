@@ -35,7 +35,7 @@ fn the_stations_read_and_point_at_the_work() {
     let all = stations::data().unwrap();
     assert_eq!(
         all.iter().map(|s| s.tool.as_str()).collect::<Vec<_>>(),
-        ["iron", "welder"]
+        ["iron", "welder", "cutter"]
     );
     assert!(all[0].feeder, "the iron feeds its own solder");
     for s in &all {
@@ -227,13 +227,14 @@ fn layout_text(spec: &str) -> String {
     out
 }
 
-const PROGRAMS: [&str; 6] = [
+const PROGRAMS: [&str; 7] = [
     "arms",
     "pick",
     "solder",
     "weld",
     "solder-stations",
     "weld-stations",
+    "leads",
 ];
 
 fn program(name: &str) -> String {

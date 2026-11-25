@@ -31,6 +31,8 @@ stage [turn=DEG] [tilt=DEG] [at=X,Y,Z] -- move the positioner: turn the stage by
 present FRAME|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG] -- move the positioner so a pin's frame or a joint is at a tool station's point
 pinch PINCER on=PIN [at=MM] -- a pincer on the turntable grips a lead from the side: it holds the part there, and sinks heat
 unpinch PINCER -- a pincer lets go and draws back
+bend PINCER on=PIN at=MM angle=DEG toward=X,Y,Z [radius=MM] -- a pincer bends a lead round a mandrel, the rest of it toward a direction
+trim STATION on=PIN at=MM -- a cutter station cuts a lead, what is past the cut falling into the bin
 vise open|close -- open or close the vise on the stage
 wait [s=S] [until=TARGET] [below=C] -- let time pass, or wait until a pin or joint cools
 scope [pan=DEG] [tilt=DEG] [zoom=N] [focus=MM] [rotate=DEG] [aim=TARGET] -- move the microscope: pan, tilt, zoom, focus, rotate, or aim it at a target

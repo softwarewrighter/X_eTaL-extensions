@@ -12,6 +12,7 @@ pub mod command;
 pub mod heat;
 pub mod kin;
 pub mod layout;
+pub mod leads;
 pub mod model;
 pub mod motion;
 pub mod parts;
