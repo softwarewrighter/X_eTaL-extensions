@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-24
 
+- `plan` the assembly cell, tool stations and a work positioner (the user): C17 revised, tools on telescoping linear actuators fixed along lines from the side or below, the work turned and moved to present each joint to a station's point; step 13 renamed cell-stations.
 - `plan` the assembly cell, arms mounted from other directions (the user): decision C17, bases on walls, overhead or under the work zone, tools approaching from their arm's side; step 13 cell-mounts inserted after cell-weld, later steps renumbered.
 - `plan` the assembly cell, sacrificial supports (the user): decision C16, a frame of welded steel wire holding parts while the circuit is turned, cut away late; step 15 cell-support inserted after cell-leads, later steps renumbered; the planner adds supports.
 - `chore` saga: complete assembly-cell step 11 (cell-mcp).
