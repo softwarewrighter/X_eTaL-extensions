@@ -1,7 +1,7 @@
 number = 10
-slug = "cell-mcp"
+slug = "cell-heat"
 status = "pending"
-description = "Saga 17 step 8: extensions/cell/mcp, the binary xetal-cell-mcp (rmcp, stdio):..."
+description = "Saga 17 step 9: the thermal network (body, lead segments of about 1 mm, joint..."
 role = "production"
 context_files = []
 created_at = "2026-11-24T11:00:31"

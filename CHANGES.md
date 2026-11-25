@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-24
 
+- `plan` the assembly cell: soldering (cell-heat) moved ahead of the MCP server, the user's choice -- the first soldered subassembly, held by an arm, comes next.
 - `chore` saga: complete assembly-cell step 9 (cell-site-links).
 - `docs` the site's menu leads to the live pages (Saga 17 step 9, the user: no obvious link to the cell's live page in the menu, and a poor video): a "Live, in your browser" group at the top of the menu (the assembly cell, the neon city), a featured demo's own menu entry going to its page ("(open it)"), a demo section's link saying "open it live" (`scripts/build-catalog.py`). The cell's recording at 12 frames a second and the page's full width (1280), the README's animated picture kept at 640 (`webp=` in a film spec, `scripts/videos.sh`).
 - `chore` saga: complete assembly-cell step 8 (cell-live-fix).
