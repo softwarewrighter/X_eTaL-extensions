@@ -1,0 +1,1 @@
+Saga 17 step 9 (inserted, the user): site menu gets a Live group linking cell/live and three/live, featured demos' entries go to their pages; cell video at 12 fps and 1280 wide (webp 640 via film webp=). Gate ok.
