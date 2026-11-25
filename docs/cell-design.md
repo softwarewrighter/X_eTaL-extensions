@@ -214,6 +214,16 @@ assembly: a semiconductor in a path from electrode to electrode, or
 with no grounding clip on its lead, marks a transient risk -- refused
 by default (`weld ... risky=allow` to proceed and see the damage).
 
+**Supports.** As a 3D printer's slicer adds supports and they are
+cut away after printing (decision C16): a frame of steel wire, welded
+from the spool, holds parts by tabs while the circuit is turned and
+moved as one rigid piece; late in the program the cutter trims the
+tabs and the frame is set aside. Supports are not in the netlist, so
+the check fails while any remains. A conductive frame joins
+everything, so a weld made after it has every semiconductor on the
+frame in its current's path: clip them, solder them instead, or weld
+before the frame goes on.
+
 **Wire.** A spool of a gauge: diameter, resistance a meter, ampacity,
 stiffness, bare or enameled (which must be stripped by heat before it
 wets). The feeder pushes wire out of its nozzle; a gripper holds the

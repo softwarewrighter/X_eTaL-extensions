@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-24
 
+- `plan` the assembly cell, sacrificial supports (the user): decision C16, a frame of welded steel wire holding parts while the circuit is turned, cut away late; step 15 cell-support inserted after cell-leads, later steps renumbered; the planner adds supports.
 - `chore` saga: complete assembly-cell step 11 (cell-mcp).
 - `ext` cell, the MCP server (Saga 17 step 11): `extensions/cell/mcp`, `xetal-cell-mcp` (rmcp, stdio): `cell_do`, `cell_run`, `cell_reset`, `cell_state`, `cell_rewind`, `cell_inspect`, `cell_program`, and a typed tool for each command, its schema the command table's; refusals as tool errors or outcomes; sessions saved as programs (all commands, and the effective ones). The live page served beside it on 8470: with `?mcp` it follows the session, playing each command as it comes, its controls driving the same cell. `World::summary` (the page's state too) says where things are: the vise's middle, the stage top, the floor, the tray's pockets, the fixtures -- without them Claude Code probed for the vise's height and did not finish; with them it put the DIP in the vise and a resistor lead 0.05 mm from pin 3 in six turns (`programs/claude.cell`). A scripted MCP client in the tests (7), `scripts/cell-mcp-check.py` (the page following an agent, headless), `just ext cell mcp`, `mcp-config`, `mcp-check`; the gate tests an extension's MCP package with its crate.
 - `chore` saga: complete assembly-cell step 10 (cell-heat).
