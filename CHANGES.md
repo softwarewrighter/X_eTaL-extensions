@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-24
 
+- `chore` saga: complete assembly-cell step 10 (cell-heat).
 - `ext` cell, heat and solder (Saga 17 step 10, moved ahead of MCP: the user asked where a soldered subassembly is): a thermal network (`heat.rs`: explicit steps of 1 ms or less, nodes in balance for specks; tested against analytic RC decay, a two-node exchange, a heater's steady state), built from the cell whenever time passes (`thermal.rs`): bodies, leads in 1 mm segments, joints' solder, the iron at its set point with a limited heater, clips, convection higher in motion; `materials/thermal.toml` (sourced or illustrative). Joints (`solder.rs`): `touch`, `feed` (melting with latent heat), wetting, freezing judged good, cold, disturbed, starved, blob or bridged, melting again; a good joint makes a subassembly carried as one (an arm or the vise; falls as one); `clip`, body damage, `wait until=`, `inspect`, and a new `back` command. Collision allows a part's solids wherever they are. The player: a heat glow and joint balls, Close up. `programs/solder.cell`: a resistor soldered to a DIP's pin 3, the pair lifted out of the vise; the live page opens with it, the site features its recording. 65 Rust tests, 14 reg-rs tests.
 - `plan` the assembly cell: soldering (cell-heat) moved ahead of the MCP server, the user's choice -- the first soldered subassembly, held by an arm, comes next.
 - `chore` saga: complete assembly-cell step 9 (cell-site-links).
