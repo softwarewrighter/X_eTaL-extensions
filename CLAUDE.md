@@ -344,8 +344,12 @@ Read before working:
 9. Docs are ASCII-only markdown (`sw-markdown-checker`). User-facing
    docs (README, extension pages) say what and how; saga/step talk
    lives only in `docs/plan.md`.
-10. `CHANGES.md` gets a line for every commit (newest first, grouped
-    by day, Pacific time, a category), as in `../X_eTaL`.
+10. `CHANGES.md` gets a line for every commit, as in `../X_eTaL`:
+    newest first, grouped by day (Pacific), each line beginning with
+    its time and a category (`- 14:05 \`fix\` ...`); the gate checks
+    the form (`scripts/check-changes.py`). A version is an annotated
+    tag (with the user's yes) and a row in CHANGES.md's Versions
+    table: its commit, date and the X_eTaL it is built against.
 11. NEVER run `sw-install` unless the user explicitly asks.
 12. The site shows recordings, not live pages (the user's decision,
     2026-10-03: extensions are native): `just videos` records each demo

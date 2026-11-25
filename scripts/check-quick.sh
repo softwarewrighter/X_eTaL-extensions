@@ -36,6 +36,8 @@ esac
 "$root/scripts/literate.sh" --check
 "$root/scripts/check-spelling.py" --self-test
 "$root/scripts/check-spelling.py"
+"$root/scripts/check-changes.py" --self-test
+"$root/scripts/check-changes.py"
 md=(README.md CHANGES.md docs/plan.md docs/xetal-asks.md)
 for f in docs/*.md extensions/*/docs/*.md web/*/README.md; do [ -e "$f" ] && md+=("$f"); done
 for f in "${md[@]}"; do sw-markdown-checker -f "$f" >/dev/null || { sw-markdown-checker -f "$f"; exit 1; }; done
