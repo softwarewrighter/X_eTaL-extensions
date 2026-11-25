@@ -2,7 +2,9 @@
 // walking; showing a scene in place of the one before; and, when the
 // page can build scenes (X_eTaL linked in as WebAssembly), a seed. A
 // scene whose first call is view is a game's board (board.js): no
-// flight, and shown again it changes in place.
+// flight, and shown again it changes in place. A scene whose first
+// call is cell is an assembly cell's timeline (cell.js): played with a
+// scrubber; ?check compares its drawing with the simulator's numbers.
 // ?t=SECONDS holds the flight at a moment (a still, for a test or a
 // recording); ?hud=0 hides the controls; ?mode=fly or walk starts
 // there; ?seed=N builds that city first. For a board, ?t=SECONDS holds
@@ -14,6 +16,7 @@
 // it, a board seen through an eye says how to look round).
 import { play } from './player.js';
 import { board, isBoard } from './board.js';
+import { cellPlayer, isCell } from './cell.js';
 
 export function start(setup = {}) {
   const q = new URLSearchParams(location.search);
@@ -31,8 +34,9 @@ export function start(setup = {}) {
   const live = {
     show(calls) {
       if (isBoard(calls)) { live.board(calls); return; }
+      if (isCell(calls)) { live.cell(calls); return; }
       if (city) city.stop();
-      document.body.classList.remove('board', 'eye');
+      document.body.classList.remove('board', 'eye', 'cell');
       err.textContent = '';
       const options = {
         mode, keep: q.has('t'), media: setup.media,
@@ -67,6 +71,17 @@ export function start(setup = {}) {
       if (q.has('t')) options.time = Number(q.get('t'));
       city = board(view, calls, options);
       document.title = document.title.replace(/: (ready|error)$/, '') + ': ready';
+    },
+    // an assembly cell: its timeline, played
+    cell(calls) {
+      err.textContent = '';
+      if (city) (city.stopAll || city.stop)();
+      document.body.classList.remove('board', 'eye');
+      document.body.classList.add('cell');
+      const options = { models: setup.models, hud: q.get('hud') !== '0', check: q.has('check'),
+        onFrame: (f) => { stat.textContent = `cell ${f.name}  ${f.t.toFixed(2)} of ${f.duration.toFixed(2)} s  step ${f.step}`; } };
+      if (q.has('t')) options.time = Number(q.get('t'));
+      city = cellPlayer(view, calls, options);
     },
     fail(e) {
       err.textContent = String((e && e.message) || e);

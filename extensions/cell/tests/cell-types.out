@@ -5,6 +5,7 @@ l:c_ommands : Unit -> Char
 l:p_arse : Char -> Char
 l:r_un : Char -> Char
 l:s_tate : Char -> Char
+l:s_cene : Char -> Char -> Char
 l:r_ig : Unit -> Char
 l:a_rmModel : Unit -> Char
 l:package : Char

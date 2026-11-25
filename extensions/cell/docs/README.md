@@ -7,7 +7,8 @@ touches a lead, a third solders them, and the next part comes in. A
 program or an LLM agent drives it one command at a time (the design:
 docs/cell-design.md in the repository).
 
-Status: the arms move, and the cell has its 3D models. The parts
+Status: the arms move, the cell has its 3D models, and a program can
+be previewed in a browser, played with a scrubber. The parts
 library, the command language (text and JSON, checked against one
 table), the cell's state as JSON, four six-axis arms with the stage
 and the vise, and a model of every piece (built through Blender,
@@ -41,6 +42,7 @@ each other and the parts.
 | `run` | 1 | `Char -> Char` | a program run on a new cell, each command's outcome as JSON |
 | `state` | 1 | `Char -> Char` | a program run on a new cell, the cell's state after it as JSON |
 | `rig` | 0 | `Unit -> Char` | the arm's rig as JSON |
+| `scene` | 2 | `Char -> Char -> Char` | a program run on a new cell, written as a scene for the players |
 | `arm_model` | 0 | `Unit -> Char` | what a model of the arm must be, as JSON: its pivots, links, check poses and rig |
 
 ## From X_eTaL
@@ -123,6 +125,38 @@ line (it passes near a singularity: the wrist straight, or the wrist
 over the base's axis), each with how far along. Every motion is
 recorded in the arm's track, rows of the time and the six angles,
 every 50 ms, for a player to draw.
+
+## The preview
+
+![The arms program at 16 s, drawn by headless Chrome](preview.jpg)
+
+A program is previewed the way a slicer previews a printer's moves:
+the simulator runs it whole, `ce:s_cene` writes its timeline as a
+scene, and the three extension's cell player plays it in a browser.
+
+```sh
+just preview arms         # programs/arms.cell at http://127.0.0.1:8470/
+just check arms           # the same, checked headlessly
+```
+
+`programs/NAME.cell` is a program in the command language;
+`programs/NAME.scene`, if there is one, holds calls added to the scene
+for the player -- parts, ghosts and their expectations, until the
+simulator places parts itself. The page shows the cell from a camera
+you turn by dragging and bring closer with the wheel, a play button,
+the time, a scrubber, a speed, the list of steps (click one to go
+there) and the ghosts of where parts will end; `window.cell` plays,
+seeks and reports the state for a program (three's page says how).
+
+`just check NAME` writes the preview and has headless Chrome (no
+window, a throwaway profile) draw it with `?check`: at every `expect`
+line -- each arm's flange at the middle and end of steps, from the
+simulator's forward kinematics -- the page poses the models and
+measures where the flange is drawn. It fails beyond 0.01 mm. For
+`arms`, all 49 expectations (44 flanges, 5 positions of a part carried
+by arm A) are drawn exactly where the simulator says; turning a
+joint about the wrong axis puts the flange 552 mm off and fails. It
+also keeps a picture, `work/preview/NAME/check.png`.
 
 ## Models
 
@@ -273,6 +307,8 @@ just command-table  # the command table as markdown, for this page
 just models         # every model through Blender, checked, with stills
 just rigs           # copy the models' rigs the simulator reads into rigs/
 just sheet          # the stills as one picture, docs/models.jpg
+just preview NAME   # programs/NAME.cell previewed at http://127.0.0.1:8470/
+just check NAME     # the preview checked by headless Chrome
 ```
 
 ## Demos

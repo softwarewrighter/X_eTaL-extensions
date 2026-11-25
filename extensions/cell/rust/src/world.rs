@@ -19,6 +19,18 @@ pub const ARM_BASES: [(&str, [f64; 6]); 4] = [
     ("D", [450.0, 0.0, -200.0, 0.0, 0.0, 180.0]),
 ];
 
+/// Where the fixtures stand in the cell (a model's name and its pose:
+/// x y z mm, roll pitch yaw degrees): the rotary stage under the work
+/// zone, its top 60 mm below the origin; the microscope's gantry turned
+/// 45 degrees so its posts stand between the arms; the tool rack and a
+/// parts tray on the diagonals, 450 mm out. Illustrative.
+pub const FIXTURES: [(&str, &str, [f64; 6]); 4] = [
+    ("stage", "stage", [0.0, 0.0, -60.0, 0.0, 0.0, 0.0]),
+    ("scope", "scope", [0.0, 0.0, -100.0, 0.0, 0.0, 45.0]),
+    ("rack", "rack", [-320.0, -320.0, -150.0, 0.0, 0.0, -45.0]),
+    ("tray1", "tray", [320.0, 320.0, -150.0, 0.0, 0.0, 45.0]),
+];
+
 /// The rotary stage's top speed (degrees a second) and acceleration
 /// (degrees a second squared); illustrative.
 pub const STAGE_SPEED: f64 = 90.0;

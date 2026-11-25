@@ -43,6 +43,9 @@ pub const BOARD_PARTS: &[(&str, &str)] = &[
         include_str!("../../web/static/board/eye.js"),
     ),
 ];
+/// The cell player: an assembly cell's timeline (the cell extension's
+/// ce:s_cene), played with a scrubber.
+pub const CELL: &str = include_str!("../../web/static/cell.js");
 /// A game's page side: the clock, keys and clicks of a program kept
 /// running, its pictures handed to the board player.
 pub const GAME: &str = include_str!("../../web/static/game.js");
@@ -124,7 +127,7 @@ mod place {
 
     use xetal_ext_sdk::OwnedError;
 
-    use super::{BOARD, BOARD_PARTS, GAME, INDEX, LIVE, PLAYER, VENDOR};
+    use super::{BOARD, BOARD_PARTS, CELL, GAME, INDEX, LIVE, PLAYER, VENDOR};
 
     fn failure(message: impl Into<String>) -> OwnedError {
         OwnedError::failure(message)
@@ -174,13 +177,14 @@ mod place {
         put(&dir, "index.html", INDEX)?;
         put(&dir, "player.js", PLAYER)?;
         put(&dir, "board.js", BOARD)?;
+        put(&dir, "cell.js", CELL)?;
         put(&dir, "game.js", GAME)?;
         put(&dir, "live.js", LIVE)?;
         put(&dir, "scene.calls.js", scene)?;
         for (name, body) in BOARD_PARTS.iter().chain(VENDOR) {
             put(&dir, name, body)?;
         }
-        Ok(i64::try_from(6 + BOARD_PARTS.len() + VENDOR.len()).unwrap_or(i64::MAX))
+        Ok(i64::try_from(7 + BOARD_PARTS.len() + VENDOR.len()).unwrap_or(i64::MAX))
     }
 
     /// There is no page to draw in: nothing to do.

@@ -1,6 +1,6 @@
 the calls, and the files of the page:
 14
-26
+27
 work/board/board.js
 work/board/board/eye.js
 work/board/board/light.js
@@ -8,6 +8,7 @@ work/board/board/particles.js
 work/board/board/terrain-textures.js
 work/board/board/terrain.js
 work/board/board/water.js
+work/board/cell.js
 work/board/game.js
 work/board/index.html
 work/board/live.js

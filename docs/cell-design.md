@@ -12,7 +12,8 @@ slicer previews a 3D printer's moves before the printer runs them.
 Status: being built (docs/plan.md, Saga 17; decisions accepted
 2026-11-24). Built so far: the extension `cell` with the parts
 library, the command table, text and JSON parsing, the state as JSON,
-the arms, stage and vise, and the models (extensions/cell/docs/README.md); the rest below is the design,
+the arms, stage and vise, the models, and the player with the
+preview (extensions/cell/docs/README.md); the rest below is the design,
 its names proposals.
 
 ## What is built where

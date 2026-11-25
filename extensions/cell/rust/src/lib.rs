@@ -13,6 +13,7 @@ pub mod model;
 pub mod motion;
 pub mod parts;
 pub mod rig;
+pub mod scene;
 pub mod world;
 
 use xetal_ext_sdk::{OwnedError, Value, text};
@@ -83,6 +84,21 @@ fn arm_model(_: &[Value]) -> Result<Value, OwnedError> {
     Ok(Value::Text(model::arm(&rig).to_string()))
 }
 
+/// A program run on a new cell, written as a scene for the players
+/// (the three extension's cell player): name, then the program.
+fn scene(args: &[Value]) -> Result<Value, OwnedError> {
+    let name = text(&args[0])?;
+    let program = command::parse_program(&text(&args[1])?).map_err(OwnedError::invalid_argument)?;
+    let mut w = world::World::default();
+    if let Some(o) = w.apply_all(&program).into_iter().find(|o| !o.ok) {
+        let why = o.refused.or(o.stopped).unwrap_or_default();
+        return Err(OwnedError::failure(format!("{}: {why}", o.command)));
+    }
+    Ok(Value::Text(
+        scene::calls(&name, &w).map_err(OwnedError::failure)?,
+    ))
+}
+
 /// The arm's rig as JSON.
 fn rig(_: &[Value]) -> Result<Value, OwnedError> {
     Ok(Value::Text(
@@ -102,6 +118,7 @@ xetal_ext_sdk::xetal_extension! {
         run: 1, "Char -> Char", "A program run on a new cell: each command's outcome as JSON, one a line, stopping after the first not ok.";
         state: 1, "Char -> Char", "A program run on a new cell: its state after, as JSON; a command not ok is an error.";
         arm_model: 0, "Unit -> Char", "What a model of the arm must be, as JSON: nodes (one a joint's pivot, local z its axis), links, check poses, the rig.";
+        scene: 2, "Char -> Char -> Char", "name program: the program run on a new cell, written as a scene for the players (cell(...), rig, track, step, ...).";
         rig: 0, "Unit -> Char", "The arm's rig as JSON: its joints' DH parameters, limits, speeds and home.";
     }
 }

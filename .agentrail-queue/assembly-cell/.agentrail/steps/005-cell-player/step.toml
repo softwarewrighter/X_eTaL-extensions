@@ -1,6 +1,6 @@
 number = 5
 slug = "cell-player"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 5: extensions/three/web/static/cell.js, a third player chosen by..."
 role = "production"
 context_files = []

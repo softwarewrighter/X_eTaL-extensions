@@ -228,6 +228,7 @@
 <li class="item"><a href="#l.p_arse"><span class="c-libfunc">ˡp̲arse</span></a></li>
 <li class="item"><a href="#l.r_un"><span class="c-libfunc">ˡr̲un</span></a></li>
 <li class="item"><a href="#l.s_tate"><span class="c-libfunc">ˡs̲tate</span></a></li>
+<li class="item"><a href="#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></li>
 <li class="item"><a href="#l.r_ig"><span class="c-libfunc">ˡr̲ig</span></a></li>
 <li class="item"><a href="#l.a_rmModel"><span class="c-libfunc">ˡa̲rmModel</span></a></li>
 <li class="item"><a href="#l.package">ˡpackage</a></li>
@@ -349,9 +350,29 @@ the parts and the timeline. A command not ok is an error naming it.</p>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/state&quot;</span>
 <span class="c-depth0">}</span></pre></details>
 </div>
+<div class="item" id="l.s_cene">
+<h3><a href="#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L53">line 53</a></div>
+<div class="doc">
+<p>name ce:s_cene program: the program run on a new cell, written as a
+scene for the players -- one call a line, its first cell(name, 1280,
+720), then the fixtures, each arm (rig) with its track (rows of the
+time and the six joint angles), the stage's track, the parts, a
+step a command with its times, and expect lines (an arm's flange at
+a time, for a check of the drawing). The three extension's cell
+player draws it (th:p_age! writes a page). A command not ok is an
+error naming it.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;s_cene : text text -&gt; text&quot;</span>    <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/scene&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡs̲cene</span> ← <span class="c-depth0">{</span> a b →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/scene?text&quot;</span>
+  pb ← b <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/scene?text&quot;</span>
+  <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/scene&quot;</span>
+<span class="c-depth0">}</span></pre></details>
+</div>
 <div class="item" id="l.r_ig">
 <h3><a href="#l.r_ig"><span class="c-libfunc">ˡr̲ig</span></a> <span class="type">: Unit -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L48">line 48</a></div>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L57">line 57</a></div>
 <div class="doc">
 <p>ce:r_ig @: the arm's rig as JSON -- each joint's DH parameters
 (alpha, a, d, offset), its limits, top speed and acceleration, and
@@ -364,7 +385,7 @@ the home pose; every arm in the cell is this arm.</p>
 </div>
 <div class="item" id="l.a_rmModel">
 <h3><a href="#l.a_rmModel"><span class="c-libfunc">ˡa̲rmModel</span></a> <span class="type">: Unit -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L56">line 56</a></div>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L65">line 65</a></div>
 <div class="doc">
 <p>ce:a_rmModel @: what a model of the arm must be, as JSON (the asset
 contract, docs/cell-design.md): its nodes -- arm_base, arm_j1 to
@@ -382,7 +403,7 @@ from it, and Blender writes it back as arm.rig.json.</p>
 </div>
 <div class="item" id="l.package">
 <h3><a href="#l.package">ˡpackage</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L60">line 60</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L69">line 69</a></div>
 <div class="doc">
 <p>The native package behind these functions (a literal l: name also
 makes this file a library to <code>xetal type</code>: ask E7).</p>

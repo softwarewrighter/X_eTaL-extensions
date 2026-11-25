@@ -1,7 +1,8 @@
 # three
 
 Interactive 3D in a browser. An X_eTaL program writes a scene as the
-calls of a player -- the same text the blender extension's Cycles.xtl
+calls of a player (three players: a city, a game's board, an assembly
+cell) -- the same text the blender extension's Cycles.xtl
 writes for a ray-traced film -- and here a player written with
 Three.js draws those calls in real time: ride the camera's flight, fly,
 or walk. The first scene is the neon city: 240 lots worked out as
@@ -340,6 +341,29 @@ play.start();
 page's controls (`live.js`) choose the player by the scene's first
 call. `just ext three board` writes `tests/board.xtl`'s small board to
 `work/board`; `just ext three serve board` serves it.
+
+## An assembly cell
+
+A third player, `web/static/cell.js`, plays an assembly cell's
+timeline: a scene whose first call is `cell(name, w, h)`, as the cell
+extension writes it (`ce:s_cene`, extensions/cell/docs/README.md).
+Its calls -- `fixture`, `rig`, `track`, `part`, `attach`, `ghost`,
+`step`, `expect` -- are in the cell's frame (millimeters, Z up); the
+player hangs everything from one group turned to Three.js's Y up, and
+the cell's `.glb` models (meters, Y up as glTF has them) from groups
+that turn them back. An arm's joint is its node `arm_jN`, turned about
+its local y (glTF's name for the joint axis Blender called z). A part
+attached to an arm moves with its flange between two times and stays
+where it was left; a ghost is drawn faint where a part will end.
+
+The page has a play button, the time, a scrubber, a speed and the list
+of steps (click one to go there), and `window.cell`, an API as
+console-3D's `window.selectric`: `await cell.play(from, to)`,
+`cell.seek(t)`, `cell.state` (the time, each arm's joints and flange,
+each part, the stage, the step) and `cell.stop()`. `?t=SECONDS` holds
+a moment; `?check` seeks every `expect` and writes how far the drawing
+is from the simulator's numbers into `#check`, which
+`scripts/cell-check.py` reads from headless Chrome.
 
 ## The pictures on the screens
 

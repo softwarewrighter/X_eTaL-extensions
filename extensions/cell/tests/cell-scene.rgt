@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/scene.xtl"
+exit_code = 0
+desc = "a short program written as a scene for the players: cell(...) first, the fixtures, each arm's rig and track, the stage's track, a step a command, and expect lines (each arm's flange at the middle and end of steps)"

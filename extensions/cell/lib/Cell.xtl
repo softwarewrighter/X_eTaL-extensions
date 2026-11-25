@@ -42,6 +42,15 @@
 ## rows of the time and j1 to j6), the stage and its track, the vise,
 ## the parts and the timeline. A command not ok is an error naming it.
 "s_tate : text -> text"         ffi:b_ind< "cell/state"
+## name ce:s_cene program: the program run on a new cell, written as a
+## scene for the players -- one call a line, its first cell(name, 1280,
+## 720), then the fixtures, each arm (rig) with its track (rows of the
+## time and the six joint angles), the stage's track, the parts, a
+## step a command with its times, and expect lines (an arm's flange at
+## a time, for a check of the drawing). The three extension's cell
+## player draws it (th:p_age! writes a page). A command not ok is an
+## error naming it.
+"s_cene : text text -> text"    ffi:b_ind< "cell/scene"
 ## ce:r_ig @: the arm's rig as JSON -- each joint's DH parameters
 ## (alpha, a, d, offset), its limits, top speed and acceleration, and
 ## the home pose; every arm in the cell is this arm.
