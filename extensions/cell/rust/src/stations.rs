@@ -46,6 +46,8 @@ struct Raw {
     temp: Option<f64>,
     #[serde(default)]
     point: Option<V3>,
+    #[serde(default)]
+    feeder: bool,
 }
 
 /// A station as the data gives it.
@@ -63,6 +65,8 @@ pub struct Station {
     pub stroke: f64,
     /// An iron's set point, C.
     pub temp: Option<f64>,
+    /// An iron with its solder feeder on the same actuator.
+    pub feeder: bool,
 }
 
 thread_local! {
@@ -118,6 +122,7 @@ fn parse(text: &str) -> Result<Vec<Station>, String> {
                 from: kin::scale(r.from, 1.0 / n),
                 stroke: r.stroke,
                 temp: r.temp,
+                feeder: r.feeder,
             })
         })
         .collect()
@@ -643,6 +648,22 @@ impl World {
                     .unwrap_or(0.0)
                     .max(self.temperature(&j.b).unwrap_or(0.0));
                 events.push(format!("{}: the leads at {} C", j.name, num1(hot)));
+            }
+            "feed" if s.feeder => {
+                // the iron's own feeder: the iron on a joint at its point
+                let (ji, iron) = {
+                    let rig = Rig::arm().map_err(Halt::Refused)?;
+                    self.iron_on_joint(&rig, "")?
+                };
+                if iron != s.name {
+                    return Err(Halt::Refused(format!(
+                        "{}'s iron is not on a joint: touch one first",
+                        s.name
+                    )));
+                }
+                let mm = c.number("mm").unwrap_or(0.0);
+                let rate = c.number("rate").unwrap_or(2.0);
+                self.feed_melt(ji, mm, rate, did, events, warnings)?;
             }
             "feed" => {
                 need("solder")?;

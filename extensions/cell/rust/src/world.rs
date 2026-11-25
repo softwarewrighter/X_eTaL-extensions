@@ -147,6 +147,9 @@ pub struct Part {
     /// The vise grips it.
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub in_vise: bool,
+    /// A pincer on the turntable grips one of its leads: the pincer.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub pinched: Option<String>,
     /// It fell to the floor and is lost.
     pub lost: bool,
     /// Its thermal nodes' temperatures, C: the body, then each pin's
@@ -176,6 +179,7 @@ impl Part {
             at,
             holder: None,
             in_vise: false,
+            pinched: None,
             lost: false,
             temps: Vec::new(),
             hot: 0.0,
@@ -250,6 +254,9 @@ pub struct World {
     /// The positioner's offset from the stage's place at rest, x y z mm.
     #[serde(default)]
     pub offset: [f64; 3],
+    /// The pincers on the turntable.
+    #[serde(default = "crate::pincers::fresh")]
+    pub pincers: Vec<crate::pincers::PincerState>,
     /// The tool stations: how far each is extended.
     #[serde(default = "crate::stations::fresh")]
     pub stations: Vec<crate::stations::StationState>,
@@ -352,6 +359,7 @@ impl World {
                     at,
                     holder: None,
                     in_vise: false,
+                    pinched: None,
                     lost: false,
                     temps: Vec::new(),
                     hot: 0.0,
@@ -400,6 +408,7 @@ impl World {
             tilt: 0.0,
             offset: [0.0; 3],
             stations: crate::stations::fresh(),
+            pincers: crate::pincers::fresh(),
             vise: "open".into(),
             parts,
             tools,
@@ -634,6 +643,7 @@ impl World {
             collide::fixture_box("the vise's jaw", &f, [0.0, -14.0, 20.0], [40.0, 6.0, 16.0]),
             collide::fixture_box("the vise's jaw", &f, [0.0, 14.0, 20.0], [40.0, 6.0, 16.0]),
         ];
+        solids.extend(self.pincer_solids(&f, None));
         let moved = f.then(&self.stage_pose().inverse());
         for p in self
             .parts
@@ -980,12 +990,18 @@ impl World {
             .then(&kin::forward(rig, &self.arms[i].joints));
         for (k, o) in &held {
             self.parts[*k].at = layout::six(&flange.then(o));
-            // pulled out of the vise
+            // pulled out of the vise, or a pincer
             if self.parts[*k].in_vise && end > 0.0 {
                 self.parts[*k].in_vise = false;
                 let id = self.parts[*k].id.clone();
                 self.notes
                     .push((false, format!("{id} was pulled out of the vise")));
+            }
+            if let Some(by) = self.parts[*k].pinched.clone().filter(|_| end > 0.0) {
+                self.parts[*k].pinched = None;
+                let id = self.parts[*k].id.clone();
+                self.notes
+                    .push((false, format!("{id} was pulled out of {by}")));
             }
         }
         // heat flows while it moves
@@ -1103,7 +1119,7 @@ impl World {
     /// Part `k` is let go of: a closed vise takes it if it is at the
     /// vise's middle; then whatever carries nothing now -- it, and parts
     /// soldered to it -- falls to the floor and is lost.
-    fn let_go_of(&mut self, k: usize) {
+    pub(crate) fn let_go_of(&mut self, k: usize) {
         let center = self
             .stage_pose()
             .then(&Pose::from_xyz_rpy(
@@ -1143,17 +1159,21 @@ impl World {
                     })
                     .map(|j| j.weld.is_some())
                     .collect();
-                let how = if holding.iter().all(|&w| w) {
+                let how = if holding.is_empty() {
+                    ""
+                } else if holding.iter().all(|&w| w) {
                     "welded"
                 } else if holding.iter().any(|&w| w) {
                     "soldered and welded"
                 } else {
                     "soldered"
                 };
-                self.notes.push((
-                    false,
-                    format!("{id} stays: it is {how} to a part {by} holds"),
-                ));
+                let why = match (&self.parts[k].pinched, how) {
+                    (Some(p), _) => format!("{p} grips it"),
+                    (None, "") => format!("{by} holds it"),
+                    (None, how) => format!("it is {how} to a part {by} holds"),
+                };
+                self.notes.push((false, format!("{id} stays: {why}")));
             }
         }
     }
@@ -1227,6 +1247,21 @@ impl World {
     ) -> Result<(), Halt> {
         let refuse = |why: String| Err(Halt::Refused(why));
         let rig = Rig::arm().map_err(Halt::Refused)?;
+        // a pincer's command
+        match c.op.as_str() {
+            "pinch" => {
+                let at = c.number("at").unwrap_or(5.0);
+                return self.pinch(
+                    c.word("pincer").unwrap_or(""),
+                    c.word("on").unwrap_or(""),
+                    at,
+                    did,
+                    events,
+                );
+            }
+            "unpinch" => return self.unpinch(c.word("pincer").unwrap_or(""), did, events),
+            _ => {}
+        }
         // a station's command
         if let Some(si) = c.word("arm").and_then(|n| self.station_index(n)) {
             return self.station_step(si, c, did, events, warnings);

@@ -339,6 +339,31 @@ joint as a ball of solder that grows as it is fed, glows while molten
 and takes its result's color when it freezes; Close up shows the work
 zone.
 
+## The bench
+
+The cell is becoming a bench (docs/cell-design.md): a turntable holding
+the work, one slender arm, an iron station that feeds its own solder,
+and pincers on the turntable. Built so far:
+
+- `pinch PINCER on=PIN [at=MM]`: a pincer on the turntable (P1, P2)
+  grips a lead `at` mm from the body (5 if not given). Each rides a
+  ring round the turntable (130 mm out) and moves on simple axes --
+  round the ring, up and down, its pole turned in the level plane and
+  reaching in -- choosing the clear side nearest square to the lead.
+  The turntable then holds the part (an arm may let it go: "R1 stays:
+  P1 grips it"), turns and rises with it, and the jaws draw heat from
+  the lead as a heatsink clip does. `unpinch PINCER` lets go and draws
+  back; a part nothing else holds falls.
+- Station S1's iron feeds its own solder: `feed S1 mm= rate=` once its
+  iron is on a joint. (The separate feeder station is gone.)
+- `programs/solder-stations.cell`, soldering at the bench: arm A brings
+  the resistor's lead to pin 3, P1 grips it, A lets go and leaves, the
+  turntable presents the joint to S1, which heats it and feeds solder;
+  the joint freezes good; P1 lets go and the resistor stays.
+
+The four large arms are still here; the slender arm replaces them
+next.
+
 ## Tool stations and the positioner
 
 Tools need not ride on arms. A tool station is a tool on a linear
@@ -682,6 +707,8 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `cut ARM` | cutter | cut the wire or the lead in the cutter's jaws |
 | `stage [turn=DEG] [tilt=DEG] [at=X,Y,Z]` | stage | move the positioner: turn the stage by an angle, tilt it, move it |
 | `present FRAME\|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG]` | stage | move the positioner so a pin's frame or a joint is at a tool station's point |
+| `pinch PINCER on=PIN [at=MM]` | pincer | a pincer on the turntable grips a lead from the side: it holds the part there, and sinks heat |
+| `unpinch PINCER` | pincer | a pincer lets go and draws back |
 | `vise open\|close` | stage | open or close the vise on the stage |
 | `wait [s=S] [until=TARGET] [below=C]` | cell | let time pass, or wait until a pin or joint cools |
 | `scope [pan=DEG] [tilt=DEG] [zoom=N] [focus=MM] [rotate=DEG] [aim=TARGET]` | scope | move the microscope: pan, tilt, zoom, focus, rotate, or aim it at a target |

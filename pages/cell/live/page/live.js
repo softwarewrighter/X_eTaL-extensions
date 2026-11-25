@@ -173,7 +173,7 @@ export function start(local) {
     // the hint says which program is loaded
     const what = {
       weld: 'a disc welded to a disc in the vise, then an LED, its lead clipped to ground first: the three welded into one in the vise',
-      'solder-stations': 'the stage turns and rises to bring a chip pin to the tool stations, an arm brings a resistor lead to it, the iron station and the solder feeder station join them',
+      'solder-stations': 'the bench: an arm brings a resistor lead to a chip pin, a pincer on the turntable grips it so the arm can go, the turntable presents the joint to the iron station, which feeds its own solder',
       'weld-stations': 'the stage brings a disc lead to the welder station, which comes up from below; an arm lays a second disc lead on it, and it is welded',
       pick: 'a chip picked from the tray and put in the vise',
       arms: 'each arm taking a tool and moving',

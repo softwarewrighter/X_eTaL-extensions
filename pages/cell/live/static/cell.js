@@ -120,6 +120,9 @@ export function cellPlayer(host, calls, options = {}) {
     step(n, label, t0, t1) { s.steps.push({ n, label, t0, t1 }); },
     expect(arm, t, xyz) { s.expects.push({ arm, t, xyz }); },
     station(id, tool, housing, rows) { s.stations.push({ id, tool, housing, rows }); },
+    // a pincer: a station whose housing moves too (rows: t, housing's
+    // x y z r p y, the jaws' mount's x y z r p y)
+    pincer(id, tool, rows) { s.stations.push({ id, tool, housing: rows[0].slice(1, 7), rows: rows.map((r) => [r[0], ...r.slice(7)]), housings: rows.map((r) => r.slice(0, 7)) }); },
   };
   new Function(...Object.keys(api), calls)(...Object.values(api));
   const duration = Math.max(0, ...s.steps.map((x) => x.t1), ...s.places.map((x) => x.t), ...Object.values(s.tracks).map((r) => (r.length ? r[r.length - 1][0] : 0)));
@@ -141,7 +144,7 @@ export function cellPlayer(host, calls, options = {}) {
   // else a three-quarter view of the whole cell
   const whole = () => ({ yaw: 35 * D, pitch: 28 * D, dist: 1700, target: new THREE.Vector3(0, 60, 0) });
   // close up: the work zone, the stage's top and what is held over it
-  const close = () => ({ yaw: 35 * D, pitch: 22 * D, dist: 120, target: new THREE.Vector3(0, -30, 0) });
+  const close = () => ({ yaw: 35 * D, pitch: 22 * D, dist: 200, target: new THREE.Vector3(0, 0, -15) });
   const view = options.view || (new URLSearchParams(location.search).get('view') === 'close' ? close() : whole());
   const place = () => {
     const c = Math.cos(view.pitch);
@@ -230,14 +233,15 @@ export function cellPlayer(host, calls, options = {}) {
       tool.matrixAutoUpdate = false;
       root.add(tool);
       const steel = new THREE.MeshStandardMaterial({ color: '#8a9098', metalness: 0.6, roughness: 0.4 });
-      const housing = new THREE.Mesh(new THREE.BoxGeometry(40, 40, 60), new THREE.MeshStandardMaterial({ color: '#4a5260', roughness: 0.7 }));
+      const size = st.housings ? [20, 20, 30] : [40, 40, 60];
+      const housing = new THREE.Mesh(new THREE.BoxGeometry(...size), new THREE.MeshStandardMaterial({ color: st.housings ? '#6a5a8a' : '#4a5260', roughness: 0.7 }));
       housing.matrixAutoUpdate = false;
       housing.matrix.copy(poseMatrix(st.housing));
       root.add(housing);
       const pole = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 1, 16), steel);
       pole.matrixAutoUpdate = false;
       root.add(pole);
-      stations[st.id] = { tool, pole, rows: st.rows, front: new THREE.Vector3(0, 0, -30).applyMatrix4(poseMatrix(st.housing)) };
+      stations[st.id] = { tool, pole, housing, rows: st.rows, housings: st.housings, half: size[2] / 2, front: new THREE.Vector3(0, 0, size[2] / 2).applyMatrix4(poseMatrix(st.housing)) };
     }),
     ...s.ghosts.map(async (p) => {
       const g = holder((await load(p.kind)).clone(true));
@@ -302,6 +306,13 @@ export function cellPlayer(host, calls, options = {}) {
   // the stations: each tool at its mount, the pole from the housing to it
   const stationsAt = (u) => {
     for (const st of Object.values(stations)) {
+      // a pincer's housing rides the turntable: its pole starts at the
+      // housing's inner face
+      if (st.housings) {
+        const hm = poseMatrix(at(st.housings, u));
+        st.housing.matrix.copy(hm);
+        st.front = new THREE.Vector3(0, 0, st.half).applyMatrix4(hm);
+      }
       const m = poseMatrix(at(st.rows, u));
       st.tool.matrix.copy(m);
       const end = new THREE.Vector3().setFromMatrixPosition(m);

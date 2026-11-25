@@ -125,7 +125,7 @@ impl World {
         }
         group
             .iter()
-            .any(|&g| self.parts[g].in_vise)
+            .any(|&g| self.parts[g].in_vise || self.parts[g].pinched.is_some())
             .then(|| "vise".to_string())
     }
 
@@ -257,6 +257,25 @@ impl World {
                     let set = a.iron.unwrap_or(th.iron.set_c);
                     touches.push((set, if tool == "iron" { "iron" } else { "clip" }, tip, near));
                 }
+            }
+        }
+        // the pincers' jaws on leads: heatsinks
+        for (_, tip) in self.pincer_tips() {
+            let mut near = Vec::new();
+            for (k, pins) in where_.iter().enumerate() {
+                if self.parts[k].lost {
+                    continue;
+                }
+                for (pi, nodes) in pins.iter().enumerate() {
+                    for (ni, (at, _)) in nodes.iter().enumerate() {
+                        if kin::norm(kin::sub(*at, tip)) <= TOUCH_MM {
+                            near.push((k, pi, ni));
+                        }
+                    }
+                }
+            }
+            if !near.is_empty() {
+                touches.push((0.0, "clip", tip, near));
             }
         }
         // the stations' irons, extended

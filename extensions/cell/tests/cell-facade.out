@@ -29,6 +29,8 @@ wire ARM awg=N mm=MM -- feed bare or enameled wire from a spool out of the nozzl
 cut ARM -- cut the wire or the lead in the cutter's jaws
 stage [turn=DEG] [tilt=DEG] [at=X,Y,Z] -- move the positioner: turn the stage by an angle, tilt it, move it
 present FRAME|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG] -- move the positioner so a pin's frame or a joint is at a tool station's point
+pinch PINCER on=PIN [at=MM] -- a pincer on the turntable grips a lead from the side: it holds the part there, and sinks heat
+unpinch PINCER -- a pincer lets go and draws back
 vise open|close -- open or close the vise on the stage
 wait [s=S] [until=TARGET] [below=C] -- let time pass, or wait until a pin or joint cools
 scope [pan=DEG] [tilt=DEG] [zoom=N] [focus=MM] [rotate=DEG] [aim=TARGET] -- move the microscope: pan, tilt, zoom, focus, rotate, or aim it at a target

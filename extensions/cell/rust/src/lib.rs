@@ -15,6 +15,7 @@ pub mod layout;
 pub mod model;
 pub mod motion;
 pub mod parts;
+pub mod pincers;
 pub mod rig;
 pub mod scene;
 pub mod solder;

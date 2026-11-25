@@ -9,6 +9,7 @@
 //! rig('A', 'arm', nums('0 450 -200 0 0 -90', 6)[0])
 //! track('A', nums('t j1 j2 j3 j4 j5 j6 ...', 7))
 //! track('stage', nums('t turn tilt x y z ...', 6))
+//! pincer('P1', 'clip', nums('t housing x y z r p y, mount x y z r p y ...', 13))
 //! station('S1', 'iron', nums('housing x y z r p y', 6)[0], nums('t x y z r p y ...', 7))
 //! part('U1', 'dip8', nums('x y z r p y', 6)[0])
 //! attach('U1', 'A', t0, t1)          (an arm's hold; 'stage': the vise's)
@@ -90,6 +91,32 @@ pub fn calls(name: &str, w: &World) -> Result<String, String> {
     }
     let rows: Vec<Vec<f64>> = w.stage_track.iter().map(|r| r.to_vec()).collect();
     let _ = writeln!(out, "track('stage', {})", table(&rows, 6));
+    // the pincers: their housing and jaws in the cell's frame, at their
+    // own moves and the turntable's
+    for p in &w.pincers {
+        let mut rows: Vec<Vec<f64>> = pincer_times(w, p)
+            .into_iter()
+            .map(|t| {
+                let (h, m) = pincer_at(w, p, t);
+                std::iter::once(t)
+                    .chain(
+                        crate::layout::six(&h)
+                            .into_iter()
+                            .chain(crate::layout::six(&m))
+                            .map(|x| kin::clean((x * 1000.0).round() / 1000.0)),
+                    )
+                    .collect()
+            })
+            .collect();
+        unwrap_angles(&mut rows, &[4, 5, 6, 10, 11, 12]);
+        let _ = writeln!(
+            out,
+            "pincer({}, {}, {})",
+            quote(&p.name),
+            quote(crate::pincers::TOOL),
+            table(&rows, 13)
+        );
+    }
     // the tool stations: the housing, and the tool's mount over time
     let all = crate::stations::data().unwrap_or_default();
     for st in &w.stations {
@@ -187,6 +214,14 @@ pub fn calls(name: &str, w: &World) -> Result<String, String> {
             let _ = writeln!(out, "expect({}, {}, {})", quote(&s.name), num(t), row(&r));
         }
     }
+    // each pincer's jaws' mount, at the same times
+    for p in &w.pincers {
+        for &t in times.iter().step_by(step) {
+            let (_, m) = pincer_at(w, p, t);
+            let r = m.p.map(|x| kin::clean((x * 1000.0).round() / 1000.0));
+            let _ = writeln!(out, "expect({}, {}, {})", quote(&p.name), num(t), row(&r));
+        }
+    }
     // and where every part and tool ends
     let end = w
         .timeline
@@ -246,6 +281,61 @@ fn ext_at(track: &[[f64; 2]], t: f64) -> f64 {
         Some(k) => {
             let (a, b) = (track[k - 1], track[k]);
             a[1] + (b[1] - a[1]) * (t - a[0]) / (b[0] - a[0]).max(1e-12)
+        }
+    }
+}
+
+/// Linear between rows, held at the ends: row `k`'s columns at time `t`.
+fn lerp_rows<const N: usize>(rows: &[[f64; N]], t: f64) -> [f64; N] {
+    match rows.iter().position(|r| r[0] > t) {
+        None => rows.last().copied().unwrap_or([0.0; N]),
+        Some(0) => rows[0],
+        Some(k) => {
+            let (a, b) = (rows[k - 1], rows[k]);
+            let f = (t - a[0]) / (b[0] - a[0]).max(1e-12);
+            std::array::from_fn(|i| a[i] + (b[i] - a[i]) * f)
+        }
+    }
+}
+
+/// A pincer's housing and jaws' mount in the cell's frame at time `t`:
+/// its own track on the turntable, the turntable's track under it.
+fn pincer_at(w: &World, p: &crate::pincers::PincerState, t: f64) -> (kin::Pose, kin::Pose) {
+    let s = lerp_rows(&w.stage_track, t);
+    let frame = crate::layout::positioner(s[1], s[2], [s[3], s[4], s[5]]);
+    let q = lerp_rows(&p.track, t);
+    let (h, m) = crate::pincers::local(q[1], q[2], q[3], q[4]);
+    (frame.then(&h), frame.then(&m))
+}
+
+/// The times a pincer's drawing needs: its track's and the turntable's.
+fn pincer_times(w: &World, p: &crate::pincers::PincerState) -> Vec<f64> {
+    let mut t: Vec<f64> = p
+        .track
+        .iter()
+        .map(|r| r[0])
+        .chain(w.stage_track.iter().map(|r| r[0]))
+        .collect();
+    t.sort_by(f64::total_cmp);
+    t.dedup_by(|a, b| (*a - *b).abs() < 1e-9);
+    t
+}
+
+/// Angle columns made continuous down the rows (a step past 180 degrees
+/// taken the short way), so a player interpolating them turns the short
+/// way too.
+fn unwrap_angles(rows: &mut [Vec<f64>], cols: &[usize]) {
+    for k in 1..rows.len() {
+        for &c in cols {
+            let prev = rows[k - 1][c];
+            let mut x = rows[k][c];
+            while x - prev > 180.0 {
+                x -= 360.0;
+            }
+            while prev - x > 180.0 {
+                x += 360.0;
+            }
+            rows[k][c] = x;
         }
     }
 }

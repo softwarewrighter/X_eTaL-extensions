@@ -35,8 +35,9 @@ fn the_stations_read_and_point_at_the_work() {
     let all = stations::data().unwrap();
     assert_eq!(
         all.iter().map(|s| s.tool.as_str()).collect::<Vec<_>>(),
-        ["iron", "solder", "welder"]
+        ["iron", "welder"]
     );
+    assert!(all[0].feeder, "the iron feeds its own solder");
     for s in &all {
         assert!((kin::norm(s.from) - 1.0).abs() < 1e-12);
         // extended, the tip is at the point; retracted, a stroke back
@@ -107,7 +108,7 @@ vise close
 release A U1
 pick A R1 grasp=body
 lift A mm=100
-present U1.3.tip at=S1 and=S2");
+present U1.3.tip at=S1");
     assert!(
         out.last().unwrap().events[0].starts_with("U1.3.tip at S1's point"),
         "{:?}",
@@ -409,4 +410,56 @@ fn trace_program() {
             w.clashes()
         );
     }
+}
+
+#[test]
+#[ignore]
+fn dump_pincer() {
+    let (w, _) = run_all(&program("solder-stations"));
+    for r in &w.pincers[0].track {
+        println!(
+            "TRACK {:.3} phi {:.1} z {:.1} psi {:.1} reach {:.1}",
+            r[0], r[1], r[2], r[3], r[4]
+        );
+    }
+}
+
+#[test]
+fn a_pincer_holds_a_lead_so_the_arm_can_go() {
+    let (mut w, _) = ok("reset circuit=demo
+tool A tweezers
+pick A U1 grasp=ends
+place A U1 at=0,0,-24 rpy=0,0,90
+vise close
+release A U1
+pick A R1 grasp=body
+lift A mm=80
+move A to=0,60,60 rpy=180,0,90
+move A to=34.81,1.27,-14.05
+align A R1.1.tip to=U1.3.tip gap=0.1
+pinch P1 on=R1.1 at=6
+release A R1
+lift A mm=60");
+    let r1 = w.part("R1").unwrap();
+    assert_eq!(r1.pinched.as_deref(), Some("P1"));
+    assert_eq!(r1.holder.as_deref(), Some("vise"), "the turntable holds it");
+    assert!(w.clashes().is_empty(), "{:?}", w.clashes());
+    // the turntable turns: R1 turns with it, still at pin 3
+    let gap = |w: &World| {
+        kin::norm(kin::sub(
+            w.frame("R1.1.tip").unwrap().p,
+            w.frame("U1.3.tip").unwrap().p,
+        ))
+    };
+    let before = gap(&w);
+    let o = w.apply(&parse_line("stage turn=45").unwrap());
+    assert!(o.ok, "{o:?}");
+    assert!((gap(&w) - before).abs() < 1e-6);
+    // let go with no joint made: R1 falls
+    let o = w.apply(&parse_line("unpinch P1").unwrap());
+    assert!(o.ok, "{o:?}");
+    assert!(w.part("R1").unwrap().lost, "{:?}", o.events);
+    // a pincer that is not there
+    let e = parse_line("pinch P9 on=U1.1").unwrap_err();
+    assert!(e.contains("no pincer P9"), "{e}");
 }

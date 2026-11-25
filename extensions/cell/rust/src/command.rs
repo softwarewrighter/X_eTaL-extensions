@@ -28,6 +28,8 @@ pub enum Kind {
     Actor,
     /// A tool station: `S1`.
     Station,
+    /// A pincer on the turntable: `P1`.
+    Pincer,
     /// A frame or a joint: what the positioner presents.
     Spot,
     /// A tool in the rack.
@@ -360,6 +362,27 @@ pub const COMMANDS: &[Spec] = &[
         ],
     },
     Spec {
+        op: "pinch",
+        family: "pincer",
+        summary: "a pincer on the turntable grips a lead from the side: it holds the part there, and sinks heat",
+        positional: &[req("pincer", Kind::Pincer, "the pincer")],
+        named: &[
+            req("on", Kind::Pin, "the pin whose lead it grips"),
+            opt(
+                "at",
+                Kind::Number("mm", 0.0, 30.0),
+                "from the body, along the lead (5 if not given)",
+            ),
+        ],
+    },
+    Spec {
+        op: "unpinch",
+        family: "pincer",
+        summary: "a pincer lets go and draws back",
+        positional: &[req("pincer", Kind::Pincer, "the pincer")],
+        named: &[],
+    },
+    Spec {
         op: "vise",
         family: "stage",
         summary: "open or close the vise on the stage",
@@ -588,6 +611,7 @@ fn check_word(kind: Kind, t: &str) -> Result<(), String> {
         Kind::Arm => ARMS.contains(&t),
         Kind::Actor => ARMS.contains(&t) || crate::stations::names().iter().any(|n| n == t),
         Kind::Station => crate::stations::names().iter().any(|n| n == t),
+        Kind::Pincer => crate::pincers::NAMES.contains(&t),
         Kind::Spot => check_word(Kind::Frame, t).is_ok() || check_word(Kind::Joint, t).is_ok(),
         Kind::Tool => TOOLS.contains(&t),
         Kind::Part => is_id(t),
@@ -625,6 +649,10 @@ fn check_word(kind: Kind, t: &str) -> Result<(), String> {
         Kind::Station => format!(
             "no station {t} (stations: {})",
             crate::stations::names().join(" ")
+        ),
+        Kind::Pincer => format!(
+            "no pincer {t} (pincers: {})",
+            crate::pincers::NAMES.join(" ")
         ),
         Kind::Spot => format!("{t} is not a frame or a joint (U1.3.tip, U1.3+R1.1)"),
         Kind::Tool => format!("no tool {t} (tools: {})", TOOLS.join(" ")),
@@ -888,6 +916,7 @@ fn placeholder(a: &Arg) -> String {
         Kind::Arm => "ARM".into(),
         Kind::Actor => "ARM|STATION".into(),
         Kind::Station => "STATION".into(),
+        Kind::Pincer => "PINCER".into(),
         Kind::Spot => "FRAME|JOINT".into(),
         Kind::Tool => "TOOL".into(),
         Kind::Part => "PART".into(),
@@ -962,6 +991,7 @@ fn arg_schema(a: &Arg) -> Json {
             json!({"type": "string", "enum": all})
         }
         Kind::Station => json!({"type": "string", "enum": crate::stations::names()}),
+        Kind::Pincer => json!({"type": "string", "enum": crate::pincers::NAMES}),
         Kind::Spot => {
             json!({"type": "string", "pattern": "^[A-Z][A-Za-z0-9_]*\\.[A-Za-z0-9_]+(\\.(tip|[0-9.]+))?(\\+[A-Z][A-Za-z0-9_]*\\.[A-Za-z0-9_]+)?$"})
         }

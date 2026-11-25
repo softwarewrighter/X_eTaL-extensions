@@ -28,6 +28,7 @@ version.
 
 ## 2026-11-25
 
+- 14:09 `ext` cell, the bench begins (Saga 17 step 15, C18): pincers on the turntable (`pincers.rs`; P1, P2 on a ring, round it, up and down, a turning pole reaching in, the clear side nearest square to the lead): `pinch PINCER on=PIN [at=]` grips a lead so the turntable holds the part and an arm can let go, the jaws a heatsink; `unpinch`. Station S1's iron feeds its own solder (S2 gone; strokes 160 mm, clear of the ring). `solder-stations.cell` rewritten for the bench (a good joint, nothing overlapping). The player draws pincers riding the turntable; the scene's angles kept continuous (a pincer spun a full turn between two moves) and each move's start recorded; the Close up camera stands back from a raised turntable; "X stays: P1 grips it". Pushed early (the user): the four arms stay until the slender arm replaces them.
 - 14:01 `docs` CHANGES.md kept as X_eTaL keeps its own (the user): every entry begins with its commit's time, the 109 since 2026-10-13 that had none backfilled from git (the commit that first added each line, Pacific), four moved to the day they were committed; a Versions table names each tag's commit, date and X_eTaL; `scripts/check-changes.py` (with a self-test) in the gate and the quick check; CLAUDE.md's rule 10 says so.
 
 ## 2026-11-24
