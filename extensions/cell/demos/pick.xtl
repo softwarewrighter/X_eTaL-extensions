@@ -2,7 +2,9 @@
 ## arm A takes its tweezers and puts the DIP from the tray in the vise,
 ## the stage turns it, arm D picks the LED, and both fall when let go --
 ## each command's outcome a line: ok, what it did, and why not.
+## Title: The assembly cell, live
 ## Page: cell/live/ drive the cell, live
+## Feature: Open the cell: step through a program a command at a time, or drive every arm yourself, in your browser
 ## Run: just demo cell pick
 
 "ce:" u_se< "Cell"

@@ -81,6 +81,10 @@ function at(rows, t) {
 export function cellPlayer(host, calls, options = {}) {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('#202329');
+  // the window's listeners end with the player (a live page makes a new
+  // player for each command)
+  const stopper = new AbortController();
+  const ends = { signal: stopper.signal };
   const root = new THREE.Group();
   root.rotation.x = -Math.PI / 2;
   scene.add(root);
@@ -138,12 +142,12 @@ export function cellPlayer(host, calls, options = {}) {
     camera.updateProjectionMatrix();
   };
   size();
-  window.addEventListener('resize', size);
+  window.addEventListener('resize', size, ends);
 
   // dragging turns the view, the wheel comes closer
   let drag = null;
   renderer.domElement.addEventListener('pointerdown', (e) => { drag = [e.clientX, e.clientY]; });
-  window.addEventListener('pointerup', () => { drag = null; });
+  window.addEventListener('pointerup', () => { drag = null; }, ends);
   window.addEventListener('pointermove', (e) => {
     if (!drag) return;
     view.yaw -= (e.clientX - drag[0]) * 0.005;
@@ -151,7 +155,7 @@ export function cellPlayer(host, calls, options = {}) {
     drag = [e.clientX, e.clientY];
     place();
     draw();
-  });
+  }, ends);
   renderer.domElement.addEventListener('wheel', (e) => { e.preventDefault(); view.dist = Math.max(200, Math.min(5000, view.dist * Math.exp(e.deltaY * 0.001))); place(); draw(); }, { passive: false });
 
   // the models: each .glb fetched once, a copy for each use, hung under
@@ -301,9 +305,48 @@ export function cellPlayer(host, calls, options = {}) {
     },
     set speed(v) { speed = v; ui.show(); },
     get view() { return view; },
+    // stepping through the list, every item in turn, as a debugger
+    // steps: Next plays the next command from its start to its end;
+    // Previous goes back to the start of this command (of the one before
+    // when already at a start). Steps that start at the same time (a
+    // reset, then a tool taken) are still each their own.
+    next() {
+      const k = cursor() + 1;
+      if (k >= s.steps.length) return Promise.resolve();
+      const step = s.steps[k];
+      controls.stop();
+      seek(step.t0);
+      pinned = k;
+      ui.show();
+      return controls.play(step.t0, step.t1).then(() => { pinned = k; ui.show(); });
+    },
+    previous() {
+      let k = cursor();
+      if (k < 0) return;
+      if (now <= s.steps[k].t0 + 1e-6) k -= 1;
+      controls.stop();
+      if (k < 0) { pinned = null; seek(0); return; }
+      seek(s.steps[k].t0);
+      pinned = k;
+      ui.show();
+    },
     get duration() { return duration; },
   };
-  const stepAt = (t) => { const x = s.steps.filter((k) => k.t0 <= t).pop(); return x ? x.n : 0; };
+  // which step the list shows: the one stepped to (until the time moves
+  // by other means), else the last to have started
+  let pinned = null;
+  const cursor = () => {
+    if (pinned !== null && s.steps[pinned] && now >= s.steps[pinned].t0 - 1e-6 && now <= s.steps[pinned].t1 + 1e-6) return pinned;
+    pinned = null;
+    // a step under way (strictly inside its times), else the last done;
+    // a step that starts now has not begun
+    const going = s.steps.findIndex((x) => x.t0 < now - 1e-9 && now < x.t1 - 1e-9);
+    if (going >= 0) return going;
+    let k = -1;
+    s.steps.forEach((x, i) => { if (x.t1 <= now + 1e-9) k = i; });
+    return k;
+  };
+  const stepAt = () => { const k = cursor(); return k >= 0 ? s.steps[k].n : 0; };
 
   // the controls: play, time, scrubber, speed, the steps
   const ui = (() => {
@@ -318,23 +361,37 @@ export function cellPlayer(host, calls, options = {}) {
     bar.style.flex = '1';
     const rate = document.createElement('select');
     for (const v of [0.25, 0.5, 1, 2, 4]) rate.add(new Option(v + 'x', v, v === 1, v === 1));
+    // step by step through the list: the time to the next step's start,
+    // or back to this step's start (the one before, when already there)
+    const back = document.createElement('button');
+    back.textContent = 'Previous step';
+    const ahead = document.createElement('button');
+    ahead.textContent = 'Next step';
     const ghosts = document.createElement('label');
     ghosts.innerHTML = '<input type="checkbox" checked> ghosts';
-    for (const b of [play]) b.style.cssText = 'font:inherit;padding:3px 12px;border-radius:6px;border:1px solid #56607a;background:#1a1f2e;color:#e8eaf0;cursor:pointer';
-    box.append(play, time, bar, rate, ghosts);
+    for (const b of [play, back, ahead]) b.style.cssText = 'font:inherit;padding:3px 12px;border-radius:6px;border:1px solid #56607a;background:#1a1f2e;color:#e8eaf0;cursor:pointer';
+    box.append(play, back, ahead, time, bar, rate, ghosts);
     const list = document.createElement('ol');
     list.id = 'cellsteps';
     list.style.cssText = 'position:fixed;right:12px;top:12px;max-height:60vh;overflow:auto;margin:0;background:rgba(8,9,14,0.82);color:#e8eaf0;padding:8px 12px 8px 36px;border-radius:8px;font:13px/1.5 ui-monospace,Menlo,monospace;max-width:40vw';
-    for (const k of s.steps) {
+    s.steps.forEach((k, i) => {
       const li = document.createElement('li');
       li.textContent = k.label;
-      li.title = `${k.t0.toFixed(2)} to ${k.t1.toFixed(2)} s`;
+      li.title = `${k.t0.toFixed(2)} to ${k.t1.toFixed(2)} s: click to go there; Next step plays it`;
       li.style.cursor = 'pointer';
-      li.addEventListener('click', () => { controls.stop(); seek(k.t0); });
+      li.addEventListener('click', () => { controls.stop(); seek(k.t0); pinned = i; ui.show(); });
       list.append(li);
-    }
+    });
     if (options.hud !== false) document.body.append(box, list);
     play.addEventListener('click', () => (playing ? controls.stop() : controls.play(now >= duration ? 0 : undefined)));
+    back.addEventListener('click', () => controls.previous());
+    ahead.addEventListener('click', () => controls.next());
+    // the arrow keys step too, unless a field has the keys
+    window.addEventListener('keydown', (e) => {
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test((e.target && e.target.tagName) || '')) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); controls.next(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); controls.previous(); }
+    }, ends);
     bar.addEventListener('input', () => { controls.stop(); seek(Number(bar.value)); });
     rate.addEventListener('change', () => { speed = Number(rate.value); });
     ghosts.firstChild.addEventListener('change', (e) => { root.children.filter((c) => c.name === 'ghost').forEach((g) => { g.visible = e.target.checked; }); draw(); });
@@ -382,7 +439,7 @@ export function cellPlayer(host, calls, options = {}) {
     document.title = document.title.replace(/: (ready|error)$/, '') + ': error';
   });
   controls.ready = ready;
-  controls.stopAll = () => { running = false; controls.stop(); ui.remove(); renderer.dispose(); host.removeChild(renderer.domElement); };
+  controls.stopAll = () => { stopper.abort(); running = false; controls.stop(); ui.remove(); renderer.dispose(); host.removeChild(renderer.domElement); };
   window.cell = controls;
   return controls;
 }

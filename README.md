@@ -22,7 +22,8 @@
 <p align="center">
   <b><a href="https://softwarewrighter.github.io/X_eTaL-extensions/cell/live/">The assembly cell, live</a></b>
   -- four robot arms that pick, place and hold parts to build circuits in free air, simulated in your
-  browser (WebAssembly, with X_eTaL), drawn with Three.js: drive every arm and tool, or type commands
+  browser (WebAssembly, with X_eTaL), drawn with Three.js: step through a program a command at a time,
+  drive every arm and tool, or type commands
 </p>
 
 <p align="center">

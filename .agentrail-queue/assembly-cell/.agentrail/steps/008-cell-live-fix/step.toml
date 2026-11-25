@@ -1,0 +1,8 @@
+number = 8
+slug = "cell-live-fix"
+status = "in-progress"
+description = "Saga 17 step 8 (the user, 2026-11-24, after step 7: 'the browser cell / pick ..."
+role = "production"
+context_files = []
+created_at = "2026-11-24T17:43:00"
+commits = []

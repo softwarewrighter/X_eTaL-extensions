@@ -356,11 +356,17 @@ its local y (glTF's name for the joint axis Blender called z). A part
 attached to an arm moves with its flange between two times and stays
 where it was left; a ghost is drawn faint where a part will end.
 
-The page has a play button, the time, a scrubber, a speed and the list
-of steps (click one to go there), and `window.cell`, an API as
-console-3D's `window.selectric`: `await cell.play(from, to)`,
-`cell.seek(t)`, `cell.state` (the time, each arm's joints and flange,
-each part, the stage, the step) and `cell.stop()`. `?t=SECONDS` holds
+The page has a play button, Previous step and Next step (and the left
+and right arrow keys), the time, a scrubber, a speed and the list of
+steps (click one to go there). Stepping goes through the list an item
+at a time, as a debugger steps: Next step plays the next command from
+its start to its end; Previous step goes back to the start of this
+command, or of the one before when already at a start -- steps that
+start together (a reset, then a tool taken) are each their own. And
+`window.cell`, an API as console-3D's `window.selectric`: `await
+cell.play(from, to)`, `cell.seek(t)`, `cell.next()`,
+`cell.previous()`, `cell.state` (the time, each arm's joints and
+flange, each part, the stage, the step) and `cell.stop()`. `?t=SECONDS` holds
 a moment; `?check` seeks every `expect` and writes how far the drawing
 is from the simulator's numbers into `#check`, which
 `scripts/cell-check.py` reads from headless Chrome.

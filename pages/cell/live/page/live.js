@@ -4,7 +4,9 @@
 // runs it exactly as the command box does, so what a button does is
 // what typing it does. After each command the cell's timeline is shown
 // again by the cell player, playing what the command did.
-//   ?program=NAME runs that program first (pick, arms); ?t=SECONDS
+//   ?program=NAME runs that program first (pick, arms; pick when not
+//   given, so the list of steps is there to step through; ?program=
+//   none starts with the demo tray and nothing done); ?t=SECONDS
 //   holds that moment; ?check has the player measure its drawing
 //   against the simulator's numbers (#check, for headless Chrome);
 //   ?hud=0 hides the controls.
@@ -66,7 +68,7 @@ export function start(w) {
     const p = s.parts.find((x) => x.id === $('part').value);
     fill($('grasp'), p ? p.grasps.map((g) => [g, g]) : []);
     const a = s.arms.find((x) => x.name === arm());
-    $('holds').textContent = `${arm()}: ${a.tool ? 'the ' + a.tool : 'no tool'}${a.holding ? ', holding ' + a.holding : ''}; tip at ${a.tip.slice(0, 3).map((x) => x.toFixed(1)).join(' ')}`;
+    $('holds').textContent = `after the last command, ${arm()} has ${a.tool ? 'the ' + a.tool : 'no tool'}${a.holding ? ', holding ' + a.holding : ''}, its tip at ${a.tip.slice(0, 3).map((x) => x.toFixed(1)).join(' ')}; the next command starts there`;
     $('vise').textContent = s.vise === 'closed' ? 'Open the vise' : 'Close the vise';
   };
   const n = (id) => Number($(id).value) || 0;
@@ -114,9 +116,11 @@ export function start(w) {
   // the first cell: a program asked for, else the demo tray
   w.install();
   // a program that begins with its own reset runs on an empty cell
-  const asked = q.has('program') ? w.program(q.get('program')) : '';
+  const name = q.has('program') ? q.get('program') : 'pick';
+  const asked = name === 'none' ? '' : w.program(name);
   if (/^\s*reset\b/m.test(asked)) w.clear(); else JSON.parse(w.reset(q.get('circuit') || 'demo'));
-  if (q.has('program')) {
+  if (asked) {
+    $('program').value = name;
     const r = JSON.parse(w.command(asked));
     if (r.outcomes) r.outcomes.forEach((o) => log(o));
     show(q.has('t') ? undefined : 0, undefined);

@@ -155,6 +155,9 @@ so this is a build of the same crate, not a port), with X_eTaL beside
 it, and the three extension's cell player draws the cell's timeline
 (`web/`: its own workspace, built by trunk).
 
+- The page opens with `programs/pick.cell` loaded and paused at its
+  start: Next step (or the right arrow key) plays its commands one at a
+  time, Previous step goes back, and clicking a step goes there.
 - Every control writes a command in the command language and runs it
   as the command box does -- Take tool, Pick (a part and one of its
   grasp frames), Release, Place at x y z, move the tip by a step along
@@ -171,9 +174,19 @@ it, and the three extension's cell player draws the cell's timeline
 - X_eTaL in this page: a program runs with the cell extension linked
   in (`ce:`); when what it prints is a scene (`ce:s_cene`) the player
   shows it.
-- `?program=NAME` runs a program first, `?t=SECONDS` holds a moment,
+- `?program=NAME` runs a program first (`pick` when not given; `none`
+  for the demo tray with nothing done), `?t=SECONDS` holds a moment,
   `?check` measures the drawing against the simulator (as the preview's
   check does), `?hud=0` hides the controls.
+
+`just live-check NAME` (`scripts/cell-check.py`) has headless Chrome
+run the program in the page and measure the drawing against the
+simulator, then step: through the DevTools protocol, Next step from
+the start must play each step in turn, the list showing it, and
+Previous step come back. `just record NAME` (`scripts/cell-record.py`)
+records the page from one headless Chrome that loads it once, then
+seeks each moment through `window.cell` and captures it after it is
+drawn; a frame as dark as the bare background fails it.
 
 ```sh
 just live               # build web/dist (trunk; the models are copied in)

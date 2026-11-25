@@ -27,6 +27,7 @@
   #log li.refused { border-color: #e3a33b; } #log li.stopped { border-color: #ff6b6b; }
   #log .notes { color: #a9b0c0; }
   #err { color: #ff9a9a; white-space: pre-wrap; }
+  #hint { color: #c3c8d4; margin: 4px 0 6px; }
   dialog { background: #141518; color: #e8e6e3; border: 1px solid #30333a; border-radius: 10px; padding: 18px 22px; width: min(60em, 92vw); max-height: 86vh; overflow: auto; font: 16px/1.5 system-ui, sans-serif; }
   dialog::backdrop { background: rgba(0, 0, 0, 0.6); }
   dialog h1 { font-size: 22px; margin: 0 0 8px; }
@@ -41,6 +42,7 @@
 <div id="view"></div>
 <div id="panel">
   <h1>Assembly cell, live <button id="open-about" type="button">About</button></h1>
+  <p id="hint">The pick program is loaded: step through it with <b>Next step</b> (or the right arrow key) below the picture, click a step in the list to go there, or drive the arms yourself.</p>
   <fieldset><legend>Cell</legend>
     <select id="circuit"><option value="demo">demo tray</option><option value="none">empty tray</option></select><button id="reset">Reset</button><br>
     <select id="program"><option value="pick">pick</option><option value="arms">arms</option></select><button id="run-program">Run program</button>

@@ -15,7 +15,7 @@
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
     <li><a href="#blender">blender</a><ul><li><a href="#blender-city-preview">The neon city, ray-traced: the whole flight, rough</a></li><li><a href="#blender-city">The neon city, ray-traced: four stills</a></li><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-gpu-build">X_eTaL GPU: build process</a></li><li><a href="#blender-gpu-run">X_eTaL GPU: execution</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-build">HEX1000-UART: build process</a></li><li><a href="#blender-hex-keys-leds-build">HEX1000-keys-leds: build process</a></li><li><a href="#blender-hex-keys-leds-run">HEX1000-keys-leds: execution</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-hex-run">HEX1000-UART: execution</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
-    <li><a href="#cell">cell</a><ul><li><a href="#cell-models">models</a></li><li><a href="#cell-pick">pick</a></li></ul></li>
+    <li><a href="#cell">cell</a><ul><li><a href="#cell-models">models</a></li><li><a href="#cell-pick">The assembly cell, live</a></li></ul></li>
     <li><a href="#clock">clock</a><ul><li><a href="#clock-bridge-cost">bridge-cost</a></li></ul></li>
     <li><a href="#digest">digest</a></li>
     <li><a href="#hello">hello</a><ul><li><a href="#hello-tour">tour</a></li></ul></li>
@@ -45,6 +45,12 @@ cargo build --workspace
 just demos                  # the demos; then: just demo EXT NAME</pre>
 </header>
 <main>
+  <section class="panel feature" id="feature-cell-pick">
+    <h2><a href="cell/live/">The assembly cell, live</a></h2>
+    <p class="lede">The assembly cell picks: programs/pick.cell run by the simulator -- arm A takes its tweezers and puts the DIP from the tray in the vise, the stage turns it, arm D picks the LED, and both fall when let go -- each command&#x27;s outcome a line: ok, what it did, and why not.</p>
+    <a href="cell/live/"><video src="cell/pick.webm" autoplay loop muted playsinline preload="metadata"></video></a>
+    <p class="go"><a class="docs" href="cell/live/">Open the cell: step through a program a command at a time, or drive every arm yourself, in your browser</a></p>
+  </section>
   <section class="panel feature" id="feature-three-city">
     <h2><a href="three/live/">The neon city, live</a></h2>
     <p class="lede">Three.js, live: the neon city to ride, fly and walk through in a browser. 240 lots worked out as arrays from a seed -- another seed is another city -- built in the page by X_eTaL compiled to WebAssembly and drawn by a player written with Three.js: lit towers, neon, screens showing slides and videos, puddles that mirror it all, cars and fliers. The same arrays and the same calls as the ray-traced film (blender&#x27;s demos/NeonCity.xtl, Cycles.xtl). From the command line this writes a directory to serve, work/city: the page, the player, Three.js and the calls.</p>
@@ -199,7 +205,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <pre class="source">just demo cell models</pre>
     </section>
     <section class="panel demo" id="cell-pick">
-      <h3>cell / pick <a class="docs" href="doc/extensions-cell-demos-pick.xtl.html">source and docs</a> <a class="docs" href="cell/live/">drive the cell, live</a></h3>
+      <h3>The assembly cell, live <a class="docs" href="doc/extensions-cell-demos-pick.xtl.html">source and docs</a> <a class="docs" href="cell/live/">drive the cell, live</a></h3>
       <p class="note">The assembly cell picks: programs/pick.cell run by the simulator -- arm A takes its tweezers and puts the DIP from the tray in the vise, the stage turns it, arm D picks the LED, and both fall when let go -- each command&#x27;s outcome a line: ok, what it did, and why not.</p>
       <video src="cell/pick.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo cell pick</pre>
@@ -406,7 +412,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 8c49bd8</span><span class="sep">&middot;</span>
-  <span>built at 883e7fd</span>
+  <span>built at 636d9ea</span>
 </footer>
 </body>
 </html>
