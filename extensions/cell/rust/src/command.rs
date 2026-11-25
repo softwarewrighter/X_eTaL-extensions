@@ -656,12 +656,17 @@ fn check_word(kind: Kind, t: &str) -> Result<(), String> {
         Kind::Part => is_id(t),
         Kind::Pin => is_pin(t),
         Kind::Frame => {
-            is_id(t)
-                || is_pin(t)
-                || t.strip_suffix(".tip").is_some_and(is_pin)
-                || t.rsplit_once('.').is_some_and(|(pin, mm)| {
-                    is_pin(pin) && mm.parse::<f64>().is_ok_and(|x| x.is_finite() && x >= 0.0)
-                })
+            is_id(t) || is_pin(t) || t.strip_suffix(".tip").is_some_and(is_pin) || {
+                // a point along a lead, the mm after the pin (U1.3.2.5)
+                let mut it = t.splitn(3, '.');
+                match (it.next(), it.next(), it.next()) {
+                    (Some(id), Some(pn), Some(mm)) => {
+                        is_pin(&format!("{id}.{pn}"))
+                            && mm.parse::<f64>().is_ok_and(|x| x.is_finite() && x >= 0.0)
+                    }
+                    _ => false,
+                }
+            }
         }
         Kind::Joint => t
             .split_once('+')

@@ -28,6 +28,7 @@ version.
 
 ## 2026-11-25
 
+- 15:16 `ext` cell, excess past a joint trimmed (Saga 17 step 16): `leads.cell` solders the resistor's lead 2.5 mm down pin 3 and S4 cuts the pin 1 mm past the joint; a frame along a lead takes fractional millimeters (`U1.3.2.5`; it was read as pin `U1.3.2`).
 - 14:55 `ext` cell, forming and trimming leads (Saga 17 step 16, C15; the user): `leads.rs` (a bend round a mandrel as an arc, the lead's length kept; a cut), a part's re-formed leads its own state (`Part::kind_of`, read by collision, heat, joints, frames, the drawing); `bend PINCER on= at= angle= toward= [radius=]` (a held part, an unjoined lead; a warning after three bends at one place); `trim STATION on= at=` at the new cutter station S4 (presented first; a cut at or before a joint refused; the rest falls into the bin); `programs/leads.cell` (solder, bend, trim; clean), on the live page; the player draws re-formed leads as tubes; pincer moves record a row every 2 mm (their arc). Tests: 6 for the geometry and the refusals.
 - 14:47 `plan` leads ahead of wire (the user: "we need some logic around bending leads and cutting excess leads"): step 16 cell-leads at the bench (pincers bend, a cutter station trims), step 17 cell-bench-arm (the slender arm, turning the work over) from step 15; later steps renumbered.
 - 14:47 `chore` saga: complete assembly-cell step 15 (cell-bench).

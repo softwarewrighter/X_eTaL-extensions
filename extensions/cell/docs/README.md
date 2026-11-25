@@ -383,9 +383,11 @@ brings leads together; a slender model of it comes next.
   `R1.2.tip` and the drawing all see them. The player draws a
   re-formed lead as a tube in place of the model's.
 
-`programs/leads.cell`: the resistor soldered to pin 3 at the bench;
-then P2 bends its other lead down round a mandrel 3 mm from the body,
-and S4 trims it to 8 mm (20 mm falls into the bin).
+`programs/leads.cell`: the resistor's lead soldered to pin 3 2.5 mm
+down the pin (`align A R1.1.tip to=U1.3.2.5`), at the bench; S4 trims
+the pin's excess 1 mm past the joint (1.7 mm falls into the bin); P2
+bends the resistor's other lead down round a mandrel 3 mm from the
+body, and S4 trims it to 8 mm (20 mm falls).
 
 ## Tool stations and the positioner
 

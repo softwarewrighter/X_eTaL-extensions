@@ -183,6 +183,16 @@ fn the_leads_program_forms_solders_and_trims() {
             .iter()
             .any(|e| e.starts_with("S4 cuts R1.2 at 8 mm"))
     }));
+    // the pin's excess past the joint, 2.5 mm down it, cut 1 mm past it
+    assert!(out.iter().any(|o| {
+        o.events
+            .iter()
+            .any(|e| e.starts_with("S4 cuts U1.3 at 3.5 mm"))
+    }));
+    let u1 = w.part("U1").unwrap().kind_of().unwrap();
+    assert!((leads::length(&u1.pin("3").unwrap().lead) - 3.5).abs() < 1e-6);
+    // a point along a lead with a fraction of a millimeter is a frame
+    assert!(parse_line("align A R1.1.tip to=U1.3.2.5").is_ok());
     let r1 = w.part("R1").unwrap();
     let k = r1.kind_of().unwrap();
     assert!((leads::length(&k.pin("2").unwrap().lead) - 8.0).abs() < 1e-6);
