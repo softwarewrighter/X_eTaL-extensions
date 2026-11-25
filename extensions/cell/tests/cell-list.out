@@ -6,4 +6,5 @@ cell 0.1.0
   cell/parse : Char -> Char    # A program (text, or JSON lines) checked against the command table: each command as JSON, one a line.
   cell/run : Char -> Char    # A program run on a new cell: each command's outcome as JSON, one a line, stopping after the first not ok.
   cell/state : Char -> Char    # A program run on a new cell: its state after, as JSON; a command not ok is an error.
+  cell/arm_model : Unit -> Char    # What a model of the arm must be, as JSON: nodes (one a joint's pivot, local z its axis), links, check poses, the rig.
   cell/rig : Unit -> Char    # The arm's rig as JSON: its joints' DH parameters, limits, speeds and home.

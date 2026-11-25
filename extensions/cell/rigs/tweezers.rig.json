@@ -1,0 +1,82 @@
+{
+ "name": "tweezers",
+ "units": "mm, degrees",
+ "nodes": [
+  {
+   "name": "tool_mount",
+   "parent": "tweezers",
+   "at": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "turn": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "world": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "tool_tip",
+   "parent": "tweezers",
+   "at": [
+    0.0,
+    0.0,
+    100.0
+   ],
+   "turn": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "world": [
+    0.0,
+    0.0,
+    100.000001
+   ]
+  },
+  {
+   "name": "finger_l",
+   "parent": "tweezers",
+   "at": [
+    -6.0,
+    0.0,
+    30.0
+   ],
+   "turn": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "world": [
+    -6.0,
+    0.0,
+    29.999999
+   ]
+  },
+  {
+   "name": "finger_r",
+   "parent": "tweezers",
+   "at": [
+    6.0,
+    0.0,
+    30.0
+   ],
+   "turn": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "world": [
+    6.0,
+    0.0,
+    29.999999
+   ]
+  }
+ ]
+}

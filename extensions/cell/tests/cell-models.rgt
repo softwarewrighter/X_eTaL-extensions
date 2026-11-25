@@ -1,0 +1,3 @@
+command = "xetal-x --ext .. run tests/models.xtl"
+exit_code = 0
+desc = "every model -- the arm, seven tools, rack, tray, stage, scope and ten part kinds -- built through Blender and each .glb read back against its rig: every node where the rig says, and the arm posed at three sets of joint angles putting its flange where the simulator does"

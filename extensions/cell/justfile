@@ -47,3 +47,15 @@ wasm:
 # The command table as markdown, for docs/README.md
 command-table:
     cd {{root}} && cargo run -q -p xetal-ext-cell --example command-table
+
+# Build every model through Blender: work/cell/models (NAME.glb, NAME.rig.json, check.txt, stills/)
+models: build
+    {{root}}/target/debug/xetal-x --ext {{root}}/extensions run demos/models.xtl
+
+# Copy the rigs the simulator reads (the arm, the tools, the fixtures) from work/cell/models into rigs/
+rigs:
+    for n in arm tweezers iron solder clip welder cutter wire rack tray stage scope; do cp "work/cell/models/$n.rig.json" rigs/; done
+
+# The turntable stills as one contact sheet for the extension's page: docs/models.jpg
+sheet:
+    ffmpeg -loglevel error -y -pattern_type glob -i 'work/cell/models/stills/*.png' -vf "scale=160:120,tile=8x11" -frames:v 1 -q:v 4 docs/models.jpg

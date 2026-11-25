@@ -46,6 +46,14 @@
 ## (alpha, a, d, offset), its limits, top speed and acceleration, and
 ## the home pose; every arm in the cell is this arm.
 "r_ig : unit -> text"           ffi:b_ind< "cell/rig"
+## ce:a_rmModel @: what a model of the arm must be, as JSON (the asset
+## contract, docs/cell-design.md): its nodes -- arm_base, arm_j1 to
+## arm_j6, arm_flange -- each placed in its parent (mm, and Euler XYZ
+## degrees) with where it is at rest and its local z, the joint's axis;
+## the links between the pivots; check poses (joint angles with where
+## the flange must then be); and the rig. CellModels.xtl builds the arm
+## from it, and Blender writes it back as arm.rig.json.
+"a_rmModel : unit -> text"      ffi:b_ind< "cell/arm_model"
 
 ## The native package behind these functions (a literal l: name also
 ## makes this file a library to `xetal type`: ask E7).

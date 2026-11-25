@@ -1,0 +1,24 @@
+# Every model built through Blender and read back against its rig (no
+# stills): the run's errors, then check.txt, a line a model.
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"ce:" u_se< "Cell"
+"cm:" u_se< "CellModels"
+_ := "work/models-test/out/arm.in.json" bl:w_rite! ce:a_rmModel @
+_ := "work/models-test/out/dip8.in.json" bl:w_rite! ce:p_art "dip8"
+_ := "work/models-test/out/dip14.in.json" bl:w_rite! ce:p_art "dip14"
+_ := "work/models-test/out/dip16.in.json" bl:w_rite! ce:p_art "dip16"
+_ := "work/models-test/out/to92.in.json" bl:w_rite! ce:p_art "to92"
+_ := "work/models-test/out/axial-resistor.in.json" bl:w_rite! ce:p_art "axial-resistor"
+_ := "work/models-test/out/axial-diode.in.json" bl:w_rite! ce:p_art "axial-diode"
+_ := "work/models-test/out/radial-electrolytic.in.json" bl:w_rite! ce:p_art "radial-electrolytic"
+_ := "work/models-test/out/ceramic-disc.in.json" bl:w_rite! ce:p_art "ceramic-disc"
+_ := "work/models-test/out/led-5mm.in.json" bl:w_rite! ce:p_art "led-5mm"
+_ := "work/models-test/out/battery-snap.in.json" bl:w_rite! ce:p_art "battery-snap"
+_ := "work/models-test/run.py" bl:w_rite! bp:launcher
+_ := "work/models-test/models.py" bl:w_rite! cm:script
+r := "work/models-test/run.py" bl:r_un! "work/models-test/models.py work/models-test/out models/cell_models.py"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+bl:r_ead "work/models-test/out/check.txt"

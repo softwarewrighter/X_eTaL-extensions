@@ -1,0 +1,25 @@
+exit 0
+errors 0
+arm: 8 nodes, 3 poses ok
+tweezers: 4 nodes ok
+iron: 2 nodes ok
+solder: 3 nodes ok
+clip: 3 nodes ok
+welder: 4 nodes ok
+cutter: 4 nodes ok
+wire: 4 nodes ok
+rack: 7 nodes ok
+tray: 8 nodes ok
+stage: 3 nodes ok
+scope: 5 nodes ok
+dip8: 18 nodes ok
+dip14: 30 nodes ok
+dip16: 34 nodes ok
+to92: 7 nodes ok
+axial-resistor: 7 nodes ok
+axial-diode: 7 nodes ok
+radial-electrolytic: 5 nodes ok
+ceramic-disc: 5 nodes ok
+led-5mm: 5 nodes ok
+battery-snap: 5 nodes ok
+

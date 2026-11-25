@@ -75,9 +75,14 @@
 <ul>
 <li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
 </ul>
+<h3>extensions/cell/demos/</h3>
+<ul>
+<li><a href="extensions-cell-demos-models.xtl.html">models.xtl</a></li>
+</ul>
 <h3>extensions/cell/lib/</h3>
 <ul>
 <li><a href="extensions-cell-lib-Cell.xtl.html">Cell.xtl</a></li>
+<li><a href="extensions-cell-lib-CellModels.xtl.html">CellModels.xtl</a></li>
 </ul>
 <h3>extensions/clock/demos/</h3>
 <ul>
@@ -224,6 +229,7 @@
 <li class="item"><a href="#l.r_un"><span class="c-libfunc">ˡr̲un</span></a></li>
 <li class="item"><a href="#l.s_tate"><span class="c-libfunc">ˡs̲tate</span></a></li>
 <li class="item"><a href="#l.r_ig"><span class="c-libfunc">ˡr̲ig</span></a></li>
+<li class="item"><a href="#l.a_rmModel"><span class="c-libfunc">ˡa̲rmModel</span></a></li>
 <li class="item"><a href="#l.package">ˡpackage</a></li>
 </ul>
 </nav>
@@ -280,6 +286,7 @@ material), its grasp frames and its thermal data; ce:p_art &quot;dip8&quot;.</p>
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/part?text&quot;</span>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/part&quot;</span>
 <span class="c-depth0">}</span></pre></details>
+<div class="uses">Used in: <a href="extensions-cell-demos-models.xtl.html#_">_</a></div>
 </div>
 <div class="item" id="l.c_ommands">
 <h3><a href="#l.c_ommands"><span class="c-libfunc">ˡc̲ommands</span></a> <span class="type">: Unit -&gt; Char</span></h3>
@@ -355,9 +362,27 @@ the home pose; every arm in the cell is this arm.</p>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/rig&quot;</span>
 <span class="c-depth0">}</span></pre></details>
 </div>
+<div class="item" id="l.a_rmModel">
+<h3><a href="#l.a_rmModel"><span class="c-libfunc">ˡa̲rmModel</span></a> <span class="type">: Unit -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L56">line 56</a></div>
+<div class="doc">
+<p>ce:a_rmModel @: what a model of the arm must be, as JSON (the asset
+contract, docs/cell-design.md): its nodes -- arm_base, arm_j1 to
+arm_j6, arm_flange -- each placed in its parent (mm, and Euler XYZ
+degrees) with where it is at rest and its local z, the joint's axis;
+the links between the pivots; check poses (joint angles with where
+the flange must then be); and the rig. CellModels.xtl builds the arm
+from it, and Blender writes it back as arm.rig.json.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;a_rmModel : unit -&gt; text&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/arm_model&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡa̲rmModel</span> ← <span class="c-depth0">{</span> @ →
+  <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/arm_model&quot;</span>
+<span class="c-depth0">}</span></pre></details>
+<div class="uses">Used in: <a href="extensions-cell-demos-models.xtl.html#_">_</a></div>
+</div>
 <div class="item" id="l.package">
 <h3><a href="#l.package">ˡpackage</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L52">line 52</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L60">line 60</a></div>
 <div class="doc">
 <p>The native package behind these functions (a literal l: name also
 makes this file a library to <code>xetal type</code>: ask E7).</p>

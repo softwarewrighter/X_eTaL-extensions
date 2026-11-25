@@ -1,0 +1,289 @@
+## CellModels.xtl -- the assembly cell's 3D models, described in X_eTaL
+## and built by Blender: the arm (its pivots from the simulator, one
+## node a joint, per the asset contract of docs/cell-design.md), the
+## seven tools, the tool rack, a parts tray, the rotary stage with its
+## vise, the microscope on its gantry, and every part kind with a node
+## a pin. Each model is NAME.glb with NAME.rig.json beside it; a check
+## reads every .glb back against its rig. Generic shapes, imitating no
+## product. Millimeters and degrees; a tool's z is its approach, its
+## mount at 0 (the flange), its tip at tool_tip.
+## The Python is Bpy.xtl's head (bp:head) and the cell's builders,
+## extensions/cell/models/cell_models.py; the calls are written here.
+## Import: "cm:" u_se< "CellModels"
+
+"bp:" u_se< "Bpy"
+
+### Colors
+
+steel := 0.72 0.74 0.78
+dark := 0.16 0.17 0.19
+gray := 0.42 0.43 0.46
+orange := 0.93 0.45 0.1
+blue := 0.15 0.3 0.62
+copper := 0.78 0.45 0.25
+silver := 0.82 0.83 0.86
+red := 0.75 0.12 0.1
+white := 0.92 0.92 0.9
+glass := 0.25 0.5 0.6
+
+## cm:digits: the resistor color code, a row a digit 0 to 9: black,
+## brown, red, orange, yellow, green, blue, violet, gray, white
+l:digits := 10 3 r_eshape 0.05 0.05 0.05 0.4 0.2 0.06 0.8 0.1 0.1 0.95 0.5 0.1 0.95 0.85 0.1 0.1 0.6 0.2 0.12 0.3 0.8 0.5 0.2 0.7 0.5 0.5 0.5 0.95 0.95 0.95
+
+## cm:gold: the tolerance band of 5 percent
+l:gold := 0.85 0.65 0.2
+
+## cm:b_ands ohms: a resistor's four bands from its value (10 ohms or
+## more), a row each, left to right: two digits, the multiplier (the
+## power of ten), gold. 10 kilohm is brown, black, orange, gold:
+## >> "cm:" u_se< "CellModels"
+## >> cm:b_ands 10000
+##  0.4  0.2 0.06
+## 0.05 0.05 0.05
+## 0.95  0.5  0.1
+## 0.85 0.65  0.2
+## >> cm:b_ands 470
+## 0.95 0.85  0.1
+##  0.5  0.2  0.7
+##  0.4  0.2 0.06
+## 0.85 0.65  0.2
+l:b_ands := { ohms ->
+  e := (f_loor 0.000000001 + (l_og f_loat ohms) / l_og 10.0) - 1
+  d := f_loor 0.5 + (f_loat ohms) / e_xp (f_loat e) * l_og 10
+  4 3 r_eshape ((1 + f_loor d / 10) s_elect l:digits) c_at ((1 + d m_od 10) s_elect l:digits) c_at ((1 + e) s_elect l:digits) c_at l:gold
+}
+
+### Writing the calls
+
+# text in Python quotes
+h:q_t := { t -> "\"" c_at t c_at "\"" }
+# numbers as a Python tuple (vec, in cell_models.py)
+h:v_ec := { v -> "vec(\"" c_at (f_ormat r_avel v) c_at "\")" }
+
+# one shape: kind (box, cyl, ball, seg), its name, the node it hangs
+# from, at, size, turn, color
+h:r_ow := { (kind, part, group, at, size, turn, rgb) z ->
+  "    (" c_at (h:q_t kind) c_at ", " c_at (h:q_t part) c_at ", " c_at (h:q_t group) c_at ", " c_at (h:v_ec at) c_at ", " c_at (h:v_ec size) c_at ", " c_at (h:v_ec turn) c_at ", " c_at (h:v_ec rgb) c_at "),\n"
+}
+# a box size wide, deep and tall, its middle at at
+h:b_ox := { (part, group, at, size, rgb) z -> ("box", part, group, at, size, 0 0 0, rgb) h:r_ow 0 }
+# a cylinder of radius r and height h along z, its middle at at, turned
+h:c_yl := { (part, group, at, r, h, turn, rgb) z -> ("cyl", part, group, at, r c_at r c_at h, turn, rgb) h:r_ow 0 }
+# a rod of radius r from one point to another
+h:s_eg := { (part, group, from, to, r, rgb) z -> ("seg", part, group, from, to, r c_at 0 0, rgb) h:r_ow 0 }
+# a named node (an empty): its parent, where, turned
+h:n_ode := { (name, parent, at, turn) z ->
+  "    (" c_at (h:q_t name) c_at ", " c_at (h:q_t parent) c_at ", " c_at (h:v_ec at) c_at ", " c_at (h:v_ec turn) c_at "),\n"
+}
+# a model from its shapes and nodes, built in a fresh scene and saved
+h:m_odel := { (name, rows, nodes) z ->
+  "fresh()\nroot = build(" c_at (h:q_t name) c_at ", [\n" c_at rows c_at "], [\n" c_at nodes c_at "])\nsave(root, " c_at (h:q_t name) c_at ")\n"
+}
+
+### The tools
+
+# every tool's mount: a plate on the flange and a block
+h:m_ount := { (name, rgb) z ->
+  (("plate", name, 0 0 3, 32, 6, 0 0 0, steel) h:c_yl 0) c_at ("block", name, 0 0 20, 36 26 28, rgb) h:b_ox 0
+}
+# every tool's two nodes: the mount and the tip, length along z
+h:e_nds := { (name, length) z ->
+  ((("tool_mount", name, 0 0 0, 0 0 0) h:n_ode 0) c_at ("tool_tip", name, (0 0) c_at length, 0 0 0) h:n_ode 0)
+}
+
+## cm:tweezers: Python for the tweezer gripper: two fingers, each a
+## node (finger_l, finger_r) that turns about y to open, meeting at the
+## tip 100 mm out
+l:tweezers := ("tweezers",
+  (("tweezers", dark) h:m_ount 0) c_at
+  (("blade", "finger_l", 0 0 0, 5.4 0 70, 1.2, steel) h:s_eg 0) c_at
+  ("blade_r", "finger_r", 0 0 0, -5.4 0 70, 1.2, steel) h:s_eg 0,
+  (("tweezers", 100) h:e_nds 0) c_at
+  (("finger_l", "tweezers", -6 0 30, 0 0 0) h:n_ode 0) c_at
+  ("finger_r", "tweezers", 6 0 30, 0 0 0) h:n_ode 0) h:m_odel 0
+
+## cm:iron: Python for the soldering iron: handle, heater sleeve, a
+## conical tip 120 mm out
+l:iron := ("iron",
+  (("iron", dark) h:m_ount 0) c_at
+  (("handle", "iron", 0 0 48, 9, 30, 0 0 0, red) h:c_yl 0) c_at
+  (("sleeve", "iron", 0 0 82, 4, 38, 0 0 0, steel) h:c_yl 0) c_at
+  ("tip", "iron", 0 0 101, 0 0 120, 1.2, silver) h:s_eg 0,
+  ("iron", 120) h:e_nds 0) h:m_odel 0
+
+## cm:solder: Python for the solder feeder: a spool on its side (node
+## spool, turning about its own z) feeding a nozzle 95 mm out
+l:solder := ("solder",
+  (("solder", dark) h:m_ount 0) c_at
+  (("drum", "spool", 0 0 0, 18, 14, 0 0 0, gray) h:c_yl 0) c_at
+  (("wire", "spool", 0 0 0, 15, 12.5, 0 0 0, silver) h:c_yl 0) c_at
+  (("guide", "solder", 0 14 40, 0 0 70, 1.0, silver) h:s_eg 0) c_at
+  ("nozzle", "solder", 0 0 34, 0 0 95, 1.5, steel) h:s_eg 0,
+  (("solder", 95) h:e_nds 0) c_at
+  ("spool", "solder", 0 28 40, 0 90 0) h:n_ode 0) h:m_odel 0
+
+## cm:clip: Python for the heatsink clip: an arm and a copper jaw (node
+## jaw) 75 mm out, its two pads closing along x
+l:clip := ("clip",
+  (("clip", dark) h:m_ount 0) c_at
+  (("arm", "clip", 0 0 34, 0 0 60, 3, steel) h:s_eg 0) c_at
+  (("pad_a", "jaw", -2.5 0 8, 2 6 14, copper) h:b_ox 0) c_at
+  ("pad_b", "jaw", 2.5 0 8, 2 6 14, copper) h:b_ox 0,
+  (("clip", 75) h:e_nds 0) c_at
+  ("jaw", "clip", 0 0 60, 0 0 0) h:n_ode 0) h:m_odel 0
+
+## cm:welder: Python for the spot-weld electrodes: two copper rods
+## meeting 3 mm apart 100 mm out, their tips nodes electrode_a and
+## electrode_b
+l:welder := ("welder",
+  (("welder", dark) h:m_ount 0) c_at
+  (("rod_a", "welder", -8 0 34, -1.5 0 100, 2, copper) h:s_eg 0) c_at
+  ("rod_b", "welder", 8 0 34, 1.5 0 100, 2, copper) h:s_eg 0,
+  (("welder", 100) h:e_nds 0) c_at
+  (("electrode_a", "welder", -1.5 0 100, 0 0 0) h:n_ode 0) c_at
+  ("electrode_b", "welder", 1.5 0 100, 0 0 0) h:n_ode 0) h:m_odel 0
+
+## cm:cutter: Python for the flush cutter: two blades (nodes blade_l,
+## blade_r) closing along x at the tip 80 mm out
+l:cutter := ("cutter",
+  (("cutter", dark) h:m_ount 0) c_at
+  (("neck", "cutter", 0 0 34, 0 0 50, 4, steel) h:s_eg 0) c_at
+  (("edge_l", "blade_l", 1.5 0 15, 2 8 30, steel) h:b_ox 0) c_at
+  ("edge_r", "blade_r", -1.5 0 15, 2 8 30, steel) h:b_ox 0,
+  (("cutter", 80) h:e_nds 0) c_at
+  (("blade_l", "cutter", -3 0 50, 0 0 0) h:n_ode 0) c_at
+  ("blade_r", "cutter", 3 0 50, 0 0 0) h:n_ode 0) h:m_odel 0
+
+## cm:wire: Python for the wire feeder: a larger spool of copper wire
+## (node spool), a nozzle 100 mm out and a small cutter at its end
+## (node cutter)
+l:wire := ("wire",
+  (("wire", dark) h:m_ount 0) c_at
+  (("drum", "spool", 0 0 0, 22, 16, 0 0 0, gray) h:c_yl 0) c_at
+  (("coil", "spool", 0 0 0, 19, 14, 0 0 0, copper) h:c_yl 0) c_at
+  (("guide", "wire", 0 18 45, 0 0 75, 1.0, copper) h:s_eg 0) c_at
+  (("nozzle", "wire", 0 0 34, 0 0 100, 2, steel) h:s_eg 0) c_at
+  ("blade", "cutter", 3 0 0, 2 6 4, steel) h:b_ox 0,
+  (("wire", 100) h:e_nds 0) c_at
+  (("spool", "wire", 0 32 45, 0 90 0) h:n_ode 0) c_at
+  ("cutter", "wire", 0 0 92, 0 0 0) h:n_ode 0) h:m_odel 0
+
+## cm:tools: Python for all seven tools
+l:tools := l:tweezers c_at l:iron c_at l:solder c_at l:clip c_at l:welder c_at l:cutter c_at l:wire
+
+### The fixtures
+
+# a rack slot at x: two posts, and its node slotN on top between them
+h:p_osts := { (n, x) z ->
+  (("post" c_at n c_at "a", "rack", (x - 22) c_at 0 35, 6 30 50, gray) h:b_ox 0) c_at ("post" c_at n c_at "b", "rack", (x + 22) c_at 0 35, 6 30 50, gray) h:b_ox 0
+}
+h:s_lot := { (n, x) z -> ("slot" c_at n, "rack", x c_at 0 60, 0 0 0) h:n_ode 0 }
+
+## cm:rack: Python for the tool rack: a base 360 mm long and seven
+## slots 50 mm apart, one a tool, nodes slot1 to slot7 where a tool's
+## mount rests
+l:rack := ("rack",
+  (("base", "rack", 0 0 5, 360 60 10, dark) h:b_ox 0) c_at
+  (("1", -150) h:p_osts 0) c_at (("2", -100) h:p_osts 0) c_at (("3", -50) h:p_osts 0) c_at (("4", 0) h:p_osts 0) c_at
+  (("5", 50) h:p_osts 0) c_at (("6", 100) h:p_osts 0) c_at ("7", 150) h:p_osts 0,
+  (("1", -150) h:s_lot 0) c_at (("2", -100) h:s_lot 0) c_at (("3", -50) h:s_lot 0) c_at (("4", 0) h:s_lot 0) c_at
+  (("5", 50) h:s_lot 0) c_at (("6", 100) h:s_lot 0) c_at ("7", 150) h:s_lot 0) h:m_odel 0
+
+# a tray pocket: a dark square sunk in the plate, its node pocketN
+h:p_ocket := { (n, at) z -> ("well" c_at n, "tray", at - 0 0 1, 24 30 2, dark) h:b_ox 0 }
+h:p_lace := { (n, at) z -> ("pocket" c_at n, "tray", at, 0 0 0) h:n_ode 0 }
+
+## cm:tray: Python for a parts tray: a plate 130 by 90 mm with eight
+## pockets, nodes pocket1 to pocket8 at the middle of each, on the
+## plate's top
+l:tray := ("tray",
+  (("plate", "tray", 0 0 5, 130 90 10, blue) h:b_ox 0) c_at
+  (("1", -45 -20 10) h:p_ocket 0) c_at (("2", -15 -20 10) h:p_ocket 0) c_at (("3", 15 -20 10) h:p_ocket 0) c_at (("4", 45 -20 10) h:p_ocket 0) c_at
+  (("5", -45 20 10) h:p_ocket 0) c_at (("6", -15 20 10) h:p_ocket 0) c_at (("7", 15 20 10) h:p_ocket 0) c_at ("8", 45 20 10) h:p_ocket 0,
+  (("1", -45 -20 10) h:p_lace 0) c_at (("2", -15 -20 10) h:p_lace 0) c_at (("3", 15 -20 10) h:p_lace 0) c_at (("4", 45 -20 10) h:p_lace 0) c_at
+  (("5", -45 20 10) h:p_lace 0) c_at (("6", -15 20 10) h:p_lace 0) c_at (("7", 15 20 10) h:p_lace 0) c_at ("8", 45 20 10) h:p_lace 0) h:m_odel 0
+
+## cm:stage: Python for the rotary stage and its vise: a base, the
+## turntable (node stage_turn, turning about z, its top at 0), the vise
+## on it with a fixed jaw and a moving one (node vise_jaw, sliding
+## along y), and vise_center where a held part sits
+l:stage := ("stage",
+  (("base", "stage", 0 0 -35, 62, 50, 0 0 0, dark) h:c_yl 0) c_at
+  (("table", "stage_turn", 0 0 -5, 55, 10, 0 0 0, steel) h:c_yl 0) c_at
+  (("vise_body", "stage_turn", 0 0 6, 60 40 12, gray) h:b_ox 0) c_at
+  (("fixed_jaw", "stage_turn", 0 -14 20, 40 6 16, steel) h:b_ox 0) c_at
+  ("moving_jaw", "vise_jaw", 0 0 0, 40 6 16, steel) h:b_ox 0,
+  (("stage_turn", "stage", 0 0 0, 0 0 0) h:n_ode 0) c_at
+  (("vise_jaw", "stage_turn", 0 14 20, 0 0 0) h:n_ode 0) c_at
+  ("vise_center", "stage_turn", 0 0 28, 0 0 0) h:n_ode 0) h:m_odel 0
+
+## cm:scope: Python for the microscope on its gantry: two posts and a
+## beam 410 mm up, the head panning about z (node scope_pan) and
+## tilting about x (node scope_tilt), the body pointing down, two
+## lenses 16 mm apart for stereo (lens_l, lens_r) and scope_eye where
+## the optical axis leaves it
+l:scope := ("scope",
+  (("post_l", "scope", -250 0 200, 20 20 400, dark) h:b_ox 0) c_at
+  (("post_r", "scope", 250 0 200, 20 20 400, dark) h:b_ox 0) c_at
+  (("beam", "scope", 0 0 410, 520 24 24, dark) h:b_ox 0) c_at
+  (("carriage", "scope", 0 0 393, 40 30 10, gray) h:b_ox 0) c_at
+  (("head", "scope_pan", 0 0 -10, 14, 20, 0 0 0, gray) h:c_yl 0) c_at
+  (("body", "scope_tilt", 0 0 -60, 16, 90, 0 0 0, white) h:c_yl 0) c_at
+  (("lens_ring_l", "scope_tilt", -8 0 -112, 5, 16, 0 0 0, dark) h:c_yl 0) c_at
+  ("lens_ring_r", "scope_tilt", 8 0 -112, 5, 16, 0 0 0, dark) h:c_yl 0,
+  (("scope_pan", "scope", 0 0 388, 0 0 0) h:n_ode 0) c_at
+  (("scope_tilt", "scope_pan", 0 0 -30, 0 0 0) h:n_ode 0) c_at
+  (("lens_l", "scope_tilt", -8 0 -120, 0 0 0) h:n_ode 0) c_at
+  (("lens_r", "scope_tilt", 8 0 -120, 0 0 0) h:n_ode 0) c_at
+  ("scope_eye", "scope_tilt", 0 0 -120, 0 0 0) h:n_ode 0) h:m_odel 0
+
+## cm:fixtures: Python for the rack, the tray, the stage and the scope
+l:fixtures := l:rack c_at l:tray c_at l:stage c_at l:scope
+
+### The arm and the parts
+
+## cm:arm: Python for the arm from arm.in.json in the output directory
+## (the simulator's ce:a_rmModel): a joint housing at each pivot
+## (radius and length), rods for the links, a flange disc; orange body,
+## dark joints, steel flange
+l:arm := "fresh()\nroot = build_arm(os.path.join(out, \"arm.in.json\"), " c_at (h:v_ec 70 120 60 110 52 100 40 70 34 60 30 40) c_at ", " c_at (h:v_ec 48 42 34 30 26 22) c_at ", " c_at (h:v_ec orange c_at dark c_at steel) c_at ")\nsave(root, \"arm\")\n"
+
+## (kind, body, lead, mark, bands) cm:p_art 0: Python for one part kind
+## from KIND.in.json in the output directory (the simulator's
+## ce:p_art): its body, leads and marks in those colors; bands, a row
+## each, for a resistor (cm:b_ands), else 0 3 r_eshape 0.0
+l:p_art := { (kind, body, lead, mark, bands) z ->
+  "fresh()\nroot = build_part(os.path.join(out, " c_at (h:q_t kind c_at ".in.json") c_at "), " c_at (h:v_ec body c_at lead c_at mark) c_at ", " c_at (h:v_ec bands) c_at ")\nsave(root, " c_at (h:q_t kind) c_at ")\n"
+}
+
+## cm:kinds: the part kinds a model is made of, as the parts library
+## lists them
+l:kinds := "dip8 dip14 dip16 to92 axial-resistor axial-diode radial-electrolytic ceramic-disc led-5mm battery-snap"
+
+none := 0 3 r_eshape 0.0
+pins := silver
+black := 0.07 0.07 0.08
+
+## cm:parts: Python for every part kind; the resistor 10 kilohm
+l:parts := ((("dip8", black, pins, gray, none) l:p_art 0) c_at
+  (("dip14", black, pins, gray, none) l:p_art 0) c_at
+  (("dip16", black, pins, gray, none) l:p_art 0) c_at
+  (("to92", black, pins, gray, none) l:p_art 0) c_at
+  (("axial-resistor", 0.85 0.74 0.55, pins, gray, l:b_ands 10000) l:p_art 0) c_at
+  (("axial-diode", 0.9 0.42 0.2, pins, black, none) l:p_art 0) c_at
+  (("radial-electrolytic", blue, pins, 0.85 0.85 0.88, none) l:p_art 0) c_at
+  (("ceramic-disc", 0.85 0.52 0.2, pins, gray, none) l:p_art 0) c_at
+  (("led-5mm", 0.9 0.12 0.1, pins, steel, none) l:p_art 0) c_at
+  ("battery-snap", black, pins, silver, none) l:p_art 0)
+
+## cm:names: every model, as the check and the stills take them
+l:names := "arm tweezers iron solder clip welder cutter wire rack tray stage scope " c_at l:kinds
+
+## cm:script: the whole inner script: Bpy's head, the cell's builders
+## (the path to cell_models.py is the script's second argument), every
+## model, then the check of each .glb against its rig (check.txt)
+l:script := bp:head c_at "exec(open(args[1]).read())\n" c_at l:arm c_at l:tools c_at l:fixtures c_at l:parts c_at "check(" c_at (h:q_t l:names) c_at ".split())\n"
+
+## cm:stills: Python, after cm:script, for each model's turntable
+## stills: four, 90 degrees apart, 320 by 240, in stills/
+l:stills := "stills(" c_at (h:q_t l:names) c_at ".split(), (320, 240), (30, 120, 210, 300))\n"

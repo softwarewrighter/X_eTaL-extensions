@@ -75,9 +75,14 @@
 <ul>
 <li><a href="extensions-canvas-lib-Canvas.xtl.html">Canvas.xtl</a></li>
 </ul>
+<h3>extensions/cell/demos/</h3>
+<ul>
+<li><a href="extensions-cell-demos-models.xtl.html">models.xtl</a></li>
+</ul>
 <h3>extensions/cell/lib/</h3>
 <ul>
 <li><a href="extensions-cell-lib-Cell.xtl.html">Cell.xtl</a></li>
+<li><a href="extensions-cell-lib-CellModels.xtl.html">CellModels.xtl</a></li>
 </ul>
 <h3>extensions/clock/demos/</h3>
 <ul>
@@ -641,6 +646,27 @@ Import: &quot;ce:&quot; u_se&lt; &quot;Cell&quot;
 Run with xetal-x (xetal-x --ext DIR puts this directory on XETAL_PATH).
 Each signature line is written out by the binding macro (lib/Ffi.xtlm,
 docs/ffi-macro.md).</li>
+<li>library <a href="extensions-cell-lib-CellModels.xtl.html">extensions/cell/lib/CellModels.xtl</a>: CellModels.xtl -- the assembly cell's 3D models, described in X_eTaL
+and built by Blender: the arm (its pivots from the simulator, one
+node a joint, per the asset contract of docs/cell-design.md), the
+seven tools, the tool rack, a parts tray, the rotary stage with its
+vise, the microscope on its gantry, and every part kind with a node
+a pin. Each model is NAME.glb with NAME.rig.json beside it; a check
+reads every .glb back against its rig. Generic shapes, imitating no
+product. Millimeters and degrees; a tool's z is its approach, its
+mount at 0 (the flange), its tip at tool_tip.
+The Python is Bpy.xtl's head (bp:head) and the cell's builders,
+extensions/cell/models/cell_models.py; the calls are written here.
+Import: &quot;cm:&quot; u_se&lt; &quot;CellModels&quot;</li>
+<li>program <a href="extensions-cell-demos-models.xtl.html">extensions/cell/demos/models.xtl</a>: The assembly cell's models: X_eTaL writes the inputs -- the arm's
+pivots and every part kind as the simulator gives them (ce:a_rmModel,
+ce:p_art) -- and the Python (CellModels.xtl, Bpy.xtl's head and
+models/cell_models.py); Blender builds every model as NAME.glb with
+NAME.rig.json beside it in work/cell/models, reads each .glb back
+against its rig (check.txt), and renders four turntable stills of
+each (stills/). just ext cell rigs then copies the rigs the
+simulator reads into rigs/.
+Run: just demo cell models   (about two minutes)</li>
 <li>library <a href="extensions-clock-lib-Clock.xtl.html">extensions/clock/lib/Clock.xtl</a>: Clock.xtl -- the facade of the clock extension: wall-clock and
 monotonic time, which X_eTaL does not have, for timestamps and timing.
 Import: &quot;ck:&quot; u_se&lt; &quot;Clock&quot;
@@ -2019,7 +2045,76 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.p_art"><span class="c-libfunc">ˡp̲art</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.c_ommands"><span class="c-libfunc">ˡc̲ommands</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.p_arse"><span class="c-libfunc">ˡp̲arse</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.r_un"><span class="c-libfunc">ˡr̲un</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.s_tate"><span class="c-libfunc">ˡs̲tate</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.r_ig"><span class="c-libfunc">ˡr̲ig</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.a_rmModel"><span class="c-libfunc">ˡa̲rmModel</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.package">ˡpackage</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#steel">steel</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#dark">dark</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#gray">gray</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#orange">orange</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#blue">blue</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#copper">copper</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#silver">silver</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#red">red</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#white">white</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#glass">glass</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.digits">ˡdigits</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.gold">ˡgold</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.b_ands"><span class="c-libfunc">ˡb̲ands</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#h.q_t"><span class="c-libfunc">ʰq̲t</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#h.v_ec"><span class="c-libfunc">ʰv̲ec</span></a></td><td>function</td><td><code>a -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#h.r_ow"><span class="c-libfunc">ʰr̲ow</span></a></td><td>function</td><td><code>Any e =&gt; (Char, Char, Char, a, b, c, d) -&gt; e -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#h.b_ox"><span class="c-libfunc">ʰb̲ox</span></a></td><td>function</td><td><code>Any d =&gt; (Char, Char, a, b, c) -&gt; d -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#h.c_yl"><span class="c-libfunc">ʰc̲yl</span></a></td><td>function</td><td><code>Any e =&gt; (Char, Char, a, b, b, c, d) -&gt; e -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#h.s_eg"><span class="c-libfunc">ʰs̲eg</span></a></td><td>function</td><td><code>(Num c, Any e) =&gt; (Char, Char, a, b, c, d) -&gt; e -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#h.n_ode"><span class="c-libfunc">ʰn̲ode</span></a></td><td>function</td><td><code>Any c =&gt; (Char, Char, a, b) -&gt; c -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#h.m_odel"><span class="c-libfunc">ʰm̲odel</span></a></td><td>function</td><td><code>Any a =&gt; (Char, Char, Char) -&gt; a -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#h.m_ount"><span class="c-libfunc">ʰm̲ount</span></a></td><td>function</td><td><code>Any b =&gt; (Char, a) -&gt; b -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#h.e_nds"><span class="c-libfunc">ʰe̲nds</span></a></td><td>function</td><td><code>(Num a, Any b) =&gt; (Char, a) -&gt; b -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.tools">ˡtools</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts"><span class="c-libfunc">ʰp̲osts</span></a></td><td>function</td><td><code>(Num a, Any b) =&gt; (Char, a) -&gt; b -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#h.s_lot"><span class="c-libfunc">ʰs̲lot</span></a></td><td>function</td><td><code>(Num a, Any b) =&gt; (Char, a) -&gt; b -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.rack">ˡrack</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#h.p_ocket"><span class="c-libfunc">ʰp̲ocket</span></a></td><td>function</td><td><code>(Num a, Any b) =&gt; (Char, a) -&gt; b -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#h.p_lace"><span class="c-libfunc">ʰp̲lace</span></a></td><td>function</td><td><code>Any b =&gt; (Char, a) -&gt; b -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.tray">ˡtray</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.scope">ˡscope</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.fixtures">ˡfixtures</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.arm">ˡarm</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.p_art"><span class="c-libfunc">ˡp̲art</span></a></td><td>function</td><td><code>Any c =&gt; (Char, a, a, a, b) -&gt; c -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.kinds">ˡkinds</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#none">none</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#pins">pins</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#black">black</a></td><td>value</td><td><code>Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.parts">ˡparts</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.names">ˡnames</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.script">ˡscript</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.stills">ˡstills</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#r">r</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-demos-models.xtl.html#lines">lines</a></td><td>value</td><td><code>Box Char</code></td></tr>
 <tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.n_ow"><span class="c-libfunc">ˡn̲ow</span></a></td><td>function</td><td><code>Unit -&gt; Float</code></td></tr>
 <tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.i_so"><span class="c-libfunc">ˡi̲so</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-clock-lib-Clock.xtl.html#l.i_soOf"><span class="c-libfunc">ˡi̲soOf</span></a></td><td>function</td><td><code>Num a =&gt; a -&gt; Char</code></td></tr>

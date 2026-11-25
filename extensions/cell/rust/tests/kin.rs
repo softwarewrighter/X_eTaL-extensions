@@ -43,7 +43,7 @@ fn the_rig_reads_and_checks() {
     let rig = Rig::arm().unwrap();
     assert_eq!(rig.joints.len(), 6);
     assert!(rig.illustrative);
-    let text = include_str!("../../rigs/arm.toml");
+    let text = xetal_ext_cell::rig::ARM_TOML;
     let e = Rig::from_toml(&text.replacen("alpha = 0", "alpha = 30", 1)).unwrap_err();
     assert!(e.contains("spherical wrist"), "{e}");
     let e = Rig::from_toml(&text.replacen(

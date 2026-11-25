@@ -1,0 +1,36 @@
+## The assembly cell's models: X_eTaL writes the inputs -- the arm's
+## pivots and every part kind as the simulator gives them (ce:a_rmModel,
+## ce:p_art) -- and the Python (CellModels.xtl, Bpy.xtl's head and
+## models/cell_models.py); Blender builds every model as NAME.glb with
+## NAME.rig.json beside it in work/cell/models, reads each .glb back
+## against its rig (check.txt), and renders four turntable stills of
+## each (stills/). just ext cell rigs then copies the rigs the
+## simulator reads into rigs/.
+## Run: just demo cell models   (about two minutes)
+
+"bl:" u_se< "Blender"
+"bp:" u_se< "Bpy"
+"ce:" u_se< "Cell"
+"cm:" u_se< "CellModels"
+
+_ := "work/cell/models/arm.in.json" bl:w_rite! ce:a_rmModel @
+_ := "work/cell/models/dip8.in.json" bl:w_rite! ce:p_art "dip8"
+_ := "work/cell/models/dip14.in.json" bl:w_rite! ce:p_art "dip14"
+_ := "work/cell/models/dip16.in.json" bl:w_rite! ce:p_art "dip16"
+_ := "work/cell/models/to92.in.json" bl:w_rite! ce:p_art "to92"
+_ := "work/cell/models/axial-resistor.in.json" bl:w_rite! ce:p_art "axial-resistor"
+_ := "work/cell/models/axial-diode.in.json" bl:w_rite! ce:p_art "axial-diode"
+_ := "work/cell/models/radial-electrolytic.in.json" bl:w_rite! ce:p_art "radial-electrolytic"
+_ := "work/cell/models/ceramic-disc.in.json" bl:w_rite! ce:p_art "ceramic-disc"
+_ := "work/cell/models/led-5mm.in.json" bl:w_rite! ce:p_art "led-5mm"
+_ := "work/cell/models/battery-snap.in.json" bl:w_rite! ce:p_art "battery-snap"
+_ := "work/cell/run.py" bl:w_rite! bp:launcher
+_ := "work/cell/models.py" bl:w_rite! cm:script c_at cm:stills
+"X_eTaL -> python -> Blender: the cell's models, checked, and their stills ..."
+r := "work/cell/run.py" bl:r_un! "work/cell/models.py work/cell/models models/cell_models.py"
+"the run, and the error lines in Blender's log:"
+lines := (n_ot r = f_irst "\n") p_artition r
+d_isclose 1 s_elect lines
+d_isclose 2 s_elect lines
+"each model read back against its rig:"
+bl:r_ead "work/cell/models/check.txt"

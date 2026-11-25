@@ -9,6 +9,7 @@
 
 pub mod command;
 pub mod kin;
+pub mod model;
 pub mod motion;
 pub mod parts;
 pub mod rig;
@@ -75,6 +76,13 @@ fn state(args: &[Value]) -> Result<Value, OwnedError> {
     Ok(Value::Text(w.to_json()))
 }
 
+/// What a model of the arm must be, as JSON: its nodes (one a joint's
+/// pivot), links and check poses, with the rig.
+fn arm_model(_: &[Value]) -> Result<Value, OwnedError> {
+    let rig = rig::Rig::arm().map_err(OwnedError::failure)?;
+    Ok(Value::Text(model::arm(&rig).to_string()))
+}
+
 /// The arm's rig as JSON.
 fn rig(_: &[Value]) -> Result<Value, OwnedError> {
     Ok(Value::Text(
@@ -93,6 +101,7 @@ xetal_ext_sdk::xetal_extension! {
         parse: 1, "Char -> Char", "A program (text, or JSON lines) checked against the command table: each command as JSON, one a line.";
         run: 1, "Char -> Char", "A program run on a new cell: each command's outcome as JSON, one a line, stopping after the first not ok.";
         state: 1, "Char -> Char", "A program run on a new cell: its state after, as JSON; a command not ok is an error.";
+        arm_model: 0, "Unit -> Char", "What a model of the arm must be, as JSON: nodes (one a joint's pivot, local z its axis), links, check poses, the rig.";
         rig: 0, "Unit -> Char", "The arm's rig as JSON: its joints' DH parameters, limits, speeds and home.";
     }
 }

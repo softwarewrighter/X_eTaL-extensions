@@ -7,9 +7,11 @@ touches a lead, a third solders them, and the next part comes in. A
 program or an LLM agent drives it one command at a time (the design:
 docs/cell-design.md in the repository).
 
-Status: the arms move. The parts library, the command language (text
-and JSON, checked against one table), the cell's state as JSON and
-four six-axis arms with the stage and the vise are in place: `reset`,
+Status: the arms move, and the cell has its 3D models. The parts
+library, the command language (text and JSON, checked against one
+table), the cell's state as JSON, four six-axis arms with the stage
+and the vise, and a model of every piece (built through Blender,
+checked against the simulator) are in place: `reset`,
 `wait s=`, `joints`, `move`, `lift`, `stage` and `vise` run; every
 other command is parsed and checked, then refused as not simulated
 yet. Grasping and collision, heat, solder, welding, wire and the
@@ -19,7 +21,9 @@ each other and the parts.
 - Package: `extensions/cell/` (`extension.toml`; library
   `xetal_ext_cell`: `libxetal_ext_cell.dylib` on macOS, `.so` on
   Linux)
-- Facade: `lib/Cell.xtl`, recommended alias `ce:`
+- Facade: `lib/Cell.xtl`, recommended alias `ce:`; the models:
+  `lib/CellModels.xtl`, alias `cm:` (pure X_eTaL, through the blender
+  extension's `Bpy.xtl`)
 - Native crates: `serde`, `serde_json`, `toml`
 - Builds for WebAssembly: the simulator has no threads, files or
   clocks (time is the simulation's own), so the same crate will run in
@@ -37,6 +41,7 @@ each other and the parts.
 | `run` | 1 | `Char -> Char` | a program run on a new cell, each command's outcome as JSON |
 | `state` | 1 | `Char -> Char` | a program run on a new cell, the cell's state after it as JSON |
 | `rig` | 0 | `Unit -> Char` | the arm's rig as JSON |
+| `arm_model` | 0 | `Unit -> Char` | what a model of the arm must be, as JSON: its pivots, links, check poses and rig |
 
 ## From X_eTaL
 
@@ -118,6 +123,46 @@ line (it passes near a singularity: the wrist straight, or the wrist
 over the base's axis), each with how far along. Every motion is
 recorded in the arm's track, rows of the time and the six angles,
 every 50 ms, for a player to draw.
+
+## Models
+
+![Every model from four sides](models.jpg)
+
+`lib/CellModels.xtl` describes every piece of the cell and Blender
+builds it (`just models`, about a minute with the stills): the arm,
+seven tools (tweezers, iron, solder feeder, heatsink clip, weld
+electrodes, flush cutter, wire feeder), the tool rack, a parts tray,
+the rotary stage with its vise, the microscope on its gantry, and
+every part kind, the resistor's bands from its value (`cm:b_ands`).
+Generic shapes, imitating no product. Each is `NAME.glb` with
+`NAME.rig.json` beside it, in `work/cell/models`, with four turntable
+stills of each in `stills/` (`just sheet` makes the picture above).
+
+- The arm follows the asset contract (docs/cell-design.md): a node a
+  joint's pivot, `arm_base`, `arm_j1` to `arm_j6`, `arm_flange`, each
+  hanging from the one before, its local z the joint's axis, so
+  turning a node about its z is moving that joint. The pivots come
+  from the simulator (`ce:a_rmModel`); X_eTaL gives the shapes (joint
+  housings, link rods, colors).
+- A tool's mount is at its origin, where it meets the flange, and its
+  tip is `tool_tip`, out along z (the approach); moving parts are
+  nodes (`finger_l`, `finger_r`, `jaw`, `blade_l`, `blade_r`, `spool`).
+  The fixtures name their places: `slot1` to `slot7`, `pocket1` to
+  `pocket8`, `stage_turn`, `vise_jaw`, `vise_center`, `scope_pan`,
+  `scope_tilt`, `lens_l`, `lens_r`, `scope_eye`.
+- A part's nodes are its pins, named as the pins (`1`, `2`, ...), at
+  the lead's base, each lead's tip (`1.tip`), and its grasp frames
+  (`grasp.ends`).
+
+The check (`check.txt`) reads each `.glb` back into an empty scene:
+every node of its rig must be where the rig says (to 0.001 mm), each
+arm pivot's z its joint's axis, and the arm, posed at three sets of
+joint angles, must put its flange where the simulator's forward
+kinematics does (to 0.01 mm). `just rigs` then copies the rigs of the
+arm, the tools and the fixtures into `rigs/`, and the simulator runs
+`rigs/arm.rig.json`: the rig file Blender exported is the one the
+simulator reads, and a test checks it is exactly what `rigs/arm.toml`
+makes.
 
 ## Parts
 
@@ -225,6 +270,9 @@ just test           # Rust tests (rust/tests) and reg-rs tests (tests/)
 just wasm           # build the crate for the browser (wasm32)
 just list           # the functions as xetal-x sees them
 just command-table  # the command table as markdown, for this page
+just models         # every model through Blender, checked, with stills
+just rigs           # copy the models' rigs the simulator reads into rigs/
+just sheet          # the stills as one picture, docs/models.jpg
 ```
 
 ## Demos

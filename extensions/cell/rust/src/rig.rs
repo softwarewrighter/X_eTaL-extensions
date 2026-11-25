@@ -6,7 +6,12 @@
 
 use serde::{Deserialize, Serialize};
 
-const ARM: &str = include_str!("../../rigs/arm.toml");
+/// The arm as authored: the source CellModels.xtl's run starts from.
+pub const ARM_TOML: &str = include_str!("../../rigs/arm.toml");
+/// The arm as Blender exported it with its model (`just ext cell
+/// rigs` copies it here): the rig the simulator runs. A test checks it
+/// is what `ARM_TOML` makes.
+pub const ARM_RIG_JSON: &str = include_str!("../../rigs/arm.rig.json");
 
 /// One joint.
 #[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
@@ -58,6 +63,24 @@ impl Rig {
     /// a limit, or a speed or acceleration that is not positive.
     pub fn from_toml(text: &str) -> Result<Self, String> {
         let rig: Self = toml::from_str(text).map_err(|e| e.to_string())?;
+        rig.check()
+    }
+
+    /// The rig in a model's rig file (`NAME.rig.json`: its `rig`).
+    ///
+    /// # Errors
+    ///
+    /// Not JSON, no `rig`, or a rig `from_toml` would refuse.
+    pub fn from_rig_json(text: &str) -> Result<Self, String> {
+        let v: serde_json::Value = serde_json::from_str(text).map_err(|e| e.to_string())?;
+        let rig: Self =
+            serde_json::from_value(v.get("rig").cloned().ok_or("no rig in the rig file")?)
+                .map_err(|e| e.to_string())?;
+        rig.check()
+    }
+
+    fn check(self) -> Result<Self, String> {
+        let rig = self;
         if rig.joints.len() != 6 {
             return Err(format!("a rig has six joints, not {}", rig.joints.len()));
         }
@@ -82,13 +105,14 @@ impl Rig {
         Ok(rig)
     }
 
-    /// The generic arm every cell's four arms are.
+    /// The generic arm every cell's four arms are: the rig Blender
+    /// exported with the arm's model.
     ///
     /// # Errors
     ///
     /// The file compiled in is wrong (the tests read it).
     pub fn arm() -> Result<Self, String> {
-        Self::from_toml(ARM).map_err(|e| format!("rigs/arm.toml: {e}"))
+        Self::from_rig_json(ARM_RIG_JSON).map_err(|e| format!("rigs/arm.rig.json: {e}"))
     }
 
     /// The same rig with no joint limits (to tell out of reach from

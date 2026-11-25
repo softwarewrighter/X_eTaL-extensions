@@ -17,6 +17,7 @@ fn descriptor() {
         ("run", "Char -> Char"),
         ("state", "Char -> Char"),
         ("rig", "Unit -> Char"),
+        ("arm_model", "Unit -> Char"),
     ] {
         assert_eq!(ext.function(name).unwrap().signature(), sig, "{name}");
     }
