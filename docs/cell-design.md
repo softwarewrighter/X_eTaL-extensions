@@ -247,6 +247,32 @@ joint's temperature. Two modes:
   results only as a picture shows them. The agent must look, as a real
   cell's controller must. This is the mode a physical cell would have.
 
+## Reading a part, and testing it
+
+A part is checked before it goes in, as at a bench (decisions C12,
+C13 in docs/plan.md):
+
+- **Markings.** Every part instance carries its markings as data and
+  its model draws them: a resistor's color bands, a ceramic
+  capacitor's code (104), an electrolytic's value and voltage, an IC's
+  part number and pin-1 notch, a transistor's type, an LED's color.
+  `identify PART` turns the part (or moves the microscope) until the
+  marked side faces the lens and reads it. In oracle mode the answer is
+  the data; in sensed mode it is decoded from the scope's picture --
+  band colors sampled, printed text matched against the cell's own
+  glyphs -- with a confidence, and it can fail (the far side, glare,
+  blur), so the agent learns to turn the part.
+- **A tester with probes.** A probe tool -- a sprung pin on a lead --
+  in each of two arms, while a third holds the part in tweezers in
+  free air: no socket. `test PART` touches the probes to lead pairs in
+  turn and measures as a universal component tester does: resistance,
+  capacitance and ESR, inductance, a diode's forward drop and polarity
+  (or open, short), an LED's drop and color, a transistor's type, which
+  lead is base, collector and emitter, and its gain. Each part
+  instance has an electrical model as data, faults included (open,
+  short, out of tolerance, marked wrong). `verify PART` compares the
+  measurement with what the netlist wants and what the marking says.
+
 ## The timeline and the preview
 
 The simulator records every motion, contact, temperature and event

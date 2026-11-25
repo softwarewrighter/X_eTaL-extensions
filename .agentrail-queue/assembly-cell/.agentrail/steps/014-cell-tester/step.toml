@@ -1,0 +1,8 @@
+number = 14
+slug = "cell-tester"
+status = "pending"
+description = "Saga 17 step 14 (the user, 2026-11-24: 'a tool that can measure a component e..."
+role = "production"
+context_files = []
+created_at = "2026-11-24T16:45:33"
+commits = []

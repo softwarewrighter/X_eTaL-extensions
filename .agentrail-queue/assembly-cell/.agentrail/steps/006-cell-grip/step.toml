@@ -1,6 +1,6 @@
 number = 6
 slug = "cell-grip"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 6: collision along every motion with parry3d (links capsules, bo..."
 role = "production"
 context_files = []
