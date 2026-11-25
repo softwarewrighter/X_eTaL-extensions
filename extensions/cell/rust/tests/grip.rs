@@ -34,7 +34,7 @@ fn near(a: [f64; 3], b: [f64; 3], eps: f64) -> bool {
 const IN_VISE: &str = "reset circuit=demo
 tool A tweezers
 pick A U1 grasp=ends
-place A U1 at=0,0,-32 rpy=0,0,90
+place A U1 at=0,0,-24 rpy=0,0,90
 vise close
 release A U1
 lift A mm=60
@@ -208,7 +208,7 @@ fn a_lead_is_aligned_to_a_lead() {
     ok(&mut w, IN_VISE);
     ok(
         &mut w,
-        "tool D tweezers\npick D R1 grasp=body\nmove D to=60,60,40",
+        "tool D tweezers\npick D R1 grasp=body\nlift D mm=80\nmove D to=60,0,60 rpy=180,0,90\nmove D to=34.81,1.27,-14.05",
     );
     let o = w.apply(&parse_line("align D R1.1.tip to=U1.3.tip gap=0.1").unwrap());
     assert!(o.ok, "{o:?}");

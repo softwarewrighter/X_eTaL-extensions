@@ -7,13 +7,14 @@
 reset circuit=weld
 tool A tweezers
 pick A C1 grasp=body
-place A C1 at=0,0,-32
+place A C1 at=0,0,-20
 vise close
 release A C1
 lift A mm=60
 pick A C2 grasp=body
+lift A mm=100
 present C1.2.6 at=S3
-move A to=0,40,40 rpy=-90,0,90
+move A to=2.54,0,37
 align A C2.1.tip to=C1.2.6 gap=0.1
 weld S3 at=C1.2+C2.1 energy=8
 inspect C1.2+C2.1

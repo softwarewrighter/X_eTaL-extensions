@@ -172,7 +172,7 @@ export function start(local) {
     $('program').value = name;
     // the hint says which program is loaded
     const what = {
-      weld: 'a disc welded to a disc in the vise, then an LED, its lead clipped to ground first, then the three lifted out',
+      weld: 'a disc welded to a disc in the vise, then an LED, its lead clipped to ground first: the three welded into one in the vise',
       'solder-stations': 'the stage turns and rises to bring a chip pin to the tool stations, an arm brings a resistor lead to it, the iron station and the solder feeder station join them',
       'weld-stations': 'the stage brings a disc lead to the welder station, which comes up from below; an arm lays a second disc lead on it, and it is welded',
       pick: 'a chip picked from the tray and put in the vise',

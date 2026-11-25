@@ -1,7 +1,9 @@
 # Claude Code driving the cell over MCP (xetal-cell-mcp), given only the
 # goal: the DIP in the vise, then a resistor lead within 0.1 mm of pin 3,
 # still held. Its session as the server saved it (2026-11-24: 6 turns,
-# 20 s, every command accepted). just ext cell preview claude plays it.
+# 20 s, every command accepted). Recorded while a carried part could pass
+# through the vise unchecked: its align now stops where the resistor's
+# lead meets a vise jaw (fixed 2026-11-24); a new session replaces it.
 reset circuit=demo
 tool A tweezers
 pick A U1 grasp=ends

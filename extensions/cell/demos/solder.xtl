@@ -3,9 +3,9 @@
 ## arm C's iron heats the joint, arm D feeds solder, the joint freezes
 ## good; A lets the resistor go (it stays, soldered on), picks the DIP
 ## out of the vise and lifts the pair -- each command's outcome a line.
-## Title: The assembly cell, live
-## Page: cell/live/ drive the cell, live
-## Feature: Open the cell: watch a resistor soldered to a chip a command at a time, or drive every arm yourself, in your browser
+## Title: The assembly cell solders
+## Page: cell/live/?program=solder watch it solder, step by step, live
+## Feature: Open the cell: watch a resistor soldered to a chip a command at a time, or drive it yourself, in your browser
 ## Run: just demo cell solder
 
 "ce:" u_se< "Cell"

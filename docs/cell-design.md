@@ -214,6 +214,14 @@ assembly: a semiconductor in a path from electrode to electrode, or
 with no grounding clip on its lead, marks a transient risk -- refused
 by default (`weld ... risky=allow` to proceed and see the damage).
 
+**The bench (decision C18, replacing the four arms).** A turntable
+holds the work; one long slender arm picks and places parts and turns
+the work on its side or over; the iron has its solder feeder on the
+same actuator; pincers and probes come in from the turntable's side to
+hold parts together and sink heat. No large arms crowding one small
+work zone. Being built (docs/plan.md, step 15); what follows describes
+the four-arm cell it replaces.
+
 **Stations and the positioner.** The tools need not ride on arms
 (decision C17). A station is a tool on a linear actuator -- a
 telescoping pole with one axis, perhaps a second to turn it -- fixed in

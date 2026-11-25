@@ -12,7 +12,7 @@
   <p><a href="#top">X_eTaL extensions</a></p>
   <p><b>Live, in your browser:</b></p>
   <ul>
-    <li><a href="cell/live/">The assembly cell, live</a></li>
+    <li><a href="cell/live/?program=solder">The assembly cell solders</a></li>
     <li><a href="three/live/">The neon city, live</a></li>
   </ul>
   <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
@@ -21,7 +21,7 @@
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
     <li><a href="#blender">blender</a><ul><li><a href="#blender-city-preview">The neon city, ray-traced: the whole flight, rough</a></li><li><a href="#blender-city">The neon city, ray-traced: four stills</a></li><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-gpu-build">X_eTaL GPU: build process</a></li><li><a href="#blender-gpu-run">X_eTaL GPU: execution</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-build">HEX1000-UART: build process</a></li><li><a href="#blender-hex-keys-leds-build">HEX1000-keys-leds: build process</a></li><li><a href="#blender-hex-keys-leds-run">HEX1000-keys-leds: execution</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-hex-run">HEX1000-UART: execution</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
-    <li><a href="#cell">cell</a><ul><li><a href="#cell-models">models</a></li><li><a href="#cell-pick">The assembly cell picks</a></li><li><a href="cell/live/">The assembly cell, live (open it)</a></li></ul></li>
+    <li><a href="#cell">cell</a><ul><li><a href="#cell-models">models</a></li><li><a href="#cell-pick">The assembly cell picks</a></li><li><a href="cell/live/?program=solder">The assembly cell solders (open it)</a></li></ul></li>
     <li><a href="#clock">clock</a><ul><li><a href="#clock-bridge-cost">bridge-cost</a></li></ul></li>
     <li><a href="#digest">digest</a></li>
     <li><a href="#hello">hello</a><ul><li><a href="#hello-tour">tour</a></li></ul></li>
@@ -52,10 +52,10 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
 </header>
 <main>
   <section class="panel feature" id="feature-cell-solder">
-    <h2><a href="cell/live/">The assembly cell, live</a></h2>
+    <h2><a href="cell/live/?program=solder">The assembly cell solders</a></h2>
     <p class="lede">Two parts soldered into one: programs/solder.cell run by the simulator -- arm A puts a DIP-8 in the vise and holds a resistor&#x27;s lead to pin 3, arm C&#x27;s iron heats the joint, arm D feeds solder, the joint freezes good; A lets the resistor go (it stays, soldered on), picks the DIP out of the vise and lifts the pair -- each command&#x27;s outcome a line.</p>
-    <a href="cell/live/"><video src="cell/solder.webm" autoplay loop muted playsinline preload="metadata"></video></a>
-    <p class="go"><a class="docs" href="cell/live/">Open the cell: watch a resistor soldered to a chip a command at a time, or drive every arm yourself, in your browser</a></p>
+    <a href="cell/live/?program=solder"><video src="cell/solder.webm" autoplay loop muted playsinline preload="metadata"></video></a>
+    <p class="go"><a class="docs" href="cell/live/?program=solder">Open the cell: watch a resistor soldered to a chip a command at a time, or drive it yourself, in your browser</a></p>
   </section>
   <section class="panel feature" id="feature-three-city">
     <h2><a href="three/live/">The neon city, live</a></h2>
@@ -211,13 +211,13 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <pre class="source">just demo cell models</pre>
     </section>
     <section class="panel demo" id="cell-pick">
-      <h3>The assembly cell picks <a class="docs" href="doc/extensions-cell-demos-pick.xtl.html">source and docs</a> <a class="docs" href="cell/live/">open it live: drive the cell, live</a></h3>
+      <h3>The assembly cell picks <a class="docs" href="doc/extensions-cell-demos-pick.xtl.html">source and docs</a> <a class="docs" href="cell/live/?program=pick">open it live: watch it pick, step by step, live</a></h3>
       <p class="note">The assembly cell picks: programs/pick.cell run by the simulator -- arm A takes its tweezers and puts the DIP from the tray in the vise, the stage turns it, arm D picks the LED, and both fall when let go -- each command&#x27;s outcome a line: ok, what it did, and why not.</p>
       <video src="cell/pick.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo cell pick</pre>
     </section>
     <section class="panel demo" id="cell-solder">
-      <h3>The assembly cell, live <a class="docs" href="doc/extensions-cell-demos-solder.xtl.html">source and docs</a> <a class="docs" href="cell/live/">open it live: drive the cell, live</a></h3>
+      <h3>The assembly cell solders <a class="docs" href="doc/extensions-cell-demos-solder.xtl.html">source and docs</a> <a class="docs" href="cell/live/?program=solder">open it live: watch it solder, step by step, live</a></h3>
       <p class="note">Two parts soldered into one: programs/solder.cell run by the simulator -- arm A puts a DIP-8 in the vise and holds a resistor&#x27;s lead to pin 3, arm C&#x27;s iron heats the joint, arm D feeds solder, the joint freezes good; A lets the resistor go (it stays, soldered on), picks the DIP out of the vise and lifts the pair -- each command&#x27;s outcome a line.</p>
       <video src="cell/solder.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo cell solder</pre>
@@ -424,7 +424,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 8c49bd8</span><span class="sep">&middot;</span>
-  <span>built at 27c8d83</span>
+  <span>built at 1c2295b</span>
 </footer>
 </body>
 </html>

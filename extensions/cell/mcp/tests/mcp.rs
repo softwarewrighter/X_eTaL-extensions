@@ -154,7 +154,7 @@ fn an_agent_puts_the_dip_in_the_vise_and_a_lead_to_its_pin() {
     assert!(!err && all_ok(&r), "{r}");
     let (_, r) = c.tool(
         "cell_place",
-        json!({"arm": "A", "part": "U1", "at": [0, 0, -32], "rpy": [0, 0, 90]}),
+        json!({"arm": "A", "part": "U1", "at": [0, 0, -24], "rpy": [0, 0, 90]}),
     );
     assert!(all_ok(&r), "{r}");
     let (_, r) = c.tool("cell_vise", json!({"action": "close"}));
@@ -171,7 +171,7 @@ fn an_agent_puts_the_dip_in_the_vise_and_a_lead_to_its_pin() {
     assert!(all_ok(&r), "{r}");
     let (_, r) = c.tool(
         "cell_do",
-        json!({"commands": "move A to=40,60,0\nalign A R1.1.tip to=U1.3.tip gap=0.1"}),
+        json!({"commands": "lift A mm=80\nmove A to=0,60,60 rpy=180,0,90\nmove A to=34.81,1.27,-14.05\nalign A R1.1.tip to=U1.3.tip gap=0.1"}),
     );
     assert!(all_ok(&r), "{r}");
     // the state says where it all is
@@ -334,16 +334,22 @@ fn the_page_follows_the_session() {
 }
 
 #[test]
-fn claude_codes_session_runs_again() {
-    // programs/claude.cell: Claude Code's own session over MCP
+fn claude_codes_session_stops_where_the_checker_now_sees_a_collision() {
+    // programs/claude.cell: Claude Code's session over MCP, recorded
+    // while a carried part could pass through the vise unchecked; its
+    // resistor lead went through a jaw to pin 3, which is now caught
     let mut w = xetal_ext_cell::world::World::default();
-    for o in w.apply_all(
+    let out = w.apply_all(
         &xetal_ext_cell::command::parse_program(include_str!("../../programs/claude.cell"))
             .unwrap(),
-    ) {
-        assert!(o.ok, "{o:?}");
-    }
-    assert_eq!(w.arm("A").unwrap().holding.as_deref(), Some("R1"));
-    let u1 = w.parts.iter().find(|p| p.id == "U1").unwrap();
-    assert_eq!(u1.holder.as_deref(), Some("vise"));
+    );
+    let last = out.last().unwrap();
+    assert!(last.command.starts_with("align A R1.1.tip"), "{last:?}");
+    assert!(
+        last.stopped
+            .as_deref()
+            .unwrap()
+            .contains("with the vise's jaw"),
+        "{last:?}"
+    );
 }

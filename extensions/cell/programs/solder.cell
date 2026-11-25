@@ -6,16 +6,18 @@
 reset circuit=demo
 tool A tweezers
 pick A U1 grasp=ends
-place A U1 at=0,0,-32 rpy=0,0,90
+place A U1 at=0,0,-24 rpy=0,0,90
 vise close
 release A U1
 pick A R1 grasp=body
-move A to=40,60,0
+lift A mm=80
+move A to=0,60,60 rpy=180,0,90
+move A to=34.81,1.27,-14.05
 align A R1.1.tip to=U1.3.tip gap=0.1
 tool C iron temp=350
 touch C at=U1.3+R1.1 dwell=2
-tool D solder
-feed D mm=2 rate=1
+tool B solder
+feed B mm=2 rate=1
 back C
 wait until=U1.3+R1.1 below=100
 inspect U1.3+R1.1

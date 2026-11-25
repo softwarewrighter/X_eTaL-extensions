@@ -11,14 +11,16 @@ use xetal_ext_cell::world::{Outcome, World};
 const READY: &str = "reset circuit=demo
 tool A tweezers
 pick A U1 grasp=ends
-place A U1 at=0,0,-32 rpy=0,0,90
+place A U1 at=0,0,-24 rpy=0,0,90
 vise close
 release A U1
 pick A R1 grasp=body
-move A to=40,60,0
+lift A mm=80
+move A to=0,60,60 rpy=180,0,90
+move A to=34.81,1.27,-14.05
 align A R1.1.tip to=U1.3.tip gap=0.1
 tool C iron temp=350
-tool D solder";
+tool B solder";
 
 fn run(w: &mut World, program: &str) -> Vec<Outcome> {
     let out = w.apply_all(&parse_program(program).unwrap());
@@ -46,7 +48,7 @@ fn a_good_joint_holds_two_parts_as_one() {
     let mut w = ready();
     run(
         &mut w,
-        "touch C at=U1.3+R1.1 dwell=2\nfeed D mm=2 rate=1\nback C\nwait until=U1.3+R1.1 below=100",
+        "touch C at=U1.3+R1.1 dwell=2\nfeed B mm=2 rate=1\nback C\nwait until=U1.3+R1.1 below=100",
     );
     assert_eq!(result(&w).as_deref(), Some("good"));
     let j = &w.joints[0];
@@ -76,7 +78,7 @@ fn too_little_heat_makes_a_cold_joint() {
     let mut w = ready();
     run(
         &mut w,
-        "touch C at=U1.3+R1.1 dwell=2\nfeed D mm=0.5 rate=5\nback C\nwait until=U1.3+R1.1 below=100",
+        "touch C at=U1.3+R1.1 dwell=2\nfeed B mm=0.5 rate=5\nback C\nwait until=U1.3+R1.1 below=100",
     );
     assert_eq!(result(&w).as_deref(), Some("cold"));
 }
@@ -86,13 +88,13 @@ fn too_little_or_too_much_solder() {
     let mut w = ready();
     run(
         &mut w,
-        "touch C at=U1.3+R1.1 dwell=2\nfeed D mm=0.3 rate=0.3\nback C\nwait until=U1.3+R1.1 below=100",
+        "touch C at=U1.3+R1.1 dwell=2\nfeed B mm=0.3 rate=0.3\nback C\nwait until=U1.3+R1.1 below=100",
     );
     assert_eq!(result(&w).as_deref(), Some("starved"));
     let mut w = ready();
     run(
         &mut w,
-        "touch C at=U1.3+R1.1 dwell=2\nfeed D mm=10 rate=2\nback C\nwait until=U1.3+R1.1 below=100",
+        "touch C at=U1.3+R1.1 dwell=2\nfeed B mm=10 rate=2\nback C\nwait until=U1.3+R1.1 below=100",
     );
     assert_eq!(result(&w).as_deref(), Some("blob"));
 }
@@ -102,7 +104,7 @@ fn moving_a_side_while_molten_disturbs_it() {
     let mut w = ready();
     let out = run(
         &mut w,
-        "touch C at=U1.3+R1.1 dwell=2\nfeed D mm=2 rate=1\nlift A mm=1\nback C\nwait until=U1.3+R1.1 below=100",
+        "touch C at=U1.3+R1.1 dwell=2\nfeed B mm=2 rate=1\nlift A mm=1\nback C\nwait until=U1.3+R1.1 below=100",
     );
     assert!(
         out.iter().any(|o| o
@@ -119,7 +121,7 @@ fn heated_again_it_melts_again() {
     let mut w = ready();
     run(
         &mut w,
-        "touch C at=U1.3+R1.1 dwell=2\nfeed D mm=2 rate=1\nback C\nwait until=U1.3+R1.1 below=100",
+        "touch C at=U1.3+R1.1 dwell=2\nfeed B mm=2 rate=1\nback C\nwait until=U1.3+R1.1 below=100",
     );
     assert_eq!(result(&w).as_deref(), Some("good"));
     let out = run(&mut w, "touch C at=U1.3+R1.1 dwell=2");
@@ -139,7 +141,7 @@ fn heated_again_it_melts_again() {
 fn solder_on_a_cold_joint_does_not_melt() {
     let mut w = ready();
     // no iron on any joint: refused
-    let o = w.apply(&parse_line("feed D mm=1").unwrap());
+    let o = w.apply(&parse_line("feed B mm=1").unwrap());
     assert!(
         o.refused
             .unwrap_or_default()
@@ -176,7 +178,7 @@ fn heat_is_recorded_for_players() {
     let mut w = ready();
     run(
         &mut w,
-        "touch C at=U1.3+R1.1 dwell=2\nfeed D mm=2 rate=1\nback C\nwait until=U1.3+R1.1 below=100",
+        "touch C at=U1.3+R1.1 dwell=2\nfeed B mm=2 rate=1\nback C\nwait until=U1.3+R1.1 below=100",
     );
     let u1 = w.heat.iter().find(|h| h.id == "U1").unwrap();
     // rows: the time, the body, eight pins

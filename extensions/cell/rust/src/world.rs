@@ -691,6 +691,199 @@ impl World {
         out
     }
 
+    /// What overlaps what as the cell stands: each arm (its tool and what
+    /// it holds) against everything else, and each station against
+    /// everything but the parts of the joint at its point. Empty in a
+    /// sound cell; a test runs it after every command of every program.
+    #[must_use]
+    pub fn clashes(&self) -> Vec<String> {
+        let Ok(rig) = Rig::arm() else {
+            return Vec::new();
+        };
+        let mut out = Vec::new();
+        for i in 0..self.arms.len() {
+            let name = self.arms[i].name.clone();
+            let held = self.carried(i, &rig);
+            let others = self.others(i, &rig);
+            // the arm and its tool: the tip may touch what it works on (an
+            // iron on a joint, a clip on a lead, open tweezers round the
+            // part they let go, the part they hold)
+            let mut at_tip: Vec<String> = held
+                .iter()
+                .map(|(k, _)| format!("part:{}", self.parts[*k].id))
+                .collect();
+            if let Ok(tip) = self.tip(&name) {
+                at_tip.extend(self.near_tip(tip.p).into_iter().filter(|a| a != "stage"));
+                if self.arms[i].tool.as_deref() == Some("tweezers") {
+                    for p in self.parts.iter().filter(|p| !p.lost) {
+                        if parts::kind(&p.kind).is_ok_and(|k| {
+                            k.grasps.iter().any(|gr| {
+                                kin::norm(kin::sub(
+                                    p.pose().then(&Pose::from_xyz_rpy(gr.at, gr.rpy)).p,
+                                    tip.p,
+                                )) <= GRASP_REACH
+                            })
+                        }) {
+                            at_tip.push(format!("part:{}", p.id));
+                        }
+                    }
+                }
+            }
+            let bare = self.arm_group(i, &rig, &self.arms[i].joints, &[]);
+            if let Some(hit) = collide::first_hit(&bare, &others, &at_tip) {
+                out.push(format!("{name}: {hit}"));
+            }
+            // what it holds: its leads may meet those it is joined to, or
+            // brought to (a gap of a tenth of a millimeter)
+            let mut solids = Vec::new();
+            let mut joined: Vec<String> = Vec::new();
+            for (k, _) in &held {
+                let p = &self.parts[*k];
+                if let Ok(kind) = parts::kind(&p.kind) {
+                    solids.extend(collide::part(&p.id, &kind, &p.pose()));
+                }
+                for j in &self.joints {
+                    let (a, b) = (
+                        j.a.split('.').next().unwrap_or(""),
+                        j.b.split('.').next().unwrap_or(""),
+                    );
+                    if a == p.id {
+                        joined.push(format!("part:{b}"));
+                    } else if b == p.id {
+                        joined.push(format!("part:{a}"));
+                    }
+                }
+            }
+            for (k, _) in &held {
+                // a lead aligned to another part's, not yet a joint
+                for q in self
+                    .parts
+                    .iter()
+                    .filter(|q| q.id != self.parts[*k].id && !q.lost)
+                {
+                    if self.leads_meet(&self.parts[*k].id, &q.id) {
+                        joined.push(format!("part:{}", q.id));
+                    }
+                }
+            }
+            // another arm's tool whose tip is on a held part (a clip on
+            // its lead, an iron on its joint)
+            for (j, other) in self.arms.iter().enumerate() {
+                if j == i || other.tool.is_none() {
+                    continue;
+                }
+                if let Ok(tip) = self.tip(&other.name) {
+                    let near = self.near_tip(tip.p);
+                    if held
+                        .iter()
+                        .any(|(k, _)| near.contains(&format!("part:{}", self.parts[*k].id)))
+                    {
+                        joined.push(format!("arm:{}", other.name));
+                    }
+                }
+            }
+            let g = Group {
+                name: format!("held:{name}"),
+                solids,
+            };
+            let mut around = others.clone();
+            around.push(bare);
+            if let Some(hit) = collide::first_hit(&g, &around, &joined) {
+                if !hit.contains(&format!("arm {name}")) {
+                    out.push(format!("{name}'s part: {hit}"));
+                }
+            }
+        }
+        // leads touching that are not a joint's (aligned, soldered, welded)
+        for (a, b, _) in self.leads_near(0.0) {
+            let joined = self
+                .joints
+                .iter()
+                .any(|j| (j.a == a && j.b == b) || (j.a == b && j.b == a));
+            if !joined {
+                out.push(format!("a short: {a} touches {b}"));
+            }
+        }
+        // what the vise holds, against the stage and the vise themselves
+        let stage = self.stage_now();
+        let fixed = Group {
+            name: "the stage itself".into(),
+            solids: stage
+                .solids
+                .iter()
+                .filter(|s| s.label.starts_with("the "))
+                .cloned()
+                .collect(),
+        };
+        for p in self
+            .parts
+            .iter()
+            .filter(|p| p.holder.as_deref() == Some("vise") && !p.lost)
+        {
+            if let Ok(kind) = parts::kind(&p.kind) {
+                let g = Group {
+                    name: format!("part:{}", p.id),
+                    solids: collide::part(&p.id, &kind, &p.pose()),
+                };
+                if let Some(hit) = collide::first_hit(&g, std::slice::from_ref(&fixed), &[]) {
+                    out.push(format!("in the vise: {hit}"));
+                }
+            }
+        }
+        out
+    }
+
+    /// Every two leads of different parts whose surfaces are within `mm`
+    /// of each other (0: touching): `U1.3` and `R1.1`, the gap. A
+    /// joint's leads are among them; any other pair is a short.
+    #[must_use]
+    pub fn leads_near(&self, mm: f64) -> Vec<(String, String, f64)> {
+        let mut leads: Vec<(String, f64, Vec<V3>)> = Vec::new();
+        for p in self.parts.iter().filter(|p| !p.lost) {
+            if let Ok(k) = parts::kind(&p.kind) {
+                for pin in &k.pins {
+                    leads.push((
+                        format!("{}.{}", p.id, pin.name),
+                        pin.diameter,
+                        crate::solder::lead_in(&p.pose(), &pin.lead),
+                    ));
+                }
+            }
+        }
+        let mut out = Vec::new();
+        for (i, (a, da, la)) in leads.iter().enumerate() {
+            for (b, db, lb) in &leads[i + 1..] {
+                if a.split('.').next() == b.split('.').next() {
+                    continue;
+                }
+                let gap = crate::solder::nearest(la, lb).0 - (da + db) / 2.0;
+                if gap <= mm {
+                    out.push((a.clone(), b.clone(), (gap * 1000.0).round() / 1000.0));
+                }
+            }
+        }
+        out
+    }
+
+    /// Whether a lead of part `a` is within half a millimeter of one of
+    /// part `b`'s: brought together for a joint.
+    fn leads_meet(&self, a: &str, b: &str) -> bool {
+        let leads = |id: &str| -> Vec<Vec<V3>> {
+            self.part(id)
+                .and_then(|p| parts::kind(&p.kind).ok().map(|k| (p.pose(), k)))
+                .map(|(pose, k)| {
+                    k.pins
+                        .iter()
+                        .map(|pin| crate::solder::lead_in(&pose, &pin.lead))
+                        .collect()
+                })
+                .unwrap_or_default()
+        };
+        let (la, lb) = (leads(a), leads(b));
+        la.iter()
+            .any(|x| lb.iter().any(|y| crate::solder::nearest(x, y).0 <= 0.5))
+    }
+
     /// The stage as it stands, and what the vise holds.
     pub(crate) fn stage_now(&self) -> Group {
         self.stage_group_at(self.stage, self.tilt, self.offset)
@@ -833,11 +1026,17 @@ impl World {
             })?;
         let name = a.name.clone();
         // tweezers whose tip is on a part's grasp frame may touch it
-        // (they are round it, or leaving it)
+        // (they are round it, or leaving it); and the vise's, if the
+        // part is in it (picked from it, or left there) -- not for the
+        // part they carry, which is always at their tip
         let mut allowed = allowed.to_vec();
         if a.tool.as_deref() == Some("tweezers") {
             let tip = self.tip(&name).map_err(Halt::Refused)?.p;
-            for p in self.parts.iter().filter(|p| !p.lost) {
+            for p in self
+                .parts
+                .iter()
+                .filter(|p| !p.lost && p.holder.as_deref() != Some(name.as_str()))
+            {
                 if parts::kind(&p.kind).is_ok_and(|k| {
                     k.grasps.iter().any(|g| {
                         kin::norm(kin::sub(
@@ -847,7 +1046,45 @@ impl World {
                     })
                 }) {
                     allowed.push(format!("part:{}", p.id));
-                    allowed.push("stage".to_string());
+                    if p.holder.as_deref() == Some("vise") {
+                        allowed.push("stage".to_string());
+                    }
+                }
+            }
+        }
+        // what it carries may touch the parts it shares a joint with (two
+        // leads brought together, soldered or welded)
+        for p in self
+            .parts
+            .iter()
+            .filter(|p| p.holder.as_deref() == Some(name.as_str()))
+        {
+            for j in &self.joints {
+                let (a, b) = (
+                    j.a.split('.').next().unwrap_or(""),
+                    j.b.split('.').next().unwrap_or(""),
+                );
+                if a == p.id {
+                    allowed.push(format!("part:{b}"));
+                } else if b == p.id {
+                    allowed.push(format!("part:{a}"));
+                }
+            }
+        }
+        // and another arm's tool whose tip is on what it carries (an iron
+        // on its joint, a clip on its lead)
+        for other in self
+            .arms
+            .iter()
+            .filter(|o| o.name != name && o.tool.is_some())
+        {
+            if let Ok(tip) = self.tip(&other.name) {
+                let near = self.near_tip(tip.p);
+                if self.parts.iter().any(|p| {
+                    p.holder.as_deref() == Some(name.as_str())
+                        && near.contains(&format!("part:{}", p.id))
+                }) {
+                    allowed.push(format!("arm:{}", other.name));
                 }
             }
         }
@@ -1221,7 +1458,9 @@ impl World {
                     r: target.r,
                 };
                 self.line(i, &rig, &above, LINE_SPEED, &[], did)?;
-                self.line(i, &rig, &target, CAREFUL, &["stage".to_string()], did)?;
+                // into the vise or onto anything: nothing may be touched on
+                // the way down
+                self.line(i, &rig, &target, CAREFUL, &[], did)?;
                 events.push(format!(
                     "{arm} placed {id} at {}",
                     nums_c(&at.iter().map(|x| round3(*x)).collect::<Vec<_>>())
@@ -1261,6 +1500,11 @@ impl World {
                     did,
                 )?;
                 events.push(format!("{frame} is {} mm from {to}", num(gap)));
+                // two pins brought together: the joint they are meant to make
+                let pin = |f: &str| f.splitn(3, '.').take(2).collect::<Vec<_>>().join(".");
+                if frame.split('.').count() >= 2 && to.split('.').count() >= 2 {
+                    let _ = self.joint_for(&format!("{}+{}", pin(to), pin(frame)));
+                }
             }
             "release" => {
                 let id = c.word("part").unwrap_or("");

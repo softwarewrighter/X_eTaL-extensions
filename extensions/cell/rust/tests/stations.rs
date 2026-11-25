@@ -53,7 +53,7 @@ fn the_positioner_carries_what_the_vise_holds() {
     let (mut w, _) = ok("reset circuit=demo
 tool A tweezers
 pick A U1 grasp=ends
-place A U1 at=0,0,-32 rpy=0,0,90
+place A U1 at=0,0,-24 rpy=0,0,90
 vise close
 release A U1
 lift A mm=80");
@@ -102,10 +102,11 @@ fn present_brings_a_pin_to_a_stations_point() {
     let (mut w, out) = ok("reset circuit=demo
 tool A tweezers
 pick A U1 grasp=ends
-place A U1 at=0,0,-32 rpy=0,0,90
+place A U1 at=0,0,-24 rpy=0,0,90
 vise close
 release A U1
 pick A R1 grasp=body
+lift A mm=100
 present U1.3.tip at=S1 and=S2");
     assert!(
         out.last().unwrap().events[0].starts_with("U1.3.tip at S1's point"),
@@ -135,11 +136,13 @@ fn a_station_works_only_on_what_is_presented() {
     let (mut w, _) = ok("reset circuit=demo
 tool A tweezers
 pick A U1 grasp=ends
-place A U1 at=0,0,-32 rpy=0,0,90
+place A U1 at=0,0,-24 rpy=0,0,90
 vise close
 release A U1
 pick A R1 grasp=body
-move A to=40,60,0
+lift A mm=80
+move A to=0,60,60 rpy=180,0,90
+move A to=34.81,1.27,-14.05
 align A R1.1.tip to=U1.3.tip gap=0.1");
     let o = w.apply(&parse_line("touch S1 at=U1.3+R1.1").unwrap());
     assert!(
@@ -223,12 +226,11 @@ fn layout_text(spec: &str) -> String {
     out
 }
 
-const PROGRAMS: [&str; 7] = [
+const PROGRAMS: [&str; 6] = [
     "arms",
     "pick",
     "solder",
     "weld",
-    "claude",
     "solder-stations",
     "weld-stations",
 ];
@@ -276,5 +278,135 @@ fn layouts() {
         for (prog, bad) in trial(spec) {
             println!("{name} | {prog} | {}", bad.unwrap_or_else(|| "ok".into()));
         }
+    }
+}
+
+/// Nothing inside anything, and no lead touching a lead it is not
+/// joined to, after any command of any program (the user saw tweezers
+/// lowered into the stage, and a resistor's lead across two pins).
+#[test]
+fn no_program_overlaps_or_shorts() {
+    for name in PROGRAMS {
+        let mut w = World::default();
+        for c in parse_program(&program(name)).unwrap() {
+            let o = w.apply(&c);
+            assert!(o.ok, "{name}: {o:?}");
+            let clash = w.clashes();
+            assert!(clash.is_empty(), "{name}: after {}: {clash:?}", c.to_text());
+        }
+    }
+}
+
+/// For a program's beginning and an align: a move that brings the held
+/// frame 15 mm out from the target along a clear direction, then the
+/// align from there, with no clash after either.
+fn clear_approach(prefix: &str, arm: &str, frame: &str, to: &str, gap: f64) -> Option<String> {
+    for dir in [
+        [0.0, 0.0, 1.0],
+        [1.0, 0.0, 0.0],
+        [-1.0, 0.0, 0.0],
+        [0.0, 1.0, 0.0],
+        [0.0, -1.0, 0.0],
+        [0.7, 0.0, 0.7],
+        [-0.7, 0.0, 0.7],
+        [0.0, 0.7, 0.7],
+        [0.0, -0.7, 0.7],
+    ] {
+        let mut w = World::default();
+        for o in w.apply_all(&parse_program(prefix).unwrap()) {
+            if !o.ok {
+                return Some(format!("PREFIX FAILS: {o:?}"));
+            }
+        }
+        let tip = w.tip(arm).unwrap().p;
+        let f = w.frame(frame).unwrap().p;
+        let q = w.frame(to).unwrap().p;
+        let want = kin::add(q, kin::scale(dir, 15.0));
+        let to_tip = kin::add(tip, kin::sub(want, f));
+        let mv = format!(
+            "move {arm} to={:.3},{:.3},{:.3}",
+            to_tip[0], to_tip[1], to_tip[2]
+        );
+        let al = format!("align {arm} {frame} to={to} gap={gap}");
+        let out = w.apply_all(&parse_program(&format!("{mv}\n{al}")).unwrap());
+        if out.iter().all(|o| o.ok) && w.clashes().is_empty() {
+            return Some(format!("{mv}  [leads near: {:?}]", w.leads_near(0.3)));
+        }
+        if std::env::var("WHY").is_ok() {
+            let bad = out
+                .iter()
+                .find(|o| !o.ok)
+                .map(|o| format!("{}: {:?}{:?}", o.command, o.refused, o.stopped));
+            println!("  dir {dir:?}: {bad:?} clashes {:?}", w.clashes());
+        }
+    }
+    None
+}
+
+#[test]
+#[ignore]
+fn find_approaches() {
+    let weld = "reset circuit=weld\ntool A tweezers\npick A C1 grasp=body\nplace A C1 at=0,0,-20\nvise close\nrelease A C1";
+    let cases = [
+        ("grip D", "D", "reset circuit=demo\ntool A tweezers\npick A U1 grasp=ends\nplace A U1 at=0,0,-24 rpy=0,0,90\nvise close\nrelease A U1\nlift A mm=60\nmove A to=0,220,120\njoints A 0 0 0 0 90 0\ntool D tweezers\npick D R1 grasp=body\nlift D mm=80".to_string(), "R1.1.tip", "U1.3.tip"),
+        ("led to C1.2", "A", format!("{weld}\npick A D1 grasp=body\nlift A mm=80"), "D1.1.tip", "C1.2.6"),
+        ("led to C1.1", "A", format!("{weld}\npick A D1 grasp=body\nlift A mm=80"), "D1.1.tip", "C1.1.6"),
+        ("C2 to C1.2", "A", format!("{weld}\npick A C2 grasp=body\nlift A mm=80"), "C2.1.tip", "C1.2.6"),
+    ];
+    for (name, arm, prefix, frame, to) in cases {
+        let mut found = None;
+        for rpy in [
+            "",
+            "rpy=180,0,90",
+            "rpy=180,0,0",
+            "rpy=-90,0,90",
+            "rpy=-90,0,0",
+            "rpy=-90,0,180",
+            "rpy=90,0,90",
+            "rpy=180,0,45",
+            "rpy=180,0,135",
+        ] {
+            let pre = if rpy.is_empty() {
+                prefix.clone()
+            } else {
+                format!("{prefix}\nmove {arm} to=0,60,60 {rpy}")
+            };
+            let pre = if arm == "D" && !rpy.is_empty() {
+                pre.replace("move D to=0,60,60", "move D to=60,0,60")
+            } else {
+                pre
+            };
+            let mut w = World::default();
+            if w.apply_all(&parse_program(&pre).unwrap())
+                .iter()
+                .any(|o| !o.ok)
+            {
+                continue;
+            }
+            if let Some(mv) = clear_approach(&pre, arm, frame, to, 0.1) {
+                found = Some(format!("{rpy} | {mv}"));
+                break;
+            }
+        }
+        println!("APPROACH {name}: {found:?}");
+    }
+}
+
+#[test]
+#[ignore]
+fn trace_program() {
+    let name = std::env::var("PROG").unwrap();
+    let mut w = World::default();
+    for c in parse_program(&program(&name)).unwrap() {
+        let o = w.apply(&c);
+        println!(
+            "TRACE {} ok={} {:?}{:?} {:?} clashes {:?}",
+            c.to_text(),
+            o.ok,
+            o.refused,
+            o.stopped,
+            o.events,
+            w.clashes()
+        );
     }
 }

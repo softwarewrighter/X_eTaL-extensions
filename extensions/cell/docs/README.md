@@ -258,10 +258,12 @@ show it; then the agent picks the resistor and aligns its lead to pin
 Claude Code, given the server and only a goal (the DIP in the vise,
 then a resistor lead within 0.1 mm of pin 3, still held), did it in
 six turns and 20 seconds, every command accepted: its session is
-`programs/claude.cell` (`just ext cell preview claude` plays it). An
-earlier run, before `cell_state` said where the vise's middle is,
-spent ten minutes probing for its height and did not finish: an agent
-needs the cell's places, not only its commands.
+`programs/claude.cell`. An earlier run, before `cell_state` said
+where the vise's middle is, spent ten minutes probing for its height
+and did not finish: an agent needs the cell's places, not only its
+commands. That session was recorded while a carried part could pass
+through the vise unchecked, and its resistor lead went through a jaw;
+the checker now stops it there, and a new session will replace it.
 
 ![The page following an MCP session: the DIP in the vise, arm A bringing the resistor's lead to pin 3](mcp.jpg)
 
@@ -269,9 +271,10 @@ needs the cell's places, not only its commands.
 
 ![The solder program, recorded from the live page (just record solder, just videos cell solder)](../videos/solder.webp)
 
-`programs/solder.cell`: arm A puts a DIP-8 in the vise and holds a
-resistor's lead tip to pin 3's, 0.1 mm apart; arm C's iron (350 C)
-touches the joint for 2 s; arm D feeds 2 mm of solder wire into it,
+`programs/solder.cell`: arm A puts a DIP-8 in the vise and brings a
+resistor's lead tip to pin 3's, 0.1 mm apart, square to the pin row
+from outside it (touching pin 3 alone); arm C's iron (350 C) touches
+the joint for 2 s; arm B feeds 2 mm of solder wire into it,
 which melts; the iron backs away and the joint freezes, good; A lets
 the resistor go and it stays, soldered on; A picks the DIP out of the
 vise and lifts the pair together.
@@ -279,8 +282,8 @@ vise and lifts the pair together.
 ```
 tool C iron temp=350
 touch C at=U1.3+R1.1 dwell=2      # the iron on the joint, 2 s
-tool D solder
-feed D mm=2 rate=1                # solder wire into the joint
+tool B solder
+feed B mm=2 rate=1                # solder wire into the joint
 back C                            # the iron straight back along its axis
 wait until=U1.3+R1.1 below=100
 inspect U1.3+R1.1                 # good; 0.4 mm3 of solder, wet 2.6 s and 2.6 s
@@ -458,9 +461,27 @@ as a real arm's protective stop does: the motion up to the last clear
 step is kept, and the outcome says what touched what, and when --
 `collision: arm C link 6 with arm A joint 6 at 53.622 s`. An arm does
 not collide with itself (not simulated). Allowed contacts: tweezers
-with a part whose grasp frame their tip is on, a part being picked
-with what it lay on, a part placed into the vise with the stage, a
-lead with the lead it is aligned to, and a tool with its own rack.
+with a part whose grasp frame their tip is on (and the vise, if that
+part is in it: picking it out), never with the part they carry; a
+part being picked with what it lay on; a lead with the lead it is
+aligned or joined to; another arm's tool whose tip is on a carried
+part (an iron on its joint, a clip on its lead); and a tool with its
+own rack. A part placed in the vise touches nothing on the way down:
+parts sit in the vise high enough that their leads clear its jaws and
+base (the DIP at z -24, a disc at -20, its middle at -32 within
+reach).
+
+`World::clashes` reports what overlaps what as the cell stands (each
+arm and its tool, what it carries, what the vise holds against the
+vise), and any two leads touching that are not a joint's -- a short.
+`align` records the joint its two pins are brought together for. A
+test runs it after every command of every program; none may overlap
+or short. (Before 2026-11-24 a carried part was let through the
+stage, vise and jaws unchecked, and the solder, weld and station
+programs passed through them -- the solder program's resistor lead
+across two of the DIP's pins. The programs now approach from clear
+sides: the resistor's lead comes in square to the DIP's pin row and
+touches pin 3 alone.)
 
 - `tool ARM TOOL`: the arm puts back the tool it holds (above its
   slot, down, let go, up) and takes the new one the same way. A tool's

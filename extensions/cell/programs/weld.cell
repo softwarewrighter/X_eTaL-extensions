@@ -1,37 +1,36 @@
 # Spot welding: a ceramic disc (C1) in the vise, its leads down; a
-# second (C2) held flat, its lead 1 level, laid to C1's lead 2 6 mm from
-# the body and welded by arm C's capacitor discharge, in the window of
-# their copper-clad steel; then the LED (D1, a semiconductor) laid the
-# same way to C1's lead 2 lower down. Welded as it is, the LED would take
-# the discharge's transient, so the weld is refused: arm C takes the
-# clip instead and clips the LED's lead to ground between its body and
-# the lap, and arm B welds it. The tools back away and arm A lifts the
-# three out of the vise as one.
+# second (C2) brought to C1's lead 2, 6 mm from the body, from a clear
+# side, and welded by arm C's capacitor discharge, in the window of
+# their copper-clad steel; then the LED (D1, a semiconductor) brought to
+# C1's lead 1 the same way. Welded as it is, the LED would take the
+# discharge's transient, so the weld would be refused: an arm clips the
+# LED's lead to ground between its body and the lap first, and the weld
+# is made. The tools back away and arm A lets go: the three stay in
+# the vise as one, welded.
 reset circuit=weld
 tool A tweezers
 pick A C1 grasp=body
-place A C1 at=0,0,-32
+place A C1 at=0,0,-20
 vise close
 release A C1
 pick A C2 grasp=body
-move A to=0,40,10 rpy=-90,0,90
+lift A mm=80
+move A to=20.08,0,-5.746
 align A C2.1.tip to=C1.2.6 gap=0.1
 tool C welder
 weld C at=C1.2+C2.1 energy=8
+back C mm=60
 release A C2
 lift A mm=40
 pick A D1 grasp=body
-move A to=0,40,10 rpy=-90,0,90
-align A D1.1.tip to=C1.2.13 gap=0.1
-tool C clip
-clip C on=D1.1 at=12
-tool B welder
-weld B at=C1.2+D1.1 energy=8
-inspect C1.2+D1.1
-back B mm=60
+lift A mm=80
+move A to=-16.27,0,3.554
+align A D1.1.tip to=C1.1.6 gap=0.1
+tool B clip
+clip B on=D1.1 at=8
+weld C at=C1.1+D1.1 energy=8
+inspect C1.1+D1.1
 back C mm=60
+back B mm=60
 release A D1
 lift A mm=40
-pick A C1 grasp=body
-vise open
-lift A mm=60
