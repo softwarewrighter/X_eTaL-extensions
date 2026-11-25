@@ -168,6 +168,8 @@ struct PartFile {
     title: String,
     example: String,
     heat_sensitive: bool,
+    #[serde(default)]
+    semiconductor: bool,
     body: Body,
     #[serde(default)]
     pin_pattern: Option<PinPattern>,
@@ -188,6 +190,9 @@ pub struct PartKind {
     pub example: String,
     /// Needs heat management (a clip between body and joint).
     pub heat_sensitive: bool,
+    /// Has a junction (a diode, an LED, a transistor, a chip): a weld's
+    /// transient through it can damage it.
+    pub semiconductor: bool,
     /// The body.
     pub body: Body,
     /// The pins, in order.
@@ -217,6 +222,7 @@ impl PartKind {
             title: f.title,
             example: f.example,
             heat_sensitive: f.heat_sensitive,
+            semiconductor: f.semiconductor,
             body: f.body,
             pins,
             grasps: f.grasp,

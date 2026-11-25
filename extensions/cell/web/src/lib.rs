@@ -21,8 +21,9 @@ thread_local! {
 }
 
 /// The programs the page offers, as `programs/NAME.cell` has them.
-pub const PROGRAMS: [(&str, &str); 3] = [
+pub const PROGRAMS: [(&str, &str); 4] = [
     ("solder", include_str!("../../programs/solder.cell")),
+    ("weld", include_str!("../../programs/weld.cell")),
     ("pick", include_str!("../../programs/pick.cell")),
     ("arms", include_str!("../../programs/arms.cell")),
 ];

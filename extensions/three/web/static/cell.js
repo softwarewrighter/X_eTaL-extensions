@@ -296,7 +296,8 @@ export function cellPlayer(host, calls, options = {}) {
       });
     }
   };
-  // the joints: a ball of solder on its part, as big as the solder
+  // the joints: a ball of solder on its part, as big as the solder (a
+  // weld: a small nugget, its result's color)
   const joints = [];
   const jointAt = (t) => {
     for (const j of joints) {
@@ -306,7 +307,7 @@ export function cellPlayer(host, calls, options = {}) {
       if (!j.ball.visible) continue;
       j.ball.scale.setScalar(Math.cbrt((3 * mm3) / (4 * Math.PI)) * 1.6);
       const frozen = t >= j.t && j.result;
-      const colors = { good: '#d9dee7', cold: '#7d8188', disturbed: '#9a8f7f', starved: '#b0a07a', blob: '#c9c2b0', bridged: '#d07070' };
+      const colors = { good: '#d9dee7', cold: '#7d8188', disturbed: '#9a8f7f', starved: '#b0a07a', blob: '#c9c2b0', bridged: '#d07070', welded: '#e6c27a', weak: '#a8956a', blown: '#3a2f2a' };
       j.ball.material.color.set(frozen ? colors[j.result] || '#cccccc' : '#f2f2f2');
       const [r, g, b] = ramp(frozen ? 25 : row[0]);
       j.ball.material.emissive.setRGB(r, g, b);

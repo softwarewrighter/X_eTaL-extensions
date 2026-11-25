@@ -5,6 +5,7 @@ kind = "radial-electrolytic"
 title = "radial electrolytic capacitor"
 example = "10 uF 25 V"
 heat_sensitive = true
+semiconductor = false
 
 [body]
 shape = "cylinder"

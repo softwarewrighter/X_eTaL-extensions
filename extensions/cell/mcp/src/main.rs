@@ -121,9 +121,9 @@ fn tools() -> Vec<Tool> {
     let mut out = vec![
         Tool::new(
             "cell_reset",
-            "A new cell: arms home with no tool, the racks full, the stage at 0, the vise open; the tray laid out for a circuit (demo: a DIP-8, a resistor, an LED, a ceramic disc; none: empty). The session's program starts again.",
+            "A new cell: arms home with no tool, the racks full, the stage at 0, the vise open; the tray laid out for a circuit (demo: a DIP-8, a resistor, an LED, a ceramic disc; weld: two ceramic discs, an LED, a resistor, to try welding with; none: empty). The session's program starts again.",
             s(
-                json!({ "circuit": { "type": "string", "enum": ["demo", "none"], "description": "the tray's circuit (demo if not given)" } }),
+                json!({ "circuit": { "type": "string", "enum": xetal_ext_cell::layout::circuits(), "description": "the tray's circuit (demo if not given)" } }),
                 &[],
             ),
         ),

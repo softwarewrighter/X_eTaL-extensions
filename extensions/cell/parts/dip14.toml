@@ -6,6 +6,7 @@ kind = "dip14"
 title = "DIP-14"
 example = "74HC00 quad NAND"
 heat_sensitive = false
+semiconductor = true
 
 [body]
 shape = "box"

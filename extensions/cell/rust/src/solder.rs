@@ -216,13 +216,21 @@ pub struct Joint {
     pub set_at: Option<f64>,
     /// Rows of the time, its temperature and its solder, for players.
     pub track: Vec<[f64; 3]>,
+    /// Spot welded, or tried: the last discharge's energy, J.
+    #[serde(default)]
+    pub weld: Option<f64>,
 }
 
 impl Joint {
-    /// It holds its two parts together: good, and frozen.
+    /// It holds its two parts together: a good solder joint, frozen, or
+    /// a weld (good or weak).
     #[must_use]
     pub fn holds(&self) -> bool {
-        self.result.as_deref() == Some("good") && !self.molten
+        match self.result.as_deref() {
+            Some("good") => !self.molten,
+            Some("welded" | "weak") => self.weld.is_some(),
+            _ => false,
+        }
     }
 }
 

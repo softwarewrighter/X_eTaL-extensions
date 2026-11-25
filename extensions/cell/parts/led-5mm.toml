@@ -5,6 +5,7 @@ kind = "led-5mm"
 title = "5 mm LED"
 example = "red"
 heat_sensitive = true
+semiconductor = true
 
 [body]
 shape = "cylinder"

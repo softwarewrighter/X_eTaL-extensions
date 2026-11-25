@@ -546,7 +546,14 @@ fn check_word(kind: Kind, t: &str) -> Result<(), String> {
         Kind::Tool => TOOLS.contains(&t),
         Kind::Part => is_id(t),
         Kind::Pin => is_pin(t),
-        Kind::Frame => is_id(t) || is_pin(t) || t.strip_suffix(".tip").is_some_and(is_pin),
+        Kind::Frame => {
+            is_id(t)
+                || is_pin(t)
+                || t.strip_suffix(".tip").is_some_and(is_pin)
+                || t.rsplit_once('.').is_some_and(|(pin, mm)| {
+                    is_pin(pin) && mm.parse::<f64>().is_ok_and(|x| x.is_finite() && x >= 0.0)
+                })
+        }
         Kind::Joint => t
             .split_once('+')
             .is_some_and(|(a, b)| is_pin(a) && is_pin(b) && a != b),
@@ -567,7 +574,7 @@ fn check_word(kind: Kind, t: &str) -> Result<(), String> {
         Kind::Tool => format!("no tool {t} (tools: {})", TOOLS.join(" ")),
         Kind::Part => format!("{t} is not a part id (U1, R2, ...)"),
         Kind::Pin => format!("{t} is not a pin (U1.3)"),
-        Kind::Frame => format!("{t} is not a frame (U1, U1.3, U1.3.tip)"),
+        Kind::Frame => format!("{t} is not a frame (U1, U1.3, U1.3.tip, U1.3.5)"),
         Kind::Joint => format!("{t} is not a joint (U1.3+R1.1)"),
         Kind::Target => format!("{t} is not a pin or a joint (U1.3, U1.3+R1.1)"),
         Kind::Choice(words) => format!("{t} is not one of {}", words.join(" ")),

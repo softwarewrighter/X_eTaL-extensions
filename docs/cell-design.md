@@ -13,7 +13,7 @@ Status: being built (docs/plan.md, Saga 17; decisions accepted
 2026-11-24). Built so far: the extension `cell` with the parts
 library, the command table, text and JSON parsing, the state as JSON,
 the arms, stage and vise, the models, the player with the preview,
-grasping with collision, heat and solder, the MCP server, and the live page
+grasping with collision, heat and solder, spot welding, the MCP server, and the live page
 (<https://softwarewrighter.github.io/X_eTaL-extensions/cell/live/>,
 extensions/cell/docs/README.md); the rest below is the design,
 its names proposals.

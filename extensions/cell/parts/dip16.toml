@@ -6,6 +6,7 @@ kind = "dip16"
 title = "DIP-16"
 example = "CD4017 decade counter"
 heat_sensitive = false
+semiconductor = true
 
 [body]
 shape = "box"

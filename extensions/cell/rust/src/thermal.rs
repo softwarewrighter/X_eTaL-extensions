@@ -697,6 +697,7 @@ impl World {
             result: None,
             set_at: None,
             track: Vec::new(),
+            weld: None,
         });
         Ok(self.joints.len() - 1)
     }
@@ -1065,17 +1066,7 @@ impl World {
             )));
         }
         // the point `at` along the lead
-        let mut left = at;
-        let mut point = p.lead[0];
-        for w in p.lead.windows(2) {
-            let l = kin::norm(kin::sub(w[1], w[0]));
-            if left <= l {
-                point = kin::add(w[0], kin::scale(kin::sub(w[1], w[0]), left / l.max(1e-9)));
-                break;
-            }
-            left -= l;
-            point = w[1];
-        }
+        let point = crate::world::along(&p.lead, at);
         let world = part.pose().then(&Pose::from_xyz_rpy(point, [0.0; 3])).p;
         let r = approach(&self.arms[i].base_pose(), world);
         let z = [r[0][2], r[1][2], r[2][2]];
@@ -1112,6 +1103,16 @@ impl World {
             else {
                 return Ok(format!("{target}: not soldered"));
             };
+            if let Some(e) = j.weld {
+                return Ok(match j.result.as_deref() {
+                    Some(r) => format!("{}: {r} by a {} J discharge", j.name, num1(e)),
+                    None => format!(
+                        "{}: not welded (a {} J discharge did not fuse it)",
+                        j.name,
+                        num1(e)
+                    ),
+                });
+            }
             let state = if j.molten {
                 "molten".to_string()
             } else {
@@ -1135,4 +1136,278 @@ impl World {
             if damaged { "; the part is damaged" } else { "" }
         ))
     }
+
+    // -- spot welding -------------------------------------------------------
+
+    /// The tip of arm `a`'s tool, if it has one.
+    fn tool_tip(&self, a: usize, rig: &Rig) -> Option<V3> {
+        let arm = &self.arms[a];
+        let tool = arm.tool.as_deref()?;
+        Some(
+            arm.base_pose()
+                .then(&kin::forward(rig, &arm.joints))
+                .then(&kin::tz(layout::tool_length(tool)))
+                .p,
+        )
+    }
+
+    /// A clip on pin `pin`'s lead between its body and the lead's node
+    /// `upto` (the lap): the arm holding it.
+    fn grounded(&self, rig: &Rig, pin: &str, upto: usize) -> Option<String> {
+        let (pid, pn) = pin.split_once('.')?;
+        let part = self.part(pid)?;
+        let kind = parts::kind(&part.kind).ok()?;
+        let p = kind.pin(pn)?;
+        let nodes = nodes_in(&part.pose(), &p.lead);
+        self.arms.iter().enumerate().find_map(|(a, arm)| {
+            if arm.tool.as_deref() != Some("clip") {
+                return None;
+            }
+            let tip = self.tool_tip(a, rig)?;
+            nodes
+                .iter()
+                .take(upto)
+                .any(|(at, _)| kin::norm(kin::sub(*at, tip)) <= TOUCH_MM)
+                .then(|| arm.name.clone())
+        })
+    }
+
+    /// The semiconductors a discharge through joint `ji` would reach, and
+    /// how: one of the lap's own parts with no grounding clip between its
+    /// body and the lap, or any semiconductor joined (by other joints) to
+    /// both sides, a path from electrode to electrode besides the lap
+    /// (conservatively: anywhere on the parts that join them).
+    pub(crate) fn weld_risk(&self, ji: usize, rig: &Rig) -> Vec<(usize, String)> {
+        let j = &self.joints[ji];
+        let semi = |k: usize| parts::kind(&self.parts[k].kind).is_ok_and(|kind| kind.semiconductor);
+        let index = |pin: &str| {
+            let id = pin.split('.').next().unwrap_or("");
+            self.parts.iter().position(|p| p.id == id)
+        };
+        let mut out: Vec<(usize, String)> = Vec::new();
+        for (pin, node) in [(&j.a, j.node_a), (&j.b, j.node_b)] {
+            let Some(k) = index(pin) else { continue };
+            if semi(k) && self.grounded(rig, pin, node).is_none() {
+                out.push((
+                    k,
+                    format!(
+                        "{} is a semiconductor on the lap with no grounding clip on {pin} between its body and the lap (clip ARM on={pin} at=MM)",
+                        self.parts[k].id
+                    ),
+                ));
+            }
+        }
+        // the parts joined by the other joints: a path around the lap
+        let (Some(ka), Some(kb)) = (index(&j.a), index(&j.b)) else {
+            return out;
+        };
+        if ka == kb {
+            return out;
+        }
+        let mut group = vec![ka];
+        let mut n = 0;
+        while n < group.len() {
+            let id = &self.parts[group[n]].id;
+            for (oi, o) in self.joints.iter().enumerate() {
+                if oi == ji || !o.holds() {
+                    continue;
+                }
+                let (pa, pb) = (
+                    o.a.split('.').next().unwrap_or(""),
+                    o.b.split('.').next().unwrap_or(""),
+                );
+                let other = if pa == id {
+                    pb
+                } else if pb == id {
+                    pa
+                } else {
+                    continue;
+                };
+                if let Some(x) = self.parts.iter().position(|p| p.id == other) {
+                    if !group.contains(&x) {
+                        group.push(x);
+                    }
+                }
+            }
+            n += 1;
+        }
+        if group.contains(&kb) {
+            for &k in &group {
+                if semi(k) && !out.iter().any(|(x, _)| *x == k) {
+                    out.push((
+                        k,
+                        format!(
+                            "{} is a semiconductor in a path from electrode to electrode: {} and {} are already joined through it",
+                            self.parts[k].id, self.parts[ka].id, self.parts[kb].id
+                        ),
+                    ));
+                }
+            }
+        }
+        out
+    }
+
+    /// `weld ARM at=JOINT energy=J [risky=allow]`: the electrodes on the
+    /// lap, from the arm's side, a discharge of `energy` J, the
+    /// electrodes back. A semiconductor the current reaches is refused
+    /// unless `risky=allow`, then damaged.
+    #[allow(clippy::too_many_arguments)]
+    pub(crate) fn weld(
+        &mut self,
+        i: usize,
+        rig: &Rig,
+        name: &str,
+        energy: f64,
+        allow: bool,
+        did: &mut Vec<String>,
+        events: &mut Vec<String>,
+        warnings: &mut Vec<String>,
+    ) -> Result<(), Halt> {
+        self.need(i, "welder")?;
+        let w = crate::weld::data().map_err(Halt::Refused)?;
+        let most = w.welder.capacitance_f * w.welder.max_v * w.welder.max_v / 2.0;
+        if energy > most {
+            return Err(Halt::Refused(format!(
+                "the welder gives at most {} J ({} F at {} V)",
+                num1(most),
+                w.welder.capacitance_f,
+                num1(w.welder.max_v)
+            )));
+        }
+        let ji = self.joint_for(name).map_err(Halt::Refused)?;
+        {
+            let j = &self.joints[ji];
+            if j.holds() {
+                return Err(Halt::Refused(format!("{}: already joined", j.name)));
+            }
+            if j.solder > 0.0 {
+                return Err(Halt::Refused(format!(
+                    "{}: it has solder on it; a weld wants bare leads",
+                    j.name
+                )));
+            }
+        }
+        let metal = |pin: &str| -> Result<String, String> {
+            let (pid, pn) = pin
+                .split_once('.')
+                .ok_or_else(|| format!("{pin} is not a pin"))?;
+            let part = self.part(pid).ok_or_else(|| format!("no part {pid}"))?;
+            let kind = parts::kind(&part.kind)?;
+            Ok(kind
+                .pin(pn)
+                .ok_or_else(|| format!("{pid} has no pin {pn}"))?
+                .material
+                .clone())
+        };
+        let (ma, mb) = (
+            metal(&self.joints[ji].a).map_err(Halt::Refused)?,
+            metal(&self.joints[ji].b).map_err(Halt::Refused)?,
+        );
+        let (fused, window) = crate::weld::judge(&w, &ma, &mb, energy).map_err(Halt::Refused)?;
+        let risk = self.weld_risk(ji, rig);
+        if !risk.is_empty() && !allow {
+            let why: Vec<&str> = risk.iter().map(|(_, s)| s.as_str()).collect();
+            return Err(Halt::Refused(format!(
+                "{}: a transient risk: {}; or risky=allow to weld anyway",
+                self.joints[ji].name,
+                why.join("; ")
+            )));
+        }
+        // the electrodes onto the lap, as the iron comes
+        let at = self
+            .joint_point(&self.joints[ji])
+            .ok_or_else(|| Halt::Refused(format!("{name}: its part is gone")))?;
+        let r = approach(&self.arms[i].base_pose(), at);
+        let target = Pose { p: at, r };
+        let back = Pose {
+            p: kin::sub(at, kin::scale(target.z(), STANDOFF)),
+            r,
+        };
+        let allowed = self.touching(&self.joints[ji]);
+        self.line(i, rig, &back, LINE_SPEED, &[], did)?;
+        self.line(i, rig, &target, CAREFUL, &allowed, did)?;
+        let arm = self.arms[i].name.clone();
+        let jname = self.joints[ji].name.clone();
+        events.push(format!(
+            "{arm} discharges {} J ({} V on {} F) through {jname}",
+            num1(energy),
+            num1(crate::weld::volts(&w, energy)),
+            w.welder.capacitance_f
+        ));
+        let amb = solder::data().map_or(25.0, |t| t.ambient_c);
+        let t = self.t;
+        let in_window = |lo: f64, hi: f64| format!("{} to {} J", num1(lo), num1(hi));
+        let pair = if ma == mb {
+            format!("{ma} to {ma}")
+        } else {
+            format!("{ma} to {mb}")
+        };
+        {
+            let j = &mut self.joints[ji];
+            match fused {
+                crate::weld::Fused::Welded(q) => {
+                    j.result = Some(q.to_string());
+                    j.weld = Some(energy);
+                    j.set_at = Some(t);
+                    j.track.push([t, amb, 0.05]);
+                    let (lo, hi) = window.unwrap_or((0.0, 0.0));
+                    events.push(format!(
+                        "{jname}: {q} ({pair}, in the window of {})",
+                        in_window(lo, hi)
+                    ));
+                    if q == "weak" {
+                        warnings.push(format!("{jname} is weak: copper welds poorly"));
+                    }
+                }
+                crate::weld::Fused::Cold => {
+                    j.weld = Some(energy);
+                    events.push(format!(
+                        "{jname}: not fused ({pair}: {})",
+                        window.map_or(
+                            "no window: these metals do not weld".to_string(),
+                            |(lo, _)| format!("below the window's {} J", num1(lo))
+                        )
+                    ));
+                    warnings.push(format!("{jname} did not weld"));
+                }
+                crate::weld::Fused::Blown => {
+                    j.result = Some("blown".into());
+                    j.weld = Some(energy);
+                    j.set_at = Some(t);
+                    j.track.push([t, amb, 0.05]);
+                    events.push(format!(
+                        "{jname}: blown out ({pair}: {})",
+                        window.map_or(
+                            "no window: one blows out before the other fuses".to_string(),
+                            |(_, hi)| format!("above the window's {} J", num1(hi))
+                        )
+                    ));
+                }
+            }
+        }
+        if fused == crate::weld::Fused::Blown {
+            for pin in [self.joints[ji].a.clone(), self.joints[ji].b.clone()] {
+                let id = pin.split('.').next().unwrap_or("").to_string();
+                if let Some(p) = self.parts.iter_mut().find(|p| p.id == id) {
+                    p.damaged = true;
+                }
+                warnings.push(format!("{id} is damaged: {pin}'s lead burned through"));
+            }
+        }
+        for (k, why) in risk {
+            self.parts[k].damaged = true;
+            warnings.push(format!(
+                "{} is damaged by the transient (allowed): {why}",
+                self.parts[k].id
+            ));
+        }
+        // a moment's hold, then the electrodes back
+        self.advance(WELD_HOLD, None);
+        did.push(format!("hold {} s", num1(WELD_HOLD)));
+        let leave = self.near_tip(at);
+        self.line(i, rig, &back, CAREFUL, &leave, did)
+    }
 }
+
+/// How long the electrodes stay on the lap, s.
+pub const WELD_HOLD: f64 = 0.3;

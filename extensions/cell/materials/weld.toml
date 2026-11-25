@@ -1,0 +1,53 @@
+# The cell's spot welding data: a capacitor discharge (E = C V^2 / 2)
+# through two electrodes either side of a lap of two leads. Units: J,
+# F, V, mm. Every number is `sourced` (with the `source` beside it) or
+# `illustrative` (chosen as plausible): the same rule as the parts
+# library's. Real windows depend on the welder, the electrodes, the
+# force and the leads' sizes; these are for leads of about 0.5 mm.
+
+# The welder's capacitor bank: the energy asked for is C V^2 / 2, the
+# voltage charged to is said with it.
+[welder]
+capacitance_f = 0.1
+max_v = 40.0
+illustrative = ["capacitance_f", "max_v"]
+
+# Each lead metal's window, J: below `min_j` the leads do not fuse;
+# above `max_j` the lap blows out (metal expelled, the lead burned
+# through); between, a weld, `good` or `weak`. A lap of two metals
+# welds in the overlap of their windows, as well as the worse of them;
+# with no overlap it does not weld at all.
+[metal.nickel]
+min_j = 2.0
+max_j = 10.0
+quality = "good"
+illustrative = ["min_j", "max_j"]
+note = "nickel is the classic resistance-welding metal: high resistance, low conductivity, a wide window"
+
+[metal.steel]
+min_j = 3.0
+max_j = 12.0
+quality = "good"
+illustrative = ["min_j", "max_j"]
+note = "steel welds well, like nickel"
+
+[metal.copper-clad-steel]
+min_j = 5.0
+max_j = 12.0
+quality = "good"
+illustrative = ["min_j", "max_j"]
+note = "a steel core under a copper skin: the skin takes more energy to break through"
+
+[metal.copper]
+min_j = 15.0
+max_j = 20.0
+quality = "weak"
+illustrative = ["min_j", "max_j"]
+note = "copper welds poorly: its low resistance and high conductivity carry the heat away from the lap"
+
+# A semiconductor the current can reach takes a transient: through it
+# on a path from electrode to electrode, or on a lap lead with no
+# grounding clip between its body and the lap. Refused unless
+# risky=allow; allowed, it is damaged.
+[risk]
+note = "a capacitor discharge's fast edge couples into a junction: semiconductors are kept out of the current's path, or their leads clipped to ground"

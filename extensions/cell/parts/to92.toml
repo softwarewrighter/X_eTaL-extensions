@@ -6,6 +6,7 @@ kind = "to92"
 title = "TO-92"
 example = "2N3904 NPN transistor"
 heat_sensitive = true
+semiconductor = true
 
 [body]
 shape = "d_cylinder"

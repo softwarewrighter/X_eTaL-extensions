@@ -4,6 +4,7 @@ kind = "ceramic-disc"
 title = "ceramic disc capacitor"
 example = "100 nF"
 heat_sensitive = false
+semiconductor = false
 
 [body]
 shape = "cylinder"

@@ -6,6 +6,7 @@ kind = "dip8"
 title = "DIP-8"
 example = "NE555 timer"
 heat_sensitive = false
+semiconductor = true
 
 [body]
 shape = "box"

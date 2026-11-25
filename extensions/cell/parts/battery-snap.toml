@@ -5,6 +5,7 @@ kind = "battery-snap"
 title = "9 V battery snap"
 example = "9 V snap, 100 mm leads"
 heat_sensitive = true
+semiconductor = false
 
 [body]
 shape = "box"

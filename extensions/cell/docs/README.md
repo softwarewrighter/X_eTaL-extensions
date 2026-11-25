@@ -333,6 +333,46 @@ joint as a ball of solder that grows as it is fed, glows while molten
 and takes its result's color when it freezes; Close up shows the work
 zone.
 
+## Spot welding
+
+`weld ARM at=LAP energy=J [risky=allow]`: the welder's electrodes on a
+lap of two leads (brought within 0.5 mm, as for solder), a capacitor
+discharge of `energy` J (E = C V^2 / 2; the bank is 0.1 F charged to at
+most 40 V, so at most 80 J), the electrodes back. Every number is in
+`materials/weld.toml`, illustrative:
+
+| Lead metal | Window (J) | A weld in it |
+| ---------- | ---------- | ------------ |
+| nickel | 2 to 10 | good |
+| steel | 3 to 12 | good |
+| copper-clad steel | 5 to 12 | good |
+| copper | 15 to 20 | weak: copper carries the heat away |
+
+A lap of two metals welds in the overlap of their windows (copper to
+steel has none, so it never welds). Below the window nothing fuses
+(the lap can be welded again); above it the lap blows out and both
+parts are damaged. A weld, good or weak, holds its two parts as one,
+as a good solder joint does (`C2 stays: it is welded to a part the
+vise holds`).
+
+The current's path is traced: a semiconductor on the lap with no
+grounding clip on its lead between its body and the lap (`clip ARM
+on=D1.1 at=MM`), or one joined to both sides of the lap by other
+joints (a second path from electrode to electrode), takes a transient.
+The weld is refused, naming it, unless `risky=allow`; allowed, the part
+is damaged. `inspect` reports a weld (`C1.2+C2.1: welded by a 8 J
+discharge`). `reset circuit=weld` lays out two ceramic discs, an LED
+and a resistor to try it with; `programs/weld.cell` welds a second disc
+to a disc in the vise, then the LED, its lead clipped to ground first,
+and lifts the three out as one (on the live page: `?program=weld`).
+Around one small lap the tweezers, welder and clip come down from
+above and crowd each other: the arm that clips and the arm that welds
+were chosen by trying each; tool stations that come in from the side
+or below are planned (docs/plan.md, C17).
+
+Welding is not part of the heat network: a discharge's heat is local
+and brief. The joint's nugget is drawn in its result's color.
+
 ## Grasping and collision
 
 Every motion is checked for collision as it goes, at steps short
@@ -361,7 +401,8 @@ lead with the lead it is aligned to, and a tool with its own rack.
 - `place ARM PART at= [rpy=]`: the part carried until it is there,
   coming down the last 30 mm slowly.
 - `align ARM FRAME to=FRAME [gap=]`: the held part's frame (`R1.1.tip`)
-  brought to another part's (`U1.3.tip`) along the line between them,
+  brought to another part's (`U1.3.tip`, or a point along a lead,
+  `C1.2.6`) along the line between them,
   stopping `gap` mm short (0.1 if not given), the last 5 mm slowly.
 - `release ARM PART` (or `grip ARM open`): the tweezers open. A part
   the vise can hold stays; one held by nothing falls straight down to
@@ -485,7 +526,10 @@ it lies in a tray. A file gives:
   diameter and material (`copper`, `copper-clad-steel`, `steel`,
   `nickel`), and a role where it matters (`E`, `anode`, `+`) -- or,
   for a DIP, a `pin_pattern` the pins are worked out from. A pin is
-  named `PART.PIN` (`U1.3`), its lead's free end `U1.3.tip`;
+  named `PART.PIN` (`U1.3`), its lead's free end `U1.3.tip`, a point
+  MM mm along the lead from the body `U1.3.MM` (`C1.2.6`);
+- whether it is a semiconductor (a diode, an LED, a transistor, a
+  chip): a weld's transient through it can damage it;
 - grasp frames, where tweezers may hold: the jaws' center, the frame's
   roll, pitch and yaw (the jaws close along its x and approach along
   its -z), and the width between the jaws;

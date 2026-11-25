@@ -19,6 +19,7 @@ pub mod rig;
 pub mod scene;
 pub mod solder;
 mod thermal;
+pub mod weld;
 pub mod world;
 
 use xetal_ext_sdk::{OwnedError, Value, text};

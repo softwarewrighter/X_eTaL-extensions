@@ -1,0 +1,30 @@
+# weld: parts to try spot welding with -- two ceramic discs (copper-clad
+# steel leads, which weld well), an LED (steel leads, a semiconductor)
+# and a resistor (copper leads, which weld poorly). Each part: its id,
+# its kind in the parts library, the tray pocket it lies in (1 to 8)
+# and its turn about z (degrees).
+title = "parts to try spot welding with"
+
+[[part]]
+id = "C1"
+kind = "ceramic-disc"
+pocket = 8
+yaw = 0
+
+[[part]]
+id = "C2"
+kind = "ceramic-disc"
+pocket = 3
+yaw = 0
+
+[[part]]
+id = "D1"
+kind = "led-5mm"
+pocket = 6
+yaw = 0
+
+[[part]]
+id = "R1"
+kind = "axial-resistor"
+pocket = 1
+yaw = 90

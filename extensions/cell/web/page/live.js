@@ -170,6 +170,14 @@ export function start(local) {
   if (/^\s*reset\b/m.test(asked)) w.clear(); else JSON.parse(w.reset(q.get('circuit') || 'demo'));
   if (asked) {
     $('program').value = name;
+    // the hint says which program is loaded
+    const what = {
+      weld: 'a disc welded to a disc in the vise, then an LED, its lead clipped to ground first, then the three lifted out',
+      pick: 'a chip picked from the tray and put in the vise',
+      arms: 'each arm taking a tool and moving',
+    }[name];
+    if (what) $('hint').innerHTML = $('hint').innerHTML.replace(/The solder program is loaded: [^.]*\./, `The ${name} program is loaded: ${what}.`);
+    if (/^\s*reset circuit=(\w+)/m.test(asked)) $('circuit').value = asked.match(/^\s*reset circuit=(\w+)/m)[1];
     const r = JSON.parse(w.command(asked));
     if (r.outcomes) r.outcomes.forEach((o) => log(o));
     show(q.has('t') ? undefined : 0, undefined);

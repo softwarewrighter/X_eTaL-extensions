@@ -4,6 +4,7 @@ kind = "axial-diode"
 title = "axial diode, DO-35"
 example = "1N4148"
 heat_sensitive = false
+semiconductor = true
 
 [body]
 shape = "cylinder"

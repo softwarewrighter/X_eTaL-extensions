@@ -4,6 +4,7 @@ kind = "axial-resistor"
 title = "axial resistor, 1/4 W"
 example = "10 kilohm"
 heat_sensitive = false
+semiconductor = false
 
 [body]
 shape = "cylinder"

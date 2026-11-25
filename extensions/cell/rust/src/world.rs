@@ -478,7 +478,8 @@ impl World {
     }
 
     /// A named frame's pose: a part (`U1`), a pin where its lead leaves
-    /// the body (`U1.3`), or a lead's tip (`U1.3.tip`).
+    /// the body (`U1.3`), a lead's tip (`U1.3.tip`), or a point `MM` mm
+    /// along the lead from the body (`U1.3.5`).
     ///
     /// # Errors
     ///
@@ -494,10 +495,16 @@ impl World {
         let p = kind
             .pin(pin)
             .ok_or_else(|| format!("{id} has no pin {pin}"))?;
-        let at = if it.next() == Some("tip") {
-            p.tip()
-        } else {
-            p.base()
+        let at = match it.next() {
+            Some("tip") => p.tip(),
+            Some(mm) => {
+                let mm: f64 = mm.parse().map_err(|_| format!("{name} is not a frame"))?;
+                if mm > p.length() + 1e-9 {
+                    return Err(format!("{id}.{pin}'s lead is {} mm long", num1(p.length())));
+                }
+                along(&p.lead, mm)
+            }
+            None => p.base(),
         };
         Ok(part.pose().then(&Pose::from_xyz_rpy(at, [0.0; 3])))
     }
@@ -823,9 +830,28 @@ impl World {
                 } else {
                     format!("arm {h}")
                 };
+                // soldered, welded, or both, by the joints that hold it
+                let holding: Vec<bool> = self
+                    .joints
+                    .iter()
+                    .filter(|j| {
+                        j.holds()
+                            && [&j.a, &j.b]
+                                .iter()
+                                .any(|p| p.split('.').next() == Some(id.as_str()))
+                    })
+                    .map(|j| j.weld.is_some())
+                    .collect();
+                let how = if holding.iter().all(|&w| w) {
+                    "welded"
+                } else if holding.iter().any(|&w| w) {
+                    "soldered and welded"
+                } else {
+                    "soldered"
+                };
                 self.notes.push((
                     false,
-                    format!("{id} stays: it is soldered to a part {by} holds"),
+                    format!("{id} stays: it is {how} to a part {by} holds"),
                 ));
             }
         }
@@ -1154,6 +1180,12 @@ impl World {
                 let on = c.word("on").unwrap_or("");
                 let at = c.number("at").unwrap_or(2.0);
                 self.clip_on(i, &rig, on, at, did, events)?;
+            }
+            "weld" => {
+                let at = c.word("at").unwrap_or("");
+                let energy = c.number("energy").unwrap_or(0.0);
+                let allow = c.word("risky") == Some("allow");
+                self.weld(i, &rig, at, energy, allow, did, events, warnings)?;
             }
             "inspect" => {
                 let target = c.word("target").unwrap_or("");
@@ -1601,4 +1633,18 @@ fn nums(xs: &[f64]) -> String {
 
 fn nums_c(xs: &[f64]) -> String {
     xs.iter().map(|x| num(*x)).collect::<Vec<_>>().join(",")
+}
+
+/// The point `mm` along a polyline from its start.
+#[must_use]
+pub fn along(line: &[V3], mm: f64) -> V3 {
+    let mut left = mm;
+    for w in line.windows(2) {
+        let l = kin::norm(kin::sub(w[1], w[0]));
+        if left <= l {
+            return kin::add(w[0], kin::scale(kin::sub(w[1], w[0]), left / l.max(1e-9)));
+        }
+        left -= l;
+    }
+    line.last().copied().unwrap_or([0.0; 3])
 }
