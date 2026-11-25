@@ -245,8 +245,9 @@ l:fixtures := l:rack c_at l:tray c_at l:stage c_at l:scope
 ## cm:arm: Python for the arm from arm.in.json in the output directory
 ## (the simulator's ce:a_rmModel): a joint housing at each pivot
 ## (radius and length), rods for the links, a flange disc; orange body,
-## dark joints, steel flange
-l:arm := "fresh()\nroot = build_arm(os.path.join(out, \"arm.in.json\"), " c_at (h:v_ec 70 120 60 110 52 100 40 70 34 60 30 40) c_at ", " c_at (h:v_ec 48 42 34 30 26 22) c_at ", " c_at (h:v_ec orange c_at dark c_at steel) c_at ")\nsave(root, \"arm\")\n"
+## dark joints, steel flange. Slender (decision C18): about half the
+## thickness of the four arms' it replaced
+l:arm := "fresh()\nroot = build_arm(os.path.join(out, \"arm.in.json\"), " c_at (h:v_ec 36 60 30 54 26 50 20 36 17 30 15 22) c_at ", " c_at (h:v_ec 24 20 16 14 12 10) c_at ", " c_at (h:v_ec orange c_at dark c_at steel) c_at ")\nsave(root, \"arm\")\n"
 
 ## (kind, body, lead, mark, bands) cm:p_art 0: Python for one part kind
 ## from KIND.in.json in the output directory (the simulator's

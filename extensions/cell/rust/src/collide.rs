@@ -17,16 +17,16 @@ use parry3d_f64::query;
 use parry3d_f64::shape::{Capsule, Cuboid, Cylinder};
 
 /// A link's radius, joints 1 to 6, mm: as CellModels.xtl draws them.
-pub const LINK_RADII: [f64; 6] = [48.0, 42.0, 34.0, 30.0, 26.0, 22.0];
+pub const LINK_RADII: [f64; 6] = [24.0, 20.0, 16.0, 14.0, 12.0, 10.0];
 /// A joint housing's radius and length along its axis, joints 1 to 6:
 /// as CellModels.xtl draws them.
 pub const HOUSINGS: [(f64, f64); 6] = [
-    (70.0, 120.0),
-    (60.0, 110.0),
-    (52.0, 100.0),
-    (40.0, 70.0),
-    (34.0, 60.0),
-    (30.0, 40.0),
+    (36.0, 60.0),
+    (30.0, 54.0),
+    (26.0, 50.0),
+    (20.0, 36.0),
+    (17.0, 30.0),
+    (15.0, 22.0),
 ];
 /// A tool's block at the flange: a capsule this radius from 6 to 30 mm.
 pub const TOOL_BLOCK: f64 = 19.0;

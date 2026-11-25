@@ -1,6 +1,6 @@
 number = 17
 slug = "cell-bench-arm"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 17 (from step 15, C18): the bench's slender arm -- a thinner, lo..."
 role = "production"
 context_files = []

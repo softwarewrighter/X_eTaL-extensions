@@ -227,7 +227,7 @@ fn layout_text(spec: &str) -> String {
     out
 }
 
-const PROGRAMS: [&str; 7] = [
+const PROGRAMS: [&str; 8] = [
     "arms",
     "pick",
     "solder",
@@ -235,6 +235,7 @@ const PROGRAMS: [&str; 7] = [
     "solder-stations",
     "weld-stations",
     "leads",
+    "turn",
 ];
 
 fn program(name: &str) -> String {
@@ -463,4 +464,30 @@ lift A mm=60");
     // a pincer that is not there
     let e = parse_line("pinch P9 on=U1.1").unwrap_err();
     assert!(e.contains("no pincer P9"), "{e}");
+}
+
+#[test]
+fn the_arm_turns_the_work_on_its_side() {
+    let (w, _) = ok(&program("turn"));
+    let u1 = w.part("U1").unwrap();
+    assert_eq!(u1.holder.as_deref(), Some("vise"));
+    // on its side: its pins point across, not down
+    let k = u1.kind_of().unwrap();
+    let pin = k.pin("1").unwrap();
+    let lead = xetal_ext_cell::solder::lead_in(&u1.pose(), &pin.lead);
+    let d = kin::sub(lead[lead.len() - 1], lead[lead.len() - 2]);
+    assert!(d[2].abs() < 0.8 * kin::norm(d), "{d:?}");
+    // upside down in one move is out of the arm's reach: refused, said so
+    let mut w = World::default();
+    let out = w.apply_all(&parse_program("reset circuit=demo\ntool A tweezers\npick A U1 grasp=ends\nplace A U1 at=0,0,-20 rpy=180,0,90").unwrap());
+    assert!(
+        out.last()
+            .unwrap()
+            .refused
+            .as_deref()
+            .unwrap_or("")
+            .contains("cannot go there"),
+        "{:?}",
+        out.last()
+    );
 }

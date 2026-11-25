@@ -361,8 +361,18 @@ and pincers on the turntable. Built so far:
   turntable presents the joint to S1, which heats it and feeds solder;
   the joint freezes good; P1 lets go and the resistor stays.
 
-The four large arms are gone: the arm that remains picks, places and
-brings leads together; a slender model of it comes next.
+The four large arms are gone. The arm that remains is slender -- about
+half their thickness (its links 24 to 10 mm in radius, its joint
+housings 36 to 15), the same reach -- and picks, places and brings
+leads together.
+
+The arm also turns the work: `programs/turn.cell` takes the DIP out of
+the vise and puts it back on its side (`place A U1 at=0,0,-20
+rpy=90,0,90`), its pins pointing across, toward where a pincer or a
+station reaches them; the turntable then turns and tilts it. Upside
+down is out of the arm's reach in the vise (the tweezers grip a part
+from its top; a refusal says so): on its side, with the turntable's
+tilt (up to 90 degrees), is how the work is turned over.
 
 ### Forming and trimming leads
 

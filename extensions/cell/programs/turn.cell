@@ -1,0 +1,22 @@
+# turn: the arm turns the work on the turntable. The DIP into the vise,
+# pins down; the arm takes it out again, the vise open, and puts it back
+# on its side -- its pins now pointing across, toward the turntable's
+# edge where a pincer or a station reaches them easily; the vise holds
+# it; the turntable turns it a quarter round and tilts it, so a pin row
+# faces up.
+reset circuit=demo
+tool A tweezers
+pick A U1 grasp=ends
+place A U1 at=0,0,-24 rpy=0,0,90
+vise close
+release A U1
+lift A mm=40
+pick A U1 grasp=ends
+vise open
+lift A mm=60
+place A U1 at=0,0,-20 rpy=90,0,90
+vise close
+release A U1
+lift A mm=60
+stage turn=90
+stage tilt=-45

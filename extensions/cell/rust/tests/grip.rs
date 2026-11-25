@@ -159,8 +159,8 @@ fn an_arm_that_meets_the_vise_stops_where_it_touches() {
         w.timeline.last().unwrap().command,
         "move A to=0,0,-60 rpy=180,0,0"
     );
-    // and the arm can go on from there
-    ok(&mut w, "move A to=0,60,100");
+    // and the arm can go on from there: straight back up first
+    ok(&mut w, "lift A mm=40\nmove A to=0,60,100");
 }
 
 #[test]

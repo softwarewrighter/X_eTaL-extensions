@@ -1,8 +1,9 @@
 number = 16
 slug = "cell-leads"
-status = "in-progress"
+status = "completed"
 description = "Saga 17 step 16 (C15, the user 2026-11-25: 'we need some logic around bending..."
 role = "production"
 context_files = []
 created_at = "2026-11-24T16:49:33"
-commits = []
+completed_at = "2026-11-25T15:32:14"
+commits = ["0bd80b90395e2c1d8ca8bbaac428db95ece5ddac"]

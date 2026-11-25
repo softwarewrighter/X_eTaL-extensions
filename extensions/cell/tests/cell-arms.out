@@ -3,5 +3,6 @@
 {"ok":true,"command":"joints A 0 0 0 0 90 0 speed=0.8","t0":4.201351,"t1":4.756493,"did":["joints A 0 0 0 0 90 0 in 0.555 s"],"events":[],"warnings":[]}
 {"ok":true,"command":"stage turn=90","t0":4.756493,"t1":6.006493,"did":["stage to 90 in 1.25 s"],"events":[],"warnings":[]}
 {"ok":true,"command":"vise close","t0":6.006493,"t1":6.506493,"did":["vise closed in 0.5 s"],"events":[],"warnings":[]}
-{"ok":false,"command":"move A to=0,-90,30 rpy=180,0,0","t0":6.506493,"t1":7.627546,"did":[],"stopped":"collision: arm A joint 5 with the microscope at 7.628 s","events":[],"warnings":[],"dry":true}
+{"ok":true,"command":"move A to=0,-90,30 rpy=180,0,0","t0":6.506493,"t1":10.677119,"did":["line A to=0,-90,30 rpy=180,0,0 in 4.171 s","joints A 0 53.136 -6.174 0 43.038 -90"],"events":[],"warnings":[],"dry":true}
+{"ok":true,"command":"wait s=0.5","t0":6.506493,"t1":7.006493,"did":["wait 0.5 s"],"events":[],"warnings":[]}
 
