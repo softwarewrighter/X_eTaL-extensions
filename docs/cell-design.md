@@ -13,7 +13,7 @@ Status: being built (docs/plan.md, Saga 17; decisions accepted
 2026-11-24). Built so far: the extension `cell` with the parts
 library, the command table, text and JSON parsing, the state as JSON,
 the arms, stage and vise, the models, the player with the preview,
-grasping with collision, heat and solder, and the live page
+grasping with collision, heat and solder, the MCP server, and the live page
 (<https://softwarewrighter.github.io/X_eTaL-extensions/cell/live/>,
 extensions/cell/docs/README.md); the rest below is the design,
 its names proposals.
@@ -381,14 +381,19 @@ kind's `.glb` has a node a pin, named as the pin.
 | `cell_do` | one command (text or JSON), its result |
 | `cell_run` | a list of commands, stopping at the first failure |
 | `cell_state` | arms, tools, parts, joints, temperatures (oracle mode) |
-| `cell_snap` | the microscope's picture, as an image |
-| `cell_inspect`, `cell_probe` | as the commands |
+| `cell_snap` | the microscope's picture, as an image (with the scope) |
+| `cell_inspect`, `cell_probe` | as the commands (`cell_probe` with the tester) |
 | `cell_rewind` | back to a time |
-| `cell_plan` | run the X_eTaL planner on a netlist; its program, not run |
-| `cell_check` | the assembly against the netlist |
+| `cell_program` | the session as a program, and the commands that stand |
+| `cell_plan` | run the X_eTaL planner on a netlist; its program, not run (with the planner) |
+| `cell_check` | the assembly against the netlist (with the planner) |
 
-Each command family also has its own tool with a typed schema
-(`arm_move`, `iron_touch`, ...), made from the command table, for
+`cell_state` also says where things are (the vise's middle, the stage
+top, the floor, the tray's pockets, the fixtures): an agent given only
+the tools had to probe for the vise's height without them.
+
+Each command also has its own tool with a typed schema (`cell_move`,
+`cell_touch`, ...), made from the command table, for
 agents that do better with typed tools than with text. A session's
 commands are saved as a program, so an agent's build can be previewed
 again, edited and rerun.

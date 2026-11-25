@@ -1,0 +1,21 @@
+[package]
+name = "xetal-cell-mcp"
+version = "0.1.0"
+description = "The assembly cell over MCP: an agent drives the simulator command by command, the cell's page following live"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "xetal-cell-mcp"
+path = "src/main.rs"
+
+[dependencies]
+rmcp = { version = "3", features = ["server", "transport-io"] }
+serde_json = { version = "1", features = ["float_roundtrip", "preserve_order"] }
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "io-std"] }
+xetal-ext-cell = { path = "../rust" }
+
+[lints]
+workspace = true

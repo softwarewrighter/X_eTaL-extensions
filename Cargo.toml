@@ -2,7 +2,7 @@
 # scripts/xetal.sh)
 # keeps its own workspaces and is never a member.
 [workspace]
-members = ["crates/*", "extensions/*/rust"]
+members = ["crates/*", "extensions/*/rust", "extensions/cell/mcp"]
 resolver = "3"
 # The live pages (web/, extensions/*/web/) are workspaces of their own:
 # they link extensions with the `static` feature.

@@ -1507,6 +1507,63 @@ impl World {
         }
     }
 
+    /// The cell now, for an agent or a page: the time; each arm's
+    /// joints, tool, what it holds and its tool tip (x y z roll pitch
+    /// yaw); each part's kind, pose, what carries it, whether lost or
+    /// damaged, its grasp frames; the stage, the vise; each joint; the
+    /// timeline (each command, its times, rewound or not).
+    #[must_use]
+    pub fn summary(&self) -> serde_json::Value {
+        use serde_json::json;
+        let arms: Vec<serde_json::Value> = self
+            .arms
+            .iter()
+            .map(|a| {
+                let tip = self.tip(&a.name).map(|p| layout::six(&p)).unwrap_or([0.0; 6]);
+                json!({ "name": a.name, "joints": a.joints, "tool": a.tool, "holding": a.holding, "tip": tip })
+            })
+            .collect();
+        let parts: Vec<serde_json::Value> = self
+            .parts
+            .iter()
+            .map(|p| {
+                let grasps: Vec<String> = parts::kind(&p.kind).map(|k| k.grasps.iter().map(|g| g.name.clone()).collect()).unwrap_or_default();
+                json!({ "id": p.id, "kind": p.kind, "at": p.at, "holder": p.holder, "lost": p.lost, "damaged": p.damaged, "grasps": grasps })
+            })
+            .collect();
+        let joints: Vec<serde_json::Value> = self
+            .joints
+            .iter()
+            .map(|j| json!({ "name": j.name, "solder_mm3": j.solder, "molten": j.molten, "result": j.result, "temp": j.temp }))
+            .collect();
+        let timeline: Vec<serde_json::Value> = self
+            .timeline
+            .iter()
+            .map(|e| json!({ "t0": e.t0, "t1": e.t1, "command": e.command, "rewound": e.rewound }))
+            .collect();
+        // where things are, for an agent planning a motion
+        let vise = layout::stage_frame(self.stage)
+            .then(&kin::Pose::from_xyz_rpy(
+                layout::vise_center_on_stage(),
+                [0.0; 3],
+            ))
+            .p;
+        let fixtures: Vec<serde_json::Value> = layout::fixtures()
+            .into_iter()
+            .map(|(name, kind, at)| json!({ "name": name, "kind": kind, "at": at }))
+            .collect();
+        let pockets: Vec<[f64; 3]> = (1..=8).map(layout::pocket).collect();
+        let places = json!({
+            "vise_center": vise.map(|x| (x * 1000.0).round() / 1000.0),
+            "stage_top_z": layout::stage_frame(0.0).p[2],
+            "floor_z": layout::FLOOR,
+            "tray_pockets": pockets.iter().map(|p| p.map(|x| (x * 1000.0).round() / 1000.0)).collect::<Vec<_>>(),
+            "fixtures": fixtures,
+            "note": "a part's `at` is its origin (x y z mm, roll pitch yaw degrees); placed with its origin at vise_center and closed, the vise holds it (place ARM PART at=<vise_center>); a part's pins' tips are frames for align (U1.3.tip)",
+        });
+        json!({ "t": self.t, "circuit": self.circuit, "arms": arms, "parts": parts, "joints": joints, "stage": self.stage, "vise": self.vise, "places": places, "timeline": timeline })
+    }
+
     /// The point a part's frame is at (for messages and tests).
     ///
     /// # Errors

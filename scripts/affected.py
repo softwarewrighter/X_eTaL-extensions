@@ -71,7 +71,10 @@ def extensions() -> dict[str, dict]:
         uses = set()
         for xtl in list(d.glob("demos/*.xtl")) + list(d.glob("tests/*.xtl")) + list(d.glob("lib/*.xtl")):
             uses |= set(re.findall(r'u_se<\s*"([^"]+)"', xtl.read_text()))
-        found[d.name] = {"package": package, "facades": facades, "uses": uses}
+        # its MCP server, a package of its own built on its crate
+        server = d / "mcp/Cargo.toml"
+        mcp = re.search(r'^name\s*=\s*"([^"]+)"', server.read_text(), re.M).group(1) if server.exists() else None
+        found[d.name] = {"package": package, "facades": facades, "uses": uses, "mcp": mcp}
     return found
 
 
@@ -82,6 +85,9 @@ def plan(files: list[str], exts: dict[str, dict]) -> dict[str, object]:
     touched = {f.split("/")[1] for f in files if f.startswith("extensions/") and f.split("/")[1] in exts}
     rust = sorted(exts[e]["package"] for e in touched
                   if any(f.startswith(f"extensions/{e}/rust/") for f in files))
+    # an MCP server: when it or the crate it is built on changes
+    rust += sorted(exts[e]["mcp"] for e in touched if exts[e].get("mcp")
+                   and any(f.startswith((f"extensions/{e}/rust/", f"extensions/{e}/mcp/")) for f in files))
     # the extensions whose programs use a touched extension's facades, and so on
     goldens = set(touched)
     grew = True
@@ -112,6 +118,7 @@ def self_test() -> None:
         "digest": {"package": "xetal-ext-digest", "facades": {"Digest"}, "uses": {"Ffi"}},
         "blender": {"package": "xetal-ext-blender", "facades": {"Blender", "Bpy"}, "uses": {"Blender", "Bpy", "Digest", "Td"}},
         "clock": {"package": "xetal-ext-clock", "facades": {"Clock"}, "uses": {"Clock"}},
+        "cell": {"package": "xetal-ext-cell", "facades": {"Cell"}, "uses": {"Cell"}, "mcp": "xetal-cell-mcp"},
     }
     cases = [
         ([], {"exts": [], "rust": [], "xetal-x": False, "web": False}),
@@ -123,6 +130,8 @@ def self_test() -> None:
         (["scripts/gate.sh"], {"exts": "all", "rust": "all", "xetal-x": True, "web": True}),
         (["web/shell/src/main.rs"], {"exts": [], "rust": [], "xetal-x": False, "web": True}),
         (["scripts/check-xetal-x.sh"], {"exts": [], "rust": [], "xetal-x": True, "web": False}),
+        (["extensions/cell/mcp/src/main.rs"], {"exts": ["cell"], "rust": ["xetal-cell-mcp"], "xetal-x": False, "web": False}),
+        (["extensions/cell/rust/src/world.rs"], {"exts": ["cell"], "rust": ["xetal-ext-cell", "xetal-cell-mcp"], "xetal-x": False, "web": True}),
     ]
     for files, want in cases:
         got = plan(files, exts)

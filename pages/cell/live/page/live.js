@@ -15,8 +15,34 @@ import { cellPlayer } from '../static/cell.js';
 const q = new URLSearchParams(location.search);
 const $ = (id) => document.getElementById(id);
 
-export function start(w) {
+// ?mcp: the page follows an MCP session (xetal-cell-mcp serves it):
+// the cell's commands, scene and state are the server's, asked over
+// HTTP; what an agent does is played as it comes, and the page's own
+// controls drive the same cell. Everything else (the programs, X_eTaL)
+// stays the page's own.
+function remote(w) {
+  const ask = (method, path, body) => {
+    const x = new XMLHttpRequest();
+    x.open(method, path, false);
+    x.send(body === undefined ? null : body);
+    return x.responseText;
+  };
+  // a module's exports are read-only: a plain copy, the session's calls over them
+  return Object.assign({ ...w }, {
+    command: (text) => ask('POST', '/mcp/command', text),
+    reset: (circuit) => ask('POST', '/mcp/reset?circuit=' + encodeURIComponent(circuit)),
+    clear: () => {},
+    scene: () => ask('GET', '/mcp/scene'),
+    state: () => ask('GET', '/mcp/state'),
+    version: () => JSON.parse(ask('GET', '/mcp/version')).version,
+    last: () => JSON.parse(ask('GET', '/mcp/last')),
+  });
+}
+
+export function start(local) {
+  const w = q.has('mcp') ? remote(local) : local;
   let player = null;
+  let seenOwn = -1;
   const view = $('view');
   // show the cell's timeline, playing from `from` to `to` (or holding t)
   const show = (from, to, calls) => {
@@ -47,6 +73,7 @@ export function start(w) {
   // run commands on the cell, log them, play what they did
   const run = (text) => {
     const r = JSON.parse(w.command(text));
+    if (w.version) seenOwn = w.version();
     if (r.error) { log(r, text); return r; }
     r.outcomes.forEach((o) => log(o));
     if (r.outcomes.some((o) => !o.dry)) show(r.t0, r.t1);
@@ -113,6 +140,28 @@ export function start(w) {
   $('facts').innerHTML = w.about();
   on('open-about', () => $('about').showModal());
   if (q.get('hud') === '0') $('panel').style.display = 'none';
+  // following an MCP session: the cell is the server's as it stands;
+  // each change an agent makes is played as it comes
+  if (q.has('mcp')) {
+    w.install();
+    $('hint').textContent = 'Following an MCP session: what an agent does here is played as it comes; these controls drive the same cell.';
+    let seen = w.version();
+    const last = w.last();
+    show(last && last.t0 !== undefined ? last.t0 : 0, last && last.t1);
+    refresh();
+    setInterval(() => {
+      const v = w.version();
+      if (v === seen) return;
+      seen = v;
+      // this page's own command: already shown
+      if (v === seenOwn) return;
+      const r = w.last();
+      (r.outcomes || []).forEach((o) => log(o));
+      show(r.t0, r.t1);
+      refresh();
+    }, 500);
+    return { run, show };
+  }
   // the first cell: a program asked for, else the demo tray
   w.install();
   // a program that begins with its own reset runs on an empty cell

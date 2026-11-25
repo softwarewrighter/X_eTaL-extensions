@@ -200,6 +200,68 @@ just publish            # copy it to pages/cell/live; commit pages/ and push
 just record pick        # the page recorded running pick: work/record/pick.mp4
 ```
 
+## Over MCP
+
+`xetal-cell-mcp` (`mcp/`) serves the cell over MCP (stdio), for an
+agent such as Claude Code to drive it command by command. Build it and
+print the configuration an MCP client takes:
+
+```
+cargo build -p xetal-cell-mcp
+just ext cell mcp-config        # {"mcpServers": {"cell": {"command": ".../xetal-cell-mcp"}}}
+```
+
+For Claude Code, `claude mcp add cell -- PATH/target/debug/xetal-cell-mcp`
+(PATH this repository), or the printed JSON in a project's `.mcp.json`;
+other clients take the same command in their own settings. `just ext
+cell mcp` builds and runs it (what a client starts).
+
+The tools:
+
+- `cell_do`: commands in the command language (one a line, or JSON
+  lines), each outcome returned: ok, its times, the motions it was made
+  of, why it was refused (nothing changed) or where it stopped (what
+  touched what), events, warnings. It stops after the first not ok.
+- a typed tool for each command, `cell_move`, `cell_pick`,
+  `cell_align`, `cell_touch` and so on, its arguments by name, its
+  schema the command table's (the same one the parser checks against).
+- `cell_reset` (a circuit's tray), `cell_run` (a whole program),
+  `cell_rewind`, `cell_inspect`.
+- `cell_state`: the time, each arm (joints, tool, what it holds, its
+  tool tip), each part (kind, pose, what carries it, its grasps), the
+  stage and vise, the joints, where things are (the vise's middle, the
+  stage top, the floor, the tray's pockets, every fixture) and the
+  command list.
+- `cell_program`: the session as a program, every command that ran
+  (saved to `work/mcp/session.cell`; `XETAL_CELL_SESSION` for another
+  file), which runs again to the same cell, and the effective program,
+  the commands that stand.
+
+Arguments the table refuses are a tool error naming why; a command the
+cell refuses, or one that stops on a collision, is an outcome saying
+so.
+
+The cell's page is served beside it, at http://127.0.0.1:8470/?mcp
+(`XETAL_CELL_PORT` another port, 0 none; `XETAL_CELL_BIND=0.0.0.0` for
+the network): it shows the session as it stands and plays each command
+an agent sends as it comes, and its own controls drive the same cell.
+It needs the live page built (`just ext cell live`).
+
+`just ext cell mcp-check` checks it headlessly: a scripted agent puts
+the DIP in the vise, the page (headless Chrome, its own profile) must
+show it; then the agent picks the resistor and aligns its lead to pin
+3 while the page is open, and the page must play it.
+
+Claude Code, given the server and only a goal (the DIP in the vise,
+then a resistor lead within 0.1 mm of pin 3, still held), did it in
+six turns and 20 seconds, every command accepted: its session is
+`programs/claude.cell` (`just ext cell preview claude` plays it). An
+earlier run, before `cell_state` said where the vise's middle is,
+spent ten minutes probing for its height and did not finish: an agent
+needs the cell's places, not only its commands.
+
+![The page following an MCP session: the DIP in the vise, arm A bringing the resistor's lead to pin 3](mcp.jpg)
+
 ## Heat and solder
 
 ![The solder program, recorded from the live page (just record solder, just videos cell solder)](../videos/solder.webp)

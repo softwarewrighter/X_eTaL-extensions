@@ -10,8 +10,6 @@
 use serde_json::{Value as Json, json};
 use std::cell::RefCell;
 use xetal_ext_cell::command::parse_program;
-use xetal_ext_cell::layout;
-use xetal_ext_cell::parts;
 use xetal_ext_cell::scene;
 use xetal_ext_cell::world::{World, outcome_json};
 use xetal_ext_shell::chrome::footer_markup;
@@ -98,29 +96,7 @@ pub fn scene(name: &str) -> String {
 /// timeline (each command, its times, rewound or not).
 #[must_use]
 pub fn state() -> String {
-    CELL.with(|c| {
-        let w = c.borrow();
-        let arms: Vec<Json> = w
-            .arms
-            .iter()
-            .map(|a| {
-                let tip = w.tip(&a.name).map(|p| layout::six(&p)).unwrap_or([0.0; 6]);
-                json!({ "name": a.name, "joints": a.joints, "tool": a.tool, "holding": a.holding, "tip": tip })
-            })
-            .collect();
-        let parts: Vec<Json> = w
-            .parts
-            .iter()
-            .map(|p| {
-                let grasps: Vec<String> = parts::kind(&p.kind).map(|k| k.grasps.iter().map(|g| g.name.clone()).collect()).unwrap_or_default();
-                json!({ "id": p.id, "kind": p.kind, "at": p.at, "holder": p.holder, "lost": p.lost, "grasps": grasps })
-            })
-            .collect();
-        let timeline: Vec<Json> =
-            w.timeline.iter().map(|e| json!({ "t0": e.t0, "t1": e.t1, "command": e.command, "rewound": e.rewound })).collect();
-        json!({ "t": w.t, "circuit": w.circuit, "arms": arms, "parts": parts, "stage": w.stage, "vise": w.vise, "timeline": timeline })
-            .to_string()
-    })
+    CELL.with(|c| c.borrow().summary().to_string())
 }
 
 /// A program the page offers, by name (`pick`, `arms`); empty for
