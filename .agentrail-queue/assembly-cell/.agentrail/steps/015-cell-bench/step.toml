@@ -1,0 +1,8 @@
+number = 15
+slug = "cell-bench"
+status = "pending"
+description = "Saga 17 step 15 (inserted 2026-11-24, decision C18, the user: 'you are making..."
+role = "production"
+context_files = []
+created_at = "2026-11-24T22:53:54"
+commits = []

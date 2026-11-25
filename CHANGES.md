@@ -12,6 +12,7 @@ refresh of the vendored X_eTaL.
 
 ## 2026-11-24
 
+- `chore` saga: complete assembly-cell step 14 (cell-clash-fix); insert step 15 cell-bench.
 - `fix` cell, collisions and shorts (Saga 17 step 14, the user saw tweezers lowered into the stage, and a resistor's lead across two of the DIP's pins): tweezers whose tip was on any part's grasp allowed the whole stage, and the part they carry is always at their tip, so it passed through the stage, vise and jaws unchecked; now only a part in the vise allows the vise, `place` allows nothing, a carried part may touch what it is joined to and another arm's tool on it. `World::clashes` (overlaps, and shorts: leads touching that are not a joint's) runs after every command of every program in a test; `align` records its joint. Parts sit higher in the vise; the solder, weld and station programs approach from clear sides (the resistor's lead square to the pin row, touching pin 3 alone; the arm-B feeder; the discs' laps on lead 2 and 1). solder and solder-stations recorded again. The site's two cell demos link to their own programs (`?program=pick`, `?program=solder`). Claude's recorded session now stops where its lead met a jaw; a new one will replace it.
 - `plan` the assembly cell, a bench (the user, C18): a turntable, one slender arm, an iron with its feeder, pincers and probes from the turntable's side replace the four arms; step 15 cell-bench inserted, later steps renumbered to 26.
 - `chore` saga: complete assembly-cell step 13 (cell-stations).

@@ -1,6 +1,6 @@
 name = "assembly-cell"
 status = "active"
-current_step = 14
+current_step = 15
 created_at = "2026-11-24T11:00:31"
 plan_file = ".agentrail/plan.md"
 retroactive = false
