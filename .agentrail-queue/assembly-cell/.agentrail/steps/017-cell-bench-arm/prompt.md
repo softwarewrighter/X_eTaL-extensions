@@ -1,0 +1,1 @@
+Saga 17 step 17 (from step 15, C18): the bench's slender arm -- a thinner, longer model of the one arm through Blender (CellModels.xtl), its collision solids to match -- and the arm turning the work on the turntable (on its side, upside down) with place and the vise; tests; recordings; published.
