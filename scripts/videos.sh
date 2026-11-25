@@ -39,7 +39,10 @@ export PATH="$root/.venv/bin:$PATH" VIRTUAL_ENV="$root/.venv"
 XETAL_PATH="$("$root/scripts/libraries.sh")"
 export XETAL_PATH
 cd "$root"
-for tool in vhs ffmpeg gif2webp sox curl; do command -v "$tool" >/dev/null || { echo "$tool not found" >&2; exit 127; }; done
+# every recording needs these; vhs (terminal sessions) and sox (sound)
+# only the recordings that use them
+need() { command -v "$1" >/dev/null || { echo "$1 not found" >&2; exit 127; }; }
+for tool in ffmpeg gif2webp curl; do need "$tool"; done
 # headless Chrome renders the web demos (.web): CHROME, else the usual places
 chrome="${CHROME:-}"
 for c in "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" google-chrome chromium; do
@@ -67,6 +70,7 @@ for dir in extensions/${1:-*}/videos; do
     name="$(basename "$tape" .tape)"
     [ -z "$only" ] || [ "$name" = "$only" ] || continue
     echo "==> vhs $ext $name"
+    need vhs
     vhs "$tape" > /dev/null
     encode "target/screens/$ext-$name.mp4" "$dir/$name" 880 760
   done
@@ -207,6 +211,7 @@ for dir in extensions/${1:-*}/videos; do
     # intro=: a terminal session (vhs) first, both at the video's size
     if [ -n "$intro" ]; then
       echo "==> vhs $ext $name intro"
+      need vhs
       vhs "$dir/$intro" > /dev/null
       size="$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 "$src" | tr x :)"
       ffmpeg -loglevel error -y -i "target/screens/$ext-$name-intro.mp4" -i "$src" -filter_complex \
@@ -224,6 +229,7 @@ for dir in extensions/${1:-*}/videos; do
     # shellcheck disable=SC1090
     . "$spec"
     echo "==> sound $ext $name (no device)"
+    need sox
     wav="$root/target/screens/$ext-$name.wav"
     (cd "extensions/$ext" && XETAL_AUDIO=off XETAL_AUDIO_WAV="$wav" \
       "$root/target/release/xetal-x" --ext "$root/extensions" run --seed "$seed" "demos/$demo.xtl" > /dev/null)

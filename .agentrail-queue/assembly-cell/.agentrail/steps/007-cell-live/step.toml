@@ -1,6 +1,6 @@
 number = 7
 slug = "cell-live"
-status = "pending"
+status = "in-progress"
 description = 'Saga 17 step 7 (the user, 2026-11-24: "interactive first, and also videos"; d...'
 role = "production"
 context_files = []

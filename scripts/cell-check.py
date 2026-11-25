@@ -7,6 +7,8 @@ simulator) and reports the drawn flange's distance from it. Fails when
 any is off by more than 0.01 mm, or the page does not finish. A
 picture of the page at --at seconds is kept: work/preview/NAME/check.png.
     scripts/cell-check.py NAME [--at SECONDS]
+    scripts/cell-check.py NAME --site DIR   # the live page (built in DIR)
+                                            # running programs/NAME.cell
 """
 import argparse
 import http.server
@@ -54,22 +56,32 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("name")
     ap.add_argument("--at", type=float, default=None)
+    ap.add_argument("--site", default=None)
     a = ap.parse_args()
-    site = root / "extensions/cell/work/preview" / a.name
-    if not (site / "scene.calls.js").exists():
-        sys.exit(f"cell-check: nothing written: scripts/cell-preview.sh {a.name} --write")
+    if a.site:
+        site = pathlib.Path(a.site).resolve()
+        if not (site / "index.html").exists():
+            sys.exit(f"cell-check: no page in {a.site}")
+        query = f"program={a.name}&"
+    else:
+        site = root / "extensions/cell/work/preview" / a.name
+        query = ""
+        if not (site / "scene.calls.js").exists():
+            sys.exit(f"cell-check: nothing written: scripts/cell-preview.sh {a.name} --write")
     c = chrome()
     httpd = serve(site)
     try:
         with tempfile.TemporaryDirectory() as tmp:
-            dom = run(c, f"{tmp}/a", ["--dump-dom"], "http://127.0.0.1:8470/?check&hud=0").stdout
+            dom = run(c, f"{tmp}/a", ["--dump-dom"], f"http://127.0.0.1:8470/?{query}check&hud=0").stdout
             m = re.search(r'<pre id="check">(.*?)</pre>', dom, re.S)
             if not m:
                 err = re.search(r'<div id="err">(.*?)</div>', dom, re.S)
                 sys.exit("cell-check: the page did not report" + (f": {err.group(1)}" if err and err.group(1) else ""))
             report = json.loads(m.group(1).replace("&quot;", '"').replace("&amp;", "&"))
             at = a.at if a.at is not None else report["duration"] / 2
-            run(c, f"{tmp}/b", [f"--screenshot={site / 'check.png'}"], f"http://127.0.0.1:8470/?t={at}")
+            shot = root / "extensions/cell/work" / f"check-{a.name}{'-live' if a.site else ''}.png"
+            shot.parent.mkdir(parents=True, exist_ok=True)
+            run(c, f"{tmp}/b", [f"--screenshot={shot}"], f"http://127.0.0.1:8470/?{query}t={at}")
     finally:
         httpd.shutdown()
     print(f"cell-check: {a.name}: {report['steps']} steps, {report['duration']:.3f} s; "
@@ -79,7 +91,7 @@ def main():
         print(f"cell-check:   {r['arm']} at {r['t']} s: drawn at {r['got']}, the simulator says {r['want']} ({r['off']} mm)")
     if report["expects"] == 0 or report["worst"] > 0.01:
         sys.exit("cell-check: the drawing is not the simulator's")
-    print(f"cell-check: ok (picture at {at:.2f} s: extensions/cell/work/preview/{a.name}/check.png)")
+    print(f"cell-check: ok (picture at {at:.2f} s: {shot.relative_to(root)})")
 
 
 if __name__ == "__main__":

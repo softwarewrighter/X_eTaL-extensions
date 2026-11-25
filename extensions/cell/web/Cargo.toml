@@ -1,0 +1,23 @@
+[package]
+name = "cell-web"
+description = "The assembly cell live: the simulator and X_eTaL compiled to WebAssembly beside the Three.js cell player, driven by controls and a command box"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+
+[dependencies]
+serde_json = { version = "1", features = ["float_roundtrip", "preserve_order"] }
+wasm-bindgen = "0.2"
+xetal-ext-cell = { path = "../rust", features = ["static"] }
+xetal-ext-shell = { path = "../../../web/shell" }
+
+# Its own workspace: cell is linked with its `static` feature.
+[workspace]
+
+# collision checks are most of the work: optimized even in a test build
+[profile.dev.package.xetal-ext-cell]
+opt-level = 2
+
+[profile.dev.package.parry3d-f64]
+opt-level = 3

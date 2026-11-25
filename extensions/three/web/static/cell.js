@@ -43,6 +43,11 @@ export function isCell(calls) {
 
 const D = Math.PI / 180;
 
+// the models, each .glb fetched and parsed once for every player on
+// the page (a live page makes a new player for each command)
+const loader = new GLTFLoader();
+const sources = {};
+
 function nums(text, k) {
   const v = text.trim() ? text.trim().split(/\s+/).map(Number) : [];
   const rows = [];
@@ -112,7 +117,9 @@ export function cellPlayer(host, calls, options = {}) {
   grid.position.z = -200;
   root.add(grid);
   const camera = new THREE.PerspectiveCamera(40, 16 / 9, 5, 10000);
-  const view = { yaw: 35 * D, pitch: 28 * D, dist: 1700, target: new THREE.Vector3(0, 60, 0) };
+  // where the camera looks from: options.view (a player's view before),
+  // else a three-quarter view of the whole cell
+  const view = options.view || { yaw: 35 * D, pitch: 28 * D, dist: 1700, target: new THREE.Vector3(0, 60, 0) };
   const place = () => {
     const c = Math.cos(view.pitch);
     camera.position.set(view.target.x + view.dist * c * Math.sin(view.yaw), view.target.y + view.dist * Math.sin(view.pitch), view.target.z + view.dist * c * Math.cos(view.yaw));
@@ -149,9 +156,7 @@ export function cellPlayer(host, calls, options = {}) {
 
   // the models: each .glb fetched once, a copy for each use, hung under
   // a group that turns glTF's meters and Y up into the cell's mm and Z up
-  const loader = new GLTFLoader();
-  const sources = {};
-  const load = (model) => (sources[model] ||= new Promise((ok, no) => loader.load(folder + model + '.glb', (g) => ok(g.scene), undefined, () => no(new Error('no model ' + model + '.glb')))));
+  const load = (model) => (sources[folder + model] ||= new Promise((ok, no) => loader.load(folder + model + '.glb', (g) => ok(g.scene), undefined, () => no(new Error('no model ' + model + '.glb')))));
   const holder = (obj) => {
     const g = new THREE.Group();
     const inner = new THREE.Group();
@@ -295,6 +300,7 @@ export function cellPlayer(host, calls, options = {}) {
       return out;
     },
     set speed(v) { speed = v; ui.show(); },
+    get view() { return view; },
     get duration() { return duration; },
   };
   const stepAt = (t) => { const x = s.steps.filter((k) => k.t0 <= t).pop(); return x ? x.n : 0; };

@@ -143,6 +143,46 @@ over the base's axis), each with how far along. Every motion is
 recorded in the arm's track, rows of the time and the six angles,
 every 50 ms, for a player to draw.
 
+## The live page
+
+Live: <https://softwarewrighter.github.io/X_eTaL-extensions/cell/live/>
+
+![The live page running pick, recorded by headless Chrome (just record pick, just videos cell pick)](../videos/pick.webp)
+
+The cell driven in a browser, nothing installed: the simulator runs in
+the page compiled to WebAssembly (it has no threads, files or clocks,
+so this is a build of the same crate, not a port), with X_eTaL beside
+it, and the three extension's cell player draws the cell's timeline
+(`web/`: its own workspace, built by trunk).
+
+- Every control writes a command in the command language and runs it
+  as the command box does -- Take tool, Pick (a part and one of its
+  grasp frames), Release, Place at x y z, move the tip by a step along
+  x, y or z, Home, turn the stage, open or close the vise -- for the
+  arm chosen. The box takes any program, a command a line; with dry
+  run each runs on a copy.
+- Each outcome is listed: ok, refused (and why; nothing changed), or
+  stopped (what touched what); events and warnings. The player then
+  plays what the command did; its scrubber, speed and steps list go
+  anywhere in the timeline, and Rewind to here goes back to the
+  scrubber's time, keeping what came after, marked rewound.
+- Reset lays a tray out again (demo or empty); Run program runs one of
+  `programs/` (`pick`, `arms`).
+- X_eTaL in this page: a program runs with the cell extension linked
+  in (`ce:`); when what it prints is a scene (`ce:s_cene`) the player
+  shows it.
+- `?program=NAME` runs a program first, `?t=SECONDS` holds a moment,
+  `?check` measures the drawing against the simulator (as the preview's
+  check does), `?hud=0` hides the controls.
+
+```sh
+just live               # build web/dist (trunk; the models are copied in)
+just live-serve         # at http://127.0.0.1:8470/ (BIND=0.0.0.0 for the network)
+just live-check pick    # programs/pick.cell run in the page, checked headlessly
+just publish            # copy it to pages/cell/live; commit pages/ and push
+just record pick        # the page recorded running pick: work/record/pick.mp4
+```
+
 ## Grasping and collision
 
 Every motion is checked for collision as it goes, at steps short
@@ -228,7 +268,7 @@ of steps, and where every part and tool ends: carried, held by the
 vise as the stage turns, fallen -- are drawn where the simulator says;
 turning a joint about the wrong axis puts a flange 552 mm off and
 fails. It
-also keeps a picture, `work/preview/NAME/check.png`.
+also keeps a picture, `work/check-NAME.png`.
 
 ## Models
 

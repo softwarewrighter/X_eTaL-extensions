@@ -1,0 +1,12 @@
+## The assembly cell picks: programs/pick.cell run by the simulator --
+## arm A takes its tweezers and puts the DIP from the tray in the vise,
+## the stage turns it, arm D picks the LED, and both fall when let go --
+## each command's outcome a line: ok, what it did, and why not.
+## Page: cell/live/ drive the cell, live
+## Run: just demo cell pick
+
+"ce:" u_se< "Cell"
+"bl:" u_se< "Blender"
+
+"each command: ok, its end time, its events and warnings"
+ce:r_un bl:r_ead "programs/pick.cell"

@@ -40,6 +40,13 @@ XETAL_X = re.compile(r"^(crates/|Cargo\.(toml|lock)$|XETAL_COMMIT$|scripts/check
 WEB = re.compile(r"^(web/|extensions/[^/]+/web/|crates/|scripts/check-web\.sh$|XETAL_COMMIT$)")
 
 
+def linked_by_page(f: str) -> bool:
+    """A change to the crate of an extension that has a live page (its
+    web/ links it): the page must be checked too."""
+    m = re.match(r"^extensions/([^/]+)/rust/", f)
+    return bool(m) and (root / "extensions" / m.group(1) / "web" / "Cargo.toml").exists()
+
+
 def changed() -> list[str]:
     """The files changed since origin/main: committed, staged, unstaged
     and untracked."""
@@ -88,7 +95,7 @@ def plan(files: list[str], exts: dict[str, dict]) -> dict[str, object]:
         "exts": sorted(goldens),
         "rust": rust,
         "xetal-x": any(XETAL_X.match(f) for f in files),
-        "web": any(WEB.match(f) for f in files),
+        "web": any(WEB.match(f) or linked_by_page(f) for f in files),
     }
 
 

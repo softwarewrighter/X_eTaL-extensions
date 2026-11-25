@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assembly cell, live -- X_eTaL extensions</title>
+  
+<script type="module">
+import init, * as bindings from './cell-web.js';
+
+const wasm = await init({ module_or_path: './cell-web_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+  
+  
+  <link rel="icon" href="./favicon.ico" integrity="sha384-LtdCgsGO0xEFvMFZQaLVOi8+k28hqqO5FBYcCFyW1haw9t2//81ksi/e5KHnr5/x"/>
+<style>
+  html, body { margin: 0; height: 100%; background: #202329; color: #e8eaf0; font: 14px/1.4 system-ui, sans-serif; overflow: hidden; }
+  #view { position: fixed; inset: 0; }
+  #panel { position: fixed; left: 12px; top: 12px; bottom: 76px; width: 22em; overflow: auto; background: rgba(8, 9, 14, 0.86); padding: 10px 12px; border-radius: 8px; }
+  #panel h1 { font-size: 16px; margin: 0 0 6px; }
+  #panel fieldset { border: 1px solid #343a48; border-radius: 6px; margin: 8px 0; padding: 6px 8px; }
+  #panel legend { color: #a9b0c0; padding: 0 4px; }
+  #panel button, #panel select, #panel input, #panel textarea { font: inherit; margin: 2px 4px 2px 0; padding: 3px 8px; border-radius: 6px; border: 1px solid #56607a; background: #1a1f2e; color: #e8eaf0; }
+  #panel button { cursor: pointer; }
+  #panel input[type=number] { width: 4.5em; }
+  #panel #text { width: calc(100% - 20px); height: 4.5em; font: 13px/1.4 ui-monospace, Menlo, monospace; }
+  #xetal-code { width: calc(100% - 20px); height: 7em; font: 13px/1.4 ui-monospace, Menlo, monospace; }
+  #holds, #xetal-out { color: #c3c8d4; font-size: 13px; white-space: pre-wrap; }
+  #log { list-style: none; padding: 0; margin: 4px 0; font: 12px/1.4 ui-monospace, Menlo, monospace; }
+  #log li { border-left: 3px solid #56607a; padding: 2px 6px; margin: 3px 0; }
+  #log li.ok { border-color: #5fbf6f; } #log li.dry { border-color: #7fb4ff; }
+  #log li.refused { border-color: #e3a33b; } #log li.stopped { border-color: #ff6b6b; }
+  #log .notes { color: #a9b0c0; }
+  #err { color: #ff9a9a; white-space: pre-wrap; }
+  dialog { background: #141518; color: #e8e6e3; border: 1px solid #30333a; border-radius: 10px; padding: 18px 22px; width: min(60em, 92vw); max-height: 86vh; overflow: auto; font: 16px/1.5 system-ui, sans-serif; }
+  dialog::backdrop { background: rgba(0, 0, 0, 0.6); }
+  dialog h1 { font-size: 22px; margin: 0 0 8px; }
+  dialog p { margin: 8px 0; max-width: 72ch; }
+  dialog a { color: #8fb0ff; }
+  dialog footer { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 14px 0 10px; padding-top: 10px; border-top: 1px solid #30333a; color: #a0a4ab; font-size: 14px; }
+  dialog button { font: inherit; padding: 5px 14px; border-radius: 6px; border: 1px solid #56607a; background: #1a1f2e; color: #e8eaf0; cursor: pointer; }
+</style>
+<script type="importmap">{ "imports": { "three": "./static/vendor/three/three.module.min.js" } }</script>
+<link rel="modulepreload" href="./cell-web.js" crossorigin="anonymous" integrity="sha384-K4SnHn0TpSZjuBF2NVtqDt5/hT58MovRU2U0ecs1SkKpt+Q0BSpJC6xHROkmiRaB"><link rel="preload" href="./cell-web_bg.wasm" crossorigin="anonymous" integrity="sha384-ieeG5sULijN+70cIyC5mLbbazAdstDEP9ChD4hlKKAtE3zQ97wzQz8/79/y+qum/" as="fetch" type="application/wasm"></head>
+<body>
+<div id="view"></div>
+<div id="panel">
+  <h1>Assembly cell, live <button id="open-about" type="button">About</button></h1>
+  <fieldset><legend>Cell</legend>
+    <select id="circuit"><option value="demo">demo tray</option><option value="none">empty tray</option></select><button id="reset">Reset</button><br>
+    <select id="program"><option value="pick">pick</option><option value="arms">arms</option></select><button id="run-program">Run program</button>
+  </fieldset>
+  <fieldset><legend>Arm</legend>
+    <select id="arm"><option>A</option><option>B</option><option>C</option><option>D</option></select>
+    <select id="tool"><option>tweezers</option><option>iron</option><option>solder</option><option>clip</option><option>welder</option><option>cutter</option><option>wire</option></select><button id="take">Take tool</button>
+    <div id="holds"></div>
+    <select id="part"></select><select id="grasp"></select><button id="pick">Pick</button><button id="release">Release</button><br>
+    at <input id="px" type="number" value="0"> <input id="py" type="number" value="0"> <input id="pz" type="number" value="40"><button id="place">Place</button><br>
+    move <button id="xm">x-</button><button id="xp">x+</button><button id="ym">y-</button><button id="yp">y+</button><button id="zm">z-</button><button id="zp">z+</button>
+    <select id="step"><option>1</option><option selected>10</option><option>50</option></select> mm <button id="home">Home</button>
+  </fieldset>
+  <fieldset><legend>Stage</legend>
+    <button id="turn-l">Turn +90</button><button id="turn-r">Turn -90</button><button id="vise">Close the vise</button>
+  </fieldset>
+  <fieldset><legend>Commands</legend>
+    <form id="box"><textarea id="text" spellcheck="false" placeholder="tool A tweezers&#10;pick A U1 grasp=ends"></textarea><br>
+    <button>Run</button><label><input id="dry" type="checkbox"> dry run</label><button id="rewind" type="button">Rewind to here</button></form>
+    <ol id="log"></ol>
+  </fieldset>
+  <details><summary>X_eTaL in this page</summary>
+    <textarea id="xetal-code" spellcheck="false"></textarea><br>
+    <button id="xetal-run" type="button">Run X_eTaL</button><button id="xetal-back" type="button">Show the cell</button>
+    <div id="xetal-out"></div>
+  </details>
+  <div id="err"></div>
+</div>
+<dialog id="about">
+  <h1>Assembly cell, live</h1>
+  <p>A robot assembly cell, simulated: four six-axis arms on a ring round a work zone, a tool rack beside each, a tray of parts, a rotary stage with a vise, a microscope on a gantry. The simulator -- kinematics, timed moves, collision along every motion, grasping, falling -- runs in this page, compiled to WebAssembly, with X_eTaL beside it; a Three.js player draws the cell's timeline.</p>
+  <p>Every control writes a command in the cell's command language and runs it, as the command box does: <code>tool A tweezers</code>, <code>pick A U1 grasp=ends</code>, <code>place A U1 at=0,0,-32</code>, <code>vise close</code>, <code>release A U1</code>, <code>move A to=0,120,60</code>, <code>stage turn=90</code>. A command that cannot start is refused and changes nothing; one that meets something stops there and says what touched what. A dry run changes nothing; Rewind goes back to the scrubber's time, keeping what came after on the timeline, marked.</p>
+  <p>Units are millimeters and degrees, Z up, the work zone at 0 0 0. The design: docs/cell-design.md in the repository.</p>
+  <footer id="facts"></footer>
+  <form method="dialog"><button>Close</button></form>
+</dialog>
+<script type="module">
+import { start } from './page/live.js';
+const ready = () => {
+  try { start(window.wasmBindings); } catch (e) { document.getElementById('err').textContent = String(e.message || e); }
+};
+if (window.wasmBindings) ready(); else window.addEventListener('TrunkApplicationStarted', ready, { once: true });
+</script>
+</body>
+</html>

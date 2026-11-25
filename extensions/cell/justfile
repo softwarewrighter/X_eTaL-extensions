@@ -73,4 +73,24 @@ check name:
 preview-picture:
     {{root}}/scripts/cell-preview.sh pick --write
     {{root}}/.venv/bin/python3 {{root}}/scripts/cell-check.py pick --at 17
-    ffmpeg -loglevel error -y -i work/preview/pick/check.png -vf scale=960:-1 -q:v 4 docs/preview.jpg
+    ffmpeg -loglevel error -y -i work/check-pick.png -vf scale=960:-1 -q:v 4 docs/preview.jpg
+
+# The live page: the simulator and X_eTaL as WebAssembly with the cell player, built by trunk into web/dist (with the models)
+live:
+    {{root}}/scripts/publish-cell.sh
+
+# Serve the live page at http://127.0.0.1:8470/ (BIND=0.0.0.0 for the network)
+live-serve: live
+    {{root}}/.venv/bin/python3 -m http.server 8470 --bind "${BIND:-127.0.0.1}" -d web/dist
+
+# The live page checked headlessly: programs/NAME.cell run in the page, every expect drawn where the simulator says
+live-check name="pick": live
+    {{root}}/.venv/bin/python3 {{root}}/scripts/cell-check.py "$1" --site web/dist
+
+# Publish the live page on the site (pages/cell/live); commit pages/ and push
+publish:
+    {{root}}/scripts/publish-cell.sh --publish
+
+# A recording of the live page running programs/NAME.cell (headless Chrome): work/record/NAME.mp4; then just videos cell NAME
+record name="pick":
+    {{root}}/.venv/bin/python3 {{root}}/scripts/cell-record.py "$1"

@@ -42,6 +42,11 @@ if [ -d "$root/pages/three/live" ]; then
   mkdir -p "$out/three/live"
   cp -R "$root/pages/three/live/." "$out/three/live/"
 fi
+# the cell extension's live page, published by scripts/publish-cell.sh
+if [ -d "$root/pages/cell/live" ]; then
+  mkdir -p "$out/cell/live"
+  cp -R "$root/pages/cell/live/." "$out/cell/live/"
+fi
 [ -n "${PAGES_DIR:-}" ] && exit 0
 "$root/scripts/sync-pages.py" "$out" "$root/pages"
 echo "pages/ built; commit it (git add pages/) and push to publish."
