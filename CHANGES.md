@@ -28,6 +28,7 @@ version.
 
 ## 2026-11-25
 
+- 15:42 `chore` saga: complete assembly-cell step 17 (cell-bench-arm).
 - 15:32 `ext` cell, the slender arm (Saga 17 step 17, C18): the arm half as thick (CellModels.xtl's housings and links, rebuilt through Blender; `collide.rs` to match), the same reach; `programs/turn.cell`, the arm turning the DIP on its side in the vise, the turntable turning and tilting it (upside down is out of reach: tested as refused); on the live page; the page's default hint describes the bench; the grip test lifts clear of the jaw before going on; goldens re-recorded (the arms test's dry run now clears the microscope). solder recorded again.
 - 15:32 `chore` saga: complete assembly-cell step 16 (cell-leads).
 - 15:16 `ext` cell, excess past a joint trimmed (Saga 17 step 16): `leads.cell` solders the resistor's lead 2.5 mm down pin 3 and S4 cuts the pin 1 mm past the joint; a frame along a lead takes fractional millimeters (`U1.3.2.5`; it was read as pin `U1.3.2`).

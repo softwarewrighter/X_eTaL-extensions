@@ -1,0 +1,1 @@
+Saga 17 step 17 (C18): the slender arm (half as thick, Blender rebuild, collision solids to match, same reach) and the arm turning the work on its side (turn.cell; upside down out of reach in the vise, tested as refused; the turntable's tilt covers the rest). Page hint, goldens, solder recording updated. Gate --full ok at 32e568e.
