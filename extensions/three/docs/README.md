@@ -354,7 +354,14 @@ the cell's `.glb` models (meters, Y up as glTF has them) from groups
 that turn them back. An arm's joint is its node `arm_jN`, turned about
 its local y (glTF's name for the joint axis Blender called z). A part
 attached to an arm moves with its flange between two times and stays
-where it was left; a ghost is drawn faint where a part will end.
+where it was left (attached to `stage`, it turns with the vise); a
+ghost is drawn faint where a part will end. `heat(id, rows)` gives a
+part's temperatures over time (its body, each pin's hottest lead
+segment), drawn as a glow from 100 C, and `joint(name, part, xyz,
+rows, result, t)` a joint's solder, a ball on its part that grows,
+glows while molten and takes its result's color once frozen. Close up
+switches the camera to the work zone and back (`?view=close` starts
+there).
 
 The page has a play button, Previous step and Next step (and the left
 and right arrow keys), the time, a scrubber, a speed and the list of

@@ -9,6 +9,7 @@
 
 pub mod collide;
 pub mod command;
+pub mod heat;
 pub mod kin;
 pub mod layout;
 pub mod model;
@@ -16,6 +17,8 @@ pub mod motion;
 pub mod parts;
 pub mod rig;
 pub mod scene;
+pub mod solder;
+mod thermal;
 pub mod world;
 
 use xetal_ext_sdk::{OwnedError, Value, text};

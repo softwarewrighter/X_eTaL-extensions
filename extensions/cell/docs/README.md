@@ -8,17 +8,21 @@ program or an LLM agent drives it one command at a time (the design:
 docs/cell-design.md in the repository).
 
 Status: the arms move, change tools, pick, place, align and let go of
-parts, and stop where they touch; the cell has its 3D models, and a
+parts, stop where they touch, and solder: heat flows in leads and
+bodies, an iron heats a joint, solder fed into it melts, wets and
+freezes into a joint judged good or not, and a good joint holds two
+parts as one; the cell has its 3D models, and a
 program can be previewed in a browser, played with a scrubber. The
 parts library, the command language (text and JSON, checked against
 one table), the cell's state as JSON, four six-axis arms with the
 stage and the vise, collision along every motion, and a model of
 every piece (built through Blender, checked against the simulator)
 are in place: `reset`, `wait s=`, `joints`, `move`, `lift`, `stage`,
-`vise`, `tool`, `grip`, `pick`, `place`, `align`, `release` and
-`rewind` run; every other command is parsed and checked, then refused
-as not simulated yet. Heat and solder, welding, wire, the microscope,
-reading and testing parts come next.
+`vise`, `tool`, `grip`, `pick`, `place`, `align`, `release`, `back`,
+`touch`, `feed`, `clip`, `wait until=`, `inspect` and `rewind` run;
+every other command is parsed and checked, then refused as not
+simulated yet. Welding, wire, forming leads, the microscope, reading
+and testing parts come next.
 
 - Package: `extensions/cell/` (`extension.toml`; library
   `xetal_ext_cell`: `libxetal_ext_cell.dylib` on macOS, `.so` on
@@ -195,6 +199,77 @@ just live-check pick    # programs/pick.cell run in the page, checked headlessly
 just publish            # copy it to pages/cell/live; commit pages/ and push
 just record pick        # the page recorded running pick: work/record/pick.mp4
 ```
+
+## Heat and solder
+
+![The solder program, recorded from the live page (just record solder, just videos cell solder)](../videos/solder.webp)
+
+`programs/solder.cell`: arm A puts a DIP-8 in the vise and holds a
+resistor's lead tip to pin 3's, 0.1 mm apart; arm C's iron (350 C)
+touches the joint for 2 s; arm D feeds 2 mm of solder wire into it,
+which melts; the iron backs away and the joint freezes, good; A lets
+the resistor go and it stays, soldered on; A picks the DIP out of the
+vise and lifts the pair together.
+
+```
+tool C iron temp=350
+touch C at=U1.3+R1.1 dwell=2      # the iron on the joint, 2 s
+tool D solder
+feed D mm=2 rate=1                # solder wire into the joint
+back C                            # the iron straight back along its axis
+wait until=U1.3+R1.1 below=100
+inspect U1.3+R1.1                 # good; 0.4 mm3 of solder, wet 2.6 s and 2.6 s
+```
+
+Heat is a thermal network (`heat.rs`, `thermal.rs`), built each time
+time passes from the cell as it stands: a node for each part's body
+and for each lead in segments of about 1 mm (conduction between them,
+k A / L, the lead's metal), each joint's solder, the iron's tip held
+at its set point by a heater of limited power, and a heatsink clip;
+convection to the air from every node, higher for a part being
+carried. It is integrated in explicit steps of 1 ms or less, small
+enough to be stable; a node too small for that (a speck of solder) is
+taken as in balance with its neighbors. Tests check it against the
+analytic lumped RC decay, two nodes exchanging heat, and a heater's
+steady state. Every number is in `materials/thermal.toml`, sourced or
+marked illustrative: the metals' conductivities and heats are handbook
+values, the solders' melting ranges are the alloys' (SAC305 217 to
+220 C, the default; Sn63Pb37 183 C), and the rest is illustrative.
+
+- A joint is two pins' leads within 0.5 mm of each other (`align`
+  brings them there); the first `touch` on it makes it. The iron comes
+  down at 45 degrees from its arm's side and stays on the joint until
+  the arm moves; touching a lead dry conducts poorly, through molten
+  solder far better.
+- `feed ARM mm= rate=` (the solder feeder): the wire comes in from the
+  arm's side to 1 mm short of the joint an iron is on; it melts only
+  while the joint is above the liquidus, its latent heat taken from
+  the leads; what does not melt is a warning.
+- A side is wet while its lead is above the liquidus with molten solder
+  on it. As the joint cools below the solidus it freezes and is judged:
+  `bridged` (another lead within 0.6 mm), `cold` (a side wet under 1 s),
+  `disturbed` (an arm moved one side while it was molten), `starved` or
+  `blob` (under 0.4 or over 3 times the 0.4 mm3 a joint wants), else
+  `good`. A joint heated past the solidus again melts again.
+- A good, frozen joint holds its two parts together: a subassembly,
+  carried as one by whatever holds any part of it (an arm, the vise);
+  let go of one part, it stays if the other is held; let go of all, it
+  falls as one.
+- `clip ARM on=PIN at=MM`: a heatsink clip on a lead, `at` mm from the
+  body, drawing heat while the arm holds it there.
+- A body above its limit (`body_limit_c`) for its time (`body_limit_s`)
+  is damaged: a warning, and `inspect` says so.
+- `back ARM [mm=]` moves a tool straight back along its own axis (30 mm
+  if not given), leaving what it touched; `wait until=TARGET below=C`
+  waits for a pin or joint to cool (two minutes at most); `inspect`
+  reports a joint's state or a pin's temperature (the simulator's own
+  numbers).
+
+The player draws heat as a glow on bodies and leads (from 100 C, dull
+red through orange to yellow white at the iron's temperature) and each
+joint as a ball of solder that grows as it is fed, glows while molten
+and takes its result's color when it freezes; Close up shows the work
+zone.
 
 ## Grasping and collision
 
@@ -394,6 +469,7 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `joints ARM J1 J2 J3 J4 J5 J6 [speed=N]` | arm | move the arm to absolute joint angles, all joints arriving together |
 | `move ARM to=X,Y,Z [rpy=R,P,Y] [speed=MM/S]` | arm | move the tool to a pose, by inverse kinematics, in a straight line |
 | `lift ARM [mm=MM]` | arm | move the tool straight up |
+| `back ARM [mm=MM]` | arm | move the tool straight back along its own axis, away from what it touches |
 | `grip ARM open\|close [force=N]` | tweezers | open or close the tweezers |
 | `pick ARM PART grasp=NAME` | tweezers | approach a part, close on a grasp frame, lift it |
 | `place ARM PART at=X,Y,Z [rpy=R,P,Y]` | tweezers | carry the held part to a pose |

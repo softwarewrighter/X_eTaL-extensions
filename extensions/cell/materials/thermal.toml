@@ -1,0 +1,102 @@
+# The cell's thermal data: what heat does to leads, solder, the iron
+# and heatsink clips. SI units unless named: W/(m K), J/(g K), g/cm3,
+# C, W, W/K, mm. Every number is `sourced` (with the `source` beside
+# it) or `illustrative` (chosen as plausible): the same rule as the
+# parts library's.
+
+ambient_c = 25.0
+
+# convection to still air, and to air an arm moves through
+[air]
+h_still = 10.0
+h_moving = 25.0
+illustrative = ["h_still", "h_moving"]
+note = "natural convection from small parts is commonly put at 5 to 25 W/(m2 K)"
+
+# lead and wire metals
+[metal.copper]
+k = 401.0
+c = 0.385
+rho = 8.96
+sourced = ["k", "c", "rho"]
+source = "copper at room temperature: handbook values (CRC Handbook of Chemistry and Physics)"
+
+[metal.steel]
+k = 50.0
+c = 0.49
+rho = 7.85
+sourced = ["k", "c", "rho"]
+source = "carbon steel at room temperature: typical handbook values"
+
+[metal.copper-clad-steel]
+k = 160.0
+c = 0.45
+rho = 8.2
+illustrative = ["k", "c", "rho"]
+note = "a steel core under copper: between the two, nearer steel by mass"
+
+[metal.nickel]
+k = 91.0
+c = 0.44
+rho = 8.9
+sourced = ["k", "c", "rho"]
+source = "nickel at room temperature: handbook values (CRC Handbook of Chemistry and Physics)"
+
+# solder alloys: SAC305 the default, Sn63Pb37 the option
+[solder.SAC305]
+solidus = 217.0
+liquidus = 220.0
+c = 0.23
+rho = 7.4
+latent = 60.0
+sourced = ["solidus", "liquidus"]
+source = "SAC305 (Sn96.5Ag3.0Cu0.5): melting range 217 to 220 C, as alloy data sheets give it"
+illustrative = ["c", "rho", "latent"]
+
+[solder.Sn63Pb37]
+solidus = 183.0
+liquidus = 183.0
+c = 0.18
+rho = 8.4
+latent = 45.0
+sourced = ["solidus", "liquidus"]
+source = "Sn63Pb37 is eutectic: it melts at 183 C"
+illustrative = ["c", "rho", "latent"]
+
+# the soldering iron: a tip held at its set point by a heater of
+# limited power; it touches a lead dry, or through molten solder
+[iron]
+set_c = 350.0
+min_c = 150.0
+max_c = 450.0
+tip_heat_capacity = 0.4
+heater_w = 60.0
+gain_w_per_k = 3.0
+contact_dry = 0.04
+contact_wet = 0.4
+illustrative = ["set_c", "min_c", "max_c", "tip_heat_capacity", "heater_w", "gain_w_per_k", "contact_dry", "contact_wet"]
+
+# a heatsink clip: a copper jaw on a spring, its own heat capacity
+[clip]
+heat_capacity = 0.8
+contact = 0.3
+area_mm2 = 400.0
+illustrative = ["heat_capacity", "contact", "area_mm2"]
+
+# the solder wire the feeder pushes
+[wire]
+diameter = 0.5
+illustrative = ["diameter"]
+
+# a joint: how far apart two leads may be, how long both must be wet,
+# how much solder it wants, and how its solder couples to a lead
+[joint]
+max_gap = 0.5
+wet_seconds = 1.0
+good_mm3 = 0.4
+starved_fraction = 0.4
+blob_fraction = 3.0
+bridge_mm = 0.6
+wet_conductance = 0.3
+dry_conductance = 0.005
+illustrative = ["max_gap", "wet_seconds", "good_mm3", "starved_fraction", "blob_fraction", "bridge_mm", "wet_conductance", "dry_conductance"]

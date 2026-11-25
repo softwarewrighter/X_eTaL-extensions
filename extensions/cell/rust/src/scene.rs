@@ -12,6 +12,8 @@
 //! part('U1', 'dip8', nums('x y z r p y', 6)[0])
 //! attach('U1', 'A', t0, t1)          (an arm's hold; 'stage': the vise's)
 //! place('U1', t, nums('x y z r p y', 6)[0])   (where a fall ended)
+//! heat('U1', nums('t body pin1 pin2 ...', k))  (C, while warm)
+//! joint('U1.3+R1.1', 'U1', nums('x y z', 3)[0], nums('t temp mm3 ...', 3), 'good', t_froze)
 //! ghost('U1', 'dip8', nums('x y z r p y', 6)[0])
 //! step(1, 'move A to=0,0,20 rpy=180,0,0', t0, t1)
 //! expect('A', t, nums('x y z', 3)[0])
@@ -89,6 +91,30 @@ pub fn calls(name: &str, w: &World) -> Result<String, String> {
     let _ = writeln!(out, "track('stage', {})", table(&rows, 2));
     for p in w.tools.iter().chain(&w.parts) {
         thing(&mut out, p);
+    }
+    // how hot each warm part was, and each joint's solder
+    for h in &w.heat {
+        let k = h.rows.first().map_or(0, Vec::len);
+        let _ = writeln!(out, "heat({}, {})", quote(&h.id), table(&h.rows, k));
+    }
+    for j in &w.joints {
+        if j.track.is_empty() {
+            continue;
+        }
+        let rows: Vec<Vec<f64>> = j.track.iter().map(|r| r.to_vec()).collect();
+        let part = j.a.split('.').next().unwrap_or("");
+        let at = j.at.map(|x| kin::clean((x * 1000.0).round() / 1000.0));
+        let result = j.result.as_deref().unwrap_or("");
+        let set = j.set_at.map_or_else(|| "Infinity".to_string(), num);
+        let _ = writeln!(
+            out,
+            "joint({}, {}, {}, {}, {}, {set})",
+            quote(&j.name),
+            quote(part),
+            row(&at),
+            table(&rows, 3),
+            quote(result)
+        );
     }
     for (n, e) in w.timeline.iter().enumerate() {
         let _ = writeln!(

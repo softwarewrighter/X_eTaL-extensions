@@ -4,7 +4,7 @@
 // runs it exactly as the command box does, so what a button does is
 // what typing it does. After each command the cell's timeline is shown
 // again by the cell player, playing what the command did.
-//   ?program=NAME runs that program first (pick, arms; pick when not
+//   ?program=NAME runs that program first (solder, pick, arms; solder when not
 //   given, so the list of steps is there to step through; ?program=
 //   none starts with the demo tray and nothing done); ?t=SECONDS
 //   holds that moment; ?check has the player measure its drawing
@@ -116,7 +116,7 @@ export function start(w) {
   // the first cell: a program asked for, else the demo tray
   w.install();
   // a program that begins with its own reset runs on an empty cell
-  const name = q.has('program') ? q.get('program') : 'pick';
+  const name = q.has('program') ? q.get('program') : 'solder';
   const asked = name === 'none' ? '' : w.program(name);
   if (/^\s*reset\b/m.test(asked)) w.clear(); else JSON.parse(w.reset(q.get('circuit') || 'demo'));
   if (asked) {

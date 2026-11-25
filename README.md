@@ -21,13 +21,13 @@
 
 <p align="center">
   <b><a href="https://softwarewrighter.github.io/X_eTaL-extensions/cell/live/">The assembly cell, live</a></b>
-  -- four robot arms that pick, place and hold parts to build circuits in free air, simulated in your
-  browser (WebAssembly, with X_eTaL), drawn with Three.js: step through a program a command at a time,
-  drive every arm and tool, or type commands
+  -- four robot arms that hold parts lead to lead, solder them and lift the soldered pair, simulated in
+  your browser (WebAssembly, with X_eTaL), drawn with Three.js: step through a program a command at a
+  time, drive every arm and tool, or type commands
 </p>
 
 <p align="center">
-  <a href="https://softwarewrighter.github.io/X_eTaL-extensions/cell/live/"><img src="extensions/cell/videos/pick.webp" alt="The assembly cell: an arm takes its tweezers, picks a chip from the tray and puts it in the vise on the turning stage" width="640"></a>
+  <a href="https://softwarewrighter.github.io/X_eTaL-extensions/cell/live/"><img src="extensions/cell/videos/solder.webp" alt="The assembly cell: an arm puts a chip in the vise and holds a resistor's lead to one of its pins, an iron and a solder feeder join them, and the arm lifts the soldered pair" width="640"></a>
 </p>
 
 <p align="center">
@@ -224,7 +224,7 @@ follows the ecosystem's launch, as do the other roadmap extensions.
 | [blender](extensions/blender/docs/README.md) | `Blender` | Blender 3D in batch: X_eTaL writes the launcher and the bpy script, runs them, reads back what was made | none (python3 and Blender) | started: the chain, a report back; the size comparison orbited, a video and 3D files; game pieces with clips for X_eTaL-games ([published](https://softwarewrighter.github.io/X_eTaL-extensions/blender/td/)); arrays to video (`Video.xtl`): ReLU, softmax and matrix products as videos, explained in [literate documents](https://softwarewrighter.github.io/X_eTaL-extensions/literate/); the CoSy logo as fused tubes, turning; explainer videos (title cards, slow motion and time-lapse, YouTube and Shorts, cue sheets): HEX1000's program counter from X_eTaL-fpga, HEX1000-UART computing C0DE+BEEF= driven by its board's simulated waveform (VCD), and physical Nano 1K HEX1000-keys-leds execution and build-process videos; the GPU compiler from Core through XIR to fused OpenCL and saved device schedules, plus checked RTX execution and OpenCL event/host timing |
 | [three](extensions/three/docs/README.md) | `Three` | interactive 3D in a browser: a scene's calls drawn by a Three.js player; the neon city built from a seed by X_eTaL as WebAssembly, to ride, fly and walk through ([live](https://softwarewrighter.github.io/X_eTaL-extensions/three/live/)); a game's board (instanced tiles, pieces as models with clips, no perspective) | js-sys, wasm-bindgen (in a browser); Three.js vendored | done: the live city, the board player, facade, tests |
 | [digest](extensions/digest/docs/README.md) | `Digest` | SHA-256 and CRC-32 of text and files | sha2, crc32fast | done: facade, vectors, tests |
-| [cell](extensions/cell/docs/README.md) | `Cell` | a robot assembly cell, simulated: arms, tools, parts and a microscope that build circuits in free air, one command at a time ([live](https://softwarewrighter.github.io/X_eTaL-extensions/cell/live/), [design](docs/cell-design.md)) | serde_json, toml | started: the parts library, the command language (text and JSON, one table), the state as JSON, four six-axis arms (closed-form kinematics, timed moves), the stage and the vise; every piece's 3D model through Blender, checked against the simulator; tools changed, parts picked, placed, aligned and let fall, collision along every motion with a protective stop; a program previewed in a browser with a scrubber (three's cell player), checked headlessly; builds for wasm32 |
+| [cell](extensions/cell/docs/README.md) | `Cell` | a robot assembly cell, simulated: arms, tools, parts and a microscope that build circuits in free air, one command at a time ([live](https://softwarewrighter.github.io/X_eTaL-extensions/cell/live/), [design](docs/cell-design.md)) | serde_json, toml | started: the parts library, the command language (text and JSON, one table), the state as JSON, four six-axis arms (closed-form kinematics, timed moves), the stage and the vise; every piece's 3D model through Blender, checked against the simulator; tools changed, parts picked, placed, aligned and let fall, collision along every motion with a protective stop; soldering (heat in leads, an iron, solder that melts and wets, joints judged good or not, soldered parts carried as one); a program previewed in a browser with a scrubber (three's cell player), checked headlessly; builds for wasm32 |
 
 Each extension is a self-contained directory, `extensions/NAME/`: its
 manifest (`extension.toml`), its own `justfile`, its Rust crate

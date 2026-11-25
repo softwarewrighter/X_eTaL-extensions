@@ -1,6 +1,6 @@
 number = 10
 slug = "cell-heat"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 9: the thermal network (body, lead segments of about 1 mm, joint..."
 role = "production"
 context_files = []

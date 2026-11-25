@@ -161,6 +161,17 @@ pub const COMMANDS: &[Spec] = &[
         )],
     },
     Spec {
+        op: "back",
+        family: "arm",
+        summary: "move the tool straight back along its own axis, away from what it touches",
+        positional: &[ARM],
+        named: &[opt(
+            "mm",
+            Kind::Number("mm", 0.0, 100.0),
+            "how far (30 if not given)",
+        )],
+    },
+    Spec {
         op: "grip",
         family: "tweezers",
         summary: "open or close the tweezers",

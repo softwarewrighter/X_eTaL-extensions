@@ -278,9 +278,20 @@ impl Group {
     }
 }
 
+/// The part a solid belongs to, by its label (`R1 body`, `U1.3 lead`):
+/// its id, or nothing for an arm's or a fixture's.
+fn owner(label: &str) -> Option<&str> {
+    if label.starts_with("arm ") || label.starts_with("the ") {
+        return None;
+    }
+    label.split([' ', '.']).next()
+}
+
 /// The first solid of `moving` touching one of `others` (or the floor),
-/// skipping the groups in `allowed`: what touched what. Groups whose
-/// spheres are apart are skipped whole.
+/// skipping the groups in `allowed` and, for an allowed `part:ID`, that
+/// part's solids wherever they are (carried by another arm, in the
+/// vise): what touched what. Groups whose spheres are apart are skipped
+/// whole.
 #[must_use]
 pub fn first_hit(moving: &Group, others: &[Group], allowed: &[String]) -> Option<String> {
     for s in &moving.solids {
@@ -302,6 +313,14 @@ pub fn first_hit(moving: &Group, others: &[Group], allowed: &[String]) -> Option
             for o in &g.solids {
                 let (c2, r2) = o.shape.sphere();
                 if kin::norm(kin::sub(c1, c2)) > r1 + r2 {
+                    continue;
+                }
+                let allowed_part = |l: &str| {
+                    owner(l).is_some_and(|id| {
+                        allowed.iter().any(|a| a.strip_prefix("part:") == Some(id))
+                    })
+                };
+                if allowed_part(&s.label) || allowed_part(&o.label) {
                     continue;
                 }
                 if s.shape.hits(&o.shape) {

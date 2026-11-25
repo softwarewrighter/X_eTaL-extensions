@@ -11,7 +11,7 @@
 use crate::collide::{self, Group, Solid};
 use crate::command::{Command, Value, num};
 use crate::kin::{self, Pose, V3};
-use crate::layout::{self, ARM_BASES, FLOOR};
+use crate::layout::{self, ARM_BASES};
 use crate::motion;
 use crate::parts::{self, PartKind};
 use crate::rig::Rig;
@@ -39,6 +39,8 @@ pub const CAREFUL: f64 = 20.0;
 pub const APPROACH: f64 = 30.0;
 /// How far above a rack slot a tool change approaches, mm.
 pub const RACK_CLEAR: f64 = 120.0;
+/// How far `back` goes when not told, mm.
+pub const BACK_MM: f64 = 30.0;
 /// How far `lift` goes when not told, mm.
 pub const LIFT_MM: f64 = 10.0;
 /// Closing tweezers finds a grasp frame within this distance of the
@@ -53,6 +55,10 @@ pub const CHECK_STEP: f64 = 0.2;
 /// How far from each joint's axis a point of the arm (with a tool and
 /// what it holds) can be, joints 1 to 6, mm: bounds a turn's travel.
 pub const REACH: [f64; 6] = [900.0, 850.0, 550.0, 300.0, 300.0, 250.0];
+/// The longest `wait until=` waits, s.
+pub const WAIT_MOST: f64 = 120.0;
+/// The iron's set point when not given, C (materials/thermal.toml's).
+pub const IRON_SET: f64 = 350.0;
 /// Gravity, mm a second squared.
 pub const GRAVITY: f64 = 9810.0;
 
@@ -70,6 +76,9 @@ pub struct Arm {
     pub tool: Option<String>,
     /// The part its tweezers hold, if any.
     pub holding: Option<String>,
+    /// Its iron's set point, C, while it holds the iron.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub iron: Option<f64>,
     /// Where it has been: rows of the time, then j1 to j6.
     pub track: Vec<[f64; 7]>,
 }
@@ -130,10 +139,24 @@ pub struct Part {
     pub start: [f64; 6],
     /// Where it is now.
     pub at: [f64; 6],
-    /// What holds it now: an arm, `vise`, or nothing.
+    /// What carries it now: an arm (gripping it or a part soldered to
+    /// it), `vise`, or nothing.
     pub holder: Option<String>,
+    /// The vise grips it.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub in_vise: bool,
     /// It fell to the floor and is lost.
     pub lost: bool,
+    /// Its thermal nodes' temperatures, C: the body, then each pin's
+    /// lead segments (solder::layout); empty while at the air's.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub temps: Vec<f64>,
+    /// How long its body has been above its limit, s.
+    #[serde(default, skip_serializing_if = "is_zero")]
+    pub hot: f64,
+    /// Heat damaged it.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub damaged: bool,
     /// Every time something held it.
     pub holds: Vec<Hold>,
     /// Every time it was put somewhere (a fall).
@@ -141,6 +164,25 @@ pub struct Part {
 }
 
 impl Part {
+    /// A part (or tool) where it starts, nothing holding it, cool.
+    #[must_use]
+    pub fn fresh(id: String, kind: String, at: [f64; 6]) -> Self {
+        Self {
+            id,
+            kind,
+            start: at,
+            at,
+            holder: None,
+            in_vise: false,
+            lost: false,
+            temps: Vec::new(),
+            hot: 0.0,
+            damaged: false,
+            holds: Vec::new(),
+            moves: Vec::new(),
+        }
+    }
+
     /// Its pose now.
     #[must_use]
     pub fn pose(&self) -> Pose {
@@ -153,7 +195,7 @@ impl Part {
         self.id.contains('.')
     }
 
-    fn take(&mut self, by: &str, t: f64) {
+    pub(crate) fn take(&mut self, by: &str, t: f64) {
         self.holder = Some(by.to_string());
         self.holds.push(Hold {
             by: by.to_string(),
@@ -162,7 +204,7 @@ impl Part {
         });
     }
 
-    fn let_go(&mut self, t: f64) {
+    pub(crate) fn let_go(&mut self, t: f64) {
         self.holder = None;
         if let Some(h) = self.holds.last_mut() {
             h.t1 = Some(t);
@@ -205,8 +247,34 @@ pub struct World {
     pub parts: Vec<Part>,
     /// The tools, each arm's rack's seven.
     pub tools: Vec<Part>,
+    /// The joints: leads that met, and their solder.
+    #[serde(default)]
+    pub joints: Vec<crate::solder::Joint>,
+    /// How hot each part was: rows of the time, its body, then each
+    /// pin's hottest lead segment (for players' color ramps).
+    #[serde(default)]
+    pub heat: Vec<HeatTrack>,
     /// Every command that ran, in order.
     pub timeline: Vec<Entry>,
+    /// What happened while a command ran, for its outcome: (a warning?,
+    /// what). Emptied into each outcome; never saved.
+    #[serde(skip)]
+    pub(crate) notes: Vec<(bool, String)>,
+}
+
+/// A part's temperatures over time, while it was warm.
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
+#[serde(deny_unknown_fields)]
+pub struct HeatTrack {
+    /// The part.
+    pub id: String,
+    /// Rows: the time, the body, each pin's hottest segment, C.
+    pub rows: Vec<Vec<f64>>,
+}
+
+#[allow(clippy::trivially_copy_pass_by_ref)] // serde passes a reference
+fn is_zero(x: &f64) -> bool {
+    *x == 0.0
 }
 
 /// What a command did. A refused command changed nothing.
@@ -239,7 +307,7 @@ pub struct Outcome {
 
 /// Why a command ended early: refused (nothing changes) or stopped (a
 /// collision: what happened up to it stays).
-enum Halt {
+pub(crate) enum Halt {
     Refused(String),
     Stopped(String),
 }
@@ -271,7 +339,11 @@ impl World {
                     start: at,
                     at,
                     holder: None,
+                    in_vise: false,
                     lost: false,
+                    temps: Vec::new(),
+                    hot: 0.0,
+                    damaged: false,
                     holds: Vec::new(),
                     moves: Vec::new(),
                 });
@@ -294,16 +366,7 @@ impl World {
                 [0.0, 0.0, laid.yaw],
             );
             let at = layout::six(&p);
-            parts.push(Part {
-                id: laid.id,
-                kind: laid.kind,
-                start: at,
-                at,
-                holder: None,
-                lost: false,
-                holds: Vec::new(),
-                moves: Vec::new(),
-            });
+            parts.push(Part::fresh(laid.id, laid.kind, at));
         }
         Self {
             t: 0.0,
@@ -316,6 +379,7 @@ impl World {
                     joints: home,
                     tool: None,
                     holding: None,
+                    iron: None,
                     track: vec![[0.0, home[0], home[1], home[2], home[3], home[4], home[5]]],
                 })
                 .collect(),
@@ -324,7 +388,10 @@ impl World {
             vise: "open".into(),
             parts,
             tools,
+            joints: Vec::new(),
+            heat: Vec::new(),
             timeline: Vec::new(),
+            notes: Vec::new(),
         }
     }
 
@@ -535,14 +602,15 @@ impl World {
 
     /// An arm's group at joint angles: its links, its tool, and the part
     /// it holds (carried at `offset` from its flange).
-    fn arm_group(&self, i: usize, rig: &Rig, q: &[f64; 6], held: Option<(&Part, &Pose)>) -> Group {
+    fn arm_group(&self, i: usize, rig: &Rig, q: &[f64; 6], held: &[(usize, Pose)]) -> Group {
         let a = &self.arms[i];
         let len = a.tool.as_deref().map(layout::tool_length);
         let mut solids: Vec<Solid> = collide::arm(&a.name, &a.base_pose(), rig, q, len);
-        if let Some((p, offset)) = held {
-            if let Ok(k) = parts::kind(&p.kind) {
-                let flange = a.base_pose().then(&kin::forward(rig, q));
-                solids.extend(collide::part(&p.id, &k, &flange.then(offset)));
+        let flange = a.base_pose().then(&kin::forward(rig, q));
+        for (k, offset) in held {
+            let p = &self.parts[*k];
+            if let Ok(kind) = parts::kind(&p.kind) {
+                solids.extend(collide::part(&p.id, &kind, &flange.then(offset)));
             }
         }
         Group {
@@ -559,12 +627,8 @@ impl World {
             if j == i {
                 continue;
             }
-            let held = a
-                .holding
-                .as_deref()
-                .and_then(|id| self.part(id))
-                .map(|p| (p, self.offset(j, rig, p)));
-            out.push(self.arm_group(j, rig, &a.joints, held.as_ref().map(|(p, o)| (*p, o))));
+            let held = self.carried(j, rig);
+            out.push(self.arm_group(j, rig, &a.joints, &held));
         }
         for p in self.parts.iter().filter(|p| p.holder.is_none() && !p.lost) {
             if let Ok(k) = parts::kind(&p.kind) {
@@ -575,6 +639,16 @@ impl World {
             }
         }
         out
+    }
+
+    /// The parts arm `i` carries (gripped, or soldered to the one it
+    /// grips), each with where it sits relative to the flange.
+    fn carried(&self, i: usize, rig: &Rig) -> Vec<(usize, Pose)> {
+        let name = &self.arms[i].name;
+        (0..self.parts.len())
+            .filter(|&k| self.parts[k].holder.as_ref() == Some(name) && !self.parts[k].lost)
+            .map(|k| (k, self.offset(i, rig, &self.parts[k])))
+            .collect()
     }
 
     /// Where a part sits relative to arm `i`'s flange.
@@ -589,7 +663,7 @@ impl World {
     /// Moves arm `i` through `samples` (from now), checking every step
     /// for a collision; the part it holds goes with it. Stops at the
     /// first contact, keeping the motion up to it.
-    fn travel(
+    pub(crate) fn travel(
         &mut self,
         i: usize,
         rig: &Rig,
@@ -597,11 +671,7 @@ impl World {
         allowed: &[String],
     ) -> Result<f64, Halt> {
         let t0 = self.t;
-        let held_idx = self.arms[i]
-            .holding
-            .as_deref()
-            .and_then(|id| self.part_index(id));
-        let offset = held_idx.map(|k| self.offset(i, rig, &self.parts[k]));
+        let held = self.carried(i, rig);
         let others = self.others(i, rig);
         let mut kept: Vec<(f64, [f64; 6])> = vec![samples[0]];
         let mut stop = None;
@@ -617,10 +687,7 @@ impl World {
                 #[allow(clippy::cast_precision_loss)]
                 let s = k as f64 / n as f64;
                 let q: [f64; 6] = std::array::from_fn(|j| qa[j] + (qb[j] - qa[j]) * s);
-                let held = held_idx
-                    .zip(offset.as_ref())
-                    .map(|(h, o)| (&self.parts[h], o));
-                let g = self.arm_group(i, rig, &q, held);
+                let g = self.arm_group(i, rig, &q, &held);
                 if let Some(what) = collide::first_hit(&g, &others, allowed) {
                     // stopped at the last step that was clear
                     if free.0 > kept.last().map_or(0.0, |k| k.0) {
@@ -639,14 +706,27 @@ impl World {
             }
         }
         let end = kept.last().map_or(0.0, |k| k.0);
+        // a joint molten between what this arm carries and what it does
+        // not is disturbed by the motion
+        if end > 0.0 {
+            self.disturb(i);
+        }
         self.arms[i].record(t0, &kept);
-        self.t = micro(t0 + end);
         let flange = self.arms[i]
             .base_pose()
             .then(&kin::forward(rig, &self.arms[i].joints));
-        if let (Some(h), Some(o)) = (held_idx, offset) {
-            self.parts[h].at = layout::six(&flange.then(&o));
+        for (k, o) in &held {
+            self.parts[*k].at = layout::six(&flange.then(o));
+            // pulled out of the vise
+            if self.parts[*k].in_vise && end > 0.0 {
+                self.parts[*k].in_vise = false;
+                let id = self.parts[*k].id.clone();
+                self.notes
+                    .push((false, format!("{id} was pulled out of the vise")));
+            }
         }
+        // heat flows while it moves
+        self.advance(end, Some(i));
         // the tool on the flange: its mount is the flange
         if let Some(tool) = self.arms[i].tool.clone() {
             let id = format!("{}.{tool}", self.arms[i].name);
@@ -662,7 +742,7 @@ impl World {
 
     /// A straight move of arm `i`'s tool point to `target` (the cell's
     /// frame).
-    fn line(
+    pub(crate) fn line(
         &mut self,
         i: usize,
         rig: &Rig,
@@ -713,43 +793,42 @@ impl World {
 
     // -- holding and letting go ------------------------------------------
 
-    /// Part `k` is let go of: the vise takes it if it is closed and the
-    /// part is at its middle; otherwise it falls to the floor and is
-    /// lost.
-    fn unsupported(&mut self, k: usize, events: &mut Vec<String>, warnings: &mut Vec<String>) {
-        let t = self.t;
-        let p = &self.parts[k];
+    /// Part `k` is let go of: a closed vise takes it if it is at the
+    /// vise's middle; then whatever carries nothing now -- it, and parts
+    /// soldered to it -- falls to the floor and is lost.
+    fn let_go_of(&mut self, k: usize) {
         let center = layout::stage_frame(self.stage)
             .then(&Pose::from_xyz_rpy(
                 layout::vise_center_on_stage(),
                 [0.0; 3],
             ))
             .p;
-        if self.vise == "closed" && kin::norm(kin::sub(p.pose().p, center)) <= VISE_REACH {
-            self.parts[k].take("vise", t);
-            events.push(format!("the vise holds {}", self.parts[k].id));
-            return;
+        if self.vise == "closed"
+            && kin::norm(kin::sub(self.parts[k].pose().p, center)) <= VISE_REACH
+            && !self.parts[k].in_vise
+        {
+            self.parts[k].in_vise = true;
+            let id = self.parts[k].id.clone();
+            self.notes.push((false, format!("the vise holds {id}")));
         }
-        let Ok(kind) = parts::kind(&p.kind) else {
-            return;
-        };
-        let low = collide::part(&p.id, &kind, &p.pose())
-            .iter()
-            .map(|s| s.shape.lowest())
-            .fold(f64::INFINITY, f64::min);
-        let h = (low - FLOOR).max(0.0);
-        let mut at = p.at;
-        at[2] = kin::clean(at[2] - h);
-        let landed = micro(t + (2.0 * h / GRAVITY).sqrt());
-        let part = &mut self.parts[k];
-        part.at = at;
-        part.lost = true;
-        part.moves.push(Moved { t: landed, at });
-        warnings.push(format!(
-            "{} fell {} mm to the floor and is lost",
-            part.id,
-            num(round3(h))
-        ));
+        self.sync_carriers();
+        if self.parts[k].holder.is_none() {
+            self.fall_free(&[k]);
+        } else if let Some(h) = self.parts[k].holder.clone() {
+            // carried still, by what a part soldered to it is held by
+            if !self.parts[k].in_vise {
+                let id = self.parts[k].id.clone();
+                let by = if h == "vise" {
+                    "the vise".to_string()
+                } else {
+                    format!("arm {h}")
+                };
+                self.notes.push((
+                    false,
+                    format!("{id} stays: it is soldered to a part {by} holds"),
+                ));
+            }
+        }
     }
 
     // -- the commands ----------------------------------------------------
@@ -780,6 +859,14 @@ impl World {
             Err(Halt::Stopped(why)) => Some(why),
             Ok(()) => None,
         };
+        // what happened on the way, for the outcome
+        for (warn, what) in std::mem::take(&mut work.notes) {
+            if warn {
+                warnings.push(what)
+            } else {
+                events.push(what)
+            }
+        }
         *self = work;
         // a reset starts the clock again
         let start = if c.op == "reset" { 0.0 } else { t0 };
@@ -825,16 +912,38 @@ impl World {
                 did.push(format!("reset: {} parts in the tray", self.parts.len()));
             }
             "wait" => {
-                if c.get("until").is_some() || c.get("below").is_some() {
-                    return refuse(
-                        "wait until= below= needs temperatures, not simulated yet".into(),
-                    );
+                if let Some(target) = c.word("until") {
+                    let Some(below) = c.number("below") else {
+                        return refuse("wait until=: give below= too".into());
+                    };
+                    self.temperature(target).map_err(Halt::Refused)?;
+                    // half a second at a time, two minutes at most
+                    let start = self.t;
+                    while self.temperature(target).unwrap_or(0.0) >= below
+                        && self.t - start < WAIT_MOST
+                    {
+                        self.advance(0.5, None);
+                    }
+                    let now = self.temperature(target).unwrap_or(0.0);
+                    did.push(format!(
+                        "waited {} s: {target} at {} C",
+                        num(round3(self.t - start)),
+                        num1(now)
+                    ));
+                    if now >= below {
+                        warnings.push(format!(
+                            "{target} is still at {} C after {} s",
+                            num1(now),
+                            num(WAIT_MOST)
+                        ));
+                    }
+                } else {
+                    let Some(s) = c.number("s") else {
+                        return refuse("wait: give s=, or until= and below=".into());
+                    };
+                    self.advance(s, None);
+                    did.push(format!("wait {} s", num(s)));
                 }
-                let Some(s) = c.number("s") else {
-                    return refuse("wait: give s=".into());
-                };
-                self.t = micro(self.t + s);
-                did.push(format!("wait {} s", num(s)));
             }
             "joints" => {
                 let Some(Value::Numbers(a)) = c.get("angles") else {
@@ -855,9 +964,18 @@ impl World {
                 ));
                 r?;
             }
-            "move" | "lift" => {
+            "move" | "lift" | "back" => {
                 let now = self.tip(&arm).map_err(Halt::Refused)?;
-                let target = if c.op == "lift" {
+                let target = if c.op == "back" {
+                    // along the tool's own axis, away from what it touches
+                    Pose {
+                        p: kin::sub(
+                            now.p,
+                            kin::scale(now.z(), c.number("mm").unwrap_or(BACK_MM)),
+                        ),
+                        r: now.r,
+                    }
+                } else if c.op == "lift" {
                     Pose {
                         p: kin::add(now.p, [0.0, 0.0, c.number("mm").unwrap_or(LIFT_MM)]),
                         r: now.r,
@@ -875,12 +993,18 @@ impl World {
                         r,
                     }
                 };
+                // backing out of a joint leaves what it touched
+                let leaving = if c.op == "back" {
+                    self.near_tip(now.p)
+                } else {
+                    Vec::new()
+                };
                 self.line(
                     i,
                     &rig,
                     &target,
                     c.number("speed").unwrap_or(LINE_SPEED),
-                    &[],
+                    &leaving,
                     did,
                 )?;
                 did.push(format!(
@@ -896,7 +1020,7 @@ impl World {
                     warnings.push(format!("the vise was already {want}"));
                 }
                 self.vise = want.into();
-                self.t = micro(self.t + VISE_TIME);
+                self.advance(VISE_TIME, None);
                 did.push(format!("vise {want} in {} s", num(VISE_TIME)));
                 let center = layout::stage_frame(self.stage)
                     .then(&Pose::from_xyz_rpy(
@@ -904,26 +1028,36 @@ impl World {
                         [0.0; 3],
                     ))
                     .p;
+                // closing grips a part at its middle (an arm may hold it
+                // too); opening lets go of every part it grips
+                let mut released = Vec::new();
                 for k in 0..self.parts.len() {
                     let p = &self.parts[k];
                     if close
-                        && p.holder.is_none()
                         && !p.lost
+                        && !p.in_vise
                         && kin::norm(kin::sub(p.pose().p, center)) <= VISE_REACH
                     {
-                        let t = self.t;
-                        self.parts[k].take("vise", t);
+                        self.parts[k].in_vise = true;
                         events.push(format!("the vise holds {}", self.parts[k].id));
                     }
-                    if !close && self.parts[k].holder.as_deref() == Some("vise") {
-                        let t = self.t;
-                        self.parts[k].let_go(t);
+                    if !close && self.parts[k].in_vise {
+                        self.parts[k].in_vise = false;
                         events.push(format!("the vise lets {} go", self.parts[k].id));
-                        self.unsupported(k, events, warnings);
+                        released.push(k);
                     }
                 }
+                self.sync_carriers();
+                self.fall_free(&released);
             }
-            "tool" => self.change_tool(i, &rig, c.word("tool").unwrap_or(""), did, events)?,
+            "tool" => self.change_tool(
+                i,
+                &rig,
+                c.word("tool").unwrap_or(""),
+                c.number("temp"),
+                did,
+                events,
+            )?,
             "grip" => {
                 self.need_tweezers(i)?;
                 if c.word("action") == Some("close") {
@@ -1006,6 +1140,25 @@ impl World {
                 self.need_holding(i, id)?;
                 self.open(i, did, events, warnings);
             }
+            "touch" => {
+                let at = c.word("at").unwrap_or("");
+                let dwell = c.number("dwell").unwrap_or(1.0);
+                self.touch(i, &rig, at, dwell, did, events)?;
+            }
+            "feed" => {
+                let mm = c.number("mm").unwrap_or(0.0);
+                let rate = c.number("rate").unwrap_or(2.0);
+                self.feed(i, &rig, mm, rate, did, events, warnings)?;
+            }
+            "clip" => {
+                let on = c.word("on").unwrap_or("");
+                let at = c.number("at").unwrap_or(2.0);
+                self.clip_on(i, &rig, on, at, did, events)?;
+            }
+            "inspect" => {
+                let target = c.word("target").unwrap_or("");
+                events.push(self.inspect(target).map_err(Halt::Refused)?);
+            }
             op => return refuse(format!("{op} is not simulated yet")),
         }
         Ok(())
@@ -1049,12 +1202,8 @@ impl World {
         // collision: the turning top against the arms and what they hold
         let mut arms = Vec::new();
         for (j, a) in self.arms.iter().enumerate() {
-            let held = a
-                .holding
-                .as_deref()
-                .and_then(|id| self.part(id))
-                .map(|x| (x, self.offset(j, rig, x)));
-            arms.push(self.arm_group(j, rig, &a.joints, held.as_ref().map(|(x, o)| (*x, o))));
+            let held = self.carried(j, rig);
+            arms.push(self.arm_group(j, rig, &a.joints, &held));
         }
         // the edge of the vise is at most 40 mm out: steps of CHECK_STEP there
         #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
@@ -1096,7 +1245,7 @@ impl World {
             part.at = layout::six(&spin.then(&part.pose()));
         }
         self.stage = kin::clean(from + end);
-        self.t = micro(t0 + dt);
+        self.advance(dt, None);
         did.push(format!(
             "stage to {} in {} s",
             num(self.stage),
@@ -1113,6 +1262,7 @@ impl World {
         i: usize,
         rig: &Rig,
         tool: &str,
+        iron_set: Option<f64>,
         did: &mut Vec<String>,
         events: &mut Vec<String>,
     ) -> Result<(), Halt> {
@@ -1121,6 +1271,11 @@ impl World {
             return Err(Halt::Refused(format!("{arm} holds {h}: release it first")));
         }
         if self.arms[i].tool.as_deref() == Some(tool) {
+            if let (Some(set), "iron") = (iron_set, tool) {
+                self.arms[i].iron = Some(set);
+                events.push(format!("{arm}'s iron set to {} C", num(set)));
+                return Ok(());
+            }
             events.push(format!("{arm} already holds the {tool}"));
             return Ok(());
         }
@@ -1146,6 +1301,7 @@ impl World {
                 self.tools[k].at = layout::six(&slot);
             }
             self.arms[i].tool = None;
+            self.arms[i].iron = None;
             events.push(format!("{arm} put the {old} back in its rack"));
             self.line(i, rig, &up(&slot), LINE_SPEED, &rack, did)?;
         }
@@ -1162,6 +1318,7 @@ impl World {
             self.tools[k].take(&arm, t);
         }
         self.arms[i].tool = Some(tool.to_string());
+        self.arms[i].iron = (tool == "iron").then(|| iron_set.unwrap_or(IRON_SET));
         events.push(format!("{arm} took the {tool}"));
         let len = layout::tool_length(tool);
         self.line(
@@ -1187,11 +1344,11 @@ impl World {
         let arm = self.arms[i].name.clone();
         let tip = self.tip(&arm).map_err(Halt::Refused)?;
         let _ = rig;
-        self.t = micro(self.t + GRIP_TIME);
+        self.advance(GRIP_TIME, None);
         did.push(format!("grip {arm} close in {} s", num(GRIP_TIME)));
         let found = self.parts.iter().position(|p| {
             !p.lost
-                && p.holder.as_deref().is_none_or(|h| h == "vise")
+                && p.holder.as_deref().is_none_or(|h| h == "vise" || h == arm)
                 && only.is_none_or(|o| o == p.id)
                 && parts::kind(&p.kind).is_ok_and(|k| {
                     k.grasps.iter().any(|g| {
@@ -1204,13 +1361,8 @@ impl World {
         });
         match found {
             Some(k) => {
-                let t = self.t;
-                if self.parts[k].holder.is_some() {
-                    self.parts[k].let_go(t);
-                    events.push(format!("the vise lets {} go", self.parts[k].id));
-                }
-                self.parts[k].take(&arm, t);
                 self.arms[i].holding = Some(self.parts[k].id.clone());
+                self.sync_carriers();
                 events.push(format!("{arm} holds {}", self.parts[k].id));
             }
             None => events.push(format!("{arm} closed on nothing")),
@@ -1226,14 +1378,13 @@ impl World {
         warnings: &mut Vec<String>,
     ) {
         let arm = self.arms[i].name.clone();
-        self.t = micro(self.t + GRIP_TIME);
+        self.advance(GRIP_TIME, None);
         did.push(format!("grip {arm} open in {} s", num(GRIP_TIME)));
+        let _ = warnings;
         if let Some(id) = self.arms[i].holding.take() {
             if let Some(k) = self.part_index(&id) {
-                let t = self.t;
-                self.parts[k].let_go(t);
                 events.push(format!("{arm} let {id} go"));
-                self.unsupported(k, events, warnings);
+                self.let_go_of(k);
             }
         }
     }
@@ -1374,8 +1525,13 @@ pub fn outcome_json(o: &Outcome) -> String {
 
 /// Times are kept to the microsecond: outcomes and tracks read cleanly
 /// and stay the same on every machine.
-fn micro(t: f64) -> f64 {
+pub(crate) fn micro(t: f64) -> f64 {
     (t * 1e6).round() / 1e6
+}
+
+/// A number to one decimal, for messages.
+pub(crate) fn num1(x: f64) -> String {
+    num(kin::clean((x * 10.0).round() / 10.0))
 }
 
 fn round3(x: f64) -> f64 {

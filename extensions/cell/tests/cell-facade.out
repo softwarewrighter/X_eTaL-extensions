@@ -15,6 +15,7 @@ tool ARM TOOL [temp=C] -- change the arm's tool at the rack
 joints ARM J1 J2 J3 J4 J5 J6 [speed=N] -- move the arm to absolute joint angles, all joints arriving together
 move ARM to=X,Y,Z [rpy=R,P,Y] [speed=MM/S] -- move the tool to a pose, by inverse kinematics, in a straight line
 lift ARM [mm=MM] -- move the tool straight up
+back ARM [mm=MM] -- move the tool straight back along its own axis, away from what it touches
 grip ARM open|close [force=N] -- open or close the tweezers
 pick ARM PART grasp=NAME -- approach a part, close on a grasp frame, lift it
 place ARM PART at=X,Y,Z [rpy=R,P,Y] -- carry the held part to a pose

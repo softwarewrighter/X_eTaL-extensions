@@ -1,0 +1,15 @@
+## Two parts soldered into one: programs/solder.cell run by the simulator
+## -- arm A puts a DIP-8 in the vise and holds a resistor's lead to pin 3,
+## arm C's iron heats the joint, arm D feeds solder, the joint freezes
+## good; A lets the resistor go (it stays, soldered on), picks the DIP
+## out of the vise and lifts the pair -- each command's outcome a line.
+## Title: The assembly cell, live
+## Page: cell/live/ drive the cell, live
+## Feature: Open the cell: watch a resistor soldered to a chip a command at a time, or drive every arm yourself, in your browser
+## Run: just demo cell solder
+
+"ce:" u_se< "Cell"
+"bl:" u_se< "Blender"
+
+"each command: ok, its end time, what happened (the joint as it froze)"
+ce:r_un bl:r_ead "programs/solder.cell"

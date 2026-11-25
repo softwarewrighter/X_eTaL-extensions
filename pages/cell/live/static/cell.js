@@ -13,6 +13,15 @@
 //                                       it, turning with the stage
 //   place(id, t, pose)                  from t the part is there (where a
 //                                       fall ended)
+//   heat(id, rows)                      a part's temperatures over time:
+//                                       rows of t, its body, each pin's
+//                                       hottest lead segment (C); drawn as
+//                                       a glow, dull red to yellow white
+//   joint(name, part, xyz, rows, result, t)
+//                                       a joint's solder on a part (xyz in
+//                                       its frame): rows of t, temperature,
+//                                       mm3; molten it glows, frozen it is
+//                                       its result's color from time t
 //   ghost(id, kind, pose)               where a part ends: drawn faint,
 //                                       before it is there
 //   step(n, label, t0, t1)              a command, for the list of steps
@@ -90,7 +99,7 @@ export function cellPlayer(host, calls, options = {}) {
   scene.add(root);
   const folder = options.models || './models/';
   const s = {
-    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], attaches: [], places: [], ghosts: [], steps: [], expects: [],
+    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
   };
   const api = {
     nums,
@@ -101,6 +110,8 @@ export function cellPlayer(host, calls, options = {}) {
     part(id, kind, pose) { s.parts.push({ id, kind, pose }); },
     attach(id, arm, t0, t1) { s.attaches.push({ id, arm, t0, t1 }); },
     place(id, t, pose) { s.places.push({ id, t, pose }); },
+    heat(id, rows) { s.heats.push({ id, rows }); },
+    joint(name, part, xyz, rows, result, t) { s.joints.push({ name, part, xyz, rows, result, t }); },
     ghost(id, kind, pose) { s.ghosts.push({ id, kind, pose }); },
     step(n, label, t0, t1) { s.steps.push({ n, label, t0, t1 }); },
     expect(arm, t, xyz) { s.expects.push({ arm, t, xyz }); },
@@ -123,7 +134,10 @@ export function cellPlayer(host, calls, options = {}) {
   const camera = new THREE.PerspectiveCamera(40, 16 / 9, 5, 10000);
   // where the camera looks from: options.view (a player's view before),
   // else a three-quarter view of the whole cell
-  const view = options.view || { yaw: 35 * D, pitch: 28 * D, dist: 1700, target: new THREE.Vector3(0, 60, 0) };
+  const whole = () => ({ yaw: 35 * D, pitch: 28 * D, dist: 1700, target: new THREE.Vector3(0, 60, 0) });
+  // close up: the work zone, the stage's top and what is held over it
+  const close = () => ({ yaw: 35 * D, pitch: 22 * D, dist: 120, target: new THREE.Vector3(0, -30, 0) });
+  const view = options.view || (new URLSearchParams(location.search).get('view') === 'close' ? close() : whole());
   const place = () => {
     const c = Math.cos(view.pitch);
     camera.position.set(view.target.x + view.dist * c * Math.sin(view.yaw), view.target.y + view.dist * Math.sin(view.pitch), view.target.z + view.dist * c * Math.cos(view.yaw));
@@ -194,7 +208,16 @@ export function cellPlayer(host, calls, options = {}) {
       const g = holder((await load(p.kind)).clone(true));
       g.matrixAutoUpdate = false;
       root.add(g);
-      parts[p.id] = { g, start: poseMatrix(p.pose) };
+      // each mesh its own material, so heat tints it alone: the body's,
+      // and each pin's lead by its name (KIND_leadPIN_N)
+      const glow = { body: [], pins: {} };
+      g.traverse((o) => {
+        if (!o.isMesh) return;
+        o.material = o.material.clone();
+        const m = /_lead([^_]+)_\d+$/.exec(o.name);
+        if (m) (glow.pins[m[1]] ||= []).push(o.material); else glow.body.push(o.material);
+      });
+      parts[p.id] = { g, start: poseMatrix(p.pose), glow };
     }),
     ...s.ghosts.map(async (p) => {
       const g = holder((await load(p.kind)).clone(true));
@@ -250,11 +273,52 @@ export function cellPlayer(host, calls, options = {}) {
     const st = fixtures.stage;
     if (st && st.turn) st.turn.quaternion.copy(st.rest).multiply(new THREE.Quaternion().setFromAxisAngle(Y, (at(s.tracks.stage, u) || [0])[0] * D));
   };
+  // heat as a glow from 100 C: dull red, orange, yellow white at the
+  // iron's temperature (a part only warm keeps its own color)
+  const ramp = (temp) => {
+    const f = Math.max(0, Math.min(1, (temp - 100) / 270));
+    return [Math.sqrt(f), 0.9 * f * f, 0.6 * f * f * f];
+  };
+  const tint = (materials, temp) => {
+    const [r, g, b] = ramp(temp);
+    for (const m of materials || []) if (m.emissive) { m.emissive.setRGB(r, g, b); m.emissiveIntensity = 1; }
+  };
+  const heatAt = (t) => {
+    for (const h of s.heats) {
+      const p = parts[h.id];
+      if (!p) continue;
+      const row = at(h.rows, t);
+      const cool = !row || t < h.rows[0][0];
+      tint(p.glow.body, cool ? 25 : row[0]);
+      Object.keys(p.glow.pins).forEach((pin) => {
+        const i = Number(pin);
+        tint(p.glow.pins[pin], cool || !Number.isFinite(i) ? 25 : row[i] ?? 25);
+      });
+    }
+  };
+  // the joints: a ball of solder on its part, as big as the solder
+  const joints = [];
+  const jointAt = (t) => {
+    for (const j of joints) {
+      const row = t >= j.rows[0][0] ? at(j.rows, t) : null;
+      const mm3 = row ? row[1] : 0;
+      j.ball.visible = mm3 > 0;
+      if (!j.ball.visible) continue;
+      j.ball.scale.setScalar(Math.cbrt((3 * mm3) / (4 * Math.PI)) * 1.6);
+      const frozen = t >= j.t && j.result;
+      const colors = { good: '#d9dee7', cold: '#7d8188', disturbed: '#9a8f7f', starved: '#b0a07a', blob: '#c9c2b0', bridged: '#d07070' };
+      j.ball.material.color.set(frozen ? colors[j.result] || '#cccccc' : '#f2f2f2');
+      const [r, g, b] = ramp(frozen ? 25 : row[0]);
+      j.ball.material.emissive.setRGB(r, g, b);
+    }
+  };
   let now = 0;
   const seek = (t) => {
     now = Math.max(0, Math.min(duration, t));
     for (const id of Object.keys(parts)) parts[id].g.matrix.copy(partAt(id, now));
     for (const id of Object.keys(arms)) pose(id, at(s.tracks[id], now) || [0, 0, 0, 0, 90, 0]);
+    heatAt(now);
+    jointAt(now);
     turnStage(now);
     ui.show();
     draw();
@@ -367,10 +431,18 @@ export function cellPlayer(host, calls, options = {}) {
     back.textContent = 'Previous step';
     const ahead = document.createElement('button');
     ahead.textContent = 'Next step';
+    // the whole cell, or close up on the work zone
+    const zoom = document.createElement('button');
+    zoom.textContent = view.dist < 600 ? 'Whole cell' : 'Close up';
+    zoom.addEventListener('click', () => {
+      Object.assign(view, view.dist < 600 ? whole() : close());
+      zoom.textContent = view.dist < 600 ? 'Whole cell' : 'Close up';
+      place();
+    });
     const ghosts = document.createElement('label');
     ghosts.innerHTML = '<input type="checkbox" checked> ghosts';
-    for (const b of [play, back, ahead]) b.style.cssText = 'font:inherit;padding:3px 12px;border-radius:6px;border:1px solid #56607a;background:#1a1f2e;color:#e8eaf0;cursor:pointer';
-    box.append(play, back, ahead, time, bar, rate, ghosts);
+    for (const b of [play, back, ahead, zoom]) b.style.cssText = 'font:inherit;padding:3px 12px;border-radius:6px;border:1px solid #56607a;background:#1a1f2e;color:#e8eaf0;cursor:pointer';
+    box.append(play, back, ahead, time, bar, rate, zoom, ghosts);
     const list = document.createElement('ol');
     list.id = 'cellsteps';
     list.style.cssText = 'position:fixed;right:12px;top:12px;max-height:60vh;overflow:auto;margin:0;background:rgba(8,9,14,0.82);color:#e8eaf0;padding:8px 12px 8px 36px;border-radius:8px;font:13px/1.5 ui-monospace,Menlo,monospace;max-width:40vw';
@@ -413,6 +485,14 @@ export function cellPlayer(host, calls, options = {}) {
   })();
 
   ready.then(() => {
+    for (const j of s.joints) {
+      const host = parts[j.part];
+      if (!host || !j.rows.length) continue;
+      const ball = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 12), new THREE.MeshStandardMaterial({ color: '#d9dee7', metalness: 0.8, roughness: 0.25 }));
+      ball.position.set(j.xyz[0], j.xyz[1], j.xyz[2]);
+      host.g.add(ball);
+      joints.push({ ...j, ball });
+    }
     seek(options.time !== undefined ? options.time : 0);
     requestAnimationFrame(tick);
     if (options.check) {

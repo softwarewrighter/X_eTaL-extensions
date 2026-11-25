@@ -2,11 +2,11 @@
 {"ok":true,"command":"tool A tweezers","t0":0.0,"t1":13.935366,"did":["line A to=280,600,80 rpy=180,0,-90 in 6.615 s","line A to=280,600,-40 rpy=180,0,-90 in 6.02 s","line A to=280,600,-20 rpy=180,0,-90 in 1.3 s"],"events":["A took the tweezers"],"warnings":[]}
 {"ok":true,"command":"pick A U1 grasp=ends","t0":13.935366,"t1":22.042089,"did":["line A to=180.322,152.038,-104.72 rpy=180,0,90 in 4.767 s","line A to=180.322,152.038,-134.72 rpy=180,0,90 in 1.52 s","grip A close in 0.3 s","line A to=180.322,152.038,-104.72 rpy=180,0,90 in 1.52 s"],"events":["A holds U1"],"warnings":[]}
 {"ok":true,"command":"place A U1 at=0,0,-32 rpy=0,0,90","t0":22.042089,"t1":26.234697,"did":["line A to=0,0,-2 rpy=-180,0,90 in 2.673 s","line A to=0,0,-32 rpy=-180,0,90 in 1.52 s"],"events":["A placed U1 at 0,0,-32"],"warnings":[]}
-{"ok":true,"command":"vise close","t0":26.234697,"t1":26.734697,"did":["vise closed in 0.5 s"],"events":[],"warnings":[]}
-{"ok":true,"command":"release A U1","t0":26.734697,"t1":27.034697,"did":["grip A open in 0.3 s"],"events":["A let U1 go","the vise holds U1"],"warnings":[]}
+{"ok":true,"command":"vise close","t0":26.234697,"t1":26.734697,"did":["vise closed in 0.5 s"],"events":["the vise holds U1"],"warnings":[]}
+{"ok":true,"command":"release A U1","t0":26.734697,"t1":27.034697,"did":["grip A open in 0.3 s"],"events":["A let U1 go"],"warnings":[]}
 {"ok":true,"command":"tool D tweezers","t0":27.034697,"t1":40.970063,"did":["line D to=600,280,80 rpy=180,0,180 in 6.615 s","line D to=600,280,-40 rpy=180,0,180 in 6.02 s","line D to=600,280,-20 rpy=180,0,180 in 1.3 s"],"events":["D took the tweezers"],"warnings":[]}
 {"ok":true,"command":"pick D D1 grasp=body","t0":40.970063,"t1":48.788277,"did":["line D to=173.251,201.536,-78.45 rpy=180,0,90 in 4.478 s","line D to=173.251,201.536,-108.45 rpy=180,0,90 in 1.52 s","grip D close in 0.3 s","line D to=173.251,201.536,-78.45 rpy=180,0,90 in 1.52 s"],"events":["D holds D1"],"warnings":[]}
 {"ok":true,"command":"move D to=120,40,60","t0":48.788277,"t1":51.081399,"did":["line D to=120,40,60 rpy=180,0,90 in 2.293 s","joints D -6.911 7.97 37.763 0 44.267 83.089"],"events":[],"warnings":[]}
-{"ok":true,"command":"release D D1","t0":51.081399,"t1":51.381399,"did":["grip D open in 0.3 s"],"events":["D let D1 go"],"warnings":["D1 fell 228.45 mm to the floor and is lost"]}
+{"ok":true,"command":"release D D1","t0":51.081399,"t1":51.381399,"did":["grip D open in 0.3 s"],"events":["D let D1 go"],"warnings":["D1 fell 228.5 mm to the floor and is lost"]}
 {"ok":false,"command":"move C to=0,-20,60 rpy=180,0,0","t0":51.381399,"t1":53.622225,"did":[],"stopped":"collision: arm C link 6 with arm A joint 6 at 53.622 s","events":[],"warnings":[]}
 

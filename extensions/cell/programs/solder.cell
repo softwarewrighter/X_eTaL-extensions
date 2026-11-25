@@ -1,0 +1,26 @@
+# solder: two parts soldered into one. Arm A puts the DIP-8 in the vise
+# and brings a resistor's lead to pin 3, tip to tip; arm C's iron heats
+# the joint, arm D feeds solder into it; the joint cools and freezes.
+# A lets the resistor go -- it stays, soldered on -- then picks the DIP
+# out of the vise and lifts the pair: a subassembly, held.
+reset circuit=demo
+tool A tweezers
+pick A U1 grasp=ends
+place A U1 at=0,0,-32 rpy=0,0,90
+vise close
+release A U1
+pick A R1 grasp=body
+move A to=40,60,0
+align A R1.1.tip to=U1.3.tip gap=0.1
+tool C iron temp=350
+touch C at=U1.3+R1.1 dwell=2
+tool D solder
+feed D mm=2 rate=1
+back C
+wait until=U1.3+R1.1 below=100
+inspect U1.3+R1.1
+release A R1
+lift A mm=40
+pick A U1 grasp=ends
+vise open
+lift A mm=80
