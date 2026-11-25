@@ -47,12 +47,15 @@ player converts, as console-3D's rig does.
   three-axis spherical wrist) with a quick-change flange. Named A, B,
   C, D. Any arm can hold any tool; the first circuit uses A and B to
   hold, C to solder and D to feed solder and clip heatsinks.
-- **Tool rack** (one slot per tool, reachable by every arm): tweezer
+- **Tool racks** (one beside each arm, decision C14, each with every
+  tool): tweezer
   gripper (two fingers, force limited), soldering iron (tip size,
   set point), solder feeder (wire diameter, feed rate), heatsink clip
   (a copper jaw on a spring, a thermal mass), spot-weld electrodes
-  (capacitor discharge), flush cutter, wire feeder (a spool, a nozzle,
-  a cutter: bare tinned or enameled wire).
+  (capacitor discharge), flush cutter (trims excess leads and cuts wire),
+  wire feeder (a spool, a nozzle, a cutter: bare tinned or enameled
+  wire), and a bender (round-nose jaws on mandrels: forms leads and
+  wires, decision C15).
 - **Trays**: pocketed trays of parts, each pocket a part in a known
   pose (leads down, body up); a spool rack of wire gauges.
 - **Microscope**: a USB microscope on a pan-tilt-zoom head on a gantry,
