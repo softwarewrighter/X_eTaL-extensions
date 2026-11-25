@@ -10,12 +10,18 @@
 <body>
 <nav class="toc" aria-label="Demos">
   <p><a href="#top">X_eTaL extensions</a></p>
+  <p><b>Live, in your browser:</b></p>
+  <ul>
+    <li><a href="cell/live/">The assembly cell, live</a></li>
+    <li><a href="three/live/">The neon city, live</a></li>
+  </ul>
   <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
+  <p><b>Every demo, by extension:</b></p>
   <ul>
     <li><a href="#audio">audio</a><ul><li><a href="#audio-scope">scope</a></li><li><a href="#audio-spectrum">spectrum</a></li><li><a href="#audio-synth">synth</a></li></ul></li>
     <li><a href="#blender">blender</a><ul><li><a href="#blender-city-preview">The neon city, ray-traced: the whole flight, rough</a></li><li><a href="#blender-city">The neon city, ray-traced: four stills</a></li><li><a href="#blender-cosy">cosy</a></li><li><a href="#blender-cubes">cubes</a></li><li><a href="#blender-game-assets">game-assets</a></li><li><a href="#blender-gpu-build">X_eTaL GPU: build process</a></li><li><a href="#blender-gpu-run">X_eTaL GPU: execution</a></li><li><a href="#blender-hello">hello</a></li><li><a href="#blender-hex-build">HEX1000-UART: build process</a></li><li><a href="#blender-hex-keys-leds-build">HEX1000-keys-leds: build process</a></li><li><a href="#blender-hex-keys-leds-run">HEX1000-keys-leds: execution</a></li><li><a href="#blender-hex-pc">hex-pc</a></li><li><a href="#blender-hex-run">HEX1000-UART: execution</a></li><li><a href="#blender-matmul-fly">matmul-fly</a></li><li><a href="#blender-matmul-steps">matmul-steps</a></li><li><a href="#blender-relu-softmax">relu-softmax</a></li><li><a href="#blender-td-models">td-models</a></li></ul></li>
     <li><a href="#canvas">canvas</a><ul><li><a href="#canvas-life">life</a></li></ul></li>
-    <li><a href="#cell">cell</a><ul><li><a href="#cell-models">models</a></li><li><a href="#cell-pick">The assembly cell, live</a></li></ul></li>
+    <li><a href="#cell">cell</a><ul><li><a href="#cell-models">models</a></li><li><a href="cell/live/">The assembly cell, live (open it)</a></li></ul></li>
     <li><a href="#clock">clock</a><ul><li><a href="#clock-bridge-cost">bridge-cost</a></li></ul></li>
     <li><a href="#digest">digest</a></li>
     <li><a href="#hello">hello</a><ul><li><a href="#hello-tour">tour</a></li></ul></li>
@@ -24,7 +30,7 @@
     <li><a href="#linalg">linalg</a></li>
     <li><a href="#scene">scene</a><ul><li><a href="#scene-cube">cube</a></li><li><a href="#scene-voxels-chunk">voxels-chunk</a></li><li><a href="#scene-voxels-dig">voxels-dig</a></li><li><a href="#scene-voxels-endless">voxels-endless</a></li><li><a href="#scene-voxels-faces">voxels-faces</a></li><li><a href="#scene-voxels-fly">voxels-fly</a></li><li><a href="#scene-voxels-game">voxels-game</a></li><li><a href="#scene-voxels-light">voxels-light</a></li><li><a href="#scene-voxels-rubik-buttons">voxels-rubik-buttons</a></li><li><a href="#scene-voxels-rubik-solve">voxels-rubik-solve</a></li><li><a href="#scene-voxels-rubik-turn">voxels-rubik-turn</a></li><li><a href="#scene-voxels-rubik">voxels-rubik</a></li><li><a href="#scene-voxels-solid">voxels-solid</a></li><li><a href="#scene-voxels-walk">voxels-walk</a></li><li><a href="#scene-voxels-water">voxels-water</a></li><li><a href="#scene-voxels-world">voxels-world</a></li></ul></li>
     <li><a href="#sqlite">sqlite</a><ul><li><a href="#sqlite-notebook">notebook</a></li></ul></li>
-    <li><a href="#three">three</a><ul><li><a href="#three-city">The neon city, live</a></li></ul></li>
+    <li><a href="#three">three</a><ul><li><a href="three/live/">The neon city, live (open it)</a></li></ul></li>
     <li><a href="#web">web</a><ul><li><a href="#web-life">life</a></li><li><a href="#web-todomvc">todomvc</a></li></ul></li>
   </ul>
 </nav>
@@ -107,7 +113,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <pre class="source">just demo blender cubes</pre>
     </section>
     <section class="panel demo" id="blender-game-assets">
-      <h3>blender / game-assets <a class="docs" href="doc/extensions-blender-demos-game-assets.xtl.html">source and docs</a> <a class="docs" href="blender/td/">the pieces in 3D (published)</a></h3>
+      <h3>blender / game-assets <a class="docs" href="doc/extensions-blender-demos-game-assets.xtl.html">source and docs</a> <a class="docs" href="blender/td/">open it live: the pieces in 3D (published)</a></h3>
       <p class="note">Blender, 4: game assets. X_eTaL makes the twelve tower defense pieces for X_eTaL-games and everything published with them: it writes the Python -- the launcher, and the bpy script describing each piece (Td.xtl) -- Python runs Blender, Blender runs the script: each piece is written as NAME.glb with its clips, rendered alone as NAME.png and as two sheets of frames (NAME-turn.png, NAME-map.png), shown close, one after another, turning and playing each clip, for one video, and all twelve lined up for another. Then X_eTaL hashes every file (the digest extension) into manifest.toml and writes the page that shows them, index.html, all in work/td/site. just ext blender publish-td copies that into the site, at blender/td/.</p>
       <video src="blender/game-assets.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo blender game-assets</pre>
@@ -179,7 +185,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <pre class="source">just demo blender relu-softmax</pre>
     </section>
     <section class="panel demo" id="blender-td-models">
-      <h3>blender / td-models <a class="docs" href="doc/extensions-blender-demos-td-models.xtl.html">source and docs</a> <a class="docs" href="blender/td/">the pieces in 3D (published)</a></h3>
+      <h3>blender / td-models <a class="docs" href="doc/extensions-blender-demos-td-models.xtl.html">source and docs</a> <a class="docs" href="blender/td/">open it live: the pieces in 3D (published)</a></h3>
       <p class="note">Blender, 3: game pieces. The twelve tower defense pieces X_eTaL-games asked for -- arrow, cannon and frost towers at three levels, runner, brute and shield creeps -- described in X_eTaL (Td.xtl: boxes, cylinders, cones, spheres, rings, crystals and turned profiles, the parts that move in groups, the clips keyed from each part&#x27;s rest), written as one bpy script, and exported by Blender as one glTF file a piece with its named clips: idle, fire, walk, hit. Each file&#x27;s clips are read back from it.</p>
       <video src="blender/td-models.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo blender td-models</pre>
@@ -205,7 +211,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
       <pre class="source">just demo cell models</pre>
     </section>
     <section class="panel demo" id="cell-pick">
-      <h3>The assembly cell, live <a class="docs" href="doc/extensions-cell-demos-pick.xtl.html">source and docs</a> <a class="docs" href="cell/live/">drive the cell, live</a></h3>
+      <h3>The assembly cell, live <a class="docs" href="doc/extensions-cell-demos-pick.xtl.html">source and docs</a> <a class="docs" href="cell/live/">open it live: drive the cell, live</a></h3>
       <p class="note">The assembly cell picks: programs/pick.cell run by the simulator -- arm A takes its tweezers and puts the DIP from the tray in the vise, the stage turns it, arm D picks the LED, and both fall when let go -- each command&#x27;s outcome a line: ok, what it did, and why not.</p>
       <video src="cell/pick.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo cell pick</pre>
@@ -381,7 +387,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <p class="lede">Interactive 3D in a browser. An X_eTaL program writes a scene as the calls of a player (three players: a city, a game&#x27;s board, an assembly cell) -- the same text the blender extension&#x27;s Cycles.xtl writes for a ray-traced film -- and here a player written with Three.js draws those calls in real time: ride the camera&#x27;s flight, fly, or walk. The first scene is the neon city: 240 lots worked out as arrays from a seed, so another seed is another city, built in the page by X_eTaL compiled to WebAssembly.</p>
   <div class="demos">
     <section class="panel demo" id="three-city">
-      <h3>The neon city, live <a class="docs" href="doc/extensions-three-demos-city.xtl.html">source and docs</a> <a class="docs" href="three/live/">fly and walk through it, live</a> <a class="docs" href="#blender-city">the same city, ray-traced by Blender</a></h3>
+      <h3>The neon city, live <a class="docs" href="doc/extensions-three-demos-city.xtl.html">source and docs</a> <a class="docs" href="three/live/">open it live: fly and walk through it, live</a> <a class="docs" href="#blender-city">the same city, ray-traced by Blender</a></h3>
       <p class="note">Three.js, live: the neon city to ride, fly and walk through in a browser. 240 lots worked out as arrays from a seed -- another seed is another city -- built in the page by X_eTaL compiled to WebAssembly and drawn by a player written with Three.js: lit towers, neon, screens showing slides and videos, puddles that mirror it all, cars and fliers. The same arrays and the same calls as the ray-traced film (blender&#x27;s demos/NeonCity.xtl, Cycles.xtl). From the command line this writes a directory to serve, work/city: the page, the player, Three.js and the calls.</p>
       <video src="three/city.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just ext three city &amp;&amp; just ext three serve city</pre>
@@ -412,7 +418,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 8c49bd8</span><span class="sep">&middot;</span>
-  <span>built at 636d9ea</span>
+  <span>built at f350d5c</span>
 </footer>
 </body>
 </html>

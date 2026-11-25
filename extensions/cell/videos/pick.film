@@ -1,9 +1,11 @@
 # extensions/cell/videos/pick.webm and .webp: the live page running
-# programs/pick.cell, as the page itself draws it -- headless Chrome
-# (no window) at moments of the program, joined (just ext cell live,
-# then just ext cell record pick: work/record/pick.mp4; then just
-# videos cell pick).
+# programs/pick.cell, as the page itself draws it -- one headless Chrome
+# (no window) seeking each moment of the program, joined (just ext cell
+# live, then just ext cell record pick: work/record/pick.mp4; then just
+# videos cell pick). The video at the page's full width, so its text
+# reads; the README's animated picture smaller.
 demo=pick
 file=work/record/pick.mp4
-scale=640
-fps=8
+scale=1280
+webp=640
+fps=12

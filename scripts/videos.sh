@@ -25,7 +25,8 @@
 #     `intro=FILE.vhs` (a vhs tape in the videos folder, not recorded on
 #     its own) that terminal session first, joined to the video; with
 #     `sheet=GLOB` (pictures the demo made, in the extension's
-#     directory) those pictures side by side first, `hold` seconds.
+#     directory) those pictures side by side first, `hold` seconds;
+#     `webp=WIDTH` the animated webp smaller than the video.
 #   scripts/videos.sh [EXT [NAME]]     (NAME: that one recording only)
 # The demos run on the release build of xetal-x (as `just demo` does).
 set -euo pipefail
@@ -178,7 +179,7 @@ for dir in extensions/${1:-*}/videos; do
     [ -e "$spec" ] || continue
     name="$(basename "$spec" .film)"
     [ -z "$only" ] || [ "$name" = "$only" ] || continue
-    demo=""; seed=1; file=""; scale=640; fps=24; intro=""; sheet=""; hold=4
+    demo=""; seed=1; file=""; scale=640; fps=24; intro=""; sheet=""; hold=4; webp=
     # shellcheck disable=SC1090
     . "$spec"
     echo "==> film $ext $name"
@@ -219,7 +220,8 @@ for dir in extensions/${1:-*}/videos; do
         -map "[v]" -pix_fmt yuv420p "target/screens/$ext-$name.mp4"
       src="target/screens/$ext-$name.mp4"
     fi
-    encode "$src" "$dir/$name" "$scale" "$scale" "$fps"
+    # webp=: the animated picture smaller than the video (a README's)
+    encode "$src" "$dir/$name" "$scale" "${webp:-$scale}" "$fps"
   done
   for spec in "$dir"/*.sound; do
     [ -e "$spec" ] || continue

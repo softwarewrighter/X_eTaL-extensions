@@ -93,4 +93,4 @@ publish:
 
 # A recording of the live page running programs/NAME.cell (headless Chrome): work/record/NAME.mp4; then just videos cell NAME
 record name="pick":
-    {{root}}/.venv/bin/python3 {{root}}/scripts/cell-record.py "$1"
+    {{root}}/.venv/bin/python3 {{root}}/scripts/cell-record.py "$1" --fps 12

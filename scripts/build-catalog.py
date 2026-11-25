@@ -51,7 +51,7 @@ def page_link(demo):
         t = line.lstrip("# ").rstrip()
         if t.startswith("Page: "):
             path, _, text = t[len("Page: "):].partition(" ")
-            return f' <a class="docs" href="{html.escape(path)}">{html.escape(text or path)}</a>'
+            return f' <a class="docs" href="{html.escape(path)}">open it live: {html.escape(text or path)}</a>'
     return ""
 
 
@@ -140,6 +140,8 @@ def page_path(demo):
 
 sections = []
 toc = []
+# the live pages, for the menu's Live group
+live = []
 # demos shown first, large: a demo whose header has `## Feature: TEXT`
 # (what the link says) and a `## Page:` to go to; its recording is the link
 features = []
@@ -173,8 +175,16 @@ for ext_dir in sorted(p.parent for p in root.glob("extensions/*/extension.toml")
       {player}
       <pre class="source">{html.escape(metadata(demo, 'Command', f'just demo {ext} {name}'))}</pre>
     </section>""")
-    links = "".join(f'<li><a href="#{ext}-{d.stem}">{html.escape(title(d, d.stem))}</a></li>'
-                    for d in sorted((ext_dir / "demos").glob("*.xtl")) if d.stem[0].islower())
+    # a featured demo with a live page (## Feature: and ## Page:): its
+    # menu entry goes to the page itself, and it is listed again in the
+    # menu's Live group, at the top
+    def entry(d):
+        go = page_path(d)
+        if go and metadata(d, "Feature", ""):
+            live.append(f'<li><a href="{html.escape(go)}">{html.escape(title(d, d.stem))}</a></li>')
+            return f'<li><a href="{html.escape(go)}">{html.escape(title(d, d.stem))} (open it)</a></li>'
+        return f'<li><a href="#{ext}-{d.stem}">{html.escape(title(d, d.stem))}</a></li>'
+    links = "".join(entry(d) for d in sorted((ext_dir / "demos").glob("*.xtl")) if d.stem[0].islower())
     toc.append(f'    <li><a href="#{ext}">{html.escape(ext)}</a>'
                + (f"<ul>{links}</ul>" if links else "") + "</li>")
     facades = sorted(p.name for p in (ext_dir / "lib").glob("*.xtl"))
@@ -200,7 +210,12 @@ page = f"""<!doctype html>
 <body>
 <nav class="toc" aria-label="Demos">
   <p><a href="#top">X_eTaL extensions</a></p>
+  <p><b>Live, in your browser:</b></p>
+  <ul>
+{chr(10).join('    ' + l for l in live)}
+  </ul>
   <p class="docs"><a href="doc/index.html">Docs: every facade, library and demo, cross-referenced</a></p>
+  <p><b>Every demo, by extension:</b></p>
   <ul>
 {chr(10).join(toc)}
   </ul>
