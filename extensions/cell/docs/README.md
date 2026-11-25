@@ -1,9 +1,11 @@
 # cell
 
-A robot assembly cell, simulated: four arms, a tool rack, trays of
-parts and a microscope that build electronic circuits in free air, in
-3D, from the center outward -- two arms hold two parts so that a lead
-touches a lead, a third solders them, and the next part comes in. A
+A robot assembly bench, simulated: one arm, a turntable with a vise
+and pincers, tool stations (an iron that feeds its own solder, a
+welder), a tool rack, trays of parts and a microscope that build
+electronic circuits in free air, in 3D, from the center outward -- the
+arm brings a lead to a lead, a pincer holds it there, the turntable
+presents the joint to a station, and the next part comes in. A
 program or an LLM agent drives it one command at a time (the design:
 docs/cell-design.md in the repository).
 
@@ -16,7 +18,7 @@ positioner (the stage, turning, tilting and moving) presents to them;
 the cell has its 3D models, and a
 program can be previewed in a browser, played with a scrubber. The
 parts library, the command language (text and JSON, checked against
-one table), the cell's state as JSON, four six-axis arms with the
+one table), the cell's state as JSON, a six-axis arm with the
 stage and the vise, collision along every motion, and a model of
 every piece (built through Blender, checked against the simulator)
 are in place: `reset`, `wait s=`, `joints`, `move`, `lift`, `stage`,
@@ -82,10 +84,10 @@ repository's docs/bridge.md).
 ## The cell
 
 Millimeters, degrees, seconds, grams, watts and degrees Celsius; Z up,
-right handed. Four arms, A to D, stand on a ring of 450 mm around the
-work zone and 200 mm below it (A at +y, B at -x, C at -y, D at +x),
-each facing the center. A new cell (`reset`) has every arm home with
-no tool, every rack full, the rotary stage at 0, the vise open, the
+right handed. One arm, A, stands 450 mm from the work zone at +y and
+200 mm below it, facing the center (there were four, a quarter turn
+apart: the bench replaced them, decision C18). A new cell (`reset`)
+has the arm home with no tool, its rack full, the rotary stage at 0, the vise open, the
 time 0; `reset circuit=demo` lays four parts in the tray
 (`circuits/demo.toml`: a DIP-8, a resistor, an LED, a ceramic disc).
 
@@ -95,13 +97,11 @@ Around the arms (`layout.rs`, every number illustrative):
   origin, with the vise on it: a part whose origin is within 15 mm of
   the vise's middle when it closes (or when an arm lets go of it while
   it is closed) is held, and turns with the stage;
-- the microscope on its gantry, turned 135 degrees so its posts stand
-  between arms A and B and arms C and D, its lens 330 mm above the
-  work zone, clear of the arms' wrists;
-- a tool rack beside each arm, each with all seven tools, on the side
-  away from the nearer gantry post (one shared rack cannot be reached
-  by four arms 900 mm apart: decision C14 in docs/plan.md);
-- the parts tray between arms A and D, which only they reach.
+- the microscope on its gantry, turned 135 degrees, its lens 330 mm
+  above the work zone, clear of the arm's wrist;
+- a tool rack beside the arm with all seven tools;
+- the parts tray at +x +y, in the arm's reach;
+- the tool stations and the pincers on the turntable (below).
 
 The state is plain data and round-trips through JSON exactly: the
 time, the circuit, the arms (base, joint angles, tool, track), the
@@ -271,22 +271,22 @@ the checker now stops it there, and a new session will replace it.
 
 ![The solder program, recorded from the live page (just record solder, just videos cell solder)](../videos/solder.webp)
 
-`programs/solder.cell`: arm A puts a DIP-8 in the vise and brings a
-resistor's lead tip to pin 3's, 0.1 mm apart, square to the pin row
-from outside it (touching pin 3 alone); arm C's iron (350 C) touches
-the joint for 2 s; arm B feeds 2 mm of solder wire into it,
-which melts; the iron backs away and the joint freezes, good; A lets
-the resistor go and it stays, soldered on; A picks the DIP out of the
-vise and lifts the pair together.
+`programs/solder.cell`, at the bench: the arm puts a DIP-8 in the
+vise and brings a resistor's lead tip to pin 3's, 0.1 mm apart, square
+to the pin row from outside it (touching pin 3 alone); pincer P1 grips
+the lead and the arm goes; the turntable presents the joint to station
+S1, whose iron (350 C) touches it for 2 s and feeds 2 mm of solder
+wire into it, which melts; the iron backs away and the joint freezes,
+good; P1 lets go and the resistor stays, soldered on.
 
 ```
-tool C iron temp=350
-touch C at=U1.3+R1.1 dwell=2      # the iron on the joint, 2 s
-tool B solder
-feed B mm=2 rate=1                # solder wire into the joint
-back C                            # the iron straight back along its axis
+pinch P1 on=R1.1 at=6             # the pincer holds the resistor
+present U1.3+R1.1 at=S1           # the turntable brings the joint to the iron
+touch S1 at=U1.3+R1.1 dwell=2     # the iron on the joint, 2 s
+feed S1 mm=2 rate=1               # its own feeder: solder wire into the joint
+back S1                           # the iron straight back along its line
 wait until=U1.3+R1.1 below=100
-inspect U1.3+R1.1                 # good; 0.4 mm3 of solder, wet 2.6 s and 2.6 s
+inspect U1.3+R1.1                 # good; 0.4 mm3 of solder, wet 2 s and 2 s
 ```
 
 Heat is a thermal network (`heat.rs`, `thermal.rs`), built each time
@@ -361,8 +361,8 @@ and pincers on the turntable. Built so far:
   turntable presents the joint to S1, which heats it and feeds solder;
   the joint freezes good; P1 lets go and the resistor stays.
 
-The four large arms are still here; the slender arm replaces them
-next.
+The four large arms are gone: the arm that remains picks, places and
+brings leads together; a slender model of it comes next.
 
 ## Tool stations and the positioner
 
@@ -376,9 +376,8 @@ it holds. The arms still pick, place and hold parts to each other.
 
 | Station | Tool | Comes from |
 | ------- | ---- | ---------- |
-| S1 | iron (350 C) | between arms B and C, slightly below the work |
-| S2 | solder feeder | between arms C and D, slightly below the work |
-| S3 | welder | below, between arms A and B |
+| S1 | iron (350 C) with its own solder feeder | -x -y, slightly below the work |
+| S3 | welder | -x +y, below |
 
 ```
 stage turn=30 tilt=-20 at=10,0,30   # the positioner: turn by, tilt to, move to
@@ -414,7 +413,8 @@ and S2's feeder make a good joint. `programs/weld-stations.cell` welds
 a disc's lead to another's at S3, from below (the positioner tilts the
 stage 60 degrees for it).
 
-The layout was chosen by trying candidates on every program (`arms`,
+The layout was chosen, with the four arms still in the cell and a
+separate feeder station S2, by trying candidates on every program (`arms`,
 `pick`, `solder`, `weld`, `claude`, `solder-stations`,
 `weld-stations`), S3 from below in each (`tests/stations.rs`,
 `layouts`):
@@ -462,13 +462,13 @@ joints (a second path from electrode to electrode), takes a transient.
 The weld is refused, naming it, unless `risky=allow`; allowed, the part
 is damaged. `inspect` reports a weld (`C1.2+C2.1: welded by a 8 J
 discharge`). `reset circuit=weld` lays out two ceramic discs, an LED
-and a resistor to try it with; `programs/weld.cell` welds a second disc
-to a disc in the vise, then the LED, its lead clipped to ground first,
-and lifts the three out as one (on the live page: `?program=weld`).
-Around one small lap the tweezers, welder and clip come down from
-above and crowd each other: the arm that clips and the arm that welds
-were chosen by trying each; tool stations that come in from the side
-or below are planned (docs/plan.md, C17).
+and a resistor to try it with; `programs/weld.cell`, at the bench,
+brings a second disc's lead to a disc's in the vise and the LED's to
+its other lead, pincers holding each (P2 grips the LED's lead between
+its body and the lap: a grounding clip), and the welder station S3,
+from below, welds both laps; the three stay in the vise as one (on the
+live page: `?program=weld`). A pincer, like an arm's clip, grounds a
+lead it grips between a part's body and the lap.
 
 Welding is not part of the heat network: a discharge's heat is local
 and brief. The joint's nugget is drawn in its result's color.
@@ -484,7 +484,7 @@ cylinder and each lead as a thin capsule, the fixtures as boxes and
 cylinders, and the floor. A motion that meets something stops there,
 as a real arm's protective stop does: the motion up to the last clear
 step is kept, and the outcome says what touched what, and when --
-`collision: arm C link 6 with arm A joint 6 at 53.622 s`. An arm does
+`collision: arm A's tool with the vise's jaw at 38.141 s`. An arm does
 not collide with itself (not simulated). Allowed contacts: tweezers
 with a part whose grasp frame their tip is on (and the vise, if that
 part is in it: picking it out), never with the part they carry; a
@@ -717,7 +717,7 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `probe PIN PIN` | scope | measure continuity and resistance between two pins |
 | `rewind t=S` | cell | put the cell back as it was at a time (the timeline keeps both branches) |
 
-Arguments: `ARM` is A to D; `TOOL` one of tweezers, iron, solder,
+Arguments: `ARM` is A; `STATION` S1 or S3; `PINCER` P1 or P2; `TOOL` one of tweezers, iron, solder,
 clip, welder, cutter, wire; `PART` an id (`U1`); `PIN` `U1.3`;
 `FRAME` a part, a pin or a pin's tip; `JOINT` two pins, `U1.3+R1.1`;
 `TARGET` a pin or a joint. Every number has limits (an iron from 150

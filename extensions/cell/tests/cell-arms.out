@@ -1,8 +1,7 @@
-{"ok":true,"command":"move A to=0,0,20 rpy=180,0,0","t0":0.0,"t1":3.932754,"did":["line A to=0,0,20 rpy=180,0,0 in 3.933 s","joints A 0 43.296 17.674 0 29.029 -90"],"events":[],"warnings":[]}
-{"ok":true,"command":"lift A mm=30","t0":3.932754,"t1":4.332754,"did":["line A to=0,0,50 rpy=180,0,0 in 0.4 s","joints A 0 39.044 17.584 0 33.372 -90"],"events":[],"warnings":[]}
-{"ok":true,"command":"joints B -20 -10 0 0 80 0 speed=0.8","t0":4.332754,"t1":4.779968,"did":["joints B -20 -10 0 0 80 0 in 0.447 s"],"events":[],"warnings":[]}
-{"ok":true,"command":"stage turn=90","t0":4.779968,"t1":6.029968,"did":["stage to 90 in 1.25 s"],"events":[],"warnings":[]}
-{"ok":true,"command":"vise close","t0":6.029968,"t1":6.529968,"did":["vise closed in 0.5 s"],"events":[],"warnings":[]}
-{"ok":true,"command":"move C to=0,-90,30 rpy=180,0,0","t0":6.529968,"t1":10.231357,"did":["line C to=0,-90,30 rpy=180,0,0 in 3.701 s","joints C 0 32.603 37.954 0 19.443 90"],"events":[],"warnings":[],"dry":true}
-{"ok":true,"command":"wait s=0.5","t0":6.529968,"t1":7.029968,"did":["wait 0.5 s"],"events":[],"warnings":[]}
+{"ok":true,"command":"move A to=0,90,20 rpy=180,0,0","t0":0.0,"t1":3.801351,"did":["line A to=0,90,20 rpy=180,0,0 in 3.801 s","joints A 0 34.466 37.92 0 17.615 -90"],"events":[],"warnings":[]}
+{"ok":true,"command":"lift A mm=30","t0":3.801351,"t1":4.201351,"did":["line A to=0,90,50 rpy=180,0,0 in 0.4 s","joints A 0 28.972 37.817 0 23.211 -90"],"events":[],"warnings":[]}
+{"ok":true,"command":"joints A 0 0 0 0 90 0 speed=0.8","t0":4.201351,"t1":4.756493,"did":["joints A 0 0 0 0 90 0 in 0.555 s"],"events":[],"warnings":[]}
+{"ok":true,"command":"stage turn=90","t0":4.756493,"t1":6.006493,"did":["stage to 90 in 1.25 s"],"events":[],"warnings":[]}
+{"ok":true,"command":"vise close","t0":6.006493,"t1":6.506493,"did":["vise closed in 0.5 s"],"events":[],"warnings":[]}
+{"ok":false,"command":"move A to=0,-90,30 rpy=180,0,0","t0":6.506493,"t1":7.627546,"did":[],"stopped":"collision: arm A joint 5 with the microscope at 7.628 s","events":[],"warnings":[],"dry":true}
 

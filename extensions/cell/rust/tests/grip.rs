@@ -56,7 +56,7 @@ fn a_reset_fills_the_tray_and_the_racks() {
             .fold(f64::INFINITY, f64::min);
         assert!((low + 140.0).abs() < 1e-6, "{}: {low}", p.id);
     }
-    assert_eq!(w.tools.len(), 28);
+    assert_eq!(w.tools.len(), 7, "one rack of seven");
     assert!(w.tools.iter().all(|t| t.holder.is_none()));
     refused(
         &mut w,
@@ -142,25 +142,25 @@ fn the_vise_holds_a_part_as_the_stage_turns() {
 }
 
 #[test]
-fn arms_that_meet_stop_where_they_touch() {
+fn an_arm_that_meets_the_vise_stops_where_it_touches() {
     let mut w = World::default();
     ok(&mut w, "move A to=0,0,40 rpy=180,0,0");
-    let o = w.apply(&parse_line("move C to=0,0,40 rpy=180,0,0").unwrap());
+    let o = w.apply(&parse_line("move A to=0,0,-60 rpy=180,0,0").unwrap());
     let why = o.stopped.clone().unwrap_or_default();
     assert!(
-        !o.ok && why.starts_with("collision: arm C") && why.contains("with arm A"),
+        !o.ok && why.starts_with("collision: arm A") && why.contains("the vise"),
         "{o:?}"
     );
     // stopped short, the motion up to there kept and on the timeline
     assert!(o.t1 > o.t0);
     assert_eq!(w.t, o.t1);
-    assert!(!near(w.flange("C").unwrap().p, [0.0, 0.0, 40.0], 10.0));
+    assert!(w.flange("A").unwrap().p[2] > -60.0 + 10.0);
     assert_eq!(
         w.timeline.last().unwrap().command,
-        "move C to=0,0,40 rpy=180,0,0"
+        "move A to=0,0,-60 rpy=180,0,0"
     );
     // and the arm can go on from there
-    ok(&mut w, "move C to=0,-250,100");
+    ok(&mut w, "move A to=0,60,100");
 }
 
 #[test]
@@ -168,7 +168,7 @@ fn a_dry_run_that_collides_changes_nothing() {
     let mut w = World::default();
     ok(&mut w, "move A to=0,0,40 rpy=180,0,0");
     let before = w.clone();
-    let o = w.apply(&parse_line("move C to=0,0,40 rpy=180,0,0 dry=1").unwrap());
+    let o = w.apply(&parse_line("move A to=0,0,-60 rpy=180,0,0 dry=1").unwrap());
     assert!(o.dry && !o.ok && o.stopped.is_some());
     assert_eq!(w, before);
 }
@@ -208,9 +208,9 @@ fn a_lead_is_aligned_to_a_lead() {
     ok(&mut w, IN_VISE);
     ok(
         &mut w,
-        "tool D tweezers\npick D R1 grasp=body\nlift D mm=80\nmove D to=60,0,60 rpy=180,0,90\nmove D to=34.81,1.27,-14.05",
+        "pick A R1 grasp=body\nlift A mm=80\nmove A to=0,60,60 rpy=180,0,90\nmove A to=34.81,1.27,-14.05",
     );
-    let o = w.apply(&parse_line("align D R1.1.tip to=U1.3.tip gap=0.1").unwrap());
+    let o = w.apply(&parse_line("align A R1.1.tip to=U1.3.tip gap=0.1").unwrap());
     assert!(o.ok, "{o:?}");
     let d = kin::norm(kin::sub(
         w.point("R1.1.tip").unwrap(),

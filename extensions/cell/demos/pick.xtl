@@ -1,7 +1,7 @@
 ## The assembly cell picks: programs/pick.cell run by the simulator --
-## arm A takes its tweezers and puts the DIP from the tray in the vise,
-## the stage turns it, arm D picks the LED, and both fall when let go --
-## each command's outcome a line: ok, what it did, and why not.
+## the arm takes its tweezers and puts the DIP from the tray in the vise,
+## the turntable turns it, the arm picks the LED, and both fall when let
+## go -- each command's outcome a line: ok, what it did, and why not.
 ## Title: The assembly cell picks
 ## Page: cell/live/?program=pick watch it pick, step by step, live
 ## Run: just demo cell pick

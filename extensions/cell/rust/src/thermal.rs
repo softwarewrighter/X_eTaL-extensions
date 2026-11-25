@@ -1233,16 +1233,22 @@ impl World {
         let kind = parts::kind(&part.kind).ok()?;
         let p = kind.pin(pn)?;
         let nodes = nodes_in(&part.pose(), &p.lead);
+        let on = |tip: V3| {
+            nodes
+                .iter()
+                .take(upto)
+                .any(|(at, _)| kin::norm(kin::sub(*at, tip)) <= TOUCH_MM)
+        };
+        // a pincer on the turntable gripping the lead there grounds it too
+        if let Some((name, _)) = self.pincer_tips().into_iter().find(|(_, tip)| on(*tip)) {
+            return Some(name);
+        }
         self.arms.iter().enumerate().find_map(|(a, arm)| {
             if arm.tool.as_deref() != Some("clip") {
                 return None;
             }
             let tip = self.tool_tip(a, rig)?;
-            nodes
-                .iter()
-                .take(upto)
-                .any(|(at, _)| kin::norm(kin::sub(*at, tip)) <= TOUCH_MM)
-                .then(|| arm.name.clone())
+            on(tip).then(|| arm.name.clone())
         })
     }
 

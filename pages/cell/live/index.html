@@ -49,7 +49,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
   dialog button { font: inherit; padding: 5px 14px; border-radius: 6px; border: 1px solid #56607a; background: #1a1f2e; color: #e8eaf0; cursor: pointer; }
 </style>
 <script type="importmap">{ "imports": { "three": "./static/vendor/three/three.module.min.js" } }</script>
-<link rel="modulepreload" href="./cell-web.js" crossorigin="anonymous" integrity="sha384-K4SnHn0TpSZjuBF2NVtqDt5/hT58MovRU2U0ecs1SkKpt+Q0BSpJC6xHROkmiRaB"><link rel="preload" href="./cell-web_bg.wasm" crossorigin="anonymous" integrity="sha384-pS96CfKC2ELJpBm3Bono5TvmVq6nxRs1Bu9tuZX4FEziXmOjgqiwR+zA5jgrqzSw" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="./cell-web.js" crossorigin="anonymous" integrity="sha384-K4SnHn0TpSZjuBF2NVtqDt5/hT58MovRU2U0ecs1SkKpt+Q0BSpJC6xHROkmiRaB"><link rel="preload" href="./cell-web_bg.wasm" crossorigin="anonymous" integrity="sha384-V0/OzZzhtjKvNWW4MqhSQnghSZVb/I+3SvALhTL6ySX9AYBeQITSVBUrjCRd+tNZ" as="fetch" type="application/wasm"></head>
 <body>
 <div id="view"></div>
 <div id="panel">
@@ -60,7 +60,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
     <select id="program"><option value="solder">solder</option><option value="solder-stations">solder at the bench</option><option value="weld">weld</option><option value="weld-stations">weld at a station</option><option value="pick">pick</option><option value="arms">arms</option></select><button id="run-program">Run program</button>
   </fieldset>
   <fieldset><legend>Arm</legend>
-    <select id="arm"><option>A</option><option>B</option><option>C</option><option>D</option></select>
+    <select id="arm"><option>A</option></select>
     <select id="tool"><option>tweezers</option><option>iron</option><option>solder</option><option>clip</option><option>welder</option><option>cutter</option><option>wire</option></select><button id="take">Take tool</button>
     <div id="holds"></div>
     <select id="part"></select><select id="grasp"></select><button id="pick">Pick</button><button id="release">Release</button><br>

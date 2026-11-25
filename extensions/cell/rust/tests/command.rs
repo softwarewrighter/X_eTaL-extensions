@@ -20,16 +20,16 @@ reset circuit=blinker                      # trays filled, arms home
 tool A tweezers
 pick A U1 grasp=ends
 place A U1 at=0,0,0 rpy=180,0,0
-pick B R1 grasp=body
-align B R1.1.tip to=U1.3.tip gap=0.1
-tool D clip
-clip D on=U1.3 at=2
-tool C iron temp=350
-touch C at=U1.3+R1.1 dwell=1.5
-feed D mm=1.2 rate=2
-lift C
+pick A R1 grasp=body
+align A R1.1.tip to=U1.3.tip gap=0.1
+tool A clip
+clip A on=U1.3 at=2
+tool A iron temp=350
+touch S1 at=U1.3+R1.1 dwell=1.5
+feed S1 mm=1.2 rate=2
+lift A
 wait until=U1.3+R1.1 below=150
-release B R1
+release A R1
 scope zoom=40 aim=U1.3+R1.1 ; snap
 inspect U1.3+R1.1
 joints A 0 -90 90 0 45 0
@@ -37,12 +37,12 @@ move A to=10,20,30 rpy=0,90,0 speed=50
 grip A close force=0.5
 stage turn=90
 vise close
-weld C at=Q1.1+R2.2 energy=2 risky=allow
-wire D awg=26 mm=40
-cut D
+weld S3 at=Q1.1+R2.2 energy=2 risky=allow
+wire A awg=26 mm=40
+cut A
 probe U1.3 R1.2
 rewind t=12.5
-back C mm=20
+back S1 mm=20
 stage tilt=-30 at=0,10,40
 present U1.3.tip at=S1 turn=45
 touch S1 at=U1.3+R1.1 dwell=2
@@ -83,16 +83,16 @@ fn canonical_text_orders_and_shortens() {
         c.to_json(),
         serde_json::json!({"op": "move", "arm": "A", "to": [10.0, 0.5, -0.0], "speed": 50.0, "dry": true})
     );
-    let w = round_trip("wire D mm=40 awg=26");
+    let w = round_trip("wire A mm=40 awg=26");
     assert_eq!(w.to_json()["awg"], serde_json::json!(26));
 }
 
 #[test]
 fn json_is_the_same_command() {
-    let j = serde_json::json!({"op": "align", "arm": "B", "frame": "R1.1.tip", "to": "U1.3.tip", "gap": 0.1});
+    let j = serde_json::json!({"op": "align", "arm": "A", "frame": "R1.1.tip", "to": "U1.3.tip", "gap": 0.1});
     assert_eq!(
         parse_json(&j).unwrap(),
-        parse_line("align B R1.1.tip to=U1.3.tip gap=0.1").unwrap()
+        parse_line("align A R1.1.tip to=U1.3.tip gap=0.1").unwrap()
     );
     let p = parse_program("{\"op\": \"vise\", \"action\": \"close\"}\nvise close").unwrap();
     assert_eq!(p[0], p[1]);
@@ -105,7 +105,7 @@ fn wrong_commands_say_what_is_wrong() {
         assert!(e.contains(msg), "{line}: {e}");
     };
     says("fly A", "no command fly");
-    says("tool E iron", "no arm E (arms: A B C D)");
+    says("tool E iron", "no arm E (arms: A)");
     says("tool A hammer", "no tool hammer");
     says("tool A iron temp=900", "temp: 900 is outside 150 to 450 C");
     says("tool A", "tool: tool is required");
@@ -119,10 +119,10 @@ fn wrong_commands_say_what_is_wrong() {
     says("joints A 1 2 3", "six angles needed, 3 given");
     says("lift A B", "too many words: B");
     says("pick A u1 grasp=ends", "u1 is not a part id");
-    says("clip D on=U1 at=2", "U1 is not a pin");
-    says("touch C at=U1.3", "is not a joint");
-    says("touch C at=U1.3+U1.3", "is not a joint");
-    says("wire D awg=27.5 mm=3", "not a whole number from 22 to 34");
+    says("clip A on=U1 at=2", "U1 is not a pin");
+    says("touch S1 at=U1.3", "is not a joint");
+    says("touch S1 at=U1.3+U1.3", "is not a joint");
+    says("wire A awg=27.5 mm=3", "not a whole number from 22 to 34");
     says("vise close dry=yes", "dry: yes is not 0 or 1");
     says("stage turn=nan", "not a finite number");
     let j = parse_json(&serde_json::json!({"op": "lift", "arm": "A", "height": 3})).unwrap_err();

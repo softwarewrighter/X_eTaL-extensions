@@ -42,6 +42,6 @@ rewind t=S -- put the cell back as it was at a time (the timeline keeps both bra
 {"op":"tool","arm":"A","tool":"tweezers"}
 {"op":"pick","arm":"A","part":"U1","grasp":"ends"}
 {"op":"place","arm":"A","part":"U1","at":[0.0,0.0,0.0],"rpy":[180.0,0.0,0.0]}
-{"op":"align","arm":"B","frame":"R1.1.tip","to":"U1.3.tip","gap":0.1,"dry":true}
+{"op":"align","arm":"A","frame":"R1.1.tip","to":"U1.3.tip","gap":0.1,"dry":true}
 {"op":"joints","arm":"A","angles":[0.0,-90.0,90.0,0.0,45.0,0.0]}
 

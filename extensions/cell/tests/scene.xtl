@@ -1,3 +1,3 @@
 # A program written as a scene for the players (ce:s_cene).
 "ce:" u_se< "Cell"
-"demo" ce:s_cene "stage turn=30\nvise close\njoints C 0 -10 0 0 80 0 speed=1"
+"demo" ce:s_cene "stage turn=30\nvise close\njoints A 0 -10 0 0 80 0 speed=1"

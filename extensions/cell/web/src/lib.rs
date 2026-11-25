@@ -37,7 +37,7 @@ pub const PROGRAMS: [(&str, &str); 6] = [
 ];
 
 /// The X_eTaL program the page starts with: the cell from X_eTaL.
-pub const EXAMPLE: &str = "\"ce:\" u_se< \"Cell\"\n\n# a scene written by the simulator, from X_eTaL in this page\n\"from X_eTaL\" ce:s_cene \"reset circuit=demo\\ntool D tweezers\\npick D C1 grasp=body\\nmove D to=120,20,60\\nrelease D C1\"\n";
+pub const EXAMPLE: &str = "\"ce:\" u_se< \"Cell\"\n\n# a scene written by the simulator, from X_eTaL in this page\n\"from X_eTaL\" ce:s_cene \"reset circuit=demo\\ntool A tweezers\\npick A C1 grasp=body\\nmove A to=120,20,60\\nrelease A C1\"\n";
 
 /// cell, linked statically, and its facade.
 #[must_use]

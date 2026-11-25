@@ -10,9 +10,10 @@ use xetal_ext_cell::command::parse_program;
 use xetal_ext_cell::weld::{self, Fused};
 use xetal_ext_cell::world::{Outcome, World};
 
-/// A ceramic disc in the vise, its leads down; a second disc's lead 1
-/// brought to the first's lead 2, 6 mm from its body, from a clear side;
-/// the welder on arm C.
+/// At the bench: a ceramic disc in the vise, its leads down; a second
+/// disc's lead 1 brought to the first's lead 2, 6 mm from its body, and
+/// gripped there by pincer P1; the arm gone; the lap presented to the
+/// welder station S3.
 const DISCS: &str = "reset circuit=weld
 tool A tweezers
 pick A C1 grasp=body
@@ -23,7 +24,10 @@ pick A C2 grasp=body
 lift A mm=80
 move A to=20.08,0,-5.746
 align A C2.1.tip to=C1.2.6 gap=0.1
-tool C welder";
+pinch P1 on=C2.1 at=6
+release A C2
+lift A mm=60
+present C1.2+C2.1 at=S3";
 
 fn run(w: &mut World, program: &str) -> Vec<Outcome> {
     let out = w.apply_all(&parse_program(program).unwrap());
@@ -87,7 +91,7 @@ fn the_data_reads_and_the_windows_judge() {
 #[test]
 fn a_weld_in_the_window_holds_two_parts_as_one() {
     let mut w = ready(DISCS);
-    let o = run(&mut w, "weld C at=C1.2+C2.1 energy=8");
+    let o = run(&mut w, "weld S3 at=C1.2+C2.1 energy=8");
     assert_eq!(result(&w, "C1.2+C2.1").as_deref(), Some("welded"), "{o:?}");
     assert!(
         o[0].events
@@ -95,8 +99,8 @@ fn a_weld_in_the_window_holds_two_parts_as_one() {
             .any(|e| e.contains("in the window of 5 to 12 J")),
         "{o:?}"
     );
-    // let go, the disc stays: welded to the one the vise holds
-    let o = run(&mut w, "release A C2");
+    // the pincer lets go, the disc stays: welded to the one the vise holds
+    let o = run(&mut w, "unpinch P1");
     assert!(o[0].events.iter().any(|e| e.contains("C2 stays")), "{o:?}");
     assert_eq!(w.part("C2").unwrap().holder.as_deref(), Some("vise"));
     assert!(!w.part("C1").unwrap().damaged && !w.part("C2").unwrap().damaged);
@@ -105,25 +109,25 @@ fn a_weld_in_the_window_holds_two_parts_as_one() {
 #[test]
 fn too_little_energy_does_not_fuse_and_too_much_blows_out() {
     let mut w = ready(DISCS);
-    let o = run(&mut w, "weld C at=C1.2+C2.1 energy=2");
+    let o = run(&mut w, "weld S3 at=C1.2+C2.1 energy=2");
     assert_eq!(result(&w, "C1.2+C2.1"), None);
     assert!(
         o[0].warnings.iter().any(|x| x.contains("did not weld")),
         "{o:?}"
     );
     // it can be welded again, and too hard it blows out, both parts damaged
-    run(&mut w, "weld C at=C1.2+C2.1 energy=30");
+    run(&mut w, "weld S3 at=C1.2+C2.1 energy=30");
     assert_eq!(result(&w, "C1.2+C2.1").as_deref(), Some("blown"));
     assert!(w.part("C1").unwrap().damaged && w.part("C2").unwrap().damaged);
-    // a blown lap holds nothing: let go, C2 falls
-    let o = run(&mut w, "release A C2");
+    // a blown lap holds nothing: the pincer lets go, C2 falls
+    let o = run(&mut w, "unpinch P1");
     assert!(!o[0].events.iter().any(|e| e.contains("C2 stays")), "{o:?}");
 }
 
 #[test]
 fn the_welder_refuses_what_it_cannot_give_or_a_soldered_lap() {
     let mut w = ready(DISCS);
-    let o = w.apply_all(&parse_program("weld C at=C1.2+C2.1 energy=90").unwrap());
+    let o = w.apply_all(&parse_program("weld S3 at=C1.2+C2.1 energy=90").unwrap());
     assert!(
         o[0].refused.as_deref().unwrap().contains("at most 80 J"),
         "{o:?}"
@@ -135,17 +139,22 @@ fn the_welder_refuses_what_it_cannot_give_or_a_soldered_lap() {
     );
 }
 
-/// The LED's lead 1 (steel) laid to the disc's lead, as `DISCS` lays C2's.
+/// The LED's lead 1 (steel) laid to the disc's lead, as `DISCS` lays C2's;
+/// P1 grips its other lead, so nothing grounds the lap's.
 fn led() -> String {
     DISCS
         .replace("pick A C2 grasp=body", "pick A D1 grasp=body")
+        .replace("move A to=20.08,0,-5.746", "move A to=18.81,0,3.554")
         .replace("align A C2.1.tip", "align A D1.1.tip")
+        .replace("pinch P1 on=C2.1 at=6", "pinch P1 on=D1.2 at=6")
+        .replace("release A C2", "release A D1")
+        .replace("present C1.2+C2.1", "present C1.2+D1.1")
 }
 
 #[test]
 fn a_semiconductor_on_the_lap_is_refused_unless_allowed() {
     let mut w = ready(&led());
-    let o = w.apply_all(&parse_program("weld C at=C1.2+D1.1 energy=8").unwrap());
+    let o = w.apply_all(&parse_program("weld S3 at=C1.2+D1.1 energy=8").unwrap());
     let why = o[0].refused.as_deref().unwrap_or("");
     assert!(
         why.contains("D1 is a semiconductor on the lap with no grounding clip on D1.1"),
@@ -154,7 +163,7 @@ fn a_semiconductor_on_the_lap_is_refused_unless_allowed() {
     assert!(why.contains("risky=allow"), "{why}");
     assert_eq!(result(&w, "C1.2+D1.1"), None, "refused: nothing changed");
     // allowed: welded, and the LED damaged by the transient
-    let o = run(&mut w, "weld C at=C1.2+D1.1 energy=8 risky=allow");
+    let o = run(&mut w, "weld S3 at=C1.2+D1.1 energy=8 risky=allow");
     assert_eq!(result(&w, "C1.2+D1.1").as_deref(), Some("welded"));
     assert!(w.part("D1").unwrap().damaged);
     assert!(
@@ -174,7 +183,7 @@ fn a_grounding_clip_between_the_body_and_the_lap_makes_it_safe() {
     let mut w = ready(&led());
     let o = run(
         &mut w,
-        "tool B clip\nclip B on=D1.1 at=8\nweld C at=C1.2+D1.1 energy=8",
+        "pinch P2 on=D1.1 at=8\nweld S3 at=C1.2+D1.1 energy=8",
     );
     assert_eq!(result(&w, "C1.2+D1.1").as_deref(), Some("welded"), "{o:?}");
     assert!(!w.part("D1").unwrap().damaged);
@@ -206,7 +215,7 @@ fn a_semiconductor_joined_to_both_sides_is_in_the_path() {
             weld: Some(8.0),
         });
     }
-    let o = w.apply_all(&parse_program("weld C at=C1.2+C2.1 energy=8").unwrap());
+    let o = w.apply_all(&parse_program("weld S3 at=C1.2+C2.1 energy=8").unwrap());
     let why = o[0].refused.as_deref().unwrap_or("");
     assert!(
         why.contains("D1 is a semiconductor in a path from electrode to electrode"),
@@ -221,15 +230,17 @@ fn copper_to_steel_does_not_weld_and_a_weld_inspects() {
     let prog = DISCS
         .replace("pick A C2 grasp=body", "pick A R1 grasp=body")
         .replace("align A C2.1.tip", "align A R1.1.tip")
-        .replace("rpy=-90,0,90", "rpy=180,0,90");
+        .replace("pinch P1 on=C2.1", "pinch P1 on=R1.1")
+        .replace("release A C2", "release A R1")
+        .replace("present C1.2+C2.1", "present C1.2+R1.1");
     let mut w = ready(&prog);
-    let o = run(&mut w, "weld C at=C1.2+R1.1 energy=10");
+    let o = run(&mut w, "weld S3 at=C1.2+R1.1 energy=10");
     assert!(o[0].events.iter().any(|e| e.contains("no window")), "{o:?}");
     let o = run(&mut w, "inspect C1.2+R1.1");
     assert!(o[0].events[0].contains("not welded"), "{o:?}");
     // a good weld says so
     let mut w = ready(DISCS);
-    run(&mut w, "weld C at=C1.2+C2.1 energy=8");
+    run(&mut w, "weld S3 at=C1.2+C2.1 energy=8");
     let o = run(&mut w, "inspect C1.2+C2.1");
     assert_eq!(o[0].events[0], "C1.2+C2.1: welded by a 8 J discharge");
 }

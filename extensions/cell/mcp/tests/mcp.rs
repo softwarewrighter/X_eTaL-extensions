@@ -131,7 +131,7 @@ fn the_tools_come_from_the_command_table() {
     let touch = tools.iter().find(|t| t["name"] == "cell_touch").unwrap();
     assert_eq!(
         touch["inputSchema"]["properties"]["arm"]["enum"],
-        json!(["A", "B", "C", "D", "S1", "S3"])
+        json!(["A", "S1", "S3"])
     );
     let present = tools.iter().find(|t| t["name"] == "cell_present").unwrap();
     assert_eq!(
@@ -313,7 +313,7 @@ fn the_page_follows_the_session() {
         .port();
     let mut c = Client::start(port, &session_file("page"));
     let v0: Value = serde_json::from_str(&http(port, "GET", "/mcp/version", "")).unwrap();
-    let (_, r) = c.tool("cell_do", json!({"commands": "tool B tweezers"}));
+    let (_, r) = c.tool("cell_do", json!({"commands": "tool A tweezers"}));
     assert!(all_ok(&r));
     let v1: Value = serde_json::from_str(&http(port, "GET", "/mcp/version", "")).unwrap();
     assert_eq!(
@@ -321,14 +321,14 @@ fn the_page_follows_the_session() {
         v0["version"].as_u64().unwrap() + 1
     );
     let last: Value = serde_json::from_str(&http(port, "GET", "/mcp/last", "")).unwrap();
-    assert_eq!(last["outcomes"][0]["command"], "tool B tweezers");
+    assert_eq!(last["outcomes"][0]["command"], "tool A tweezers");
     assert!(http(port, "GET", "/mcp/scene", "").starts_with("cell('mcp', 1280, 720)"));
     // the page's own command drives the same cell
     let r: Value =
-        serde_json::from_str(&http(port, "POST", "/mcp/command", "tool C iron temp=330")).unwrap();
+        serde_json::from_str(&http(port, "POST", "/mcp/command", "tool A iron temp=330")).unwrap();
     assert!(all_ok(&r), "{r}");
     let (_, s) = c.tool("cell_state", json!({}));
-    assert_eq!(s["arms"][2]["tool"], "iron");
+    assert_eq!(s["arms"][0]["tool"], "iron");
     // nothing outside the page's directory
     assert!(http(port, "GET", "/../Cargo.toml", "").starts_with("no"));
 }

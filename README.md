@@ -21,9 +21,9 @@
 
 <p align="center">
   <b><a href="https://softwarewrighter.github.io/X_eTaL-extensions/cell/live/">The assembly cell, live</a></b>
-  -- four robot arms that hold parts lead to lead, solder them and lift the soldered pair, simulated in
-  your browser (WebAssembly, with X_eTaL), drawn with Three.js: step through a program a command at a
-  time, drive every arm and tool, or type commands
+  -- an assembly bench: one arm, a turntable, pincers that hold parts lead to lead, and an iron and a
+  welder on fixed actuators that solder and weld them, simulated in your browser (WebAssembly, with
+  X_eTaL), drawn with Three.js: step through a program a command at a time, or type commands
 </p>
 
 <p align="center">

@@ -9,15 +9,11 @@ use crate::command::TOOLS;
 use crate::kin::{self, Pose, V3};
 use serde::Deserialize;
 
-/// The arms' bases: on a ring of 450 mm around the work zone, 200 mm
-/// below it, each facing the center (x, y, z mm; roll, pitch, yaw
-/// degrees).
-pub const ARM_BASES: [(&str, [f64; 6]); 4] = [
-    ("A", [0.0, 450.0, -200.0, 0.0, 0.0, -90.0]),
-    ("B", [-450.0, 0.0, -200.0, 0.0, 0.0, 0.0]),
-    ("C", [0.0, -450.0, -200.0, 0.0, 0.0, 90.0]),
-    ("D", [450.0, 0.0, -200.0, 0.0, 0.0, 180.0]),
-];
+/// The arm's base: the bench has one arm (decision C18; there were
+/// four, at A's place and a quarter turn apart), 450 mm from the work
+/// zone and 200 mm below it, facing the center (x, y, z mm; roll,
+/// pitch, yaw degrees).
+pub const ARM_BASES: [(&str, [f64; 6]); 1] = [("A", [0.0, 450.0, -200.0, 0.0, 0.0, -90.0])];
 
 /// The floor, z mm: the arms' bases stand on it; what falls lands on it.
 pub const FLOOR: f64 = -200.0;
@@ -28,12 +24,7 @@ pub const FLOOR: f64 = -200.0;
 /// from the gantry's nearer post (A and C to their left, +y; B and D to
 /// their right), so an arm swinging from its rack to the work zone or
 /// the tray does not sweep through a post.
-pub const RACK_BESIDE: [(&str, [f64; 3]); 4] = [
-    ("A", [0.0, 280.0, 100.0]),
-    ("B", [0.0, -280.0, 100.0]),
-    ("C", [0.0, 280.0, 100.0]),
-    ("D", [0.0, -280.0, 100.0]),
-];
+pub const RACK_BESIDE: [(&str, [f64; 3]); 1] = [("A", [0.0, 280.0, 100.0])];
 
 /// The fixtures: an id, a model and a pose (x y z mm; roll pitch yaw
 /// degrees). The rotary stage under the work zone, its top 60 mm below

@@ -1,6 +1,6 @@
 # Grasping through ce:r_un: arm A takes its tweezers, picks the DIP from
-# the tray, puts it in the vise and lets go (the vise holds it); arm D
-# picks the LED and lets it fall (lost); then C reaches for where A is
-# and stops at the touch.
+# the tray, puts it in the vise and lets go (the vise holds it); A picks
+# the LED and lets it fall (lost); then A reaches down into the vise and
+# stops at the touch.
 "ce:" u_se< "Cell"
-ce:r_un "reset circuit=demo\ntool A tweezers\npick A U1 grasp=ends\nplace A U1 at=0,0,-32 rpy=0,0,90\nvise close\nrelease A U1\ntool D tweezers\npick D D1 grasp=body\nmove D to=120,40,60\nrelease D D1\nmove C to=0,-20,60 rpy=180,0,0"
+ce:r_un "reset circuit=demo\ntool A tweezers\npick A U1 grasp=ends\nplace A U1 at=0,0,-24 rpy=0,0,90\nvise close\nrelease A U1\nlift A mm=60\npick A D1 grasp=body\nmove A to=120,40,60\nrelease A D1\nmove A to=0,0,-60 rpy=180,0,0"

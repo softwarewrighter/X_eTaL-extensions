@@ -429,12 +429,17 @@ impl World {
     ///
     /// # Errors
     ///
-    /// Not a cell's state: a missing or unknown field, or not four arms.
+    /// Not a cell's state: a missing or unknown field, or not the cell's
+    /// arms.
     pub fn from_json(text: &str) -> Result<Self, String> {
         let w: Self = serde_json::from_str(text).map_err(|e| format!("not a cell's state: {e}"))?;
         let names: Vec<&str> = w.arms.iter().map(|a| a.name.as_str()).collect();
-        if names != ["A", "B", "C", "D"] {
-            return Err("not a cell's state: the arms are A, B, C, D".into());
+        let want: Vec<&str> = ARM_BASES.iter().map(|(n, _)| *n).collect();
+        if names != want {
+            return Err(format!(
+                "not a cell's state: the arms are {}",
+                want.join(", ")
+            ));
         }
         Ok(w)
     }

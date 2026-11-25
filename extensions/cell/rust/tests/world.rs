@@ -9,8 +9,8 @@ fn a_new_cell() {
     let w = World::default();
     assert_eq!(w.t, 0.0);
     let names: Vec<&str> = w.arms.iter().map(|a| a.name.as_str()).collect();
-    assert_eq!(names, ["A", "B", "C", "D"]);
-    // on a ring of 450 mm, each base facing the center
+    assert_eq!(names, ["A"], "the bench has one arm");
+    // 450 mm out, its base facing the center
     for a in &w.arms {
         assert!(((a.base[0].powi(2) + a.base[1].powi(2)).sqrt() - 450.0).abs() < 1e-9);
         let yaw = a.base[5].to_radians();
@@ -36,11 +36,11 @@ fn state_round_trips_through_json() {
             .unwrap_err()
             .starts_with("not a cell's state")
     );
-    let three = j.replacen("\"name\": \"D\"", "\"name\": \"E\"", 1);
+    let other = j.replacen("\"name\": \"A\"", "\"name\": \"E\"", 1);
     assert!(
-        World::from_json(&three)
+        World::from_json(&other)
             .unwrap_err()
-            .contains("the arms are A, B, C, D")
+            .contains("the arms are A")
     );
 }
 
@@ -116,7 +116,7 @@ fn reset_starts_over() {
 
 #[test]
 fn the_same_program_gives_the_same_state() {
-    let p = parse_program("wait s=0.1\nwait s=0.2\nlift B\nwait s=3").unwrap();
+    let p = parse_program("wait s=0.1\nwait s=0.2\nlift A\nwait s=3").unwrap();
     let run = || {
         let mut w = World::default();
         w.apply_all(&p);

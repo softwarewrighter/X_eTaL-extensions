@@ -1,8 +1,10 @@
-## Two parts soldered into one: programs/solder.cell run by the simulator
-## -- arm A puts a DIP-8 in the vise and holds a resistor's lead to pin 3,
-## arm C's iron heats the joint, arm D feeds solder, the joint freezes
-## good; A lets the resistor go (it stays, soldered on), picks the DIP
-## out of the vise and lifts the pair -- each command's outcome a line.
+## Two parts soldered into one at the bench: programs/solder.cell run by
+## the simulator -- the arm puts a DIP-8 in the vise and brings a
+## resistor's lead to pin 3, a pincer on the turntable grips it and the
+## arm goes, the turntable presents the joint to the iron station, which
+## heats it and feeds its own solder; the joint freezes good, the pincer
+## lets go and the resistor stays, soldered on -- each command's
+## outcome a line.
 ## Title: The assembly cell solders
 ## Page: cell/live/?program=solder watch it solder, step by step, live
 ## Feature: Open the cell: watch a resistor soldered to a chip a command at a time, or drive it yourself, in your browser

@@ -318,7 +318,20 @@ fn pincer_times(w: &World, p: &crate::pincers::PincerState) -> Vec<f64> {
         .collect();
     t.sort_by(f64::total_cmp);
     t.dedup_by(|a, b| (*a - *b).abs() < 1e-9);
-    t
+    // riding the turntable a pincer moves on an arc 130 mm out: four
+    // points inside each short step of a motion keep the chords a player
+    // draws within a few thousandths of a millimeter of it
+    let mut out = Vec::with_capacity(t.len() * 5);
+    for w in t.windows(2) {
+        out.push(w[0]);
+        if w[1] - w[0] < 0.2 {
+            for k in 1..5 {
+                out.push(w[0] + (w[1] - w[0]) * f64::from(k) / 5.0);
+            }
+        }
+    }
+    out.extend(t.last());
+    out
 }
 
 /// Angle columns made continuous down the rows (a step past 180 degrees

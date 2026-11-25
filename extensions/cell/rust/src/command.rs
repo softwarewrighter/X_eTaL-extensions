@@ -13,7 +13,7 @@ use serde_json::{Map, Value as Json, json};
 use std::fmt::Write as _;
 
 /// The arms, by name.
-pub const ARMS: [&str; 4] = ["A", "B", "C", "D"];
+pub const ARMS: [&str; 1] = ["A"];
 /// The tools in the rack, by name.
 pub const TOOLS: [&str; 7] = [
     "tweezers", "iron", "solder", "clip", "welder", "cutter", "wire",

@@ -25,12 +25,12 @@ fn a_session() {
     assert!(o["t1"].as_f64().unwrap() > o["t0"].as_f64().unwrap());
     assert_eq!(json(&cell_web::state())["arms"][0]["holding"], "U1");
     // a refusal says why and changes nothing
-    let r = json(&cell_web::command("pick B R1 grasp=body"));
+    let r = json(&cell_web::command("pick A R1 grasp=body"));
     assert!(
         r["outcomes"][0]["refused"]
             .as_str()
             .unwrap()
-            .contains("not tweezers")
+            .contains("A already holds U1")
     );
     // not commands at all
     assert!(
@@ -71,6 +71,6 @@ fn xetal_in_the_page_reaches_the_cell() {
     assert_eq!(o["err"], "", "{o}");
     let out = o["out"].as_str().unwrap();
     assert!(out.starts_with("cell('from X_eTaL', 1280, 720)"), "{out}");
-    assert!(out.contains("pick D C1 grasp=body"));
+    assert!(out.contains("pick A C1 grasp=body"));
     assert!(cell_web::rendered(cell_web::EXAMPLE).contains("<span"));
 }

@@ -78,7 +78,7 @@ def main():
         # before the page: the DIP into the vise
         agent.tool("cell_reset", circuit="demo")
         agent.tool("cell_do", commands="tool A tweezers\npick A U1 grasp=ends")
-        agent.tool("cell_place", arm="A", part="U1", at=[0, 0, -32], rpy=[0, 0, 90])
+        agent.tool("cell_place", arm="A", part="U1", at=[0, 0, -24], rpy=[0, 0, 90])
         agent.tool("cell_vise", action="close")
         agent.tool("cell_release", arm="A", part="U1")
         try:
@@ -122,7 +122,7 @@ def main():
         print("cell-mcp-check: the page shows the session (U1 in the vise)")
         # while the page is open: a resistor lead to pin 3
         agent.tool("cell_pick", arm="A", part="R1", grasp="body")
-        agent.tool("cell_do", commands="move A to=40,60,0\nalign A R1.1.tip to=U1.3.tip gap=0.1")
+        agent.tool("cell_do", commands="lift A mm=80\nmove A to=0,60,60 rpy=180,0,90\nmove A to=34.81,1.27,-14.05\nalign A R1.1.tip to=U1.3.tip gap=0.1")
         log = wait("(() => { const t = document.getElementById('log').textContent; return t.includes('align A R1.1.tip') && t; })()",
                    "the page did not follow the agent's commands")
         holds = wait("(() => { const t = document.getElementById('holds').textContent; return t.includes('holding R1') && t; })()",

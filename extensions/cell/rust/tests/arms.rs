@@ -31,12 +31,12 @@ fn arms_start_home_pointing_down() {
 #[test]
 fn a_move_arrives_where_it_was_sent() {
     let mut w = World::default();
-    // each its own corner of the work zone, apart enough not to touch
+    // the arm to each corner of the work zone in turn
     for (arm, at) in [
         ("A", [70.0, 70.0, 20.0]),
-        ("B", [-70.0, 70.0, 20.0]),
-        ("C", [-70.0, -70.0, 20.0]),
-        ("D", [70.0, -70.0, 20.0]),
+        ("A", [-70.0, 70.0, 20.0]),
+        ("A", [-70.0, -70.0, 20.0]),
+        ("A", [70.0, -70.0, 20.0]),
     ] {
         run(
             &mut w,
@@ -47,8 +47,8 @@ fn a_move_arrives_where_it_was_sent() {
         let want = kin::rpy_to_r([180.0, 0.0, 30.0]);
         assert!(kin::angle_between(&f.r, &want) < 1e-4, "{arm}");
     }
-    run(&mut w, "lift C mm=25");
-    assert!((w.flange("C").unwrap().p[2] - 45.0).abs() < 1e-6);
+    run(&mut w, "lift A mm=25");
+    assert!((w.flange("A").unwrap().p[2] - 45.0).abs() < 1e-6);
 }
 
 #[test]
@@ -83,10 +83,10 @@ fn a_straight_move_stays_straight() {
 fn a_joint_move_respects_speeds_and_arrives_together() {
     let rig = Rig::arm().unwrap();
     let mut w = World::default();
-    let from = w.arm("B").unwrap().joints;
+    let from = w.arm("A").unwrap().joints;
     let to = [-30.0, -20.0, 10.0, 90.0, 45.0, -120.0];
-    run(&mut w, "joints B -30 -20 10 90 45 -120 speed=0.8");
-    let arm = w.arm("B").unwrap();
+    run(&mut w, "joints A -30 -20 10 90 45 -120 speed=0.8");
+    let arm = w.arm("A").unwrap();
     assert_eq!(arm.joints, to);
     let rows = &arm.track;
     for pair in rows.windows(2) {
@@ -159,10 +159,7 @@ fn every_limit_is_refused_with_nothing_changed() {
     }
     for (line, says) in [
         ("move A to=900,0,0", "out of reach"),
-        (
-            "move C to=0,-800,100 rpy=180,0,0",
-            "j1 would turn suddenly (near a singularity)",
-        ),
+        ("move A to=0,450,100 rpy=180,0,0", "(near a singularity)"),
         ("lift A mm=100", ""),
     ] {
         let mut copy = w.clone();
@@ -183,7 +180,7 @@ fn every_limit_is_refused_with_nothing_changed() {
 #[test]
 fn a_dry_move_changes_nothing() {
     let mut w = World::default();
-    let o = w.apply(&parse_line("move D to=0,0,0 rpy=180,0,0 dry=1").unwrap());
+    let o = w.apply(&parse_line("move A to=0,0,0 rpy=180,0,0 dry=1").unwrap());
     assert!(o.ok && o.dry && o.t1 > 0.0, "{o:?}");
     assert_eq!(w, World::default());
 }
@@ -210,7 +207,7 @@ fn the_timeline_records_every_motion() {
     let mut w = World::default();
     run(
         &mut w,
-        "joints A 10 0 0 0 90 0\nmove B to=0,0,30 rpy=180,0,0\nstage turn=45\nwait s=1",
+        "joints A 10 0 0 0 90 0\nmove A to=0,0,30 rpy=180,0,0\nstage turn=45\nwait s=1",
     );
     let ops: Vec<&str> = w
         .timeline

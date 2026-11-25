@@ -1,8 +1,11 @@
-# solder: two parts soldered into one. Arm A puts the DIP-8 in the vise
-# and brings a resistor's lead to pin 3, tip to tip; arm C's iron heats
-# the joint, arm D feeds solder into it; the joint cools and freezes.
-# A lets the resistor go -- it stays, soldered on -- then picks the DIP
-# out of the vise and lifts the pair: a subassembly, held.
+# solder: soldering at the bench (decisions C17, C18): the DIP into the vise on
+# the turntable; arm A brings a resistor's lead to pin 3's tip, square
+# to the pin row; pincer P1 comes in from the turntable's side and grips
+# the lead -- the turntable now holds the resistor, and A lets go and
+# goes; the turntable turns and rises to present the joint to station
+# S1, whose iron touches it and whose own feeder feeds the solder; the
+# iron backs away, the joint freezes; P1 lets go and the resistor stays,
+# soldered on.
 reset circuit=demo
 tool A tweezers
 pick A U1 grasp=ends
@@ -14,15 +17,13 @@ lift A mm=80
 move A to=0,60,60 rpy=180,0,90
 move A to=34.81,1.27,-14.05
 align A R1.1.tip to=U1.3.tip gap=0.1
-tool C iron temp=350
-touch C at=U1.3+R1.1 dwell=2
-tool B solder
-feed B mm=2 rate=1
-back C
+pinch P1 on=R1.1 at=6
+release A R1
+lift A mm=60
+present U1.3+R1.1 at=S1
+touch S1 at=U1.3+R1.1 dwell=2
+feed S1 mm=2 rate=1
+back S1
 wait until=U1.3+R1.1 below=100
 inspect U1.3+R1.1
-release A R1
-lift A mm=40
-pick A U1 grasp=ends
-vise open
-lift A mm=80
+unpinch P1

@@ -2,5 +2,5 @@
 
 {"ok":false,"command":"move A to=900,0,0","t0":0.0,"t1":0.0,"did":[],"refused":"A cannot go there in a straight line: out of reach 57% of the way","events":[],"warnings":[]}
 
-{"ok":false,"command":"move C to=0,-800,100 rpy=180,0,0","t0":0.0,"t1":0.0,"did":[],"refused":"C cannot go there in a straight line: j1 would turn suddenly (near a singularity) 50% of the way","events":[],"warnings":[]}
+{"ok":false,"command":"move A to=0,450,100 rpy=180,0,0","t0":0.0,"t1":0.0,"did":[],"refused":"A cannot go there in a straight line: j2 would turn suddenly (near a singularity) 98% of the way","events":[],"warnings":[]}
 

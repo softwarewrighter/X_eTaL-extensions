@@ -1,21 +1,17 @@
 # pick: arm A takes its tweezers at its rack, lifts the DIP-8 out of
-# the tray and puts it in the vise, which holds it when A lets go; A
-# backs out and goes home, the stage turns the DIP a quarter round.
-# Arm D takes its tweezers, picks the LED and holds it up; the vise
-# opens and the DIP, held by nothing, falls to the floor and is lost,
-# and so does the LED when D lets it go.
+# the tray and puts it in the vise on the turntable, which holds it when
+# A lets go; the turntable turns the DIP a quarter round. A picks the
+# LED and holds it up; the vise opens and the DIP, held by nothing,
+# falls to the floor and is lost, and so does the LED when A lets go.
 reset circuit=demo
 tool A tweezers
 pick A U1 grasp=ends
-place A U1 at=0,0,-32 rpy=0,0,90
+place A U1 at=0,0,-24 rpy=0,0,90
 vise close
 release A U1
 lift A mm=60
-move A to=0,220,120
-joints A 0 0 0 0 90 0
 stage turn=90
-tool D tweezers
-pick D D1 grasp=body
-move D to=60,0,80
+pick A D1 grasp=body
+move A to=60,0,80
 vise open
-release D D1
+release A D1

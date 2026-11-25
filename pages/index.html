@@ -53,7 +53,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
 <main>
   <section class="panel feature" id="feature-cell-solder">
     <h2><a href="cell/live/?program=solder">The assembly cell solders</a></h2>
-    <p class="lede">Two parts soldered into one: programs/solder.cell run by the simulator -- arm A puts a DIP-8 in the vise and holds a resistor&#x27;s lead to pin 3, arm C&#x27;s iron heats the joint, arm D feeds solder, the joint freezes good; A lets the resistor go (it stays, soldered on), picks the DIP out of the vise and lifts the pair -- each command&#x27;s outcome a line.</p>
+    <p class="lede">Two parts soldered into one at the bench: programs/solder.cell run by the simulator -- the arm puts a DIP-8 in the vise and brings a resistor&#x27;s lead to pin 3, a pincer on the turntable grips it and the arm goes, the turntable presents the joint to the iron station, which heats it and feeds its own solder; the joint freezes good, the pincer lets go and the resistor stays, soldered on -- each command&#x27;s outcome a line.</p>
     <a href="cell/live/?program=solder"><video src="cell/solder.webm" autoplay loop muted playsinline preload="metadata"></video></a>
     <p class="go"><a class="docs" href="cell/live/?program=solder">Open the cell: watch a resistor soldered to a chip a command at a time, or drive it yourself, in your browser</a></p>
   </section>
@@ -202,7 +202,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
     </section>
   </div>
   <h2 id="cell"><a href="https://github.com/softwarewrighter/X_eTaL-extensions/blob/main/extensions/cell/docs/README.md">cell</a> <a class="docs" href="doc/extensions-cell-lib-Cell.xtl.html">facade docs</a></h2>
-  <p class="lede">A robot assembly cell, simulated: four arms, a tool rack, trays of parts and a microscope that build electronic circuits in free air, in 3D, from the center outward -- two arms hold two parts so that a lead touches a lead, a third solders them, and the next part comes in. A program or an LLM agent drives it one command at a time (the design: docs/cell-design.md in the repository).</p>
+  <p class="lede">A robot assembly bench, simulated: one arm, a turntable with a vise and pincers, tool stations (an iron that feeds its own solder, a welder), a tool rack, trays of parts and a microscope that build electronic circuits in free air, in 3D, from the center outward -- the arm brings a lead to a lead, a pincer holds it there, the turntable presents the joint to a station, and the next part comes in. A program or an LLM agent drives it one command at a time (the design: docs/cell-design.md in the repository).</p>
   <div class="demos">
     <section class="panel demo" id="cell-models">
       <h3>cell / models <a class="docs" href="doc/extensions-cell-demos-models.xtl.html">source and docs</a></h3>
@@ -212,13 +212,13 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
     </section>
     <section class="panel demo" id="cell-pick">
       <h3>The assembly cell picks <a class="docs" href="doc/extensions-cell-demos-pick.xtl.html">source and docs</a> <a class="docs" href="cell/live/?program=pick">open it live: watch it pick, step by step, live</a></h3>
-      <p class="note">The assembly cell picks: programs/pick.cell run by the simulator -- arm A takes its tweezers and puts the DIP from the tray in the vise, the stage turns it, arm D picks the LED, and both fall when let go -- each command&#x27;s outcome a line: ok, what it did, and why not.</p>
+      <p class="note">The assembly cell picks: programs/pick.cell run by the simulator -- the arm takes its tweezers and puts the DIP from the tray in the vise, the turntable turns it, the arm picks the LED, and both fall when let go -- each command&#x27;s outcome a line: ok, what it did, and why not.</p>
       <video src="cell/pick.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo cell pick</pre>
     </section>
     <section class="panel demo" id="cell-solder">
       <h3>The assembly cell solders <a class="docs" href="doc/extensions-cell-demos-solder.xtl.html">source and docs</a> <a class="docs" href="cell/live/?program=solder">open it live: watch it solder, step by step, live</a></h3>
-      <p class="note">Two parts soldered into one: programs/solder.cell run by the simulator -- arm A puts a DIP-8 in the vise and holds a resistor&#x27;s lead to pin 3, arm C&#x27;s iron heats the joint, arm D feeds solder, the joint freezes good; A lets the resistor go (it stays, soldered on), picks the DIP out of the vise and lifts the pair -- each command&#x27;s outcome a line.</p>
+      <p class="note">Two parts soldered into one at the bench: programs/solder.cell run by the simulator -- the arm puts a DIP-8 in the vise and brings a resistor&#x27;s lead to pin 3, a pincer on the turntable grips it and the arm goes, the turntable presents the joint to the iron station, which heats it and feeds its own solder; the joint freezes good, the pincer lets go and the resistor stays, soldered on -- each command&#x27;s outcome a line.</p>
       <video src="cell/solder.webm" autoplay loop muted playsinline controls preload="metadata"></video>
       <pre class="source">just demo cell solder</pre>
     </section>
@@ -424,7 +424,7 @@ just demos                  # the demos; then: just demo EXT NAME</pre>
   <a href="https://softwarewrighter.github.io/X_eTaL/">X_eTaL live</a><span class="sep">&middot;</span>
   <a href="https://softwarewrighter.github.io/X_eTaL-demos/">X_eTaL demos</a><span class="sep">&middot;</span>
   <span>X_eTaL 8c49bd8</span><span class="sep">&middot;</span>
-  <span>built at 1c2295b</span>
+  <span>built at 5cf22bc</span>
 </footer>
 </body>
 </html>
