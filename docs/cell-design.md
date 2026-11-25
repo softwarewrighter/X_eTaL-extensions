@@ -214,6 +214,12 @@ assembly: a semiconductor in a path from electrode to electrode, or
 with no grounding clip on its lead, marks a transient risk -- refused
 by default (`weld ... risky=allow` to proceed and see the damage).
 
+**Mounts.** An arm's base is a full pose, so arms need not all stand
+on the floor below the work zone (decision C17): one may hang from
+above, stand on a wall, or reach up from under the stage, and its
+tools approach from its own side. A lead reached from below or the
+side leaves room above for the others.
+
 **Supports.** As a 3D printer's slicer adds supports and they are
 cut away after printing (decision C16): a frame of steel wire, welded
 from the spool, holds parts by tabs while the circuit is turned and
