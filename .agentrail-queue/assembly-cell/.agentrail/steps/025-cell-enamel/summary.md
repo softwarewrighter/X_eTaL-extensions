@@ -1,0 +1,1 @@
+Enameled wire insulates (C21): enamel stripped a span at a time where thermal nodes reach strip_c (WireInfo.bare); Part::insulated (sleeves + enamel but bare spans) used by the shorts check, inspect shorts and sleeve clearances; AWG 36/38/40; enamel program (AWG 30 enameled wire across pin 4 to pin 3, no short; bare copper shorts). Commit 8e7926e; full gate ok.
