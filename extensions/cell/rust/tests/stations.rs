@@ -35,7 +35,7 @@ fn the_stations_read_and_point_at_the_work() {
     let all = stations::data().unwrap();
     assert_eq!(
         all.iter().map(|s| s.tool.as_str()).collect::<Vec<_>>(),
-        ["iron", "welder", "cutter"]
+        ["iron", "welder", "cutter", "wire"]
     );
     assert!(all[0].feeder, "the iron feeds its own solder");
     for s in &all {

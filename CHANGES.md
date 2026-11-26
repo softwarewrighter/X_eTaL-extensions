@@ -28,6 +28,7 @@ version.
 
 ## 2026-11-25
 
+- 18:06 `test` cell: the stations' tools include the wire feeder S5 (the full gate after the wire push caught the stale list).
 - 18:02 `ext` cell, wire (Saga 17 step 18): `materials/wire.toml` and `wire.rs` (gauges listed and by the AWG formula, ampacity interpolated, cantilever sag); a length of wire is a part whose halves are its pins (`Part::kind_of` builds its kind), so it is bent, pinched, soldered and trimmed like any lead; the wire feeder station S5: `wire S5 awg= mm= [enamel=]` (still on the spool: taken by the arm, not carried off), `cut S5` (kept by what holds it, else it falls); enamel burns off above 330 C before it wets (`touch ... temp=` sets a station's iron); `programs/wire.cell` (feed, cut, solder, bend; clean), on the live page; the player draws a wire from its leads. Six new tests.
 - 15:42 `chore` saga: complete assembly-cell step 17 (cell-bench-arm).
 - 15:32 `ext` cell, the slender arm (Saga 17 step 17, C18): the arm half as thick (CellModels.xtl's housings and links, rebuilt through Blender; `collide.rs` to match), the same reach; `programs/turn.cell`, the arm turning the DIP on its side in the vise, the turntable turning and tilting it (upside down is out of reach: tested as refused); on the live page; the page's default hint describes the bench; the grip test lifts clear of the jaw before going on; goldens re-recorded (the arms test's dry run now clears the microscope). solder recorded again.
