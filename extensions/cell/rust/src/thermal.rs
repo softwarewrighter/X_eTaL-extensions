@@ -684,7 +684,8 @@ impl World {
     }
 
     /// A joint's place in the cell's frame.
-    pub(crate) fn joint_point(&self, j: &Joint) -> Option<V3> {
+    #[must_use]
+    pub fn joint_point(&self, j: &Joint) -> Option<V3> {
         let id = j.a.split('.').next()?;
         let p = self.parts.iter().find(|p| p.id == id)?;
         Some(p.pose().then(&Pose::from_xyz_rpy(j.at, [0.0; 3])).p)

@@ -22,9 +22,11 @@ pinch P1 on=W1.1 at=12
 release A W1
 lift A mm=60
 present U1.3+W1.1 at=S1
+scope aim=U1.3+W1.1 zoom=8
 touch S1 at=U1.3+W1.1 dwell=2
 feed S1 mm=2 rate=1
 back S1
 wait until=U1.3+W1.1 below=100
+scope aim=W1.2 zoom=3
 bend P2 on=W1.2 at=6 angle=90 toward=0,0,-1
 unpinch P1

@@ -313,6 +313,13 @@ pub struct World {
     /// The pincers on the turntable.
     #[serde(default = "crate::pincers::fresh")]
     pub pincers: Vec<crate::pincers::PincerState>,
+    /// The microscope.
+    #[serde(default)]
+    pub scope: crate::scope::Scope,
+    /// Solder fed into joints, for players: from, to the time, where the
+    /// wire starts and where it goes.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub feeding: Vec<(f64, f64, V3, V3)>,
     /// The tool stations: how far each is extended.
     #[serde(default = "crate::stations::fresh")]
     pub stations: Vec<crate::stations::StationState>,
@@ -470,6 +477,8 @@ impl World {
             offset: [0.0; 3],
             stations: crate::stations::fresh(),
             pincers: crate::pincers::fresh(),
+            scope: crate::scope::Scope::default(),
+            feeding: Vec::new(),
             vise: "open".into(),
             parts,
             tools,
@@ -1700,6 +1709,20 @@ impl World {
                 let allow = c.word("risky") == Some("allow");
                 self.weld(i, &rig, at, energy, allow, did, events, warnings)?;
             }
+            "scope" => {
+                let target = c.word("aim").map(str::to_string);
+                self.move_scope(
+                    c.number("pan"),
+                    c.number("tilt"),
+                    c.number("zoom"),
+                    c.number("focus"),
+                    c.number("rotate"),
+                    target.as_deref(),
+                    did,
+                    events,
+                )?;
+            }
+            "snap" => self.snap(events),
             "inspect" => {
                 let target = c.word("target").unwrap_or("");
                 events.push(self.inspect(target).map_err(Halt::Refused)?);
@@ -1828,6 +1851,8 @@ impl World {
         {
             part.at = layout::six(&moved.then(&part.pose()));
         }
+        // a scope with an aim follows it over the same span
+        self.follow_aim(t0, dt);
         self.advance(dt, None);
         let mut said = format!("stage to {}", num(self.stage));
         if self.tilt != 0.0 || from_tilt != 0.0 {

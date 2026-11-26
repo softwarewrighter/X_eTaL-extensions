@@ -14,10 +14,11 @@ each command: ok, its end time, what happened (the joint as it froze)
 {"ok":true,"command":"release A R1","t0":40.835127,"t1":41.135127,"did":["grip A open in 0.3 s"],"events":["A let R1 go","R1 stays: P1 grips it"],"warnings":[]}
 {"ok":true,"command":"lift A mm=60","t0":41.135127,"t1":41.835127,"did":["line A to=34.81,1.27,31.05 rpy=180,0,90 in 0.7 s","joints A 4.436 29.112 14.631 0 46.258 184.436"],"events":[],"warnings":[]}
 {"ok":true,"command":"present U1.3+R1.1 at=S1","t0":41.835127,"t1":42.815808,"did":["stage to 30 at -2.664556788 -3.004852263 28.95 in 0.981 s"],"events":["U1.3+R1.1 at S1's point (stage turn 30, tilt 0, at -2.665 -3.005 28.95)"],"warnings":[]}
-{"ok":true,"command":"touch S1 at=U1.3+R1.1 dwell=2","t0":42.815808,"t1":50.065808,"did":["extend S1 to 150 mm in 4 s","extend S1 to 160 mm in 1.25 s","dwell 2 s"],"events":["S1's iron (350 C) on U1.3+R1.1","U1.3+R1.1: the leads at 309.7 C"],"warnings":[]}
-{"ok":true,"command":"feed S1 mm=2 rate=1","t0":50.065808,"t1":52.065808,"did":["feed 2 mm of solder in 2 s"],"events":["0.4 mm3 of solder melted into U1.3+R1.1"],"warnings":[]}
-{"ok":true,"command":"back S1","t0":52.065808,"t1":56.315808,"did":["retract S1 to 0 mm in 4.25 s"],"events":["U1.3+R1.1 froze: good (0.4 mm3 of solder, wet 2 s and 2 s)"],"warnings":[]}
-{"ok":true,"command":"wait until=U1.3+R1.1 below=100","t0":56.315808,"t1":56.315808,"did":["waited 0 s: U1.3+R1.1 at 52.8 C"],"events":[],"warnings":[]}
-{"ok":true,"command":"inspect U1.3+R1.1","t0":56.315808,"t1":56.315808,"did":[],"events":["U1.3+R1.1: good; 0.4 mm3 of solder, wet 2 s and 2 s, at 52.8 C"],"warnings":[]}
-{"ok":true,"command":"unpinch P1","t0":56.315808,"t1":57.674195,"did":["P1 at -80 degrees round the ring, 31.1 mm up, its pole 0 mm out"],"events":["P1 lets R1.1 go","R1 stays: it is soldered to a part the vise holds"],"warnings":[]}
+{"ok":true,"command":"scope zoom=8 aim=U1.3+R1.1","t0":42.815808,"t1":43.315808,"did":["scope to pan 0 tilt 0 zoom 8 in 0.5 s"],"events":["the scope looks at U1.3+R1.1, 15 mm across"],"warnings":[]}
+{"ok":true,"command":"touch S1 at=U1.3+R1.1 dwell=2","t0":43.315808,"t1":50.565808,"did":["extend S1 to 150 mm in 4 s","extend S1 to 160 mm in 1.25 s","dwell 2 s"],"events":["S1's iron (350 C) on U1.3+R1.1","U1.3+R1.1: the leads at 309.7 C"],"warnings":[]}
+{"ok":true,"command":"feed S1 mm=2 rate=1","t0":50.565808,"t1":52.565808,"did":["feed 2 mm of solder in 2 s"],"events":["0.4 mm3 of solder melted into U1.3+R1.1"],"warnings":[]}
+{"ok":true,"command":"back S1","t0":52.565808,"t1":56.815808,"did":["retract S1 to 0 mm in 4.25 s"],"events":["U1.3+R1.1 froze: good (0.4 mm3 of solder, wet 2 s and 2 s)"],"warnings":[]}
+{"ok":true,"command":"wait until=U1.3+R1.1 below=100","t0":56.815808,"t1":56.815808,"did":["waited 0 s: U1.3+R1.1 at 52.8 C"],"events":[],"warnings":[]}
+{"ok":true,"command":"inspect U1.3+R1.1","t0":56.815808,"t1":56.815808,"did":[],"events":["U1.3+R1.1: good; 0.4 mm3 of solder, wet 2 s and 2 s, at 52.8 C"],"warnings":[]}
+{"ok":true,"command":"unpinch P1","t0":56.815808,"t1":58.174195,"did":["P1 at -80 degrees round the ring, 31.1 mm up, its pole 0 mm out"],"events":["P1 lets R1.1 go","R1 stays: it is soldered to a part the vise holds"],"warnings":[]}
 

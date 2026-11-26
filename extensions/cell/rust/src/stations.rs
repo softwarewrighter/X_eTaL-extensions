@@ -675,6 +675,26 @@ impl World {
                 }
                 let mm = c.number("mm").unwrap_or(0.0);
                 let rate = c.number("rate").unwrap_or(2.0);
+                // drawn: the solder wire coming in beside the iron, from above
+                // its line, into the joint, shrinking as it melts
+                if let Some(at) = self.joint_point(&self.joints[ji]) {
+                    // the iron's side, raised to 45 degrees: clear of the iron
+                    let flat = kin::scale(
+                        [s.from[0], s.from[1], 0.0],
+                        1.0 / s.from[0].hypot(s.from[1]).max(1e-9),
+                    );
+                    let side = kin::scale(
+                        kin::add(flat, [0.0, 0.0, 1.0]),
+                        std::f64::consts::FRAC_1_SQRT_2,
+                    );
+                    let t0 = self.t;
+                    self.feeding.push((
+                        t0,
+                        t0 + mm / rate,
+                        kin::add(at, kin::scale(side, 20.0)),
+                        at,
+                    ));
+                }
                 self.feed_melt(ji, mm, rate, did, events, warnings)?;
             }
             "feed" => {
@@ -983,12 +1003,31 @@ impl World {
         let half = mm / 2.0;
         let t = self.t;
         for (pin, end) in [("1", half), ("2", -half)] {
-            let lead = vec![[0.0; 3], [end, 0.0, 0.0]];
-            part.leads.insert(pin.to_string(), lead.clone());
-            part.reformed.push((t, pin.to_string(), lead));
+            part.leads
+                .insert(pin.to_string(), vec![[0.0; 3], [end, 0.0, 0.0]]);
+        }
+        // drawn growing out of the nozzle (its end 2, at -half): eight
+        // lengths over the feed, the last the whole wire
+        let dt = mm / 20.0;
+        let steps = 8;
+        for k in 0..=steps {
+            let out = -half + mm * f64::from(k).max(0.2) / f64::from(steps);
+            let tk = micro(t + dt * f64::from(k) / f64::from(steps));
+            let (one, two) = if out > 0.0 {
+                (
+                    vec![[0.0; 3], [out, 0.0, 0.0]],
+                    vec![[0.0; 3], [-half, 0.0, 0.0]],
+                )
+            } else {
+                (
+                    vec![[out, 0.0, 0.0], [out + 0.01, 0.0, 0.0]],
+                    vec![[out, 0.0, 0.0], [-half, 0.0, 0.0]],
+                )
+            };
+            part.reformed.push((tk, "1".into(), one));
+            part.reformed.push((tk, "2".into(), two));
         }
         self.parts.push(part);
-        let dt = mm / 20.0;
         self.advance(dt, None);
         did.push(format!(
             "feed {} mm of AWG {awg} in {} s",

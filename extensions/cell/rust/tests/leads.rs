@@ -110,7 +110,9 @@ fn a_pincer_bends_a_held_parts_lead() {
         "{o:?}"
     );
     let r1 = w.part("R1").unwrap();
-    assert!(r1.leads.contains_key("2") && r1.reformed.len() == 1);
+    // drawn as it swings: eight shapes, the last the lead as it is now
+    assert!(r1.leads.contains_key("2") && r1.reformed.len() == 8);
+    assert_eq!(&r1.reformed.last().unwrap().2, &r1.leads["2"]);
     // the lead's tip went somewhere else, and points down now
     let after = w.frame("R1.2.tip").unwrap().p;
     assert!(kin::norm(kin::sub(after, before)) > 5.0);

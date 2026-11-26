@@ -1,6 +1,6 @@
 number = 20
 slug = "cell-scope"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 12: the microscope: pan, tilt, zoom, focus, rotate; field of vie..."
 role = "production"
 context_files = []

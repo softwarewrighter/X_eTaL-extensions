@@ -11,6 +11,8 @@
 //! track('stage', nums('t turn tilt x y z ...', 6))
 //! pincer('P1', 'clip', nums('t housing x y z r p y, mount x y z r p y ...', 13))
 //! lead('R1', '2', t, diameter, nums('x y z ...', 3))   a lead re-formed
+//! scope(nums('t pan tilt view focus rotate dist ...', 7))   the microscope
+//! snap(t, 'U1.3+R1.1', field)           a picture taken
 //! station('S1', 'iron', nums('housing x y z r p y', 6)[0], nums('t x y z r p y ...', 7))
 //! part('U1', 'dip8', nums('x y z r p y', 6)[0])
 //! attach('U1', 'A', t0, t1)          (an arm's hold; 'stage': the vise's)
@@ -92,6 +94,23 @@ pub fn calls(name: &str, w: &World) -> Result<String, String> {
     }
     let rows: Vec<Vec<f64>> = w.stage_track.iter().map(|r| r.to_vec()).collect();
     let _ = writeln!(out, "track('stage', {})", table(&rows, 6));
+    // the microscope: its pan, tilt, view and the pictures it took
+    let rows: Vec<Vec<f64>> = w.scope.track.iter().map(|r| r.to_vec()).collect();
+    let _ = writeln!(out, "scope({})", table(&rows, 7));
+    for (t0, t1, from, to) in &w.feeding {
+        let r = |v: &kin::V3| row(&v.map(|x| kin::clean((x * 1000.0).round() / 1000.0)));
+        let _ = writeln!(
+            out,
+            "feeding({}, {}, {}, {})",
+            num(*t0),
+            num(*t1),
+            r(from),
+            r(to)
+        );
+    }
+    for (t, what, field) in &w.scope.snaps {
+        let _ = writeln!(out, "snap({}, {}, {})", num(*t), quote(what), num(*field));
+    }
     // the pincers: their housing and jaws in the cell's frame, at their
     // own moves and the turntable's
     for p in &w.pincers {
@@ -214,6 +233,14 @@ pub fn calls(name: &str, w: &World) -> Result<String, String> {
                 .map(|x| kin::clean((x * 1000.0).round() / 1000.0));
             let _ = writeln!(out, "expect({}, {}, {})", quote(&s.name), num(t), row(&r));
         }
+    }
+    // the scope's eye, at the same times (its pan and tilt drawn right)
+    for &t in times.iter().step_by(step) {
+        let r = lerp_rows(&w.scope.track, t);
+        let e = crate::scope::eye(r[1], r[2])
+            .p
+            .map(|x| kin::clean((x * 1000.0).round() / 1000.0));
+        let _ = writeln!(out, "expect('scope', {}, {})", num(t), row(&e));
     }
     // each pincer's jaws' mount, at the same times
     for p in &w.pincers {

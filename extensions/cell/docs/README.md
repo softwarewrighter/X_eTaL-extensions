@@ -449,6 +449,42 @@ the pin's excess 1 mm past the joint (1.7 mm falls into the bin); P2
 bends the resistor's other lead down round a mandrel 3 mm from the
 body, and S4 trims it to 8 mm (20 mm falls).
 
+## The microscope
+
+The microscope hangs over the work zone on its gantry. Its head pans
+about the vertical and tilts; its eye is 120 mm below the tilt.
+
+```
+scope aim=U1.3+R1.1 zoom=8     # turn the head onto a joint, 15 mm across
+scope aim=R1.2 zoom=4          # onto a pin's frame, 30 mm across
+scope pan=20 tilt=10 zoom=2    # or by hand
+snap                           # record a picture: its time, what, field
+```
+
+- `aim` works out the pan and tilt that put the eye's axis through a
+  joint (`A.n+B.m`) or a pin. The scope keeps its aim: when the stage
+  turns or tilts to present the work to a station, the head turns back
+  onto the target over the same span.
+- `zoom` sets the field of view: 120 mm across at zoom 1, 15 mm at 8.
+  A head turn takes its angle over 60 degrees a second; a zoom or focus
+  change takes 0.5 s.
+- The player draws the scope's picture in a frame of its own (bottom
+  right, or beside the live page's panel), from its eye, as the scope's
+  track says. It is a cutaway: anything more than 30 mm above the
+  target, such as the iron's shaft or a pincer's rod right over the
+  joint, is left out, so the joint is always in sight. A line of sight
+  checked for what is in the way comes later.
+- What is small is drawn larger than life so it reads in the cell: a
+  joint's solder at least 1 mm across, a lead or wire at least 0.9 mm
+  thick. Solder fed into a joint is drawn as a silver wire coming in
+  beside the iron, shortening as it melts; a bend swings the lead
+  through eight shapes over 1.2 s; fed wire grows out of the nozzle.
+- The programs that solder, bend or trim aim the scope first, and the
+  live page opens them close up.
+
+Saving the picture as a PNG and judging a joint from the picture rather
+than the simulator's numbers come with part identification.
+
 ## Tool stations and the positioner
 
 Tools need not ride on arms. A tool station is a tool on a linear

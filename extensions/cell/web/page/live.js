@@ -46,7 +46,10 @@ export function start(local) {
   const view = $('view');
   // show the cell's timeline, playing from `from` to `to` (or holding t)
   const show = (from, to, calls) => {
-    const options = { models: './models/', hud: q.get('hud') !== '0', check: q.has('check') };
+    // the detailed programs open close up on the work (the whole cell
+    // is a meter across; a lead is half a millimeter)
+    const detailed = ['solder', 'solder-stations', 'weld', 'weld-stations', 'leads', 'wire', 'support', 'turn'].includes(q.get('program') || 'solder');
+    const options = { models: './models/', hud: q.get('hud') !== '0', check: q.has('check'), close: detailed && !q.has('view'), scopeLeft: 360 };
     if (player) { options.view = player.view; player.stopAll(); }
     if (q.has('t')) options.time = Number(q.get('t'));
     else if (from !== undefined) options.time = from;

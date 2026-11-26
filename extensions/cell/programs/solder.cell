@@ -21,6 +21,7 @@ pinch P1 on=R1.1 at=6
 release A R1
 lift A mm=60
 present U1.3+R1.1 at=S1
+scope aim=U1.3+R1.1 zoom=8
 touch S1 at=U1.3+R1.1 dwell=2
 feed S1 mm=2 rate=1
 back S1

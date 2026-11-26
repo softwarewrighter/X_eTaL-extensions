@@ -19,6 +19,7 @@ pub mod parts;
 pub mod pincers;
 pub mod rig;
 pub mod scene;
+pub mod scope;
 pub mod solder;
 pub mod stations;
 mod thermal;

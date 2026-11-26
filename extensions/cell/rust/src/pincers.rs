@@ -31,6 +31,10 @@ const HOUSING: [f64; 3] = [20.0, 20.0, 30.0];
 /// The jaws' tapered end, left out of their solid, mm.
 const TIP: f64 = 8.0;
 
+/// How long a bend takes, s, and in how many shapes it is drawn.
+const BEND_TIME: f64 = 1.2;
+const BEND_STEPS: u32 = 8;
+
 /// The pincers' names.
 pub const NAMES: [&str; 2] = ["P1", "P2"];
 
@@ -513,8 +517,24 @@ impl World {
             ))
         })?;
         self.pincer_go(k, to, &allowed, did)?;
-        // the bend
-        self.reform(pk, pn, new.clone());
+        // the bend, as the jaws swing it: eight shapes over about a
+        // second, the last the bend itself
+        for k in 1..=BEND_STEPS {
+            let f = f64::from(k) / f64::from(BEND_STEPS);
+            let part = if k == BEND_STEPS {
+                new.clone()
+            } else {
+                crate::leads::bend(&p.lead, at, angle * f, toward_local, r, p.diameter)
+                    .unwrap_or_else(|_| new.clone())
+            };
+            self.advance(BEND_TIME / f64::from(BEND_STEPS), None);
+            self.reform(pk, pn, part);
+        }
+        did.push(format!(
+            "bend {} degrees in {} s",
+            num1(angle),
+            num1(BEND_TIME)
+        ));
         let after = at_world(&new, grip);
         let dir_after = kin::sub(
             at_world(&new, (grip + 0.5).min(crate::leads::length(&new))),

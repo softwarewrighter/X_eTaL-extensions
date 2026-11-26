@@ -103,7 +103,7 @@ export function cellPlayer(host, calls, options = {}) {
   scene.add(root);
   const folder = options.models || './models/';
   const s = {
-    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], stations: [], leads: [], attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
+    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], stations: [], leads: [], scope: [], snaps: [], feeding: [], attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
   };
   const api = {
     nums,
@@ -121,6 +121,9 @@ export function cellPlayer(host, calls, options = {}) {
     expect(arm, t, xyz) { s.expects.push({ arm, t, xyz }); },
     station(id, tool, housing, rows) { s.stations.push({ id, tool, housing, rows }); },
     lead(id, pin, t, d, rows) { s.leads.push({ id, pin, t, d, points: rows }); },
+    scope(rows) { s.scope = rows; },
+    snap(t, what, field) { s.snaps.push({ t, what, field }); },
+    feeding(t0, t1, from, to) { s.feeding.push({ t0, t1, from, to }); },
     // a pincer: a station whose housing moves too (rows: t, housing's
     // x y z r p y, the jaws' mount's x y z r p y)
     pincer(id, tool, rows) { s.stations.push({ id, tool, housing: rows[0].slice(1, 7), rows: rows.map((r) => [r[0], ...r.slice(7)]), housings: rows.map((r) => r.slice(0, 7)) }); },
@@ -146,7 +149,7 @@ export function cellPlayer(host, calls, options = {}) {
   const whole = () => ({ yaw: 35 * D, pitch: 28 * D, dist: 1700, target: new THREE.Vector3(0, 60, 0) });
   // close up: the work zone, the stage's top and what is held over it
   const close = () => ({ yaw: 35 * D, pitch: 22 * D, dist: 200, target: new THREE.Vector3(0, 0, -15) });
-  const view = options.view || (new URLSearchParams(location.search).get('view') === 'close' ? close() : whole());
+  const view = options.view || (options.close || new URLSearchParams(location.search).get('view') === 'close' ? close() : whole());
   const place = () => {
     const c = Math.cos(view.pitch);
     camera.position.set(view.target.x + view.dist * c * Math.sin(view.yaw), view.target.y + view.dist * Math.sin(view.pitch), view.target.z + view.dist * c * Math.cos(view.yaw));
@@ -179,7 +182,7 @@ export function cellPlayer(host, calls, options = {}) {
     place();
     draw();
   }, ends);
-  renderer.domElement.addEventListener('wheel', (e) => { e.preventDefault(); view.dist = Math.max(200, Math.min(5000, view.dist * Math.exp(e.deltaY * 0.001))); place(); draw(); }, { passive: false });
+  renderer.domElement.addEventListener('wheel', (e) => { e.preventDefault(); view.dist = Math.max(40, Math.min(5000, view.dist * Math.exp(e.deltaY * 0.001))); place(); draw(); }, { passive: false });
 
   // the models: each .glb fetched once, a copy for each use, hung under
   // a group that turns glTF's meters and Y up into the cell's mm and Z up
@@ -194,6 +197,7 @@ export function cellPlayer(host, calls, options = {}) {
     return g;
   };
   const arms = {}, fixtures = {}, parts = {}, stations = {};
+  const feeds = [];
   const Y = new THREE.Vector3(0, 1, 0);
   const ready = Promise.all([
     ...s.fixtures.map(async (f) => {
@@ -201,7 +205,8 @@ export function cellPlayer(host, calls, options = {}) {
       g.matrixAutoUpdate = false;
       g.matrix.copy(poseMatrix(f.pose));
       root.add(g);
-      fixtures[f.id] = { g, base: g.matrix.clone(), turn: g.getObjectByName('stage_turn') };
+      fixtures[f.id] = { g, base: g.matrix.clone(), turn: g.getObjectByName('stage_turn'), pan: g.getObjectByName('scope_pan'), tilt: g.getObjectByName('scope_tilt'), eye: g.getObjectByName('scope_eye') };
+      for (const k of ['pan', 'tilt']) if (fixtures[f.id][k]) fixtures[f.id][k + 'Rest'] = fixtures[f.id][k].quaternion.clone();
       if (fixtures[f.id].turn) fixtures[f.id].rest = fixtures[f.id].turn.quaternion.clone();
     }),
     ...s.rigs.map(async (r) => {
@@ -240,7 +245,7 @@ export function cellPlayer(host, calls, options = {}) {
         }
         const material = (glow.pins[L.pin] && glow.pins[L.pin][0] ? glow.pins[L.pin][0] : new THREE.MeshStandardMaterial({ color: '#c0c4c8', metalness: 0.8, roughness: 0.3 })).clone();
         (glow.pins[L.pin] ||= []).push(material);
-        const tube = new THREE.Mesh(new THREE.TubeGeometry(path, Math.max(8, L.points.length * 6), L.d / 2, 8, false), material);
+        const tube = new THREE.Mesh(new THREE.TubeGeometry(path, Math.max(8, L.points.length * 6), Math.max(L.d / 2, 0.45), 8, false), material);
         tube.visible = false;
         g.add(tube);
         (reformed[L.pin] ||= []).push({ t: L.t, tube });
@@ -262,6 +267,16 @@ export function cellPlayer(host, calls, options = {}) {
       pole.matrixAutoUpdate = false;
       root.add(pole);
       stations[st.id] = { tool, pole, housing, rows: st.rows, housings: st.housings, half: size[2] / 2, front: new THREE.Vector3(0, 0, size[2] / 2).applyMatrix4(poseMatrix(st.housing)) };
+    }),
+    // solder fed into a joint: a silver wire from beside the iron, there
+    // while it feeds (drawn thicker than its 0.5 mm, as the leads are)
+    ...s.feeding.map(async (f) => {
+      const a = new THREE.Vector3(...f.from), b = new THREE.Vector3(...f.to);
+      const m = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 1, 10), new THREE.MeshStandardMaterial({ color: '#eef1f4', metalness: 0.2, roughness: 0.35, emissive: '#3a3d42' }));
+      m.matrixAutoUpdate = false;
+      m.visible = false;
+      root.add(m);
+      feeds.push({ f, m, a, b });
     }),
     ...s.ghosts.map(async (p) => {
       const g = holder((await load(p.kind)).clone(true));
@@ -323,6 +338,60 @@ export function cellPlayer(host, calls, options = {}) {
     st.g.matrix.makeTranslation(x, y, z).multiply(st.base).multiply(new THREE.Matrix4().makeRotationX(tilt * D));
     st.g.matrixWorldNeedsUpdate = true;
   };
+  // solder wire feeding: in from beside the iron, shorter as it melts
+  const feedsAt = (u) => {
+    for (const { f, m, a, b } of feeds) {
+      m.visible = u >= f.t0 && u <= f.t1;
+      if (!m.visible) continue;
+      const k = 1 - 0.7 * (u - f.t0) / Math.max(1e-6, f.t1 - f.t0);
+      const end = b.clone();
+      const start = b.clone().add(a.clone().sub(b).multiplyScalar(k));
+      const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), start.clone().sub(end).normalize());
+      m.matrix.compose(start.clone().add(end).multiplyScalar(0.5), q, new THREE.Vector3(1, start.distanceTo(end), 1));
+    }
+  };
+  // the microscope: its head turned to its pan and tilt, its view drawn
+  // in a picture of its own (bottom right) from its eye
+  const scopeCam = new THREE.PerspectiveCamera(10, 4 / 3, 1, 3000);
+  const X = new THREE.Vector3(1, 0, 0);
+  let scopeOn = false;
+  const scopeAt = (u) => {
+    const sc = fixtures.scope;
+    const r = at(s.scope, u);
+    if (!sc || !r || !sc.eye) { scopeOn = false; return; }
+    const [pan, tilt, across, , rotate, dist] = r;
+    if (sc.pan) sc.pan.quaternion.copy(sc.panRest).multiply(new THREE.Quaternion().setFromAxisAngle(Y, pan * D));
+    if (sc.tilt) sc.tilt.quaternion.copy(sc.tiltRest).multiply(new THREE.Quaternion().setFromAxisAngle(X, tilt * D));
+    root.updateMatrixWorld(true);
+    // the eye as the simulator has it: the gantry, up 358 to the tilt's
+    // pivot, turned by pan about z and tilt about x, 120 down the axis
+    const f = s.fixtures.find((x) => x.id === 'scope');
+    const m = poseMatrix(f.pose).multiply(new THREE.Matrix4().makeTranslation(0, 0, 358))
+      .multiply(new THREE.Matrix4().makeRotationZ(pan * D)).multiply(new THREE.Matrix4().makeRotationX(tilt * D));
+    const toWorld = (v) => root.localToWorld(v.applyMatrix4(m));
+    // just past the lens's end, so the camera is not inside its barrel
+    const eyeP = toWorld(new THREE.Vector3(0, 0, -135));
+    const ahead = toWorld(new THREE.Vector3(0, 0, -220));
+    const up = toWorld(new THREE.Vector3(0, 1, -135)).sub(eyeP);
+    scopeCam.position.copy(eyeP);
+    scopeCam.up.copy(up);
+    scopeCam.lookAt(ahead);
+    scopeCam.rotateZ(rotate * D);
+    scopeCam.fov = 2 * Math.atan(Math.tan((across * D) / 2) / scopeCam.aspect) / D;
+    // a cutaway: what is more than 30 mm above what it looks at (the
+    // tools over the joint) is left out of the picture
+    scopeCam.near = Math.max(1, (dist || 330) - 15 - 30);
+    scopeCam.far = (dist || 330) + 200;
+    scopeCam.updateProjectionMatrix();
+    scopeOn = s.scope.length > 1;
+  };
+  const scopeFrame = document.createElement('div');
+  // bottom right, or options.scopeLeft px from the left (beside a page's panel)
+  const scopeLeft = options.scopeLeft;
+  scopeFrame.style.cssText = (scopeLeft != null ? `left:${scopeLeft}px;` : 'right:16px;') + 'position:absolute;bottom:72px;width:320px;height:240px;border:1px solid #9aa4b2;border-radius:4px;pointer-events:none;display:none;font:12px system-ui,sans-serif;color:#dfe6f0';
+  scopeFrame.innerHTML = '<span style="position:absolute;left:6px;top:4px;background:#1e222acc;padding:1px 5px;border-radius:3px">microscope (cutaway: tools above the work left out)</span>';
+  if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+  host.appendChild(scopeFrame);
   // re-formed leads: the latest form by time u, else the model's own
   const leadsAt = (u) => {
     for (const p of Object.values(parts)) {
@@ -386,7 +455,9 @@ export function cellPlayer(host, calls, options = {}) {
       const mm3 = row ? row[1] : 0;
       j.ball.visible = mm3 > 0;
       if (!j.ball.visible) continue;
-      j.ball.scale.setScalar(Math.cbrt((3 * mm3) / (4 * Math.PI)) * 1.6);
+      // larger than life (a ball of 0.4 mm3 is under a millimeter across):
+      // at least a millimeter, so it reads in the cell
+      j.ball.scale.setScalar(Math.max(1.0, Math.cbrt((3 * mm3) / (4 * Math.PI)) * 2.2));
       const frozen = t >= j.t && j.result;
       const colors = { good: '#d9dee7', cold: '#7d8188', disturbed: '#9a8f7f', starved: '#b0a07a', blob: '#c9c2b0', bridged: '#d07070', welded: '#e6c27a', weak: '#a8956a', blown: '#3a2f2a' };
       j.ball.material.color.set(frozen ? colors[j.result] || '#cccccc' : '#f2f2f2');
@@ -404,10 +475,30 @@ export function cellPlayer(host, calls, options = {}) {
     turnStage(now);
     stationsAt(now);
     leadsAt(now);
+    feedsAt(now);
+    scopeAt(now);
     ui.show();
     draw();
   };
-  const draw = () => renderer.render(scene, camera);
+  const draw = () => {
+    renderer.setScissorTest(false);
+    renderer.setViewport(0, 0, renderer.domElement.clientWidth, renderer.domElement.clientHeight);
+    renderer.render(scene, camera);
+    scopeFrame.style.display = scopeOn ? 'block' : 'none';
+    if (!scopeOn) return;
+    // the microscope's picture: bottom right, above the controls
+    const iw = 320, ih = 240, x = scopeLeft != null ? scopeLeft : renderer.domElement.clientWidth - iw - 16, y = 72;
+    renderer.setScissorTest(true);
+    renderer.setViewport(x, y, iw, ih);
+    renderer.setScissor(x, y, iw, ih);
+    // the scope's own body is not in its picture
+    const body = fixtures.scope && fixtures.scope.g;
+    if (body) body.visible = false;
+    renderer.render(scene, scopeCam);
+    if (body) body.visible = true;
+    renderer.setScissorTest(false);
+    renderer.setViewport(0, 0, renderer.domElement.clientWidth, renderer.domElement.clientHeight);
+  };
 
   // playing: one loop, every frame -- the time moves on while playing,
   // and the picture is drawn each frame (a picture drawn once is not
@@ -448,6 +539,13 @@ export function cellPlayer(host, calls, options = {}) {
       for (const id of Object.keys(parts)) {
         const p = new THREE.Vector3().setFromMatrixPosition(parts[id].g.matrix);
         out.parts[id] = [p.x, p.y, p.z].map((x) => +x.toFixed(3));
+      }
+      // the scope's eye, checked as a part's place is
+      if (fixtures.scope && fixtures.scope.eye) {
+        root.updateMatrixWorld(true);
+        const inv = new THREE.Matrix4().copy(root.matrixWorld).invert();
+        const e = new THREE.Vector3().setFromMatrixPosition(inv.multiply(fixtures.scope.eye.matrixWorld.clone()));
+        out.parts.scope = [e.x, e.y, e.z].map((x) => +x.toFixed(3));
       }
       // a station's tool mount, checked as a part's place is
       for (const id of Object.keys(stations)) {

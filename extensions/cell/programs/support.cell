@@ -25,6 +25,7 @@ pinch P1 on=W1.2 at=8
 release A W1
 lift A mm=60
 present C1.1+W1.1 at=S3
+scope aim=C1.1+W1.1 zoom=8
 weld S3 at=C1.1+W1.1 energy=8
 vise open
 stage turn=60 tilt=-20
@@ -32,6 +33,7 @@ stage turn=-60 tilt=0
 vise close
 inspect supports
 present W1.1.12 at=S4
+scope aim=W1.1 zoom=4
 trim S4 on=W1.1 at=12
 unpinch P1
 inspect supports

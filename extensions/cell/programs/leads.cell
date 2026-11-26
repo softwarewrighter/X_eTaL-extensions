@@ -22,12 +22,14 @@ pinch P1 on=R1.1 at=6
 release A R1
 lift A mm=60
 present U1.3+R1.1 at=S1
+scope aim=U1.3+R1.1 zoom=8
 touch S1 at=U1.3+R1.1 dwell=2
 feed S1 mm=2 rate=1
 back S1
 wait until=U1.3+R1.1 below=100
 present U1.3.3.5 at=S4
 trim S4 on=U1.3 at=3.5
+scope aim=R1.2 zoom=4
 bend P2 on=R1.2 at=3 angle=90 toward=0,0,-1
 present R1.2.8 at=S4
 trim S4 on=R1.2 at=8
