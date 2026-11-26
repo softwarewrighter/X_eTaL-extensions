@@ -28,6 +28,7 @@ version.
 
 ## 2026-11-25
 
+- 19:02 `chore` saga: complete assembly-cell step 19 (cell-support).
 - 18:44 `ext` cell, sacrificial supports (Saga 17 step 19, the user's C16): steel wire (`wire ... metal=steel`, welds well) and a part's `support` mark (`support=yes`); a support welded on by its tab and held by a pincer holds the work while the vise opens and the turntable turns and tilts it ("C1 stays: P1 grips W1, joined to it"); `trim` at or before a support's own joint cuts the tab free (a stub stays), and a support nothing holds falls into the bin; `inspect supports`; `programs/support.cell` (clean), on the live page. A frame of several supports waits for the planner.
 - 18:13 `chore` saga: complete assembly-cell step 18 (cell-wire).
 - 18:06 `test` cell: the stations' tools include the wire feeder S5 (the full gate after the wire push caught the stale list).
