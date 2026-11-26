@@ -313,10 +313,17 @@ values, the solders' melting ranges are the alloys' (SAC305 217 to
   arm's side to 1 mm short of the joint an iron is on; it melts only
   while the joint is above the liquidus, its latent heat taken from
   the leads; what does not melt is a warning.
-- A side is wet while its lead is above the liquidus with molten solder
-  on it. As the joint cools below the solidus it freezes and is judged:
+- The solder is flux-cored: each bit that melts into a joint brings
+  fresh flux, active for 4 s of molten time (`flux_seconds`). No
+  separate fluxing is needed for clean, tinned leads. A side wets only
+  while the flux is active and its lead is above the liquidus with
+  molten solder on it. Molten with the flux spent, the solder oxidizes:
+  held so more than 4 s (`dull_seconds`), as when the iron stays on long
+  after the feed or a joint is reheated with no solder fed, it comes out
+  `dull`. As the joint cools below the solidus it freezes and is judged:
   `bridged` (another lead within 0.6 mm), `cold` (a side wet under 1 s),
-  `disturbed` (an arm moved one side while it was molten), `starved` or
+  `disturbed` (an arm moved one side while it was molten), `dull`,
+  `starved` or
   `blob` (under 0.4 or over 3 times the 0.4 mm3 a joint wants), else
   `good`. A joint heated past the solidus again melts again.
 - A good, frozen joint holds its two parts together: a subassembly,
@@ -476,9 +483,15 @@ snap                           # record a picture: its time, what, field
   checked for what is in the way comes later.
 - What is small is drawn larger than life so it reads in the cell: a
   joint's solder at least 1 mm across, a lead or wire at least 0.9 mm
-  thick. Solder fed into a joint is drawn as a silver wire coming in
-  beside the iron, shortening as it melts; a bend swings the lead
-  through eight shapes over 1.2 s; fed wire grows out of the nozzle.
+  thick. A bend swings the lead through eight shapes over 1.2 s; fed
+  wire grows out of the nozzle.
+- The iron station's solder feeder rides on the iron: a guide on the
+  iron's side ending 4 mm short of the tip, a spool behind it, a 1.5 mm
+  stub of solder showing, all moving in with the iron. At `feed` the
+  solder runs out of the guide into the joint beside the tip, the spool
+  turns and the joint's ball grows; after the feed the solder pulls
+  back to its stub before the iron goes back. The feeder is drawn but
+  not yet in the collision model.
 - The programs that solder, bend or trim aim the scope first, and the
   live page opens them close up.
 

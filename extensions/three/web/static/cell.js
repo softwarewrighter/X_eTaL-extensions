@@ -103,7 +103,7 @@ export function cellPlayer(host, calls, options = {}) {
   scene.add(root);
   const folder = options.models || './models/';
   const s = {
-    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], stations: [], leads: [], scope: [], snaps: [], feeding: [], attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
+    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], stations: [], leads: [], scope: [], snaps: [], feeding: [], feeders: {}, attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
   };
   const api = {
     nums,
@@ -123,7 +123,8 @@ export function cellPlayer(host, calls, options = {}) {
     lead(id, pin, t, d, rows) { s.leads.push({ id, pin, t, d, points: rows }); },
     scope(rows) { s.scope = rows; },
     snap(t, what, field) { s.snaps.push({ t, what, field }); },
-    feeding(t0, t1, from, to) { s.feeding.push({ t0, t1, from, to }); },
+    feeding(t0, t1, st) { s.feeding.push({ t0, t1, st }); },
+    feeder(id, length) { s.feeders[id] = length; },
     // a pincer: a station whose housing moves too (rows: t, housing's
     // x y z r p y, the jaws' mount's x y z r p y)
     pincer(id, tool, rows) { s.stations.push({ id, tool, housing: rows[0].slice(1, 7), rows: rows.map((r) => [r[0], ...r.slice(7)]), housings: rows.map((r) => r.slice(0, 7)) }); },
@@ -197,7 +198,7 @@ export function cellPlayer(host, calls, options = {}) {
     return g;
   };
   const arms = {}, fixtures = {}, parts = {}, stations = {};
-  const feeds = [];
+  const feeders = {};
   const Y = new THREE.Vector3(0, 1, 0);
   const ready = Promise.all([
     ...s.fixtures.map(async (f) => {
@@ -266,17 +267,36 @@ export function cellPlayer(host, calls, options = {}) {
       const pole = new THREE.Mesh(new THREE.CylinderGeometry(5, 5, 1, 16), steel);
       pole.matrixAutoUpdate = false;
       root.add(pole);
+      // an iron with its own solder feeder: a guide on its side ending
+      // 4 mm short of the tip, a spool behind; in the tool's frame (its z
+      // toward the tip, the tip at z = length). Drawn only: the feeder is
+      // not yet in the collision model.
+      const L = s.feeders[st.id];
+      if (L != null) {
+        const dark = new THREE.MeshStandardMaterial({ color: '#3b4048', metalness: 0.5, roughness: 0.5 });
+        const tin = new THREE.MeshStandardMaterial({ color: '#eef1f4', metalness: 0.2, roughness: 0.35, emissive: '#3a3d42' });
+        const rod = (a, b, r, m) => {
+          const c = new THREE.Mesh(new THREE.CylinderGeometry(r, r, a.distanceTo(b), 12), m);
+          c.position.copy(a.clone().add(b).multiplyScalar(0.5));
+          c.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), b.clone().sub(a).normalize());
+          return c;
+        };
+        const guideEnd = new THREE.Vector3(4, 0, L - 4), guideStart = new THREE.Vector3(6, 0, L - 30);
+        tool.add(rod(guideStart, guideEnd, 0.9, dark));
+        const spoolAt = new THREE.Vector3(18, 0, L - 55);
+        tool.add(rod(spoolAt.clone().add(new THREE.Vector3(-8, 0, 6)), guideStart, 0.5, tin));
+        const spool = new THREE.Group();
+        spool.position.copy(spoolAt);
+        const drum = new THREE.Mesh(new THREE.CylinderGeometry(10, 10, 7, 24), tin);
+        const hub = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 9, 16), dark);
+        spool.add(drum, hub);
+        tool.add(spool);
+        const wire = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 1, 10), tin);
+        tool.add(wire);
+        // to the joint, just beside the tip
+        feeders[st.id] = { from: guideEnd, to: new THREE.Vector3(0.8, 0, L - 0.4), wire, spool };
+      }
       stations[st.id] = { tool, pole, housing, rows: st.rows, housings: st.housings, half: size[2] / 2, front: new THREE.Vector3(0, 0, size[2] / 2).applyMatrix4(poseMatrix(st.housing)) };
-    }),
-    // solder fed into a joint: a silver wire from beside the iron, there
-    // while it feeds (drawn thicker than its 0.5 mm, as the leads are)
-    ...s.feeding.map(async (f) => {
-      const a = new THREE.Vector3(...f.from), b = new THREE.Vector3(...f.to);
-      const m = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 1, 10), new THREE.MeshStandardMaterial({ color: '#eef1f4', metalness: 0.2, roughness: 0.35, emissive: '#3a3d42' }));
-      m.matrixAutoUpdate = false;
-      m.visible = false;
-      root.add(m);
-      feeds.push({ f, m, a, b });
     }),
     ...s.ghosts.map(async (p) => {
       const g = holder((await load(p.kind)).clone(true));
@@ -338,16 +358,25 @@ export function cellPlayer(host, calls, options = {}) {
     st.g.matrix.makeTranslation(x, y, z).multiply(st.base).multiply(new THREE.Matrix4().makeRotationX(tilt * D));
     st.g.matrixWorldNeedsUpdate = true;
   };
-  // solder wire feeding: in from beside the iron, shorter as it melts
+  // the iron's solder feeder: its solder runs out of the guide into the
+  // joint while it feeds (out in 0.3 s, back in 0.3 s after), the spool
+  // turning; at rest a 1.5 mm stub shows
   const feedsAt = (u) => {
-    for (const { f, m, a, b } of feeds) {
-      m.visible = u >= f.t0 && u <= f.t1;
-      if (!m.visible) continue;
-      const k = 1 - 0.7 * (u - f.t0) / Math.max(1e-6, f.t1 - f.t0);
-      const end = b.clone();
-      const start = b.clone().add(a.clone().sub(b).multiplyScalar(k));
-      const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), start.clone().sub(end).normalize());
-      m.matrix.compose(start.clone().add(end).multiplyScalar(0.5), q, new THREE.Vector3(1, start.distanceTo(end), 1));
+    for (const [id, f] of Object.entries(feeders)) {
+      let out = 0, turn = 0;
+      for (const x of s.feeding.filter((x) => x.st === id)) {
+        if (u < x.t0) continue;
+        if (u <= x.t1) { out = Math.min(1, (u - x.t0) / 0.3); turn += (u - x.t0) * 2; }
+        else { out = Math.max(out, 1 - (u - x.t1) / 0.3); turn += (x.t1 - x.t0) * 2; }
+      }
+      const L = f.from.distanceTo(f.to);
+      const reach = 1.5 + (L - 1.5) * out;
+      const end = f.from.clone().add(f.to.clone().sub(f.from).multiplyScalar(reach / L));
+      const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), end.clone().sub(f.from).normalize());
+      f.wire.position.copy(f.from.clone().add(end).multiplyScalar(0.5));
+      f.wire.quaternion.copy(q);
+      f.wire.scale.set(1, reach, 1);
+      f.spool.rotation.y = turn;
     }
   };
   // the microscope: its head turned to its pan and tilt, its view drawn

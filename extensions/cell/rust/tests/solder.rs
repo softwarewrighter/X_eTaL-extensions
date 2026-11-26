@@ -193,3 +193,28 @@ fn heat_is_recorded_for_players() {
     assert!(hottest > 280.0 && hottest < 350.0, "{hottest}");
     assert!(!w.joints[0].track.is_empty());
 }
+
+/// The bench's solder program, with `extra` after the feed.
+fn solder_with(extra: &str) -> xetal_ext_cell::world::World {
+    let prog = include_str!("../../programs/solder.cell").replace(
+        "feed S1 mm=2 rate=1\n",
+        &format!("feed S1 mm=2 rate=1\n{extra}"),
+    );
+    let mut w = xetal_ext_cell::world::World::default();
+    let out = w.apply_all(&xetal_ext_cell::command::parse_program(&prog).unwrap());
+    assert!(out.iter().all(|o| o.ok), "{:?}", out.iter().find(|o| !o.ok));
+    w
+}
+
+#[test]
+fn the_flux_comes_with_the_solder_and_burns_off() {
+    // fed and let go: good, the flux still active as it froze
+    let w = solder_with("");
+    let j = w.joints.iter().find(|j| j.name == "U1.3+R1.1").unwrap();
+    assert_eq!(j.result.as_deref(), Some("good"), "{j:?}");
+    // the iron held on 10 s past the feed: the flux spent, the joint dull
+    let w = solder_with("wait s=10\n");
+    let j = w.joints.iter().find(|j| j.name == "U1.3+R1.1").unwrap();
+    assert_eq!(j.result.as_deref(), Some("dull"), "{j:?}");
+    assert!(j.dry > 4.0, "{}", j.dry);
+}

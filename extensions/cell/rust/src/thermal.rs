@@ -567,10 +567,23 @@ impl World {
                 continue;
             }
             if j.molten {
-                if !ea && a.is_some_and(|a| temps[a] >= alloy.liquidus) {
+                // a lead wets only while the flux is active; without it
+                // the molten solder oxidizes
+                let fluxed = j.flux > 0.0;
+                if fluxed {
+                    j.flux = (j.flux - ds).max(0.0);
+                    if j.flux == 0.0 {
+                        let name = j.name.clone();
+                        self.notes.push((false, format!("{name}'s flux is spent")));
+                    }
+                } else {
+                    j.dry += ds;
+                }
+                let j = &mut self.joints[*ji];
+                if fluxed && !ea && a.is_some_and(|a| temps[a] >= alloy.liquidus) {
                     j.wet_a += ds;
                 }
-                if !eb && b.is_some_and(|b| temps[b] >= alloy.liquidus) {
+                if fluxed && !eb && b.is_some_and(|b| temps[b] >= alloy.liquidus) {
                     j.wet_b += ds;
                 }
                 if temp < alloy.solidus {
@@ -674,6 +687,8 @@ impl World {
             "cold".into()
         } else if j.moved {
             "disturbed".into()
+        } else if j.dry > r.dull_seconds {
+            "dull".into()
         } else if j.solder < r.starved_fraction * r.good_mm3 {
             "starved".into()
         } else if j.solder > r.blob_fraction * r.good_mm3 {
@@ -752,6 +767,8 @@ impl World {
             molten: false,
             wet_a: 0.0,
             wet_b: 0.0,
+            flux: 0.0,
+            dry: 0.0,
             moved: false,
             result: None,
             set_at: None,
@@ -864,10 +881,13 @@ impl World {
             }
             self.parts[k].temps[starts[pi] + node] -= energy / 2.0 / c.max(1e-9);
         }
+        let flux = th.joint.flux_seconds;
         let j = &mut self.joints[ji];
         j.solder += mm3;
         j.temp = alloy.liquidus;
         j.molten = true;
+        // the core's flux comes with it
+        j.flux = flux;
         mm3
     }
 

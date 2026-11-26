@@ -208,6 +208,8 @@ fn a_semiconductor_joined_to_both_sides_is_in_the_path() {
             molten: false,
             wet_a: 0.0,
             wet_b: 0.0,
+            flux: 0.0,
+            dry: 0.0,
             moved: false,
             result: Some("welded".into()),
             set_at: Some(0.0),

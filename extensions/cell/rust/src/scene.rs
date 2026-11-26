@@ -13,6 +13,8 @@
 //! lead('R1', '2', t, diameter, nums('x y z ...', 3))   a lead re-formed
 //! scope(nums('t pan tilt view focus rotate dist ...', 7))   the microscope
 //! snap(t, 'U1.3+R1.1', field)           a picture taken
+//! feeder('S1', length)                   the iron's solder feeder
+//! feeding(t0, t1, 'S1')                  solder fed into a joint
 //! station('S1', 'iron', nums('housing x y z r p y', 6)[0], nums('t x y z r p y ...', 7))
 //! part('U1', 'dip8', nums('x y z r p y', 6)[0])
 //! attach('U1', 'A', t0, t1)          (an arm's hold; 'stage': the vise's)
@@ -97,16 +99,8 @@ pub fn calls(name: &str, w: &World) -> Result<String, String> {
     // the microscope: its pan, tilt, view and the pictures it took
     let rows: Vec<Vec<f64>> = w.scope.track.iter().map(|r| r.to_vec()).collect();
     let _ = writeln!(out, "scope({})", table(&rows, 7));
-    for (t0, t1, from, to) in &w.feeding {
-        let r = |v: &kin::V3| row(&v.map(|x| kin::clean((x * 1000.0).round() / 1000.0)));
-        let _ = writeln!(
-            out,
-            "feeding({}, {}, {}, {})",
-            num(*t0),
-            num(*t1),
-            r(from),
-            r(to)
-        );
+    for (t0, t1, st) in &w.feeding {
+        let _ = writeln!(out, "feeding({}, {}, {})", num(*t0), num(*t1), quote(st));
     }
     for (t, what, field) in &w.scope.snaps {
         let _ = writeln!(out, "snap({}, {}, {})", num(*t), quote(what), num(*field));
@@ -163,6 +157,15 @@ pub fn calls(name: &str, w: &World) -> Result<String, String> {
             row(&housing),
             table(&rows, 7)
         );
+        if s.feeder {
+            // its solder feeder: the tool's length, its tip from the mount
+            let _ = writeln!(
+                out,
+                "feeder({}, {})",
+                quote(&s.name),
+                num(crate::layout::tool_length(&s.tool))
+            );
+        }
     }
     for p in w.tools.iter().chain(&w.parts) {
         thing(&mut out, p);

@@ -675,26 +675,10 @@ impl World {
                 }
                 let mm = c.number("mm").unwrap_or(0.0);
                 let rate = c.number("rate").unwrap_or(2.0);
-                // drawn: the solder wire coming in beside the iron, from above
-                // its line, into the joint, shrinking as it melts
-                if let Some(at) = self.joint_point(&self.joints[ji]) {
-                    // the iron's side, raised to 45 degrees: clear of the iron
-                    let flat = kin::scale(
-                        [s.from[0], s.from[1], 0.0],
-                        1.0 / s.from[0].hypot(s.from[1]).max(1e-9),
-                    );
-                    let side = kin::scale(
-                        kin::add(flat, [0.0, 0.0, 1.0]),
-                        std::f64::consts::FRAC_1_SQRT_2,
-                    );
-                    let t0 = self.t;
-                    self.feeding.push((
-                        t0,
-                        t0 + mm / rate,
-                        kin::add(at, kin::scale(side, 20.0)),
-                        at,
-                    ));
-                }
+                // drawn: the solder running out of the feeder's guide, on the
+                // iron's side, into the joint
+                let t0 = self.t;
+                self.feeding.push((t0, t0 + mm / rate, s.name.clone()));
                 self.feed_melt(ji, mm, rate, did, events, warnings)?;
             }
             "feed" => {

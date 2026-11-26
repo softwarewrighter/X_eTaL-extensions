@@ -99,4 +99,10 @@ blob_fraction = 3.0
 bridge_mm = 0.6
 wet_conductance = 0.3
 dry_conductance = 0.005
-illustrative = ["max_gap", "wet_seconds", "good_mm3", "starved_fraction", "blob_fraction", "bridge_mm", "wet_conductance", "dry_conductance"]
+# the flux in the solder's core: active this long, s, molten, after the
+# last solder melted in (each bit fed brings fresh flux); a lead wets only
+# while it is active; held molten longer than dull_seconds without it,
+# the joint oxidizes: dull
+flux_seconds = 4.0
+dull_seconds = 4.0
+illustrative = ["max_gap", "wet_seconds", "good_mm3", "starved_fraction", "blob_fraction", "bridge_mm", "wet_conductance", "dry_conductance", "flux_seconds", "dull_seconds"]

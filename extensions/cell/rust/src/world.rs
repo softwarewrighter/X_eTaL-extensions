@@ -316,10 +316,10 @@ pub struct World {
     /// The microscope.
     #[serde(default)]
     pub scope: crate::scope::Scope,
-    /// Solder fed into joints, for players: from, to the time, where the
-    /// wire starts and where it goes.
+    /// Solder fed into joints, for players: from, to the time, and the
+    /// station whose feeder fed it.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
-    pub feeding: Vec<(f64, f64, V3, V3)>,
+    pub feeding: Vec<(f64, f64, String)>,
     /// The tool stations: how far each is extended.
     #[serde(default = "crate::stations::fresh")]
     pub stations: Vec<crate::stations::StationState>,

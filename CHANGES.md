@@ -28,6 +28,7 @@ version.
 
 ## 2026-11-25
 
+- 20:14 `ext` cell, flux-cored solder and the iron's feeder (Saga 17 step 20): each melt brings flux active 4 s molten, a lead wets only while it is active, a joint molten over 4 s without it is judged `dull`; the feeder (guide, spool, solder stub) drawn riding on the iron, its solder running into the joint at `feed` and back after; live page republished.
 - 20:02 `ext` cell, the microscope (Saga 17 step 20): `scope aim= zoom=` turns the head onto a joint or pin and follows it as the stage moves, `snap` records a picture, the player draws the scope's picture beside the cell (a cutaway); the solder fed into a joint, a lead's bend and fed wire drawn as they happen; small things drawn larger than life; the detailed programs aim the scope and open close up; live page republished.
 - 19:52 `plan` the assembly cell, a bending rig (the user): decision C19, pins in slots that bend a placed lead in one plane, the part flipped or turned for other bends, then trimmed and soldered; step 21 cell-bend-rig inserted after the scope; later steps renumbered.
 - 19:02 `chore` saga: complete assembly-cell step 19 (cell-support).

@@ -93,6 +93,10 @@ pub struct JointRules {
     pub wet_conductance: f64,
     /// Solder to a lead it has not wetted, W/K.
     pub dry_conductance: f64,
+    /// How long the flux fed with the solder stays active, molten, s.
+    pub flux_seconds: f64,
+    /// Molten longer than this with no active flux: dull, s.
+    pub dull_seconds: f64,
 }
 
 /// The solder wire.
@@ -209,8 +213,14 @@ pub struct Joint {
     pub wet_b: f64,
     /// A part of it moved against the other while it was molten.
     pub moved: bool,
-    /// What it came to when it froze: good, cold, disturbed, starved,
-    /// blob, bridged; none while molten or never soldered.
+    /// The flux's activity left, s (molten time).
+    #[serde(default)]
+    pub flux: f64,
+    /// How long it has been molten with no active flux, s.
+    #[serde(default)]
+    pub dry: f64,
+    /// What it came to when it froze: good, cold, disturbed, dull,
+    /// starved, blob, bridged; none while molten or never soldered.
     pub result: Option<String>,
     /// When it froze.
     pub set_at: Option<f64>,
