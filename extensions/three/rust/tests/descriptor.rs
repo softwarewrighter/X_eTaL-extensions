@@ -91,7 +91,8 @@ fn the_board_player_defines_its_calls() {
 
 #[test]
 fn the_vendored_three_is_whole() {
-    assert_eq!(xetal_ext_three::VENDOR.len(), 14);
+    // with the SVG renderer and its Projector, the cell player's fallback without WebGL
+    assert_eq!(xetal_ext_three::VENDOR.len(), 16);
     assert!(
         xetal_ext_three::VENDOR
             .iter()

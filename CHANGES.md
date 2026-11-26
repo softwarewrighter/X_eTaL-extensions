@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-26
 
+- 00:07 `test` three, the vendored files are 16 with the SVG renderer and its Projector.
 - 00:01 `test` three, the city and board pages' goldens: 29 files written (the SVG renderer).
 - 00:01 `test` three, the tiny page's golden: 29 files, the SVG renderer and its Projector among them.
 ## 2026-11-25
