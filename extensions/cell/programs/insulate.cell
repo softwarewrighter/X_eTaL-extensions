@@ -1,10 +1,12 @@
-# insulate: heat-shrink sleeving (decision C20). Laid along the chip's
-# pin row, the resistor's lead 1 crosses pins 1 and 2 on its way to pin
-# 3: bare, that is two shorts. So first the resistor goes in the vise
-# and the sleeve station S6 slides a sleeve onto lead 1 from its free
-# end, 15 to 27 mm from the body (the last millimeter left bare for the
-# joint), and shrinks it with hot air; then the chip takes the vise and
-# the resistor is soldered to pin 3 across pins 1 and 2 -- insulated.
+# insulate: heat-shrink sleeving (decision C20). The resistor's lead 1
+# runs along the chip's pin row to pin 3, past pins 1 and 2. First the
+# resistor goes in the vise; the sleeve station S6 slides a sleeve onto
+# lead 1 from its free end, 15 to 24 mm from the body, and shrinks it
+# with hot air; then pincer P2 bends the last 3 mm of the lead up 60
+# degrees -- a joggle, so the sleeved length passes the pins with a
+# clearance (1.5 mm) instead of resting on them (where their own
+# soldering later could melt it), and only the bare tip comes in to pin
+# 3. Then the chip takes the vise and the resistor is soldered to pin 3.
 reset circuit=demo
 tool A tweezers
 pick A R1 grasp=body
@@ -13,10 +15,11 @@ vise close
 release A R1
 lift A mm=60
 present R1.1.tip at=S6
-sleeve S6 on=R1.1 from=15 to=27 size=1.0 color=red
-present R1.1.21 at=S6
+sleeve S6 on=R1.1 from=15 to=24 size=1.0 color=red
+present R1.1.20 at=S6
 shrink S6 on=R1.1
 stage turn=0 tilt=0 at=0,0,0
+bend P2 on=R1.1 at=25 angle=60 toward=0,0,1
 pick A R1 grasp=body
 vise open
 lift A mm=60

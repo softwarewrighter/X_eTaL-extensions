@@ -1318,6 +1318,10 @@ impl World {
             if !insulated.is_empty() {
                 said += &format!("; insulated: {}", insulated.join(", "));
             }
+            let clear = self.sleeve_clearances();
+            if !clear.is_empty() {
+                said += &format!("; {}", clear.join(", "));
+            }
             return Ok(said);
         }
         if target == "supports" {

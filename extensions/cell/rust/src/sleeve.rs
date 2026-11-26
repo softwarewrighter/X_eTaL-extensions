@@ -162,6 +162,59 @@ impl World {
         out
     }
 
+    /// For each sleeve, the other part's lead nearest it and the gap
+    /// between their surfaces (the sleeve's wall counted), within 3 mm:
+    /// `R1.1's sleeve clears U1.2 by 0.9 mm`.
+    #[must_use]
+    pub fn sleeve_clearances(&self) -> Vec<String> {
+        let Ok(d) = data() else { return Vec::new() };
+        let mut out = Vec::new();
+        for p in self.parts.iter().filter(|p| !p.lost) {
+            let Ok(kind) = p.kind_of() else { continue };
+            for s in &p.sleeves {
+                let Some(pin) = kind.pin(&s.pin) else {
+                    continue;
+                };
+                let wall = d
+                    .size
+                    .iter()
+                    .find(|z| z.name == s.size)
+                    .map_or(0.25, |z| z.wall);
+                let (_, tail) = crate::leads::split(&pin.lead, s.from);
+                let (span, _) = crate::leads::split(&tail, s.to - s.from);
+                if span.len() < 2 {
+                    continue;
+                }
+                let span = crate::solder::lead_in(&p.pose(), &span);
+                let mut best: Option<(f64, String)> = None;
+                for q in self.parts.iter().filter(|q| !q.lost && q.id != p.id) {
+                    let Ok(qk) = q.kind_of() else { continue };
+                    for qp in &qk.pins {
+                        let line = crate::solder::lead_in(&q.pose(), &qp.lead);
+                        let gap = crate::solder::nearest(&span, &line).0
+                            - pin.diameter / 2.0
+                            - wall
+                            - qp.diameter / 2.0;
+                        if best.as_ref().is_none_or(|b| gap < b.0) {
+                            best = Some((gap, format!("{}.{}", q.id, qp.name)));
+                        }
+                    }
+                }
+                if let Some((gap, who)) = best {
+                    if gap <= 3.0 {
+                        out.push(format!(
+                            "{}.{}'s sleeve clears {who} by {} mm",
+                            p.id,
+                            s.pin,
+                            num1(gap.max(0.0))
+                        ));
+                    }
+                }
+            }
+        }
+        out
+    }
+
     /// `sleeve STATION on=PIN from= to= [size=] [color=]`: the station
     /// at the lead's free end slides a cut length of tubing onto it.
     #[allow(clippy::too_many_arguments)]

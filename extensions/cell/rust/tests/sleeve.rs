@@ -40,20 +40,29 @@ fn a_sleeve_insulates_a_crossing_that_would_short() {
     let mut w = World::default();
     let out = run(&mut w, PROGRAM);
     let last = said(out.last().unwrap());
-    assert_eq!(
-        last,
-        "shorts: none; insulated: R1.1 crosses U1.1, R1.1 crosses U1.2"
-    );
+    // the joggle keeps the sleeved length off the pins it passes
+    assert_eq!(last, "shorts: none; R1.1's sleeve clears U1.1 by 1.5 mm");
     let j = w.joints.iter().find(|j| j.name == "U1.3+R1.1").unwrap();
     assert_eq!(j.result.as_deref(), Some("good"), "{j:?}");
     assert!(w.clashes().is_empty(), "{:?}", w.clashes());
     let s = &w.part("R1").unwrap().sleeves[0];
-    assert!(s.shrunk.is_some() && s.color == "red" && (s.from, s.to) == (15.0, 27.0));
+    assert!(s.shrunk.is_some() && s.color == "red" && (s.from, s.to) == (15.0, 24.0));
     assert_eq!(World::from_json(&w.to_json()).unwrap(), w);
-    // the same without the sleeve: two shorts
+    // with the joggle and no sleeve: still no contact
     let bare: String = PROGRAM
         .lines()
         .filter(|l| !l.starts_with("sleeve ") && !l.starts_with("shrink "))
+        .collect::<Vec<_>>()
+        .join("\n");
+    let mut w = World::default();
+    let out = run(&mut w, &bare);
+    assert_eq!(said(out.last().unwrap()), "shorts: none");
+    // with neither: the lead rests on pins 1 and 2, two shorts
+    let bare: String = PROGRAM
+        .lines()
+        .filter(|l| {
+            !l.starts_with("sleeve ") && !l.starts_with("shrink ") && !l.starts_with("bend ")
+        })
         .collect::<Vec<_>>()
         .join("\n");
     let mut w = World::default();

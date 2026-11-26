@@ -450,11 +450,12 @@ a cut length onto the lead from its free end, then shrinks it.
 
 ```
 present R1.1.tip at=S6
-sleeve S6 on=R1.1 from=15 to=27 size=1.0 color=red
-present R1.1.21 at=S6
+sleeve S6 on=R1.1 from=15 to=24 size=1.0 color=red
+present R1.1.20 at=S6
 shrink S6 on=R1.1
+bend P2 on=R1.1 at=25 angle=60 toward=0,0,1   # a joggle: the sleeve off the pins
 ...
-inspect shorts     # shorts: none; insulated: R1.1 crosses U1.1, R1.1 crosses U1.2
+inspect shorts     # shorts: none; R1.1's sleeve clears U1.1 by 1.5 mm
 ```
 
 - `sleeve STATION on=PIN from= to= [size=] [color=]`: the lead's free
@@ -471,12 +472,17 @@ inspect shorts     # shorts: none; insulated: R1.1 crosses U1.1, R1.1 crosses U1
   warms.
 - A sleeved span is insulated: the shorts check (`clashes`,
   `leads_near`) measures only bare metal. `inspect shorts` lists the
-  shorts and the crossings a sleeve insulates. The sleeve is drawn as a
+  shorts, the crossings a sleeve insulates (a sleeve resting on another
+  lead) and how far each sleeve clears the nearest other lead. The sleeve is drawn as a
   tube on the lead, loose until shrunk, snug after; its wall is not yet
   a solid in the collision model.
-- The `insulate` program lays the resistor along the chip's pin row, so
-  its lead crosses pins 1 and 2 on the way to pin 3: sleeved first, it
-  is soldered with no short (without the sleeve, two shorts). A sleeve
+- The `insulate` program runs the resistor's lead along the chip's pin
+  row to pin 3, past pins 1 and 2. A sleeve resting on a pin is poor
+  practice: soldering that pin later could melt it. So after sleeving,
+  a pincer bends the last 3 mm of the lead 60 degrees (a joggle): the
+  sleeved length passes the pins 1.5 mm clear, and only the bare tip
+  comes in to pin 3 (with neither the sleeve nor the joggle, the lead
+  rests on pins 1 and 2: two shorts). A sleeve
   is drawn along the lead as it is at the end, so one sleeved and then
   bent is drawn bent from the start.
 
