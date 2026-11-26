@@ -15,6 +15,7 @@
 //! snap(t, 'U1.3+R1.1', field)           a picture taken
 //! feeder('S1', length)                   the iron's solder feeder
 //! bender_shape(plate, size, shear, height)  the bending rig's shape
+//! mark('R1', {marking, body, pin1})     a part's marking, for drawing
 //! bender(nums('t close former shear r ...', 5))  the bending rig
 //! feeding(t0, t1, 'S1')                  solder fed into a joint
 //! station('S1', 'iron', nums('housing x y z r p y', 6)[0], nums('t x y z r p y ...', 7))
@@ -301,6 +302,25 @@ fn thing(out: &mut String, p: &Part) {
         quote(&p.kind),
         row(&p.start)
     );
+    // its marking and the body it is on, for drawing (and reading back)
+    if let (Some(mark), Ok(kind)) = (&p.mark, p.kind_of()) {
+        if let Ok(m) = crate::marks::marking(&p.kind, mark) {
+            let pin1 = kind.pins.first().and_then(|x| x.lead.first().copied());
+            let json = serde_json::json!({
+                "marking": m,
+                "body": {
+                    "shape": kind.body.shape,
+                    "size": kind.body.size,
+                    "diameter": kind.body.diameter,
+                    "length": kind.body.length,
+                    "axis": kind.body.axis,
+                    "flat": kind.body.flat,
+                },
+                "pin1": pin1,
+            });
+            let _ = writeln!(out, "mark({}, {})", quote(&p.id), json);
+        }
+    }
     for h in &p.holds {
         let by = if h.by == "vise" {
             "stage"

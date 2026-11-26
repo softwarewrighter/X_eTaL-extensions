@@ -30,6 +30,13 @@ pub fn command(text: &str) -> String {
     cell_web::command(text)
 }
 
+/// Bands read from the microscope's picture (JSON in, JSON out).
+#[wasm_bindgen]
+#[must_use]
+pub fn read_bands(json: &str) -> String {
+    cell_web::read_bands(json)
+}
+
 /// The cell's timeline as a scene for the player.
 #[wasm_bindgen]
 #[must_use]

@@ -454,3 +454,44 @@ pub fn nearest_color(rgb: [f64; 3]) -> (&'static str, f64) {
     // 441 is black to white
     (best.0, (1.0 - best.1 / 120.0).clamp(0.0, 1.0))
 }
+
+/// Bands read from a picture: each band's sampled color, the body's
+/// sampled color between them and the body's true color (sRGB, 0 to
+/// 255). The samples are white-balanced against the body (the light and
+/// the camera tint every pixel alike), each taken for its nearest band
+/// color, and the bands decoded from either end.
+#[derive(Clone, Debug, Serialize, PartialEq)]
+pub struct BandReading {
+    /// The colors read, in the order sampled.
+    pub bands: Vec<String>,
+    /// How near each sample came to its color, the least of them: 0 to 1.
+    pub confidence: f64,
+    /// What they mean, or why they mean nothing.
+    pub value: Result<String, String>,
+}
+
+/// Reads sampled band colors (see [`BandReading`]).
+#[must_use]
+pub fn read_bands(samples: &[[f64; 3]], body_seen: [f64; 3], body_true: [f64; 3]) -> BandReading {
+    let gain: Vec<f64> = (0..3)
+        .map(|k| (body_true[k] / body_seen[k].max(1.0)).clamp(0.2, 5.0))
+        .collect();
+    let mut bands = Vec::new();
+    let mut confidence: f64 = 1.0;
+    for s in samples {
+        let c = [
+            (s[0] * gain[0]).min(255.0),
+            (s[1] * gain[1]).min(255.0),
+            (s[2] * gain[2]).min(255.0),
+        ];
+        let (name, q) = nearest_color(c);
+        bands.push(name.to_string());
+        confidence = confidence.min(q);
+    }
+    let value = decode_bands(&bands).map(|(v, t)| format!("{}, {t}%", ohms_words(v)));
+    BandReading {
+        bands,
+        confidence,
+        value,
+    }
+}

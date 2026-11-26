@@ -113,6 +113,21 @@ export function start(local) {
     run(text);
     show(0, JSON.parse(w.state()).t);
   });
+  // the bands in the microscope's picture, read from its pixels by the
+  // simulator's own decoder (marks.rs): what a sensed reading sees
+  on('read-picture', () => {
+    const seen = player ? player.readPicture() : [];
+    $('reading').textContent = seen.length
+      ? seen.map((x) => {
+        const r = JSON.parse(local.read_bands(JSON.stringify(x)));
+        const sure = r.confidence >= 0.6 ? '' : ' -- doubtful, zoom in or turn it';
+        const raw = q.has('raw') ? ` [samples ${JSON.stringify(x.bands.map((c) => c.map(Math.round)))} body ${JSON.stringify(x.body.map(Math.round))} true ${JSON.stringify(x.body_true)}]` : '';
+        return `${x.id}: ${r.bands.join(' ')} = ${r.value || r.error} (confidence ${r.confidence.toFixed(2)})${sure}${raw}`;
+      }).join('; ')
+      : 'no banded part in the microscope\'s picture: aim it at one (identify R1)';
+  });
+  // ?read: the picture read once the page has drawn (for checking it headlessly)
+  if (q.has('read')) setTimeout(() => $('read-picture').click(), 4000);
   on('take', () => run(`tool ${arm()} ${$('tool').value}`));
   on('pick', () => run(`pick ${arm()} ${$('part').value} grasp=${$('grasp').value}`));
   on('release', () => { const h = JSON.parse(w.state()).arms.find((a) => a.name === arm()).holding; run(h ? `release ${arm()} ${h}` : `grip ${arm()} open`); });

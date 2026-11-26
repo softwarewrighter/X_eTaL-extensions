@@ -470,6 +470,22 @@ identify R1 mode=sensed zoom=2
   its neighbor) and is a warning naming the doubtful reading; under
   0.3 the part is unreadable. A misread or unreadable part is always a
   warning, never silently right.
+- The player draws each part's marking on its model: the bands as
+  rings round the body (the model's own default bands hidden), the
+  printed text as a texture on the marked side in the page's own
+  monospace font, the pin-1 dot, the LED's body in its color.
+- The live page's "Read the scope's picture" button reads the bands
+  from the microscope's picture itself: for each banded part in view
+  it samples the drawn pixels (3 by 3) at the point of each band's
+  surface facing the scope, and the simulator's decoder (marks.rs, in
+  the page as WebAssembly) white-balances them against the body
+  between the bands, takes each for its nearest band color and decodes
+  them from either end, with the least of the matches as the
+  confidence: "R1: yellow violet red gold = 4.7 kilohm, 5% (confidence
+  0.87)". `?read` on the page's address presses the button once it has
+  drawn, `&raw` shows the samples. Printed text is not yet read from
+  the picture (matching it against the font's own glyphs is the next
+  part of this work); `identify`'s sensed mode models it.
 - The `identify` program reads the resistor and the LED in the tray,
   finds the capacitor's face sideways, puts it in the vise and tilts
   the positioner: at 30 degrees its code may be misread, at 45 it

@@ -129,3 +129,42 @@ fn colors_seen_in_a_picture() {
     assert!(c == "orange" || c == "red", "{c}");
     assert!(q < 0.9);
 }
+
+#[test]
+fn bands_read_from_a_picture() {
+    use xetal_ext_cell::marks::read_bands;
+    // as the page sampled them: the body balances the light
+    let r = read_bands(
+        &[
+            [217.0, 201.0, 44.0],
+            [127.0, 59.0, 178.0],
+            [182.0, 36.0, 37.0],
+            [184.0, 151.0, 51.0],
+        ],
+        [210.0, 201.0, 180.0],
+        [237.0, 223.0, 196.0],
+    );
+    assert_eq!(r.bands, bands("yellow violet red gold"));
+    assert_eq!(r.value.as_deref(), Ok("4.7 kilohm, 5%"));
+    assert!(r.confidence > 0.6, "{}", r.confidence);
+    // the same in a dim bluish light: the body's color corrects it
+    let dim = |c: [f64; 3]| [c[0] * 0.5, c[1] * 0.55, c[2] * 0.7];
+    let r2 = read_bands(
+        &[
+            dim([217.0, 201.0, 44.0]),
+            dim([127.0, 59.0, 178.0]),
+            dim([182.0, 36.0, 37.0]),
+            dim([184.0, 151.0, 51.0]),
+        ],
+        dim([210.0, 201.0, 180.0]),
+        [237.0, 223.0, 196.0],
+    );
+    assert_eq!(r2.bands, r.bands);
+    // a blurred picture: every band the body's color -- no value, not sure
+    let blur = read_bands(
+        &[[210.0, 201.0, 180.0]; 4],
+        [210.0, 201.0, 180.0],
+        [237.0, 223.0, 196.0],
+    );
+    assert!(blur.value.is_err());
+}

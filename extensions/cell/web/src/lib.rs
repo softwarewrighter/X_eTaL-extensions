@@ -99,6 +99,29 @@ fn command_on(w: &mut World, text: &str) -> String {
     json!({ "outcomes": outcomes, "t0": t0, "t1": w.t }).to_string()
 }
 
+/// Bands read from the microscope's picture: `{"bands": [[r,g,b],...],
+/// "body": [r,g,b], "body_true": [r,g,b]}` in, the reading out (JSON).
+#[must_use]
+pub fn read_bands(json_in: &str) -> String {
+    let v: Json = match serde_json::from_str(json_in) {
+        Ok(v) => v,
+        Err(e) => return json!({ "error": e.to_string() }).to_string(),
+    };
+    let rgb = |x: &Json| -> [f64; 3] {
+        let a = x.as_array().cloned().unwrap_or_default();
+        std::array::from_fn(|k| a.get(k).and_then(Json::as_f64).unwrap_or(0.0))
+    };
+    let samples: Vec<[f64; 3]> = v["bands"].as_array().map(|a| a.iter().map(rgb).collect()).unwrap_or_default();
+    let r = xetal_ext_cell::marks::read_bands(&samples, rgb(&v["body"]), rgb(&v["body_true"]));
+    json!({
+        "bands": r.bands,
+        "confidence": r.confidence,
+        "value": r.value.as_ref().ok(),
+        "error": r.value.as_ref().err(),
+    })
+    .to_string()
+}
+
 /// The cell's timeline as a scene for the cell player.
 #[must_use]
 pub fn scene(name: &str) -> String {

@@ -103,7 +103,7 @@ export function cellPlayer(host, calls, options = {}) {
   scene.add(root);
   const folder = options.models || './models/';
   const s = {
-    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], stations: [], leads: [], scope: [], snaps: [], feeding: [], feeders: {}, bender: [], benderShape: null, attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
+    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], stations: [], leads: [], scope: [], snaps: [], feeding: [], feeders: {}, marks: {}, bender: [], benderShape: null, attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
   };
   const api = {
     nums,
@@ -127,6 +127,7 @@ export function cellPlayer(host, calls, options = {}) {
     feeder(id, length) { s.feeders[id] = length; },
     bender_shape(plate, size, shear, height) { s.benderShape = { plate, size, shear, height }; },
     bender(rows) { s.bender = rows; },
+    mark(id, m) { s.marks[id] = m; },
     // a pincer: a station whose housing moves too (rows: t, housing's
     // x y z r p y, the jaws' mount's x y z r p y)
     pincer(id, tool, rows) { s.stations.push({ id, tool, housing: rows[0].slice(1, 7), rows: rows.map((r) => [r[0], ...r.slice(7)]), housings: rows.map((r) => r.slice(0, 7)) }); },
@@ -212,6 +213,21 @@ export function cellPlayer(host, calls, options = {}) {
   };
   const arms = {}, fixtures = {}, parts = {}, stations = {};
   const feeders = {};
+  const BAND = { black: '#141414', brown: '#784212', red: '#c81e1e', orange: '#f08214', yellow: '#f0dc28', green: '#1e9632', blue: '#1e46c8', violet: '#8c3cbe', gray: '#808080', white: '#f0f0f0', gold: '#cda532', silver: '#bebec8' };
+  const LED = { red: '#e02020', green: '#20c040', yellow: '#f0d020', blue: '#2050f0', white: '#f4f4f4', orange: '#f08020' };
+  const textTexture = (lines, color) => {
+    const c = document.createElement('canvas');
+    c.width = 512; c.height = 128 * lines.length;
+    const x = c.getContext('2d');
+    x.fillStyle = color;
+    x.font = 'bold 96px monospace';
+    x.textAlign = 'center';
+    x.textBaseline = 'middle';
+    lines.forEach((l, i) => x.fillText(l, 256, 64 + 128 * i, 500));
+    const t = new THREE.CanvasTexture(c);
+    t.anisotropy = 4;
+    return t;
+  };
   const rigParts = {};
   const Y = new THREE.Vector3(0, 1, 0);
   const ready = Promise.all([
@@ -265,6 +281,7 @@ export function cellPlayer(host, calls, options = {}) {
         g.add(tube);
         (reformed[L.pin] ||= []).push({ t: L.t, tube });
       }
+      if (s.marks[p.id]) drawMarking(g, s.marks[p.id], glow);
       parts[p.id] = { g, start: poseMatrix(p.pose), glow, meshes, reformed };
     }),
     // a tool station: its housing, its pole, its tool on the pole's end
@@ -372,6 +389,63 @@ export function cellPlayer(host, calls, options = {}) {
     st.g.matrix.makeTranslation(x, y, z).multiply(st.base).multiply(new THREE.Matrix4().makeRotationX(tilt * D));
     st.g.matrixWorldNeedsUpdate = true;
   };
+  // a part's marking on its body, in the part's frame (the body's center
+  // at the origin): bands as rings round an axial body, printed text as
+  // a texture on its marked side (in the cell's own font, the glyphs a
+  // sensed reading is matched against), a pin-1 dot, an LED's color
+  function drawMarking(g, { marking: m, body: b, pin1 }, glow) {
+    m.bands = m.bands || [];
+    m.text = m.text || [];
+    const add = (mesh) => { g.add(mesh); return mesh; };
+    const d = b.diameter || 2, L = b.length || 4;
+    // bands round an axial body (along x): the model's own (a default
+    // value) hidden, the part's drawn
+    if (m.bands.length && b.axis === 'x') {
+      g.traverse((o) => { if (o.isMesh && /_band\d+$/.test(o.name)) o.visible = false; });
+      const w = 0.5, r = d / 2 + 0.04;
+      const xs = m.bands.length === 1 ? [-L / 2 + 0.5] : m.bands.map((_, i) => (i < m.bands.length - 1 ? -L / 2 + 0.7 + 0.75 * i : L / 2 - 0.7));
+      m.bands.forEach((c, i) => {
+        const ring = add(new THREE.Mesh(new THREE.CylinderGeometry(r, r, w, 24, 1, true), new THREE.MeshStandardMaterial({ color: BAND[c] || '#888', roughness: 0.6, side: THREE.DoubleSide })));
+        ring.rotation.z = Math.PI / 2;
+        ring.position.x = xs[i];
+        ring.name = 'band' + i;
+      });
+      // where to sample the bare body (between the last two bands), and
+      // its true color, for a reading's white balance
+      let bodyMesh = null;
+      g.traverse((o) => { if (o.isMesh && /_body$/.test(o.name)) bodyMesh = o; });
+      g.userData.bands = { r: d / 2 + 0.04, xs, gap: (xs[xs.length - 2] + xs[xs.length - 1]) / 2, body: bodyMesh ? bodyMesh.material.color.clone() : new THREE.Color(0.85, 0.74, 0.55) };
+    }
+    // printed text on its side
+    if (m.text.length && !(b.axis === 'x')) {
+      let size, pos, rot, color;
+      if (m.side === 'top') {
+        const [sx, sy, sz] = b.size || [6, 4, 2];
+        size = [sx * 0.8, sy * 0.4]; pos = [0, 0, sz / 2 + 0.03]; rot = [0, 0, 0]; color = '#d8d8d8';
+      } else if (m.side === 'faceplusy') {
+        size = [d * 0.75, d * 0.38]; pos = [0, L / 2 + 0.03, 0]; color = '#3a2a10';
+        rot = [Math.PI / 2, Math.PI, 0];
+      } else if (m.side === 'faceminusy') {
+        size = [d * 0.7, d * 0.3]; pos = [0, -(b.flat || d / 2) - 0.03, 0]; rot = [Math.PI / 2, 0, 0]; color = '#e0e0e0';
+      } else {
+        // all round a body along z: on its -y side
+        size = [d * 0.75, L * 0.45]; pos = [0, -(d / 2) - 0.03, 0]; rot = [Math.PI / 2, 0, 0]; color = '#e8e8e8';
+      }
+      const label = add(new THREE.Mesh(new THREE.PlaneGeometry(size[0], size[1] * m.text.length), new THREE.MeshBasicMaterial({ map: textTexture(m.text, color), transparent: true, depthWrite: false })));
+      label.position.set(...pos);
+      label.rotation.set(...rot);
+      label.name = 'marking';
+    }
+    // the pin-1 dot on an IC's top, toward pin 1's corner
+    if (m.pin1_dot && pin1 && b.size) {
+      const dot = add(new THREE.Mesh(new THREE.CircleGeometry(0.45, 16), new THREE.MeshStandardMaterial({ color: '#606060', roughness: 0.9 })));
+      dot.position.set(Math.sign(pin1[0]) * (b.size[0] / 2 - 1.1), Math.sign(pin1[1]) * (b.size[1] / 2 - 1.1), b.size[2] / 2 + 0.03);
+    }
+    // an LED's body in its color, a little clear
+    if (m.color) {
+      for (const mat of glow.body) { mat.color.set(LED[m.color] || m.color); mat.transparent = true; mat.opacity = 0.85; }
+    }
+  }
   // the bending rig, in its own frame (x along the lead, z up, the lead's
   // point at the origin): the backplate and post, the mandrel below the
   // lead, the clamp above and the anvil below it on the body's side, the
@@ -457,6 +531,7 @@ export function cellPlayer(host, calls, options = {}) {
   const scopeCam = new THREE.PerspectiveCamera(10, 4 / 3, 1, 3000);
   const X = new THREE.Vector3(1, 0, 0);
   let scopeOn = false;
+  let scopeView = null;
   const scopeAt = (u) => {
     const sc = fixtures.scope;
     const r = at(s.scope, u);
@@ -591,6 +666,7 @@ export function cellPlayer(host, calls, options = {}) {
     if (!scopeOn) return;
     // the microscope's picture: bottom right, above the controls
     const iw = 320, ih = 240, x = scopeLeft != null ? scopeLeft : renderer.domElement.clientWidth - iw - 16, y = 72;
+    scopeView = { x, y, w: iw, h: ih };
     renderer.setScissorTest(true);
     renderer.setViewport(x, y, iw, ih);
     renderer.setScissor(x, y, iw, ih);
@@ -631,6 +707,49 @@ export function cellPlayer(host, calls, options = {}) {
       }));
     },
     seek(t) { seek(t); },
+    // the microscope's picture as it is now, the bands of each banded
+    // part in it sampled where they are (3 by 3 pixels about each band's
+    // middle): [{ id, bands: [[r,g,b]...], body: [r,g,b], body_true }]
+    readPicture() {
+      if (!scopeOn || !scopeView) return [];
+      draw();
+      const gl = renderer.getContext();
+      const pr = renderer.getPixelRatio();
+      const px = new Uint8Array(4 * 9);
+      // a point in the cell, in the scope's picture as drawn on the page
+      const sample = (v) => {
+        const p = v.clone().project(scopeCam);
+        if (Math.abs(p.x) > 0.95 || Math.abs(p.y) > 0.95 || p.z > 1) return null;
+        const x = Math.round((scopeView.x + (p.x + 1) / 2 * scopeView.w) * pr) - 1;
+        const y = Math.round((scopeView.y + (p.y + 1) / 2 * scopeView.h) * pr) - 1;
+        gl.readPixels(x, y, 3, 3, gl.RGBA, gl.UNSIGNED_BYTE, px);
+        const sum = [0, 0, 0];
+        for (let i = 0; i < 9; i++) for (let k = 0; k < 3; k++) sum[k] += px[4 * i + k];
+        return sum.map((x) => x / 9);
+      };
+      const out = [];
+      for (const [id, part] of Object.entries(parts)) {
+        const b = part.g.userData.bands;
+        if (!b || !part.g.visible) continue;
+        part.g.updateMatrixWorld(true);
+        // the point of the body's surface at x along it that faces the
+        // scope (the axis's own point lies behind it, off along the body
+        // when seen at an angle)
+        const axis = new THREE.Vector3(1, 0, 0).transformDirection(part.g.matrixWorld);
+        const at = (x) => {
+          const c = part.g.localToWorld(new THREE.Vector3(x, 0, 0));
+          const to = scopeCam.position.clone().sub(c);
+          const n = to.sub(axis.clone().multiplyScalar(to.dot(axis))).normalize();
+          return c.add(n.multiplyScalar(b.r));
+        };
+        const bands = b.xs.map((x) => sample(at(x)));
+        const bodySeen = sample(at(b.gap));
+        if (bands.some((x) => !x) || !bodySeen) continue;
+        const hex = b.body.getHex();
+        out.push({ id, bands, body: bodySeen, body_true: [(hex >> 16) & 255, (hex >> 8) & 255, hex & 255] });
+      }
+      return out;
+    },
     stop() { playing = false; last = 0; if (until) { const u = until; until = null; u.done(); } ui.show(); },
     get state() {
       const out = { name: s.name, t: now, duration, playing, speed, arms: {}, stage: (at(s.tracks.stage, now) || [0])[0], step: stepAt(now) };
