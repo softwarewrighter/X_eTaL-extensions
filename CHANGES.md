@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-25
 
+- 23:59 `fix` cell, a browser without WebGL (the user: the live page fails on Firefox and Chrome where the GPU is not supported): the player falls back to three.js's SVG renderer (vendored, r170, MIT), slower and flat shaded, without the microscope's picture, with a notice; `?software` forces it.
 - 23:54 `plan` the assembly cell, insulation (the user): decision C20, heat-shrink sleeving slid over a lead's free end and shrunk with hot air, insulated spans ignored by the shorts check; step 24 cell-insulate inserted before the planner; later steps renumbered.
 - 23:20 `ext` cell, the component tester (Saga 17 step 23): tester.rs (electrical models from kind, value and fault; readings both ways round, with tolerance and noise; what a part is from the readings alone), `test PART` with the pincers as probes, `verify PART` against the netlist and the marking (good, wrong part, mislabeled, reversed marking, failed); circuits tester and tester-b with their programs; pincers keep to their own side; a diode's band at its cathode.
 - 22:34 `ext` cell, printed text read from the picture (Saga 17 step 22, part 3): the label's plane sampled straight through the scope's projection, ink told from ground, characters split by ink columns and matched against the page's own glyphs, the meaning from marks.rs (decode_mark in WebAssembly); the identify program also reads U1; IC labels clear of the pin-1 dot, disc ink darker.

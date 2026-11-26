@@ -203,6 +203,16 @@ just publish            # copy it to pages/cell/live; commit pages/ and push
 just record pick        # the page recorded running pick: work/record/pick.mp4
 ```
 
+### Without a GPU
+
+The page draws with WebGL. Where the browser has none (its GPU is not
+supported, or WebGL is turned off), it falls back to three.js's SVG
+renderer, which needs no GPU: everything runs -- the simulator, the
+programs, the controls, the step list -- drawn more slowly and flat
+shaded, without the floor's grid, the microscope's picture or reading
+it. A notice at the top says so. `?software` on the page's address
+uses the fallback anywhere, to see it.
+
 ## Over MCP
 
 `xetal-cell-mcp` (`mcp/`) serves the cell over MCP (stdio), for an

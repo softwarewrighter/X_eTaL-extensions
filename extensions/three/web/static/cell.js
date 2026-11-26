@@ -48,6 +48,7 @@
 // --dump-dom); ?hud=0 hides the controls.
 import * as THREE from 'three';
 import { GLTFLoader } from './vendor/three/loaders/GLTFLoader.js';
+import { SVGRenderer } from './vendor/three/renderers/SVGRenderer.js';
 
 // Is this scene a cell's (its first call is cell)?
 export function isCell(calls) {
@@ -172,7 +173,38 @@ export function cellPlayer(host, calls, options = {}) {
   };
   place();
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+  // WebGL when the browser can (the GPU); else, or with ?software, the
+  // SVG renderer: no GPU at all, slower, without the microscope's picture
+  const webgl = () => {
+    try {
+      const c = document.createElement('canvas');
+      return !!(c.getContext('webgl2') || c.getContext('webgl'));
+    } catch (e) { return false; }
+  };
+  let renderer = null;
+  const software = new URLSearchParams(location.search).has('software') || !webgl();
+  if (!software) {
+    try { renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true }); } catch (e) { renderer = null; }
+  }
+  const slow = !renderer;
+  if (slow) {
+    renderer = new SVGRenderer();
+    renderer.setQuality('low');
+    renderer.setClearColor(scene.background);
+    // it lights by ambient, directional and point lights only (not the
+    // hemisphere's fill): an ambient and a second, weaker light instead
+    scene.add(new THREE.AmbientLight('#ffffff', 0.45));
+    const fill = new THREE.DirectionalLight('#ffffff', 0.4);
+    fill.position.set(-600, 400, -800);
+    scene.add(fill);
+    // its lines are not hidden behind solids: the floor's grid would show through everything
+    grid.visible = false;
+    const note = document.createElement('div');
+    note.textContent = 'No WebGL in this browser (its GPU is not supported, or ?software): drawn without the GPU, more slowly, flat shaded, without the microscope\'s picture.';
+    note.style.cssText = 'position:absolute;left:50%;top:8px;transform:translateX(-50%);max-width:640px;background:#3a2f12ee;color:#ffe7a8;font:13px system-ui,sans-serif;padding:6px 10px;border-radius:4px;z-index:5;pointer-events:none';
+    if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+    host.appendChild(note);
+  }
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   host.appendChild(renderer.domElement);
   renderer.domElement.style.display = 'block';
@@ -748,6 +780,12 @@ export function cellPlayer(host, calls, options = {}) {
     draw();
   };
   const draw = () => {
+    if (slow) {
+      // one picture, the cell's; the microscope's needs WebGL's viewports
+      scopeFrame.style.display = 'none';
+      renderer.render(scene, camera);
+      return;
+    }
     renderer.setScissorTest(false);
     renderer.setViewport(0, 0, renderer.domElement.clientWidth, renderer.domElement.clientHeight);
     renderer.render(scene, camera);
@@ -800,7 +838,7 @@ export function cellPlayer(host, calls, options = {}) {
     // part in it sampled where they are (3 by 3 pixels about each band's
     // middle): [{ id, bands: [[r,g,b]...], body: [r,g,b], body_true }]
     readPicture() {
-      if (!scopeOn || !scopeView) return [];
+      if (slow || !scopeOn || !scopeView) return [];
       draw();
       const gl = renderer.getContext();
       const pr = renderer.getPixelRatio();
@@ -1048,7 +1086,9 @@ export function cellPlayer(host, calls, options = {}) {
     document.title = document.title.replace(/: (ready|error)$/, '') + ': error';
   });
   controls.ready = ready;
-  controls.stopAll = () => { stopper.abort(); running = false; controls.stop(); ui.remove(); renderer.dispose(); host.removeChild(renderer.domElement); };
+  controls.stopAll = () => { stopper.abort(); running = false; controls.stop(); ui.remove(); if (renderer.dispose) renderer.dispose(); host.removeChild(renderer.domElement); };
+  // drawn without the GPU (no WebGL): no microscope picture to read
+  controls.software = slow;
   window.cell = controls;
   return controls;
 }

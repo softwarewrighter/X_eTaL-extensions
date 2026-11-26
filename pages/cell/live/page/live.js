@@ -116,6 +116,7 @@ export function start(local) {
   // the bands in the microscope's picture, read from its pixels by the
   // simulator's own decoder (marks.rs): what a sensed reading sees
   on('read-picture', () => {
+    if (player && player.software) { $('reading').textContent = 'reading the microscope\'s picture needs WebGL, which this browser does not have here'; return; }
     const seen = player ? player.readPicture() : [];
     const kinds = {};
     for (const p of Object.values(JSON.parse(w.state()).parts || {})) if (p && p.id) kinds[p.id] = p.kind;

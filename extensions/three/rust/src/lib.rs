@@ -54,8 +54,9 @@ pub const LIVE: &str = include_str!("../../web/static/live.js");
 /// The page `page` writes, which reads the calls from scene.calls.js.
 pub const INDEX: &str = include_str!("../../web/static/standalone.html");
 
-/// Three.js 0.170.0 (MIT), the passes the player uses and the glTF
-/// loader the board player reads its pieces with, as vendored
+/// Three.js 0.170.0 (MIT), the passes the player uses, the glTF
+/// loader the board player reads its pieces with and the SVG renderer
+/// the cell player falls back to without WebGL, as vendored
 /// in web/static/vendor/three: the path under the page, the text.
 pub const VENDOR: &[(&str, &str)] = &[
     (
@@ -69,6 +70,14 @@ pub const VENDOR: &[(&str, &str)] = &[
     (
         "vendor/three/loaders/GLTFLoader.js",
         include_str!("../../web/static/vendor/three/loaders/GLTFLoader.js"),
+    ),
+    (
+        "vendor/three/renderers/SVGRenderer.js",
+        include_str!("../../web/static/vendor/three/renderers/SVGRenderer.js"),
+    ),
+    (
+        "vendor/three/renderers/Projector.js",
+        include_str!("../../web/static/vendor/three/renderers/Projector.js"),
     ),
     (
         "vendor/three/utils/BufferGeometryUtils.js",
