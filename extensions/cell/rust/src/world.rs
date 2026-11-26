@@ -171,6 +171,19 @@ pub struct Part {
     /// circuit or its kind's default (decision C12).
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub mark: Option<String>,
+    /// What it truly is when that is not what its mark says (a wrong
+    /// value or a mislabeled part): `2.2k`.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub value: Option<String>,
+    /// What the circuit's netlist wants here, when not its mark.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub expect: Option<String>,
+    /// A fault: `open`, `short`, `reversed` (its marking the wrong way round).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub fault: Option<String>,
+    /// What the tester last found it to be.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub measured: Option<crate::tester::Measured>,
     /// It lies loose on the turntable (dropped there): it rides with it.
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub on_stage: bool,
@@ -210,6 +223,10 @@ impl Part {
             wire: None,
             support: false,
             mark: None,
+            value: None,
+            expect: None,
+            fault: None,
+            measured: None,
             on_stage: false,
             lost: false,
             temps: Vec::new(),
@@ -441,6 +458,10 @@ impl World {
                     wire: None,
                     support: false,
                     mark: None,
+                    value: None,
+                    expect: None,
+                    fault: None,
+                    measured: None,
                     on_stage: false,
                     lost: false,
                     temps: Vec::new(),
@@ -472,6 +493,9 @@ impl World {
             part.mark = laid
                 .mark
                 .or_else(|| crate::marks::default_mark(&part.kind).map(str::to_string));
+            part.value = laid.value;
+            part.expect = laid.expect;
+            part.fault = laid.fault;
             parts.push(part);
         }
         Self {
@@ -1763,6 +1787,14 @@ impl World {
                 )?;
             }
             "snap" => self.snap(events),
+            "test" => {
+                let id = c.word("part").unwrap_or("");
+                self.test_part(id, did, events, warnings)?;
+            }
+            "verify" => {
+                let id = c.word("part").unwrap_or("");
+                self.verify_part(id, events, warnings)?;
+            }
             "identify" => {
                 let id = c.word("part").unwrap_or("");
                 let mode = c.word("mode").unwrap_or("oracle");

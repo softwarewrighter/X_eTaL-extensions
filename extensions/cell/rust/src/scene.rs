@@ -317,6 +317,8 @@ fn thing(out: &mut String, p: &Part) {
                     "flat": kind.body.flat,
                 },
                 "pin1": pin1,
+                // a diode's band printed at its anode, not its cathode
+                "reversed": p.fault.as_deref() == Some("reversed"),
             });
             let _ = writeln!(out, "mark({}, {})", quote(&p.id), json);
         }

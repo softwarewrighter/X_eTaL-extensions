@@ -560,6 +560,20 @@ pub const COMMANDS: &[Spec] = &[
         named: &[],
     },
     Spec {
+        op: "test",
+        family: "tester",
+        summary: "the component tester: the probes (the turntable's pincers) on each pair of a held part's leads in turn; what it is, from the readings alone",
+        positional: &[req("part", Kind::Part, "the part, held over the turntable")],
+        named: &[],
+    },
+    Spec {
+        op: "verify",
+        family: "tester",
+        summary: "the part's last test against what the netlist wants and what its marking says: good, wrong part, mislabeled, reversed marking or failed",
+        positional: &[req("part", Kind::Part, "the part")],
+        named: &[],
+    },
+    Spec {
         op: "identify",
         family: "scope",
         summary: "the microscope turns onto a part and reads its marking: bands, printed text, color",

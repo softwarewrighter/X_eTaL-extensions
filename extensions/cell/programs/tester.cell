@@ -1,0 +1,55 @@
+# tester: the component tester (decision C13): arm A picks a part from
+# the tray and holds it in free air over the turntable; the tester's
+# probes (pincers P1 and P2) touch each pair of its leads in turn, and
+# say what it is from the readings alone; verify compares that with
+# what the netlist wants and what its marking says.
+reset circuit=tester
+tool A tweezers
+pick A R1 grasp=body
+move A to=0,0,0 rpy=180,0,90
+test R1
+verify R1
+place A R1 at=180.322,152.038,-138.35 rpy=0,0,90
+release A R1
+pick A R2 grasp=body
+move A to=0,0,0 rpy=180,0,90
+test R2
+verify R2
+place A R2 at=201.536,173.251,-138.35 rpy=0,0,90
+release A R2
+pick A R3 grasp=body
+move A to=0,0,0 rpy=180,0,90
+test R3
+verify R3
+place A R3 at=222.749,194.464,-138.35 rpy=0,0,90
+release A R3
+pick A C1 grasp=body
+move A to=0,0,30 rpy=180,0,90
+test C1
+verify C1
+place A C1 at=243.962,215.678,-117.25 rpy=0,0,0
+release A C1
+pick A C2 grasp=body
+move A to=0,0,30 rpy=180,0,90
+test C2
+verify C2
+place A C2 at=152.038,180.322,-116.75 rpy=0,0,0
+release A C2
+pick A D1 grasp=body
+move A to=0,0,30 rpy=180,0,90
+test D1
+verify D1
+place A D1 at=173.251,201.536,-107.95 rpy=0,0,0
+release A D1
+pick A D2 grasp=body
+move A to=0,0,0 rpy=180,0,90
+test D2
+verify D2
+place A D2 at=194.464,222.749,-138.55 rpy=0,0,90
+release A D2
+pick A Q1 grasp=body
+move A to=0,0,30 rpy=180,0,90
+test Q1
+verify Q1
+place A Q1 at=215.678,243.962,-124.175 rpy=0,0,0
+release A Q1

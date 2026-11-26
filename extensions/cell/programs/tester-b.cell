@@ -1,0 +1,23 @@
+# tester-b: more parts for the component tester: a PNP transistor, a
+# shorted capacitor and a good electrolytic (the tray's IC, U1, is not a
+# part the tester measures: test U1 is refused and says so).
+reset circuit=tester-b
+tool A tweezers
+pick A Q2 grasp=body
+move A to=0,0,30 rpy=180,0,90
+test Q2
+verify Q2
+place A Q2 at=180.322,152.038,-124.175 rpy=0,0,0
+release A Q2
+pick A C3 grasp=body
+move A to=0,0,30 rpy=180,0,90
+test C3
+verify C3
+place A C3 at=201.536,173.251,-117.25 rpy=0,0,0
+release A C3
+pick A C4 grasp=body
+move A to=0,0,30 rpy=180,0,90
+test C4
+verify C4
+place A C4 at=222.749,194.464,-116.75 rpy=0,0,0
+release A C4

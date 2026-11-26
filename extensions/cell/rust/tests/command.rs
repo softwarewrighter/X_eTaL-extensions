@@ -54,9 +54,11 @@ insert A on=R1.2 at=3 roll=90
 form angle=90 radius=1
 shear A on=R1.2 at=8
 identify R1 mode=sensed zoom=6
+test R1
+verify R1
 ";
     let p = parse_program(program).unwrap();
-    assert_eq!(p.len(), 39);
+    assert_eq!(p.len(), 41);
     for c in &p {
         round_trip(&c.to_text());
     }
@@ -75,7 +77,7 @@ fn every_command_has_an_example() {
         "reset", "tool", "joints", "move", "lift", "back", "grip", "pick", "place", "align",
         "release", "clip", "touch", "feed", "weld", "wire", "cut", "stage", "present", "pinch",
         "unpinch", "bend", "trim", "insert", "form", "shear", "vise", "wait", "scope", "snap",
-        "inspect", "identify", "probe", "rewind",
+        "inspect", "test", "verify", "identify", "probe", "rewind",
     ];
     let ops: Vec<&str> = COMMANDS.iter().map(|s| s.op).collect();
     assert_eq!(ops, covered);

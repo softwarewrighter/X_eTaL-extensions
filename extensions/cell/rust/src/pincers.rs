@@ -415,7 +415,15 @@ impl World {
             let square = ((d[0] * lead[0] + d[1] * lead[1]) / (dist * lv)).abs();
             tries.push((square, phi, psi, reach));
         }
-        tries.sort_by(|a, b| a.0.total_cmp(&b.0));
+        // squarest to the lead first; among equals (a lead straight down
+        // is square from every side) the least travel round the ring, so
+        // each pincer keeps to its own side
+        let now = self.pincers[k].phi;
+        let travel = |phi: f64| kin::wrap(phi - now).abs();
+        tries.sort_by(|a, b| {
+            let (sa, sb) = ((a.0 * 20.0).round(), (b.0 * 20.0).round());
+            sa.total_cmp(&sb).then(travel(a.1).total_cmp(&travel(b.1)))
+        });
         let frame = self.stage_pose();
         let rig = Rig::arm()?;
         let mut others = self.fixture_groups();
@@ -560,6 +568,65 @@ impl World {
         }
         let p = &self.pincers[k];
         let to = [p.phi, p.z, p.psi, 0.0];
+        self.pincer_go(k, to, &allowed, did)
+    }
+
+    /// A probe touch (the tester): pincer `name`'s jaws onto `pin`'s lead,
+    /// six tenths of the way out, without gripping it.
+    pub(crate) fn probe_touch(
+        &mut self,
+        name: &str,
+        pin: &str,
+        did: &mut Vec<String>,
+    ) -> Result<(), Halt> {
+        let k = self
+            .pincer_index(name)
+            .ok_or_else(|| Halt::Refused(format!("no pincer {name}")))?;
+        if self.pincers[k].on.is_some() {
+            return Err(Halt::Refused(format!(
+                "{name} grips a lead: unpinch {name} first"
+            )));
+        }
+        let (pid, pn) = pin
+            .split_once('.')
+            .ok_or_else(|| Halt::Refused(format!("{pin} is not a pin")))?;
+        let part = self
+            .part(pid)
+            .ok_or_else(|| Halt::Refused(format!("no part {pid}")))?;
+        let kind = part.kind_of().map_err(Halt::Refused)?;
+        let p = kind
+            .pin(pn)
+            .ok_or_else(|| Halt::Refused(format!("{pid} has no pin {pn}")))?;
+        let at = (p.length() * 0.6).min(8.0);
+        let at_world = |mm: f64| {
+            part.pose()
+                .then(&Pose::from_xyz_rpy(
+                    crate::world::along(&p.lead, mm),
+                    [0.0; 3],
+                ))
+                .p
+        };
+        let world = at_world(at);
+        let lead = kin::sub(at_world((at + 0.5).min(p.length())), world);
+        let allowed = vec![format!("part:{pid}")];
+        let to = self
+            .reach(k, world, lead, &allowed)
+            .map_err(|e| Halt::Refused(format!("probe {name} cannot reach {pin}: {e}")))?;
+        self.pincer_go(k, to, &allowed, did)
+    }
+
+    /// The probe back: pincer `name`'s pole in.
+    pub(crate) fn probe_back(&mut self, name: &str, did: &mut Vec<String>) -> Result<(), Halt> {
+        let k = self
+            .pincer_index(name)
+            .ok_or_else(|| Halt::Refused(format!("no pincer {name}")))?;
+        let p = &self.pincers[k];
+        let to = [p.phi, p.z, p.psi, 0.0];
+        let allowed: Vec<String> = self
+            .parts
+            .iter()
+            .map(|x| format!("part:{}", x.id))
+            .collect();
         self.pincer_go(k, to, &allowed, did)
     }
 

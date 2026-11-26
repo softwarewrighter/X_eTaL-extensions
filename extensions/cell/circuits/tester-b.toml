@@ -1,0 +1,34 @@
+# tester-b: more parts for the component tester: a PNP transistor, a
+# shorted capacitor, a good electrolytic and an IC (which the tester does
+# not measure).
+title = "more parts to test"
+
+[[part]]
+id = "Q2"
+kind = "to92"
+pocket = 1
+yaw = 0
+mark = "2N3906"
+
+# failed: shorted
+[[part]]
+id = "C3"
+kind = "ceramic-disc"
+pocket = 2
+yaw = 0
+mark = "103"
+fault = "short"
+
+[[part]]
+id = "C4"
+kind = "radial-electrolytic"
+pocket = 3
+yaw = 0
+mark = "10uF 25V"
+
+[[part]]
+id = "U1"
+kind = "dip8"
+pocket = 4
+yaw = 90
+mark = "NE555P"

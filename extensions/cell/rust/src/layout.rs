@@ -216,6 +216,15 @@ pub struct Laid {
     /// default if not given.
     #[serde(default)]
     pub mark: Option<String>,
+    /// What it truly is, when not what its mark says (decision C13).
+    #[serde(default)]
+    pub value: Option<String>,
+    /// What the netlist wants here, when not its mark.
+    #[serde(default)]
+    pub expect: Option<String>,
+    /// A fault: `open`, `short` or `reversed`.
+    #[serde(default)]
+    pub fault: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -226,9 +235,11 @@ struct CircuitFile {
     part: Vec<Laid>,
 }
 
-const CIRCUITS: [(&str, &str); 2] = [
+const CIRCUITS: [(&str, &str); 4] = [
     ("demo", include_str!("../../circuits/demo.toml")),
     ("weld", include_str!("../../circuits/weld.toml")),
+    ("tester", include_str!("../../circuits/tester.toml")),
+    ("tester-b", include_str!("../../circuits/tester-b.toml")),
 ];
 
 /// The circuits a reset can lay out: `none` (empty trays) and those in
@@ -255,9 +266,17 @@ pub fn circuit(name: &str) -> Result<Vec<Laid>, String> {
         .ok_or_else(|| format!("no circuit {name} (circuits: {})", circuits().join(" ")))?;
     let f: CircuitFile = toml::from_str(text).map_err(|e| format!("circuits/{name}.toml: {e}"))?;
     for p in &f.part {
-        if let Some(m) = &p.mark {
+        for m in [&p.mark, &p.value, &p.expect].into_iter().flatten() {
             crate::marks::marking(&p.kind, m)
                 .map_err(|e| format!("circuits/{name}.toml: {}: {e}", p.id))?;
+        }
+        if let Some(x) = &p.fault {
+            if !["open", "short", "reversed"].contains(&x.as_str()) {
+                return Err(format!(
+                    "circuits/{name}.toml: {}: fault {x}: open, short or reversed",
+                    p.id
+                ));
+            }
         }
     }
     Ok(f.part)

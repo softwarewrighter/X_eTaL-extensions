@@ -1,6 +1,6 @@
 number = 23
 slug = "cell-tester"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 14 (the user, 2026-11-24: 'a tool that can measure a component e..."
 role = "production"
 context_files = []

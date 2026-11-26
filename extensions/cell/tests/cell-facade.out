@@ -41,6 +41,8 @@ wait [s=S] [until=TARGET] [below=C] -- let time pass, or wait until a pin or joi
 scope [pan=DEG] [tilt=DEG] [zoom=N] [focus=MM] [rotate=DEG] [aim=TARGET] -- move the microscope: pan, tilt, zoom, focus, rotate, or aim it at a target
 snap [stereo=N] -- take the microscope's picture
 inspect TARGET -- report a joint's gap, fillet and result, or a pin's temperature
+test PART -- the component tester: the probes (the turntable's pincers) on each pair of a held part's leads in turn; what it is, from the readings alone
+verify PART -- the part's last test against what the netlist wants and what its marking says: good, wrong part, mislabeled, reversed marking or failed
 identify PART [mode=oracle|sensed] [zoom=N] -- the microscope turns onto a part and reads its marking: bands, printed text, color
 probe PIN PIN -- measure continuity and resistance between two pins
 rewind t=S -- put the cell back as it was at a time (the timeline keeps both branches)

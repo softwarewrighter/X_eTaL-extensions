@@ -61,7 +61,7 @@ fn a_reset_fills_the_tray_and_the_racks() {
     refused(
         &mut w,
         "reset circuit=blinker",
-        "no circuit blinker (circuits: none demo weld)",
+        "no circuit blinker (circuits: none demo weld tester tester-b)",
     );
 }
 

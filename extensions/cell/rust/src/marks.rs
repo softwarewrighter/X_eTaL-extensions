@@ -72,8 +72,9 @@ impl Side {
 pub struct Marking {
     /// The mark as the circuit gives it: `4.7k`, `104`.
     pub mark: String,
-    /// Color bands, body to the end of pin 2 (resistors), or a diode's
-    /// cathode band (one band, at pin 1's end).
+    /// Color bands, pin 1's end to pin 2's (resistors), or a diode's
+    /// cathode band (one band, at pin 2's end; at pin 1's on a part whose
+    /// marking is reversed).
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub bands: Vec<String>,
     /// Printed text, lines.
@@ -159,7 +160,7 @@ pub fn marking(kind: &str, mark: &str) -> Result<Marking, String> {
         "axial-diode" => {
             m.text = vec![mark.to_string()];
             m.bands = vec!["black".into()];
-            m.value = format!("the part number {mark}, its cathode at pin 1");
+            m.value = format!("the part number {mark}, its cathode at pin 2 (the band)");
         }
         "led-5mm" => {
             let c = mark.to_lowercase();

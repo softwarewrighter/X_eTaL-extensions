@@ -431,7 +431,50 @@ P1 lets the support go, and none is left. A frame of several supports
 built on the turntable, holding several parts at once, comes with the
 planner.
 
-### Markings and identify
+### The component tester
+
+The tester measures a part before it is placed (decision C13): arm A
+holds it in free air over the turntable, and the probes -- the
+turntable's two pincers, touching rather than gripping -- go onto each
+pair of its leads in turn. It measures both ways round, as a component
+tester does, and says what the part is from the readings alone.
+
+```
+pick A R2 grasp=body
+move A to=0,0,0 rpy=180,0,90     # over the turntable, in the probes' reach
+test R2        # probes on R2.1 and R2.2: 2.26 kilohm both ways
+verify R2      # R2: mislabeled -- 2.26 kilohm, as the netlist wants, but marked 4.7k
+```
+
+| Reads | It is |
+| ----- | ----- |
+| the same resistance both ways | a resistor (0.1 ohm to 50 megohm; beyond, open) |
+| charging | a capacitor: its value and ESR |
+| a drop one way, nothing back | a diode (its anode the + probe); over 1.5 V an LED, its color from the drop |
+| two drops from one lead (three leads) | a transistor: NPN if from the base, else PNP; E B C; its hFE |
+| nothing any way | open |
+| a wire every way | shorted |
+
+- Each part's electrical model comes from its kind, its true value and
+  its fault. A circuit gives a part `mark` (what is printed on it),
+  and may give `value` (what it truly is, when not its mark), `expect`
+  (what the netlist wants there, when not its mark) and `fault`
+  (`open`, `short`, or `reversed`: a diode's band printed at its anode).
+  Values vary within their tolerance and readings carry the tester's
+  noise, both fixed by the part's id so a run repeats.
+- `verify PART` compares the last test with the netlist and the
+  marking: good; wrong part (not what the netlist wants); mislabeled
+  (what the netlist wants, marked otherwise); a reversed marking (the
+  band at the measured anode); failed (open or shorted). All but good
+  are warnings.
+- The `tester` program tests a tray of parts, some faulty, and puts
+  each back; `tester-b` a PNP transistor, a shorted capacitor and an
+  electrolytic. The tester refuses an IC (two- and three-lead parts
+  only), a part nothing holds, and one out of the probes' reach (0 to
+  90 mm above the turntable). There is no inductor in the parts
+  library yet, so nothing measures inductance.
+
+## Markings and identify
 
 Every part carries its marking (decision C12): what is banded or
 printed on it, from its circuit (`mark = "4.7k"`) or its kind's
@@ -446,7 +489,7 @@ either end) and EIA capacitor codes (`104` is 100 nF, `4R7` 4.7 pF).
 | radial electrolytic | `10uF 25V` | value and voltage all round |
 | DIP IC | `NE555P` | the part number on its top, a pin-1 dot |
 | TO-92 | `2N3904` | the part number on its flat face |
-| axial diode | `1N4148` | the number, a band at the cathode (pin 1) |
+| axial diode | `1N4148` | the number, a band at the cathode (pin 2) |
 | 5 mm LED | `red` | its body's color |
 
 ```
@@ -973,6 +1016,8 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `scope [pan=DEG] [tilt=DEG] [zoom=N] [focus=MM] [rotate=DEG] [aim=TARGET]` | scope | move the microscope: pan, tilt, zoom, focus, rotate, or aim it at a target |
 | `snap [stereo=N]` | scope | take the microscope's picture |
 | `inspect TARGET` | scope | report a joint's gap, fillet and result, or a pin's temperature |
+| `test PART` | tester | the component tester: the probes (the turntable's pincers) on each pair of a held part's leads in turn; what it is, from the readings alone |
+| `verify PART` | tester | the part's last test against what the netlist wants and what its marking says: good, wrong part, mislabeled, reversed marking or failed |
 | `identify PART [mode=oracle\|sensed] [zoom=N]` | scope | the microscope turns onto a part and reads its marking: bands, printed text, color |
 | `probe PIN PIN` | scope | measure continuity and resistance between two pins |
 | `rewind t=S` | cell | put the cell back as it was at a time (the timeline keeps both branches) |

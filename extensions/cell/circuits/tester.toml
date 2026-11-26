@@ -1,0 +1,71 @@
+# tester: parts for the component tester (decision C13), every kind it
+# measures, some of them faulty. Each part: its id, its kind, the tray
+# pocket, its turn, its mark (what is printed or banded on it); value
+# when it truly is something else, expect when the netlist wants
+# something other than its mark, fault (open, short, reversed marking).
+title = "parts to test, some faulty"
+
+[[part]]
+id = "R1"
+kind = "axial-resistor"
+pocket = 1
+yaw = 90
+mark = "4.7k"
+
+# mislabeled: banded 4.7k, truly 2.2k -- which the netlist wants
+[[part]]
+id = "R2"
+kind = "axial-resistor"
+pocket = 2
+yaw = 90
+mark = "4.7k"
+value = "2.2k"
+expect = "2.2k"
+
+# the wrong part: a 10k, marked so, where the netlist wants 4.7k
+[[part]]
+id = "R3"
+kind = "axial-resistor"
+pocket = 3
+yaw = 90
+mark = "10k"
+expect = "4.7k"
+
+[[part]]
+id = "C1"
+kind = "ceramic-disc"
+pocket = 4
+yaw = 0
+mark = "104"
+
+# failed: open
+[[part]]
+id = "C2"
+kind = "radial-electrolytic"
+pocket = 5
+yaw = 0
+mark = "10uF 25V"
+fault = "open"
+
+[[part]]
+id = "D1"
+kind = "led-5mm"
+pocket = 6
+yaw = 0
+mark = "red"
+
+# its cathode band printed at the anode
+[[part]]
+id = "D2"
+kind = "axial-diode"
+pocket = 7
+yaw = 90
+mark = "1N4148"
+fault = "reversed"
+
+[[part]]
+id = "Q1"
+kind = "to92"
+pocket = 8
+yaw = 0
+mark = "2N3904"

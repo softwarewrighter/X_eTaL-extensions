@@ -25,6 +25,7 @@ pub mod scene;
 pub mod scope;
 pub mod solder;
 pub mod stations;
+pub mod tester;
 mod thermal;
 pub mod weld;
 pub mod wire;

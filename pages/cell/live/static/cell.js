@@ -479,7 +479,7 @@ export function cellPlayer(host, calls, options = {}) {
     }
     return { text: lines.join(' '), confidence: +worst.toFixed(2) };
   }
-  function drawMarking(g, { marking: m, body: b, pin1 }, glow) {
+  function drawMarking(g, { marking: m, body: b, pin1, reversed }, glow) {
     m.bands = m.bands || [];
     m.text = m.text || [];
     const add = (mesh) => { g.add(mesh); return mesh; };
@@ -489,7 +489,8 @@ export function cellPlayer(host, calls, options = {}) {
     if (m.bands.length && b.axis === 'x') {
       g.traverse((o) => { if (o.isMesh && /_band\d+$/.test(o.name)) o.visible = false; });
       const w = 0.5, r = d / 2 + 0.04;
-      const xs = m.bands.length === 1 ? [-L / 2 + 0.5] : m.bands.map((_, i) => (i < m.bands.length - 1 ? -L / 2 + 0.7 + 0.75 * i : L / 2 - 0.7));
+      // one band: a diode's cathode, pin 2's end (pin 1's when its marking is reversed)
+      const xs = m.bands.length === 1 ? [reversed ? -L / 2 + 0.5 : L / 2 - 0.5] : m.bands.map((_, i) => (i < m.bands.length - 1 ? -L / 2 + 0.7 + 0.75 * i : L / 2 - 0.7));
       m.bands.forEach((c, i) => {
         const ring = add(new THREE.Mesh(new THREE.CylinderGeometry(r, r, w, 24, 1, true), new THREE.MeshStandardMaterial({ color: BAND[c] || '#888', roughness: 0.6, side: THREE.DoubleSide })));
         ring.rotation.z = Math.PI / 2;
