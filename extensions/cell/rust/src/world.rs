@@ -181,6 +181,9 @@ pub struct Part {
     /// A fault: `open`, `short`, `reversed` (its marking the wrong way round).
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub fault: Option<String>,
+    /// Heat-shrink sleeves on its leads.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub sleeves: Vec<crate::sleeve::Sleeve>,
     /// What the tester last found it to be.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub measured: Option<crate::tester::Measured>,
@@ -226,6 +229,7 @@ impl Part {
             value: None,
             expect: None,
             fault: None,
+            sleeves: Vec::new(),
             measured: None,
             on_stage: false,
             lost: false,
@@ -461,6 +465,7 @@ impl World {
                     value: None,
                     expect: None,
                     fault: None,
+                    sleeves: Vec::new(),
                     measured: None,
                     on_stage: false,
                     lost: false,
@@ -967,15 +972,23 @@ impl World {
     /// joint's leads are among them; any other pair is a short.
     #[must_use]
     pub fn leads_near(&self, mm: f64) -> Vec<(String, String, f64)> {
-        let mut leads: Vec<(String, f64, Vec<V3>)> = Vec::new();
+        // each lead's bare metal: a sleeved span insulates (decision C20)
+        let mut leads: Vec<(String, f64, Vec<Vec<V3>>)> = Vec::new();
         for p in self.parts.iter().filter(|p| !p.lost) {
             if let Ok(k) = p.kind_of() {
                 for pin in &k.pins {
-                    leads.push((
-                        format!("{}.{}", p.id, pin.name),
-                        pin.diameter,
-                        crate::solder::lead_in(&p.pose(), &pin.lead),
-                    ));
+                    let spans: Vec<(f64, f64)> = p
+                        .sleeves
+                        .iter()
+                        .filter(|s| s.pin == pin.name)
+                        .map(|s| (s.from, s.to))
+                        .collect();
+                    let pieces = crate::sleeve::bare(&pin.lead, &spans)
+                        .iter()
+                        .filter(|x| x.len() >= 2)
+                        .map(|x| crate::solder::lead_in(&p.pose(), x))
+                        .collect();
+                    leads.push((format!("{}.{}", p.id, pin.name), pin.diameter, pieces));
                 }
             }
         }
@@ -985,7 +998,16 @@ impl World {
                 if a.split('.').next() == b.split('.').next() {
                     continue;
                 }
-                let gap = crate::solder::nearest(la, lb).0 - (da + db) / 2.0;
+                let mut near = f64::INFINITY;
+                for x in la {
+                    for y in lb {
+                        near = near.min(crate::solder::nearest(x, y).0);
+                    }
+                }
+                if !near.is_finite() {
+                    continue;
+                }
+                let gap = near - (da + db) / 2.0;
                 if gap <= mm {
                     out.push((a.clone(), b.clone(), (gap * 1000.0).round() / 1000.0));
                 }

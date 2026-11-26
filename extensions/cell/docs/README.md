@@ -441,7 +441,46 @@ P1 lets the support go, and none is left. A frame of several supports
 built on the turntable, holding several parts at once, comes with the
 planner.
 
-### The component tester
+### Insulation: heat-shrink sleeving
+
+Leads of different nets that cross in a compact build would short.
+A heat-shrink sleeve insulates a span of a lead (decision C20): station
+S6 (the wire feeder's nozzle, feeding tubing and blowing hot air) slides
+a cut length onto the lead from its free end, then shrinks it.
+
+```
+present R1.1.tip at=S6
+sleeve S6 on=R1.1 from=15 to=27 size=1.0 color=red
+present R1.1.21 at=S6
+shrink S6 on=R1.1
+...
+inspect shorts     # shorts: none; insulated: R1.1 crosses U1.1, R1.1 crosses U1.2
+```
+
+- `sleeve STATION on=PIN from= to= [size=] [color=]`: the lead's free
+  end must be at the station's point (present `PIN.tip`), not yet in a
+  joint, with no bend and no other sleeve between it and `from` (the
+  tubing slides on from the end): sleeve before soldering and before
+  bending. The size is the tubing's inner diameter as supplied
+  (materials/sleeve.toml: 2:1 polyolefin, 0.6 to 2.0 mm); one that does
+  not pass over the lead is refused, one too big to grip it shrunk is a
+  warning (it can slide); without `size` the one that fits is taken.
+- `shrink STATION on=PIN [dwell=]`: hot air (200 C) on the sleeve,
+  presented at the point; it shrinks from 90 C and fully at 120 C held
+  2 s, else a warning (partly shrunk, or not at all). The lead under it
+  warms.
+- A sleeved span is insulated: the shorts check (`clashes`,
+  `leads_near`) measures only bare metal. `inspect shorts` lists the
+  shorts and the crossings a sleeve insulates. The sleeve is drawn as a
+  tube on the lead, loose until shrunk, snug after; its wall is not yet
+  a solid in the collision model.
+- The `insulate` program lays the resistor along the chip's pin row, so
+  its lead crosses pins 1 and 2 on the way to pin 3: sleeved first, it
+  is soldered with no short (without the sleeve, two shorts). A sleeve
+  is drawn along the lead as it is at the end, so one sleeved and then
+  bent is drawn bent from the start.
+
+## The component tester
 
 The tester measures a part before it is placed (decision C13): arm A
 holds it in free air over the turntable, and the probes -- the
@@ -1017,6 +1056,8 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `pinch PINCER on=PIN [at=MM]` | pincer | a pincer on the turntable grips a lead from the side: it holds the part there, and sinks heat |
 | `unpinch PINCER` | pincer | a pincer lets go and draws back |
 | `bend PINCER on=PIN at=MM angle=DEG toward=X,Y,Z [radius=MM]` | pincer | a pincer bends a lead round a mandrel, the rest of it toward a direction |
+| `sleeve STATION on=PIN from=MM to=MM [size=0.6\|0.8\|1.0\|1.5\|2.0] [color=black\|red\|blue\|clear]` | sleeve | the sleeve station slides heat-shrink tubing onto a lead from its free end, presented at its point |
+| `shrink STATION on=PIN [dwell=S]` | sleeve | the sleeve station's hot air shrinks the sleeve on a lead, presented at its point |
 | `trim STATION on=PIN at=MM` | cutter | a cutter station cuts a lead, what is past the cut falling into the bin |
 | `insert ARM on=PIN [at=MM] [roll=DEG]` | bender | the arm slides a held part's lead into the bending rig, at a distance from the body at its mandrel |
 | `form [angle=DEG] [radius=MM]` | bender | the bending rig clamps the lead in it and bends it down round its mandrel, in the rig's plane |

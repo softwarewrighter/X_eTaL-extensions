@@ -1294,6 +1294,32 @@ impl World {
     /// was wet, what it came to, its temperature), or a pin's
     /// temperature. The simulator's own numbers (oracle).
     pub(crate) fn inspect(&self, target: &str) -> Result<String, String> {
+        if target == "shorts" {
+            // bare leads of two parts touching, not a joint; and where only
+            // a sleeve keeps two apart
+            let joined = |a: &str, b: &str| {
+                self.joints
+                    .iter()
+                    .any(|j| (j.a == a && j.b == b) || (j.a == b && j.b == a))
+            };
+            let mut shorts: Vec<String> = self
+                .leads_near(0.0)
+                .into_iter()
+                .filter(|(a, b, _)| !joined(a, b))
+                .map(|(a, b, _)| format!("{a} touches {b}"))
+                .collect();
+            shorts.sort();
+            let insulated = self.insulated_crossings();
+            let mut said = if shorts.is_empty() {
+                "shorts: none".to_string()
+            } else {
+                format!("shorts: {}", shorts.join(", "))
+            };
+            if !insulated.is_empty() {
+                said += &format!("; insulated: {}", insulated.join(", "));
+            }
+            return Ok(said);
+        }
         if target == "supports" {
             // in the work: joined to a part; cut free and lying loose, debris
             let joined = |id: &str| {

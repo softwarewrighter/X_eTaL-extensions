@@ -56,9 +56,11 @@ shear A on=R1.2 at=8
 identify R1 mode=sensed zoom=6
 test R1
 verify R1
+sleeve S6 on=R1.1 from=15 to=27 size=1.0 color=red
+shrink S6 on=R1.1 dwell=3
 ";
     let p = parse_program(program).unwrap();
-    assert_eq!(p.len(), 41);
+    assert_eq!(p.len(), 43);
     for c in &p {
         round_trip(&c.to_text());
     }
@@ -76,8 +78,8 @@ fn every_command_has_an_example() {
     let covered = [
         "reset", "tool", "joints", "move", "lift", "back", "grip", "pick", "place", "align",
         "release", "clip", "touch", "feed", "weld", "wire", "cut", "stage", "present", "pinch",
-        "unpinch", "bend", "trim", "insert", "form", "shear", "vise", "wait", "scope", "snap",
-        "inspect", "test", "verify", "identify", "probe", "rewind",
+        "unpinch", "bend", "sleeve", "shrink", "trim", "insert", "form", "shear", "vise", "wait",
+        "scope", "snap", "inspect", "test", "verify", "identify", "probe", "rewind",
     ];
     let ops: Vec<&str> = COMMANDS.iter().map(|s| s.op).collect();
     assert_eq!(ops, covered);

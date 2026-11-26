@@ -23,6 +23,7 @@ pub mod pincers;
 pub mod rig;
 pub mod scene;
 pub mod scope;
+pub mod sleeve;
 pub mod solder;
 pub mod stations;
 pub mod tester;

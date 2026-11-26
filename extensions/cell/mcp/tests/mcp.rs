@@ -131,12 +131,12 @@ fn the_tools_come_from_the_command_table() {
     let touch = tools.iter().find(|t| t["name"] == "cell_touch").unwrap();
     assert_eq!(
         touch["inputSchema"]["properties"]["arm"]["enum"],
-        json!(["A", "S1", "S3", "S4", "S5"])
+        json!(["A", "S1", "S3", "S4", "S5", "S6"])
     );
     let present = tools.iter().find(|t| t["name"] == "cell_present").unwrap();
     assert_eq!(
         present["inputSchema"]["properties"]["at"]["enum"],
-        json!(["S1", "S3", "S4", "S5"])
+        json!(["S1", "S3", "S4", "S5", "S6"])
     );
 }
 

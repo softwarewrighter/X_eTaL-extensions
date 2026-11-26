@@ -8,7 +8,7 @@ use xetal_ext_cell::world::{Outcome, World};
 #[test]
 #[ignore]
 fn print_starts() {
-    for c in ["tester", "tester-b"] {
+    for c in ["tester", "tester-b", "demo"] {
         let mut w = World::default();
         w.apply_all(&parse_program(&format!("reset circuit={c}")).unwrap());
         for p in &w.parts {

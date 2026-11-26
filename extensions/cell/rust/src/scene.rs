@@ -16,6 +16,7 @@
 //! feeder('S1', length)                   the iron's solder feeder
 //! bender_shape(plate, size, shear, height)  the bending rig's shape
 //! mark('R1', {marking, body, pin1})     a part's marking, for drawing
+//! sleeve('R1', '1', on, shrunk, nums(...), loose, snug, color)  heat-shrink on a lead
 //! bender(nums('t close former shear r ...', 5))  the bending rig
 //! feeding(t0, t1, 'S1')                  solder fed into a joint
 //! station('S1', 'iron', nums('housing x y z r p y', 6)[0], nums('t x y z r p y ...', 7))
@@ -302,6 +303,38 @@ fn thing(out: &mut String, p: &Part) {
         quote(&p.kind),
         row(&p.start)
     );
+    // its sleeves: the span of the lead they cover (the part's frame),
+    // loose until shrunk, then snug
+    if let (Ok(kind), Ok(d)) = (p.kind_of(), crate::sleeve::data()) {
+        for s in &p.sleeves {
+            let Some(pin) = kind.pin(&s.pin) else {
+                continue;
+            };
+            let Some(size) = d.size.iter().find(|z| z.name == s.size) else {
+                continue;
+            };
+            let (_, tail) = crate::leads::split(&pin.lead, s.from);
+            let (span, _) = crate::leads::split(&tail, s.to - s.from);
+            let pts: Vec<f64> = span
+                .iter()
+                .flat_map(|q| q.iter().map(|x| kin::clean((x * 1000.0).round() / 1000.0)))
+                .collect();
+            let loose = size.before / 2.0 + size.wall;
+            let snug = pin.diameter.max(size.after) / 2.0 + size.wall;
+            let _ = writeln!(
+                out,
+                "sleeve({}, {}, {}, {}, {}, {}, {}, {})",
+                quote(&p.id),
+                quote(&s.pin),
+                num(s.on),
+                s.shrunk.map_or_else(|| "null".to_string(), num),
+                table(&[pts], 3),
+                num(loose),
+                num(snug),
+                quote(&s.color)
+            );
+        }
+    }
     // its marking and the body it is on, for drawing (and reading back)
     if let (Some(mark), Ok(kind)) = (&p.mark, p.kind_of()) {
         if let Ok(m) = crate::marks::marking(&p.kind, mark) {

@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-26
 
+- 11:44 `ext` cell, heat-shrink sleeving (Saga 17 step 24, decision C20): station S6 slides tubing onto a lead's free end (`sleeve`) and shrinks it with hot air (`shrink`), refusing a joined end, a bend in the way or a size that will not pass; sleeved spans insulated in the shorts check; `inspect shorts`; sleeves drawn; the `insulate` program (two shorts without the sleeve, none with it).
 - 00:07 `test` three, the vendored files are 16 with the SVG renderer and its Projector.
 - 00:01 `test` three, the city and board pages' goldens: 29 files written (the SVG renderer).
 - 00:01 `test` three, the tiny page's golden: 29 files, the SVG renderer and its Projector among them.

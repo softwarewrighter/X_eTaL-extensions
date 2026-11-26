@@ -145,6 +145,9 @@ fn say_program() {
     let mut w = World::default();
     for c in parse_program(&text).unwrap() {
         let o = w.apply(&c);
+        if std::env::var("CLASHES").is_ok() {
+            println!("CLASH {:?}", w.clashes());
+        }
         println!(
             "SAY {} ok={} {:?} {}",
             o.command,

@@ -47,3 +47,13 @@ name = "S5"
 tool = "wire"
 from = [-1.0, 0.0, -0.25]
 stroke = 160.0
+
+# S6: heat-shrink sleeving (decision C20): a nozzle that feeds tubing
+# onto a lead's free end and blows hot air to shrink it (drawn with the
+# wire feeder's nozzle)
+[[station]]
+name = "S6"
+tool = "wire"
+from = [0.0, -1.0, 0.4]
+stroke = 160.0
+sleeve = true

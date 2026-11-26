@@ -104,7 +104,7 @@ export function cellPlayer(host, calls, options = {}) {
   scene.add(root);
   const folder = options.models || './models/';
   const s = {
-    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], stations: [], leads: [], scope: [], snaps: [], feeding: [], feeders: {}, marks: {}, bender: [], benderShape: null, attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
+    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], stations: [], leads: [], scope: [], snaps: [], feeding: [], feeders: {}, marks: {}, sleeves: [], bender: [], benderShape: null, attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
   };
   const api = {
     nums,
@@ -129,6 +129,7 @@ export function cellPlayer(host, calls, options = {}) {
     bender_shape(plate, size, shear, height) { s.benderShape = { plate, size, shear, height }; },
     bender(rows) { s.bender = rows; },
     mark(id, m) { s.marks[id] = m; },
+    sleeve(id, pin, on, shrunk, pts, loose, snug, color) { s.sleeves.push({ id, pin, on, shrunk, pts, loose, snug, color }); },
     // a pincer: a station whose housing moves too (rows: t, housing's
     // x y z r p y, the jaws' mount's x y z r p y)
     pincer(id, tool, rows) { s.stations.push({ id, tool, housing: rows[0].slice(1, 7), rows: rows.map((r) => [r[0], ...r.slice(7)]), housings: rows.map((r) => r.slice(0, 7)) }); },
@@ -261,6 +262,7 @@ export function cellPlayer(host, calls, options = {}) {
     return t;
   };
   const rigParts = {};
+  const sleeveTubes = [];
   const Y = new THREE.Vector3(0, 1, 0);
   const ready = Promise.all([
     ...s.fixtures.map(async (f) => {
@@ -314,6 +316,16 @@ export function cellPlayer(host, calls, options = {}) {
         (reformed[L.pin] ||= []).push({ t: L.t, tube });
       }
       if (s.marks[p.id]) drawMarking(g, s.marks[p.id], glow);
+      // heat-shrink sleeves: a loose tube from when it goes on, a snug one
+      // from when it is shrunk
+      for (const sl of s.sleeves.filter((x) => x.id === p.id)) {
+        const path = new THREE.CurvePath();
+        for (let i = 0; i + 1 < sl.pts.length; i++) path.add(new THREE.LineCurve3(new THREE.Vector3(...sl.pts[i]), new THREE.Vector3(...sl.pts[i + 1])));
+        const color = { black: '#1c1c1c', red: '#c02020', blue: '#2040c0', clear: '#d8e0e8' }[sl.color] || '#1c1c1c';
+        const mat = new THREE.MeshStandardMaterial({ color, roughness: 0.6, transparent: sl.color === 'clear', opacity: sl.color === 'clear' ? 0.5 : 1 });
+        const tube = (r) => { const m = new THREE.Mesh(new THREE.TubeGeometry(path, Math.max(8, sl.pts.length * 6), r, 12, false), mat); m.visible = false; g.add(m); return m; };
+        sleeveTubes.push({ sl, loose: tube(sl.loose), snug: tube(sl.snug) });
+      }
       parts[p.id] = { g, start: poseMatrix(p.pose), glow, meshes, reformed };
     }),
     // a tool station: its housing, its pole, its tool on the pole's end
@@ -775,6 +787,11 @@ export function cellPlayer(host, calls, options = {}) {
     leadsAt(now);
     feedsAt(now);
     benderAt(now);
+    for (const { sl, loose, snug } of sleeveTubes) {
+      const on = now >= sl.on, shrunk = sl.shrunk != null && now >= sl.shrunk;
+      loose.visible = on && !shrunk;
+      snug.visible = shrunk;
+    }
     scopeAt(now);
     ui.show();
     draw();

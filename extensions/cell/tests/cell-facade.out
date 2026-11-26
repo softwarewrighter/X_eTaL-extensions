@@ -32,6 +32,8 @@ present FRAME|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG] -- move the p
 pinch PINCER on=PIN [at=MM] -- a pincer on the turntable grips a lead from the side: it holds the part there, and sinks heat
 unpinch PINCER -- a pincer lets go and draws back
 bend PINCER on=PIN at=MM angle=DEG toward=X,Y,Z [radius=MM] -- a pincer bends a lead round a mandrel, the rest of it toward a direction
+sleeve STATION on=PIN from=MM to=MM [size=0.6|0.8|1.0|1.5|2.0] [color=black|red|blue|clear] -- the sleeve station slides heat-shrink tubing onto a lead from its free end, presented at its point
+shrink STATION on=PIN [dwell=S] -- the sleeve station's hot air shrinks the sleeve on a lead, presented at its point
 trim STATION on=PIN at=MM -- a cutter station cuts a lead, what is past the cut falling into the bin
 insert ARM on=PIN [at=MM] [roll=DEG] -- the arm slides a held part's lead into the bending rig, at a distance from the body at its mandrel
 form [angle=DEG] [radius=MM] -- the bending rig clamps the lead in it and bends it down round its mandrel, in the rig's plane

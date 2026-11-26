@@ -48,6 +48,8 @@ struct Raw {
     point: Option<V3>,
     #[serde(default)]
     feeder: bool,
+    #[serde(default)]
+    sleeve: bool,
 }
 
 /// A station as the data gives it.
@@ -67,6 +69,8 @@ pub struct Station {
     pub temp: Option<f64>,
     /// An iron with its solder feeder on the same actuator.
     pub feeder: bool,
+    /// A nozzle that feeds heat-shrink sleeving and blows hot air.
+    pub sleeve: bool,
 }
 
 thread_local! {
@@ -123,6 +127,7 @@ fn parse(text: &str) -> Result<Vec<Station>, String> {
                 stroke: r.stroke,
                 temp: r.temp,
                 feeder: r.feeder,
+                sleeve: r.sleeve,
             })
         })
         .collect()
@@ -725,7 +730,7 @@ impl World {
                 let at = c.number("at").unwrap_or(0.0);
                 self.trim(si, &s, &pin, at, did, events)?;
             }
-            "wire" => {
+            "wire" if !s.sleeve => {
                 need("wire")?;
                 let awg = c.number("awg").unwrap_or(26.0);
                 #[allow(clippy::cast_possible_truncation)]
@@ -756,6 +761,48 @@ impl World {
             "cut" => {
                 need("wire")?;
                 self.cut_wire(&s, events, warnings)?;
+            }
+            "sleeve" | "shrink" if s.sleeve => {
+                let on = c.word("on").unwrap_or("").to_string();
+                let pid = on.split('.').next().unwrap_or("").to_string();
+                let allowed = vec![format!("part:{pid}")];
+                // to the lead: a little short of the point for hot air
+                let stop = if c.op == "shrink" {
+                    s.stroke - 3.0
+                } else {
+                    s.stroke
+                };
+                self.extend(si, s.stroke - 10.0, STATION_SPEED, &[], did)?;
+                self.extend(si, stop, STATION_CAREFUL, &allowed, did)?;
+                let r = if c.op == "sleeve" {
+                    let from = c.number("from").unwrap_or(0.0);
+                    let to = c.number("to").unwrap_or(0.0);
+                    let color = c.word("color").unwrap_or("black").to_string();
+                    let r = self.sleeve_on(
+                        &on,
+                        from,
+                        to,
+                        c.word("size"),
+                        &color,
+                        s.point,
+                        events,
+                        warnings,
+                    );
+                    if r.is_ok() {
+                        self.advance(1.0, None);
+                        did.push("feed and cut the sleeve in 1 s".into());
+                    }
+                    r
+                } else {
+                    let dwell = c.number("dwell").unwrap_or(3.0);
+                    let r = self.shrink(&on, dwell, s.point, events, warnings);
+                    if r.is_ok() {
+                        did.push(format!("hot air {} s", num1(dwell)));
+                    }
+                    r
+                };
+                self.extend(si, 0.0, STATION_SPEED, &allowed, did)?;
+                r?;
             }
             "back" => {
                 let leave = self.near_tip(s.tip(self.stations[si].ext));

@@ -1,0 +1,46 @@
+# insulate: heat-shrink sleeving (decision C20). Laid along the chip's
+# pin row, the resistor's lead 1 crosses pins 1 and 2 on its way to pin
+# 3: bare, that is two shorts. So first the resistor goes in the vise
+# and the sleeve station S6 slides a sleeve onto lead 1 from its free
+# end, 15 to 27 mm from the body (the last millimeter left bare for the
+# joint), and shrinks it with hot air; then the chip takes the vise and
+# the resistor is soldered to pin 3 across pins 1 and 2 -- insulated.
+reset circuit=demo
+tool A tweezers
+pick A R1 grasp=body
+place A R1 at=0,0,-20
+vise close
+release A R1
+lift A mm=60
+present R1.1.tip at=S6
+sleeve S6 on=R1.1 from=15 to=27 size=1.0 color=red
+present R1.1.21 at=S6
+shrink S6 on=R1.1
+stage turn=0 tilt=0 at=0,0,0
+pick A R1 grasp=body
+vise open
+lift A mm=60
+place A R1 at=222.749,194.464,-138.35 rpy=0,0,90
+release A R1
+pick A U1 grasp=ends
+place A U1 at=0,0,-24 rpy=0,0,90
+vise close
+release A U1
+pick A R1 grasp=body
+lift A mm=80
+move A to=0,60,60 rpy=180,0,0
+move A to=34.81,1.27,-14.05 rpy=180,0,0
+align A R1.1.tip to=U1.3.tip gap=0.1
+pinch P1 on=R1.1 at=6
+release A R1
+lift A mm=60
+inspect shorts
+present U1.3+R1.1 at=S1
+scope aim=U1.3+R1.1 zoom=8
+touch S1 at=U1.3+R1.1 dwell=2
+feed S1 mm=2 rate=1
+back S1
+wait until=U1.3+R1.1 below=100
+inspect U1.3+R1.1
+unpinch P1
+inspect shorts

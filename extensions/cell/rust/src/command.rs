@@ -108,6 +108,8 @@ const ARM: Arg = req("arm", Kind::Arm, "the arm");
 const ACTOR: Arg = req("arm", Kind::Actor, "the arm, or a tool station");
 const OPEN_CLOSE: &[&str] = &["open", "close"];
 const MODES: &[&str] = &["oracle", "sensed"];
+const SLEEVE_SIZES: &[&str] = &["0.6", "0.8", "1.0", "1.5", "2.0"];
+const SLEEVE_COLORS: &[&str] = &["black", "red", "blue", "clear"];
 
 /// The command table: the one source of the language.
 pub const COMMANDS: &[Spec] = &[
@@ -425,6 +427,45 @@ pub const COMMANDS: &[Spec] = &[
                 "radius",
                 Kind::Number("mm", 0.1, 10.0),
                 "the mandrel's (the lead's diameter if not given)",
+            ),
+        ],
+    },
+    Spec {
+        op: "sleeve",
+        family: "sleeve",
+        summary: "the sleeve station slides heat-shrink tubing onto a lead from its free end, presented at its point",
+        positional: &[req("arm", Kind::Station, "the sleeve station")],
+        named: &[
+            req("on", Kind::Pin, "the pin whose lead it sleeves"),
+            req(
+                "from",
+                Kind::Number("mm", 0.0, 40.0),
+                "where the sleeve starts, from the body along the lead",
+            ),
+            req("to", Kind::Number("mm", 0.0, 40.0), "where it ends"),
+            opt(
+                "size",
+                Kind::Choice(SLEEVE_SIZES),
+                "the tubing's inner diameter as supplied, mm (the one that fits if not given)",
+            ),
+            opt(
+                "color",
+                Kind::Choice(SLEEVE_COLORS),
+                "its color (black if not given)",
+            ),
+        ],
+    },
+    Spec {
+        op: "shrink",
+        family: "sleeve",
+        summary: "the sleeve station's hot air shrinks the sleeve on a lead, presented at its point",
+        positional: &[req("arm", Kind::Station, "the sleeve station")],
+        named: &[
+            req("on", Kind::Pin, "the pin whose sleeve it shrinks"),
+            opt(
+                "dwell",
+                Kind::Number("s", 0.5, 20.0),
+                "how long (3 if not given)",
             ),
         ],
     },
@@ -775,7 +816,9 @@ fn check_word(kind: Kind, t: &str) -> Result<(), String> {
         Kind::Joint => t
             .split_once('+')
             .is_some_and(|(a, b)| is_pin(a) && is_pin(b) && a != b),
-        Kind::Target => is_pin(t) || check_word(Kind::Joint, t).is_ok() || t == "supports",
+        Kind::Target => {
+            is_pin(t) || check_word(Kind::Joint, t).is_ok() || t == "supports" || t == "shorts"
+        }
         Kind::Name => {
             !t.is_empty()
                 && t.chars()

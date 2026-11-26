@@ -1,0 +1,41 @@
+# Heat-shrink sleeving (decision C20): 2:1 polyolefin tubing, as the
+# sleeve station feeds it. Each size: its inner diameter as supplied and
+# fully shrunk, and its wall once shrunk, mm (typical catalog values for
+# 2:1 polyolefin; the 0.6 mm and 0.8 mm sizes are the small end of what
+# is sold). It shrinks from shrink_c, the station's hot air is air_c.
+shrink_c = 90.0
+full_c = 120.0
+air_c = 200.0
+# a sleeve shrinks fully held at full_c this long, s
+shrink_s = 2.0
+illustrative = ["shrink_s", "air_c"]
+
+[[size]]
+name = "0.6"
+before = 0.6
+after = 0.3
+wall = 0.2
+
+[[size]]
+name = "0.8"
+before = 0.8
+after = 0.4
+wall = 0.2
+
+[[size]]
+name = "1.0"
+before = 1.0
+after = 0.5
+wall = 0.25
+
+[[size]]
+name = "1.5"
+before = 1.5
+after = 0.75
+wall = 0.3
+
+[[size]]
+name = "2.0"
+before = 2.0
+after = 1.0
+wall = 0.35

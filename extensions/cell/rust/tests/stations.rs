@@ -35,9 +35,11 @@ fn the_stations_read_and_point_at_the_work() {
     let all = stations::data().unwrap();
     assert_eq!(
         all.iter().map(|s| s.tool.as_str()).collect::<Vec<_>>(),
-        ["iron", "welder", "cutter", "wire"]
+        ["iron", "welder", "cutter", "wire", "wire"]
     );
     assert!(all[0].feeder, "the iron feeds its own solder");
+    // S6: the wire feeder's nozzle, feeding sleeving instead
+    assert!(all[4].sleeve && !all[3].sleeve);
     for s in &all {
         assert!((kin::norm(s.from) - 1.0).abs() < 1e-12);
         // extended, the tip is at the point; retracted, a stroke back
@@ -227,7 +229,7 @@ fn layout_text(spec: &str) -> String {
     out
 }
 
-const PROGRAMS: [&str; 14] = [
+const PROGRAMS: [&str; 15] = [
     "arms",
     "pick",
     "solder",
@@ -242,6 +244,7 @@ const PROGRAMS: [&str; 14] = [
     "identify",
     "tester",
     "tester-b",
+    "insulate",
 ];
 
 fn program(name: &str) -> String {
