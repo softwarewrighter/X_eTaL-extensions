@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-26
 
+- 11:58 `plan` the assembly cell, SMD dead-bug and enameled wire (the user): decision C21; steps 25 cell-enamel (enameled wire insulates except where stripped), 30 cell-smd-deadbug and 31 cell-bga-wire (a 5x5 BGA, a paste dispenser, a fine enameled wire to each ball) inserted; the planner is now step 26, the release 32.
 - 11:44 `ext` cell, heat-shrink sleeving (Saga 17 step 24, decision C20): station S6 slides tubing onto a lead's free end (`sleeve`) and shrinks it with hot air (`shrink`), refusing a joined end, a bend in the way or a size that will not pass; sleeved spans insulated in the shorts check; `inspect shorts`; sleeves drawn; the `insulate` program (two shorts without the sleeve, none with it).
 - 00:07 `test` three, the vendored files are 16 with the SVG renderer and its Projector.
 - 00:01 `test` three, the city and board pages' goldens: 29 files written (the SVG renderer).
