@@ -393,6 +393,92 @@ export function cellPlayer(host, calls, options = {}) {
   // at the origin): bands as rings round an axial body, printed text as
   // a texture on its marked side (in the cell's own font, the glyphs a
   // sensed reading is matched against), a pin-1 dot, an LED's color
+  // the glyphs text is read against: each character of the page's own
+  // marking font, cropped to its ink, as a GW by GH grid of ink fractions
+  const GW = 8, GH = 12;
+  const GLYPHS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZuR.';
+  const inkGrid = (ink, w, h) => {
+    // ink(x, y) in 0..1 over a w by h box, averaged into GW by GH cells
+    const g = new Float32Array(GW * GH);
+    for (let j = 0; j < GH; j++) for (let i = 0; i < GW; i++) {
+      let sum = 0, n = 0;
+      for (let y = Math.floor(j * h / GH); y < Math.max(Math.floor(j * h / GH) + 1, Math.floor((j + 1) * h / GH)); y++) {
+        for (let x = Math.floor(i * w / GW); x < Math.max(Math.floor(i * w / GW) + 1, Math.floor((i + 1) * w / GW)); x++) { sum += ink(x, y); n++; }
+      }
+      g[j * GW + i] = n ? sum / n : 0;
+    }
+    return g;
+  };
+  let glyphs = null;
+  const glyphSet = () => glyphs ||= [...GLYPHS].map((ch) => {
+    const c = document.createElement('canvas');
+    c.width = 128; c.height = 128;
+    const x = c.getContext('2d');
+    x.font = 'bold 96px monospace'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillStyle = '#fff';
+    x.fillText(ch, 64, 64);
+    const d = x.getImageData(0, 0, 128, 128).data;
+    let x0 = 128, x1 = -1, y0 = 128, y1 = -1;
+    for (let y = 0; y < 128; y++) for (let i = 0; i < 128; i++) if (d[4 * (y * 128 + i) + 3] > 100) { x0 = Math.min(x0, i); x1 = Math.max(x1, i); y0 = Math.min(y0, y); y1 = Math.max(y1, y); }
+    const w = x1 - x0 + 1, h = y1 - y0 + 1;
+    return { ch, aspect: w / h, g: inkGrid((i, y) => d[4 * ((y0 + y) * 128 + x0 + i) + 3] / 255, w, h) };
+  });
+  // a label seen through look(u, v) (a pixel's color at a point of its
+  // plane, or null): { text, confidence } -- or why it cannot be read
+  function readLabel(L, look) {
+    const NU = 192, NV = 48 * L.lines;
+    const lum = new Float32Array(NU * NV);
+    let lo = 255, hi = 0, missing = 0;
+    for (let j = 0; j < NV; j++) for (let i = 0; i < NU; i++) {
+      const c = look((i + 0.5) / NU * L.w - L.w / 2, L.h / 2 - (j + 0.5) / NV * L.h);
+      if (!c) { missing++; continue; }
+      const y = 0.3 * c[0] + 0.59 * c[1] + 0.11 * c[2];
+      lum[j * NU + i] = y; lo = Math.min(lo, y); hi = Math.max(hi, y);
+    }
+    if (missing > NU * NV / 4) return { text: null, why: 'outside the picture' };
+    if (hi - lo < 25) return { text: null, why: 'no contrast: blurred, or glare' };
+    // ink is the rarer of the two
+    const mid = (lo + hi) / 2;
+    let dark = 0;
+    for (const y of lum) if (y < mid) dark++;
+    const inkDark = dark < lum.length / 2;
+    const isInk = (i, j) => (inkDark ? lum[j * NU + i] < mid : lum[j * NU + i] >= mid) ? 1 : 0;
+    const lines = [];
+    let worst = 1;
+    for (let line = 0; line < L.lines; line++) {
+      const r0 = line * 48, r1 = r0 + 48;
+      // columns with ink, runs of them a character each
+      const col = (i) => { let n = 0; for (let j = r0; j < r1; j++) n += isInk(i, j); return n; };
+      const runs = [];
+      let start = -1;
+      for (let i = 0; i <= NU; i++) {
+        const on = i < NU && col(i) > 0;
+        if (on && start < 0) start = i;
+        if (!on && start >= 0) { runs.push([start, i]); start = -1; }
+      }
+      let text = '';
+      for (const [a, b] of runs) {
+        if (b - a < 2) continue;
+        let y0 = r1, y1 = r0 - 1;
+        for (let j = r0; j < r1; j++) for (let i = a; i < b; i++) if (isInk(i, j)) { y0 = Math.min(y0, j); y1 = Math.max(y1, j); }
+        const w = b - a, h = y1 - y0 + 1;
+        const seen = inkGrid((x, y) => isInk(a + x, y0 + y), w, h);
+        // the glyph it is most like; a '.' is small
+        let best = null, second = 0;
+        for (const gl of glyphSet()) {
+          if ((gl.ch === '.') !== (h < 0.4 * 48)) continue;
+          let d = 0;
+          for (let k = 0; k < seen.length; k++) d += Math.abs(seen[k] - gl.g[k]);
+          const score = 1 - d / seen.length - 0.3 * Math.abs(Math.log((w / h) / gl.aspect));
+          if (!best || score > best.score) { second = best ? best.score : 0; best = { ch: gl.ch, score }; } else if (score > second) second = score;
+        }
+        if (!best) continue;
+        text += best.ch;
+        worst = Math.min(worst, Math.max(0, Math.min(1, (best.score - 0.5) * 2 + (best.score - second))));
+      }
+      lines.push(text);
+    }
+    return { text: lines.join(' '), confidence: +worst.toFixed(2) };
+  }
   function drawMarking(g, { marking: m, body: b, pin1 }, glow) {
     m.bands = m.bands || [];
     m.text = m.text || [];
@@ -421,9 +507,10 @@ export function cellPlayer(host, calls, options = {}) {
       let size, pos, rot, color;
       if (m.side === 'top') {
         const [sx, sy, sz] = b.size || [6, 4, 2];
-        size = [sx * 0.8, sy * 0.4]; pos = [0, 0, sz / 2 + 0.03]; rot = [0, 0, 0]; color = '#d8d8d8';
+        // clear of the pin-1 dot at the corner
+        size = [sx * 0.6, sy * 0.4]; pos = [0, 0, sz / 2 + 0.03]; rot = [0, 0, 0]; color = '#d8d8d8';
       } else if (m.side === 'faceplusy') {
-        size = [d * 0.75, d * 0.38]; pos = [0, L / 2 + 0.03, 0]; color = '#3a2a10';
+        size = [d * 0.75, d * 0.38]; pos = [0, L / 2 + 0.03, 0]; color = '#140c04';
         rot = [Math.PI / 2, Math.PI, 0];
       } else if (m.side === 'faceminusy') {
         size = [d * 0.7, d * 0.3]; pos = [0, -(b.flat || d / 2) - 0.03, 0]; rot = [Math.PI / 2, 0, 0]; color = '#e0e0e0';
@@ -435,6 +522,7 @@ export function cellPlayer(host, calls, options = {}) {
       label.position.set(...pos);
       label.rotation.set(...rot);
       label.name = 'marking';
+      g.userData.label = { mesh: label, w: size[0], h: size[1] * m.text.length, lines: m.text.length };
     }
     // the pin-1 dot on an IC's top, toward pin 1's corner
     if (m.pin1_dot && pin1 && b.size) {
@@ -715,16 +803,29 @@ export function cellPlayer(host, calls, options = {}) {
       draw();
       const gl = renderer.getContext();
       const pr = renderer.getPixelRatio();
-      const px = new Uint8Array(4 * 9);
-      // a point in the cell, in the scope's picture as drawn on the page
-      const sample = (v) => {
+      // the scope's picture as drawn on the page, read once
+      const PW = Math.round(scopeView.w * pr), PH = Math.round(scopeView.h * pr);
+      const X0 = Math.round(scopeView.x * pr), Y0 = Math.round(scopeView.y * pr);
+      const pic = new Uint8Array(4 * PW * PH);
+      gl.readPixels(X0, Y0, PW, PH, gl.RGBA, gl.UNSIGNED_BYTE, pic);
+      const pixel = (x, y) => {
+        const i = 4 * (Math.min(PH - 1, Math.max(0, y)) * PW + Math.min(PW - 1, Math.max(0, x)));
+        return [pic[i], pic[i + 1], pic[i + 2]];
+      };
+      // a point in the cell, in that picture (3 by 3 pixels about it)
+      const where = (v) => {
         const p = v.clone().project(scopeCam);
-        if (Math.abs(p.x) > 0.95 || Math.abs(p.y) > 0.95 || p.z > 1) return null;
-        const x = Math.round((scopeView.x + (p.x + 1) / 2 * scopeView.w) * pr) - 1;
-        const y = Math.round((scopeView.y + (p.y + 1) / 2 * scopeView.h) * pr) - 1;
-        gl.readPixels(x, y, 3, 3, gl.RGBA, gl.UNSIGNED_BYTE, px);
+        if (Math.abs(p.x) > 0.97 || Math.abs(p.y) > 0.97 || p.z > 1) return null;
+        return [(p.x + 1) / 2 * PW, (p.y + 1) / 2 * PH];
+      };
+      const sample = (v) => {
+        const w = where(v);
+        if (!w) return null;
         const sum = [0, 0, 0];
-        for (let i = 0; i < 9; i++) for (let k = 0; k < 3; k++) sum[k] += px[4 * i + k];
+        for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+          const c = pixel(Math.round(w[0]) + dx, Math.round(w[1]) + dy);
+          for (let k = 0; k < 3; k++) sum[k] += c[k];
+        }
         return sum.map((x) => x / 9);
       };
       const out = [];
@@ -747,6 +848,24 @@ export function cellPlayer(host, calls, options = {}) {
         if (bands.some((x) => !x) || !bodySeen) continue;
         const hex = b.body.getHex();
         out.push({ id, bands, body: bodySeen, body_true: [(hex >> 16) & 255, (hex >> 8) & 255, hex & 255] });
+      }
+      // printed text: its label's plane sampled in its own coordinates
+      // (the picture straightened), ink told from ground, split into
+      // characters by columns of ink, each matched against the page's
+      // own glyphs
+      for (const [id, part] of Object.entries(parts)) {
+        const L = part.g.userData.label;
+        if (!L || !part.g.visible) continue;
+        part.g.updateMatrixWorld(true);
+        const normal = new THREE.Vector3(0, 0, 1).transformDirection(L.mesh.matrixWorld);
+        const center = L.mesh.getWorldPosition(new THREE.Vector3());
+        const facing = normal.dot(scopeCam.position.clone().sub(center).normalize());
+        if (facing < 0.26) { out.push({ id, text: null, why: 'its printed side faces away' }); continue; }
+        const read = readLabel(L, (u, v) => {
+          const w = where(L.mesh.localToWorld(new THREE.Vector3(u, v, 0)));
+          return w ? pixel(Math.round(w[0]), Math.round(w[1])) : null;
+        });
+        out.push({ id, ...read, facing: +facing.toFixed(2) });
       }
       return out;
     },

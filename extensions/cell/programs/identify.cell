@@ -1,5 +1,5 @@
 # identify: reading parts' markings with the microscope (decision C12):
-# the resistor's bands and the LED's color in the tray, read as the
+# the resistor's bands, the LED's color and the chip's number in the tray, read as the
 # scope's picture gives them; the capacitor lies with its printed face
 # sideways and cannot be read, so arm A puts it in the vise and the
 # positioner tilts it toward the scope: at 30 degrees the face is seen
@@ -7,6 +7,7 @@
 reset circuit=demo
 identify R1 mode=sensed
 identify D1 mode=sensed
+identify U1 mode=sensed
 identify C1 mode=sensed
 tool A tweezers
 pick A C1 grasp=body

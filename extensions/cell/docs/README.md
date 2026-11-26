@@ -483,9 +483,20 @@ identify R1 mode=sensed zoom=2
   them from either end, with the least of the matches as the
   confidence: "R1: yellow violet red gold = 4.7 kilohm, 5% (confidence
   0.87)". `?read` on the page's address presses the button once it has
-  drawn, `&raw` shows the samples. Printed text is not yet read from
-  the picture (matching it against the font's own glyphs is the next
-  part of this work); `identify`'s sensed mode models it.
+  drawn, `&raw` shows the samples.
+- Printed text is read from the same picture, with no outside OCR: the
+  label's plane is sampled in its own coordinates through the scope's
+  projection (the picture straightened), its pixels told ink from
+  ground (the rarer of the two is ink), split into characters by
+  columns of ink, and each matched against the glyphs of the page's own
+  marking font, drawn and cropped the same way; the confidence comes
+  from the worst character's match and its margin over the next best.
+  The simulator's decoder (marks.rs, as WebAssembly) says what it
+  means: C1 tilted toward the scope reads "104" = 100 nF (0.72); U1 in
+  the tray "NE555P" (0.50, so doubtful at that zoom). A printed side
+  facing away, off the picture or without contrast (blurred, glare) is
+  unreadable, and says so. `identify`'s sensed mode, in the simulator
+  itself (no picture there), still models the reading.
 - The `identify` program reads the resistor and the LED in the tray,
   finds the capacitor's face sideways, puts it in the vise and tilts
   the positioner: at 30 degrees its code may be misread, at 45 it

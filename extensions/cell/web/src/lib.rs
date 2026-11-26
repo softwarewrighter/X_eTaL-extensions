@@ -122,6 +122,16 @@ pub fn read_bands(json_in: &str) -> String {
     .to_string()
 }
 
+/// What a marking read from the picture means, for a part's kind:
+/// `{"value": ...}` or `{"error": ...}` (JSON).
+#[must_use]
+pub fn decode_mark(kind: &str, text: &str) -> String {
+    match xetal_ext_cell::marks::marking(kind, text) {
+        Ok(m) => json!({ "value": m.value }).to_string(),
+        Err(e) => json!({ "error": e }).to_string(),
+    }
+}
+
 /// The cell's timeline as a scene for the cell player.
 #[must_use]
 pub fn scene(name: &str) -> String {

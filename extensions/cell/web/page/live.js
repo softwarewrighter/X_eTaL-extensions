@@ -117,14 +117,23 @@ export function start(local) {
   // simulator's own decoder (marks.rs): what a sensed reading sees
   on('read-picture', () => {
     const seen = player ? player.readPicture() : [];
+    const kinds = {};
+    for (const p of Object.values(JSON.parse(w.state()).parts || {})) if (p && p.id) kinds[p.id] = p.kind;
+    const parts = JSON.parse(w.state()).parts;
+    const kindOf = (id) => (Array.isArray(parts) ? (parts.find((p) => p.id === id) || {}).kind : (parts[id] || {}).kind) || kinds[id];
+    const doubt = (c) => (c >= 0.6 ? '' : ' -- doubtful, zoom in or turn it');
     $('reading').textContent = seen.length
       ? seen.map((x) => {
-        const r = JSON.parse(local.read_bands(JSON.stringify(x)));
-        const sure = r.confidence >= 0.6 ? '' : ' -- doubtful, zoom in or turn it';
-        const raw = q.has('raw') ? ` [samples ${JSON.stringify(x.bands.map((c) => c.map(Math.round)))} body ${JSON.stringify(x.body.map(Math.round))} true ${JSON.stringify(x.body_true)}]` : '';
-        return `${x.id}: ${r.bands.join(' ')} = ${r.value || r.error} (confidence ${r.confidence.toFixed(2)})${sure}${raw}`;
+        if (x.bands) {
+          const r = JSON.parse(local.read_bands(JSON.stringify(x)));
+          const raw = q.has('raw') ? ` [samples ${JSON.stringify(x.bands.map((c) => c.map(Math.round)))} body ${JSON.stringify(x.body.map(Math.round))} true ${JSON.stringify(x.body_true)}]` : '';
+          return `${x.id}: ${r.bands.join(' ')} = ${r.value || r.error} (confidence ${r.confidence.toFixed(2)})${doubt(r.confidence)}${raw}`;
+        }
+        if (!x.text) return `${x.id}: unreadable, ${x.why}`;
+        const r = JSON.parse(local.decode_mark(kindOf(x.id) || '', x.text));
+        return `${x.id}: "${x.text}" = ${r.value || r.error} (confidence ${x.confidence.toFixed(2)})${doubt(x.confidence)}`;
       }).join('; ')
-      : 'no banded part in the microscope\'s picture: aim it at one (identify R1)';
+      : 'no marked part in the microscope\'s picture: aim it at one (identify R1)';
   });
   // ?read: the picture read once the page has drawn (for checking it headlessly)
   if (q.has('read')) setTimeout(() => $('read-picture').click(), 4000);

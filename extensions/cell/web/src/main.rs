@@ -37,6 +37,13 @@ pub fn read_bands(json: &str) -> String {
     cell_web::read_bands(json)
 }
 
+/// What a marking read from the picture means for a kind (JSON).
+#[wasm_bindgen]
+#[must_use]
+pub fn decode_mark(kind: &str, text: &str) -> String {
+    cell_web::decode_mark(kind, text)
+}
+
 /// The cell's timeline as a scene for the player.
 #[wasm_bindgen]
 #[must_use]
