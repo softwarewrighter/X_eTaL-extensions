@@ -15,7 +15,7 @@ vise close
 release A R1
 lift A mm=60
 present R1.1.tip at=S6
-sleeve S6 on=R1.1 from=15 to=24 size=1.0 color=red
+sleeve S6 on=R1.1 from=15 to=24 size=1.0 color=blue
 present R1.1.20 at=S6
 shrink S6 on=R1.1
 stage turn=0 tilt=0 at=0,0,0

@@ -46,7 +46,7 @@ fn a_sleeve_insulates_a_crossing_that_would_short() {
     assert_eq!(j.result.as_deref(), Some("good"), "{j:?}");
     assert!(w.clashes().is_empty(), "{:?}", w.clashes());
     let s = &w.part("R1").unwrap().sleeves[0];
-    assert!(s.shrunk.is_some() && s.color == "red" && (s.from, s.to) == (15.0, 24.0));
+    assert!(s.shrunk.is_some() && s.color == "blue" && (s.from, s.to) == (15.0, 24.0));
     assert_eq!(World::from_json(&w.to_json()).unwrap(), w);
     // with the joggle and no sleeve: still no contact
     let bare: String = PROGRAM
@@ -144,4 +144,41 @@ fn a_sleeve_goes_on_before_the_lead_is_bent_or_joined() {
     );
     let _ = w.apply(&parse_line("present R1.1.tip at=S6").unwrap());
     refused(&mut w, "sleeve S6 on=R1.1 from=1 to=10", "bent at 3 mm");
+}
+
+#[test]
+fn colors_and_sizes_are_data() {
+    let d = xetal_ext_cell::sleeve::data().unwrap();
+    // the command's choices are the colors stocked
+    let names: Vec<&str> = d.color.iter().map(|c| c.name.as_str()).collect();
+    assert_eq!(names, xetal_ext_cell::command::SLEEVE_COLORS);
+    assert!(
+        d.color
+            .iter()
+            .all(|c| c.rgb.len() == 7 && c.rgb.starts_with('#'))
+    );
+    assert_eq!(
+        d.color.iter().find(|c| c.name == "red").unwrap().use_,
+        "the supply (Vcc)"
+    );
+    assert_eq!(
+        d.color.iter().find(|c| c.name == "black").unwrap().use_,
+        "ground"
+    );
+    // each size picked by name, from the smallest
+    let sizes: Vec<&str> = d.size.iter().map(|s| s.name.as_str()).collect();
+    assert_eq!(sizes, ["0.6", "0.8", "1.0", "1.5", "2.0"]);
+    // a yellow one on, by size and color
+    let mut w = World::default();
+    run(&mut w, AT_S6);
+    let o = &run(
+        &mut w,
+        "sleeve S6 on=R1.1 from=15 to=24 size=1.0 color=yellow",
+    )[0];
+    assert!(
+        o.events
+            .iter()
+            .any(|e| e.contains("1.0 mm yellow sleeving")),
+        "{o:?}"
+    );
 }

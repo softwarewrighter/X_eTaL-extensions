@@ -450,7 +450,7 @@ a cut length onto the lead from its free end, then shrinks it.
 
 ```
 present R1.1.tip at=S6
-sleeve S6 on=R1.1 from=15 to=24 size=1.0 color=red
+sleeve S6 on=R1.1 from=15 to=24 size=1.0 color=blue
 present R1.1.20 at=S6
 shrink S6 on=R1.1
 bend P2 on=R1.1 at=25 angle=60 toward=0,0,1   # a joggle: the sleeve off the pins
@@ -462,8 +462,12 @@ inspect shorts     # shorts: none; R1.1's sleeve clears U1.1 by 1.5 mm
   end must be at the station's point (present `PIN.tip`), not yet in a
   joint, with no bend and no other sleeve between it and `from` (the
   tubing slides on from the end): sleeve before soldering and before
-  bending. The size is the tubing's inner diameter as supplied
-  (materials/sleeve.toml: 2:1 polyolefin, 0.6 to 2.0 mm); one that does
+  bending. A piece is picked by size and color: the size is the
+  tubing's inner diameter as supplied (materials/sleeve.toml: 2:1
+  polyolefin, 0.6 to 2.0 mm), the color one of those stocked in every
+  size -- by convention red for the supply (Vcc), black for ground, and
+  blue, yellow, green, orange, violet, white, gray and brown to tell
+  signals apart; clear lets the lead show (black if not given). One that does
   not pass over the lead is refused, one too big to grip it shrunk is a
   warning (it can slide); without `size` the one that fits is taken.
 - `shrink STATION on=PIN [dwell=]`: hot air (200 C) on the sleeve,
@@ -1062,7 +1066,7 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `pinch PINCER on=PIN [at=MM]` | pincer | a pincer on the turntable grips a lead from the side: it holds the part there, and sinks heat |
 | `unpinch PINCER` | pincer | a pincer lets go and draws back |
 | `bend PINCER on=PIN at=MM angle=DEG toward=X,Y,Z [radius=MM]` | pincer | a pincer bends a lead round a mandrel, the rest of it toward a direction |
-| `sleeve STATION on=PIN from=MM to=MM [size=0.6\|0.8\|1.0\|1.5\|2.0] [color=black\|red\|blue\|clear]` | sleeve | the sleeve station slides heat-shrink tubing onto a lead from its free end, presented at its point |
+| `sleeve STATION on=PIN from=MM to=MM [size=0.6\|0.8\|1.0\|1.5\|2.0] [color=black\|red\|blue\|yellow\|green\|orange\|violet\|white\|gray\|brown\|clear]` | sleeve | the sleeve station slides heat-shrink tubing onto a lead from its free end, presented at its point |
 | `shrink STATION on=PIN [dwell=S]` | sleeve | the sleeve station's hot air shrinks the sleeve on a lead, presented at its point |
 | `trim STATION on=PIN at=MM` | cutter | a cutter station cuts a lead, what is past the cut falling into the bin |
 | `insert ARM on=PIN [at=MM] [roll=DEG]` | bender | the arm slides a held part's lead into the bending rig, at a distance from the body at its mandrel |

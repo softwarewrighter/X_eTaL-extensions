@@ -16,7 +16,7 @@
 //! feeder('S1', length)                   the iron's solder feeder
 //! bender_shape(plate, size, shear, height)  the bending rig's shape
 //! mark('R1', {marking, body, pin1})     a part's marking, for drawing
-//! sleeve('R1', '1', on, shrunk, nums(...), loose, snug, color)  heat-shrink on a lead
+//! sleeve('R1', '1', on, shrunk, nums(...), loose, snug, '#2050c8')  heat-shrink on a lead, its color
 //! bender(nums('t close former shear r ...', 5))  the bending rig
 //! feeding(t0, t1, 'S1')                  solder fed into a joint
 //! station('S1', 'iron', nums('housing x y z r p y', 6)[0], nums('t x y z r p y ...', 7))
@@ -331,7 +331,12 @@ fn thing(out: &mut String, p: &Part) {
                 table(&[pts], 3),
                 num(loose),
                 num(snug),
-                quote(&s.color)
+                quote(
+                    &d.color
+                        .iter()
+                        .find(|c| c.name == s.color)
+                        .map_or_else(|| "#1c1c1c".to_string(), |c| c.rgb.clone())
+                )
             );
         }
     }

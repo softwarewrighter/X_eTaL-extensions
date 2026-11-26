@@ -109,7 +109,11 @@ const ACTOR: Arg = req("arm", Kind::Actor, "the arm, or a tool station");
 const OPEN_CLOSE: &[&str] = &["open", "close"];
 const MODES: &[&str] = &["oracle", "sensed"];
 const SLEEVE_SIZES: &[&str] = &["0.6", "0.8", "1.0", "1.5", "2.0"];
-const SLEEVE_COLORS: &[&str] = &["black", "red", "blue", "clear"];
+/// The sleeving colors stocked (materials/sleeve.toml; a test keeps the two alike).
+pub const SLEEVE_COLORS: &[&str] = &[
+    "black", "red", "blue", "yellow", "green", "orange", "violet", "white", "gray", "brown",
+    "clear",
+];
 
 /// The command table: the one source of the language.
 pub const COMMANDS: &[Spec] = &[

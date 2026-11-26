@@ -321,8 +321,9 @@ export function cellPlayer(host, calls, options = {}) {
       for (const sl of s.sleeves.filter((x) => x.id === p.id)) {
         const path = new THREE.CurvePath();
         for (let i = 0; i + 1 < sl.pts.length; i++) path.add(new THREE.LineCurve3(new THREE.Vector3(...sl.pts[i]), new THREE.Vector3(...sl.pts[i + 1])));
-        const color = { black: '#1c1c1c', red: '#c02020', blue: '#2040c0', clear: '#d8e0e8' }[sl.color] || '#1c1c1c';
-        const mat = new THREE.MeshStandardMaterial({ color, roughness: 0.6, transparent: sl.color === 'clear', opacity: sl.color === 'clear' ? 0.5 : 1 });
+        // its color from the tubing data (materials/sleeve.toml); clear lets the lead show
+        const clear = sl.color === '#d8e0e8';
+        const mat = new THREE.MeshStandardMaterial({ color: sl.color, roughness: 0.6, transparent: clear, opacity: clear ? 0.5 : 1 });
         const tube = (r) => { const m = new THREE.Mesh(new THREE.TubeGeometry(path, Math.max(8, sl.pts.length * 6), r, 12, false), mat); m.visible = false; g.add(m); return m; };
         sleeveTubes.push({ sl, loose: tube(sl.loose), snug: tube(sl.snug) });
       }

@@ -39,3 +39,61 @@ name = "2.0"
 before = 2.0
 after = 1.0
 wall = 0.35
+
+# The colors stocked in every size: how each is drawn, and the use a
+# circuit conventionally gives it (red supply, black ground, the rest
+# signals, chosen to tell nets apart).
+[[color]]
+name = "black"
+rgb = "#1c1c1c"
+use = "ground"
+
+[[color]]
+name = "red"
+rgb = "#c02020"
+use = "the supply (Vcc)"
+
+[[color]]
+name = "blue"
+rgb = "#2050c8"
+use = "a signal"
+
+[[color]]
+name = "yellow"
+rgb = "#e8c820"
+use = "a signal"
+
+[[color]]
+name = "green"
+rgb = "#209040"
+use = "a signal"
+
+[[color]]
+name = "orange"
+rgb = "#e87818"
+use = "a signal"
+
+[[color]]
+name = "violet"
+rgb = "#8040b0"
+use = "a signal"
+
+[[color]]
+name = "white"
+rgb = "#ececec"
+use = "a signal"
+
+[[color]]
+name = "gray"
+rgb = "#808080"
+use = "a signal"
+
+[[color]]
+name = "brown"
+rgb = "#7a4a20"
+use = "a signal"
+
+[[color]]
+name = "clear"
+rgb = "#d8e0e8"
+use = "any: the lead shows through"

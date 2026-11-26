@@ -41,6 +41,21 @@ pub struct Data {
     pub illustrative: Vec<String>,
     /// The sizes.
     pub size: Vec<Size>,
+    /// The colors stocked in every size.
+    pub color: Vec<Color>,
+}
+
+/// A color of tubing.
+#[derive(Clone, Debug, Deserialize, PartialEq)]
+#[serde(deny_unknown_fields)]
+pub struct Color {
+    /// Its name: `blue`.
+    pub name: String,
+    /// How it is drawn: `#2050c8`.
+    pub rgb: String,
+    /// The use a circuit conventionally gives it.
+    #[serde(rename = "use")]
+    pub use_: String,
 }
 
 /// The tubing data.
@@ -290,6 +305,16 @@ impl World {
                 "{pin} has a sleeve from {} to {} mm in the way",
                 num1(s.from),
                 num1(s.to)
+            )));
+        }
+        if !d.color.iter().any(|c| c.name == color) {
+            return Err(Halt::Refused(format!(
+                "no {color} sleeving (colors: {})",
+                d.color
+                    .iter()
+                    .map(|c| c.name.as_str())
+                    .collect::<Vec<_>>()
+                    .join(" ")
             )));
         }
         // the size: it must pass over the lead, and grip it shrunk
