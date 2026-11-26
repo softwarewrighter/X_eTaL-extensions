@@ -143,3 +143,85 @@ fn enamel_burns_off_at_the_iron_before_the_wire_wets() {
     assert_eq!(j.result.as_deref(), Some("good"), "{j:?}");
     assert!(w.part("W1").unwrap().wire.as_ref().unwrap().stripped[0]);
 }
+
+/// Enameled wire (decision C21, step 25): run along the chip's pin row
+/// to pin 3, across pin 4; stripped only where the iron heated it.
+const ENAMEL: &str = include_str!("../../programs/enamel.cell");
+
+fn said(o: &Outcome) -> String {
+    o.events
+        .iter()
+        .chain(&o.warnings)
+        .cloned()
+        .collect::<Vec<_>>()
+        .join(" | ")
+}
+
+#[test]
+fn enamel_insulates_but_where_the_iron_burned_it_off() {
+    let mut w = World::default();
+    let out = run(&mut w, ENAMEL);
+    assert_eq!(
+        said(out.last().unwrap()),
+        "shorts: none; insulated: W1.1 crosses U1.4"
+    );
+    let j = w.joints.iter().find(|j| j.name == "U1.3+W1.1").unwrap();
+    assert_eq!(j.result.as_deref(), Some("good"), "{j:?}");
+    assert!(w.clashes().is_empty(), "{:?}", w.clashes());
+    // stripped at the joint only: a few millimeters at the tip of end 1
+    let wi = w.part("W1").unwrap().wire.clone().unwrap();
+    assert!(
+        !wi.bare.is_empty() && wi.bare.iter().all(|b| b.0 == "1"),
+        "{:?}",
+        wi.bare
+    );
+    let len = 20.0;
+    for (_, a, b) in &wi.bare {
+        assert!(*b > len - 3.0 && b - a < 8.0, "{:?}", wi.bare);
+    }
+    assert_eq!(World::from_json(&w.to_json()).unwrap(), w);
+    // bare copper the same way: a short on pin 4
+    let mut w = World::default();
+    let out = run(&mut w, &ENAMEL.replace(" enamel=yes", ""));
+    assert!(
+        said(out.last().unwrap()).contains("U1.4 touches W1.1"),
+        "{}",
+        said(out.last().unwrap())
+    );
+}
+
+#[test]
+fn an_iron_too_cool_leaves_the_enamel_on() {
+    let mut w = World::default();
+    let out = run(
+        &mut w,
+        &ENAMEL.replace(
+            "touch S1 at=U1.3+W1.1 dwell=3 temp=400",
+            "touch S1 at=U1.3+W1.1 dwell=3 temp=330",
+        ),
+    );
+    // the leads stay under 330 C: no enamel burned off, no wetting of the wire
+    assert!(out.iter().all(|o| !said(o).contains("enamel burned off")));
+    let j = w.joints.iter().find(|j| j.name == "U1.3+W1.1").unwrap();
+    assert_ne!(j.result.as_deref(), Some("good"), "{j:?}");
+    assert!(w.part("W1").unwrap().wire.as_ref().unwrap().bare.is_empty());
+}
+
+#[test]
+fn an_enameled_wire_is_insulated_but_where_it_is_bare() {
+    let mut w = World::default();
+    run(
+        &mut w,
+        "reset circuit=demo\nwire S5 awg=36 mm=30 enamel=yes",
+    );
+    let p = w.part("W1").unwrap().clone();
+    // all of each half while nothing is stripped
+    assert_eq!(p.insulated("1", 15.0), [(0.0, 15.0)]);
+    let mut q = p.clone();
+    q.wire.as_mut().unwrap().bare = vec![("1".into(), 12.0, 15.0), ("2".into(), 0.0, 2.0)];
+    assert_eq!(q.insulated("1", 15.0), [(0.0, 12.0)]);
+    assert_eq!(q.insulated("2", 15.0), [(2.0, 15.0)]);
+    // AWG 36 to 40 are in the table now
+    let d = wire::data().unwrap();
+    assert!((d.gauge(40).diameter - 0.0799).abs() < 1e-9);
+}

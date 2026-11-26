@@ -133,7 +133,7 @@ fn wrong_commands_say_what_is_wrong() {
     says("clip A on=U1 at=2", "U1 is not a pin");
     says("touch S1 at=U1.3", "is not a joint");
     says("touch S1 at=U1.3+U1.3", "is not a joint");
-    says("wire S5 awg=27.5 mm=3", "not a whole number from 22 to 34");
+    says("wire S5 awg=27.5 mm=3", "not a whole number from 22 to 40");
     says("vise close dry=yes", "dry: yes is not 0 or 1");
     says("stage turn=nan", "not a finite number");
     let j = parse_json(&serde_json::json!({"op": "lift", "arm": "A", "height": 3})).unwrap_err();

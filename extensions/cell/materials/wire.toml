@@ -42,3 +42,23 @@ awg = 34
 diameter = 0.160
 ohm_per_m = 0.8560
 amps = 0.35
+
+# fine magnet wire, for the finest work (a BGA's balls): the diameters
+# are the AWG formula's, their resistance copper's; ampacity illustrative
+[[gauge]]
+awg = 36
+diameter = 0.127
+ohm_per_m = 1.361
+amps = 0.13
+
+[[gauge]]
+awg = 38
+diameter = 0.101
+ohm_per_m = 2.164
+amps = 0.09
+
+[[gauge]]
+awg = 40
+diameter = 0.0799
+ohm_per_m = 3.441
+amps = 0.06

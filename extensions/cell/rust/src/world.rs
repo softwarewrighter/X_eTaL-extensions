@@ -275,6 +275,39 @@ impl Part {
         Ok(k)
     }
 
+    /// The spans of a pin's lead that are insulated, mm along it: its
+    /// sleeves (C20), and an enameled wire's whole length but where its
+    /// enamel has burned off (C21).
+    #[must_use]
+    pub fn insulated(&self, pin: &str, len: f64) -> Vec<(f64, f64)> {
+        let mut spans: Vec<(f64, f64)> = self
+            .sleeves
+            .iter()
+            .filter(|s| s.pin == pin)
+            .map(|s| (s.from, s.to))
+            .collect();
+        if let Some(w) = self.wire.as_ref().filter(|w| w.enamel) {
+            let mut bare: Vec<(f64, f64)> = w
+                .bare
+                .iter()
+                .filter(|b| b.0 == pin)
+                .map(|b| (b.1, b.2))
+                .collect();
+            bare.sort_by(|a, b| a.0.total_cmp(&b.0));
+            let mut at = 0.0;
+            for (a, b) in bare {
+                if a > at {
+                    spans.push((at, a));
+                }
+                at = at.max(b);
+            }
+            if len > at {
+                spans.push((at, len));
+            }
+        }
+        spans
+    }
+
     /// Its pose now.
     #[must_use]
     pub fn pose(&self) -> Pose {
@@ -977,12 +1010,7 @@ impl World {
         for p in self.parts.iter().filter(|p| !p.lost) {
             if let Ok(k) = p.kind_of() {
                 for pin in &k.pins {
-                    let spans: Vec<(f64, f64)> = p
-                        .sleeves
-                        .iter()
-                        .filter(|s| s.pin == pin.name)
-                        .map(|s| (s.from, s.to))
-                        .collect();
+                    let spans = p.insulated(&pin.name, pin.length());
                     let pieces = crate::sleeve::bare(&pin.lead, &spans)
                         .iter()
                         .filter(|x| x.len() >= 2)
@@ -2344,8 +2372,12 @@ pub struct WireInfo {
     pub awg: i64,
     /// Enameled (magnet wire): an end wets only once stripped by heat.
     pub enamel: bool,
-    /// Each end (pin 1, pin 2) stripped.
+    /// Each end (pin 1, pin 2) stripped somewhere (it can wet there).
     pub stripped: [bool; 2],
+    /// Where its enamel has burned off: the pin (its half) and the span,
+    /// mm along it from the middle (decision C21: elsewhere it insulates).
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub bare: Vec<(String, f64, f64)>,
     /// Still on this station's spool.
     pub spool: Option<String>,
     /// Its metal: copper, or steel (for supports: it welds well).

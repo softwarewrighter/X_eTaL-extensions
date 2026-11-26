@@ -1,0 +1,34 @@
+# enamel: enameled (magnet) wire insulates (decision C21). The wire
+# feeder S5 feeds 40 mm of AWG 30 enameled wire; the arm runs its end 1
+# along the chip's pin row to pin 3, lying across pin 4 on the way. The
+# iron, hot enough to burn solderable enamel off (330 C; it is set to
+# 400), strips it only where it heats the wire, at the joint; elsewhere
+# the enamel insulates, so crossing pin 4 is no short. No sleeve and no
+# joggle are needed.
+reset circuit=demo
+tool A tweezers
+pick A U1 grasp=ends
+place A U1 at=0,0,-24 rpy=0,0,90
+vise close
+release A U1
+lift A mm=60
+wire S5 awg=30 mm=40 enamel=yes
+pick A W1 grasp=middle
+cut S5
+lift A mm=60
+move A to=0,60,60 rpy=180,0,0
+move A to=20,1.27,-14.05 rpy=180,0,0
+align A W1.1.tip to=U1.3.tip gap=0.1
+pinch P1 on=W1.1 at=12
+release A W1
+lift A mm=60
+present U1.3+W1.1 at=S1
+scope aim=U1.3+W1.1 zoom=8
+touch S1 at=U1.3+W1.1 dwell=3 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=U1.3+W1.1 below=100
+scope aim=W1.2 zoom=3
+bend P2 on=W1.2 at=6 angle=90 toward=0,0,-1
+unpinch P1
+inspect shorts

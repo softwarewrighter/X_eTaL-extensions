@@ -1,6 +1,6 @@
 number = 25
 slug = "cell-enamel"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 25 (inserted 2026-11-26, decision C21, the user: 'another way to..."
 role = "production"
 context_files = []

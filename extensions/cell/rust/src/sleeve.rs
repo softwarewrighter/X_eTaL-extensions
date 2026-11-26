@@ -133,8 +133,8 @@ impl World {
         })
     }
 
-    /// Pairs of leads that touch only where a sleeve covers one: `R1.1
-    /// crosses U1.2`.
+    /// Pairs of leads that touch only where one is insulated (a sleeve,
+    /// or an enameled wire's enamel): `R1.1 crosses U1.2`.
     #[must_use]
     pub fn insulated_crossings(&self) -> Vec<String> {
         let bare: Vec<(String, String)> = self
@@ -146,7 +146,7 @@ impl World {
         for p in self.parts.iter().filter(|p| !p.lost) {
             if let Ok(k) = p.kind_of() {
                 for pin in &k.pins {
-                    let sleeved = p.sleeves.iter().any(|s| s.pin == pin.name);
+                    let sleeved = !p.insulated(&pin.name, pin.length()).is_empty();
                     leads.push((
                         format!("{}.{}", p.id, pin.name),
                         pin.diameter,

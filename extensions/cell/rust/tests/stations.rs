@@ -229,7 +229,7 @@ fn layout_text(spec: &str) -> String {
     out
 }
 
-const PROGRAMS: [&str; 15] = [
+const PROGRAMS: [&str; 16] = [
     "arms",
     "pick",
     "solder",
@@ -245,6 +245,7 @@ const PROGRAMS: [&str; 15] = [
     "tester",
     "tester-b",
     "insulate",
+    "enamel",
 ];
 
 fn program(name: &str) -> String {

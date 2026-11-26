@@ -315,7 +315,7 @@ pub const COMMANDS: &[Spec] = &[
         summary: "the wire feeder station feeds bare or enameled wire from its spool out of its nozzle",
         positional: &[req("arm", Kind::Station, "the wire feeder station")],
         named: &[
-            req("awg", Kind::Int(22, 34), "the gauge"),
+            req("awg", Kind::Int(22, 40), "the gauge"),
             req("mm", Kind::Number("mm", 1.0, 120.0), "how much"),
             opt(
                 "enamel",

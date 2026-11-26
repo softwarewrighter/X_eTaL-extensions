@@ -1027,6 +1027,7 @@ impl World {
             awg,
             enamel,
             stripped: [false; 2],
+            bare: Vec::new(),
             spool: Some(s.name.clone()),
             metal: "copper".into(),
         });

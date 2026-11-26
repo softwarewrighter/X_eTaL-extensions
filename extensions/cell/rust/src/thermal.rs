@@ -1772,17 +1772,44 @@ impl World {
             if !hot {
                 continue;
             }
-            // which end: the hotter half of the wire's nodes
+            // where: each node of each half that is hot enough, its span
+            // of the lead stripped (a node stands for its share of it)
+            let Ok(kind) = self.parts[k].kind_of() else {
+                continue;
+            };
+            let (starts, _) = crate::solder::layout(&kind);
             let temps = self.parts[k].temps.clone();
-            let n = temps.len().saturating_sub(1);
-            for (i, range) in [(0usize, 1..1 + n / 2), (1usize, 1 + n / 2..1 + n)] {
-                if !w.stripped[i] && temps[range].iter().any(|t| *t >= data.strip_c) {
-                    let id = self.parts[k].id.clone();
-                    if let Some(wi) = self.parts[k].wire.as_mut() {
-                        wi.stripped[i] = true;
+            let id = self.parts[k].id.clone();
+            for (pi, pin) in kind.pins.iter().enumerate().take(2) {
+                let count = crate::solder::lead_nodes(&pin.lead).len().max(1);
+                let len = pin.length();
+                #[allow(clippy::cast_precision_loss)]
+                let step = len / count as f64;
+                let mut spans: Vec<(f64, f64)> = Vec::new();
+                for n in 0..count {
+                    if temps
+                        .get(starts[pi] + n)
+                        .is_some_and(|t| *t >= data.strip_c)
+                    {
+                        #[allow(clippy::cast_precision_loss)]
+                        let a = n as f64 * step;
+                        spans.push((a, (a + step).min(len)));
                     }
+                }
+                if spans.is_empty() {
+                    continue;
+                }
+                let first = !w.stripped[pi];
+                if let Some(wi) = self.parts[k].wire.as_mut() {
+                    wi.stripped[pi] = true;
+                    for (a, b) in spans {
+                        wi.bare.push((pin.name.clone(), a, b));
+                    }
+                    wi.bare = merge_bare(std::mem::take(&mut wi.bare));
+                }
+                if first {
                     self.notes
-                        .push((false, format!("{id}.{}'s enamel burned off", i + 1)));
+                        .push((false, format!("{id}.{}'s enamel burned off", pin.name)));
                 }
             }
         }
@@ -1804,4 +1831,20 @@ fn what_words(name: &str) -> String {
     } else {
         name.to_string()
     }
+}
+
+/// Bare spans merged where they touch or overlap, per pin, in order.
+fn merge_bare(mut v: Vec<(String, f64, f64)>) -> Vec<(String, f64, f64)> {
+    v.sort_by(|a, b| a.0.cmp(&b.0).then(a.1.total_cmp(&b.1)));
+    let mut out: Vec<(String, f64, f64)> = Vec::new();
+    for (pin, a, b) in v {
+        if let Some(last) = out.last_mut() {
+            if last.0 == pin && a <= last.2 + 1e-9 {
+                last.2 = last.2.max(b);
+                continue;
+            }
+        }
+        out.push((pin, a, b));
+    }
+    out
 }

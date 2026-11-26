@@ -404,14 +404,25 @@ tilt (up to 90 degrees), is how the work is turned over.
   free end keeps it, else it falls.
 - From then on a wire is a part like any other: its ends are brought
   to leads, pinched, soldered, bent by a pincer and trimmed.
-- `materials/wire.toml`: AWG 22, 26, 30 and 34 (diameter, ohms a
+- `materials/wire.toml`: AWG 22, 26, 30, 34, 36, 38 and 40 (diameter, ohms a
   meter, ampacity), copper's density and stiffness; other gauges from
   the AWG formula. A free end held at one end sags as a cantilever
   (w L^4 / 8 E I); past 0.1 mm a warning says how far (40 mm of AWG 34
   sags about 0.15 mm).
 - Enameled (magnet) wire wets only where its enamel has burned off:
   above 330 C, which wants a hotter iron than 350 C gives a lead --
-  `touch S1 at=... temp=400`.
+  `touch S1 at=... temp=400`. The enamel burns off only where the wire
+  gets that hot, a span at a time (each thermal node's share of the
+  lead), and everywhere else it insulates (decision C21): the shorts
+  check sees an enameled wire as bare only on its stripped spans, so it
+  may cross other leads and other enameled wires, and `inspect shorts`
+  lists those crossings as insulated. It is the first insulator for
+  connections; heat-shrink sleeving is for component leads.
+
+`programs/enamel.cell`: 40 mm of AWG 30 enameled wire run along the
+chip's pin row to pin 3, across pin 4; soldered at 400 C, stripped
+only at the joint -- `shorts: none; insulated: W1.1 crosses U1.4`
+(bare copper the same way shorts on pin 4).
 
 `programs/wire.cell`: S5 feeds 40 mm of AWG 26; the arm takes it by
 its middle and S5 cuts it; the arm brings its end to pin 3, P1 grips
