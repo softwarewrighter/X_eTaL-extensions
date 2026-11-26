@@ -1,6 +1,6 @@
 the calls, and the files of the page:
 3
-27
+29
 work/tiny/board.js
 work/tiny/board/eye.js
 work/tiny/board/light.js
@@ -23,6 +23,8 @@ work/tiny/vendor/three/postprocessing/Pass.js
 work/tiny/vendor/three/postprocessing/RenderPass.js
 work/tiny/vendor/three/postprocessing/ShaderPass.js
 work/tiny/vendor/three/postprocessing/UnrealBloomPass.js
+work/tiny/vendor/three/renderers/Projector.js
+work/tiny/vendor/three/renderers/SVGRenderer.js
 work/tiny/vendor/three/shaders/CopyShader.js
 work/tiny/vendor/three/shaders/LuminosityHighPassShader.js
 work/tiny/vendor/three/shaders/OutputShader.js

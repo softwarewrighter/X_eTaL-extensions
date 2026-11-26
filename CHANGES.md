@@ -27,6 +27,9 @@ version.
 | v0.2.0 | 9dec588 | 2026-10-05 | v0.1.0 (512b3ee) | canvas, scene, audio, web; the binding macro; X_eTaL pinned by commit, not copied; the site of recordings |
 | v0.1.0 | fee06a4 | 2026-10-03 | 7b70575 (vendored) | release 1: the native ABI V1, SDK and loader, the xetal-x bridge; hello, clock, sqlite and the data notebook |
 
+## 2026-11-26
+
+- 00:01 `test` three, the tiny page's golden: 29 files, the SVG renderer and its Projector among them.
 ## 2026-11-25
 
 - 23:59 `fix` cell, a browser without WebGL (the user: the live page fails on Firefox and Chrome where the GPU is not supported): the player falls back to three.js's SVG renderer (vendored, r170, MIT), slower and flat shaded, without the microscope's picture, with a notice; `?software` forces it.
