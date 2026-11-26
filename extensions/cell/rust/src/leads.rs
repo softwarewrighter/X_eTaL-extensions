@@ -46,7 +46,7 @@ pub fn split(line: &[V3], mm: f64) -> (Vec<V3>, Vec<V3>) {
 }
 
 /// The lead's direction just past `mm` along it.
-fn direction_at(line: &[V3], mm: f64) -> V3 {
+pub fn direction_at(line: &[V3], mm: f64) -> V3 {
     let (_, tail) = split(line, mm);
     let d = kin::sub(tail[1], tail[0]);
     kin::scale(d, 1.0 / kin::norm(d).max(1e-12))

@@ -442,6 +442,57 @@ pub const COMMANDS: &[Spec] = &[
         ],
     },
     Spec {
+        op: "insert",
+        family: "bender",
+        summary: "the arm slides a held part's lead into the bending rig, at a distance from the body at its mandrel",
+        positional: &[ARM],
+        named: &[
+            req("on", Kind::Pin, "the pin whose lead goes in"),
+            opt(
+                "at",
+                Kind::Number("mm", 0.0, 30.0),
+                "from the body, along the lead (3 if not given)",
+            ),
+            opt(
+                "roll",
+                Kind::Number("deg", -180.0, 180.0),
+                "the part turned about the lead: the bend square to one made at 0",
+            ),
+        ],
+    },
+    Spec {
+        op: "form",
+        family: "bender",
+        summary: "the bending rig clamps the lead in it and bends it down round its mandrel, in the rig's plane",
+        positional: &[],
+        named: &[
+            opt(
+                "angle",
+                Kind::Number("deg", 1.0, 135.0),
+                "how far (90 if not given)",
+            ),
+            opt(
+                "radius",
+                Kind::Number("mm", 0.2, 5.0),
+                "the bend's inner radius (the lead's diameter, at least 1 mm, if not given)",
+            ),
+        ],
+    },
+    Spec {
+        op: "shear",
+        family: "bender",
+        summary: "the arm puts a held part's lead through the rig's shear, which cuts it; what is past the cut falls into the bin",
+        positional: &[ARM],
+        named: &[
+            req("on", Kind::Pin, "the pin whose lead it cuts"),
+            req(
+                "at",
+                Kind::Number("mm", 0.0, 40.0),
+                "from the body, along the lead",
+            ),
+        ],
+    },
+    Spec {
         op: "vise",
         family: "stage",
         summary: "open or close the vise on the stage",

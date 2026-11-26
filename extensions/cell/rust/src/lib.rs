@@ -7,6 +7,7 @@
 //! compiled to WebAssembly, the live page's. The functions below are the
 //! extension's: what the facade `lib/Cell.xtl` calls.
 
+pub mod bender;
 pub mod collide;
 pub mod command;
 pub mod heat;

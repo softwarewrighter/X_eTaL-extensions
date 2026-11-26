@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-25
 
+- 21:07 `ext` cell, the bending rig (Saga 17 step 21, decision C19, the user's design): `insert` slides a held part's lead in at a distance from the body, `form` closes the clamp and anvil from opposite sides and swings the former round the mandrel, `shear` trims; a U by turning the part end for end, a square bend with `roll`; the `bend-rig` program; the rig drawn and animated; the player's `look=` view; live page republished.
 - 20:46 `release` v0.3.0 tagged at ea977d1 (the user's yes), built against X_eTaL 8c49bd8; a row in the Versions table.
 - 20:14 `ext` cell, flux-cored solder and the iron's feeder (Saga 17 step 20): each melt brings flux active 4 s molten, a lead wets only while it is active, a joint molten over 4 s without it is judged `dull`; the feeder (guide, spool, solder stub) drawn riding on the iron, its solder running into the joint at `feed` and back after; live page republished.
 - 20:02 `ext` cell, the microscope (Saga 17 step 20): `scope aim= zoom=` turns the head onto a joint or pin and follows it as the stage moves, `snap` records a picture, the player draws the scope's picture beside the cell (a cutaway); the solder fed into a joint, a lead's bend and fed wire drawn as they happen; small things drawn larger than life; the detailed programs aim the scope and open close up; live page republished.

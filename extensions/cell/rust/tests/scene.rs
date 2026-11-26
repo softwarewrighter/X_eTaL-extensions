@@ -25,8 +25,8 @@ fn a_scene_of_a_program() {
     let count = |p: &str| lines.iter().filter(|l| l.starts_with(p)).count();
     assert_eq!(
         count("fixture("),
-        4,
-        "the stage, the scope, one rack, the tray"
+        5,
+        "the stage, the scope, one rack, the bending rig, the tray"
     );
     assert_eq!(count("rig("), 1, "one arm");
     assert_eq!(count("track("), 2, "the arm and the stage");

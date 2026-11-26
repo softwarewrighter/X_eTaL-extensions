@@ -50,6 +50,8 @@ export function start(local) {
     // is a meter across; a lead is half a millimeter)
     const detailed = ['solder', 'solder-stations', 'weld', 'weld-stations', 'leads', 'wire', 'support', 'turn'].includes(q.get('program') || 'solder');
     const options = { models: './models/', hud: q.get('hud') !== '0', check: q.has('check'), close: detailed && !q.has('view'), scopeLeft: 360 };
+    // the bending rig stands beside the turntable: open on it
+    if ((q.get('program') || 'solder') === 'bend-rig' && !q.has('view') && !q.has('look')) options.look = { at: [-55, 300, -100], dist: 150 };
     if (player) { options.view = player.view; player.stopAll(); }
     if (q.has('t')) options.time = Number(q.get('t'));
     else if (from !== undefined) options.time = from;
@@ -179,6 +181,7 @@ export function start(local) {
       'solder-stations': 'the bench: an arm brings a resistor lead to a chip pin, a pincer on the turntable grips it so the arm can go, the turntable presents the joint to the iron station, which feeds its own solder',
       'weld-stations': 'the stage brings a disc lead to the welder station, which comes up from below; an arm lays a second disc lead on it, and it is welded',
       pick: 'a chip picked from the tray and put in the vise',
+      'bend-rig': 'the resistor\'s lead slid into the bending rig 3 mm from the body: the clamp and anvil close on it from opposite sides and the former bends it down round the mandrel; the rig\'s shear trims the bent leg to 8 mm; then the resistor is soldered to the chip by its straight lead',
       support: 'a steel support is welded to a part and held by a pincer; the vise opens and the support alone holds the part while the turntable turns and tilts it; then the support is cut away',
       wire: 'the wire feeder feeds 40 mm of wire, the arm takes it and the feeder cuts it, its end is soldered to a chip pin, and a pincer bends its other half down',
       turn: 'the arm takes the chip out of the vise and puts it back on its side, its pins pointing across; the turntable turns and tilts it',

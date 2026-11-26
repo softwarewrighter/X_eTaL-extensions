@@ -50,9 +50,12 @@ pinch P1 on=R1.1 at=6
 unpinch P1
 bend P2 on=R1.2 at=3 angle=90 toward=0,0,-1
 trim S4 on=R1.2 at=8
+insert A on=R1.2 at=3 roll=90
+form angle=90 radius=1
+shear A on=R1.2 at=8
 ";
     let p = parse_program(program).unwrap();
-    assert_eq!(p.len(), 35);
+    assert_eq!(p.len(), 38);
     for c in &p {
         round_trip(&c.to_text());
     }
@@ -70,7 +73,8 @@ fn every_command_has_an_example() {
     let covered = [
         "reset", "tool", "joints", "move", "lift", "back", "grip", "pick", "place", "align",
         "release", "clip", "touch", "feed", "weld", "wire", "cut", "stage", "present", "pinch",
-        "unpinch", "bend", "trim", "vise", "wait", "scope", "snap", "inspect", "probe", "rewind",
+        "unpinch", "bend", "trim", "insert", "form", "shear", "vise", "wait", "scope", "snap",
+        "inspect", "probe", "rewind",
     ];
     let ops: Vec<&str> = COMMANDS.iter().map(|s| s.op).collect();
     assert_eq!(ops, covered);
@@ -156,4 +160,12 @@ fn docs_and_schemas_come_from_the_table() {
         "the tool point, in the cell's frame (mm)"
     );
     assert_eq!(move_["additionalProperties"], false);
+}
+
+/// Prints the command table, for docs/README.md:
+/// `cargo test -p xetal-ext-cell --test command print_markdown -- --ignored --nocapture`.
+#[test]
+#[ignore]
+fn print_markdown() {
+    print!("{}", command::markdown());
 }

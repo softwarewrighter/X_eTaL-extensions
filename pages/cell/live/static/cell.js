@@ -103,7 +103,7 @@ export function cellPlayer(host, calls, options = {}) {
   scene.add(root);
   const folder = options.models || './models/';
   const s = {
-    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], stations: [], leads: [], scope: [], snaps: [], feeding: [], feeders: {}, attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
+    name: 'cell', w: 1280, h: 720, fixtures: [], rigs: [], tracks: {}, parts: [], stations: [], leads: [], scope: [], snaps: [], feeding: [], feeders: {}, bender: [], benderShape: null, attaches: [], places: [], heats: [], joints: [], ghosts: [], steps: [], expects: [],
   };
   const api = {
     nums,
@@ -125,6 +125,8 @@ export function cellPlayer(host, calls, options = {}) {
     snap(t, what, field) { s.snaps.push({ t, what, field }); },
     feeding(t0, t1, st) { s.feeding.push({ t0, t1, st }); },
     feeder(id, length) { s.feeders[id] = length; },
+    bender_shape(plate, size, shear, height) { s.benderShape = { plate, size, shear, height }; },
+    bender(rows) { s.bender = rows; },
     // a pincer: a station whose housing moves too (rows: t, housing's
     // x y z r p y, the jaws' mount's x y z r p y)
     pincer(id, tool, rows) { s.stations.push({ id, tool, housing: rows[0].slice(1, 7), rows: rows.map((r) => [r[0], ...r.slice(7)]), housings: rows.map((r) => r.slice(0, 7)) }); },
@@ -151,6 +153,17 @@ export function cellPlayer(host, calls, options = {}) {
   // close up: the work zone, the stage's top and what is held over it
   const close = () => ({ yaw: 35 * D, pitch: 22 * D, dist: 200, target: new THREE.Vector3(0, 0, -15) });
   const view = options.view || (options.close || new URLSearchParams(location.search).get('view') === 'close' ? close() : whole());
+  // ?look=x,y,z (a point in the cell's frame) [&dist=mm]: the camera on it
+  {
+    // or options.look = { at: [x, y, z], dist }
+    const q = new URLSearchParams(location.search);
+    const look = q.has('look') ? { at: q.get('look').split(',').map(Number), dist: Number(q.get('dist') || 120) } : options.look;
+    if (look && !options.view) {
+      root.updateMatrixWorld(true);
+      view.target = root.localToWorld(new THREE.Vector3(...look.at));
+      view.dist = look.dist;
+    }
+  }
   const place = () => {
     const c = Math.cos(view.pitch);
     camera.position.set(view.target.x + view.dist * c * Math.sin(view.yaw), view.target.y + view.dist * Math.sin(view.pitch), view.target.z + view.dist * c * Math.cos(view.yaw));
@@ -199,10 +212,11 @@ export function cellPlayer(host, calls, options = {}) {
   };
   const arms = {}, fixtures = {}, parts = {}, stations = {};
   const feeders = {};
+  const rigParts = {};
   const Y = new THREE.Vector3(0, 1, 0);
   const ready = Promise.all([
     ...s.fixtures.map(async (f) => {
-      const g = holder((await load(f.model)).clone(true));
+      const g = f.model === 'bender' ? buildBender() : holder((await load(f.model)).clone(true));
       g.matrixAutoUpdate = false;
       g.matrix.copy(poseMatrix(f.pose));
       root.add(g);
@@ -358,6 +372,65 @@ export function cellPlayer(host, calls, options = {}) {
     st.g.matrix.makeTranslation(x, y, z).multiply(st.base).multiply(new THREE.Matrix4().makeRotationX(tilt * D));
     st.g.matrixWorldNeedsUpdate = true;
   };
+  // the bending rig, in its own frame (x along the lead, z up, the lead's
+  // point at the origin): the backplate and post, the mandrel below the
+  // lead, the clamp above and the anvil below it on the body's side, the
+  // former that swings the free end down, the shear
+  function buildBender() {
+    const g = new THREE.Group();
+    const b = s.benderShape;
+    if (!b) return g;
+    const metal = new THREE.MeshStandardMaterial({ color: '#7b8794', metalness: 0.5, roughness: 0.45 });
+    const block = new THREE.MeshStandardMaterial({ color: '#5a6b5a', roughness: 0.7 });
+    const box = (c, size, m) => { const x = new THREE.Mesh(new THREE.BoxGeometry(...size), m); x.position.set(...c); return x; };
+    g.add(box(b.plate, b.size, block));
+    const top = b.plate[2] - b.size[2] / 2;
+    // the post, from the plate's bottom to the floor (as bender.rs's solid)
+    const postH = b.height + top;
+    g.add(box([b.plate[0], b.plate[1], top - postH / 2], [14, b.size[1], postH], block));
+    // pins along y, from the backplate's face to 2 mm past the lead
+    const face = b.plate[1] - b.size[1] / 2;
+    const pin = (r, m) => {
+      const c = new THREE.Mesh(new THREE.CylinderGeometry(r, r, face + 2, 16), m);
+      const h = new THREE.Group();
+      c.position.y = (face - 2) / 2;
+      h.add(c);
+      g.add(h);
+      return h;
+    };
+    rigParts.mandrel = pin(0.7, metal);
+    rigParts.clamp = pin(0.5, metal);
+    rigParts.anvil = pin(0.5, metal);
+    rigParts.former = pin(0.5, new THREE.MeshStandardMaterial({ color: '#c08a3e', metalness: 0.4, roughness: 0.4 }));
+    // the shear: a block with a slot, a blade across it
+    const sh = b.shear;
+    g.add(box([sh[0] + 4, face / 2 + 1, sh[2]], [4, face + 2, 4], block));
+    g.add(box([sh[0] - 4, face / 2 + 1, sh[2]], [4, face + 2, 4], block));
+    rigParts.blade = box([sh[0] - 6, 0, sh[2] + 2.3], [6, 4, 0.6], metal);
+    g.add(rigParts.blade);
+    rigParts.shear = sh;
+    // as glTF groups are, under a holder: here already in mm, z up
+    const outer = new THREE.Group();
+    outer.add(g);
+    return outer;
+  }
+  const benderAt = (u) => {
+    if (!rigParts.mandrel) return;
+    const r = s.bender.length ? at(s.bender, u) : [0, 0, 0, 1];
+    const [close, former, shear, radius] = r;
+    const R = radius || 1, half = 0.3;
+    rigParts.mandrel.position.set(0, 0, -R);
+    rigParts.mandrel.children[0].scale.set((R - half) / 0.7, 1, (R - half) / 0.7);
+    // clamp down, anvil up: from opposite sides onto the lead
+    rigParts.clamp.position.set(-1.5, 0, half + 0.5 + 3 * (1 - close));
+    rigParts.anvil.position.set(-1.5, 0, -half - 0.5 - 3 * (1 - close));
+    // the former on the lead's outer side, 3 mm past the bend
+    const a = (former || 0) * D;
+    const p = [R * Math.sin(a), 0, -R + R * Math.cos(a)];
+    const dir = [Math.cos(a), 0, -Math.sin(a)], out = [Math.sin(a), 0, Math.cos(a)];
+    rigParts.former.position.set(p[0] + 3 * dir[0] + (half + 0.5) * out[0], 0, p[2] + 3 * dir[2] + (half + 0.5) * out[2]);
+    rigParts.blade.position.x = rigParts.shear[0] - 6 + 6 * (shear || 0);
+  };
   // the iron's solder feeder: its solder runs out of the guide into the
   // joint while it feeds (out in 0.3 s, back in 0.3 s after), the spool
   // turning; at rest a 1.5 mm stub shows
@@ -505,6 +578,7 @@ export function cellPlayer(host, calls, options = {}) {
     stationsAt(now);
     leadsAt(now);
     feedsAt(now);
+    benderAt(now);
     scopeAt(now);
     ui.show();
     draw();

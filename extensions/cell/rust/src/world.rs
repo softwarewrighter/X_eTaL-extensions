@@ -316,6 +316,9 @@ pub struct World {
     /// The microscope.
     #[serde(default)]
     pub scope: crate::scope::Scope,
+    /// The bending rig.
+    #[serde(default)]
+    pub bender: crate::bender::Bender,
     /// Solder fed into joints, for players: from, to the time, and the
     /// station whose feeder fed it.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
@@ -478,6 +481,7 @@ impl World {
             stations: crate::stations::fresh(),
             pincers: crate::pincers::fresh(),
             scope: crate::scope::Scope::default(),
+            bender: crate::bender::Bender::default(),
             feeding: Vec::new(),
             vise: "open".into(),
             parts,
@@ -613,7 +617,7 @@ impl World {
         self.arms.iter().position(|a| a.name == name).unwrap_or(0)
     }
 
-    fn part_index(&self, id: &str) -> Option<usize> {
+    pub(crate) fn part_index(&self, id: &str) -> Option<usize> {
         self.parts.iter().position(|p| p.id == id)
     }
 
@@ -659,6 +663,7 @@ impl World {
                     [0.0, 0.0, 5.0],
                     [360.0, 60.0, 10.0],
                 )],
+                "bender" => crate::bender::solids(&f),
                 "tray" => vec![collide::fixture_box(
                     "the tray",
                     &f,
@@ -1367,6 +1372,15 @@ impl World {
                 );
             }
             "unpinch" => return self.unpinch(c.word("pincer").unwrap_or(""), did, events),
+            "form" => {
+                return self.bender_form(
+                    c.number("angle").unwrap_or(90.0),
+                    c.number("radius"),
+                    did,
+                    events,
+                    warnings,
+                );
+            }
             "bend" => {
                 let toward = match c.get("toward") {
                     Some(Value::Numbers(v)) => [v[0], v[1], v[2]],
@@ -1688,6 +1702,17 @@ impl World {
                 self.need_holding(i, id)?;
                 self.open(i, did, events, warnings);
             }
+            "insert" => {
+                let on = c.word("on").unwrap_or("");
+                let at = c.number("at").unwrap_or(3.0);
+                let roll = c.number("roll").unwrap_or(0.0);
+                self.bender_insert(i, &rig, on, at, roll, did, events)?;
+            }
+            "shear" => {
+                let on = c.word("on").unwrap_or("");
+                let at = c.number("at").unwrap_or(0.0);
+                self.bender_shear(i, &rig, on, at, did, events)?;
+            }
             "touch" => {
                 let at = c.word("at").unwrap_or("");
                 let dwell = c.number("dwell").unwrap_or(1.0);
@@ -1744,7 +1769,7 @@ impl World {
         }
     }
 
-    fn need_holding(&self, i: usize, id: &str) -> Result<(), Halt> {
+    pub(crate) fn need_holding(&self, i: usize, id: &str) -> Result<(), Halt> {
         match self.arms[i].holding.as_deref() {
             Some(h) if h == id => Ok(()),
             Some(h) => Err(Halt::Refused(format!(

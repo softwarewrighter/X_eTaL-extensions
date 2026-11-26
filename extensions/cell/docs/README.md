@@ -431,7 +431,48 @@ P1 lets the support go, and none is left. A frame of several supports
 built on the turntable, holding several parts at once, comes with the
 planner.
 
-### Forming and trimming leads
+### The bending rig
+
+Leads are formed in the bending rig, a fixed block beside the turntable
+with pins in slots (decision C19). The arm holds the part; the rig does
+the bending, in its one plane.
+
+```
+insert A on=R1.2 at=3        # the lead in, 3 mm from the body at the mandrel
+form angle=90                # clamp, bend down round the mandrel, open
+lift A mm=30
+shear A on=R1.2 at=8         # the bent leg through the shear: 8 mm long
+```
+
+- `insert ARM on=PIN [at=MM] [roll=DEG]`: the arm carries the part up
+  clear of the rig, turns it there (a joint move, so the turn does not
+  pass the wrist's singularity), comes down in front of the rig and
+  slides the lead in from the front: the point `at` mm from the body on
+  the mandrel, the lead along the rig, its free end past the mandrel.
+- `form [angle=DEG] [radius=MM]`: a clamp above the lead and an anvil
+  below it close from opposite sides, on the body's side of the
+  mandrel; the former swings the free end down round the mandrel (eight
+  shapes over 1.2 s), returns, and the clamp and anvil open. The bend's
+  inner radius is the lead's diameter, at least 1 mm, unless given. The
+  rig refuses when nothing is in it, when the arm has carried the lead
+  out of place since `insert`, or for a lead already in a joint.
+- The rig bends only in its plane. For the other lead, insert that one:
+  the part turns end for end and its bend comes out the same way as the
+  first, a U. With `roll=90` the part is turned about the lead first, so
+  the bend comes out square to the other.
+- `shear ARM on=PIN at=MM`: the arm puts the lead straight down through
+  the rig's shear with the point `at` mm along it at the blade; what is
+  past the cut falls into the bin.
+- The `bend-rig` program forms the resistor's lead 2 down, trims it to
+  8 mm and solders the resistor to the chip by its straight lead 1; the
+  live page opens it looking at the rig, the microscope aimed at the
+  bend.
+
+The rig's backplate and post are solids the arm and parts must clear;
+its pins are what the lead touches and are not. A pincer bending a lead
+in free air (below) stays for small corrections.
+
+## Forming and trimming leads
 
 - `bend PINCER on=PIN at=MM angle=DEG toward=X,Y,Z [radius=MM]`: a
   pincer grips the lead just past `at` mm from the body and swings it
@@ -847,6 +888,9 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `unpinch PINCER` | pincer | a pincer lets go and draws back |
 | `bend PINCER on=PIN at=MM angle=DEG toward=X,Y,Z [radius=MM]` | pincer | a pincer bends a lead round a mandrel, the rest of it toward a direction |
 | `trim STATION on=PIN at=MM` | cutter | a cutter station cuts a lead, what is past the cut falling into the bin |
+| `insert ARM on=PIN [at=MM] [roll=DEG]` | bender | the arm slides a held part's lead into the bending rig, at a distance from the body at its mandrel |
+| `form [angle=DEG] [radius=MM]` | bender | the bending rig clamps the lead in it and bends it down round its mandrel, in the rig's plane |
+| `shear ARM on=PIN at=MM` | bender | the arm puts a held part's lead through the rig's shear, which cuts it; what is past the cut falls into the bin |
 | `vise open\|close` | stage | open or close the vise on the stage |
 | `wait [s=S] [until=TARGET] [below=C]` | cell | let time pass, or wait until a pin or joint cools |
 | `scope [pan=DEG] [tilt=DEG] [zoom=N] [focus=MM] [rotate=DEG] [aim=TARGET]` | scope | move the microscope: pan, tilt, zoom, focus, rotate, or aim it at a target |

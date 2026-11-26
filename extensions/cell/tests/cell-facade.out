@@ -33,6 +33,9 @@ pinch PINCER on=PIN [at=MM] -- a pincer on the turntable grips a lead from the s
 unpinch PINCER -- a pincer lets go and draws back
 bend PINCER on=PIN at=MM angle=DEG toward=X,Y,Z [radius=MM] -- a pincer bends a lead round a mandrel, the rest of it toward a direction
 trim STATION on=PIN at=MM -- a cutter station cuts a lead, what is past the cut falling into the bin
+insert ARM on=PIN [at=MM] [roll=DEG] -- the arm slides a held part's lead into the bending rig, at a distance from the body at its mandrel
+form [angle=DEG] [radius=MM] -- the bending rig clamps the lead in it and bends it down round its mandrel, in the rig's plane
+shear ARM on=PIN at=MM -- the arm puts a held part's lead through the rig's shear, which cuts it; what is past the cut falls into the bin
 vise open|close -- open or close the vise on the stage
 wait [s=S] [until=TARGET] [below=C] -- let time pass, or wait until a pin or joint cools
 scope [pan=DEG] [tilt=DEG] [zoom=N] [focus=MM] [rotate=DEG] [aim=TARGET] -- move the microscope: pan, tilt, zoom, focus, rotate, or aim it at a target

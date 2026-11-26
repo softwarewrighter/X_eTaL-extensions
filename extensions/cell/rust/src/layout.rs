@@ -49,6 +49,8 @@ pub fn fixtures() -> Vec<(String, String, [f64; 6])> {
     for (name, _) in ARM_BASES {
         out.push((format!("rack_{name}"), "rack".to_string(), rack_pose(name)));
     }
+    let b = crate::bender::POSE;
+    out.push(("bender".to_string(), "bender".to_string(), b));
     out.push((
         "tray1".to_string(),
         "tray".to_string(),

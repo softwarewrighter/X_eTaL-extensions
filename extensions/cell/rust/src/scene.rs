@@ -14,6 +14,8 @@
 //! scope(nums('t pan tilt view focus rotate dist ...', 7))   the microscope
 //! snap(t, 'U1.3+R1.1', field)           a picture taken
 //! feeder('S1', length)                   the iron's solder feeder
+//! bender_shape(plate, size, shear, height)  the bending rig's shape
+//! bender(nums('t close former shear r ...', 5))  the bending rig
 //! feeding(t0, t1, 'S1')                  solder fed into a joint
 //! station('S1', 'iron', nums('housing x y z r p y', 6)[0], nums('t x y z r p y ...', 7))
 //! part('U1', 'dip8', nums('x y z r p y', 6)[0])
@@ -101,6 +103,22 @@ pub fn calls(name: &str, w: &World) -> Result<String, String> {
     let _ = writeln!(out, "scope({})", table(&rows, 7));
     for (t0, t1, st) in &w.feeding {
         let _ = writeln!(out, "feeding({}, {}, {})", num(*t0), num(*t1), quote(st));
+    }
+    // the bending rig: its shape, then its clamp, former and shear
+    {
+        use crate::bender::{PLATE, POSE, SHEAR};
+        let _ = writeln!(
+            out,
+            "bender_shape({}, {}, {}, {})",
+            row(&PLATE.0),
+            row(&PLATE.1),
+            row(&SHEAR),
+            num(POSE[2] + 200.0)
+        );
+    }
+    let rows: Vec<Vec<f64>> = w.bender.track.iter().map(|r| r.to_vec()).collect();
+    if !rows.is_empty() {
+        let _ = writeln!(out, "bender({})", table(&rows, 5));
     }
     for (t, what, field) in &w.scope.snaps {
         let _ = writeln!(out, "snap({}, {}, {})", num(*t), quote(what), num(*field));
