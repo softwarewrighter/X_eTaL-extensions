@@ -20,6 +20,11 @@
 ## (each a name, a lead as a polyline from the body, its diameter and
 ## material), its grasp frames and its thermal data; ce:p_art "dip8".
 "p_art : text -> text"          ffi:b_ind< "cell/part"
+## ce:t_ips kind: a kind's pin tips in its own frame (its body's center
+## at the origin), mm: x y z a line, in pin order -- read with n_umbers
+## (the planner, CellPlan.xtl, places parts from them); for an axial
+## resistor "-31 0 0\n31 0 0".
+"t_ips : text -> text"          ffi:b_ind< "cell/tips"
 ## ce:c_ommands @: the command language, one line a command -- its
 ## synopsis (positional arguments in capitals, optional ones in
 ## brackets) and what it does: "lift ARM [mm=MM] -- move the tool

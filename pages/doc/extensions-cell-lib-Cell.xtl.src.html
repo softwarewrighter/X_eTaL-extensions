@@ -85,6 +85,7 @@
 <ul>
 <li><a href="extensions-cell-lib-Cell.xtl.html">Cell.xtl</a></li>
 <li><a href="extensions-cell-lib-CellModels.xtl.html">CellModels.xtl</a></li>
+<li><a href="extensions-cell-lib-CellPlan.xtl.html">CellPlan.xtl</a></li>
 </ul>
 <h3>extensions/clock/demos/</h3>
 <ul>
@@ -226,14 +227,15 @@
 <li class="item"><a href="#L13"><span class="c-libfunc">ˡa̲bout</span></a></li>
 <li class="item"><a href="#L18"><span class="c-libfunc">ˡp̲arts</span></a></li>
 <li class="item"><a href="#L22"><span class="c-libfunc">ˡp̲art</span></a></li>
-<li class="item"><a href="#L27"><span class="c-libfunc">ˡc̲ommands</span></a></li>
-<li class="item"><a href="#L33"><span class="c-libfunc">ˡp̲arse</span></a></li>
-<li class="item"><a href="#L39"><span class="c-libfunc">ˡr̲un</span></a></li>
-<li class="item"><a href="#L44"><span class="c-libfunc">ˡs̲tate</span></a></li>
-<li class="item"><a href="#L53"><span class="c-libfunc">ˡs̲cene</span></a></li>
-<li class="item"><a href="#L57"><span class="c-libfunc">ˡr̲ig</span></a></li>
-<li class="item"><a href="#L65"><span class="c-libfunc">ˡa̲rmModel</span></a></li>
-<li class="item"><a href="#L69">ˡpackage</a></li>
+<li class="item"><a href="#L27"><span class="c-libfunc">ˡt̲ips</span></a></li>
+<li class="item"><a href="#L32"><span class="c-libfunc">ˡc̲ommands</span></a></li>
+<li class="item"><a href="#L38"><span class="c-libfunc">ˡp̲arse</span></a></li>
+<li class="item"><a href="#L44"><span class="c-libfunc">ˡr̲un</span></a></li>
+<li class="item"><a href="#L49"><span class="c-libfunc">ˡs̲tate</span></a></li>
+<li class="item"><a href="#L58"><span class="c-libfunc">ˡs̲cene</span></a></li>
+<li class="item"><a href="#L62"><span class="c-libfunc">ˡr̲ig</span></a></li>
+<li class="item"><a href="#L70"><span class="c-libfunc">ˡa̲rmModel</span></a></li>
+<li class="item"><a href="#L74">ˡpackage</a></li>
 </ul>
 </nav>
 <main>
@@ -272,79 +274,88 @@
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/part?text&quot;</span>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/part&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:c_ommands @: the command language, one line a command -- its</span></span>
-<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-doc">⍝│</span><span class="c-doc"> synopsis (positional arguments in capitals, optional ones in</span></span>
-<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-doc">⍝│</span><span class="c-doc"> brackets) and what it does: &quot;lift ARM [mm=MM] -- move the tool</span></span>
-<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-doc">⍝│</span><span class="c-doc"> straight up&quot;.</span></span>
-<span class="line" id="L27"><a class="ln" href="#L27">27</a><span class="c-string">&quot;c_ommands : unit -&gt; text&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/commands&quot;</span></span>
+<span class="line" id="L23"><a class="ln" href="#L23">23</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:t_ips kind: a kind's pin tips in its own frame (its body's center</span></span>
+<span class="line" id="L24"><a class="ln" href="#L24">24</a><span class="c-doc">⍝│</span><span class="c-doc"> at the origin), mm: x y z a line, in pin order -- read with n_umbers</span></span>
+<span class="line" id="L25"><a class="ln" href="#L25">25</a><span class="c-doc">⍝│</span><span class="c-doc"> (the planner, CellPlan.xtl, places parts from them); for an axial</span></span>
+<span class="line" id="L26"><a class="ln" href="#L26">26</a><span class="c-doc">⍝│</span><span class="c-doc"> resistor &quot;-31 0 0\n31 0 0&quot;.</span></span>
+<span class="line" id="L27"><a class="ln" href="#L27">27</a><span class="c-string">&quot;t_ips : text -&gt; text&quot;</span>          <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/tips&quot;</span></span>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡt̲ips</span> ← <span class="c-depth0">{</span> a →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/tips?text&quot;</span>
+  <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/tips&quot;</span>
+<span class="c-depth0">}</span></pre></details>
+<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:c_ommands @: the command language, one line a command -- its</span></span>
+<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-doc">⍝│</span><span class="c-doc"> synopsis (positional arguments in capitals, optional ones in</span></span>
+<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-doc">⍝│</span><span class="c-doc"> brackets) and what it does: &quot;lift ARM [mm=MM] -- move the tool</span></span>
+<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-doc">⍝│</span><span class="c-doc"> straight up&quot;.</span></span>
+<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-string">&quot;c_ommands : unit -&gt; text&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/commands&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡc̲ommands</span> ← <span class="c-depth0">{</span> @ →
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/commands&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L28"><a class="ln" href="#L28">28</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:p_arse program: a program checked against the command table, each</span></span>
-<span class="line" id="L29"><a class="ln" href="#L29">29</a><span class="c-doc">⍝│</span><span class="c-doc"> command as JSON, one a line, its arguments in the table's order. The</span></span>
-<span class="line" id="L30"><a class="ln" href="#L30">30</a><span class="c-doc">⍝│</span><span class="c-doc"> program is text -- one command a line, &quot;;&quot; between commands on a</span></span>
-<span class="line" id="L31"><a class="ln" href="#L31">31</a><span class="c-doc">⍝│</span><span class="c-doc"> line, &quot;#&quot; a comment -- or a line holding one JSON command. A wrong</span></span>
-<span class="line" id="L32"><a class="ln" href="#L32">32</a><span class="c-doc">⍝│</span><span class="c-doc"> command is an error naming its line and what is wrong.</span></span>
-<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-string">&quot;p_arse : text -&gt; text&quot;</span>         <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/parse&quot;</span></span>
+<span class="line" id="L33"><a class="ln" href="#L33">33</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:p_arse program: a program checked against the command table, each</span></span>
+<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-doc">⍝│</span><span class="c-doc"> command as JSON, one a line, its arguments in the table's order. The</span></span>
+<span class="line" id="L35"><a class="ln" href="#L35">35</a><span class="c-doc">⍝│</span><span class="c-doc"> program is text -- one command a line, &quot;;&quot; between commands on a</span></span>
+<span class="line" id="L36"><a class="ln" href="#L36">36</a><span class="c-doc">⍝│</span><span class="c-doc"> line, &quot;#&quot; a comment -- or a line holding one JSON command. A wrong</span></span>
+<span class="line" id="L37"><a class="ln" href="#L37">37</a><span class="c-doc">⍝│</span><span class="c-doc"> command is an error naming its line and what is wrong.</span></span>
+<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-string">&quot;p_arse : text -&gt; text&quot;</span>         <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/parse&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡp̲arse</span> ← <span class="c-depth0">{</span> a →
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/parse?text&quot;</span>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/parse&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L34"><a class="ln" href="#L34">34</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:r_un program: the program run on a new cell -- arms home, the</span></span>
-<span class="line" id="L35"><a class="ln" href="#L35">35</a><span class="c-doc">⍝│</span><span class="c-doc"> stage at 0, the vise open, the time 0 -- each command's outcome as</span></span>
-<span class="line" id="L36"><a class="ln" href="#L36">36</a><span class="c-doc">⍝│</span><span class="c-doc"> JSON, one a line: ok, the command, its start and end times, what it</span></span>
-<span class="line" id="L37"><a class="ln" href="#L37">37</a><span class="c-doc">⍝│</span><span class="c-doc"> did, why it was refused or where it stopped, events and warnings. It</span></span>
-<span class="line" id="L38"><a class="ln" href="#L38">38</a><span class="c-doc">⍝│</span><span class="c-doc"> stops after the first command that is not ok.</span></span>
-<span class="line" id="L39"><a class="ln" href="#L39">39</a><span class="c-string">&quot;r_un : text -&gt; text&quot;</span>           <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/run&quot;</span></span>
+<span class="line" id="L39"><a class="ln" href="#L39">39</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:r_un program: the program run on a new cell -- arms home, the</span></span>
+<span class="line" id="L40"><a class="ln" href="#L40">40</a><span class="c-doc">⍝│</span><span class="c-doc"> stage at 0, the vise open, the time 0 -- each command's outcome as</span></span>
+<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-doc">⍝│</span><span class="c-doc"> JSON, one a line: ok, the command, its start and end times, what it</span></span>
+<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-doc">⍝│</span><span class="c-doc"> did, why it was refused or where it stopped, events and warnings. It</span></span>
+<span class="line" id="L43"><a class="ln" href="#L43">43</a><span class="c-doc">⍝│</span><span class="c-doc"> stops after the first command that is not ok.</span></span>
+<span class="line" id="L44"><a class="ln" href="#L44">44</a><span class="c-string">&quot;r_un : text -&gt; text&quot;</span>           <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/run&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡr̲un</span> ← <span class="c-depth0">{</span> a →
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/run?text&quot;</span>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/run&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L40"><a class="ln" href="#L40">40</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:s_tate program: the program run on a new cell, the cell's state</span></span>
-<span class="line" id="L41"><a class="ln" href="#L41">41</a><span class="c-doc">⍝│</span><span class="c-doc"> after it as JSON -- the time, the arms (base, joints, tool, track:</span></span>
-<span class="line" id="L42"><a class="ln" href="#L42">42</a><span class="c-doc">⍝│</span><span class="c-doc"> rows of the time and j1 to j6), the stage and its track, the vise,</span></span>
-<span class="line" id="L43"><a class="ln" href="#L43">43</a><span class="c-doc">⍝│</span><span class="c-doc"> the parts and the timeline. A command not ok is an error naming it.</span></span>
-<span class="line" id="L44"><a class="ln" href="#L44">44</a><span class="c-string">&quot;s_tate : text -&gt; text&quot;</span>         <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/state&quot;</span></span>
+<span class="line" id="L45"><a class="ln" href="#L45">45</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:s_tate program: the program run on a new cell, the cell's state</span></span>
+<span class="line" id="L46"><a class="ln" href="#L46">46</a><span class="c-doc">⍝│</span><span class="c-doc"> after it as JSON -- the time, the arms (base, joints, tool, track:</span></span>
+<span class="line" id="L47"><a class="ln" href="#L47">47</a><span class="c-doc">⍝│</span><span class="c-doc"> rows of the time and j1 to j6), the stage and its track, the vise,</span></span>
+<span class="line" id="L48"><a class="ln" href="#L48">48</a><span class="c-doc">⍝│</span><span class="c-doc"> the parts and the timeline. A command not ok is an error naming it.</span></span>
+<span class="line" id="L49"><a class="ln" href="#L49">49</a><span class="c-string">&quot;s_tate : text -&gt; text&quot;</span>         <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/state&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡs̲tate</span> ← <span class="c-depth0">{</span> a →
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/state?text&quot;</span>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/state&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L45"><a class="ln" href="#L45">45</a><span class="c-doc">⍝│</span><span class="c-doc"> name ce:s_cene program: the program run on a new cell, written as a</span></span>
-<span class="line" id="L46"><a class="ln" href="#L46">46</a><span class="c-doc">⍝│</span><span class="c-doc"> scene for the players -- one call a line, its first cell(name, 1280,</span></span>
-<span class="line" id="L47"><a class="ln" href="#L47">47</a><span class="c-doc">⍝│</span><span class="c-doc"> 720), then the fixtures, each arm (rig) with its track (rows of the</span></span>
-<span class="line" id="L48"><a class="ln" href="#L48">48</a><span class="c-doc">⍝│</span><span class="c-doc"> time and the six joint angles), the stage's track, the parts, a</span></span>
-<span class="line" id="L49"><a class="ln" href="#L49">49</a><span class="c-doc">⍝│</span><span class="c-doc"> step a command with its times, and expect lines (an arm's flange at</span></span>
-<span class="line" id="L50"><a class="ln" href="#L50">50</a><span class="c-doc">⍝│</span><span class="c-doc"> a time, for a check of the drawing). The three extension's cell</span></span>
-<span class="line" id="L51"><a class="ln" href="#L51">51</a><span class="c-doc">⍝│</span><span class="c-doc"> player draws it (th:p_age! writes a page). A command not ok is an</span></span>
-<span class="line" id="L52"><a class="ln" href="#L52">52</a><span class="c-doc">⍝│</span><span class="c-doc"> error naming it.</span></span>
-<span class="line" id="L53"><a class="ln" href="#L53">53</a><span class="c-string">&quot;s_cene : text text -&gt; text&quot;</span>    <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/scene&quot;</span></span>
+<span class="line" id="L50"><a class="ln" href="#L50">50</a><span class="c-doc">⍝│</span><span class="c-doc"> name ce:s_cene program: the program run on a new cell, written as a</span></span>
+<span class="line" id="L51"><a class="ln" href="#L51">51</a><span class="c-doc">⍝│</span><span class="c-doc"> scene for the players -- one call a line, its first cell(name, 1280,</span></span>
+<span class="line" id="L52"><a class="ln" href="#L52">52</a><span class="c-doc">⍝│</span><span class="c-doc"> 720), then the fixtures, each arm (rig) with its track (rows of the</span></span>
+<span class="line" id="L53"><a class="ln" href="#L53">53</a><span class="c-doc">⍝│</span><span class="c-doc"> time and the six joint angles), the stage's track, the parts, a</span></span>
+<span class="line" id="L54"><a class="ln" href="#L54">54</a><span class="c-doc">⍝│</span><span class="c-doc"> step a command with its times, and expect lines (an arm's flange at</span></span>
+<span class="line" id="L55"><a class="ln" href="#L55">55</a><span class="c-doc">⍝│</span><span class="c-doc"> a time, for a check of the drawing). The three extension's cell</span></span>
+<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-doc">⍝│</span><span class="c-doc"> player draws it (th:p_age! writes a page). A command not ok is an</span></span>
+<span class="line" id="L57"><a class="ln" href="#L57">57</a><span class="c-doc">⍝│</span><span class="c-doc"> error naming it.</span></span>
+<span class="line" id="L58"><a class="ln" href="#L58">58</a><span class="c-string">&quot;s_cene : text text -&gt; text&quot;</span>    <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/scene&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡs̲cene</span> ← <span class="c-depth0">{</span> a b →
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/scene?text&quot;</span>
   pb ← b <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/scene?text&quot;</span>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/scene&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L54"><a class="ln" href="#L54">54</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:r_ig @: the arm's rig as JSON -- each joint's DH parameters</span></span>
-<span class="line" id="L55"><a class="ln" href="#L55">55</a><span class="c-doc">⍝│</span><span class="c-doc"> (alpha, a, d, offset), its limits, top speed and acceleration, and</span></span>
-<span class="line" id="L56"><a class="ln" href="#L56">56</a><span class="c-doc">⍝│</span><span class="c-doc"> the home pose; every arm in the cell is this arm.</span></span>
-<span class="line" id="L57"><a class="ln" href="#L57">57</a><span class="c-string">&quot;r_ig : unit -&gt; text&quot;</span>           <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/rig&quot;</span></span>
+<span class="line" id="L59"><a class="ln" href="#L59">59</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:r_ig @: the arm's rig as JSON -- each joint's DH parameters</span></span>
+<span class="line" id="L60"><a class="ln" href="#L60">60</a><span class="c-doc">⍝│</span><span class="c-doc"> (alpha, a, d, offset), its limits, top speed and acceleration, and</span></span>
+<span class="line" id="L61"><a class="ln" href="#L61">61</a><span class="c-doc">⍝│</span><span class="c-doc"> the home pose; every arm in the cell is this arm.</span></span>
+<span class="line" id="L62"><a class="ln" href="#L62">62</a><span class="c-string">&quot;r_ig : unit -&gt; text&quot;</span>           <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/rig&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡr̲ig</span> ← <span class="c-depth0">{</span> @ →
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/rig&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L58"><a class="ln" href="#L58">58</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:a_rmModel @: what a model of the arm must be, as JSON (the asset</span></span>
-<span class="line" id="L59"><a class="ln" href="#L59">59</a><span class="c-doc">⍝│</span><span class="c-doc"> contract, docs/cell-design.md): its nodes -- arm_base, arm_j1 to</span></span>
-<span class="line" id="L60"><a class="ln" href="#L60">60</a><span class="c-doc">⍝│</span><span class="c-doc"> arm_j6, arm_flange -- each placed in its parent (mm, and Euler XYZ</span></span>
-<span class="line" id="L61"><a class="ln" href="#L61">61</a><span class="c-doc">⍝│</span><span class="c-doc"> degrees) with where it is at rest and its local z, the joint's axis;</span></span>
-<span class="line" id="L62"><a class="ln" href="#L62">62</a><span class="c-doc">⍝│</span><span class="c-doc"> the links between the pivots; check poses (joint angles with where</span></span>
-<span class="line" id="L63"><a class="ln" href="#L63">63</a><span class="c-doc">⍝│</span><span class="c-doc"> the flange must then be); and the rig. CellModels.xtl builds the arm</span></span>
-<span class="line" id="L64"><a class="ln" href="#L64">64</a><span class="c-doc">⍝│</span><span class="c-doc"> from it, and Blender writes it back as arm.rig.json.</span></span>
-<span class="line" id="L65"><a class="ln" href="#L65">65</a><span class="c-string">&quot;a_rmModel : unit -&gt; text&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/arm_model&quot;</span></span>
+<span class="line" id="L63"><a class="ln" href="#L63">63</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:a_rmModel @: what a model of the arm must be, as JSON (the asset</span></span>
+<span class="line" id="L64"><a class="ln" href="#L64">64</a><span class="c-doc">⍝│</span><span class="c-doc"> contract, docs/cell-design.md): its nodes -- arm_base, arm_j1 to</span></span>
+<span class="line" id="L65"><a class="ln" href="#L65">65</a><span class="c-doc">⍝│</span><span class="c-doc"> arm_j6, arm_flange -- each placed in its parent (mm, and Euler XYZ</span></span>
+<span class="line" id="L66"><a class="ln" href="#L66">66</a><span class="c-doc">⍝│</span><span class="c-doc"> degrees) with where it is at rest and its local z, the joint's axis;</span></span>
+<span class="line" id="L67"><a class="ln" href="#L67">67</a><span class="c-doc">⍝│</span><span class="c-doc"> the links between the pivots; check poses (joint angles with where</span></span>
+<span class="line" id="L68"><a class="ln" href="#L68">68</a><span class="c-doc">⍝│</span><span class="c-doc"> the flange must then be); and the rig. CellModels.xtl builds the arm</span></span>
+<span class="line" id="L69"><a class="ln" href="#L69">69</a><span class="c-doc">⍝│</span><span class="c-doc"> from it, and Blender writes it back as arm.rig.json.</span></span>
+<span class="line" id="L70"><a class="ln" href="#L70">70</a><span class="c-string">&quot;a_rmModel : unit -&gt; text&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/arm_model&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡa̲rmModel</span> ← <span class="c-depth0">{</span> @ →
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/arm_model&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L66"><a class="ln" href="#L66">66</a></span>
-<span class="line" id="L67"><a class="ln" href="#L67">67</a><span class="c-doc">⍝│</span><span class="c-doc"> The native package behind these functions (a literal l: name also</span></span>
-<span class="line" id="L68"><a class="ln" href="#L68">68</a><span class="c-doc">⍝│</span><span class="c-doc"> makes this file a library to </span><span class="c-doc"></span>xetal type<span class="c-doc"></span><span class="c-doc">: ask E7).</span></span>
-<span class="line" id="L69"><a class="ln" href="#L69">69</a>ˡpackage ← <span class="c-string">&quot;cell&quot;</span></span>
+<span class="line" id="L71"><a class="ln" href="#L71">71</a></span>
+<span class="line" id="L72"><a class="ln" href="#L72">72</a><span class="c-doc">⍝│</span><span class="c-doc"> The native package behind these functions (a literal l: name also</span></span>
+<span class="line" id="L73"><a class="ln" href="#L73">73</a><span class="c-doc">⍝│</span><span class="c-doc"> makes this file a library to </span><span class="c-doc"></span>xetal type<span class="c-doc"></span><span class="c-doc">: ask E7).</span></span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a>ˡpackage ← <span class="c-string">&quot;cell&quot;</span></span>
 </div>
 </main>
 </body>

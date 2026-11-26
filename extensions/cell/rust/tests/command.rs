@@ -58,9 +58,10 @@ test R1
 verify R1
 sleeve S6 on=R1.1 from=15 to=27 size=1.0 color=red
 shrink S6 on=R1.1 dwell=3
+bring A R1.1 to=U1.3.tip along=1,0,0 gap=0.1
 ";
     let p = parse_program(program).unwrap();
-    assert_eq!(p.len(), 43);
+    assert_eq!(p.len(), 44);
     for c in &p {
         round_trip(&c.to_text());
     }
@@ -78,8 +79,8 @@ fn every_command_has_an_example() {
     let covered = [
         "reset", "tool", "joints", "move", "lift", "back", "grip", "pick", "place", "align",
         "release", "clip", "touch", "feed", "weld", "wire", "cut", "stage", "present", "pinch",
-        "unpinch", "bend", "sleeve", "shrink", "trim", "insert", "form", "shear", "vise", "wait",
-        "scope", "snap", "inspect", "test", "verify", "identify", "probe", "rewind",
+        "unpinch", "bend", "sleeve", "shrink", "trim", "bring", "insert", "form", "shear", "vise",
+        "wait", "scope", "snap", "inspect", "test", "verify", "identify", "probe", "rewind",
     ];
     let ops: Vec<&str> = COMMANDS.iter().map(|s| s.op).collect();
     assert_eq!(ops, covered);

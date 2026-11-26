@@ -1,0 +1,3 @@
+command = "xetal-x --ext . run tests/plan.xtl"
+exit_code = 0
+desc = "the planner on the netlist nets/plan.net (four resistors dead-bug on a DIP-8): the core into the vise, each resistor brought along its pin (fanned), pinched by the pincer on its side, soldered, let go, the turntable back to rest; one side of the core, then the other; the shorts checked at the end"

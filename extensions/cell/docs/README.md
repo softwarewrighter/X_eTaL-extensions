@@ -452,7 +452,50 @@ P1 lets the support go, and none is left. A frame of several supports
 built on the turntable, holding several parts at once, comes with the
 planner.
 
-### Insulation: heat-shrink sleeving
+### The planner
+
+The planner turns a netlist into a command program (decision C9, the
+slicer). It is written in X_eTaL, `lib/CellPlan.xtl` (`cp:`), and works
+the placement out as arrays.
+
+```
+# nets/plan.net
+circuit plan
+core U1 dip8
+R1 U1 2          # R1's lead 1 to the core's pin 2
+R2 U1 3
+R3 U1 6
+R4 U1 7
+```
+
+`just ext cell plan plan` writes `programs/plan.cell`, which the
+simulator runs, the preview plays and the live page offers ("planned:
+four resistors on a DIP").
+
+- The core goes in the vise. Its pin tips come from the extension
+  (`ce:t_ips`), turned into the cell as the vise holds it.
+- Each neighbor comes in level along its pin, out to the pin's side and
+  fanned along the row (`cp:d_irections`), so neighbors on one side
+  spread apart; where each body comes to rest gives the least
+  clearance between any two (`cp:c_learance`), written at the top of
+  the program.
+- The joins are made one side of the core at a time, in pin order
+  (`cp:o_rder`): each side's pincer works its own side, and none crosses
+  the leads already standing on the other. Each joint cools below
+  100 C before the next.
+- Each join: pick, `bring` (the held part turned and carried so its
+  lead comes in along the direction, its body out that way), pinch,
+  release, present, touch, feed, back, wait, inspect, unpinch, and the
+  turntable back to rest; at the end `inspect shorts`.
+- `bring ARM PIN to=FRAME along=X,Y,Z [gap=] [roll=]` is the
+  simulator's side: the planner says where and from which way, the
+  simulator works out the motion (up clear, a joint move, in along the
+  direction, the last of the way slowly).
+- The neighbors are axial parts joined by lead 1 for now. Sleeving or
+  enameled wire where nets cross, supports where a part cannot be held,
+  and other kinds of neighbor come with the builds that need them.
+
+## Insulation: heat-shrink sleeving
 
 Leads of different nets that cross in a compact build would short.
 A heat-shrink sleeve insulates a span of a lead (decision C20): station
@@ -1080,6 +1123,7 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `sleeve STATION on=PIN from=MM to=MM [size=0.6\|0.8\|1.0\|1.5\|2.0] [color=black\|red\|blue\|yellow\|green\|orange\|violet\|white\|gray\|brown\|clear]` | sleeve | the sleeve station slides heat-shrink tubing onto a lead from its free end, presented at its point |
 | `shrink STATION on=PIN [dwell=S]` | sleeve | the sleeve station's hot air shrinks the sleeve on a lead, presented at its point |
 | `trim STATION on=PIN at=MM` | cutter | a cutter station cuts a lead, what is past the cut falling into the bin |
+| `bring ARM PIN to=FRAME along=X,Y,Z [gap=MM] [roll=DEG]` | tweezers | the held part turned and carried so a lead's tip comes in toward a frame along a direction (its body out that way), stopping short: for the planner |
 | `insert ARM on=PIN [at=MM] [roll=DEG]` | bender | the arm slides a held part's lead into the bending rig, at a distance from the body at its mandrel |
 | `form [angle=DEG] [radius=MM]` | bender | the bending rig clamps the lead in it and bends it down round its mandrel, in the rig's plane |
 | `shear ARM on=PIN at=MM` | bender | the arm puts a held part's lead through the rig's shear, which cuts it; what is past the cut falls into the bin |

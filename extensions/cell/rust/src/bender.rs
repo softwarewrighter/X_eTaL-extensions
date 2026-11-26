@@ -174,23 +174,45 @@ impl World {
                 num1(total)
             )));
         }
-        let now = self.parts[k].pose();
         let f = frame();
-        let local = crate::world::along(&lead, at);
-        let d_local = crate::leads::direction_at(&lead, at);
+        let point_w = f.then(&Pose::from_xyz_rpy(point, [0.0; 3])).p;
+        let dir_w = kin::mv(&f.r, dir);
+        let front = kin::mv(&f.r, [0.0, -FRONT, 0.0]);
+        self.carry_lead(i, rig, k, &lead, at, point_w, dir_w, roll, front, &[], did)
+    }
+
+    /// The held part `k` carried so the point `at` mm along its lead
+    /// `lead` is at `point` (the cell's frame), the lead there along
+    /// `dir`, turned `roll` degrees about it: up clear first, there in
+    /// joint space, then in from `front` (an offset from the goal), the
+    /// last of the way slowly, `allowed` touching at the end.
+    #[allow(clippy::too_many_arguments)]
+    pub(crate) fn carry_lead(
+        &mut self,
+        i: usize,
+        rig: &crate::rig::Rig,
+        k: usize,
+        lead: &[V3],
+        at: f64,
+        point: V3,
+        dir: V3,
+        roll: f64,
+        front: V3,
+        allowed: &[String],
+        did: &mut Vec<String>,
+    ) -> Result<(), Halt> {
+        let now = self.parts[k].pose();
+        let local = crate::world::along(lead, at);
+        let d_local = crate::leads::direction_at(lead, at);
         let d_world = kin::mv(&now.r, d_local);
-        let want = kin::mv(&f.r, dir);
+        let want = kin::scale(dir, 1.0 / kin::norm(dir).max(1e-9));
         let r = kin::mm(&turn_onto(d_world, want), &now.r);
         let r = kin::mm(&about(want, roll.to_radians()), &r);
-        let goal_p = kin::sub(
-            f.then(&Pose::from_xyz_rpy(point, [0.0; 3])).p,
-            kin::mv(&r, local),
-        );
+        let goal_p = kin::sub(point, kin::mv(&r, local));
         let goal = Pose { p: goal_p, r };
         let arm = self.arms[i].name.clone();
         let tip = self.tip(&arm).map_err(Halt::Refused)?;
         let target = goal.then(&now.inverse().then(&tip));
-        let front = kin::mv(&f.r, [0.0, -FRONT, 0.0]);
         let ahead = Pose {
             p: kin::add(target.p, front),
             r: target.r,
@@ -213,7 +235,63 @@ impl World {
         };
         self.joint_to(i, rig, &above, did)?;
         self.line(i, rig, &ahead, LINE_SPEED, &[], did)?;
-        self.line(i, rig, &target, CAREFUL, &[], did)
+        self.line(i, rig, &target, CAREFUL, allowed, did)
+    }
+
+    /// `bring ARM PIN to=FRAME along=X,Y,Z [gap=] [roll=]`: the held
+    /// part turned so its lead `PIN` comes in toward the frame along the
+    /// direction given (the part's body out that way) and carried there,
+    /// its tip `gap` mm short: the joint they are meant to make.
+    #[allow(clippy::too_many_arguments)]
+    pub(crate) fn bring(
+        &mut self,
+        i: usize,
+        rig: &crate::rig::Rig,
+        pin: &str,
+        to: &str,
+        along: V3,
+        gap: f64,
+        roll: f64,
+        did: &mut Vec<String>,
+        events: &mut Vec<String>,
+    ) -> Result<(), Halt> {
+        let (k, _, lead, _) = self.bender_lead(pin)?;
+        let id = self.parts[k].id.clone();
+        self.need_holding(i, &id)?;
+        let n = kin::norm(along);
+        if n < 1e-9 {
+            return Err(Halt::Refused("along: give a direction".into()));
+        }
+        let u = kin::scale(along, 1.0 / n);
+        let target = self.frame(to).map_err(Halt::Refused)?.p;
+        let other = to.split('.').next().unwrap_or("").to_string();
+        if other == id {
+            return Err(Halt::Refused(format!(
+                "{pin} and {to} are on the same part"
+            )));
+        }
+        let total = crate::leads::length(&lead);
+        let at = (total - 0.01).max(0.0);
+        let point = kin::add(target, kin::scale(u, gap));
+        self.carry_lead(
+            i,
+            rig,
+            k,
+            &lead,
+            at,
+            point,
+            kin::scale(u, -1.0),
+            roll,
+            kin::scale(u, FRONT),
+            &[format!("part:{other}")],
+            did,
+        )?;
+        events.push(format!("{pin}.tip is {} mm from {to}", num1(gap)));
+        let to_pin = to.splitn(3, '.').take(2).collect::<Vec<_>>().join(".");
+        if to_pin.contains('.') {
+            let _ = self.joint_for(&format!("{to_pin}+{pin}"));
+        }
+        Ok(())
     }
 
     /// Arm `i` to a tool pose by a joint move, checked for collision.

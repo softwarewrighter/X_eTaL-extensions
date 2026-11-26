@@ -1,0 +1,38 @@
+# plan: a DIP-8 and four resistors for the planner's first netlist
+# (nets/plan.net): each part's id, kind, tray pocket, turn and mark.
+title = "a DIP-8 and four resistors, for the planner"
+
+[[part]]
+id = "U1"
+kind = "dip8"
+pocket = 1
+yaw = 90
+mark = "NE555P"
+
+[[part]]
+id = "R1"
+kind = "axial-resistor"
+pocket = 2
+yaw = 90
+mark = "1k"
+
+[[part]]
+id = "R2"
+kind = "axial-resistor"
+pocket = 3
+yaw = 90
+mark = "4.7k"
+
+[[part]]
+id = "R3"
+kind = "axial-resistor"
+pocket = 4
+yaw = 90
+mark = "10k"
+
+[[part]]
+id = "R4"
+kind = "axial-resistor"
+pocket = 5
+yaw = 90
+mark = "100k"

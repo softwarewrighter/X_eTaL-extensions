@@ -1,0 +1,4 @@
+# the planner (CellPlan.xtl) on nets/plan.net: the program it writes,
+# which must be programs/plan.cell (the golden cell-plan)
+"cp:" u_se< "CellPlan"
+cp:p_lan "circuit plan\ncore U1 dip8\nR1 U1 2\nR2 U1 3\nR3 U1 6\nR4 U1 7"

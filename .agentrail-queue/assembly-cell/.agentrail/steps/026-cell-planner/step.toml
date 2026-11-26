@@ -1,6 +1,6 @@
 number = 26
 slug = "cell-planner"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 13: extensions/cell/lib/CellPlan.xtl (cp:): a netlist as text to..."
 role = "production"
 context_files = []

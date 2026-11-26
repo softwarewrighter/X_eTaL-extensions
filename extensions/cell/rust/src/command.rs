@@ -488,6 +488,33 @@ pub const COMMANDS: &[Spec] = &[
         ],
     },
     Spec {
+        op: "bring",
+        family: "tweezers",
+        summary: "the held part turned and carried so a lead's tip comes in toward a frame along a direction (its body out that way), stopping short: for the planner",
+        positional: &[
+            ARM,
+            req("pin", Kind::Pin, "the held part's pin whose lead comes in"),
+        ],
+        named: &[
+            req("to", Kind::Frame, "the frame its tip comes to (U1.3.tip)"),
+            req(
+                "along",
+                Kind::Vec3("mm"),
+                "the direction from the target out along the lead toward its body",
+            ),
+            opt(
+                "gap",
+                Kind::Number("mm", 0.0, 5.0),
+                "how far short it stops (0.1 if not given)",
+            ),
+            opt(
+                "roll",
+                Kind::Number("deg", -180.0, 180.0),
+                "the part turned about the lead",
+            ),
+        ],
+    },
+    Spec {
         op: "insert",
         family: "bender",
         summary: "the arm slides a held part's lead into the bending rig, at a distance from the body at its mandrel",

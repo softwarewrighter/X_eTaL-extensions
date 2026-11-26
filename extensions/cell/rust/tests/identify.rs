@@ -155,5 +155,8 @@ fn say_program() {
             o.refused.as_ref().or(o.stopped.as_ref()),
             said(&o)
         );
+        if std::env::var("DID").is_ok() && !o.ok {
+            println!("DID {:?}", o.did);
+        }
     }
 }

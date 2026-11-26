@@ -1,0 +1,20 @@
+reset circuit=demo
+tool A tweezers
+pick A U1 grasp=ends
+place A U1 at=0,0,-24 rpy=0,0,90
+vise close
+release A U1
+pick A R1 grasp=body
+lift A mm=60
+bring A R1.1 to=U1.3.tip along=-1,0,0
+pinch P1 on=R1.1 at=6
+release A R1
+lift A mm=60
+present U1.3+R1.1 at=S1
+touch S1 at=U1.3+R1.1 dwell=2
+feed S1 mm=2 rate=1
+back S1
+wait until=U1.3+R1.1 below=100
+inspect U1.3+R1.1
+unpinch P1
+inspect shorts

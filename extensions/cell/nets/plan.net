@@ -1,0 +1,9 @@
+# plan: four resistors dead-bug on a DIP-8 -- the planner's first
+# netlist (CellPlan.xtl). Each neighbor line: the neighbor, the core,
+# the core's pin its lead 1 is soldered to.
+circuit plan
+core U1 dip8
+R1 U1 2
+R2 U1 3
+R3 U1 6
+R4 U1 7

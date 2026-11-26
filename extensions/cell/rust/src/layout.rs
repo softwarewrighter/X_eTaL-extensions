@@ -235,11 +235,12 @@ struct CircuitFile {
     part: Vec<Laid>,
 }
 
-const CIRCUITS: [(&str, &str); 4] = [
+const CIRCUITS: [(&str, &str); 5] = [
     ("demo", include_str!("../../circuits/demo.toml")),
     ("weld", include_str!("../../circuits/weld.toml")),
     ("tester", include_str!("../../circuits/tester.toml")),
     ("tester-b", include_str!("../../circuits/tester-b.toml")),
+    ("plan", include_str!("../../circuits/plan.toml")),
 ];
 
 /// The circuits a reset can lay out: `none` (empty trays) and those in

@@ -1791,6 +1791,17 @@ impl World {
                 self.need_holding(i, id)?;
                 self.open(i, did, events, warnings);
             }
+            "bring" => {
+                let pin = c.word("pin").unwrap_or("").to_string();
+                let to = c.word("to").unwrap_or("").to_string();
+                let along = match c.get("along") {
+                    Some(Value::Numbers(v)) => [v[0], v[1], v[2]],
+                    _ => [0.0, 0.0, 0.0],
+                };
+                let gap = c.number("gap").unwrap_or(0.1);
+                let roll = c.number("roll").unwrap_or(0.0);
+                self.bring(i, &rig, &pin, &to, along, gap, roll, did, events)?;
+            }
             "insert" => {
                 let on = c.word("on").unwrap_or("");
                 let at = c.number("at").unwrap_or(3.0);

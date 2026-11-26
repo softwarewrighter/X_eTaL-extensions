@@ -85,6 +85,7 @@
 <ul>
 <li><a href="extensions-cell-lib-Cell.xtl.html">Cell.xtl</a></li>
 <li><a href="extensions-cell-lib-CellModels.xtl.html">CellModels.xtl</a></li>
+<li><a href="extensions-cell-lib-CellPlan.xtl.html">CellPlan.xtl</a></li>
 </ul>
 <h3>extensions/clock/demos/</h3>
 <ul>
@@ -660,6 +661,18 @@ mount at 0 (the flange), its tip at tool_tip.
 The Python is Bpy.xtl's head (bp:head) and the cell's builders,
 extensions/cell/models/cell_models.py; the calls are written here.
 Import: &quot;cm:&quot; u_se&lt; &quot;CellModels&quot;</li>
+<li>library <a href="extensions-cell-lib-CellPlan.xtl.html">extensions/cell/lib/CellPlan.xtl</a>: CellPlan.xtl -- the assembly cell's planner (decision C9, the
+slicer): a netlist as text to a command program for the cell. The
+core part goes in the vise; each neighbor is brought dead-bug to its
+core pin, coming in from outside along the pin (fanned a little along
+the pin row, so neighbors on one side spread apart), pinched by the
+turntable, soldered at the iron station and let go. The placement is
+worked out as arrays: the core's pin tips (ce:t_ips) turned into the
+cell, each neighbor's direction, where its body comes to rest, the
+clearance between every two bodies, and the order: one side of the
+core at a time, so the turntable's two pincers keep to their own
+sides.
+Import: &quot;cp:&quot; u_se&lt; &quot;CellPlan&quot;</li>
 <li>program <a href="extensions-cell-demos-models.xtl.html">extensions/cell/demos/models.xtl</a>: The assembly cell's models: X_eTaL writes the inputs -- the arm's
 pivots and every part kind as the simulator gives them (ce:a_rmModel,
 ce:p_art) -- and the Python (CellModels.xtl, Bpy.xtl's head and
@@ -2063,6 +2076,7 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.a_bout"><span class="c-libfunc">ˡa̲bout</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.p_arts"><span class="c-libfunc">ˡp̲arts</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.p_art"><span class="c-libfunc">ˡp̲art</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.t_ips"><span class="c-libfunc">ˡt̲ips</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.c_ommands"><span class="c-libfunc">ˡc̲ommands</span></a></td><td>function</td><td><code>Unit -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.p_arse"><span class="c-libfunc">ˡp̲arse</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-cell-lib-Cell.xtl.html#l.r_un"><span class="c-libfunc">ˡr̲un</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
@@ -2121,6 +2135,25 @@ Run: just demo web todomvc, then open http://127.0.0.1:8470/
 <tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.names">ˡnames</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.script">ˡscript</a></td><td>value</td><td><code>Char</code></td></tr>
 <tr><td><a href="extensions-cell-lib-CellModels.xtl.html#l.stills">ˡstills</a></td><td>value</td><td><code>Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#h.l_ines"><span class="c-libfunc">ʰl̲ines</span></a></td><td>function</td><td><code>Char -&gt; Box Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#h.w_ords"><span class="c-libfunc">ʰw̲ords</span></a></td><td>function</td><td><code>Char -&gt; Box Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#h.w_ord"><span class="c-libfunc">ʰw̲ord</span></a></td><td>function</td><td><code>Any a =&gt; (Box Char, Int) -&gt; a -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#h.w_ith"><span class="c-libfunc">ʰw̲ith</span></a></td><td>function</td><td><code>(Any a, Truthy b) =&gt; (Box Char, Char) -&gt; a -&gt; b</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#l.c_ircuit"><span class="c-libfunc">ˡc̲ircuit</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#l.c_ore"><span class="c-libfunc">ˡc̲ore</span></a></td><td>function</td><td><code>Char -&gt; Box Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#h.j_oins"><span class="c-libfunc">ʰj̲oins</span></a></td><td>function</td><td><code>Char -&gt; Box Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#l.n_eighbors"><span class="c-libfunc">ˡn̲eighbors</span></a></td><td>function</td><td><code>Char -&gt; Box Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#l.p_ins"><span class="c-libfunc">ˡp̲ins</span></a></td><td>function</td><td><code>Char -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#h.c_ols"><span class="c-libfunc">ʰc̲ols</span></a></td><td>function</td><td><code>Any b =&gt; (a, a, a) -&gt; b -&gt; a</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#h.r_3"><span class="c-libfunc">ʰr̲3</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#l.t_ips"><span class="c-libfunc">ˡt̲ips</span></a></td><td>function</td><td><code>Char -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#l.d_irections"><span class="c-libfunc">ˡd̲irections</span></a></td><td>function</td><td><code>Float -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#l.c_learance"><span class="c-libfunc">ˡc̲learance</span></a></td><td>function</td><td><code>Num a =&gt; (a, a) -&gt; a -&gt; Float</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#l.o_rder"><span class="c-libfunc">ˡo̲rder</span></a></td><td>function</td><td><code>(Num a, Num b, Truthy b, Any c) =&gt; (a, b) -&gt; c -&gt; Int</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#h.n_um"><span class="c-libfunc">ʰn̲um</span></a></td><td>function</td><td><code>Float -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#h.x_yz"><span class="c-libfunc">ʰx̲yz</span></a></td><td>function</td><td><code>Float -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#h.j_oin"><span class="c-libfunc">ʰj̲oin</span></a></td><td>function</td><td><code>Any b =&gt; (Char, Char, a, Float) -&gt; b -&gt; Char</code></td></tr>
+<tr><td><a href="extensions-cell-lib-CellPlan.xtl.html#l.p_lan"><span class="c-libfunc">ˡp̲lan</span></a></td><td>function</td><td><code>Char -&gt; Char</code></td></tr>
 <tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>
 <tr><td><a href="extensions-cell-demos-models.xtl.html#_">_</a></td><td>function</td><td><code>Int</code></td></tr>

@@ -1,0 +1,191 @@
+## CellPlan.xtl -- the assembly cell's planner (decision C9, the
+## slicer): a netlist as text to a command program for the cell. The
+## core part goes in the vise; each neighbor is brought dead-bug to its
+## core pin, coming in from outside along the pin (fanned a little along
+## the pin row, so neighbors on one side spread apart), pinched by the
+## turntable, soldered at the iron station and let go. The placement is
+## worked out as arrays: the core's pin tips (ce:t_ips) turned into the
+## cell, each neighbor's direction, where its body comes to rest, the
+## clearance between every two bodies, and the order: one side of the
+## core at a time, so the turntable's two pincers keep to their own
+## sides.
+## Import: "cp:" u_se< "CellPlan"
+##
+## A netlist, a line each (# begins a comment):
+##
+##     circuit plan          the circuit whose tray holds the parts
+##     core U1 dip8          the core: its id and kind
+##     R1 U1 2               R1's lead 1 to the core's pin 2
+##
+## Each neighbor is an axial part (a resistor, a diode) joined by its
+## lead 1; its body comes to rest 31 mm out from the joint.
+
+"ce:" u_se< "Cell"
+
+### Reading the netlist
+
+# the lines of a text, each boxed, comments and blank lines left out
+h:l_ines := { t ->
+  ls := (t != f_irst "\n") p_artition t
+  keep := '{ l -> n_ot (f_irst d_isclose l) = f_irst "#" } e_ach ls
+  keep r_eplicate ls
+}
+# the words of a line, each boxed
+h:w_ords := { s -> (s != f_irst " ") p_artition s }
+# the k-th word of a boxed line
+h:w_ord := { (line, k) z -> d_isclose k s_elect h:w_ords d_isclose line }
+# the lines whose first word is w
+h:w_ith := { (ls, w) z -> '{ l -> ((l, 1) h:w_ord 0) m_atch w } e_ach ls }
+
+## cp:c_ircuit net: the circuit a netlist names
+## >> "cp:" u_se< "CellPlan"
+## >> cp:c_ircuit "circuit plan\ncore U1 dip8\nR1 U1 2"
+## plan
+l:c_ircuit := { net ->
+  ls := h:l_ines net
+  (f_irst ((ls, "circuit") h:w_ith 0) r_eplicate ls, 2) h:w_ord 0
+}
+
+## cp:c_ore net: the core's id and kind, boxed
+## >> "cp:" u_se< "CellPlan"
+## >> d_isclose 2 s_elect cp:c_ore "circuit plan\ncore U1 dip8\nR1 U1 2"
+## dip8
+l:c_ore := { net ->
+  ls := h:l_ines net
+  line := f_irst ((ls, "core") h:w_ith 0) r_eplicate ls
+  (e_nclose (line, 2) h:w_ord 0) c_at e_nclose (line, 3) h:w_ord 0
+}
+
+# the join lines: neither circuit nor core
+h:j_oins := { net ->
+  ls := h:l_ines net
+  other := n_ot ((ls, "circuit") h:w_ith 0) | (ls, "core") h:w_ith 0
+  other r_eplicate ls
+}
+
+## cp:n_eighbors net: the neighbors' ids, boxed, in the netlist's order
+## >> "cp:" u_se< "CellPlan"
+## >> t_ally cp:n_eighbors "circuit plan\ncore U1 dip8\nR1 U1 2\nR2 U1 7"
+## 2
+l:n_eighbors := { net -> '{ l -> e_nclose (l, 1) h:w_ord 0 } e_ach h:j_oins net }
+
+## cp:p_ins net: the core pin each neighbor joins, in the netlist's order
+## >> "cp:" u_se< "CellPlan"
+## >> cp:p_ins "circuit plan\ncore U1 dip8\nR1 U1 2\nR2 U1 7"
+## 2 7
+l:p_ins := { net -> '{ l -> f_loor 0.5 + f_irst n_umbers (l, 3) h:w_ord 0 } e_ach h:j_oins net }
+
+### The placement, as arrays
+
+# three vectors as the columns of a matrix, a row each item
+h:c_ols := { (a, b, c) z -> 2 1 t_ranspose (3 c_at t_ally a) r_eshape a c_at b c_at c }
+# to three decimals
+h:r_3 := { v -> (f_loat f_loor 0.5 + v * 1000) / 1000.0 }
+
+## cp:t_ips kind: the kind's pin tips in the cell, a row each, x y z (mm),
+## with the core in the vise as the planner places it: its origin at
+## 0 0 -24, turned 90 degrees about z (x goes to y, y to -x); a DIP-8's
+## pin 2 is at 3.81 -1.27 -29.05. (It asks the cell extension, so run it
+## with xetal-x.)
+l:t_ips := { kind ->
+  v := n_umbers ce:t_ips kind
+  t := (((t_ally v) d_iv 3) c_at 3) r_eshape v
+  c := 2 1 t_ranspose t
+  (n_eg 2 s_elect c, 1 s_elect c, (3 s_elect c) - 24) h:c_ols 0
+}
+
+## cp:d_irections tips: for each pin tip (a row of cp:t_ips), the unit
+## direction out from the core, level, a row each: out to the pin's side,
+## fanned along the row (0.3 of the tip's distance along it), so the
+## neighbors on one side spread apart
+## >> "cp:" u_se< "CellPlan"
+## >> cp:d_irections 2 3 r_eshape 3.81 -1.27 -29.05 -3.81 1.27 -29.05
+##  0.934 -0.356 0.0
+## -0.934  0.356 0.0
+l:d_irections := { tips ->
+  c := 2 1 t_ranspose tips
+  x := 1 s_elect c
+  y := 2 s_elect c
+  dx := f_loat (x > 0) - x < 0
+  dy := 0.3 * y
+  n := s_qrt (dx * dx) + dy * dy
+  (h:r_3 dx / n, h:r_3 dy / n, 0.0 + 0.0 * dx) h:c_ols 0
+}
+
+## (tips, dirs) cp:c_learance out: the least distance between two
+## neighbors' bodies (mm), each resting out mm along its direction from
+## its tip; 1000 for one neighbor
+## >> "cp:" u_se< "CellPlan"
+## >> t := 2 3 r_eshape 3.81 -1.27 -29.05 3.81 1.27 -29.05
+## >> f_loor (t, cp:d_irections t) cp:c_learance 31
+## 24
+l:c_learance := { (tips, dirs) out ->
+  c := 2 1 t_ranspose tips + out * dirs
+  x := 1 s_elect c
+  y := 2 s_elect c
+  d := s_qrt ((x '- t_able x) ^ 2) + (y '- t_able y) ^ 2
+  n := t_ally x
+  same := (r_ange n) '= t_able r_ange n
+  'm_in r_/ r_avel d + 1000.0 * f_loat same
+}
+
+## (tips, pins) cp:o_rder 0: the joins in the order they are made: one
+## side of the core at a time, in pin order, so each pincer works its
+## own side and none crosses the leads already standing on the other
+## (each joint cools below 100 C before the next is made)
+## >> "cp:" u_se< "CellPlan"
+## >> t := 4 3 r_eshape -3.81 1.27 -29 3.81 -1.27 -29 -3.81 -1.27 -29 3.81 1.27 -29
+## >> (t, 6 2 7 3) cp:o_rder 0
+## 2 4 1 3
+l:o_rder := { (tips, pins) z ->
+  side := (1 s_elect 2 1 t_ranspose tips) > 0
+  g_rade (1000 * n_ot side) + pins
+}
+
+### The program
+
+# a number in a command: three decimals at most
+h:n_um := { v -> f_ormat h:r_3 v }
+# x,y,z
+h:x_yz := { v -> (h:n_um 1 s_elect v) c_at "," c_at (h:n_um 2 s_elect v) c_at "," c_at h:n_um 3 s_elect v }
+
+# the commands that make one join: (neighbor, core, pin, direction)
+h:j_oin := { (nb, core, pin, dir) z ->
+  lead := nb c_at ".1"
+  to := core c_at "." c_at f_ormat pin
+  joint := to c_at "+" c_at lead
+  nl := "\n"
+  a := "pick A " c_at nb c_at " grasp=body" c_at nl c_at "lift A mm=60" c_at nl
+  b := "bring A " c_at lead c_at " to=" c_at to c_at ".tip along=" c_at (h:x_yz dir) c_at nl
+  # the pincer on its side of the core: each keeps to its own side of the ring
+  pz := "P" c_at f_ormat 1 + (1 s_elect dir) < 0
+  c := "pinch " c_at pz c_at " on=" c_at lead c_at " at=6" c_at nl c_at "release A " c_at nb c_at nl c_at "lift A mm=60" c_at nl
+  d := "present " c_at joint c_at " at=S1" c_at nl c_at "touch S1 at=" c_at joint c_at " dwell=2" c_at nl
+  e := "feed S1 mm=2 rate=1" c_at nl c_at "back S1" c_at nl c_at "wait until=" c_at joint c_at " below=100" c_at nl
+  # let go, and the turntable back to rest for the next one
+  f := "inspect " c_at joint c_at nl c_at "unpinch " c_at pz c_at nl c_at "stage turn=0 tilt=0 at=0,0,0" c_at nl
+  a c_at b c_at c c_at d c_at e c_at f
+}
+
+## cp:p_lan net: the netlist's command program: the core into the vise,
+## then each join in turn, then the shorts checked; its first lines are
+## comments saying the placement (each neighbor's pin and direction, the
+## least clearance between bodies). It asks the cell extension for the
+## core's pins, so run it with xetal-x (scripts/cell-plan.sh, `just ext
+## cell plan NAME`).
+l:p_lan := { net ->
+  core := l:c_ore net
+  id := d_isclose 1 s_elect core
+  kind := d_isclose 2 s_elect core
+  pins := l:p_ins net
+  nbs := l:n_eighbors net
+  tips := pins s_elect l:t_ips kind
+  dirs := l:d_irections tips
+  order := (tips, pins) l:o_rder 0
+  clear := (tips, dirs) l:c_learance 31
+  head := "# planned by CellPlan.xtl from a netlist: " c_at (f_ormat t_ally pins) c_at " joins to " c_at id c_at ", the least clearance between bodies " c_at (h:n_um clear) c_at " mm\n"
+  start := "reset circuit=" c_at (l:c_ircuit net) c_at "\ntool A tweezers\npick A " c_at id c_at " grasp=ends\nplace A " c_at id c_at " at=0,0,-24 rpy=0,0,90\nvise close\nrelease A " c_at id c_at "\n"
+  one := { k -> (d_isclose k s_elect nbs, id, k s_elect pins, k s_elect dirs) h:j_oin 0 }
+  body := d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ one m_ap order
+  head c_at start c_at body c_at "inspect shorts\n"
+}

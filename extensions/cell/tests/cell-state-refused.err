@@ -1,7 +1,7 @@
 error[io]: []N_GET: ext:cell/state: move A to=900,0,0: A cannot go there in a straight line: out of reach 57% of the way
-  --> ./lib/Cell.xtl:44:1
+  --> ./lib/Cell.xtl:49:1
    |
-44 | "s_tate : text -> text"         ffi:b_ind< "cell/state"
+49 | "s_tate : text -> text"         ffi:b_ind< "cell/state"
    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   ::: tests/state-refused.xtl:3:1
    |

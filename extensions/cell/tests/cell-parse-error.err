@@ -1,7 +1,7 @@
 error[io]: []N_GET: ext:cell/parse: line 2: touch: dwell: 99 is outside 0 to 30 s
-  --> ./lib/Cell.xtl:33:1
+  --> ./lib/Cell.xtl:38:1
    |
-33 | "p_arse : text -> text"         ffi:b_ind< "cell/parse"
+38 | "p_arse : text -> text"         ffi:b_ind< "cell/parse"
    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   ::: tests/parse-error.xtl:3:1
    |

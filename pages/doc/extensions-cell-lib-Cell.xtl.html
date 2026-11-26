@@ -85,6 +85,7 @@
 <ul>
 <li><a href="extensions-cell-lib-Cell.xtl.html">Cell.xtl</a></li>
 <li><a href="extensions-cell-lib-CellModels.xtl.html">CellModels.xtl</a></li>
+<li><a href="extensions-cell-lib-CellPlan.xtl.html">CellPlan.xtl</a></li>
 </ul>
 <h3>extensions/clock/demos/</h3>
 <ul>
@@ -226,6 +227,7 @@
 <li class="item"><a href="#l.a_bout"><span class="c-libfunc">ˡa̲bout</span></a></li>
 <li class="item"><a href="#l.p_arts"><span class="c-libfunc">ˡp̲arts</span></a></li>
 <li class="item"><a href="#l.p_art"><span class="c-libfunc">ˡp̲art</span></a></li>
+<li class="item"><a href="#l.t_ips"><span class="c-libfunc">ˡt̲ips</span></a></li>
 <li class="item"><a href="#l.c_ommands"><span class="c-libfunc">ˡc̲ommands</span></a></li>
 <li class="item"><a href="#l.p_arse"><span class="c-libfunc">ˡp̲arse</span></a></li>
 <li class="item"><a href="#l.r_un"><span class="c-libfunc">ˡr̲un</span></a></li>
@@ -291,9 +293,25 @@ material), its grasp frames and its thermal data; ce:p_art &quot;dip8&quot;.</p>
 <span class="c-depth0">}</span></pre></details>
 <div class="uses">Used in: <a href="extensions-cell-demos-models.xtl.html#_">_</a></div>
 </div>
+<div class="item" id="l.t_ips">
+<h3><a href="#l.t_ips"><span class="c-libfunc">ˡt̲ips</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L27">line 27</a></div>
+<div class="doc">
+<p>ce:t_ips kind: a kind's pin tips in its own frame (its body's center
+at the origin), mm: x y z a line, in pin order -- read with n_umbers
+(the planner, CellPlan.xtl, places parts from them); for an axial
+resistor &quot;-31 0 0\n31 0 0&quot;.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;t_ips : text -&gt; text&quot;</span>          <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/tips&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡt̲ips</span> ← <span class="c-depth0">{</span> a →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/tips?text&quot;</span>
+  <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/tips&quot;</span>
+<span class="c-depth0">}</span></pre></details>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellPlan.xtl.html#l.t_ips"><span class="c-libfunc">ˡt̲ips</span></a></div>
+</div>
 <div class="item" id="l.c_ommands">
 <h3><a href="#l.c_ommands"><span class="c-libfunc">ˡc̲ommands</span></a> <span class="type">: Unit -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L27">line 27</a></div>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L32">line 32</a></div>
 <div class="doc">
 <p>ce:c_ommands @: the command language, one line a command -- its
 synopsis (positional arguments in capitals, optional ones in
@@ -307,7 +325,7 @@ straight up&quot;.</p>
 </div>
 <div class="item" id="l.p_arse">
 <h3><a href="#l.p_arse"><span class="c-libfunc">ˡp̲arse</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L33">line 33</a></div>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L38">line 38</a></div>
 <div class="doc">
 <p>ce:p_arse program: a program checked against the command table, each
 command as JSON, one a line, its arguments in the table's order. The
@@ -323,7 +341,7 @@ command is an error naming its line and what is wrong.</p>
 </div>
 <div class="item" id="l.r_un">
 <h3><a href="#l.r_un"><span class="c-libfunc">ˡr̲un</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L39">line 39</a></div>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L44">line 44</a></div>
 <div class="doc">
 <p>ce:r_un program: the program run on a new cell -- arms home, the
 stage at 0, the vise open, the time 0 -- each command's outcome as
@@ -340,7 +358,7 @@ stops after the first command that is not ok.</p>
 </div>
 <div class="item" id="l.s_tate">
 <h3><a href="#l.s_tate"><span class="c-libfunc">ˡs̲tate</span></a> <span class="type">: Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L44">line 44</a></div>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L49">line 49</a></div>
 <div class="doc">
 <p>ce:s_tate program: the program run on a new cell, the cell's state
 after it as JSON -- the time, the arms (base, joints, tool, track:
@@ -355,7 +373,7 @@ the parts and the timeline. A command not ok is an error naming it.</p>
 </div>
 <div class="item" id="l.s_cene">
 <h3><a href="#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a> <span class="type">: Char -&gt; Char -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L53">line 53</a></div>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L58">line 58</a></div>
 <div class="doc">
 <p>name ce:s_cene program: the program run on a new cell, written as a
 scene for the players -- one call a line, its first cell(name, 1280,
@@ -375,7 +393,7 @@ error naming it.</p>
 </div>
 <div class="item" id="l.r_ig">
 <h3><a href="#l.r_ig"><span class="c-libfunc">ˡr̲ig</span></a> <span class="type">: Unit -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L57">line 57</a></div>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L62">line 62</a></div>
 <div class="doc">
 <p>ce:r_ig @: the arm's rig as JSON -- each joint's DH parameters
 (alpha, a, d, offset), its limits, top speed and acceleration, and
@@ -388,7 +406,7 @@ the home pose; every arm in the cell is this arm.</p>
 </div>
 <div class="item" id="l.a_rmModel">
 <h3><a href="#l.a_rmModel"><span class="c-libfunc">ˡa̲rmModel</span></a> <span class="type">: Unit -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L65">line 65</a></div>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L70">line 70</a></div>
 <div class="doc">
 <p>ce:a_rmModel @: what a model of the arm must be, as JSON (the asset
 contract, docs/cell-design.md): its nodes -- arm_base, arm_j1 to
@@ -406,7 +424,7 @@ from it, and Blender writes it back as arm.rig.json.</p>
 </div>
 <div class="item" id="l.package">
 <h3><a href="#l.package">ˡpackage</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L69">line 69</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L74">line 74</a></div>
 <div class="doc">
 <p>The native package behind these functions (a literal l: name also
 makes this file a library to <code>xetal type</code>: ask E7).</p>

@@ -52,6 +52,26 @@ fn part(args: &[Value]) -> Result<Value, OwnedError> {
     Ok(Value::Text(kind.to_json()))
 }
 
+/// A kind's pin tips in its own frame, mm: three numbers a pin, a line
+/// each, in pin order -- for a planner written in X_eTaL (n_umbers).
+fn tips(args: &[Value]) -> Result<Value, OwnedError> {
+    let kind = parts::kind(text(&args[0])?.trim()).map_err(OwnedError::invalid_argument)?;
+    let lines: Vec<String> = kind
+        .pins
+        .iter()
+        .map(|p| {
+            let t = p.lead.last().copied().unwrap_or([0.0; 3]);
+            format!(
+                "{} {} {}",
+                command::num(t[0]),
+                command::num(t[1]),
+                command::num(t[2])
+            )
+        })
+        .collect();
+    Ok(Value::Text(lines.join("\n")))
+}
+
 /// The command list, one line a command.
 #[allow(clippy::unnecessary_wraps)]
 fn commands(_: &[Value]) -> Result<Value, OwnedError> {
@@ -129,6 +149,7 @@ xetal_ext_sdk::xetal_extension! {
         about: 0, "Unit -> Char", "The extension's name and version.";
         parts: 0, "Unit -> Char", "The parts library, one line a kind: kind, pins, title, example.";
         part: 1, "Char -> Char", "One part kind, its pins worked out, as JSON.";
+        tips: 1, "Char -> Char", "A kind's pin tips in its own frame: x y z a line, in pin order.";
         commands: 0, "Unit -> Char", "The command list, one line a command: its synopsis and what it does.";
         parse: 1, "Char -> Char", "A program (text, or JSON lines) checked against the command table: each command as JSON, one a line.";
         run: 1, "Char -> Char", "A program run on a new cell: each command's outcome as JSON, one a line, stopping after the first not ok.";

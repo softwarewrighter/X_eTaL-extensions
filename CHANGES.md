@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-26
 
+- 14:12 `ext` cell, the planner (Saga 17 step 26): lib/CellPlan.xtl turns a netlist into a command program, the placement worked out as X_eTaL arrays (pin tips turned into the cell, fanned directions, the least clearance between bodies, one side of the core at a time); the simulator's `bring`; `ce:t_ips`; `just ext cell plan NAME`; nets/plan.net planned into four good joints with no shorts; the golden cell-plan.
 - 13:35 `ext` cell, enameled wire insulates (Saga 17 step 25, decision C21): enamel burns off a span at a time where the iron heats it, the shorts check sees an enameled wire as bare only there, `inspect shorts` lists the crossings enamel insulates; AWG 36, 38 and 40 in the wire table; the `enamel` program (a wire across pin 4, no short).
 - 12:05 `fix` cell, the insulate program (the user: the insulated part touched DIP pins not yet soldered, whose soldering could melt it): the sleeve ends at 24 mm and a pincer joggles the last 3 mm up 60 degrees, so the sleeved length passes the pins 1.5 mm clear and only the bare tip meets pin 3; `inspect shorts` reports each sleeve's clearance.
 - 11:58 `plan` the assembly cell, SMD dead-bug and enameled wire (the user): decision C21; steps 25 cell-enamel (enameled wire insulates except where stripped), 30 cell-smd-deadbug and 31 cell-bga-wire (a 5x5 BGA, a paste dispenser, a fine enameled wire to each ball) inserted; the planner is now step 26, the release 32.
