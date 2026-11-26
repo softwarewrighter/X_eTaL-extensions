@@ -127,7 +127,7 @@ impl Data {
 /// out from a speck of a body at its middle, grasp frames near each end
 /// and at the middle, copper's heat.
 #[must_use]
-pub fn kind(awg: i64, d: f64, lead1: &[V3], lead2: &[V3], density: f64) -> PartKind {
+pub fn kind(awg: i64, d: f64, lead1: &[V3], lead2: &[V3], density: f64, metal: &str) -> PartKind {
     let length = crate::leads::length(lead1) + crate::leads::length(lead2);
     let mass = density * std::f64::consts::PI * d * d / 4.0 * length / 1000.0;
     let pin = |name: &str, lead: &[V3]| Pin {
@@ -135,7 +135,7 @@ pub fn kind(awg: i64, d: f64, lead1: &[V3], lead2: &[V3], density: f64) -> PartK
         role: None,
         lead: lead.to_vec(),
         diameter: d,
-        material: "copper".into(),
+        material: metal.into(),
     };
     // a grasp 3 mm in from an end, the jaws across the wire there
     let grasp = |name: &str, lead: &[V3]| {

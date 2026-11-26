@@ -1187,6 +1187,22 @@ impl World {
     /// was wet, what it came to, its temperature), or a pin's
     /// temperature. The simulator's own numbers (oracle).
     pub(crate) fn inspect(&self, target: &str) -> Result<String, String> {
+        if target == "supports" {
+            let left: Vec<&str> = self
+                .parts
+                .iter()
+                .filter(|p| p.support && !p.lost)
+                .map(|p| p.id.as_str())
+                .collect();
+            return Ok(if left.is_empty() {
+                "supports: none left in the work".to_string()
+            } else {
+                format!(
+                    "supports: {} still in the work: cut them away",
+                    left.join(" ")
+                )
+            });
+        }
         if target.contains('+') {
             let Some(j) = self
                 .joints

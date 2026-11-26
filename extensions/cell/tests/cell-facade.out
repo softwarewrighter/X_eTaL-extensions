@@ -25,7 +25,7 @@ clip ARM on=PIN at=MM -- clip a heatsink on a lead, between the body and the joi
 touch ARM|STATION at=JOINT [dwell=S] [temp=C] -- put the iron's tip on a joint and hold it there
 feed ARM|STATION mm=MM [rate=MM/S] -- feed solder wire into the joint the iron is on
 weld ARM|STATION at=JOINT energy=J [risky=refuse|allow] -- spot weld a lap of two leads by a capacitor discharge
-wire STATION awg=N mm=MM [enamel=no|yes] -- the wire feeder station feeds bare or enameled wire from its spool out of its nozzle
+wire STATION awg=N mm=MM [enamel=no|yes] [metal=copper|steel] [support=no|yes] -- the wire feeder station feeds bare or enameled wire from its spool out of its nozzle
 cut STATION -- the wire feeder cuts its wire at the nozzle: what holds the free end keeps it
 stage [turn=DEG] [tilt=DEG] [at=X,Y,Z] -- move the positioner: turn the stage by an angle, tilt it, move it
 present FRAME|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG] -- move the positioner so a pin's frame or a joint is at a tool station's point

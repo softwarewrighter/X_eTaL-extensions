@@ -401,6 +401,29 @@ its middle and S5 cuts it; the arm brings its end to pin 3, P1 grips
 it; the iron station solders the joint; P2 bends the wire's other half
 down.
 
+### Supports
+
+As a 3D printer's slicer adds supports and they are cut away after
+printing (decision C16): a support is a steel wire (`wire S5 awg=22
+mm=30 metal=steel support=yes`), welded to the work by its ends --
+tabs -- and held by a pincer, so the work can be held through it while
+the turntable turns and tilts it (and the vise opens: "C1 stays: P1
+grips W1, joined to it"). It is not part of the circuit:
+
+- `trim S4 on=W1.1 at=MM` at or before a support's own joint cuts its
+  tab free (for any other part such a cut is refused): the joint is
+  gone, a stub stays on the lead, and once nothing holds the support
+  it falls into the bin.
+- `inspect supports` says which are still in the work ("supports: W1
+  still in the work: cut them away", or "none left").
+
+`programs/support.cell`: a steel support welded to a ceramic disc's
+lead and held by P1; the vise opens and the turntable turns and tilts
+the disc on its support alone; the vise closes, the tab is cut free,
+P1 lets the support go, and none is left. A frame of several supports
+built on the turntable, holding several parts at once, comes with the
+planner.
+
 ### Forming and trimming leads
 
 - `bend PINCER on=PIN at=MM angle=DEG toward=X,Y,Z [radius=MM]`: a
@@ -767,7 +790,7 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `touch ARM\|STATION at=JOINT [dwell=S] [temp=C]` | iron | put the iron's tip on a joint and hold it there |
 | `feed ARM\|STATION mm=MM [rate=MM/S]` | solder | feed solder wire into the joint the iron is on |
 | `weld ARM\|STATION at=JOINT energy=J [risky=refuse\|allow]` | welder | spot weld a lap of two leads by a capacitor discharge |
-| `wire STATION awg=N mm=MM [enamel=no\|yes]` | wire | the wire feeder station feeds bare or enameled wire from its spool out of its nozzle |
+| `wire STATION awg=N mm=MM [enamel=no\|yes] [metal=copper\|steel] [support=no\|yes]` | wire | the wire feeder station feeds bare or enameled wire from its spool out of its nozzle |
 | `cut STATION` | wire | the wire feeder cuts its wire at the nozzle: what holds the free end keeps it |
 | `stage [turn=DEG] [tilt=DEG] [at=X,Y,Z]` | stage | move the positioner: turn the stage by an angle, tilt it, move it |
 | `present FRAME\|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG]` | stage | move the positioner so a pin's frame or a joint is at a tool station's point |

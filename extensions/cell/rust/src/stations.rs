@@ -728,7 +728,26 @@ impl World {
                 let awg = awg.round() as i64;
                 let mm = c.number("mm").unwrap_or(20.0);
                 let enamel = c.word("enamel") == Some("yes");
+                let metal = c.word("metal").unwrap_or("copper").to_string();
+                let support = c.word("support") == Some("yes");
                 self.feed_wire(si, &s, awg, mm, enamel, did, events, warnings)?;
+                if let Some(p) = self.parts.last_mut() {
+                    if let Some(w) = p.wire.as_mut() {
+                        w.metal.clone_from(&metal);
+                    }
+                    p.support = support;
+                    if support || metal != "copper" {
+                        events.push(format!(
+                            "{} is {metal}{}",
+                            p.id,
+                            if support {
+                                ", a support: cut it away before the work is done"
+                            } else {
+                                ""
+                            }
+                        ));
+                    }
+                }
             }
             "cut" => {
                 need("wire")?;
@@ -804,13 +823,20 @@ impl World {
                 s.name
             )));
         }
-        // a joint on this lead at or past the cut would be cut off
+        // a joint on this lead at or past the cut would be cut off -- for
+        // a support, that is the point: its tab is cut free
         let lead_world = crate::solder::lead_in(&pose, &p.lead);
+        let support = self.parts[pk].support;
+        let mut freed: Vec<String> = Vec::new();
         for j in self.joints.iter().filter(|j| j.a == pin || j.b == pin) {
             let Some(jp) = self.joint_point(j) else {
                 continue;
             };
             let along = along_to(&lead_world, jp);
+            if along >= at - 0.5 && support {
+                freed.push(j.name.clone());
+                continue;
+            }
             if along >= at - 0.5 {
                 return Err(Halt::Refused(format!(
                     "{} is {} mm along {pin}: a cut at {} mm would cut it off (cut past it)",
@@ -826,12 +852,34 @@ impl World {
         let (kept, cut) = crate::leads::split(&p.lead, at);
         let off = crate::leads::length(&cut);
         self.reform(pk, pn, kept);
-        events.push(format!(
-            "{} cuts {pin} at {} mm: {} mm of lead falls into the bin",
-            s.name,
-            num1(at),
-            num1(off)
-        ));
+        if freed.is_empty() {
+            events.push(format!(
+                "{} cuts {pin} at {} mm: {} mm of lead falls into the bin",
+                s.name,
+                num1(at),
+                num1(off)
+            ));
+        }
+        for name in &freed {
+            let other = name
+                .split('+')
+                .find(|x| !x.starts_with(&format!("{pid}.")))
+                .unwrap_or("")
+                .to_string();
+            self.joints.retain(|j| &j.name != name);
+            events.push(format!(
+                "{} cuts {pid}'s tab at {name} free: a {} mm stub stays on {other}",
+                s.name,
+                num1(off)
+            ));
+        }
+        if !freed.is_empty() {
+            self.sync_carriers();
+            if self.parts[pk].holder.is_none() {
+                events.push(format!("{pid}, a support, falls away into the bin"));
+                self.let_go_of(pk);
+            }
+        }
         self.advance(0.2, None);
         let leave = self.near_tip(s.point);
         self.extend(si, 0.0, STATION_SPEED, &leave, did)
@@ -929,6 +977,7 @@ impl World {
             enamel,
             stripped: [false; 2],
             spool: Some(s.name.clone()),
+            metal: "copper".into(),
         });
         part.holder = Some(s.name.clone());
         let half = mm / 2.0;

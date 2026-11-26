@@ -315,6 +315,16 @@ pub const COMMANDS: &[Spec] = &[
                 Kind::Choice(&["no", "yes"]),
                 "enameled (magnet) wire: no if not given",
             ),
+            opt(
+                "metal",
+                Kind::Choice(&["copper", "steel"]),
+                "copper if not given; steel welds well, for supports",
+            ),
+            opt(
+                "support",
+                Kind::Choice(&["no", "yes"]),
+                "a sacrificial support, cut away later: no if not given",
+            ),
         ],
     },
     Spec {
@@ -681,7 +691,7 @@ fn check_word(kind: Kind, t: &str) -> Result<(), String> {
         Kind::Joint => t
             .split_once('+')
             .is_some_and(|(a, b)| is_pin(a) && is_pin(b) && a != b),
-        Kind::Target => is_pin(t) || check_word(Kind::Joint, t).is_ok(),
+        Kind::Target => is_pin(t) || check_word(Kind::Joint, t).is_ok() || t == "supports",
         Kind::Name => {
             !t.is_empty()
                 && t.chars()

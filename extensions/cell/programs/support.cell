@@ -1,0 +1,37 @@
+# support: a sacrificial support at the bench (decision C16), as a 3D
+# printer's slicer adds supports and they are cut away after. A ceramic
+# disc (C1) in the vise; the wire feeder feeds 30 mm of steel wire, a
+# support; the arm takes it and the feeder cuts it; the arm brings its
+# end to the disc's lead 1, pincer P1 grips the support, the arm goes;
+# the welder station welds the support's tab to the lead. The vise
+# opens: the disc is held by the support alone, and the turntable turns
+# and tilts it. The vise closes on it again; the cutter station cuts the
+# tab free, P1 lets the support go, and it falls into the bin.
+reset circuit=weld
+tool A tweezers
+pick A C1 grasp=body
+place A C1 at=0,0,-20
+vise close
+release A C1
+lift A mm=60
+wire S5 awg=22 mm=30 metal=steel support=yes
+pick A W1 grasp=middle
+cut S5
+lift A mm=60
+move A to=0,60,60 rpy=180,0,45
+move A to=-28.147,10.607,-27.746
+align A W1.1.tip to=C1.1.6 gap=0.1
+pinch P1 on=W1.2 at=8
+release A W1
+lift A mm=60
+present C1.1+W1.1 at=S3
+weld S3 at=C1.1+W1.1 energy=8
+vise open
+stage turn=60 tilt=-20
+stage turn=-60 tilt=0
+vise close
+inspect supports
+present W1.1.12 at=S4
+trim S4 on=W1.1 at=12
+unpinch P1
+inspect supports

@@ -227,7 +227,7 @@ fn layout_text(spec: &str) -> String {
     out
 }
 
-const PROGRAMS: [&str; 9] = [
+const PROGRAMS: [&str; 10] = [
     "arms",
     "pick",
     "solder",
@@ -237,6 +237,7 @@ const PROGRAMS: [&str; 9] = [
     "leads",
     "turn",
     "wire",
+    "support",
 ];
 
 fn program(name: &str) -> String {
@@ -491,4 +492,24 @@ fn the_arm_turns_the_work_on_its_side() {
         "{:?}",
         out.last()
     );
+}
+
+#[test]
+fn a_support_holds_the_work_and_is_cut_away() {
+    let (w, out) = ok(&program("support"));
+    let said = |what: &str| {
+        out.iter()
+            .any(|o| o.events.iter().any(|e| e.contains(what)))
+    };
+    // welded on, steel to the disc's copper-clad steel
+    assert!(said("C1.1+W1.1: welded"));
+    // the vise open, the disc held by the support alone
+    assert!(said("C1 stays: P1 grips W1, joined to it"));
+    assert!(said("supports: W1 still in the work"));
+    // the tab cut free, a stub left; the support gone
+    assert!(said("S4 cuts W1's tab at C1.1+W1.1 free"));
+    assert!(said("supports: none left in the work"));
+    assert!(w.part("W1").unwrap().lost);
+    assert!(w.joints.iter().all(|j| j.name != "C1.1+W1.1"));
+    assert_eq!(w.part("C1").unwrap().holder.as_deref(), Some("vise"));
 }

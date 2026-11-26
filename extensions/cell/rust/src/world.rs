@@ -163,6 +163,10 @@ pub struct Part {
     /// A length of wire: its gauge, enamel, and the spool it is still on.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub wire: Option<WireInfo>,
+    /// A sacrificial support (decision C16): not part of the circuit, cut
+    /// away before the work is done.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub support: bool,
     /// It fell to the floor and is lost.
     pub lost: bool,
     /// Its thermal nodes' temperatures, C: the body, then each pin's
@@ -197,6 +201,7 @@ impl Part {
             bends: std::collections::BTreeMap::new(),
             reformed: Vec::new(),
             wire: None,
+            support: false,
             lost: false,
             temps: Vec::new(),
             hot: 0.0,
@@ -228,6 +233,7 @@ impl Part {
                 &half("1"),
                 &half("2"),
                 data.density,
+                &w.metal,
             ));
         }
         let mut k = parts::kind(&self.kind)?;
@@ -414,6 +420,7 @@ impl World {
                     bends: std::collections::BTreeMap::new(),
                     reformed: Vec::new(),
                     wire: None,
+                    support: false,
                     lost: false,
                     temps: Vec::new(),
                     hot: 0.0,
@@ -1555,6 +1562,24 @@ impl World {
                     }
                 }
                 self.sync_carriers();
+                // what something else still holds (a pincer, through a
+                // support or a joint) stays; the rest falls
+                for &k in &released {
+                    if let Some(by) = self.parts[k].holder.clone() {
+                        let id = self.parts[k].id.clone();
+                        let how = self
+                            .assembly(k)
+                            .iter()
+                            .find_map(|&g| {
+                                self.parts[g]
+                                    .pinched
+                                    .clone()
+                                    .map(|p| format!("{p} grips {}", self.parts[g].id))
+                            })
+                            .unwrap_or_else(|| format!("{by} holds it"));
+                        events.push(format!("{id} stays: {how}, joined to it"));
+                    }
+                }
                 self.fall_free(&released);
             }
             "tool" => self.change_tool(
@@ -2199,6 +2224,13 @@ pub struct WireInfo {
     pub stripped: [bool; 2],
     /// Still on this station's spool.
     pub spool: Option<String>,
+    /// Its metal: copper, or steel (for supports: it welds well).
+    #[serde(default = "copper")]
+    pub metal: String,
+}
+
+fn copper() -> String {
+    "copper".into()
 }
 
 /// The point `mm` along a polyline from its start.
