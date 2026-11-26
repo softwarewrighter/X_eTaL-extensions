@@ -121,8 +121,14 @@ impl World {
         kin::add(e.p, kin::scale(e.z(), e.p[2].abs().max(50.0)))
     }
 
-    /// A pin's frame or a joint's place, for aiming.
+    /// A pin's frame, a joint's place or a part's origin, for aiming.
     fn spot_point(&self, target: &str) -> Result<V3, String> {
+        if !target.contains('.') && !target.contains('+') {
+            return self
+                .part(target)
+                .map(|p| p.pose().p)
+                .ok_or_else(|| format!("no part {target}"));
+        }
         if target.contains('+') {
             let (a, b) = target.split_once('+').ok_or("not a joint")?;
             let j = self

@@ -7,6 +7,6 @@
 {"ok":true,"command":"lift A mm=60","t0":27.067672,"t1":27.767672,"did":["line A to=0,0,36 rpy=-180,0,90 in 0.7 s","joints A 0 28.579 14.344 0 47.078 180"],"events":[],"warnings":[]}
 {"ok":true,"command":"pick A D1 grasp=body","t0":27.767672,"t1":34.101309,"did":["line A to=173.251,201.536,-78.45 rpy=180,0,90 in 2.994 s","line A to=173.251,201.536,-108.45 rpy=180,0,90 in 1.52 s","grip A close in 0.3 s","line A to=173.251,201.536,-78.45 rpy=180,0,90 in 1.52 s"],"events":["A holds D1"],"warnings":[]}
 {"ok":true,"command":"move A to=120,40,60","t0":34.101309,"t1":36.394431,"did":["line A to=120,40,60 rpy=180,0,90 in 2.293 s","joints A 16.314 22.719 17.951 0 49.33 196.314"],"events":[],"warnings":[]}
-{"ok":true,"command":"release A D1","t0":36.394431,"t1":36.694431,"did":["grip A open in 0.3 s"],"events":["A let D1 go"],"warnings":["D1 fell 228.5 mm to the floor and is lost"]}
-{"ok":false,"command":"move A to=0,0,-60 rpy=180,0,0","t0":36.694431,"t1":38.140959,"did":[],"stopped":"collision: arm A's tool with the vise's jaw at 38.141 s","events":[],"warnings":[]}
+{"ok":true,"command":"release A D1","t0":36.394431,"t1":36.910243,"did":["grip A open in 0.3 s"],"events":["A let D1 go"],"warnings":["D1 fell 228.5 mm to the floor and is lost"]}
+{"ok":false,"command":"move A to=0,0,-60 rpy=180,0,0","t0":36.910243,"t1":38.356771,"did":[],"stopped":"collision: arm A's tool with the vise's jaw at 38.357 s","events":[],"warnings":[]}
 

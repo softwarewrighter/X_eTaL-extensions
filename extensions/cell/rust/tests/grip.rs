@@ -117,8 +117,9 @@ fn a_part_is_picked_carried_and_let_fall() {
         .fold(f64::INFINITY, f64::min);
     assert!((low - FLOOR).abs() < 1e-6, "{low}");
     // it landed after falling, by gravity
+    // the command lasts until it lands
     let m = &p.moves[0];
-    assert!(m.t > w.t && m.t < w.t + 0.5);
+    assert!((m.t - w.t).abs() < 1e-6 && w.t > 0.0, "{} {}", m.t, w.t);
     refused(&mut w, "pick A U1 grasp=ends", "U1 is lost");
 }
 
@@ -138,7 +139,12 @@ fn the_vise_holds_a_part_as_the_stage_turns() {
         o.events.contains(&"the vise lets U1 go".to_string()),
         "{o:?}"
     );
-    assert!(w.part("U1").unwrap().lost);
+    // it lies on the vise's bed, riding the turntable still
+    let u1 = w.part("U1").unwrap();
+    assert!(
+        !u1.lost && u1.on_stage && u1.holder.as_deref() == Some("vise"),
+        "{o:?}"
+    );
 }
 
 #[test]
@@ -253,4 +259,39 @@ fn rewind_goes_back_and_keeps_both_branches() {
     );
     // a new branch from there
     ok(&mut w, "move A to=-60,120,60");
+}
+
+#[test]
+fn a_dropped_part_lands_on_what_is_below_it() {
+    // over the turntable: onto the vise, and it rides the turntable
+    let mut w = World::default();
+    ok(
+        &mut w,
+        "reset circuit=demo\ntool A tweezers\npick A U1 grasp=ends\nplace A U1 at=0,0,40\nrelease A U1\nlift A mm=40",
+    );
+    let u1 = w.part("U1").unwrap();
+    assert!(!u1.lost && u1.on_stage && u1.holder.as_deref() == Some("vise"));
+    let before = u1.pose().p;
+    ok(&mut w, "stage turn=90");
+    let after = w.part("U1").unwrap().pose().p;
+    let want = kin::Pose::from_xyz_rpy([0.0; 3], [0.0, 0.0, 90.0])
+        .then(&kin::Pose::from_xyz_rpy(before, [0.0; 3]))
+        .p;
+    assert!(near(after, want, 1e-6), "{after:?} {want:?}");
+    // over the tray: onto it, resting there, nothing holding it
+    let o = w.apply(&parse_line("pick A R1 grasp=body").unwrap());
+    assert!(o.ok, "{o:?}");
+    ok(&mut w, "place A R1 at=150,150,-60");
+    let o = w.apply(&parse_line("release A R1").unwrap());
+    assert!(
+        o.warnings
+            .iter()
+            .any(|x| x.contains("onto the tray and rests there")),
+        "{o:?}"
+    );
+    let r1 = w.part("R1").unwrap();
+    assert!(!r1.lost && r1.holder.is_none() && !r1.on_stage);
+    // and it can be picked up again
+    ok(&mut w, "pick A R1 grasp=body");
+    assert!(w.clashes().is_empty(), "{:?}", w.clashes());
 }

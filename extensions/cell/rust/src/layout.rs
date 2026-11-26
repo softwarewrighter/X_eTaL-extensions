@@ -212,6 +212,10 @@ pub struct Laid {
     /// Its turn about z, degrees.
     #[serde(default)]
     pub yaw: f64,
+    /// What is printed or banded on it (`4.7k`, `104`); its kind's
+    /// default if not given.
+    #[serde(default)]
+    pub mark: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -250,5 +254,11 @@ pub fn circuit(name: &str) -> Result<Vec<Laid>, String> {
         .find(|(n, _)| *n == name)
         .ok_or_else(|| format!("no circuit {name} (circuits: {})", circuits().join(" ")))?;
     let f: CircuitFile = toml::from_str(text).map_err(|e| format!("circuits/{name}.toml: {e}"))?;
+    for p in &f.part {
+        if let Some(m) = &p.mark {
+            crate::marks::marking(&p.kind, m)
+                .map_err(|e| format!("circuits/{name}.toml: {}: {e}", p.id))?;
+        }
+    }
     Ok(f.part)
 }

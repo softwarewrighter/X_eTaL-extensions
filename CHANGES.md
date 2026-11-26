@@ -29,6 +29,8 @@ version.
 
 ## 2026-11-25
 
+- 21:33 `fix` cell, gravity (the user: a released IC floated in the air): a dropped part lands on the first thing below it -- on the turntable it rides it, on the tray or the rig it rests, else the floor and lost -- and the command lasts until it lands; `inspect supports` tells a cut-free support lying loose from one still joined.
+- 21:33 `ext` cell, markings and `identify` (Saga 17 step 22, first part): marks.rs (the resistor color code both ways and from either end, EIA capacitor codes), a mark on every part from its circuit or kind, `identify PART [mode=oracle|sensed] [zoom=]` with a modeled picture (pixels, angle, glare) whose doubtful readings are warnings; the `identify` program; live page republished.
 - 21:07 `ext` cell, the bending rig (Saga 17 step 21, decision C19, the user's design): `insert` slides a held part's lead in at a distance from the body, `form` closes the clamp and anvil from opposite sides and swings the former round the mandrel, `shear` trims; a U by turning the part end for end, a square bend with `roll`; the `bend-rig` program; the rig drawn and animated; the player's `look=` view; live page republished.
 - 20:46 `release` v0.3.0 tagged at ea977d1 (the user's yes), built against X_eTaL 8c49bd8; a row in the Versions table.
 - 20:14 `ext` cell, flux-cored solder and the iron's feeder (Saga 17 step 20): each melt brings flux active 4 s molten, a lead wets only while it is active, a joint molten over 4 s without it is judged `dull`; the feeder (guide, spool, solder stub) drawn riding on the iron, its solder running into the joint at `feed` and back after; live page republished.

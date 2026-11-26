@@ -181,6 +181,7 @@ export function start(local) {
       'solder-stations': 'the bench: an arm brings a resistor lead to a chip pin, a pincer on the turntable grips it so the arm can go, the turntable presents the joint to the iron station, which feeds its own solder',
       'weld-stations': 'the stage brings a disc lead to the welder station, which comes up from below; an arm lays a second disc lead on it, and it is welded',
       pick: 'a chip picked from the tray and put in the vise',
+      identify: 'the microscope reads the parts\' markings: the resistor\'s bands and the LED\'s color in the tray; the capacitor\'s printed face is sideways and cannot be read, so it goes in the vise and the positioner tilts it toward the scope -- at 30 degrees the code may be misread (a warning), at 45 it reads 104, 100 nF. The readings are in the step list\'s events',
       'bend-rig': 'the resistor\'s lead slid into the bending rig 3 mm from the body: the clamp and anvil close on it from opposite sides and the former bends it down round the mandrel; the rig\'s shear trims the bent leg to 8 mm; then the resistor is soldered to the chip by its straight lead',
       support: 'a steel support is welded to a part and held by a pincer; the vise opens and the support alone holds the part while the turntable turns and tilts it; then the support is cut away',
       wire: 'the wire feeder feeds 40 mm of wire, the arm takes it and the feeder cuts it, its end is soldered to a chip pin, and a pincer bends its other half down',

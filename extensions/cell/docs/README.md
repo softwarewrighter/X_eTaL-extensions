@@ -431,7 +431,51 @@ P1 lets the support go, and none is left. A frame of several supports
 built on the turntable, holding several parts at once, comes with the
 planner.
 
-### The bending rig
+### Markings and identify
+
+Every part carries its marking (decision C12): what is banded or
+printed on it, from its circuit (`mark = "4.7k"`) or its kind's
+default. `marks.rs` turns a mark into what is on the body and back: the
+resistor color code (4 bands, 5 for three significant digits, read from
+either end) and EIA capacitor codes (`104` is 100 nF, `4R7` 4.7 pF).
+
+| Kind | Mark | On the body |
+| ---- | ---- | ----------- |
+| axial resistor | `4.7k` | bands all round: yellow violet red gold |
+| ceramic disc | `104` | the code on its face (+y) |
+| radial electrolytic | `10uF 25V` | value and voltage all round |
+| DIP IC | `NE555P` | the part number on its top, a pin-1 dot |
+| TO-92 | `2N3904` | the part number on its flat face |
+| axial diode | `1N4148` | the number, a band at the cathode (pin 1) |
+| 5 mm LED | `red` | its body's color |
+
+```
+identify R1                  # oracle: the marking and what it means
+identify C1 mode=sensed      # as the microscope's picture gives it
+identify R1 mode=sensed zoom=2
+```
+
+- `identify PART [mode=oracle|sensed] [zoom=]` turns the microscope
+  onto the part and zooms so its field is three times the part (or to
+  `zoom`). A marked side more than 75 degrees from the scope's line of
+  sight cannot be read: a warning says to turn the part (the arm, the
+  vise and the positioner turn it; `identify` does not).
+- oracle gives the marking and its value as the simulator knows them.
+- sensed reads as the scope's picture would. In the simulator the
+  picture is modeled, not rendered: the pixels its finest feature gets
+  (a band's width, a character's height, over a 320-pixel picture), the
+  angle it is seen at, and glare off a glossy top seen within 15
+  degrees of straight on set a confidence. At 0.6 or more the reading
+  is right; from 0.3 it may be wrong (one band or character taken for
+  its neighbor) and is a warning naming the doubtful reading; under
+  0.3 the part is unreadable. A misread or unreadable part is always a
+  warning, never silently right.
+- The `identify` program reads the resistor and the LED in the tray,
+  finds the capacitor's face sideways, puts it in the vise and tilts
+  the positioner: at 30 degrees its code may be misread, at 45 it
+  reads 104, 100 nF.
+
+## The bending rig
 
 Leads are formed in the bending rig, a fixed block beside the turntable
 with pins in slots (decision C19). The arm holds the part; the rig does
@@ -700,9 +744,15 @@ touches pin 3 alone.)
   `C1.2.6`) along the line between them,
   stopping `gap` mm short (0.1 if not given), the last 5 mm slowly.
 - `release ARM PART` (or `grip ARM open`): the tweezers open. A part
-  the vise can hold stays; one held by nothing falls straight down to
-  the floor (no tumbling), landing after the time gravity takes, and
-  is lost: a warning says how far it fell.
+  the vise can hold stays. One held by nothing falls straight down (no
+  tumbling, its orientation kept) onto the first thing below it, the
+  command lasting until it lands (the time gravity takes): onto the
+  turntable (its top, the vise, a pincer, a part on it) it lies there
+  and rides the turntable as it turns, tilts and rises; onto the tray,
+  the bending rig or a loose part it rests there, to be picked up
+  again; with nothing below, it lands on the floor and is lost. A
+  warning says how far it fell and onto what. The same holds for a
+  part the vise lets go when it opens, or a pincer when it unpinches.
 - `grip ARM close`: the tweezers close, taking the part one of whose
   grasp frames is at their tip, if any.
 - A command of several motions (`tool`, `pick`, `place`, `align`) is
@@ -896,6 +946,7 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `scope [pan=DEG] [tilt=DEG] [zoom=N] [focus=MM] [rotate=DEG] [aim=TARGET]` | scope | move the microscope: pan, tilt, zoom, focus, rotate, or aim it at a target |
 | `snap [stereo=N]` | scope | take the microscope's picture |
 | `inspect TARGET` | scope | report a joint's gap, fillet and result, or a pin's temperature |
+| `identify PART [mode=oracle\|sensed] [zoom=N]` | scope | the microscope turns onto a part and reads its marking: bands, printed text, color |
 | `probe PIN PIN` | scope | measure continuity and resistance between two pins |
 | `rewind t=S` | cell | put the cell back as it was at a time (the timeline keeps both branches) |
 

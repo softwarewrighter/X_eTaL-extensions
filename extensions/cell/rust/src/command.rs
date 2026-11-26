@@ -107,6 +107,7 @@ const fn opt(name: &'static str, kind: Kind, doc: &'static str) -> Arg {
 const ARM: Arg = req("arm", Kind::Arm, "the arm");
 const ACTOR: Arg = req("arm", Kind::Actor, "the arm, or a tool station");
 const OPEN_CLOSE: &[&str] = &["open", "close"];
+const MODES: &[&str] = &["oracle", "sensed"];
 
 /// The command table: the one source of the language.
 pub const COMMANDS: &[Spec] = &[
@@ -557,6 +558,24 @@ pub const COMMANDS: &[Spec] = &[
         summary: "report a joint's gap, fillet and result, or a pin's temperature",
         positional: &[req("target", Kind::Target, "the pin or joint")],
         named: &[],
+    },
+    Spec {
+        op: "identify",
+        family: "scope",
+        summary: "the microscope turns onto a part and reads its marking: bands, printed text, color",
+        positional: &[req("part", Kind::Part, "the part")],
+        named: &[
+            opt(
+                "mode",
+                Kind::Choice(MODES),
+                "oracle: the marking as the simulator knows it; sensed: as the scope's picture gives it, with a confidence (oracle if not given)",
+            ),
+            opt(
+                "zoom",
+                Kind::Number("x", 1.0, 200.0),
+                "the scope's magnification (the part three times over its field if not given)",
+            ),
+        ],
     },
     Spec {
         op: "probe",

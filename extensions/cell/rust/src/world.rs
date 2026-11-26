@@ -167,6 +167,13 @@ pub struct Part {
     /// away before the work is done.
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub support: bool,
+    /// What is printed or banded on it (`4.7k`, `104`, `NE555P`), from its
+    /// circuit or its kind's default (decision C12).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub mark: Option<String>,
+    /// It lies loose on the turntable (dropped there): it rides with it.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub on_stage: bool,
     /// It fell to the floor and is lost.
     pub lost: bool,
     /// Its thermal nodes' temperatures, C: the body, then each pin's
@@ -202,6 +209,8 @@ impl Part {
             reformed: Vec::new(),
             wire: None,
             support: false,
+            mark: None,
+            on_stage: false,
             lost: false,
             temps: Vec::new(),
             hot: 0.0,
@@ -431,6 +440,8 @@ impl World {
                     reformed: Vec::new(),
                     wire: None,
                     support: false,
+                    mark: None,
+                    on_stage: false,
                     lost: false,
                     temps: Vec::new(),
                     hot: 0.0,
@@ -457,7 +468,11 @@ impl World {
                 [0.0, 0.0, laid.yaw],
             );
             let at = layout::six(&p);
-            parts.push(Part::fresh(laid.id, laid.kind, at));
+            let mut part = Part::fresh(laid.id, laid.kind, at);
+            part.mark = laid
+                .mark
+                .or_else(|| crate::marks::default_mark(&part.kind).map(str::to_string));
+            parts.push(part);
         }
         Self {
             t: 0.0,
@@ -1748,6 +1763,11 @@ impl World {
                 )?;
             }
             "snap" => self.snap(events),
+            "identify" => {
+                let id = c.word("part").unwrap_or("");
+                let mode = c.word("mode").unwrap_or("oracle");
+                self.identify(id, mode, c.number("zoom"), did, events, warnings)?;
+            }
             "inspect" => {
                 let target = c.word("target").unwrap_or("");
                 events.push(self.inspect(target).map_err(Halt::Refused)?);

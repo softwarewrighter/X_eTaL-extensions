@@ -123,10 +123,9 @@ impl World {
                 }
             }
         }
-        if group
-            .iter()
-            .any(|&g| self.parts[g].in_vise || self.parts[g].pinched.is_some())
-        {
+        if group.iter().any(|&g| {
+            self.parts[g].in_vise || self.parts[g].pinched.is_some() || self.parts[g].on_stage
+        }) {
             return Some("vise".to_string());
         }
         // a wire still on its spool: the feeder station holds it still
@@ -156,9 +155,13 @@ impl World {
     }
 
     /// Parts `ks` and those soldered to them, if nothing carries them
-    /// now, fall together straight down to the floor, and are lost.
+    /// now, fall together straight down onto the first thing below them:
+    /// on the turntable (its top, the vise, a pincer, a part on it) they
+    /// ride with it; on the tray, the bending rig or a loose part they
+    /// rest there; else on the floor, lost. Time runs on until they land.
     pub(crate) fn fall_free(&mut self, ks: &[usize]) {
         let mut done = Vec::new();
+        let mut last = self.t;
         for &k in ks {
             let group = self.assembly(k);
             if group.iter().any(|g| done.contains(g))
@@ -178,27 +181,110 @@ impl World {
                     low = low.min(l);
                 }
             }
-            let h = (low - FLOOR).max(0.0);
-            let landed = micro(self.t + (2.0 * h / GRAVITY).sqrt());
+            let floor = (low - FLOOR).max(0.0);
+            let (drop, on) = self.landing(&group, floor);
+            let landed = micro(self.t + (2.0 * drop / GRAVITY).sqrt());
+            last = last.max(landed);
             let ids: Vec<String> = group.iter().map(|&g| self.parts[g].id.clone()).collect();
+            let lost = on.is_none();
+            let on_stage = on.as_deref() == Some("stage");
             for &g in &group {
                 let p = &mut self.parts[g];
-                p.at[2] = kin::clean(p.at[2] - h);
-                p.lost = true;
+                p.at[2] = kin::clean(p.at[2] - drop);
+                p.lost = lost;
+                p.on_stage = on_stage;
                 let at = p.at;
                 p.moves.push(crate::world::Moved { t: landed, at });
             }
-            self.notes.push((
-                true,
-                format!(
+            let who = format!(
+                "{} {}",
+                ids.join(" and "),
+                if ids.len() > 1 { "fall" } else { "falls" }
+            );
+            let note = match on.as_deref() {
+                None => format!(
                     "{} fell {} mm to the floor and {} lost",
                     ids.join(" and "),
-                    num1(h),
+                    num1(drop),
                     if ids.len() > 1 { "are" } else { "is" }
                 ),
-            ));
+                Some(what) => format!(
+                    "{who} {} mm onto {} and {} there{}",
+                    num1(drop),
+                    what_words(what),
+                    if ids.len() > 1 { "rest" } else { "rests" },
+                    if on_stage {
+                        ", riding the turntable"
+                    } else {
+                        ""
+                    }
+                ),
+            };
+            self.notes.push((true, note));
             done.extend(group);
         }
+        self.sync_carriers();
+        if last > self.t {
+            self.advance(last - self.t, None);
+        }
+    }
+
+    /// How far parts `group` fall before they touch something, and what:
+    /// `stage`, a fixture's or a part's group name, or none (the floor,
+    /// `floor` mm down).
+    fn landing(&self, group: &[usize], floor: f64) -> (f64, Option<String>) {
+        let mut others = vec![self.stage_group_at(self.stage, self.tilt, self.offset)];
+        others.extend(self.fixture_groups());
+        others.extend(self.free_part_groups().into_iter().filter(|g| {
+            !group
+                .iter()
+                .any(|&k| g.name == format!("part:{}", self.parts[k].id))
+        }));
+        let at = |d: f64| -> crate::collide::Group {
+            let mut solids = Vec::new();
+            for &g in group {
+                if let Ok(kind) = self.parts[g].kind_of() {
+                    let mut pose = self.parts[g].pose();
+                    pose.p[2] -= d;
+                    solids.extend(collide::part(&self.parts[g].id, &kind, &pose));
+                }
+            }
+            crate::collide::Group {
+                name: "falling".into(),
+                solids,
+            }
+        };
+        let hit = |d: f64| -> Option<String> {
+            let g = at(d);
+            others
+                .iter()
+                .find(|o| collide::first_hit(&g, std::slice::from_ref(*o), &[]).is_some())
+                .map(|o| o.name.clone())
+        };
+        // touching something already: it rests there
+        if let Some(on) = hit(0.0) {
+            return (0.0, Some(on));
+        }
+        let mut d = 0.0;
+        while d < floor {
+            let next = (d + 1.0).min(floor);
+            if let Some(on) = hit(next) {
+                // to a tenth of a millimeter
+                let mut lo = d;
+                let mut hi = next;
+                while hi - lo > 0.1 {
+                    let mid = (lo + hi) / 2.0;
+                    if hit(mid).is_some() {
+                        hi = mid;
+                    } else {
+                        lo = mid;
+                    }
+                }
+                return (kin::clean((lo * 10.0).round() / 10.0), Some(on));
+            }
+            d = next;
+        }
+        (floor, None)
     }
 
     // -- heat ------------------------------------------------------------
@@ -1209,20 +1295,34 @@ impl World {
     /// temperature. The simulator's own numbers (oracle).
     pub(crate) fn inspect(&self, target: &str) -> Result<String, String> {
         if target == "supports" {
-            let left: Vec<&str> = self
-                .parts
-                .iter()
-                .filter(|p| p.support && !p.lost)
+            // in the work: joined to a part; cut free and lying loose, debris
+            let joined = |id: &str| {
+                self.joints.iter().any(|j| {
+                    j.holds() && [&j.a, &j.b].iter().any(|p| p.split('.').next() == Some(id))
+                })
+            };
+            let live = self.parts.iter().filter(|p| p.support && !p.lost);
+            let left: Vec<&str> = live
+                .clone()
+                .filter(|p| joined(&p.id))
                 .map(|p| p.id.as_str())
                 .collect();
-            return Ok(if left.is_empty() {
+            let loose: Vec<&str> = live
+                .filter(|p| !joined(&p.id))
+                .map(|p| p.id.as_str())
+                .collect();
+            let mut said = if left.is_empty() {
                 "supports: none left in the work".to_string()
             } else {
                 format!(
                     "supports: {} still in the work: cut them away",
                     left.join(" ")
                 )
-            });
+            };
+            if !loose.is_empty() {
+                said += &format!("; {} cut free, lying loose: clear it away", loose.join(" "));
+            }
+            return Ok(said);
         }
         if target.contains('+') {
             let Some(j) = self
@@ -1656,5 +1756,22 @@ impl World {
                 }
             }
         }
+    }
+}
+
+/// A group's name in words.
+fn what_words(name: &str) -> String {
+    if name == "stage" {
+        "the turntable".into()
+    } else if let Some(f) = name.strip_prefix("fixture:") {
+        match f {
+            "tray1" => "the tray".into(),
+            "bender" => "the bending rig".into(),
+            other => format!("the {other}"),
+        }
+    } else if let Some(p) = name.strip_prefix("part:") {
+        p.to_string()
+    } else {
+        name.to_string()
     }
 }

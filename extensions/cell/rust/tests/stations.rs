@@ -227,7 +227,7 @@ fn layout_text(spec: &str) -> String {
     out
 }
 
-const PROGRAMS: [&str; 11] = [
+const PROGRAMS: [&str; 12] = [
     "arms",
     "pick",
     "solder",
@@ -239,6 +239,7 @@ const PROGRAMS: [&str; 11] = [
     "wire",
     "support",
     "bend-rig",
+    "identify",
 ];
 
 fn program(name: &str) -> String {
@@ -460,10 +461,13 @@ lift A mm=60");
     let o = w.apply(&parse_line("stage turn=45").unwrap());
     assert!(o.ok, "{o:?}");
     assert!((gap(&w) - before).abs() < 1e-6);
-    // let go with no joint made: R1 falls
+    // let go with no joint made: R1 falls onto what is below it
     let o = w.apply(&parse_line("unpinch P1").unwrap());
     assert!(o.ok, "{o:?}");
-    assert!(w.part("R1").unwrap().lost, "{:?}", o.events);
+    assert!(
+        o.warnings.iter().any(|x| x.starts_with("R1 falls")),
+        "{o:?}"
+    );
     // a pincer that is not there
     let e = parse_line("pinch P9 on=U1.1").unwrap_err();
     assert!(e.contains("no pincer P9"), "{e}");
@@ -509,8 +513,10 @@ fn a_support_holds_the_work_and_is_cut_away() {
     assert!(said("supports: W1 still in the work"));
     // the tab cut free, a stub left; the support gone
     assert!(said("S4 cuts W1's tab at C1.1+W1.1 free"));
-    assert!(said("supports: none left in the work"));
-    assert!(w.part("W1").unwrap().lost);
+    assert!(said(
+        "supports: none left in the work; W1 cut free, lying loose: clear it away"
+    ));
+    assert!(w.part("W1").unwrap().on_stage);
     assert!(w.joints.iter().all(|j| j.name != "C1.1+W1.1"));
     assert_eq!(w.part("C1").unwrap().holder.as_deref(), Some("vise"));
 }

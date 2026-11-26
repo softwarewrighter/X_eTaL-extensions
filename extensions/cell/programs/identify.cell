@@ -1,0 +1,20 @@
+# identify: reading parts' markings with the microscope (decision C12):
+# the resistor's bands and the LED's color in the tray, read as the
+# scope's picture gives them; the capacitor lies with its printed face
+# sideways and cannot be read, so arm A puts it in the vise and the
+# positioner tilts it toward the scope: at 30 degrees the face is seen
+# too obliquely and the code may be misread (a warning); at 45 it reads.
+reset circuit=demo
+identify R1 mode=sensed
+identify D1 mode=sensed
+identify C1 mode=sensed
+tool A tweezers
+pick A C1 grasp=body
+place A C1 at=0,0,-20
+vise close
+release A C1
+lift A mm=60
+stage tilt=30
+identify C1 mode=sensed
+stage tilt=45
+identify C1 mode=sensed
