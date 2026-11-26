@@ -23,6 +23,7 @@ pub mod solder;
 pub mod stations;
 mod thermal;
 pub mod weld;
+pub mod wire;
 pub mod world;
 
 use xetal_ext_sdk::{OwnedError, Value, text};

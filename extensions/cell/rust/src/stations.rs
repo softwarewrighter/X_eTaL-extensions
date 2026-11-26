@@ -252,6 +252,9 @@ pub struct StationState {
     pub ext: f64,
     /// Rows of the time and the extension.
     pub track: Vec<[f64; 2]>,
+    /// An iron's set point, if set by a command (else the data's).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub temp: Option<f64>,
 }
 
 /// Every station, retracted.
@@ -263,6 +266,7 @@ pub fn fresh() -> Vec<StationState> {
             name,
             ext: 0.0,
             track: vec![[0.0, 0.0]],
+            temp: None,
         })
         .collect()
 }
@@ -628,6 +632,9 @@ impl World {
         match c.op.as_str() {
             "touch" => {
                 need("iron")?;
+                if let Some(t) = c.number("temp") {
+                    self.stations[si].temp = Some(t);
+                }
                 let name = c.word("at").unwrap_or("");
                 let ji = at_point(self, name)?;
                 let allowed = self.touching(&self.joints[ji]);
@@ -637,7 +644,12 @@ impl World {
                 events.push(format!(
                     "{}'s iron ({} C) on {}",
                     s.name,
-                    num1(s.temp.unwrap_or(crate::world::IRON_SET)),
+                    num1(
+                        self.stations[si]
+                            .temp
+                            .or(s.temp)
+                            .unwrap_or(crate::world::IRON_SET)
+                    ),
                     self.joints[ji].name
                 ));
                 self.advance(dwell, None);
@@ -708,6 +720,19 @@ impl World {
                 let pin = c.word("on").unwrap_or("").to_string();
                 let at = c.number("at").unwrap_or(0.0);
                 self.trim(si, &s, &pin, at, did, events)?;
+            }
+            "wire" => {
+                need("wire")?;
+                let awg = c.number("awg").unwrap_or(26.0);
+                #[allow(clippy::cast_possible_truncation)]
+                let awg = awg.round() as i64;
+                let mm = c.number("mm").unwrap_or(20.0);
+                let enamel = c.word("enamel") == Some("yes");
+                self.feed_wire(si, &s, awg, mm, enamel, did, events, warnings)?;
+            }
+            "cut" => {
+                need("wire")?;
+                self.cut_wire(&s, events, warnings)?;
             }
             "back" => {
                 let leave = self.near_tip(s.tip(self.stations[si].ext));
@@ -831,4 +856,158 @@ fn along_to(line: &[V3], p: V3) -> f64 {
         run += l;
     }
     at
+}
+
+impl World {
+    /// `wire STATION awg= mm= [enamel=]`: the feeder, retracted, feeds
+    /// `mm` of wire straight out of its nozzle toward the work: a new part
+    /// (W1, W2, ...) still on the spool, held still by it until cut.
+    #[allow(clippy::too_many_arguments)]
+    fn feed_wire(
+        &mut self,
+        si: usize,
+        s: &Station,
+        awg: i64,
+        mm: f64,
+        enamel: bool,
+        did: &mut Vec<String>,
+        events: &mut Vec<String>,
+        warnings: &mut Vec<String>,
+    ) -> Result<(), Halt> {
+        if self.stations[si].ext > 0.0 {
+            return Err(Halt::Refused(format!(
+                "{} is extended: back {} first",
+                s.name, s.name
+            )));
+        }
+        if let Some(w) = self.parts.iter().find(|p| {
+            p.wire
+                .as_ref()
+                .is_some_and(|w| w.spool.as_deref() == Some(s.name.as_str()))
+        }) {
+            return Err(Halt::Refused(format!(
+                "{} is still on {}'s spool: cut {} first",
+                w.id, s.name, s.name
+            )));
+        }
+        if mm > s.stroke - 10.0 {
+            return Err(Halt::Refused(format!(
+                "{} feeds at most {} mm toward the work",
+                s.name,
+                num1(s.stroke - 10.0)
+            )));
+        }
+        let data = crate::wire::data().map_err(Halt::Refused)?;
+        let g = data.gauge(awg);
+        // the nozzle, and the wire out of it toward the work
+        let nozzle = s.tip(0.0);
+        let toward = kin::scale(s.from, -1.0);
+        let middle = kin::add(nozzle, kin::scale(toward, mm / 2.0));
+        // the wire's frame: x along it, toward the work; z as near up as it can be
+        let up = [0.0, 0.0, 1.0];
+        let z0 = kin::sub(up, kin::scale(toward, toward[2]));
+        let z = kin::scale(z0, 1.0 / kin::norm(z0).max(1e-9));
+        let y = [
+            z[1] * toward[2] - z[2] * toward[1],
+            z[2] * toward[0] - z[0] * toward[2],
+            z[0] * toward[1] - z[1] * toward[0],
+        ];
+        let r = [
+            [toward[0], y[0], z[0]],
+            [toward[1], y[1], z[1]],
+            [toward[2], y[2], z[2]],
+        ];
+        let pose = Pose { p: middle, r };
+        let n = (1..)
+            .find(|n| self.part(&format!("W{n}")).is_none())
+            .unwrap_or(1);
+        let id = format!("W{n}");
+        let mut part =
+            crate::world::Part::fresh(id.clone(), format!("awg{awg}"), crate::layout::six(&pose));
+        part.wire = Some(crate::world::WireInfo {
+            awg,
+            enamel,
+            stripped: [false; 2],
+            spool: Some(s.name.clone()),
+        });
+        part.holder = Some(s.name.clone());
+        let half = mm / 2.0;
+        let t = self.t;
+        for (pin, end) in [("1", half), ("2", -half)] {
+            let lead = vec![[0.0; 3], [end, 0.0, 0.0]];
+            part.leads.insert(pin.to_string(), lead.clone());
+            part.reformed.push((t, pin.to_string(), lead));
+        }
+        self.parts.push(part);
+        let dt = mm / 20.0;
+        self.advance(dt, None);
+        did.push(format!(
+            "feed {} mm of AWG {awg} in {} s",
+            num1(mm),
+            num1(dt)
+        ));
+        events.push(format!(
+            "{} feeds {id}: {} mm of AWG {awg}{} ({} mm, {} ohms a meter, {} A), its end 1 toward the work",
+            s.name,
+            num1(mm),
+            if enamel { " enameled" } else { "" },
+            g.diameter,
+            (g.ohm_per_m * 10000.0).round() / 10000.0,
+            g.amps
+        ));
+        let sag = data.sag(g.diameter, mm);
+        if sag > data.sag_warn_mm {
+            warnings.push(format!(
+                "{id} sags {} mm at its free end, held only by the nozzle",
+                (sag * 100.0).round() / 100.0
+            ));
+        }
+        Ok(())
+    }
+
+    /// `cut STATION`: the feeder cuts its wire at the nozzle; what holds
+    /// the free end keeps it, else it falls.
+    fn cut_wire(
+        &mut self,
+        s: &Station,
+        events: &mut Vec<String>,
+        warnings: &mut Vec<String>,
+    ) -> Result<(), Halt> {
+        let k = self
+            .parts
+            .iter()
+            .position(|p| {
+                p.wire
+                    .as_ref()
+                    .is_some_and(|w| w.spool.as_deref() == Some(s.name.as_str()))
+            })
+            .ok_or_else(|| Halt::Refused(format!("{} has no wire out: feed some first", s.name)))?;
+        if let Some(w) = self.parts[k].wire.as_mut() {
+            w.spool = None;
+        }
+        let id = self.parts[k].id.clone();
+        events.push(format!("{} cuts {id} at the nozzle", s.name));
+        self.sync_carriers();
+        match self.parts[k].holder.clone() {
+            Some(by) => {
+                // held at one end: how far the other sags
+                if let (Ok(data), Some(w)) = (crate::wire::data(), self.parts[k].wire.clone()) {
+                    let d = data.gauge(w.awg).diameter;
+                    let len = self.parts[k]
+                        .kind_of()
+                        .map(|k| k.pins.iter().map(crate::parts::Pin::length).sum::<f64>())
+                        .unwrap_or(0.0);
+                    let sag = data.sag(d, (len - 3.0).max(0.0));
+                    if sag > data.sag_warn_mm {
+                        warnings.push(format!(
+                            "{id} sags {} mm at its free end, held by {by} at one end",
+                            (sag * 100.0).round() / 100.0
+                        ));
+                    }
+                }
+            }
+            None => self.let_go_of(k),
+        }
+        Ok(())
+    }
 }

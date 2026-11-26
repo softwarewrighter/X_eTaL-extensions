@@ -160,6 +160,9 @@ pub struct Part {
     /// Each re-forming: the time, the pin and its new lead, for players.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub reformed: Vec<(f64, String, Vec<V3>)>,
+    /// A length of wire: its gauge, enamel, and the spool it is still on.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub wire: Option<WireInfo>,
     /// It fell to the floor and is lost.
     pub lost: bool,
     /// Its thermal nodes' temperatures, C: the body, then each pin's
@@ -193,6 +196,7 @@ impl Part {
             leads: std::collections::BTreeMap::new(),
             bends: std::collections::BTreeMap::new(),
             reformed: Vec::new(),
+            wire: None,
             lost: false,
             temps: Vec::new(),
             hot: 0.0,
@@ -202,12 +206,30 @@ impl Part {
         }
     }
 
-    /// Its kind, with its own leads where they have been re-formed.
+    /// Its kind, with its own leads where they have been re-formed (a
+    /// length of wire's kind made from its own two halves).
     ///
     /// # Errors
     ///
     /// No such kind in the library.
     pub fn kind_of(&self) -> Result<PartKind, String> {
+        if let Some(w) = &self.wire {
+            let data = crate::wire::data()?;
+            let d = data.gauge(w.awg).diameter;
+            let half = |pin: &str| {
+                self.leads
+                    .get(pin)
+                    .cloned()
+                    .unwrap_or_else(|| vec![[0.0; 3], [1.0, 0.0, 0.0]])
+            };
+            return Ok(crate::wire::kind(
+                w.awg,
+                d,
+                &half("1"),
+                &half("2"),
+                data.density,
+            ));
+        }
         let mut k = parts::kind(&self.kind)?;
         for pin in &mut k.pins {
             if let Some(lead) = self.leads.get(&pin.name) {
@@ -391,6 +413,7 @@ impl World {
                     leads: std::collections::BTreeMap::new(),
                     bends: std::collections::BTreeMap::new(),
                     reformed: Vec::new(),
+                    wire: None,
                     lost: false,
                     temps: Vec::new(),
                     hot: 0.0,
@@ -950,7 +973,13 @@ impl World {
     pub(crate) fn free_part_groups(&self) -> Vec<Group> {
         self.parts
             .iter()
-            .filter(|p| p.holder.is_none() && !p.lost)
+            .filter(|p| {
+                (p.holder.is_none()
+                    || p.wire
+                        .as_ref()
+                        .is_some_and(|w| w.spool.is_some() && p.holder == w.spool))
+                    && !p.lost
+            })
             .filter_map(|p| {
                 let k = p.kind_of().ok()?;
                 Some(Group {
@@ -1088,6 +1117,21 @@ impl World {
                 ))
             })?;
         let name = a.name.clone();
+        // a wire still on its spool is not carried off: cut it first
+        if let Some(w) = self.parts.iter().find(|p| {
+            p.holder.as_deref() == Some(name.as_str())
+                && p.wire.as_ref().is_some_and(|w| w.spool.is_some())
+        }) {
+            let spool = w
+                .wire
+                .as_ref()
+                .and_then(|x| x.spool.clone())
+                .unwrap_or_default();
+            return Err(Halt::Refused(format!(
+                "{} is still on {spool}'s spool: cut {spool} first",
+                w.id
+            )));
+        }
         // tweezers whose tip is on a part's grasp frame may touch it
         // (they are round it, or leaving it); and the vise's, if the
         // part is in it (picked from it, or left there) -- not for the
@@ -1865,7 +1909,11 @@ impl World {
         did.push(format!("grip {arm} close in {} s", num(GRIP_TIME)));
         let found = self.parts.iter().position(|p| {
             !p.lost
-                && p.holder.as_deref().is_none_or(|h| h == "vise" || h == arm)
+                && p.holder.as_deref().is_none_or(|h| {
+                    h == "vise"
+                        || h == arm
+                        || p.wire.as_ref().and_then(|w| w.spool.as_deref()) == Some(h)
+                })
                 && only.is_none_or(|o| o == p.id)
                 && p.kind_of().is_ok_and(|k| {
                     k.grasps.iter().any(|g| {
@@ -1927,7 +1975,13 @@ impl World {
         if p.lost {
             return Err(Halt::Refused(format!("{id} is lost")));
         }
-        if let Some(h) = p.holder.as_deref().filter(|h| *h != "vise") {
+        // the vise, or a wire's own spool, let go of what an arm takes
+        let spool = p.wire.as_ref().and_then(|w| w.spool.clone());
+        if let Some(h) = p
+            .holder
+            .as_deref()
+            .filter(|h| *h != "vise" && Some(*h) != spool.as_deref())
+        {
             return Err(Halt::Refused(format!("{h} holds {id}")));
         }
         let kind: PartKind = p.kind_of().map_err(Halt::Refused)?;
@@ -1955,6 +2009,13 @@ impl World {
             return Err(Halt::Refused(format!(
                 "{arm}'s tweezers did not close on {id}"
             )));
+        }
+        // a wire still on its spool stays where it is until it is cut
+        if let Some(s) = spool {
+            events.push(format!(
+                "{id} is still on {s}'s spool: cut {s} to take it away"
+            ));
+            return Ok(());
         }
         // up, off what it lay on
         let lift = Pose {
@@ -2124,6 +2185,20 @@ pub(crate) fn nums(xs: &[f64]) -> String {
 
 fn nums_c(xs: &[f64]) -> String {
     xs.iter().map(|x| num(*x)).collect::<Vec<_>>().join(",")
+}
+
+/// A length of wire's own: its gauge, whether it is enameled and which
+/// ends have been stripped, the spool (a station) it is still on.
+#[derive(Clone, Debug, Deserialize, Serialize, PartialEq)]
+pub struct WireInfo {
+    /// The AWG number.
+    pub awg: i64,
+    /// Enameled (magnet wire): an end wets only once stripped by heat.
+    pub enamel: bool,
+    /// Each end (pin 1, pin 2) stripped.
+    pub stripped: [bool; 2],
+    /// Still on this station's spool.
+    pub spool: Option<String>,
 }
 
 /// The point `mm` along a polyline from its start.

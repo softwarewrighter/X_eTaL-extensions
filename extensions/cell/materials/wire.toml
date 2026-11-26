@@ -1,0 +1,44 @@
+# Wire on spools: copper, bare or enameled (decision C15's wire, the
+# design's table). Units: mm, ohms a meter, A, g/cm3, GPa, C. Every
+# number is `sourced` (with the `source` beside it) or `illustrative`.
+# Gauges not listed are worked out from the AWG formula (the diameter
+# 0.127 mm times 92 to the power (36 - n) / 39) and copper's
+# resistivity; their ampacity is interpolated.
+
+density = 8.96
+young_gpa = 117.0
+resistivity_ohm_m = 1.724e-8
+sourced = ["density", "young_gpa", "resistivity_ohm_m"]
+source = "annealed copper: handbook values (the IACS conductivity standard's 1.7241e-8 ohm m; Young's modulus 110 to 128 GPa)"
+
+# solderable polyurethane enamel burns off where the wire is hot enough
+strip_c = 330.0
+illustrative = ["strip_c"]
+note = "solderable enamels are commonly stripped by a solder bath or iron at 330 to 390 C"
+
+# a free end may sag this much before it is warned about, mm
+sag_warn_mm = 0.1
+
+[[gauge]]
+awg = 22
+diameter = 0.644
+ohm_per_m = 0.0530
+amps = 7.0
+
+[[gauge]]
+awg = 26
+diameter = 0.405
+ohm_per_m = 0.1339
+amps = 2.2
+
+[[gauge]]
+awg = 30
+diameter = 0.255
+ohm_per_m = 0.3386
+amps = 0.86
+
+[[gauge]]
+awg = 34
+diameter = 0.160
+ohm_per_m = 0.8560
+amps = 0.35

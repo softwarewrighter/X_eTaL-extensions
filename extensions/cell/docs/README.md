@@ -374,6 +374,33 @@ down is out of the arm's reach in the vise (the tweezers grip a part
 from its top; a refusal says so): on its side, with the turntable's
 tilt (up to 90 degrees), is how the work is turned over.
 
+### Wire
+
+- `wire STATION awg=N mm=MM [enamel=yes|no]`: the wire feeder station
+  S5 (from -x, slightly below the work) feeds `mm` of copper wire of a
+  gauge out of its nozzle toward the work -- a new part, `W1`, `W2`,
+  ..., its two halves its pins `1` (the end toward the work) and `2`
+  (the end at the nozzle), grasp frames `1`, `2` and `middle`. It is
+  still on the spool: held still there, it may be taken by the arm
+  (`pick A W1 grasp=middle`) but not carried off.
+- `cut STATION`: the feeder cuts its wire at the nozzle; what holds the
+  free end keeps it, else it falls.
+- From then on a wire is a part like any other: its ends are brought
+  to leads, pinched, soldered, bent by a pincer and trimmed.
+- `materials/wire.toml`: AWG 22, 26, 30 and 34 (diameter, ohms a
+  meter, ampacity), copper's density and stiffness; other gauges from
+  the AWG formula. A free end held at one end sags as a cantilever
+  (w L^4 / 8 E I); past 0.1 mm a warning says how far (40 mm of AWG 34
+  sags about 0.15 mm).
+- Enameled (magnet) wire wets only where its enamel has burned off:
+  above 330 C, which wants a hotter iron than 350 C gives a lead --
+  `touch S1 at=... temp=400`.
+
+`programs/wire.cell`: S5 feeds 40 mm of AWG 26; the arm takes it by
+its middle and S5 cuts it; the arm brings its end to pin 3, P1 grips
+it; the iron station solders the joint; P2 bends the wire's other half
+down.
+
 ### Forming and trimming leads
 
 - `bend PINCER on=PIN at=MM angle=DEG toward=X,Y,Z [radius=MM]`: a
@@ -414,6 +441,7 @@ it holds. The arms still pick, place and hold parts to each other.
 | S1 | iron (350 C) with its own solder feeder | -x -y, slightly below the work |
 | S3 | welder | -x +y, below |
 | S4 | flush cutter | +x -y, slightly below the work |
+| S5 | wire feeder (a spool, a nozzle, a cutter) | -x, slightly below the work |
 
 ```
 stage turn=30 tilt=-20 at=10,0,30   # the positioner: turn by, tilt to, move to
@@ -736,11 +764,11 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `align ARM FRAME to=FRAME [gap=MM]` | tweezers | bring a frame of the held part to another frame, a gap apart |
 | `release ARM PART` | tweezers | open the tweezers and let the part go |
 | `clip ARM on=PIN at=MM` | clip | clip a heatsink on a lead, between the body and the joint |
-| `touch ARM\|STATION at=JOINT [dwell=S]` | iron | put the iron's tip on a joint and hold it there |
+| `touch ARM\|STATION at=JOINT [dwell=S] [temp=C]` | iron | put the iron's tip on a joint and hold it there |
 | `feed ARM\|STATION mm=MM [rate=MM/S]` | solder | feed solder wire into the joint the iron is on |
 | `weld ARM\|STATION at=JOINT energy=J [risky=refuse\|allow]` | welder | spot weld a lap of two leads by a capacitor discharge |
-| `wire ARM awg=N mm=MM` | wire | feed bare or enameled wire from a spool out of the nozzle |
-| `cut ARM` | cutter | cut the wire or the lead in the cutter's jaws |
+| `wire STATION awg=N mm=MM [enamel=no\|yes]` | wire | the wire feeder station feeds bare or enameled wire from its spool out of its nozzle |
+| `cut STATION` | wire | the wire feeder cuts its wire at the nozzle: what holds the free end keeps it |
 | `stage [turn=DEG] [tilt=DEG] [at=X,Y,Z]` | stage | move the positioner: turn the stage by an angle, tilt it, move it |
 | `present FRAME\|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG]` | stage | move the positioner so a pin's frame or a joint is at a tool station's point |
 | `pinch PINCER on=PIN [at=MM]` | pincer | a pincer on the turntable grips a lead from the side: it holds the part there, and sinks heat |

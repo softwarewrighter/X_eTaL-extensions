@@ -214,7 +214,10 @@ export function cellPlayer(host, calls, options = {}) {
       arms[r.id] = { g, joints, rest: joints.map((j) => j.quaternion.clone()), flange: g.getObjectByName('arm_flange'), q: [0, 0, 0, 0, 0, 0] };
     }),
     ...s.parts.map(async (p) => {
-      const g = holder((await load(p.kind)).clone(true));
+      // a part with no model of its own (a length of wire) is only its
+      // leads, drawn below as tubes
+      const model = s.leads.some((x) => x.id === p.id) && /^awg\d+$/.test(p.kind) ? new THREE.Group() : await load(p.kind);
+      const g = holder(model.clone(true));
       g.matrixAutoUpdate = false;
       root.add(g);
       // each mesh its own material, so heat tints it alone: the body's,

@@ -262,6 +262,11 @@ pub const COMMANDS: &[Spec] = &[
                 Kind::Number("s", 0.0, 30.0),
                 "how long (1 if not given)",
             ),
+            opt(
+                "temp",
+                Kind::Number("C", 150.0, 450.0),
+                "a station's iron set to this first (an arm's iron is set by tool ... temp=)",
+            ),
         ],
     },
     Spec {
@@ -300,18 +305,23 @@ pub const COMMANDS: &[Spec] = &[
     Spec {
         op: "wire",
         family: "wire",
-        summary: "feed bare or enameled wire from a spool out of the nozzle",
-        positional: &[ARM],
+        summary: "the wire feeder station feeds bare or enameled wire from its spool out of its nozzle",
+        positional: &[req("arm", Kind::Station, "the wire feeder station")],
         named: &[
             req("awg", Kind::Int(22, 34), "the gauge"),
-            req("mm", Kind::Number("mm", 0.0, 300.0), "how much"),
+            req("mm", Kind::Number("mm", 1.0, 120.0), "how much"),
+            opt(
+                "enamel",
+                Kind::Choice(&["no", "yes"]),
+                "enameled (magnet) wire: no if not given",
+            ),
         ],
     },
     Spec {
         op: "cut",
-        family: "cutter",
-        summary: "cut the wire or the lead in the cutter's jaws",
-        positional: &[ARM],
+        family: "wire",
+        summary: "the wire feeder cuts its wire at the nozzle: what holds the free end keeps it",
+        positional: &[req("arm", Kind::Station, "the wire feeder station")],
         named: &[],
     },
     Spec {

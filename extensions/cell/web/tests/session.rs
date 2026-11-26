@@ -53,6 +53,7 @@ fn the_offered_programs_run_clean() {
         "weld",
         "leads",
         "turn",
+        "wire",
         "weld-stations",
         "pick",
         "arms",

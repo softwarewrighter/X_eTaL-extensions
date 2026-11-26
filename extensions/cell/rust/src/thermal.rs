@@ -123,10 +123,16 @@ impl World {
                 }
             }
         }
-        group
+        if group
             .iter()
             .any(|&g| self.parts[g].in_vise || self.parts[g].pinched.is_some())
-            .then(|| "vise".to_string())
+        {
+            return Some("vise".to_string());
+        }
+        // a wire still on its spool: the feeder station holds it still
+        group
+            .iter()
+            .find_map(|&g| self.parts[g].wire.as_ref().and_then(|w| w.spool.clone()))
     }
 
     /// Every part's holder made what carries it now, a hold begun or
@@ -204,6 +210,7 @@ impl World {
         if dt <= 0.0 {
             return;
         }
+        self.strip_enamel();
         let Ok(th) = solder::data() else {
             self.t = micro(self.t + dt);
             return;
@@ -294,7 +301,13 @@ impl World {
                 }
             }
             if !near.is_empty() {
-                let set = crate::stations::temp(&name).unwrap_or(th.iron.set_c);
+                let set = self
+                    .stations
+                    .iter()
+                    .find(|x| x.name == name)
+                    .and_then(|x| x.temp)
+                    .or_else(|| crate::stations::temp(&name))
+                    .unwrap_or(th.iron.set_c);
                 touches.push((set, "iron", tip, near));
             }
         }
@@ -534,6 +547,11 @@ impl World {
             let Some(alloy) = th.solder.get(&self.joints[*ji].alloy).cloned() else {
                 continue;
             };
+            // an enameled wire's end wets only once its enamel is gone
+            let (ea, eb) = (
+                self.enameled(&self.joints[*ji].a),
+                self.enameled(&self.joints[*ji].b),
+            );
             let j = &mut self.joints[*ji];
             if j.solder <= 0.0 {
                 continue;
@@ -549,10 +567,10 @@ impl World {
                 continue;
             }
             if j.molten {
-                if a.is_some_and(|a| temps[a] >= alloy.liquidus) {
+                if !ea && a.is_some_and(|a| temps[a] >= alloy.liquidus) {
                     j.wet_a += ds;
                 }
-                if b.is_some_and(|b| temps[b] >= alloy.liquidus) {
+                if !eb && b.is_some_and(|b| temps[b] >= alloy.liquidus) {
                     j.wet_b += ds;
                 }
                 if temp < alloy.solidus {
@@ -1551,3 +1569,55 @@ pub(crate) struct WeldPlan {
 
 /// How long the electrodes stay on the lap, s.
 pub const WELD_HOLD: f64 = 0.3;
+
+impl World {
+    /// Whether a pin is an enameled wire's end not yet stripped.
+    pub(crate) fn enameled(&self, pin: &str) -> bool {
+        let Some((pid, pn)) = pin.split_once('.') else {
+            return false;
+        };
+        self.part(pid)
+            .and_then(|p| p.wire.as_ref())
+            .is_some_and(|w| {
+                let i = usize::from(pn == "2");
+                w.enamel && !w.stripped[i]
+            })
+    }
+
+    /// Enamel burned off: each enameled wire's end whose lead is above the
+    /// strip temperature somewhere is stripped from then on.
+    pub(crate) fn strip_enamel(&mut self) {
+        let Ok(data) = crate::wire::data() else {
+            return;
+        };
+        for k in 0..self.parts.len() {
+            let Some(w) = self.parts[k].wire.clone() else {
+                continue;
+            };
+            if !w.enamel {
+                continue;
+            }
+            let hot = self.parts[k]
+                .temps
+                .iter()
+                .skip(1)
+                .any(|t| *t >= data.strip_c);
+            if !hot {
+                continue;
+            }
+            // which end: the hotter half of the wire's nodes
+            let temps = self.parts[k].temps.clone();
+            let n = temps.len().saturating_sub(1);
+            for (i, range) in [(0usize, 1..1 + n / 2), (1usize, 1 + n / 2..1 + n)] {
+                if !w.stripped[i] && temps[range].iter().any(|t| *t >= data.strip_c) {
+                    let id = self.parts[k].id.clone();
+                    if let Some(wi) = self.parts[k].wire.as_mut() {
+                        wi.stripped[i] = true;
+                    }
+                    self.notes
+                        .push((false, format!("{id}.{}'s enamel burned off", i + 1)));
+                }
+            }
+        }
+    }
+}

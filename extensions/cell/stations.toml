@@ -39,3 +39,11 @@ name = "S4"
 tool = "cutter"
 from = [1.0, -1.0, -0.4]
 stroke = 160.0
+
+# the wire feeder: a spool behind, a nozzle in front; it feeds wire out
+# toward the work and cuts it at the nozzle (decision C15)
+[[station]]
+name = "S5"
+tool = "wire"
+from = [-1.0, 0.0, -0.25]
+stroke = 160.0

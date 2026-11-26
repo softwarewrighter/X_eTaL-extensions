@@ -1,0 +1,30 @@
+# wire: a jumper of wire at the bench. The DIP in the vise; the wire
+# feeder station S5 feeds 40 mm of AWG 26 toward the work; the arm takes
+# the wire by its middle and S5 cuts it at the nozzle; the arm brings
+# the wire's end to pin 3, and pincer P1 grips it there; the turntable
+# presents the joint to the iron station, which solders it; pincer P2
+# bends the wire's other half down, toward where its next part will be.
+reset circuit=demo
+tool A tweezers
+pick A U1 grasp=ends
+place A U1 at=0,0,-24 rpy=0,0,90
+vise close
+release A U1
+lift A mm=60
+wire S5 awg=26 mm=40
+pick A W1 grasp=middle
+cut S5
+lift A mm=60
+move A to=0,60,60 rpy=180,0,-45
+move A to=17.952,15.412,-11.365
+align A W1.1.tip to=U1.3.2.5 gap=0.1
+pinch P1 on=W1.1 at=12
+release A W1
+lift A mm=60
+present U1.3+W1.1 at=S1
+touch S1 at=U1.3+W1.1 dwell=2
+feed S1 mm=2 rate=1
+back S1
+wait until=U1.3+W1.1 below=100
+bend P2 on=W1.2 at=6 angle=90 toward=0,0,-1
+unpinch P1

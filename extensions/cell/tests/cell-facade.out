@@ -22,11 +22,11 @@ place ARM PART at=X,Y,Z [rpy=R,P,Y] -- carry the held part to a pose
 align ARM FRAME to=FRAME [gap=MM] -- bring a frame of the held part to another frame, a gap apart
 release ARM PART -- open the tweezers and let the part go
 clip ARM on=PIN at=MM -- clip a heatsink on a lead, between the body and the joint
-touch ARM|STATION at=JOINT [dwell=S] -- put the iron's tip on a joint and hold it there
+touch ARM|STATION at=JOINT [dwell=S] [temp=C] -- put the iron's tip on a joint and hold it there
 feed ARM|STATION mm=MM [rate=MM/S] -- feed solder wire into the joint the iron is on
 weld ARM|STATION at=JOINT energy=J [risky=refuse|allow] -- spot weld a lap of two leads by a capacitor discharge
-wire ARM awg=N mm=MM -- feed bare or enameled wire from a spool out of the nozzle
-cut ARM -- cut the wire or the lead in the cutter's jaws
+wire STATION awg=N mm=MM [enamel=no|yes] -- the wire feeder station feeds bare or enameled wire from its spool out of its nozzle
+cut STATION -- the wire feeder cuts its wire at the nozzle: what holds the free end keeps it
 stage [turn=DEG] [tilt=DEG] [at=X,Y,Z] -- move the positioner: turn the stage by an angle, tilt it, move it
 present FRAME|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG] -- move the positioner so a pin's frame or a joint is at a tool station's point
 pinch PINCER on=PIN [at=MM] -- a pincer on the turntable grips a lead from the side: it holds the part there, and sinks heat

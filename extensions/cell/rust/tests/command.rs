@@ -38,8 +38,8 @@ grip A close force=0.5
 stage turn=90
 vise close
 weld S3 at=Q1.1+R2.2 energy=2 risky=allow
-wire A awg=26 mm=40
-cut A
+wire S5 awg=26 mm=40
+cut S5
 probe U1.3 R1.2
 rewind t=12.5
 back S1 mm=20
@@ -85,7 +85,7 @@ fn canonical_text_orders_and_shortens() {
         c.to_json(),
         serde_json::json!({"op": "move", "arm": "A", "to": [10.0, 0.5, -0.0], "speed": 50.0, "dry": true})
     );
-    let w = round_trip("wire A mm=40 awg=26");
+    let w = round_trip("wire S5 mm=40 awg=26");
     assert_eq!(w.to_json()["awg"], serde_json::json!(26));
 }
 
@@ -124,7 +124,7 @@ fn wrong_commands_say_what_is_wrong() {
     says("clip A on=U1 at=2", "U1 is not a pin");
     says("touch S1 at=U1.3", "is not a joint");
     says("touch S1 at=U1.3+U1.3", "is not a joint");
-    says("wire A awg=27.5 mm=3", "not a whole number from 22 to 34");
+    says("wire S5 awg=27.5 mm=3", "not a whole number from 22 to 34");
     says("vise close dry=yes", "dry: yes is not 0 or 1");
     says("stage turn=nan", "not a finite number");
     let j = parse_json(&serde_json::json!({"op": "lift", "arm": "A", "height": 3})).unwrap_err();
