@@ -22,12 +22,14 @@ version.
 
 | Version | Commit | Date | Built against X_eTaL | What |
 | ------- | ------ | ---- | -------------------- | ---- |
-| (untagged) | main | since 2026-10-05 | 8c49bd8 (XETAL_COMMIT) | everything below v0.2.0's entries |
+| (untagged) | main | since 2026-11-25 | 8c49bd8 (XETAL_COMMIT) | everything above v0.3.0's entries |
+| v0.3.0 | ea977d1 | 2026-11-25 | 8c49bd8 | digest, http, image, linalg, blender, three and cell; the assembly cell through its microscope (Saga 17 step 20); two live pages; CHANGES.md timed |
 | v0.2.0 | 9dec588 | 2026-10-05 | v0.1.0 (512b3ee) | canvas, scene, audio, web; the binding macro; X_eTaL pinned by commit, not copied; the site of recordings |
 | v0.1.0 | fee06a4 | 2026-10-03 | 7b70575 (vendored) | release 1: the native ABI V1, SDK and loader, the xetal-x bridge; hello, clock, sqlite and the data notebook |
 
 ## 2026-11-25
 
+- 20:46 `release` v0.3.0 tagged at ea977d1 (the user's yes), built against X_eTaL 8c49bd8; a row in the Versions table.
 - 20:14 `ext` cell, flux-cored solder and the iron's feeder (Saga 17 step 20): each melt brings flux active 4 s molten, a lead wets only while it is active, a joint molten over 4 s without it is judged `dull`; the feeder (guide, spool, solder stub) drawn riding on the iron, its solder running into the joint at `feed` and back after; live page republished.
 - 20:02 `ext` cell, the microscope (Saga 17 step 20): `scope aim= zoom=` turns the head onto a joint or pin and follows it as the stage moves, `snap` records a picture, the player draws the scope's picture beside the cell (a cutaway); the solder fed into a joint, a lead's bend and fed wire drawn as they happen; small things drawn larger than life; the detailed programs aim the scope and open close up; live page republished.
 - 19:52 `plan` the assembly cell, a bending rig (the user): decision C19, pins in slots that bend a placed lead in one plane, the part flipped or turned for other bends, then trimmed and soldered; step 21 cell-bend-rig inserted after the scope; later steps renumbered.
