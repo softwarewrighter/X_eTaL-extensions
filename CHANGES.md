@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-27
 
+- 14:41 `fix` cell, the goldens listing the extension's functions and types rebased for the planner's session functions; programs/zz-bring.cell, a scratch file committed by mistake, removed (with the user's yes).
 - 13:51 `ext` cell, the planner plans the blinker by search (Saga 17 step 31): a session cell in the extension (ce:b_egin, ce:a_ttempt, ce:f_rame, ce:k_ind, ce:n_extWire, ce:j_oined); cp:b_uild tries each step on the simulator and keeps the first it takes; programs/blinker.cell planned from nets/blinker.net, check 7 of 7.
 - 11:28 `ext` cell, the feature programs moved to lap joints (Saga 17 step 30): solder-stations, bend-rig, leads, wire, enamel and insulate, the chip legs up; solder.cell stays the weak butt joint; the insulate joggle gone (the sleeved lead clears the pins by 0.7 mm); legs-down crossings kept as test fixtures.
 - 09:56 `fix` cell live page: Run program runs the program in a Web Worker, a command at a time, off the page's thread, and hands the cell back (world/set_world); what is being simulated is shown beside the button (the blinker's 366 commands froze the page until the browser offered to kill it; now 48 s, the page answering within 0.15 s throughout). Without a worker (an MCP session) it runs here a command at a time, yielding with setTimeout.

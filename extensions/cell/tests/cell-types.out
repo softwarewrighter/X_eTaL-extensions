@@ -7,6 +7,12 @@ l:p_arse : Char -> Char
 l:r_un : Char -> Char
 l:s_tate : Char -> Char
 l:s_cene : Char -> Char -> Char
+l:b_egin : Char -> Char
+l:a_ttempt : Char -> Char
+l:f_rame : Char -> Char
+l:k_ind : Char -> Char
+l:n_extWire : Unit -> Char
+l:j_oined : Char -> Char
 l:r_ig : Unit -> Char
 l:a_rmModel : Unit -> Char
 l:package : Char
