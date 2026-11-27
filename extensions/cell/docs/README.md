@@ -1197,6 +1197,44 @@ turning a joint about the wrong axis puts a flange 552 mm off and
 fails. It
 also keeps a picture, `work/check-NAME.png`.
 
+## Render bundles
+
+![The finished blinker ray-traced in Cycles from its render bundle alone](blinker-cycles.jpg)
+
+The videos are the live page's recordings (decision C11); a program can
+also be written as a render bundle for a Blender render node:
+
+```
+just ext cell bundle blinker [SAMPLES]
+```
+
+writes `work/cell/bundles/blinker/` and `blinker.zip`, everything a node
+needs with only Blender: `scene.py` (Cycles.xtl's player and the cell
+player, `models/cell_player.py`), `calls.js` (the simulator's calls,
+the same the page draws), `models/*.glb`, `render.py`, `render.sh`,
+`encode.sh`, `job.toml` (the frames, fps, resolution, samples, engine,
+the Blender it was made for, a sha256 a file) and `README.txt`. No
+repository, Rust or X_eTaL on the node:
+
+```
+unzip blinker.zip && cd blinker
+./render.sh still 1079 end.png      # one picture, near the end
+./render.sh 1 33841                 # every frame (out/frames; one there is skipped)
+./encode.sh                         # the frames into out/blinker.mp4
+```
+
+The cell player poses each frame as the page does: the arm's joints
+from its track (each model's joint turning about its own axis), the
+turntable from its own, each part where it starts, carried while held
+by the arm's flange or the turntable's top, put where a fall ended; a
+re-formed lead a tube from its time on; a joint's solder as it grows.
+Checked against the simulator: the arm's flange and the parts within a
+thousandth of a millimeter at every point the scene says where they
+are. Not drawn yet: the microscope's picture, the bending rig,
+sleeves, markings and heat. The farm divides a bundle's frames (a job
+of kind `bundle`, docs/farm.md); the picture above took 6 s at 64
+samples on one Mac.
+
 ## Models
 
 ![Every model from four sides](models.jpg)

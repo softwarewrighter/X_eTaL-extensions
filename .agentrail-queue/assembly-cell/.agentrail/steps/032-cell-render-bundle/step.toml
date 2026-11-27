@@ -1,6 +1,6 @@
 number = 32
 slug = "cell-render-bundle"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 15 (the user, 2026-11-24: Three.js recordings rather than expens..."
 role = "production"
 context_files = []

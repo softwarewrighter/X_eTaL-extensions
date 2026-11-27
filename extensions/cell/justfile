@@ -68,6 +68,10 @@ preview name:
 plan name:
     {{root}}/scripts/cell-plan.sh "$1"
 
+# A render bundle of programs/NAME.cell (decision C11): work/cell/bundles/NAME/ and NAME.zip, needing only Blender on a render node
+bundle name samples="64":
+    {{root}}/scripts/cell-bundle.sh "$1" "$2"
+
 # The player checked headlessly (headless Chrome, its own profile): every expect of programs/NAME.cell drawn where the simulator says
 check name:
     {{root}}/scripts/cell-preview.sh "$1" --write

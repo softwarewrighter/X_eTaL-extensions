@@ -27,3 +27,20 @@ kind = "each"
 prepare = "scripts/farm-scene.sh farm/city-film.xtl"
 items = ["0.5", "6.0", "10.5", "14.5"]
 command = '"$BLENDER" --background -noaudio --factory-startup --python-exit-code 1 --python extensions/blender/tools/farm-range.py -- {out} work/farm/city/scene.py still at-{item}.png {item}'
+
+# The 555 blinker's build as a render bundle (decision C11; just ext cell
+# bundle blinker: a directory needing only Blender): a bundle job is a
+# film of the bundle's scene, its frames the bundle's job.toml's (about
+# 32400 at 30 a second: 18 minutes of the cell). Not run unless asked.
+[jobs.cell-blinker]
+kind = "bundle"
+prepare = "just ext cell models && just ext cell bundle blinker"
+bundle = "extensions/cell/work/cell/bundles/blinker"
+
+# Four stills of it, at these seconds of the build: to try a bundle on
+# the farm first.
+[jobs.cell-blinker-stills]
+kind = "each"
+prepare = "just ext cell models && just ext cell bundle blinker"
+items = ["120", "400", "700", "1070"]
+command = 'CELL_OUT={out} extensions/cell/work/cell/bundles/blinker/render.sh still {item} at-{item}.png'

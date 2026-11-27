@@ -95,7 +95,7 @@ hosts table say otherwise.
   `--only 326-360` (frames) or `--only ITEM,ITEM` does just those,
   whoever's they are. Then `collect` as usual.
 
-## The two kinds of job
+## The kinds of job
 
 A film is a scene's script and a range of frames; the frames are
 divided into consecutive runs in proportion to speed.
@@ -132,6 +132,22 @@ The command runs from the repository's root with `{item}` and `{out}`
 (the item's own directory) filled in, and `BLENDER`, `FARM_ITEM`,
 `FARM_OUT` and `FARM_HOST` set. It may be anything: a bake, an export
 of one piece, a clip.
+
+A bundle job is a film whose scene is a render bundle's: a directory
+that needs only Blender (`just ext cell bundle NAME`, the cell
+extension's; decision C11). Its frames are the bundle's `job.toml`'s
+unless the job gives `first` and `last`.
+
+```toml
+[jobs.cell-blinker]
+kind = "bundle"
+prepare = "just ext cell models && just ext cell bundle blinker"
+bundle = "extensions/cell/work/cell/bundles/blinker"
+```
+
+A bundle also runs on a machine with no repository at all: unzip it
+and run its `render.sh FIRST LAST [GPU|CPU]` (or `render.sh still
+SECONDS FILE`), then `encode.sh`.
 
 Another repository uses the same command with its own tables:
 `scripts/farm.py --hosts FILE --jobs FILE ...`.
@@ -171,4 +187,7 @@ change of machine does not show.
 Run for real: a film on two Arch machines (Blender 5.3.0, RTX cards)
 and a Mac, `collect` and `encode`. Not yet run: `farm bench` and an
 each-job on the Arch machines, a job that asks for video memory, and
-another repository's tables (`--hosts`, `--jobs`).
+another repository's tables (`--hosts`, `--jobs`). A bundle: stills of
+the cell's lap and blinker bundles rendered from the unzipped bundle
+alone on one Mac (super), each a few seconds; not yet a bundle job on
+the farm, and no bundle's full film.

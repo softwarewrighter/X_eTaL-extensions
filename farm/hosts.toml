@@ -14,6 +14,8 @@
 # and queenbee's are guesses from the cards' names; super's is its
 # benchmark against max's (2026-11-24).
 
+# Always on: large12, beast48 and queenbee, and big72 once it is back (the
+# user, 2026-11-27).
 [hosts.large12]
 card = "RTX 5060 16 GB"
 speed = 2.3
@@ -34,7 +36,9 @@ speed = 0.55
 vram = 32
 blender = "/Applications/Blender-5.3/Blender.app/Contents/MacOS/Blender"
 
-# off 2026-11-16: it does not boot (a memory fault); on again when it is repaired
+# off 2026-11-16: it does not boot (a memory fault); on again when it is repaired.
+# Its speed is beast48's: the same CPU generation and bus, similar RAM, the
+# same card (the user, 2026-11-27).
 [hosts.big72]
 card = "RTX 3060 12 GB"
 speed = 1.0

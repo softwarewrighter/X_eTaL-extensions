@@ -26,8 +26,11 @@ calls, written by the job's prepare command) and a range of frames;
 frames are divided into consecutive runs in proportion to speed. An
 each job is a list of items and a command an item; items are dealt to
 the machines in proportion to speed, only to machines with the video
-memory the job asks for. Results are under work/farm/JOB/ (ignored by
-git): frames/NNNN.png for a film, ITEM/ and ITEM/.done for an each job.
+memory the job asks for. A bundle job is a film whose scene is a render
+bundle's (just ext cell bundle NAME: a directory needing only Blender),
+its frames the bundle's job.toml's unless the job says. Results are
+under work/farm/JOB/ (ignored by git): frames/NNNN.png for a film or a
+bundle, ITEM/ and ITEM/.done for an each job.
 """
 
 import argparse
@@ -111,6 +114,26 @@ def deal(items, hosts, vram=0.0):
     return out
 
 
+def bundle_job(name, job, root=None):
+    """A bundle job as the film it is: its scene the bundle's scene.py,
+    its frames the bundle's job.toml's (unless the job gives first and
+    last)."""
+    root = root or ROOT
+    if "bundle" not in job:
+        fail(f"job {name}: a bundle job names its bundle (bundle = DIRECTORY)")
+    there = Path(job["bundle"])
+    meta = root / there / "job.toml"
+    info = tomllib.loads(meta.read_text()) if meta.is_file() else {}
+    film = {**job, "kind": "film", "scene": str(there / "scene.py")}
+    for key in ("first", "last"):
+        if key not in film:
+            if key not in info:
+                fail(f"job {name}: {meta} is not there to say the frames (its prepare command writes it), and the job does not say {key}")
+            film[key] = info[key]
+    film.setdefault("video", info.get("name", name) + ".mp4")
+    return film
+
+
 def self_test():
     assert shares(450, [1.6, 1.0, 1.0]) == [200, 125, 125]
     assert shares(10, [1, 1, 1]) == [4, 3, 3]
@@ -138,6 +161,16 @@ def self_test():
     d = deal(list("abc"), hosts, vram=16)
     assert d == {"a": ["a", "b", "c"], "b": [], "c": []}
     assert parse_only("3-5,9") == [3, 4, 5, 9]
+    # a bundle job: a film of the bundle's scene, its frames from job.toml
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        b = Path(tmp) / "b"
+        b.mkdir()
+        (b / "job.toml").write_text('name = "lap"\nfirst = 1\nlast = 2358\n')
+        f = bundle_job("x", {"kind": "bundle", "bundle": "b"}, Path(tmp))
+        assert (f["kind"], f["scene"], f["first"], f["last"], f["video"]) == ("film", "b/scene.py", 1, 2358, "lap.mp4"), f
+        f = bundle_job("x", {"kind": "bundle", "bundle": "b", "first": 10, "last": 20}, Path(tmp))
+        assert (f["first"], f["last"]) == (10, 20), f
     print("farm: self-test ok")
 
 
@@ -186,8 +219,10 @@ class Farm:
             fail(f"no job {name}; the jobs: {', '.join(self.jobs) or 'none'}")
         job = self.jobs[name]
         kind = job.get("kind")
+        if kind == "bundle":
+            return bundle_job(name, job)
         if kind not in ("film", "each"):
-            fail(f"job {name}: kind must be film or each")
+            fail(f"job {name}: kind must be film, each or bundle")
         return job
 
     def mine(self):
