@@ -8,7 +8,8 @@ clip: 3 nodes ok
 welder: 4 nodes ok
 cutter: 4 nodes ok
 wire: 4 nodes ok
-rack: 7 nodes ok
+wrapper: 3 nodes ok
+rack: 8 nodes ok
 tray: 8 nodes ok
 stage: 3 nodes ok
 scope: 5 nodes ok

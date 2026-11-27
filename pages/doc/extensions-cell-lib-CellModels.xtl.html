@@ -257,6 +257,7 @@
 <li class="item"><a href="#l.welder">ˡwelder</a></li>
 <li class="item"><a href="#l.cutter">ˡcutter</a></li>
 <li class="item"><a href="#l.wire">ˡwire</a></li>
+<li class="item"><a href="#l.wrapper">ˡwrapper</a></li>
 <li class="item"><a href="#l.tools">ˡtools</a></li>
 <li><a href="#section-4">The fixtures</a></li>
 <li class="item"><a href="#h.p_osts"><span class="c-libfunc">ʰp̲osts</span></a></li>
@@ -289,7 +290,7 @@
 <p>CellModels.xtl -- the assembly cell's 3D models, described in X_eTaL
 and built by Blender: the arm (its pivots from the simulator, one
 node a joint, per the asset contract of docs/cell-design.md), the
-seven tools, the tool rack, a parts tray, the rotary stage with its
+eight tools, the tool rack, a parts tray, the rotary stage with its
 vise, the microscope on its gantry, and every part kind with a node
 a pin. Each model is NAME.glb with NAME.rig.json beside it; a check
 reads every .glb back against its rig. Generic shapes, imitating no
@@ -305,19 +306,19 @@ Import: &quot;cm:&quot; u_se&lt; &quot;CellModels&quot;</p>
 <h3><a href="#steel">steel</a> <span class="type">: Float</span></h3>
 <div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L18">line 18</a></div>
 <pre class="code">steel ← <span class="c-number">0.72</span> <span class="c-number">0.74</span> <span class="c-number">0.78</span></pre>
-<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#h.m_ount"><span class="c-libfunc">ʰm̲ount</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.arm">ˡarm</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.parts">ˡparts</a></div>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#h.m_ount"><span class="c-libfunc">ʰm̲ount</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wrapper">ˡwrapper</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.arm">ˡarm</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.parts">ˡparts</a></div>
 </div>
 <div class="item" id="dark">
 <h3><a href="#dark">dark</a> <span class="type">: Float</span></h3>
 <div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L19">line 19</a></div>
 <pre class="code">dark ← <span class="c-number">0.16</span> <span class="c-number">0.17</span> <span class="c-number">0.19</span></pre>
-<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.rack">ˡrack</a>, <a href="extensions-cell-lib-CellModels.xtl.html#h.p_ocket"><span class="c-libfunc">ʰp̲ocket</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.scope">ˡscope</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.arm">ˡarm</a></div>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wrapper">ˡwrapper</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.rack">ˡrack</a>, <a href="extensions-cell-lib-CellModels.xtl.html#h.p_ocket"><span class="c-libfunc">ʰp̲ocket</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.scope">ˡscope</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.arm">ˡarm</a></div>
 </div>
 <div class="item" id="gray">
 <h3><a href="#gray">gray</a> <span class="type">: Float</span></h3>
 <div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L20">line 20</a></div>
 <pre class="code">gray ← <span class="c-number">0.42</span> <span class="c-number">0.43</span> <span class="c-number">0.46</span></pre>
-<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts"><span class="c-libfunc">ʰp̲osts</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.scope">ˡscope</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.parts">ˡparts</a></div>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wrapper">ˡwrapper</a>, <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts"><span class="c-libfunc">ʰp̲osts</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.scope">ˡscope</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.parts">ˡparts</a></div>
 </div>
 <div class="item" id="orange">
 <h3><a href="#orange">orange</a> <span class="type">: Float</span></h3>
@@ -430,13 +431,13 @@ power of ten), gold. 10 kilohm is brown, black, orange, gold:</p>
 <h3><a href="#h.b_ox"><span class="c-libfunc">ʰb̲ox</span></a> <span class="type">: Any d =&gt; (Char, Char, a, b, c) -&gt; d -&gt; Char</span></h3>
 <div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L69">line 69</a></div>
 <pre class="code"><span class="c-libfunc">ʰb̲ox</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>part, group, at, size, rgb<span class="c-depth1">)</span> z → <span class="c-depth1">(</span><span class="c-string">&quot;box&quot;</span>, part, group, at, size, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span>, rgb<span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.r_ow" class="c-libfunc">ʰr̲ow</a> <span class="c-number">0</span> <span class="c-depth0">}</span></pre>
-<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#h.m_ount"><span class="c-libfunc">ʰm̲ount</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts"><span class="c-libfunc">ʰp̲osts</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.rack">ˡrack</a>, <a href="extensions-cell-lib-CellModels.xtl.html#h.p_ocket"><span class="c-libfunc">ʰp̲ocket</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.tray">ˡtray</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.scope">ˡscope</a></div>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#h.m_ount"><span class="c-libfunc">ʰm̲ount</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wrapper">ˡwrapper</a>, <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts"><span class="c-libfunc">ʰp̲osts</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.rack">ˡrack</a>, <a href="extensions-cell-lib-CellModels.xtl.html#h.p_ocket"><span class="c-libfunc">ʰp̲ocket</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.tray">ˡtray</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.scope">ˡscope</a></div>
 </div>
 <div class="item" id="h.c_yl">
 <h3><a href="#h.c_yl"><span class="c-libfunc">ʰc̲yl</span></a> <span class="type">: Any e =&gt; (Char, Char, a, b, b, c, d) -&gt; e -&gt; Char</span></h3>
 <div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L71">line 71</a></div>
 <pre class="code"><span class="c-libfunc">ʰc̲yl</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>part, group, at, r, h, turn, rgb<span class="c-depth1">)</span> z → <span class="c-depth1">(</span><span class="c-string">&quot;cyl&quot;</span>, part, group, at, r <a href="builtins.html#c_at" class="c-builtin">c̲at</a> r <a href="builtins.html#c_at" class="c-builtin">c̲at</a> h, turn, rgb<span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.r_ow" class="c-libfunc">ʰr̲ow</a> <span class="c-number">0</span> <span class="c-depth0">}</span></pre>
-<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#h.m_ount"><span class="c-libfunc">ʰm̲ount</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.scope">ˡscope</a></div>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#h.m_ount"><span class="c-libfunc">ʰm̲ount</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wrapper">ˡwrapper</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.scope">ˡscope</a></div>
 </div>
 <div class="item" id="h.s_eg">
 <h3><a href="#h.s_eg"><span class="c-libfunc">ʰs̲eg</span></a> <span class="type">: (Num c, Any e) =&gt; (Char, Char, a, b, c, d) -&gt; e -&gt; Char</span></h3>
@@ -450,7 +451,7 @@ power of ten), gold. 10 kilohm is brown, black, orange, gold:</p>
 <pre class="code"><span class="c-libfunc">ʰn̲ode</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>name, parent, at, turn<span class="c-depth1">)</span> z →
   <span class="c-string">&quot;    (&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><a href="extensions-cell-lib-CellModels.xtl.html#h.q_t" class="c-libfunc">ʰq̲t</a> name<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><a href="extensions-cell-lib-CellModels.xtl.html#h.q_t" class="c-libfunc">ʰq̲t</a> parent<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><a href="extensions-cell-lib-CellModels.xtl.html#h.v_ec" class="c-libfunc">ʰv̲ec</a> at<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><a href="extensions-cell-lib-CellModels.xtl.html#h.v_ec" class="c-libfunc">ʰv̲ec</a> turn<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;),\n&quot;</span>
 <span class="c-depth0">}</span></pre>
-<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#h.e_nds"><span class="c-libfunc">ʰe̲nds</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#h.s_lot"><span class="c-libfunc">ʰs̲lot</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#h.p_lace"><span class="c-libfunc">ʰp̲lace</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.scope">ˡscope</a></div>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#h.e_nds"><span class="c-libfunc">ʰe̲nds</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wrapper">ˡwrapper</a>, <a href="extensions-cell-lib-CellModels.xtl.html#h.s_lot"><span class="c-libfunc">ʰs̲lot</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#h.p_lace"><span class="c-libfunc">ʰp̲lace</span></a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.scope">ˡscope</a></div>
 </div>
 <div class="item" id="h.m_odel">
 <h3><a href="#h.m_odel"><span class="c-libfunc">ʰm̲odel</span></a> <span class="type">: Any a =&gt; (Char, Char, Char) -&gt; a -&gt; Char</span></h3>
@@ -458,7 +459,7 @@ power of ten), gold. 10 kilohm is brown, black, orange, gold:</p>
 <pre class="code"><span class="c-libfunc">ʰm̲odel</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>name, rows, nodes<span class="c-depth1">)</span> z →
   <span class="c-string">&quot;fresh()\nroot = build(&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><a href="extensions-cell-lib-CellModels.xtl.html#h.q_t" class="c-libfunc">ʰq̲t</a> name<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;, [\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> rows <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;], [\n&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> nodes <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;])\nsave(root, &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><a href="extensions-cell-lib-CellModels.xtl.html#h.q_t" class="c-libfunc">ʰq̲t</a> name<span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;)\n&quot;</span>
 <span class="c-depth0">}</span></pre>
-<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.rack">ˡrack</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.tray">ˡtray</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.scope">ˡscope</a></div>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wrapper">ˡwrapper</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.rack">ˡrack</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.tray">ˡtray</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stage">ˡstage</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.scope">ˡscope</a></div>
 </div>
 <h2 class="section" id="section-3">The tools</h2>
 <div class="item" id="h.m_ount">
@@ -467,7 +468,7 @@ power of ten), gold. 10 kilohm is brown, black, orange, gold:</p>
 <pre class="code"><span class="c-libfunc">ʰm̲ount</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>name, rgb<span class="c-depth1">)</span> z →
   <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;plate&quot;</span>, name, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">3</span>, <span class="c-number">32</span>, <span class="c-number">6</span>, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span>, <a href="extensions-cell-lib-CellModels.xtl.html#steel">steel</a><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.c_yl" class="c-libfunc">ʰc̲yl</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-string">&quot;block&quot;</span>, name, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">20</span>, <span class="c-number">36</span> <span class="c-number">26</span> <span class="c-number">28</span>, rgb<span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span>
 <span class="c-depth0">}</span></pre>
-<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a></div>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wrapper">ˡwrapper</a></div>
 </div>
 <div class="item" id="h.e_nds">
 <h3><a href="#h.e_nds"><span class="c-libfunc">ʰe̲nds</span></a> <span class="type">: (Num a, Any b) =&gt; (Char, a) -&gt; b -&gt; Char</span></h3>
@@ -475,7 +476,7 @@ power of ten), gold. 10 kilohm is brown, black, orange, gold:</p>
 <pre class="code"><span class="c-libfunc">ʰe̲nds</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>name, length<span class="c-depth1">)</span> z →
   <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-depth3">(</span><span class="c-string">&quot;tool_mount&quot;</span>, name, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span>, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span><span class="c-depth3">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.n_ode" class="c-libfunc">ʰn̲ode</a> <span class="c-number">0</span><span class="c-depth2">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth2">(</span><span class="c-string">&quot;tool_tip&quot;</span>, name, <span class="c-depth3">(</span><span class="c-number">0</span> <span class="c-number">0</span><span class="c-depth3">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> length, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.n_ode" class="c-libfunc">ʰn̲ode</a> <span class="c-number">0</span><span class="c-depth1">)</span>
 <span class="c-depth0">}</span></pre>
-<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a></div>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wrapper">ˡwrapper</a></div>
 </div>
 <div class="item" id="l.tweezers">
 <h3><a href="#l.tweezers">ˡtweezers</a> <span class="type">: Char</span></h3>
@@ -596,19 +597,37 @@ blade_r) closing along x at the tip 80 mm out</p>
   <span class="c-depth1">(</span><span class="c-string">&quot;cutter&quot;</span>, <span class="c-string">&quot;wire&quot;</span>, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">92</span>, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.n_ode" class="c-libfunc">ʰn̲ode</a> <span class="c-number">0</span><span class="c-depth0">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.m_odel" class="c-libfunc">ʰm̲odel</a> <span class="c-number">0</span></pre>
 <div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.tools">ˡtools</a></div>
 </div>
+<div class="item" id="l.wrapper">
+<h3><a href="#l.wrapper">ˡwrapper</a> <span class="type">: Char</span></h3>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L175">line 175</a></div>
+<div class="doc">
+<p>cm:wrapper: Python for the wire-wrap tool (decision C23): a barrel,
+and a bit (node bit, turning about its own z) whose steel sleeve
+slips over a lead's free end 90 mm out, winding a wire round it, a
+small blade at its edge cutting the tail</p>
+</div>
+<pre class="code">ˡwrapper ← <span class="c-depth0">(</span><span class="c-string">&quot;wrapper&quot;</span>,
+  <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;wrapper&quot;</span>, <a href="extensions-cell-lib-CellModels.xtl.html#dark">dark</a><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.m_ount" class="c-libfunc">ʰm̲ount</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;barrel&quot;</span>, <span class="c-string">&quot;wrapper&quot;</span>, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">50</span>, <span class="c-number">7</span>, <span class="c-number">32</span>, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span>, <a href="extensions-cell-lib-CellModels.xtl.html#gray">gray</a><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.c_yl" class="c-libfunc">ʰc̲yl</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;sleeve&quot;</span>, <span class="c-string">&quot;bit&quot;</span>, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">-12</span>, <span class="c-number">1.5</span>, <span class="c-number">24</span>, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span>, <a href="extensions-cell-lib-CellModels.xtl.html#steel">steel</a><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.c_yl" class="c-libfunc">ʰc̲yl</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-depth1">(</span><span class="c-string">&quot;blade&quot;</span>, <span class="c-string">&quot;bit&quot;</span>, <span class="c-number">2</span> <span class="c-number">0</span> <span class="c-number">-1</span>, <span class="c-number">1</span> <span class="c-number">3</span> <span class="c-number">2</span>, <a href="extensions-cell-lib-CellModels.xtl.html#steel">steel</a><span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span>,
+  <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;wrapper&quot;</span>, <span class="c-number">90</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.e_nds" class="c-libfunc">ʰe̲nds</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-depth1">(</span><span class="c-string">&quot;bit&quot;</span>, <span class="c-string">&quot;wrapper&quot;</span>, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">90</span>, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.n_ode" class="c-libfunc">ʰn̲ode</a> <span class="c-number">0</span><span class="c-depth0">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.m_odel" class="c-libfunc">ʰm̲odel</a> <span class="c-number">0</span></pre>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.tools">ˡtools</a></div>
+</div>
 <div class="item" id="l.tools">
 <h3><a href="#l.tools">ˡtools</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L172">line 172</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L184">line 184</a></div>
 <div class="doc">
-<p>cm:tools: Python for all seven tools</p>
+<p>cm:tools: Python for all eight tools</p>
 </div>
-<pre class="code">ˡtools ← <a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a></pre>
+<pre class="code">ˡtools ← <a href="extensions-cell-lib-CellModels.xtl.html#l.tweezers">ˡtweezers</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.iron">ˡiron</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.solder">ˡsolder</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.cutter">ˡcutter</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.wrapper">ˡwrapper</a></pre>
 <div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.script">ˡscript</a></div>
 </div>
 <h2 class="section" id="section-4">The fixtures</h2>
 <div class="item" id="h.p_osts">
 <h3><a href="#h.p_osts"><span class="c-libfunc">ʰp̲osts</span></a> <span class="type">: (Num a, Any b) =&gt; (Char, a) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L177">line 177</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L189">line 189</a></div>
 <pre class="code"><span class="c-libfunc">ʰp̲osts</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>n, x<span class="c-depth1">)</span> z →
   <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;post&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;a&quot;</span>, <span class="c-string">&quot;rack&quot;</span>, <span class="c-depth3">(</span>x <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">22</span><span class="c-depth3">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0</span> <span class="c-number">35</span>, <span class="c-number">6</span> <span class="c-number">30</span> <span class="c-number">50</span>, <a href="extensions-cell-lib-CellModels.xtl.html#gray">gray</a><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-string">&quot;post&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-string">&quot;b&quot;</span>, <span class="c-string">&quot;rack&quot;</span>, <span class="c-depth2">(</span>x <a href="builtins.html#-2b" class="c-symbol">+</a> <span class="c-number">22</span><span class="c-depth2">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0</span> <span class="c-number">35</span>, <span class="c-number">6</span> <span class="c-number">30</span> <span class="c-number">50</span>, <a href="extensions-cell-lib-CellModels.xtl.html#gray">gray</a><span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span>
 <span class="c-depth0">}</span></pre>
@@ -616,41 +635,42 @@ blade_r) closing along x at the tip 80 mm out</p>
 </div>
 <div class="item" id="h.s_lot">
 <h3><a href="#h.s_lot"><span class="c-libfunc">ʰs̲lot</span></a> <span class="type">: (Num a, Any b) =&gt; (Char, a) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L180">line 180</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L192">line 192</a></div>
 <pre class="code"><span class="c-libfunc">ʰs̲lot</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>n, x<span class="c-depth1">)</span> z → <span class="c-depth1">(</span><span class="c-string">&quot;slot&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n, <span class="c-string">&quot;rack&quot;</span>, x <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-number">0</span> <span class="c-number">60</span>, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.n_ode" class="c-libfunc">ʰn̲ode</a> <span class="c-number">0</span> <span class="c-depth0">}</span></pre>
 <div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.rack">ˡrack</a></div>
 </div>
 <div class="item" id="l.rack">
 <h3><a href="#l.rack">ˡrack</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L185">line 185</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L198">line 198</a></div>
 <div class="doc">
-<p>cm:rack: Python for the tool rack: a base 360 mm long and seven
-slots 50 mm apart, one a tool, nodes slot1 to slot7 where a tool's
-mount rests</p>
+<p>cm:rack: Python for the tool rack: a base 425 mm long and eight
+slots, one a tool, nodes slot1 to slot8 where a tool's mount rests:
+seven 50 mm apart, the eighth (the wrap tool, added later) 60 mm on
+so its posts clear the seventh's</p>
 </div>
 <pre class="code">ˡrack ← <span class="c-depth0">(</span><span class="c-string">&quot;rack&quot;</span>,
-  <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;base&quot;</span>, <span class="c-string">&quot;rack&quot;</span>, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">5</span>, <span class="c-number">360</span> <span class="c-number">60</span> <span class="c-number">10</span>, <a href="extensions-cell-lib-CellModels.xtl.html#dark">dark</a><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;base&quot;</span>, <span class="c-string">&quot;rack&quot;</span>, <span class="c-number">32.5</span> <span class="c-number">0</span> <span class="c-number">5</span>, <span class="c-number">425</span> <span class="c-number">60</span> <span class="c-number">10</span>, <a href="extensions-cell-lib-CellModels.xtl.html#dark">dark</a><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;1&quot;</span>, <span class="c-number">-150</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts" class="c-libfunc">ʰp̲osts</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;2&quot;</span>, <span class="c-number">-100</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts" class="c-libfunc">ʰp̲osts</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;3&quot;</span>, <span class="c-number">-50</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts" class="c-libfunc">ʰp̲osts</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;4&quot;</span>, <span class="c-number">0</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts" class="c-libfunc">ʰp̲osts</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
-  <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;5&quot;</span>, <span class="c-number">50</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts" class="c-libfunc">ʰp̲osts</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;6&quot;</span>, <span class="c-number">100</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts" class="c-libfunc">ʰp̲osts</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-string">&quot;7&quot;</span>, <span class="c-number">150</span><span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts" class="c-libfunc">ʰp̲osts</a> <span class="c-number">0</span>,
+  <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;5&quot;</span>, <span class="c-number">50</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts" class="c-libfunc">ʰp̲osts</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;6&quot;</span>, <span class="c-number">100</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts" class="c-libfunc">ʰp̲osts</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;7&quot;</span>, <span class="c-number">150</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts" class="c-libfunc">ʰp̲osts</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-string">&quot;8&quot;</span>, <span class="c-number">210</span><span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.p_osts" class="c-libfunc">ʰp̲osts</a> <span class="c-number">0</span>,
   <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;1&quot;</span>, <span class="c-number">-150</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.s_lot" class="c-libfunc">ʰs̲lot</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;2&quot;</span>, <span class="c-number">-100</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.s_lot" class="c-libfunc">ʰs̲lot</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;3&quot;</span>, <span class="c-number">-50</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.s_lot" class="c-libfunc">ʰs̲lot</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;4&quot;</span>, <span class="c-number">0</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.s_lot" class="c-libfunc">ʰs̲lot</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
-  <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;5&quot;</span>, <span class="c-number">50</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.s_lot" class="c-libfunc">ʰs̲lot</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;6&quot;</span>, <span class="c-number">100</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.s_lot" class="c-libfunc">ʰs̲lot</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-string">&quot;7&quot;</span>, <span class="c-number">150</span><span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.s_lot" class="c-libfunc">ʰs̲lot</a> <span class="c-number">0</span><span class="c-depth0">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.m_odel" class="c-libfunc">ʰm̲odel</a> <span class="c-number">0</span></pre>
+  <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;5&quot;</span>, <span class="c-number">50</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.s_lot" class="c-libfunc">ʰs̲lot</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;6&quot;</span>, <span class="c-number">100</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.s_lot" class="c-libfunc">ʰs̲lot</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;7&quot;</span>, <span class="c-number">150</span><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.s_lot" class="c-libfunc">ʰs̲lot</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <span class="c-depth1">(</span><span class="c-string">&quot;8&quot;</span>, <span class="c-number">210</span><span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.s_lot" class="c-libfunc">ʰs̲lot</a> <span class="c-number">0</span><span class="c-depth0">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.m_odel" class="c-libfunc">ʰm̲odel</a> <span class="c-number">0</span></pre>
 <div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.fixtures">ˡfixtures</a></div>
 </div>
 <div class="item" id="h.p_ocket">
 <h3><a href="#h.p_ocket"><span class="c-libfunc">ʰp̲ocket</span></a> <span class="type">: (Num a, Any b) =&gt; (Char, a) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L193">line 193</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L206">line 206</a></div>
 <pre class="code"><span class="c-libfunc">ʰp̲ocket</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>n, at<span class="c-depth1">)</span> z → <span class="c-depth1">(</span><span class="c-string">&quot;well&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n, <span class="c-string">&quot;tray&quot;</span>, at <a href="builtins.html#-2d" class="c-symbol">−</a> <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">1</span>, <span class="c-number">24</span> <span class="c-number">30</span> <span class="c-number">2</span>, <a href="extensions-cell-lib-CellModels.xtl.html#dark">dark</a><span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.b_ox" class="c-libfunc">ʰb̲ox</a> <span class="c-number">0</span> <span class="c-depth0">}</span></pre>
 <div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.tray">ˡtray</a></div>
 </div>
 <div class="item" id="h.p_lace">
 <h3><a href="#h.p_lace"><span class="c-libfunc">ʰp̲lace</span></a> <span class="type">: Any b =&gt; (Char, a) -&gt; b -&gt; Char</span></h3>
-<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L194">line 194</a></div>
+<div class="meta">function <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L207">line 207</a></div>
 <pre class="code"><span class="c-libfunc">ʰp̲lace</span> ← <span class="c-depth0">{</span> <span class="c-depth1">(</span>n, at<span class="c-depth1">)</span> z → <span class="c-depth1">(</span><span class="c-string">&quot;pocket&quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> n, <span class="c-string">&quot;tray&quot;</span>, at, <span class="c-number">0</span> <span class="c-number">0</span> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#h.n_ode" class="c-libfunc">ʰn̲ode</a> <span class="c-number">0</span> <span class="c-depth0">}</span></pre>
 <div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.tray">ˡtray</a></div>
 </div>
 <div class="item" id="l.tray">
 <h3><a href="#l.tray">ˡtray</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L199">line 199</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L212">line 212</a></div>
 <div class="doc">
 <p>cm:tray: Python for a parts tray: a plate 130 by 90 mm with eight
 pockets, nodes pocket1 to pocket8 at the middle of each, on the
@@ -666,7 +686,7 @@ plate's top</p>
 </div>
 <div class="item" id="l.stage">
 <h3><a href="#l.stage">ˡstage</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L210">line 210</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L223">line 223</a></div>
 <div class="doc">
 <p>cm:stage: Python for the rotary stage and its vise: a base, the
 turntable (node stage_turn, turning about z, its top at 0), the vise
@@ -686,7 +706,7 @@ along y), and vise_center where a held part sits</p>
 </div>
 <div class="item" id="l.scope">
 <h3><a href="#l.scope">ˡscope</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L225">line 225</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L238">line 238</a></div>
 <div class="doc">
 <p>cm:scope: Python for the microscope on its gantry: two posts and a
 beam 410 mm up, the head panning about z (node scope_pan) and
@@ -712,7 +732,7 @@ the optical axis leaves it</p>
 </div>
 <div class="item" id="l.fixtures">
 <h3><a href="#l.fixtures">ˡfixtures</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L241">line 241</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L254">line 254</a></div>
 <div class="doc">
 <p>cm:fixtures: Python for the rack, the tray, the stage and the scope</p>
 </div>
@@ -722,7 +742,7 @@ the optical axis leaves it</p>
 <h2 class="section" id="section-5">The arm and the parts</h2>
 <div class="item" id="l.arm">
 <h3><a href="#l.arm">ˡarm</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L250">line 250</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L263">line 263</a></div>
 <div class="doc">
 <p>cm:arm: Python for the arm from arm.in.json in the output directory
 (the simulator's ce:a_rmModel): a joint housing at each pivot
@@ -735,7 +755,7 @@ thickness of the four arms' it replaced</p>
 </div>
 <div class="item" id="l.p_art">
 <h3><a href="#l.p_art"><span class="c-libfunc">ˡp̲art</span></a> <span class="type">: Any c =&gt; (Char, a, a, a, b) -&gt; c -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L256">line 256</a></div>
+<div class="meta">function &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L269">line 269</a></div>
 <div class="doc">
 <p>(kind, body, lead, mark, bands) cm:p_art 0: Python for one part kind
 from KIND.in.json in the output directory (the simulator's
@@ -749,7 +769,7 @@ each, for a resistor (cm:b_ands), else 0 3 r_eshape 0.0</p>
 </div>
 <div class="item" id="l.kinds">
 <h3><a href="#l.kinds">ˡkinds</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L262">line 262</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L275">line 275</a></div>
 <div class="doc">
 <p>cm:kinds: the part kinds a model is made of, as the parts library
 lists them</p>
@@ -759,25 +779,25 @@ lists them</p>
 </div>
 <div class="item" id="none">
 <h3><a href="#none">none</a> <span class="type">: Float</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L264">line 264</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L277">line 277</a></div>
 <pre class="code">none ← <span class="c-number">0</span> <span class="c-number">3</span> <a href="builtins.html#r_eshape" class="c-builtin">r̲eshape</a> <span class="c-number">0.0</span></pre>
 <div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.parts">ˡparts</a></div>
 </div>
 <div class="item" id="pins">
 <h3><a href="#pins">pins</a> <span class="type">: Float</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L265">line 265</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L278">line 278</a></div>
 <pre class="code">pins ← <a href="extensions-cell-lib-CellModels.xtl.html#silver">silver</a></pre>
 <div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.parts">ˡparts</a></div>
 </div>
 <div class="item" id="black">
 <h3><a href="#black">black</a> <span class="type">: Float</span></h3>
-<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L266">line 266</a></div>
+<div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L279">line 279</a></div>
 <pre class="code">black ← <span class="c-number">0.07</span> <span class="c-number">0.07</span> <span class="c-number">0.08</span></pre>
 <div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.parts">ˡparts</a></div>
 </div>
 <div class="item" id="l.parts">
 <h3><a href="#l.parts">ˡparts</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L269">line 269</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L282">line 282</a></div>
 <div class="doc">
 <p>cm:parts: Python for every part kind; the resistor 10 kilohm</p>
 </div>
@@ -795,16 +815,16 @@ lists them</p>
 </div>
 <div class="item" id="l.names">
 <h3><a href="#l.names">ˡnames</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L281">line 281</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L294">line 294</a></div>
 <div class="doc">
 <p>cm:names: every model, as the check and the stills take them</p>
 </div>
-<pre class="code">ˡnames ← <span class="c-string">&quot;arm tweezers iron solder clip welder cutter wire rack tray stage scope &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.kinds">ˡkinds</a></pre>
+<pre class="code">ˡnames ← <span class="c-string">&quot;arm tweezers iron solder clip welder cutter wire wrapper rack tray stage scope &quot;</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a> <a href="extensions-cell-lib-CellModels.xtl.html#l.kinds">ˡkinds</a></pre>
 <div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.script">ˡscript</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.stills">ˡstills</a></div>
 </div>
 <div class="item" id="l.script">
 <h3><a href="#l.script">ˡscript</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L286">line 286</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L299">line 299</a></div>
 <div class="doc">
 <p>cm:script: the whole inner script: Bpy's head, the cell's builders
 (the path to cell_models.py is the script's second argument), every
@@ -815,7 +835,7 @@ model, then the check of each .glb against its rig (check.txt)</p>
 </div>
 <div class="item" id="l.stills">
 <h3><a href="#l.stills">ˡstills</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L290">line 290</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L303">line 303</a></div>
 <div class="doc">
 <p>cm:stills: Python, after cm:script, for each model's turntable
 stills: four, 90 degrees apart, 320 by 240, in stills/</p>

@@ -540,7 +540,7 @@ impl World {
                             th.joint.wet_conductance
                         } else {
                             th.joint.dry_conductance
-                        } * j.lap.max(1.0)
+                        } * j.lap.max(j.turns * 2.4).max(1.0)
                             / lead.len().max(1) as f64;
                         for l in lead {
                             net.link(n, *l, g);
@@ -821,6 +821,13 @@ impl World {
             "starved".into()
         } else if j.solder > r.blob_fraction * good {
             "blob".into()
+        } else if j.turns > 0.0 {
+            // a wrap: sound with enough turns, whatever its lap
+            if j.turns < r.wrap_turns {
+                "weak".into()
+            } else {
+                "good".into()
+            }
         } else if j.lap < r.lap_mm {
             // a butt joint, or too short a lap: the solder alone holds it
             "weak".into()
@@ -834,7 +841,20 @@ impl World {
     /// length; none for a butt joint or a weld.
     #[must_use]
     pub fn lap_fillet(&self, j: &Joint) -> Option<(V3, V3, f64)> {
-        if j.weld.is_some() || j.lap < 0.05 {
+        if j.weld.is_some() {
+            return None;
+        }
+        // a wrap (decision C23): the solder over the turns, along the lead
+        if j.turns > 0.0 {
+            let (tip, t, _) = crate::wrap::lead_end(self, &j.a).ok()?;
+            let at = self.joint_point(j)?;
+            let on_axis = kin::add(tip, kin::scale(t, kin::dot(kin::sub(at, tip), t)));
+            let len = (j.turns * 0.3 + 0.6).max(1.0);
+            let host = self.part(j.a.split('.').next()?)?.pose().inverse();
+            let m = host.then(&Pose::from_xyz_rpy(on_axis, [0.0; 3])).p;
+            return Some((m, kin::mv(&host.r, t), len));
+        }
+        if j.lap < 0.05 {
             return None;
         }
         let th = solder::data().ok()?;
@@ -968,6 +988,7 @@ impl World {
             lap: 0.0,
             nodes_a: Vec::new(),
             nodes_b: Vec::new(),
+            turns: 0.0,
         });
         let ji = self.joints.len() - 1;
         self.measure_lap(ji);
@@ -1528,6 +1549,14 @@ impl World {
             };
             let rules = solder::data().map(|d| d.joint).ok();
             let lap = match rules {
+                Some(r) if j.turns > 0.0 && j.turns < r.wrap_turns => format!(
+                    "a wrap of {} turns (at least {})",
+                    crate::wrap::said(j.turns),
+                    crate::wrap::said(r.wrap_turns)
+                ),
+                Some(_) if j.turns > 0.0 => {
+                    format!("a wrap of {} turns", crate::wrap::said(j.turns))
+                }
                 Some(r) if j.lap < 0.05 => {
                     format!("a butt joint (a lap of {} mm is sound)", num1(r.lap_mm))
                 }

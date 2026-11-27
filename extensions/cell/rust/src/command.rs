@@ -15,8 +15,8 @@ use std::fmt::Write as _;
 /// The arms, by name.
 pub const ARMS: [&str; 1] = ["A"];
 /// The tools in the rack, by name.
-pub const TOOLS: [&str; 7] = [
-    "tweezers", "iron", "solder", "clip", "welder", "cutter", "wire",
+pub const TOOLS: [&str; 8] = [
+    "tweezers", "iron", "solder", "clip", "welder", "cutter", "wire", "wrapper",
 ];
 
 /// What an argument's value may be.
@@ -326,6 +326,11 @@ pub const COMMANDS: &[Spec] = &[
             ),
             opt("via2", Kind::Vec3("mm"), "with via=: a second corner"),
             opt(
+                "wrap",
+                Kind::Number("turns", 0.5, 3.0),
+                "with span=: each end fed past its pin's lead, just below its tip, long enough for this many turns of the wrap tool and a tail",
+            ),
+            opt(
                 "lap",
                 Kind::Number("mm", 0.5, 12.0),
                 "with span=: each end turned to lie alongside its pin's leg, this long (a lap joint, 3.2 or more is sound)",
@@ -569,6 +574,28 @@ pub const COMMANDS: &[Spec] = &[
             Kind::Vec3("mm"),
             "the way it comes in, a direction from the route (from above if not given)",
         )],
+    },
+    Spec {
+        op: "wrap",
+        family: "wrapper",
+        summary: "the wrap tool's bit slips over a lead's end and winds a wire's end round it, holding it while it is soldered",
+        positional: &[ARM],
+        named: &[
+            req("on", Kind::Pin, "the wire's end (W1.1)"),
+            req("around", Kind::Pin, "the pin whose lead it winds round"),
+            req(
+                "turns",
+                Kind::Number("turns", 0.5, 3.0),
+                "how many: 1.5 or more is sound, 2 or more refused",
+            ),
+        ],
+    },
+    Spec {
+        op: "snip",
+        family: "wrapper",
+        summary: "the wrap tool's blade cuts the wire's tail past its turns, and the bit lifts off",
+        positional: &[ARM],
+        named: &[req("on", Kind::Pin, "the wrapped wire's end")],
     },
     Spec {
         op: "insert",

@@ -104,6 +104,9 @@ pub struct JointRules {
     /// Leads this much farther apart than touching still count as
     /// alongside (the solder fills it), mm.
     pub lap_gap_mm: f64,
+    /// A wrap joint is sound with at least this many turns (decision
+    /// C23); fewer is weak.
+    pub wrap_turns: f64,
     /// Molten longer than this with no active flux: dull, s.
     pub dull_seconds: f64,
 }
@@ -249,6 +252,10 @@ pub struct Joint {
     /// See `nodes_a`.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub nodes_b: Vec<usize>,
+    /// A wrap joint's turns of wire round the lead (decision C23); 0
+    /// for a lap or butt joint.
+    #[serde(default)]
+    pub turns: f64,
 }
 
 impl Joint {

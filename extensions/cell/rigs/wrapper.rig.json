@@ -1,0 +1,63 @@
+{
+ "name": "wrapper",
+ "units": "mm, degrees",
+ "nodes": [
+  {
+   "name": "tool_mount",
+   "parent": "wrapper",
+   "at": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "turn": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "world": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "tool_tip",
+   "parent": "wrapper",
+   "at": [
+    0.0,
+    0.0,
+    90.0
+   ],
+   "turn": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "world": [
+    0.0,
+    0.0,
+    90.000004
+   ]
+  },
+  {
+   "name": "bit",
+   "parent": "wrapper",
+   "at": [
+    0.0,
+    0.0,
+    90.0
+   ],
+   "turn": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "world": [
+    0.0,
+    0.0,
+    90.000004
+   ]
+  }
+ ]
+}

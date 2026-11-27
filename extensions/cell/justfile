@@ -54,11 +54,11 @@ models: build
 
 # Copy the rigs the simulator reads (the arm, the tools, the fixtures) from work/cell/models into rigs/
 rigs:
-    for n in arm tweezers iron solder clip welder cutter wire rack tray stage scope; do cp "work/cell/models/$n.rig.json" rigs/; done
+    for n in arm tweezers iron solder clip welder cutter wire wrapper rack tray stage scope; do cp "work/cell/models/$n.rig.json" rigs/; done
 
 # The turntable stills as one contact sheet for the extension's page: docs/models.jpg
 sheet:
-    ffmpeg -loglevel error -y -pattern_type glob -i 'work/cell/models/stills/*.png' -vf "scale=160:120,tile=8x11" -frames:v 1 -q:v 4 docs/models.jpg
+    ffmpeg -loglevel error -y -pattern_type glob -i 'work/cell/models/stills/*.png' -vf "scale=160:120,tile=8x12" -frames:v 1 -q:v 4 docs/models.jpg
 
 # The slicer: programs/NAME.cell run, written as a scene and a page, served at http://127.0.0.1:8470/ (BIND=0.0.0.0 for the network)
 preview name:

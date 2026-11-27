@@ -522,6 +522,44 @@ the 555 blinker's parts and its seven nets.
 `turn=DEG` turns it by an angle: `stage to=0 tilt=0 at=0,0,0` puts the
 positioner back to rest.
 
+### Wrap joints
+
+![Wrap joints made by the wire-wrap tool, recorded from the live page](../videos/wrap.webp)
+
+A wire may instead be wound round a lead's end (decision C23): wound
+1.5 turns or more it holds before the solder flows. The wrap tool is
+arm A's, in rack slot 8: a barrel and a bit whose steel sleeve slips
+over a lead's free end, winding the wire's end round it just below,
+and a small blade. It works with the joint already presented at the
+iron station, so it holds the wire while the iron solders.
+
+```
+wire S5 awg=30 span=U1.4.tip+U1.5.tip wrap=1.75 enamel=yes
+                                  # each end fed past its leg, long enough for 1.75 turns and a tail
+...                               # picked, cut, laid, pinched
+tool A wrapper
+present U1.4+W1.1 at=S1
+wrap A on=W1.1 around=U1.4 turns=1.75
+                                  # the bit over the leg's end: the wire wound round it, held
+touch S1 at=U1.4+W1.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=U1.4+W1.1 below=100
+snip A on=W1.1                    # the blade cuts the tail; the bit lifts off
+inspect U1.4+W1.1                 # good; a wrap of 1.75 turns; ...
+```
+
+- The turns are a helix round the lead's axis, a wire's thickness down
+  each turn, from where the wire passes the lead; what is left past
+  them is the tail the blade cuts.
+- Fewer than 1.5 turns is `weak`; the tool winds under two (two or
+  more is refused). The joint records its turns; the solder touches
+  every segment of the wire in the turns.
+- The wire is enameled (decision C21): the iron burns the enamel off
+  where it heats.
+- `programs/wrap.cell` wraps both ends of a jumper; the planner learns
+  to choose a wrap where a lap does not fit with the blinker's rules.
+
 ## The 555 blinker
 
 ![The 555 blinker built, recorded from the live page (just record blinker, just videos cell blinker)](../videos/blinker.webp)
@@ -1247,7 +1285,7 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `touch ARM\|STATION at=JOINT [dwell=S] [temp=C]` | iron | put the iron's tip on a joint and hold it there |
 | `feed ARM\|STATION mm=MM [rate=MM/S]` | solder | feed solder wire into the joint the iron is on |
 | `weld ARM\|STATION at=JOINT energy=J [risky=refuse\|allow]` | welder | spot weld a lap of two leads by a capacitor discharge |
-| `wire STATION awg=N [mm=MM] [via=X,Y,Z] [via2=X,Y,Z] [lap=MM] [span=FRAME+FRAME] [enamel=no\|yes] [metal=copper\|steel] [support=no\|yes]` | wire | the wire feeder station feeds bare or enameled wire from its spool out of its nozzle |
+| `wire STATION awg=N [mm=MM] [via=X,Y,Z] [via2=X,Y,Z] [wrap=TURNS] [lap=MM] [span=FRAME+FRAME] [enamel=no\|yes] [metal=copper\|steel] [support=no\|yes]` | wire | the wire feeder station feeds bare or enameled wire from its spool out of its nozzle |
 | `cut STATION` | wire | the wire feeder cuts its wire at the nozzle: what holds the free end keeps it |
 | `stage [turn=DEG] [to=DEG] [tilt=DEG] [at=X,Y,Z]` | stage | move the positioner: turn the stage by an angle, tilt it, move it |
 | `present FRAME\|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG]` | stage | move the positioner so a pin's frame or a joint is at a tool station's point |
@@ -1260,6 +1298,8 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `trim STATION on=PIN at=MM` | cutter | a cutter station cuts a lead, what is past the cut falling into the bin |
 | `bring ARM PIN to=FRAME [along=X,Y,Z] [gap=MM] [roll=DEG] [from=X,Y,Z] [end=FRAME] [lap=MM]` | tweezers | the held part turned and carried so a lead's tip comes in toward a frame along a direction (its body out that way), stopping short: for the planner |
 | `lay ARM PART [from=X,Y,Z]` | tweezers | a jumper formed to its route (wire span= via=) carried onto it, both its joints made |
+| `wrap ARM on=PIN around=PIN turns=TURNS` | wrapper | the wrap tool's bit slips over a lead's end and winds a wire's end round it, holding it while it is soldered |
+| `snip ARM on=PIN` | wrapper | the wrap tool's blade cuts the wire's tail past its turns, and the bit lifts off |
 | `insert ARM on=PIN [at=MM] [roll=DEG]` | bender | the arm slides a held part's lead into the bending rig, at a distance from the body at its mandrel |
 | `form [angle=DEG] [radius=MM]` | bender | the bending rig clamps the lead in it and bends it down round its mandrel, in the rig's plane |
 | `shear ARM on=PIN at=MM` | bender | the arm puts a held part's lead through the rig's shear, which cuts it; what is past the cut falls into the bin |

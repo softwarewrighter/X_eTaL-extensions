@@ -1,0 +1,11 @@
+# extensions/cell/videos/wrap.webm and .webp: the live page running
+# programs/wrap.cell, as the page itself draws it -- one headless
+# Chrome (no window) seeking each moment of the program, joined (just
+# ext cell live, then just ext cell record wrap:
+# work/record/wrap.mp4; then just videos cell wrap). The video at
+# the page's full width; the README's animated picture smaller.
+demo=wrap
+file=work/record/wrap.mp4
+scale=1280
+webp=480
+fps=12

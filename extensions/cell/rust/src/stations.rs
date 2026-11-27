@@ -755,7 +755,7 @@ impl World {
                 // formed to its route as it comes out (the feeder bends as
                 // it feeds, as a CNC wire bender does)
                 if let Some(span) = c.word("span") {
-                    if c.get("via").is_some() || c.get("lap").is_some() {
+                    if c.get("via").is_some() || c.get("lap").is_some() || c.get("wrap").is_some() {
                         let (a, b) = span.split_once('+').unwrap_or(("", ""));
                         let path = self.route_path(a, b, c)?;
                         self.form_wire(&path, a, b, events)?;
@@ -1043,6 +1043,41 @@ impl World {
             path[n - 1] = b_corner;
             path.insert(0, a_end);
             path.push(b_end);
+            return Ok(path);
+        }
+        // wrap ends (decision C23): each end passing beside its lead just
+        // below its tip, on past it by as much as the turns take and a tail
+        if let Some(turns) = c.number("wrap") {
+            if c.get("lap").is_some() {
+                return Err(Halt::Refused("give lap= or wrap=, not both".into()));
+            }
+            let awg = c.number("awg").unwrap_or(30.0);
+            #[allow(clippy::cast_possible_truncation)]
+            let wd = crate::wire::data()
+                .map_err(Halt::Refused)?
+                .gauge(awg.round() as i64)
+                .diameter;
+            let end = |frame: &str, from: V3| -> Result<[V3; 2], Halt> {
+                let pin = frame.splitn(3, '.').take(2).collect::<Vec<_>>().join(".");
+                let (tip, t, dl) = crate::wrap::lead_end(self, &pin)?;
+                let r = crate::wrap::radius(dl, wd);
+                let h = kin::sub(tip, kin::scale(t, crate::wrap::BELOW));
+                // arriving from `from`, level across the lead
+                let a = kin::sub(h, from);
+                let a = kin::sub(a, kin::scale(t, kin::dot(a, t)));
+                let a = kin::scale(a, 1.0 / kin::norm(a).max(1e-12));
+                let side = kin::cross(t, a);
+                let q = kin::add(h, kin::scale(side, r));
+                let on = crate::wrap::length(turns, r) + crate::wrap::TAIL;
+                Ok([q, kin::add(q, kin::scale(a, on))])
+            };
+            let n = path.len();
+            let [qa, ea] = end(a, path[1])?;
+            let [qb, eb] = end(b, path[n - 2])?;
+            path[0] = qa;
+            path[n - 1] = qb;
+            path.insert(0, ea);
+            path.push(eb);
             return Ok(path);
         }
         let n = path.len();

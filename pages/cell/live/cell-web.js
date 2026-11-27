@@ -199,6 +199,26 @@ export function scene(name) {
 }
 
 /**
+ * The cell replaced by one `world` gave: empty, or what was wrong.
+ * @param {string} json
+ * @returns {string}
+ */
+export function set_world(json) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const ptr0 = passStringToWasm0(json, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.set_world(ptr0, len0);
+        deferred2_0 = ret[0];
+        deferred2_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
  * The cell now, for the controls (JSON).
  * @returns {string}
  */
@@ -207,6 +227,23 @@ export function state() {
     let deferred1_1;
     try {
         const ret = wasm.state();
+        deferred1_0 = ret[0];
+        deferred1_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
+    }
+}
+
+/**
+ * The whole cell (JSON), for a worker to hand back.
+ * @returns {string}
+ */
+export function world() {
+    let deferred1_0;
+    let deferred1_1;
+    try {
+        const ret = wasm.world();
         deferred1_0 = ret[0];
         deferred1_1 = ret[1];
         return getStringFromWasm0(ret[0], ret[1]);

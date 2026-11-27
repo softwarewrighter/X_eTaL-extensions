@@ -60,7 +60,9 @@ impl World {
                 lines.push(format!(
                     "{}: weak, {}",
                     j.name,
-                    if j.lap < 0.05 {
+                    if j.turns > 0.0 {
+                        format!("a wrap of {} turns", crate::wrap::said(j.turns))
+                    } else if j.lap < 0.05 {
                         "a butt joint".to_string()
                     } else {
                         format!("a lap of {} mm", crate::world::num1(j.lap))

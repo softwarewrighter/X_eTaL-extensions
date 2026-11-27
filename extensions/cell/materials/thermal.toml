@@ -111,5 +111,8 @@ flux_seconds = 4.0
 lap_mm = 3.2
 lap_long_mm = 6.4
 lap_gap_mm = 0.15
+# wrap joints (decision C23): a wire wound round a lead at least
+# wrap_turns times holds before the solder flows; fewer is weak
+wrap_turns = 1.5
 dull_seconds = 4.0
 illustrative = ["max_gap", "wet_seconds", "good_mm3", "starved_fraction", "blob_fraction", "bridge_mm", "wet_conductance", "dry_conductance", "flux_seconds", "dull_seconds", "lap_long_mm", "lap_gap_mm"]

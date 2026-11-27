@@ -78,3 +78,21 @@ fn xetal_in_the_page_reaches_the_cell() {
     assert!(out.contains("pick A C1 grasp=body"));
     assert!(cell_web::rendered(cell_web::EXAMPLE).contains("<span"));
 }
+
+#[test]
+fn a_cell_handed_to_a_worker_and_back_is_the_same_cell() {
+    // what the page's worker does: start from the page's cell, run a
+    // program, hand the cell back
+    cell_web::clear();
+    let out = json(&cell_web::command(&cell_web::program("lap")));
+    assert!(out["outcomes"].as_array().unwrap().iter().all(|o| o["ok"] == true), "{out}");
+    let before = cell_web::state();
+    let scene = cell_web::scene("lap");
+    let world = cell_web::world();
+    cell_web::clear();
+    assert_ne!(cell_web::state(), before);
+    assert_eq!(cell_web::set_world(&world), "");
+    assert_eq!(cell_web::state(), before);
+    assert_eq!(cell_web::scene("lap"), scene);
+    assert!(!cell_web::set_world("{}").is_empty());
+}

@@ -21,7 +21,7 @@ thread_local! {
 }
 
 /// The programs the page offers, as `programs/NAME.cell` has them.
-pub const PROGRAMS: [(&str, &str); 19] = [
+pub const PROGRAMS: [(&str, &str); 20] = [
     ("solder", include_str!("../../programs/solder.cell")),
     (
         "solder-stations",
@@ -40,6 +40,7 @@ pub const PROGRAMS: [(&str, &str); 19] = [
     ("enamel", include_str!("../../programs/enamel.cell")),
     ("blinker", include_str!("../../programs/blinker.cell")),
     ("lap", include_str!("../../programs/lap.cell")),
+    ("wrap", include_str!("../../programs/wrap.cell")),
     ("plan", include_str!("../../programs/plan.cell")),
     (
         "weld-stations",
@@ -75,6 +76,25 @@ pub fn reset(circuit: &str) -> String {
         *c.borrow_mut() = World::default();
         command_on(&mut c.borrow_mut(), &text)
     })
+}
+
+/// The whole cell as JSON: what a worker that ran a program hands back
+/// to the page.
+#[must_use]
+pub fn world() -> String {
+    CELL.with(|c| serde_json::to_string(&*c.borrow()).unwrap_or_default())
+}
+
+/// The cell replaced by one [`world`] gave: empty, or what was wrong.
+#[must_use]
+pub fn set_world(json: &str) -> String {
+    match serde_json::from_str::<World>(json) {
+        Ok(w) => {
+            CELL.with(|c| *c.borrow_mut() = w);
+            String::new()
+        }
+        Err(e) => e.to_string(),
+    }
 }
 
 /// An empty cell, nothing run on it yet (for a program that begins

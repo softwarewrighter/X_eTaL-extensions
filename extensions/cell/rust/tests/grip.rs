@@ -56,7 +56,7 @@ fn a_reset_fills_the_tray_and_the_racks() {
             .fold(f64::INFINITY, f64::min);
         assert!((low + 140.0).abs() < 1e-6, "{}: {low}", p.id);
     }
-    assert_eq!(w.tools.len(), 7, "one rack of seven");
+    assert_eq!(w.tools.len(), 8, "one rack of eight");
     assert!(w.tools.iter().all(|t| t.holder.is_none()));
     refused(
         &mut w,

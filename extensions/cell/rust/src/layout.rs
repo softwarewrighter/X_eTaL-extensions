@@ -112,7 +112,7 @@ fn node(text: &str, name: &str) -> Option<V3> {
 const RACK: &str = include_str!("../../rigs/rack.rig.json");
 const TRAY: &str = include_str!("../../rigs/tray.rig.json");
 const STAGE: &str = include_str!("../../rigs/stage.rig.json");
-const TOOL_RIGS: [(&str, &str); 7] = [
+const TOOL_RIGS: [(&str, &str); 8] = [
     ("tweezers", include_str!("../../rigs/tweezers.rig.json")),
     ("iron", include_str!("../../rigs/iron.rig.json")),
     ("solder", include_str!("../../rigs/solder.rig.json")),
@@ -120,6 +120,7 @@ const TOOL_RIGS: [(&str, &str); 7] = [
     ("welder", include_str!("../../rigs/welder.rig.json")),
     ("cutter", include_str!("../../rigs/cutter.rig.json")),
     ("wire", include_str!("../../rigs/wire.rig.json")),
+    ("wrapper", include_str!("../../rigs/wrapper.rig.json")),
 ];
 
 /// A tool's length: its tip's distance from its mount along z (its
@@ -133,7 +134,7 @@ pub fn tool_length(tool: &str) -> f64 {
         .map_or(0.0, |w| w[2])
 }
 
-/// The slot a tool rests in, 1 to 7, in the order of the tool table.
+/// The slot a tool rests in, 1 to 8, in the order of the tool table.
 #[must_use]
 pub fn slot_of(tool: &str) -> usize {
     TOOLS.iter().position(|t| *t == tool).map_or(1, |i| i + 1)

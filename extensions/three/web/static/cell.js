@@ -1081,7 +1081,10 @@ export function cellPlayer(host, calls, options = {}) {
     for (const j of s.joints) {
       const host = parts[j.part];
       if (!host || !j.rows.length) continue;
-      const material = new THREE.MeshStandardMaterial({ color: '#d9dee7', metalness: 0.8, roughness: 0.25 });
+      // a wrap's solder partly clear, so its turns show through
+      const material = j.lap && j.lap[7]
+        ? new THREE.MeshStandardMaterial({ color: '#d9dee7', metalness: 0.8, roughness: 0.25, transparent: true, opacity: 0.45, depthWrite: false })
+        : new THREE.MeshStandardMaterial({ color: '#d9dee7', metalness: 0.8, roughness: 0.25 });
       // a lap joint's fillet: a capsule of unit length along y, turned
       // onto the lap; a butt joint's or a weld's: a ball
       const ball = j.lap

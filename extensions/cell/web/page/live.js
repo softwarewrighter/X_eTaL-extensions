@@ -106,12 +106,67 @@ export function start(local) {
   const n = (id) => Number($(id).value) || 0;
   const on = (id, f) => $(id).addEventListener('click', f);
   on('reset', () => { const r = JSON.parse(w.reset($('circuit').value)); $('log').innerHTML = ''; r.outcomes.forEach((o) => log(o)); show(0, 0); refresh(); });
-  on('run-program', () => {
+  // a program run in a worker, off the page's thread, a command at a
+  // time: the page draws and answers while it runs (the blinker: hundreds
+  // of commands), what is being simulated shown beside the button; the
+  // cell handed back at the end. Where there is no worker (an MCP
+  // session's cell is on the server), a command at a time here, the page
+  // yielding between them.
+  const busy = document.createElement('span');
+  busy.id = 'busy';
+  busy.style.cssText = 'margin-left:8px;font-size:12px;opacity:.85';
+  $('run-program').after(busy);
+  const spin = ['|', '/', '-', '\\'];
+  let worker = null;
+  const inWorker = (lines, onStep) => new Promise((done, fail) => {
+    if (!worker) worker = new Worker(new URL('./cell-worker.js', import.meta.url), { type: 'module' });
+    worker.onerror = (e) => fail(e.message || 'the worker failed');
+    worker.onmessage = ({ data }) => {
+      if (data.error) fail(data.error);
+      else if (data.done) done(data.world);
+      else onStep(data);
+    };
+    worker.postMessage({ lines, world: w.world() });
+  });
+  const here = async (lines, onStep) => {
+    for (let k = 0; k < lines.length; k++) {
+      onStep({ k, n: lines.length, line: lines[k] });
+      await new Promise((go) => setTimeout(go, 0));
+      const r = JSON.parse(w.command(lines[k]));
+      onStep({ k, r });
+      if (r.error || r.outcomes.some((o) => !o.ok)) break;
+    }
+  };
+  on('run-program', async () => {
+    const button = $('run-program');
+    if (button.disabled) return;
     // a program that begins with its own reset starts the cell over
     const text = w.program($('program').value);
     if (/^\s*reset\b/m.test(text)) { w.clear(); $('log').innerHTML = ''; }
-    run(text);
-    show(0, JSON.parse(w.state()).t);
+    const lines = text.split('\n').filter((l) => l.trim() && !l.trim().startsWith('#'));
+    button.disabled = true;
+    const onStep = ({ k, n, line, r }) => {
+      if (line !== undefined) { busy.textContent = `${spin[k % 4]} simulating ${k + 1} of ${n}: ${line.trim().slice(0, 48)}`; return; }
+      if (r.error) log(r, lines[k]);
+      else r.outcomes.forEach((o) => log(o));
+    };
+    try {
+      if (w.world && typeof Worker === 'function') {
+        const world = await inWorker(lines, onStep);
+        const wrong = w.set_world(world);
+        if (wrong) throw new Error(wrong);
+      } else {
+        await here(lines, onStep);
+      }
+    } catch (e) {
+      log({ error: String(e.message || e) }, 'run');
+    } finally {
+      if (w.version) seenOwn = w.version();
+      busy.textContent = '';
+      button.disabled = false;
+      refresh();
+      show(0, JSON.parse(w.state()).t);
+    }
   });
   // the bands in the microscope's picture, read from its pixels by the
   // simulator's own decoder (marks.rs): what a sensed reading sees
@@ -207,6 +262,7 @@ export function start(local) {
       'weld-stations': 'the stage brings a disc lead to the welder station, which comes up from below; an arm lays a second disc lead on it, and it is welded',
       pick: 'a chip picked from the tray and put in the vise',
       plan: 'written by the planner (CellPlan.xtl, in X_eTaL) from a netlist -- four resistors dead-bug on a DIP-8 with lap joints: the chip into the vise legs up, then each resistor\'s lead bent 90 degrees in the rig and sheared to a 4 mm end, laid alongside its pin\'s leg (fanned out so bodies keep apart), pinched by the pincer on its side, soldered and let go; one side of the chip, then the other; no shorts, every joint a good 3.6 mm lap',
+      wrap: 'wrap joints: the chip in the vise legs up; the wire feeder feeds a jumper from pin 4 across the chip\'s end to pin 5, each end passing its leg just below the tip and on past it, long enough for 1.75 turns and a tail; arm A takes the wrap tool, and at each pin its bit slips over the leg\'s end, winds the wire round it and holds it while the iron solders, then its blade cuts the tail and the bit lifts off -- inspect: good, a wrap of 1.75 turns (1.5 or more holds before the solder flows; fewer is weak; the tool winds under two)',
       lap: 'a lap joint: the chip in the vise legs up (dead-bug); the rig bends the resistor\'s lead 90 degrees 12 mm from its body and shears it, and the arm lays the 4 mm end alongside pin 3, touching it and pointing down the leg -- two parallel pieces of metal soldered for 1/8 inch hold far better than a lead\'s end against a leg (that butt joint is weak); inspect: good, a 3.6 mm lap',
       blinker: 'the 555 LED blinker, the whole circuit, dead-bug with lap joints: the chip legs up in the vise; enameled jumpers between legs first (pin 4 to 8, then 2 to 6 over it); a lead of R1, R2, R3, C1 and C2 each laid alongside its pin\'s leg, the resistors\' leads bent in the rig, the capacitors\' straight leads lowered from above; R1, R2 and R3 trimmed at the cutter; R3\'s end bent up by a pincer and the LED lapped onto it; jumpers with lapped ends for the rest; the battery snap set on the turntable and jumped to pins 8 and 1 -- check: 7 of 7 nets, every joint a good lap, no shorts',
       enamel: 'enameled (magnet) wire insulates: 40 mm of AWG 30 enameled wire is run along the chip\'s pin row to pin 3, across pin 4; the iron at 400 C burns the enamel off only where it heats the wire, at the joint, so the crossing is no short -- inspect shorts: none, W1.1 crosses U1.4 insulated',

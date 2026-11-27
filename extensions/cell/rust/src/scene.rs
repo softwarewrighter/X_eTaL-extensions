@@ -25,7 +25,8 @@
 //! place('U1', t, nums('x y z r p y', 6)[0])   (where a fall ended)
 //! heat('U1', nums('t body pin1 pin2 ...', k))  (C, while warm)
 //! joint('U1.3+R1.1', 'U1', nums('x y z', 3)[0], nums('t temp mm3 ...', 3), 'good', t_froze, lap)
-//!                                    (lap: nums('x y z dx dy dz len', 7)[0], a lap joint's fillet, or null)
+//!                                    (lap: nums('x y z dx dy dz len wrap', 8)[0], a lap joint's fillet
+//!                                    or a wrap's solder (wrap 1), or null)
 //! ghost('U1', 'dip8', nums('x y z r p y', 6)[0])
 //! step(1, 'move A to=0,0,20 rpy=180,0,0', t0, t1)
 //! expect('A', t, nums('x y z', 3)[0])
@@ -209,10 +210,12 @@ pub fn calls(name: &str, w: &World) -> Result<String, String> {
         let lap = w.lap_fillet(j).map_or_else(
             || "null".to_string(),
             |(m, d, len)| {
+                // the eighth: 1 for a wrap's solder, drawn so its turns show
+                let wrap = if j.turns > 0.0 { 1.0 } else { 0.0 };
                 let v: Vec<f64> = m
                     .iter()
                     .chain(d.iter())
-                    .chain(std::iter::once(&len))
+                    .chain([len, wrap].iter())
                     .map(|x| kin::clean((x * 1000.0).round() / 1000.0))
                     .collect();
                 row(&v)

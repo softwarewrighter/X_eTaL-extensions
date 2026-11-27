@@ -32,6 +32,7 @@ mod thermal;
 pub mod weld;
 pub mod wire;
 pub mod world;
+pub mod wrap;
 
 use xetal_ext_sdk::{OwnedError, Value, text};
 

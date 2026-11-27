@@ -1,0 +1,47 @@
+# wrap: wrap joints (decision C23). The chip goes in the vise legs up. The
+# wire feeder feeds a jumper from pin 4 across the chip's end to pin 5,
+# each end passing its pin's leg just below the tip and on past it far
+# enough for 1.75 turns and a tail (wrap=). Arm A takes the wrap tool;
+# at each pin, the joint presented at the iron, its bit slips over the
+# leg's end, winds the wire's end round it and holds it while the iron
+# solders, then its blade cuts the tail and the bit lifts off. Wound
+# 1.5 turns or more, the joint holds before the solder flows.
+reset circuit=lap
+tool A tweezers
+pick A U1 grasp=ends
+place A U1 at=0,0,-24 rpy=180,0,90
+vise close
+release A U1
+lift A mm=60
+wire S5 awg=30 span=U1.4.tip+U1.5.tip wrap=1.75 enamel=yes
+pick A W1 grasp=middle
+cut S5
+lift A mm=60
+lay A W1
+pinch P1 on=W1.1 at=1.5
+release A W1
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+tool A wrapper
+present U1.4+W1.1 at=S1
+wrap A on=W1.1 around=U1.4 turns=1.75
+touch S1 at=U1.4+W1.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=U1.4+W1.1 below=100
+snip A on=W1.1
+inspect U1.4+W1.1
+present U1.5+W1.2 at=S1
+wrap A on=W1.2 around=U1.5 turns=1.75
+touch S1 at=U1.5+W1.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=U1.5+W1.2 below=100
+snip A on=W1.2
+inspect U1.5+W1.2
+unpinch P1
+inspect shorts
+tool A tweezers
+stage tilt=60
+scope aim=U1.4+W1.1 zoom=12

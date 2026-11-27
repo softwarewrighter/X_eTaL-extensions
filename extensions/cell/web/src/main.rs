@@ -23,6 +23,20 @@ pub fn clear() {
     cell_web::clear();
 }
 
+/// The whole cell (JSON), for a worker to hand back.
+#[wasm_bindgen]
+#[must_use]
+pub fn world() -> String {
+    cell_web::world()
+}
+
+/// The cell replaced by one `world` gave: empty, or what was wrong.
+#[wasm_bindgen]
+#[must_use]
+pub fn set_world(json: &str) -> String {
+    cell_web::set_world(json)
+}
+
 /// Commands run on the cell: their outcomes and times (JSON).
 #[wasm_bindgen]
 #[must_use]

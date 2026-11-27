@@ -745,8 +745,8 @@ impl World {
                 "rack" => vec![collide::fixture_box(
                     &id,
                     &f,
-                    [0.0, 0.0, 5.0],
-                    [360.0, 60.0, 10.0],
+                    [32.5, 0.0, 5.0],
+                    [425.0, 60.0, 10.0],
                 )],
                 "bender" => crate::bender::solids(&f),
                 "tray" => vec![collide::fixture_box(
@@ -1854,6 +1854,16 @@ impl World {
                     did,
                     events,
                 )?;
+            }
+            "wrap" => {
+                let on = c.word("on").unwrap_or("").to_string();
+                let around = c.word("around").unwrap_or("").to_string();
+                let turns = c.number("turns").unwrap_or(1.75);
+                self.wrap(i, &rig, &on, &around, turns, did, events)?;
+            }
+            "snip" => {
+                let on = c.word("on").unwrap_or("").to_string();
+                self.snip(i, &rig, &on, did, events)?;
             }
             "lay" => {
                 let id = c.word("part").unwrap_or("").to_string();

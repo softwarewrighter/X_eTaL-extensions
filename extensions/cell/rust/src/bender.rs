@@ -134,7 +134,7 @@ fn dot(a: V3, b: V3) -> f64 {
 impl World {
     /// A pin's part, the pin's name, its lead as it is now and its
     /// diameter.
-    fn bender_lead(&self, pin: &str) -> Result<(usize, String, Vec<V3>, f64), Halt> {
+    pub(crate) fn bender_lead(&self, pin: &str) -> Result<(usize, String, Vec<V3>, f64), Halt> {
         let (pid, pn) = pin
             .split_once('.')
             .ok_or_else(|| Halt::Refused(format!("{pin} is not a pin")))?;

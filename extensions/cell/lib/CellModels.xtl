@@ -1,7 +1,7 @@
 ## CellModels.xtl -- the assembly cell's 3D models, described in X_eTaL
 ## and built by Blender: the arm (its pivots from the simulator, one
 ## node a joint, per the asset contract of docs/cell-design.md), the
-## seven tools, the tool rack, a parts tray, the rotary stage with its
+## eight tools, the tool rack, a parts tray, the rotary stage with its
 ## vise, the microscope on its gantry, and every part kind with a node
 ## a pin. Each model is NAME.glb with NAME.rig.json beside it; a check
 ## reads every .glb back against its rig. Generic shapes, imitating no
@@ -168,8 +168,20 @@ l:wire := ("wire",
   (("spool", "wire", 0 32 45, 0 90 0) h:n_ode 0) c_at
   ("cutter", "wire", 0 0 92, 0 0 0) h:n_ode 0) h:m_odel 0
 
-## cm:tools: Python for all seven tools
-l:tools := l:tweezers c_at l:iron c_at l:solder c_at l:clip c_at l:welder c_at l:cutter c_at l:wire
+## cm:wrapper: Python for the wire-wrap tool (decision C23): a barrel,
+## and a bit (node bit, turning about its own z) whose steel sleeve
+## slips over a lead's free end 90 mm out, winding a wire round it, a
+## small blade at its edge cutting the tail
+l:wrapper := ("wrapper",
+  (("wrapper", dark) h:m_ount 0) c_at
+  (("barrel", "wrapper", 0 0 50, 7, 32, 0 0 0, gray) h:c_yl 0) c_at
+  (("sleeve", "bit", 0 0 -12, 1.5, 24, 0 0 0, steel) h:c_yl 0) c_at
+  ("blade", "bit", 2 0 -1, 1 3 2, steel) h:b_ox 0,
+  (("wrapper", 90) h:e_nds 0) c_at
+  ("bit", "wrapper", 0 0 90, 0 0 0) h:n_ode 0) h:m_odel 0
+
+## cm:tools: Python for all eight tools
+l:tools := l:tweezers c_at l:iron c_at l:solder c_at l:clip c_at l:welder c_at l:cutter c_at l:wire c_at l:wrapper
 
 ### The fixtures
 
@@ -179,15 +191,16 @@ h:p_osts := { (n, x) z ->
 }
 h:s_lot := { (n, x) z -> ("slot" c_at n, "rack", x c_at 0 60, 0 0 0) h:n_ode 0 }
 
-## cm:rack: Python for the tool rack: a base 360 mm long and seven
-## slots 50 mm apart, one a tool, nodes slot1 to slot7 where a tool's
-## mount rests
+## cm:rack: Python for the tool rack: a base 425 mm long and eight
+## slots, one a tool, nodes slot1 to slot8 where a tool's mount rests:
+## seven 50 mm apart, the eighth (the wrap tool, added later) 60 mm on
+## so its posts clear the seventh's
 l:rack := ("rack",
-  (("base", "rack", 0 0 5, 360 60 10, dark) h:b_ox 0) c_at
+  (("base", "rack", 32.5 0 5, 425 60 10, dark) h:b_ox 0) c_at
   (("1", -150) h:p_osts 0) c_at (("2", -100) h:p_osts 0) c_at (("3", -50) h:p_osts 0) c_at (("4", 0) h:p_osts 0) c_at
-  (("5", 50) h:p_osts 0) c_at (("6", 100) h:p_osts 0) c_at ("7", 150) h:p_osts 0,
+  (("5", 50) h:p_osts 0) c_at (("6", 100) h:p_osts 0) c_at (("7", 150) h:p_osts 0) c_at ("8", 210) h:p_osts 0,
   (("1", -150) h:s_lot 0) c_at (("2", -100) h:s_lot 0) c_at (("3", -50) h:s_lot 0) c_at (("4", 0) h:s_lot 0) c_at
-  (("5", 50) h:s_lot 0) c_at (("6", 100) h:s_lot 0) c_at ("7", 150) h:s_lot 0) h:m_odel 0
+  (("5", 50) h:s_lot 0) c_at (("6", 100) h:s_lot 0) c_at (("7", 150) h:s_lot 0) c_at ("8", 210) h:s_lot 0) h:m_odel 0
 
 # a tray pocket: a dark square sunk in the plate, its node pocketN
 h:p_ocket := { (n, at) z -> ("well" c_at n, "tray", at - 0 0 1, 24 30 2, dark) h:b_ox 0 }
@@ -278,7 +291,7 @@ l:parts := ((("dip8", black, pins, gray, none) l:p_art 0) c_at
   ("battery-snap", black, pins, silver, none) l:p_art 0)
 
 ## cm:names: every model, as the check and the stills take them
-l:names := "arm tweezers iron solder clip welder cutter wire rack tray stage scope " c_at l:kinds
+l:names := "arm tweezers iron solder clip welder cutter wire wrapper rack tray stage scope " c_at l:kinds
 
 ## cm:script: the whole inner script: Bpy's head, the cell's builders
 ## (the path to cell_models.py is the script's second argument), every
