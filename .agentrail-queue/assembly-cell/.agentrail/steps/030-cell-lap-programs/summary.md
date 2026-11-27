@@ -1,0 +1,1 @@
+Feature programs on lap joints: solder-stations, bend-rig, leads, wire, enamel, insulate (chip legs up); solder.cell stays the weak butt joint; insulate's joggle gone (0.7 mm clear); legs-down crossings kept as test fixtures; live page and docs; solder-stations re-recorded. Pushed 6bc9c797; full gate passed.
