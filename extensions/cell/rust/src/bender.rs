@@ -252,18 +252,26 @@ impl World {
         along: V3,
         gap: f64,
         roll: f64,
+        from: Option<V3>,
+        end: Option<&str>,
         did: &mut Vec<String>,
         events: &mut Vec<String>,
     ) -> Result<(), Halt> {
         let (k, _, lead, _) = self.bender_lead(pin)?;
         let id = self.parts[k].id.clone();
         self.need_holding(i, &id)?;
+        let target = self.frame(to).map_err(Halt::Refused)?.p;
+        // a jumper's far end: the direction runs from the target to it
+        let end_at = match end {
+            Some(e) => Some(self.frame(e).map_err(Halt::Refused)?.p),
+            None => None,
+        };
+        let along = end_at.map_or(along, |b| kin::sub(b, target));
         let n = kin::norm(along);
         if n < 1e-9 {
-            return Err(Halt::Refused("along: give a direction".into()));
+            return Err(Halt::Refused("along: give a direction (or end=)".into()));
         }
         let u = kin::scale(along, 1.0 / n);
-        let target = self.frame(to).map_err(Halt::Refused)?.p;
         let other = to.split('.').next().unwrap_or("").to_string();
         if other == id {
             return Err(Halt::Refused(format!(
@@ -273,6 +281,31 @@ impl World {
         let total = crate::leads::length(&lead);
         let at = (total - 0.01).max(0.0);
         let point = kin::add(target, kin::scale(u, gap));
+        // it may touch the target's part, and what is already joined at
+        // the target's pin (a lead soldered there)
+        let to_pin = to.splitn(3, '.').take(2).collect::<Vec<_>>().join(".");
+        let mut allowed = vec![format!("part:{other}")];
+        let end_pin = end.map(|e| e.splitn(3, '.').take(2).collect::<Vec<_>>().join("."));
+        if let Some(e) = &end_pin {
+            allowed.push(format!("part:{}", e.split('.').next().unwrap_or("")));
+        }
+        for j in self.joints.iter().filter(|j| {
+            j.a == to_pin
+                || j.b == to_pin
+                || end_pin.as_ref().is_some_and(|e| j.a == *e || j.b == *e)
+        }) {
+            for p in [&j.a, &j.b] {
+                let id = p.split('.').next().unwrap_or("");
+                if id != other {
+                    allowed.push(format!("part:{id}"));
+                }
+            }
+        }
+        // the way in: along the lead (its body out that way), or `from`
+        let front = from.map_or(kin::scale(u, FRONT), |f| {
+            let n = kin::norm(f).max(1e-9);
+            kin::scale(f, FRONT / n)
+        });
         self.carry_lead(
             i,
             rig,
@@ -282,14 +315,28 @@ impl World {
             point,
             kin::scale(u, -1.0),
             roll,
-            kin::scale(u, FRONT),
-            &[format!("part:{other}")],
+            front,
+            &allowed,
             did,
         )?;
         events.push(format!("{pin}.tip is {} mm from {to}", num1(gap)));
-        let to_pin = to.splitn(3, '.').take(2).collect::<Vec<_>>().join(".");
         if to_pin.contains('.') {
             let _ = self.joint_for(&format!("{to_pin}+{pin}"));
+        }
+        // the far end's joint, a wire's other half at it
+        if let (Some(e), Some((pid, pn))) = (&end_pin, pin.split_once('.')) {
+            let other_end = format!("{pid}.{}", if pn == "1" { "2" } else { "1" });
+            if let Some(b) = end_at {
+                let off = self
+                    .frame(&format!("{other_end}.tip"))
+                    .map_or(f64::INFINITY, |f| kin::norm(kin::sub(f.p, b)));
+                events.push(format!(
+                    "{other_end}.tip is {} mm from {}",
+                    num1(off),
+                    end.unwrap_or("")
+                ));
+            }
+            let _ = self.joint_for(&format!("{e}+{other_end}"));
         }
         Ok(())
     }

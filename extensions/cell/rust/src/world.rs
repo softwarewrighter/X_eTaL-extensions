@@ -963,10 +963,7 @@ impl World {
         }
         // leads touching that are not a joint's (aligned, soldered, welded)
         for (a, b, _) in self.leads_near(0.0) {
-            let joined = self
-                .joints
-                .iter()
-                .any(|j| (j.a == a && j.b == b) || (j.a == b && j.b == a));
+            let joined = self.same_node(&a, &b);
             if !joined {
                 out.push(format!("a short: {a} touches {b}"));
             }
@@ -998,6 +995,29 @@ impl World {
             }
         }
         out
+    }
+
+    /// Two pins of one node: joined to each other, or each joined to a
+    /// common pin (two leads soldered to one pin touch, and that is no
+    /// short).
+    #[must_use]
+    pub fn same_node(&self, a: &str, b: &str) -> bool {
+        let others = |x: &str| -> Vec<&str> {
+            self.joints
+                .iter()
+                .filter_map(|j| {
+                    if j.a == x {
+                        Some(j.b.as_str())
+                    } else if j.b == x {
+                        Some(j.a.as_str())
+                    } else {
+                        None
+                    }
+                })
+                .collect()
+        };
+        let oa = others(a);
+        oa.contains(&b) || others(b).iter().any(|y| oa.contains(y))
     }
 
     /// Every two leads of different parts whose surfaces are within `mm`
@@ -1804,9 +1824,26 @@ impl World {
                     Some(Value::Numbers(v)) => [v[0], v[1], v[2]],
                     _ => [0.0, 0.0, 0.0],
                 };
+                let end = c.word("end").map(str::to_string);
                 let gap = c.number("gap").unwrap_or(0.1);
                 let roll = c.number("roll").unwrap_or(0.0);
-                self.bring(i, &rig, &pin, &to, along, gap, roll, did, events)?;
+                let from = match c.get("from") {
+                    Some(Value::Numbers(v)) => Some([v[0], v[1], v[2]]),
+                    _ => None,
+                };
+                self.bring(
+                    i,
+                    &rig,
+                    &pin,
+                    &to,
+                    along,
+                    gap,
+                    roll,
+                    from,
+                    end.as_deref(),
+                    did,
+                    events,
+                )?;
             }
             "insert" => {
                 let on = c.word("on").unwrap_or("");

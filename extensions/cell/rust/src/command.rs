@@ -502,7 +502,7 @@ pub const COMMANDS: &[Spec] = &[
         ],
         named: &[
             req("to", Kind::Frame, "the frame its tip comes to (U1.3.tip)"),
-            req(
+            opt(
                 "along",
                 Kind::Vec3("mm"),
                 "the direction from the target out along the lead toward its body",
@@ -516,6 +516,16 @@ pub const COMMANDS: &[Spec] = &[
                 "roll",
                 Kind::Number("deg", -180.0, 180.0),
                 "the part turned about the lead",
+            ),
+            opt(
+                "from",
+                Kind::Vec3("mm"),
+                "the way it comes in, a direction from the goal (along the lead if not given)",
+            ),
+            opt(
+                "end",
+                Kind::Frame,
+                "a jumper: where its other end goes; the direction runs to it",
             ),
         ],
     },

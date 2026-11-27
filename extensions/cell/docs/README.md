@@ -509,6 +509,13 @@ four resistors on a DIP").
   lead comes in along the direction, its body out that way), pinch,
   release, present, touch, feed, back, wait, inspect, unpinch, and the
   turntable back to rest; at the end `inspect shorts`.
+- A jumper is enameled wire cut to the distance between two points
+  (less two small gaps) and brought with `end=`: `bring A W1.1
+  to=U1.4.tip end=U1.8.tip from=1,0,-0.15` lays it from one to the
+  other, coming in from `from` (outside and a little below, so it does
+  not slide through the pins it lands between); both its joints are
+  made. Two leads soldered to one pin touch, and that is neither a
+  short nor a bridge: they are one node.
 - `bring ARM PIN to=FRAME along=X,Y,Z [gap=] [roll=]` is the
   simulator's side: the planner says where and from which way, the
   simulator works out the motion (up clear, a joint move, in along the
@@ -1145,7 +1152,7 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `sleeve STATION on=PIN from=MM to=MM [size=0.6\|0.8\|1.0\|1.5\|2.0] [color=black\|red\|blue\|yellow\|green\|orange\|violet\|white\|gray\|brown\|clear]` | sleeve | the sleeve station slides heat-shrink tubing onto a lead from its free end, presented at its point |
 | `shrink STATION on=PIN [dwell=S]` | sleeve | the sleeve station's hot air shrinks the sleeve on a lead, presented at its point |
 | `trim STATION on=PIN at=MM` | cutter | a cutter station cuts a lead, what is past the cut falling into the bin |
-| `bring ARM PIN to=FRAME along=X,Y,Z [gap=MM] [roll=DEG]` | tweezers | the held part turned and carried so a lead's tip comes in toward a frame along a direction (its body out that way), stopping short: for the planner |
+| `bring ARM PIN to=FRAME [along=X,Y,Z] [gap=MM] [roll=DEG] [from=X,Y,Z] [end=FRAME]` | tweezers | the held part turned and carried so a lead's tip comes in toward a frame along a direction (its body out that way), stopping short: for the planner |
 | `insert ARM on=PIN [at=MM] [roll=DEG]` | bender | the arm slides a held part's lead into the bending rig, at a distance from the body at its mandrel |
 | `form [angle=DEG] [radius=MM]` | bender | the bending rig clamps the lead in it and bends it down round its mandrel, in the rig's plane |
 | `shear ARM on=PIN at=MM` | bender | the arm puts a held part's lead through the rig's shear, which cuts it; what is past the cut falls into the bin |

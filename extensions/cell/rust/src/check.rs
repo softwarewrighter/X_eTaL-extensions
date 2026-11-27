@@ -69,11 +69,7 @@ impl World {
             sets.join(&format!("{}.1", p.id), &format!("{}.2", p.id));
         }
         // shorts conduct too
-        let joined = |a: &str, b: &str| {
-            self.joints
-                .iter()
-                .any(|j| (j.a == a && j.b == b) || (j.a == b && j.b == a))
-        };
+        let joined = |a: &str, b: &str| self.same_node(a, b);
         for (a, b, _) in self.leads_near(0.0) {
             if !joined(&a, &b) {
                 lines.push(format!("a short: {a} touches {b}"));

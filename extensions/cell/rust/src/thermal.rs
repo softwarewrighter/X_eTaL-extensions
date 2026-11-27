@@ -761,6 +761,15 @@ impl World {
                     if name == j.a || name == j.b {
                         continue;
                     }
+                    // a lead joined at the same pin is part of this node,
+                    // not a bridge (two leads soldered to one pin)
+                    let same_node = self.joints.iter().any(|o| {
+                        (o.a == name || o.b == name)
+                            && [&o.a, &o.b].iter().any(|x| **x == j.a || **x == j.b)
+                    });
+                    if same_node {
+                        continue;
+                    }
                     let lead = solder::lead_in(&p.pose(), &pin.lead);
                     let (d, _, _) = solder::nearest(&lead, &[at, at]);
                     if d <= r.bridge_mm {
@@ -1297,11 +1306,7 @@ impl World {
         if target == "shorts" {
             // bare leads of two parts touching, not a joint; and where only
             // a sleeve keeps two apart
-            let joined = |a: &str, b: &str| {
-                self.joints
-                    .iter()
-                    .any(|j| (j.a == a && j.b == b) || (j.a == b && j.b == a))
-            };
+            let joined = |a: &str, b: &str| self.same_node(a, b);
             let mut shorts: Vec<String> = self
                 .leads_near(0.0)
                 .into_iter()

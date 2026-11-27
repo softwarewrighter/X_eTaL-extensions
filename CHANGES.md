@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-26
 
+- 17:34 `ext` cell, enameled jumpers (Saga 17 step 27, part 2): `bring` takes `end=` (a jumper's far end: the direction runs to it, its joint made, contact with what is joined there allowed) and `from=` (the way in); two leads soldered to one pin are one node, neither a short nor a bridge.
 - 17:24 `ext` cell, checking the work (Saga 17 step 27, first part): `check` compares what the joints connect (shorts and wires included) with the circuit's netlist; circuits carry nets; the 555 blinker's circuit; `stage to=` for an absolute heading (a `turn=0` reset had not reset); pincers never sweep through each other on the ring; the planner pinches 3 mm from the body and ends with `check`.
 - 15:22 `test` blender, the keys-and-LEDs quick golden may take 900 s: its board simulation (about 2 minutes alone) ran past the default 300 s beside the suite's other goldens on a loaded machine.
 - 14:19 `test` cell, the facade golden lists `bring`.
