@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-26
 
+- 20:23 `ext` cell, the 555 blinker on the live page, in progress (5 of its 7 nets; programs/blinker.cell, first in the list); decisions C22 (lap joints, 3.2 mm alongside) and C23 (wrap joints, 1.5 to under 2 turns) with steps 27 and 29 inserted before and after the blinker.
 - 20:18 `ext` cell, bent jumpers (Saga 17 step 27, part 4): `wire span= via= via2=` forms a jumper to a route round the work as it feeds, `lay` carries it onto the route and makes both joints.
 - 18:51 `ext` cell, the blinker by hand rules (Saga 17 step 27, part 3): `wire span=` cuts a jumper to its two ends, `park` sends a pincer home, `pinch at=` reaches 120 mm, the battery snap turned in the tray; tools/blinker-trial.py makes 5 of the blinker's 7 nets (GND and the battery to come).
 - 17:34 `ext` cell, enameled jumpers (Saga 17 step 27, part 2): `bring` takes `end=` (a jumper's far end: the direction runs to it, its joint made, contact with what is joined there allowed) and `from=` (the way in); two leads soldered to one pin are one node, neither a short nor a bridge.
