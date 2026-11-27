@@ -8,7 +8,7 @@ release A U1
 pick A R1 grasp=body
 lift A mm=60
 bring A R1.1 to=U1.2.tip along=0.934,-0.356,0.0
-pinch P1 on=R1.1 at=6
+pinch P1 on=R1.1 at=3
 release A R1
 lift A mm=60
 present U1.2+R1.1 at=S1
@@ -18,11 +18,11 @@ back S1
 wait until=U1.2+R1.1 below=100
 inspect U1.2+R1.1
 unpinch P1
-stage turn=0 tilt=0 at=0,0,0
+stage to=0 tilt=0 at=0,0,0
 pick A R2 grasp=body
 lift A mm=60
 bring A R2.1 to=U1.3.tip along=0.934,0.356,0.0
-pinch P1 on=R2.1 at=6
+pinch P1 on=R2.1 at=3
 release A R2
 lift A mm=60
 present U1.3+R2.1 at=S1
@@ -32,11 +32,11 @@ back S1
 wait until=U1.3+R2.1 below=100
 inspect U1.3+R2.1
 unpinch P1
-stage turn=0 tilt=0 at=0,0,0
+stage to=0 tilt=0 at=0,0,0
 pick A R3 grasp=body
 lift A mm=60
 bring A R3.1 to=U1.6.tip along=-0.934,0.356,0.0
-pinch P2 on=R3.1 at=6
+pinch P2 on=R3.1 at=3
 release A R3
 lift A mm=60
 present U1.6+R3.1 at=S1
@@ -46,11 +46,11 @@ back S1
 wait until=U1.6+R3.1 below=100
 inspect U1.6+R3.1
 unpinch P2
-stage turn=0 tilt=0 at=0,0,0
+stage to=0 tilt=0 at=0,0,0
 pick A R4 grasp=body
 lift A mm=60
 bring A R4.1 to=U1.7.tip along=-0.934,-0.356,0.0
-pinch P2 on=R4.1 at=6
+pinch P2 on=R4.1 at=3
 release A R4
 lift A mm=60
 present U1.7+R4.1 at=S1
@@ -60,6 +60,7 @@ back S1
 wait until=U1.7+R4.1 below=100
 inspect U1.7+R4.1
 unpinch P2
-stage turn=0 tilt=0 at=0,0,0
+stage to=0 tilt=0 at=0,0,0
 inspect shorts
+check
 

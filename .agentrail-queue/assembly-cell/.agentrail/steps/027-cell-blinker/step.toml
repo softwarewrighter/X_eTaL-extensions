@@ -1,6 +1,6 @@
 number = 27
 slug = "cell-blinker"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 14: the first circuit: a 555 LED blinker built freeform end to e..."
 role = "production"
 context_files = []

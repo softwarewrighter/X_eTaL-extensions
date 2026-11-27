@@ -159,16 +159,17 @@ h:j_oin := { (nb, core, pin, dir) z ->
   b := "bring A " c_at lead c_at " to=" c_at to c_at ".tip along=" c_at (h:x_yz dir) c_at nl
   # the pincer on its side of the core: each keeps to its own side of the ring
   pz := "P" c_at f_ormat 1 + (1 s_elect dir) < 0
-  c := "pinch " c_at pz c_at " on=" c_at lead c_at " at=6" c_at nl c_at "release A " c_at nb c_at nl c_at "lift A mm=60" c_at nl
+  c := "pinch " c_at pz c_at " on=" c_at lead c_at " at=3" c_at nl c_at "release A " c_at nb c_at nl c_at "lift A mm=60" c_at nl
   d := "present " c_at joint c_at " at=S1" c_at nl c_at "touch S1 at=" c_at joint c_at " dwell=2" c_at nl
   e := "feed S1 mm=2 rate=1" c_at nl c_at "back S1" c_at nl c_at "wait until=" c_at joint c_at " below=100" c_at nl
   # let go, and the turntable back to rest for the next one
-  f := "inspect " c_at joint c_at nl c_at "unpinch " c_at pz c_at nl c_at "stage turn=0 tilt=0 at=0,0,0" c_at nl
+  f := "inspect " c_at joint c_at nl c_at "unpinch " c_at pz c_at nl c_at "stage to=0 tilt=0 at=0,0,0" c_at nl
   a c_at b c_at c c_at d c_at e c_at f
 }
 
 ## cp:p_lan net: the netlist's command program: the core into the vise,
-## then each join in turn, then the shorts checked; its first lines are
+## then each join in turn, then the shorts and the work against the
+## circuit's netlist checked (check); its first lines are
 ## comments saying the placement (each neighbor's pin and direction, the
 ## least clearance between bodies). It asks the cell extension for the
 ## core's pins, so run it with xetal-x (scripts/cell-plan.sh, `just ext
@@ -187,5 +188,5 @@ l:p_lan := { net ->
   start := "reset circuit=" c_at (l:c_ircuit net) c_at "\ntool A tweezers\npick A " c_at id c_at " grasp=ends\nplace A " c_at id c_at " at=0,0,-24 rpy=0,0,90\nvise close\nrelease A " c_at id c_at "\n"
   one := { k -> (d_isclose k s_elect nbs, id, k s_elect pins, k s_elect dirs) h:j_oin 0 }
   body := d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ one m_ap order
-  head c_at start c_at body c_at "inspect shorts\n"
+  head c_at start c_at body c_at "inspect shorts\ncheck\n"
 }

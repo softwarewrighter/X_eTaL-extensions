@@ -415,10 +415,29 @@ impl World {
             let square = ((d[0] * lead[0] + d[1] * lead[1]) / (dist * lv)).abs();
             tries.push((square, phi, psi, reach));
         }
+        // the two pincers share the ring and cannot pass each other: no
+        // way there may sweep through another's place (its housing is
+        // about 20 degrees of the ring either way)
+        let now = self.pincers[k].phi;
+        let others: Vec<f64> = self
+            .pincers
+            .iter()
+            .enumerate()
+            .filter(|(j, _)| *j != k)
+            .map(|(_, p)| p.phi)
+            .collect();
+        tries.retain(|t| {
+            let d = kin::wrap(t.1 - now);
+            others.iter().all(|o| {
+                let e = kin::wrap(o - now);
+                // the other is on the way if it lies within the sweep (and
+                // a housing's width past it)
+                !(e * d > 0.0 && e.abs() <= d.abs() + 20.0) && kin::wrap(t.1 - o).abs() > 20.0
+            })
+        });
         // squarest to the lead first; among equals (a lead straight down
         // is square from every side) the least travel round the ring, so
         // each pincer keeps to its own side
-        let now = self.pincers[k].phi;
         let travel = |phi: f64| kin::wrap(phi - now).abs();
         tries.sort_by(|a, b| {
             let (sa, sb) = ((a.0 * 20.0).round(), (b.0 * 20.0).round());

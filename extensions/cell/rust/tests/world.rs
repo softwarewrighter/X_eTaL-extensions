@@ -67,7 +67,7 @@ fn a_refused_command_changes_nothing() {
     for line in [
         "move A to=2000,0,10",
         "grip A close",
-        "reset circuit=blinker",
+        "reset circuit=nowhere",
         "wait until=U1.3 below=100",
         "wait",
     ] {
@@ -76,10 +76,10 @@ fn a_refused_command_changes_nothing() {
         assert_eq!((o.t0, o.t1), (3.0, 3.0));
         assert_eq!(w, before, "{line}");
     }
-    let o = w.apply(&parse_line("reset circuit=blinker").unwrap());
+    let o = w.apply(&parse_line("reset circuit=nowhere").unwrap());
     assert_eq!(
         o.refused.as_deref(),
-        Some("no circuit blinker (circuits: none demo weld tester tester-b plan)")
+        Some("no circuit nowhere (circuits: none demo weld tester tester-b plan blinker)")
     );
     // a program stops at the first command that is not ok
     let out = w.apply_all(&parse_program("wait s=1\ngrip A close\nwait s=1").unwrap());

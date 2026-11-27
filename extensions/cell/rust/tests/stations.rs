@@ -95,7 +95,7 @@ lift A mm=80");
         o.refused
             .as_deref()
             .unwrap()
-            .contains("give turn=, tilt= or at="),
+            .contains("give turn=, to=, tilt= or at="),
         "{o:?}"
     );
 }

@@ -8,6 +8,7 @@
 //! extension's: what the facade `lib/Cell.xtl` calls.
 
 pub mod bender;
+pub mod check;
 pub mod collide;
 pub mod command;
 pub mod heat;

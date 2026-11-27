@@ -60,8 +60,8 @@ fn a_reset_fills_the_tray_and_the_racks() {
     assert!(w.tools.iter().all(|t| t.holder.is_none()));
     refused(
         &mut w,
-        "reset circuit=blinker",
-        "no circuit blinker (circuits: none demo weld tester tester-b plan)",
+        "reset circuit=nowhere",
+        "no circuit nowhere (circuits: none demo weld tester tester-b plan blinker)",
     );
 }
 

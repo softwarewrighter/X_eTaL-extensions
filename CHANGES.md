@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-26
 
+- 17:24 `ext` cell, checking the work (Saga 17 step 27, first part): `check` compares what the joints connect (shorts and wires included) with the circuit's netlist; circuits carry nets; the 555 blinker's circuit; `stage to=` for an absolute heading (a `turn=0` reset had not reset); pincers never sweep through each other on the ring; the planner pinches 3 mm from the body and ends with `check`.
 - 15:22 `test` blender, the keys-and-LEDs quick golden may take 900 s: its board simulation (about 2 minutes alone) ran past the default 300 s beside the suite's other goldens on a loaded machine.
 - 14:19 `test` cell, the facade golden lists `bring`.
 - 14:12 `ext` cell, the planner (Saga 17 step 26): lib/CellPlan.xtl turns a netlist into a command program, the placement worked out as X_eTaL arrays (pin tips turned into the cell, fanned directions, the least clearance between bodies, one side of the core at a time); the simulator's `bring`; `ce:t_ips`; `just ext cell plan NAME`; nets/plan.net planned into four good joints with no shorts; the golden cell-plan.

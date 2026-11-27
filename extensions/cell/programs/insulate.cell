@@ -18,7 +18,7 @@ present R1.1.tip at=S6
 sleeve S6 on=R1.1 from=15 to=24 size=1.0 color=blue
 present R1.1.20 at=S6
 shrink S6 on=R1.1
-stage turn=0 tilt=0 at=0,0,0
+stage to=0 tilt=0 at=0,0,0
 bend P2 on=R1.1 at=25 angle=60 toward=0,0,1
 pick A R1 grasp=body
 vise open

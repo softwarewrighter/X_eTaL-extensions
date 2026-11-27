@@ -352,6 +352,11 @@ pub const COMMANDS: &[Spec] = &[
                 Kind::Number("deg", -360.0, 360.0),
                 "by, counterclockwise seen from above",
             ),
+            opt(
+                "to",
+                Kind::Number("deg", -360.0, 360.0),
+                "turn to this heading (0 its rest), instead of by",
+            ),
             opt("tilt", Kind::Number("deg", -90.0, 90.0), "to, about x"),
             opt(
                 "at",
@@ -643,6 +648,13 @@ pub const COMMANDS: &[Spec] = &[
         family: "tester",
         summary: "the part's last test against what the netlist wants and what its marking says: good, wrong part, mislabeled, reversed marking or failed",
         positional: &[req("part", Kind::Part, "the part")],
+        named: &[],
+    },
+    Spec {
+        op: "check",
+        family: "tester",
+        summary: "the work against its circuit's netlist: every net joined, no two nets joined, every joint good, nothing damaged",
+        positional: &[],
         named: &[],
     },
     Spec {

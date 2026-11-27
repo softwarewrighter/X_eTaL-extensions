@@ -1,0 +1,88 @@
+# blinker: a 555 LED blinker (an astable NE555, about 1.4 Hz with these
+# values: R1 1k, R2 47k, C1 10 uF), built freeform dead-bug in the cell.
+# Each part: its id, kind, tray pocket, turn and mark; then the netlist.
+title = "a 555 LED blinker"
+
+[[part]]
+id = "U1"
+kind = "dip8"
+pocket = 1
+yaw = 90
+mark = "NE555P"
+
+[[part]]
+id = "R1"
+kind = "axial-resistor"
+pocket = 2
+yaw = 90
+mark = "1k"
+
+[[part]]
+id = "R2"
+kind = "axial-resistor"
+pocket = 3
+yaw = 90
+mark = "47k"
+
+[[part]]
+id = "R3"
+kind = "axial-resistor"
+pocket = 4
+yaw = 90
+mark = "470"
+
+[[part]]
+id = "C1"
+kind = "radial-electrolytic"
+pocket = 5
+yaw = 0
+mark = "10uF 25V"
+
+[[part]]
+id = "C2"
+kind = "ceramic-disc"
+pocket = 6
+yaw = 0
+mark = "103"
+
+[[part]]
+id = "D1"
+kind = "led-5mm"
+pocket = 7
+yaw = 0
+mark = "red"
+
+[[part]]
+id = "BT1"
+kind = "battery-snap"
+pocket = 8
+yaw = 0
+
+# the NE555: 1 GND, 2 TRIG, 3 OUT, 4 RESET, 5 CTRL, 6 THR, 7 DIS, 8 VCC
+[[net]]
+name = "VCC"
+pins = ["U1.8", "U1.4", "R1.1", "BT1.1"]
+
+[[net]]
+name = "DIS"
+pins = ["U1.7", "R1.2", "R2.1"]
+
+[[net]]
+name = "THR"
+pins = ["U1.6", "U1.2", "R2.2", "C1.1"]
+
+[[net]]
+name = "CTRL"
+pins = ["U1.5", "C2.1"]
+
+[[net]]
+name = "OUT"
+pins = ["U1.3", "R3.1"]
+
+[[net]]
+name = "LED"
+pins = ["R3.2", "D1.1"]
+
+[[net]]
+name = "GND"
+pins = ["U1.1", "C1.2", "C2.2", "D1.2", "BT1.2"]

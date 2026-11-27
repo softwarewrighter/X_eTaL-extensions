@@ -1621,8 +1621,14 @@ impl World {
             }
             "stage" => {
                 let (turn, tilt, at) = (c.number("turn"), c.number("tilt"), c.get("at"));
+                // to=: an absolute heading, the turn worked out from it
+                let to = c.number("to");
+                if turn.is_some() && to.is_some() {
+                    return refuse("stage: give turn= (by) or to= (to), not both".into());
+                }
+                let turn = to.map(|h| kin::wrap(h - self.stage)).or(turn);
                 if turn.is_none() && tilt.is_none() && at.is_none() {
-                    return refuse("stage: give turn=, tilt= or at=".into());
+                    return refuse("stage: give turn=, to=, tilt= or at=".into());
                 }
                 let at = match at {
                     Some(Value::Numbers(v)) => [v[0], v[1], v[2]],
@@ -1851,6 +1857,25 @@ impl World {
             "test" => {
                 let id = c.word("part").unwrap_or("");
                 self.test_part(id, did, events, warnings)?;
+            }
+            "check" => {
+                let r = self.check_work();
+                let head = format!(
+                    "check: {} of {} nets made{}",
+                    r.made.0,
+                    r.made.1,
+                    if r.ok {
+                        ", nothing damaged: the work matches its netlist"
+                    } else {
+                        ""
+                    }
+                );
+                if r.ok {
+                    events.push(head);
+                } else {
+                    warnings.push(head);
+                    warnings.extend(r.lines);
+                }
             }
             "verify" => {
                 let id = c.word("part").unwrap_or("");

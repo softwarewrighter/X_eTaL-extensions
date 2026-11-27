@@ -27,7 +27,7 @@ feed ARM|STATION mm=MM [rate=MM/S] -- feed solder wire into the joint the iron i
 weld ARM|STATION at=JOINT energy=J [risky=refuse|allow] -- spot weld a lap of two leads by a capacitor discharge
 wire STATION awg=N mm=MM [enamel=no|yes] [metal=copper|steel] [support=no|yes] -- the wire feeder station feeds bare or enameled wire from its spool out of its nozzle
 cut STATION -- the wire feeder cuts its wire at the nozzle: what holds the free end keeps it
-stage [turn=DEG] [tilt=DEG] [at=X,Y,Z] -- move the positioner: turn the stage by an angle, tilt it, move it
+stage [turn=DEG] [to=DEG] [tilt=DEG] [at=X,Y,Z] -- move the positioner: turn the stage by an angle, tilt it, move it
 present FRAME|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG] -- move the positioner so a pin's frame or a joint is at a tool station's point
 pinch PINCER on=PIN [at=MM] -- a pincer on the turntable grips a lead from the side: it holds the part there, and sinks heat
 unpinch PINCER -- a pincer lets go and draws back
@@ -46,6 +46,7 @@ snap [stereo=N] -- take the microscope's picture
 inspect TARGET -- report a joint's gap, fillet and result, or a pin's temperature
 test PART -- the component tester: the probes (the turntable's pincers) on each pair of a held part's leads in turn; what it is, from the readings alone
 verify PART -- the part's last test against what the netlist wants and what its marking says: good, wrong part, mislabeled, reversed marking or failed
+check -- the work against its circuit's netlist: every net joined, no two nets joined, every joint good, nothing damaged
 identify PART [mode=oracle|sensed] [zoom=N] -- the microscope turns onto a part and reads its marking: bands, printed text, color
 probe PIN PIN -- measure continuity and resistance between two pins
 rewind t=S -- put the cell back as it was at a time (the timeline keeps both branches)

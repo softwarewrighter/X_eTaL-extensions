@@ -452,7 +452,29 @@ P1 lets the support go, and none is left. A frame of several supports
 built on the turntable, holding several parts at once, comes with the
 planner.
 
-### The planner
+### Checking the work
+
+A circuit may carry its netlist (`[[net]]` tables in
+`circuits/NAME.toml`: each net's name and the pins it joins). `check`
+works out what the work connects and compares it with that:
+
+- good joints (soldered or welded) join their two pins; a wire's two
+  halves are one conductor; leads touching where they are bare (a
+  short) join too;
+- every net must be one connected piece, no two nets may be joined,
+  every joint must be good, and no part may be damaged or lost.
+
+`check: 4 of 4 nets made, nothing damaged: the work matches its
+netlist` -- or a warning listing what is wrong (`net N7: R4.1 not joined
+to U1.7`, `nets VCC and GND are joined`, `U1.2+R1.1: a cold joint`).
+The planner ends every program with it. `circuits/blinker.toml` holds
+the 555 blinker's parts and its seven nets.
+
+`stage to=DEG` turns the stage to a heading (0 its rest), where
+`turn=DEG` turns it by an angle: `stage to=0 tilt=0 at=0,0,0` puts the
+positioner back to rest.
+
+## The planner
 
 The planner turns a netlist into a command program (decision C9, the
 slicer). It is written in X_eTaL, `lib/CellPlan.xtl` (`cp:`), and works
@@ -1115,7 +1137,7 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `weld ARM\|STATION at=JOINT energy=J [risky=refuse\|allow]` | welder | spot weld a lap of two leads by a capacitor discharge |
 | `wire STATION awg=N mm=MM [enamel=no\|yes] [metal=copper\|steel] [support=no\|yes]` | wire | the wire feeder station feeds bare or enameled wire from its spool out of its nozzle |
 | `cut STATION` | wire | the wire feeder cuts its wire at the nozzle: what holds the free end keeps it |
-| `stage [turn=DEG] [tilt=DEG] [at=X,Y,Z]` | stage | move the positioner: turn the stage by an angle, tilt it, move it |
+| `stage [turn=DEG] [to=DEG] [tilt=DEG] [at=X,Y,Z]` | stage | move the positioner: turn the stage by an angle, tilt it, move it |
 | `present FRAME\|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG]` | stage | move the positioner so a pin's frame or a joint is at a tool station's point |
 | `pinch PINCER on=PIN [at=MM]` | pincer | a pincer on the turntable grips a lead from the side: it holds the part there, and sinks heat |
 | `unpinch PINCER` | pincer | a pincer lets go and draws back |
@@ -1134,6 +1156,7 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `inspect TARGET` | scope | report a joint's gap, fillet and result, or a pin's temperature |
 | `test PART` | tester | the component tester: the probes (the turntable's pincers) on each pair of a held part's leads in turn; what it is, from the readings alone |
 | `verify PART` | tester | the part's last test against what the netlist wants and what its marking says: good, wrong part, mislabeled, reversed marking or failed |
+| `check` | tester | the work against its circuit's netlist: every net joined, no two nets joined, every joint good, nothing damaged |
 | `identify PART [mode=oracle\|sensed] [zoom=N]` | scope | the microscope turns onto a part and reads its marking: bands, printed text, color |
 | `probe PIN PIN` | scope | measure continuity and resistance between two pins |
 | `rewind t=S` | cell | put the cell back as it was at a time (the timeline keeps both branches) |

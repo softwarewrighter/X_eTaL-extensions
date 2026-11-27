@@ -233,14 +233,44 @@ struct CircuitFile {
     #[allow(dead_code)]
     title: String,
     part: Vec<Laid>,
+    #[serde(default)]
+    net: Vec<Net>,
 }
 
-const CIRCUITS: [(&str, &str); 5] = [
+/// A net of a circuit's netlist: its name and the pins it joins.
+#[derive(Clone, Debug, Deserialize, PartialEq)]
+#[serde(deny_unknown_fields)]
+pub struct Net {
+    /// `VCC`.
+    pub name: String,
+    /// `U1.8`, `R1.1`.
+    pub pins: Vec<String>,
+}
+
+/// A circuit's netlist (empty for one with none).
+///
+/// # Errors
+///
+/// No circuit of that name, or its file is wrong.
+pub fn nets(name: &str) -> Result<Vec<Net>, String> {
+    if name == "none" {
+        return Ok(Vec::new());
+    }
+    let (_, text) = CIRCUITS
+        .iter()
+        .find(|(n, _)| *n == name)
+        .ok_or_else(|| format!("no circuit {name}"))?;
+    let f: CircuitFile = toml::from_str(text).map_err(|e| format!("circuits/{name}.toml: {e}"))?;
+    Ok(f.net)
+}
+
+const CIRCUITS: [(&str, &str); 6] = [
     ("demo", include_str!("../../circuits/demo.toml")),
     ("weld", include_str!("../../circuits/weld.toml")),
     ("tester", include_str!("../../circuits/tester.toml")),
     ("tester-b", include_str!("../../circuits/tester-b.toml")),
     ("plan", include_str!("../../circuits/plan.toml")),
+    ("blinker", include_str!("../../circuits/blinker.toml")),
 ];
 
 /// The circuits a reset can lay out: `none` (empty trays) and those in

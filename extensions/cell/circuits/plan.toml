@@ -36,3 +36,21 @@ kind = "axial-resistor"
 pocket = 5
 yaw = 90
 mark = "100k"
+
+# its netlist (the planner's nets/plan.net): each resistor's lead 1 on a
+# pin of the chip
+[[net]]
+name = "N2"
+pins = ["U1.2", "R1.1"]
+
+[[net]]
+name = "N3"
+pins = ["U1.3", "R2.1"]
+
+[[net]]
+name = "N6"
+pins = ["U1.6", "R3.1"]
+
+[[net]]
+name = "N7"
+pins = ["U1.7", "R4.1"]

@@ -145,6 +145,13 @@ fn say_program() {
     let mut w = World::default();
     for c in parse_program(&text).unwrap() {
         let o = w.apply(&c);
+        if let Ok(fs) = std::env::var("FRAMES") {
+            for f in fs.split(',') {
+                if let Ok(p) = w.frame(f) {
+                    println!("FRAME {f} {:?}", p.p.map(|x| (x * 100.0).round() / 100.0));
+                }
+            }
+        }
         if std::env::var("CLASHES").is_ok() {
             println!("CLASH {:?}", w.clashes());
         }
