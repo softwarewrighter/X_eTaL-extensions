@@ -24,7 +24,8 @@
 //! attach('U1', 'A', t0, t1)          (an arm's hold; 'stage': the vise's)
 //! place('U1', t, nums('x y z r p y', 6)[0])   (where a fall ended)
 //! heat('U1', nums('t body pin1 pin2 ...', k))  (C, while warm)
-//! joint('U1.3+R1.1', 'U1', nums('x y z', 3)[0], nums('t temp mm3 ...', 3), 'good', t_froze)
+//! joint('U1.3+R1.1', 'U1', nums('x y z', 3)[0], nums('t temp mm3 ...', 3), 'good', t_froze, lap)
+//!                                    (lap: nums('x y z dx dy dz len', 7)[0], a lap joint's fillet, or null)
 //! ghost('U1', 'dip8', nums('x y z r p y', 6)[0])
 //! step(1, 'move A to=0,0,20 rpy=180,0,0', t0, t1)
 //! expect('A', t, nums('x y z', 3)[0])
@@ -204,9 +205,22 @@ pub fn calls(name: &str, w: &World) -> Result<String, String> {
         let at = j.at.map(|x| kin::clean((x * 1000.0).round() / 1000.0));
         let result = j.result.as_deref().unwrap_or("");
         let set = j.set_at.map_or_else(|| "Infinity".to_string(), num);
+        // a lap joint's fillet: its middle, direction and length
+        let lap = w.lap_fillet(j).map_or_else(
+            || "null".to_string(),
+            |(m, d, len)| {
+                let v: Vec<f64> = m
+                    .iter()
+                    .chain(d.iter())
+                    .chain(std::iter::once(&len))
+                    .map(|x| kin::clean((x * 1000.0).round() / 1000.0))
+                    .collect();
+                row(&v)
+            },
+        );
         let _ = writeln!(
             out,
-            "joint({}, {}, {}, {}, {}, {set})",
+            "joint({}, {}, {}, {}, {}, {set}, {lap})",
             quote(&j.name),
             quote(part),
             row(&at),

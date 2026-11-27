@@ -517,14 +517,15 @@ impl World {
             };
             // on the tray's plate, its lowest point resting on it
             let pocket = layout::pocket(laid.pocket);
-            let flat = Pose::from_xyz_rpy([0.0; 3], [0.0, 0.0, laid.yaw]);
+            let roll = if laid.back { 180.0 } else { 0.0 };
+            let flat = Pose::from_xyz_rpy([0.0; 3], [roll, 0.0, laid.yaw]);
             let low = collide::part(&laid.id, &kind, &flat)
                 .iter()
                 .map(|s| s.shape.lowest())
                 .fold(f64::INFINITY, f64::min);
             let p = Pose::from_xyz_rpy(
                 [pocket[0], pocket[1], pocket[2] - low],
-                [0.0, 0.0, laid.yaw],
+                [roll, 0.0, laid.yaw],
             );
             let at = layout::six(&p);
             let mut part = Part::fresh(laid.id, laid.kind, at);
@@ -1842,6 +1843,7 @@ impl World {
                     roll,
                     from,
                     end.as_deref(),
+                    c.number("lap"),
                     did,
                     events,
                 )?;
@@ -2255,6 +2257,13 @@ impl World {
         // the tip on the grasp frame, approaching along its -z: the
         // tool's z is the frame's -z, its x the frame's x
         let frame = p.pose().then(&Pose::from_xyz_rpy(g.at, g.rpy));
+        // a part on its back (a chip legs up): the jaws close along x
+        // either way up, so it is taken from above all the same
+        let frame = if frame.z()[2] < 0.0 {
+            frame.then(&Pose::from_xyz_rpy([0.0; 3], [180.0, 0.0, 0.0]))
+        } else {
+            frame
+        };
         let target = frame.then(&Pose::from_xyz_rpy([0.0; 3], [180.0, 0.0, 0.0]));
         let above = Pose {
             p: kin::sub(target.p, kin::scale(target.z(), APPROACH)),

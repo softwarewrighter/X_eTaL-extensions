@@ -296,8 +296,56 @@ touch S1 at=U1.3+R1.1 dwell=2     # the iron on the joint, 2 s
 feed S1 mm=2 rate=1               # its own feeder: solder wire into the joint
 back S1                           # the iron straight back along its line
 wait until=U1.3+R1.1 below=100
-inspect U1.3+R1.1                 # good; 0.4 mm3 of solder, wet 2 s and 2 s
+inspect U1.3+R1.1                 # weak; a butt joint (a lap of 3.2 mm is sound); ...
 ```
+
+That joint is weak: a lead's end against a leg holds by the solder
+alone.
+
+### Lap joints
+
+A lead or wire joined to another lead lies alongside it: its end is
+bent so at least 3.2 mm (1/8 inch) of the two run parallel and touch,
+and the solder joins two parallel pieces of metal (decision C22). That
+holds; a butt joint or a shorter lap is judged `weak` (it conducts,
+and `check` lists it). More overlap is more metal to heat: the solder
+touches every 1 mm segment of each lead along the lap, so a longer lap
+draws more heat and takes longer to wet, nearer the part's limit;
+`inspect` calls a lap over 6.4 mm long.
+
+![A lap joint, the work tilted so the microscope sees it from the side](../videos/lap.webp)
+
+`programs/lap.cell`: the chip goes in the vise legs up (dead-bug; the
+`lap` circuit kits it on its back, and the tweezers take it from above
+all the same). The legs up, the arm works from above: a lead's end
+points down a leg toward the chip.
+
+```
+insert A on=R1.1 at=12            # the lead into the bending rig, 12 mm from the body
+form angle=90                     # bent 90 degrees there
+shear A on=R1.1 at=17.2           # cut: an end of about 4 mm
+bring A R1.1 to=U1.3.tip along=-0.934,0.356,0 lap=3.2
+                                  # the end alongside pin 3, touching it, 3.2 mm down it
+...
+inspect U1.3+R1.1                 # good; a 3.6 mm lap; 0.4 mm3 of solder, ...
+```
+
+- `bring ... lap=MM` lays a lead's bent end (its last straight run)
+  alongside the target lead: parallel, touching, pointing back up it
+  toward its body, the rest of the lead out along `along`; as long as
+  asked, or as both straight runs allow (a DIP-8's leg has 4.5 mm). A
+  straight lead is refused: bend its end first.
+- `wire ... span=A+B lap=MM` forms a jumper's two ends the same way as
+  it is fed, each turned down its pin's leg; `lay` carries it there
+  and reports each lap.
+- The lap measured is how far the two leads run within touching (plus
+  0.15 mm the solder fills) and within 15 degrees of parallel, at the
+  joint's making and again as it freezes; the start of the bend counts
+  (3.2 mm laid measures 3.6).
+- The programs that show something else (the bending rig, leads, wire,
+  enameled wire, sleeving, the stations) still make butt joints, which
+  their `inspect` lines call weak; they move to lap joints in a later
+  step.
 
 Heat is a thermal network (`heat.rs`, `thermal.rs`), built each time
 time passes from the cell as it stands: a node for each part's body
@@ -494,8 +542,8 @@ R4 U1 7
 simulator runs, the preview plays and the live page offers ("planned:
 four resistors on a DIP").
 
-- The core goes in the vise. Its pin tips come from the extension
-  (`ce:t_ips`), turned into the cell as the vise holds it.
+- The core goes in the vise legs up (dead-bug). Its pin tips come from
+  the extension (`ce:t_ips`), turned into the cell as the vise holds it.
 - Each neighbor comes in level along its pin, out to the pin's side and
   fanned along the row (`cp:d_irections`), so neighbors on one side
   spread apart; where each body comes to rest gives the least
@@ -505,10 +553,12 @@ four resistors on a DIP").
   (`cp:o_rder`): each side's pincer works its own side, and none crosses
   the leads already standing on the other. Each joint cools below
   100 C before the next.
-- Each join: pick, `bring` (the held part turned and carried so its
-  lead comes in along the direction, its body out that way), pinch,
-  release, present, touch, feed, back, wait, inspect, unpinch, and the
-  turntable back to rest; at the end `inspect shorts`.
+- Each join is a lap joint: pick; the lead bent 90 degrees in the rig
+  12 mm from the body and sheared to a 4 mm end; `bring ... lap=3.2`
+  (the end alongside the pin's leg, the body out along the direction);
+  pinch, release, out from over the work and home through joint space;
+  present, touch, feed, back, wait, inspect, unpinch, and the turntable
+  back to rest; at the end `inspect shorts` and `check`.
 - `wire STATION awg=N span=FRAME+FRAME enamel=yes` cuts a jumper to
   the distance between two frames, less 0.1 mm at each end, so a
   planner needs no geometry of its own for it. `park PINCER` sends a
@@ -1151,7 +1201,7 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `touch ARM\|STATION at=JOINT [dwell=S] [temp=C]` | iron | put the iron's tip on a joint and hold it there |
 | `feed ARM\|STATION mm=MM [rate=MM/S]` | solder | feed solder wire into the joint the iron is on |
 | `weld ARM\|STATION at=JOINT energy=J [risky=refuse\|allow]` | welder | spot weld a lap of two leads by a capacitor discharge |
-| `wire STATION awg=N [mm=MM] [via=X,Y,Z] [via2=X,Y,Z] [span=FRAME+FRAME] [enamel=no\|yes] [metal=copper\|steel] [support=no\|yes]` | wire | the wire feeder station feeds bare or enameled wire from its spool out of its nozzle |
+| `wire STATION awg=N [mm=MM] [via=X,Y,Z] [via2=X,Y,Z] [lap=MM] [span=FRAME+FRAME] [enamel=no\|yes] [metal=copper\|steel] [support=no\|yes]` | wire | the wire feeder station feeds bare or enameled wire from its spool out of its nozzle |
 | `cut STATION` | wire | the wire feeder cuts its wire at the nozzle: what holds the free end keeps it |
 | `stage [turn=DEG] [to=DEG] [tilt=DEG] [at=X,Y,Z]` | stage | move the positioner: turn the stage by an angle, tilt it, move it |
 | `present FRAME\|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG]` | stage | move the positioner so a pin's frame or a joint is at a tool station's point |
@@ -1162,7 +1212,7 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `sleeve STATION on=PIN from=MM to=MM [size=0.6\|0.8\|1.0\|1.5\|2.0] [color=black\|red\|blue\|yellow\|green\|orange\|violet\|white\|gray\|brown\|clear]` | sleeve | the sleeve station slides heat-shrink tubing onto a lead from its free end, presented at its point |
 | `shrink STATION on=PIN [dwell=S]` | sleeve | the sleeve station's hot air shrinks the sleeve on a lead, presented at its point |
 | `trim STATION on=PIN at=MM` | cutter | a cutter station cuts a lead, what is past the cut falling into the bin |
-| `bring ARM PIN to=FRAME [along=X,Y,Z] [gap=MM] [roll=DEG] [from=X,Y,Z] [end=FRAME]` | tweezers | the held part turned and carried so a lead's tip comes in toward a frame along a direction (its body out that way), stopping short: for the planner |
+| `bring ARM PIN to=FRAME [along=X,Y,Z] [gap=MM] [roll=DEG] [from=X,Y,Z] [end=FRAME] [lap=MM]` | tweezers | the held part turned and carried so a lead's tip comes in toward a frame along a direction (its body out that way), stopping short: for the planner |
 | `lay ARM PART [from=X,Y,Z]` | tweezers | a jumper formed to its route (wire span= via=) carried onto it, both its joints made |
 | `insert ARM on=PIN [at=MM] [roll=DEG]` | bender | the arm slides a held part's lead into the bending rig, at a distance from the body at its mandrel |
 | `form [angle=DEG] [radius=MM]` | bender | the bending rig clamps the lead in it and bends it down round its mandrel, in the rig's plane |

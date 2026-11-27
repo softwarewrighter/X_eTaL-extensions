@@ -92,6 +92,22 @@ pub fn norm(a: V3) -> f64 {
     (a[0] * a[0] + a[1] * a[1] + a[2] * a[2]).sqrt()
 }
 
+/// a . b.
+#[must_use]
+pub fn dot(a: V3, b: V3) -> f64 {
+    a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
+}
+
+/// a x b.
+#[must_use]
+pub fn cross(a: V3, b: V3) -> V3 {
+    [
+        a[1] * b[2] - a[2] * b[1],
+        a[2] * b[0] - a[0] * b[2],
+        a[0] * b[1] - a[1] * b[0],
+    ]
+}
+
 /// Matrix times vector.
 #[must_use]
 pub fn mv(m: &M3, v: V3) -> V3 {

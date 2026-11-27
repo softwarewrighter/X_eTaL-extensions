@@ -95,6 +95,15 @@ pub struct JointRules {
     pub dry_conductance: f64,
     /// How long the flux fed with the solder stays active, molten, s.
     pub flux_seconds: f64,
+    /// A lap joint is sound with at least this much overlap, mm
+    /// (decision C22: 1/8 inch); less, a butt joint included, is weak.
+    pub lap_mm: f64,
+    /// More overlap than this is more metal to heat than a joint needs,
+    /// mm: inspect says so.
+    pub lap_long_mm: f64,
+    /// Leads this much farther apart than touching still count as
+    /// alongside (the solder fills it), mm.
+    pub lap_gap_mm: f64,
     /// Molten longer than this with no active flux: dull, s.
     pub dull_seconds: f64,
 }
@@ -229,6 +238,17 @@ pub struct Joint {
     /// Spot welded, or tried: the last discharge's energy, J.
     #[serde(default)]
     pub weld: Option<f64>,
+    /// How far its two leads run alongside each other, touching, mm: a
+    /// lap joint (decision C22); about 0 for a butt joint.
+    #[serde(default)]
+    pub lap: f64,
+    /// The thermal nodes of each lead along the joint (indices along the
+    /// lead): the solder wets and heats all of them.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub nodes_a: Vec<usize>,
+    /// See `nodes_a`.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub nodes_b: Vec<usize>,
 }
 
 impl Joint {
@@ -238,10 +258,80 @@ impl Joint {
     pub fn holds(&self) -> bool {
         match self.result.as_deref() {
             Some("good") => !self.molten,
-            Some("welded" | "weak") => self.weld.is_some(),
+            Some("welded") => self.weld.is_some(),
+            // a weak weld, or a short lap soldered: it holds, not well
+            Some("weak") => self.weld.is_some() || !self.molten,
             _ => false,
         }
     }
+}
+
+/// A point on a polyline nearest `q`: the distance and the unit
+/// direction of the segment it is on.
+#[must_use]
+pub fn nearest_on(line: &[V3], q: V3) -> (f64, V3) {
+    let mut best = (f64::INFINITY, [0.0, 0.0, 1.0]);
+    for w in line.windows(2) {
+        let d = kin::sub(w[1], w[0]);
+        let l2 = kin::dot(d, d);
+        if l2 < 1e-18 {
+            continue;
+        }
+        let f = (kin::dot(kin::sub(q, w[0]), d) / l2).clamp(0.0, 1.0);
+        let at = kin::add(w[0], kin::scale(d, f));
+        let dist = kin::norm(kin::sub(q, at));
+        if dist < best.0 {
+            best = (dist, kin::scale(d, 1.0 / l2.sqrt()));
+        }
+    }
+    best
+}
+
+/// How far the polyline `a` runs alongside `b` (both in one frame),
+/// mm: its length within `touch` of `b` and parallel to it there, within
+/// 15 degrees (decision C22: a lap joint).
+#[must_use]
+pub fn lap(a: &[V3], b: &[V3], touch: f64) -> f64 {
+    lap_span(a, b, touch).0
+}
+
+/// As `lap`, with the lap's middle and its direction along `a` (a unit
+/// vector; z if there is no lap).
+#[must_use]
+pub fn lap_span(a: &[V3], b: &[V3], touch: f64) -> (f64, V3, V3) {
+    const STEP: f64 = 0.05;
+    let cos = 15f64.to_radians().cos();
+    let mut len = 0.0;
+    let mut sum = [0.0; 3];
+    let mut dir = [0.0, 0.0, 1.0];
+    for w in a.windows(2) {
+        let d = kin::sub(w[1], w[0]);
+        let l = kin::norm(d);
+        if l < 1e-9 {
+            continue;
+        }
+        let u = kin::scale(d, 1.0 / l);
+        #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
+        let n = (l / STEP).ceil().max(1.0) as usize;
+        #[allow(clippy::cast_precision_loss)]
+        let step = l / n as f64;
+        for i in 0..n {
+            #[allow(clippy::cast_precision_loss)]
+            let q = kin::add(w[0], kin::scale(u, (i as f64 + 0.5) * step));
+            let (dist, ub) = nearest_on(b, q);
+            if dist <= touch && kin::dot(u, ub).abs() >= cos {
+                len += step;
+                sum = kin::add(sum, kin::scale(q, step));
+                dir = u;
+            }
+        }
+    }
+    let middle = if len > 0.0 {
+        kin::scale(sum, 1.0 / len)
+    } else {
+        sum
+    };
+    (len, middle, dir)
 }
 
 /// The nearest points of two polylines (in one frame): the distance,

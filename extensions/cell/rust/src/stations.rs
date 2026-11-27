@@ -755,7 +755,7 @@ impl World {
                 // formed to its route as it comes out (the feeder bends as
                 // it feeds, as a CNC wire bender does)
                 if let Some(span) = c.word("span") {
-                    if c.get("via").is_some() {
+                    if c.get("via").is_some() || c.get("lap").is_some() {
                         let (a, b) = span.split_once('+').unwrap_or(("", ""));
                         let path = self.route_path(a, b, c)?;
                         self.form_wire(&path, a, b, events)?;
@@ -995,6 +995,56 @@ impl World {
             }
         }
         path.push(fb);
+        // lap ends (decision C22): each end turned to lie alongside its
+        // leg, touching it, `lap` mm down it from the tip toward the body
+        if let Some(lap) = c.number("lap") {
+            let awg = c.number("awg").unwrap_or(30.0);
+            #[allow(clippy::cast_possible_truncation)]
+            let wd = crate::wire::data()
+                .map_err(Halt::Refused)?
+                .gauge(awg.round() as i64)
+                .diameter;
+            let end = |pin_frame: &str, next: V3| -> Result<[V3; 2], Halt> {
+                let pin = pin_frame
+                    .splitn(3, '.')
+                    .take(2)
+                    .collect::<Vec<_>>()
+                    .join(".");
+                let (pid, pn) = pin
+                    .split_once('.')
+                    .ok_or_else(|| Halt::Refused(format!("{pin} is not a pin")))?;
+                let part = self
+                    .part(pid)
+                    .ok_or_else(|| Halt::Refused(format!("no part {pid}")))?;
+                let kind = part.kind_of().map_err(Halt::Refused)?;
+                let p = kind
+                    .pin(pn)
+                    .ok_or_else(|| Halt::Refused(format!("{pid} has no pin {pn}")))?;
+                let line = crate::solder::lead_in(&part.pose(), &p.lead);
+                let m = line.len();
+                let d = kin::sub(line[m - 1], line[m - 2]);
+                let t = kin::scale(d, 1.0 / kin::norm(d).max(1e-12));
+                let tip = self.frame(pin_frame).map_err(Halt::Refused)?.p;
+                let out = kin::sub(next, tip);
+                let side = kin::sub(out, kin::scale(t, kin::dot(out, t)));
+                let side = kin::scale(side, 1.0 / kin::norm(side).max(1e-12));
+                let corner = kin::add(tip, kin::scale(side, (wd + p.diameter) / 2.0));
+                // no farther than the leg's last straight run, short of the body
+                let run = kin::norm(d);
+                Ok([
+                    kin::sub(corner, kin::scale(t, lap.min(run - 0.2).max(0.0))),
+                    corner,
+                ])
+            };
+            let n = path.len();
+            let [a_end, a_corner] = end(a, path[1])?;
+            let [b_end, b_corner] = end(b, path[n - 2])?;
+            path[0] = a_corner;
+            path[n - 1] = b_corner;
+            path.insert(0, a_end);
+            path.push(b_end);
+            return Ok(path);
+        }
         let n = path.len();
         let back = |p: V3, q: V3| {
             let d = kin::sub(q, p);

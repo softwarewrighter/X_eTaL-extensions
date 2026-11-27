@@ -17,8 +17,8 @@ each command: ok, its end time, what happened (the joint as it froze)
 {"ok":true,"command":"scope zoom=8 aim=U1.3+R1.1","t0":42.815808,"t1":43.315808,"did":["scope to pan 0 tilt 0 zoom 8 in 0.5 s"],"events":["the scope looks at U1.3+R1.1, 15 mm across"],"warnings":[]}
 {"ok":true,"command":"touch S1 at=U1.3+R1.1 dwell=2","t0":43.315808,"t1":50.565808,"did":["extend S1 to 150 mm in 4 s","extend S1 to 160 mm in 1.25 s","dwell 2 s"],"events":["S1's iron (350 C) on U1.3+R1.1","U1.3+R1.1: the leads at 309.7 C"],"warnings":[]}
 {"ok":true,"command":"feed S1 mm=2 rate=1","t0":50.565808,"t1":52.565808,"did":["feed 2 mm of solder in 2 s"],"events":["0.4 mm3 of solder melted into U1.3+R1.1"],"warnings":[]}
-{"ok":true,"command":"back S1","t0":52.565808,"t1":56.815808,"did":["retract S1 to 0 mm in 4.25 s"],"events":["U1.3+R1.1 froze: good (0.4 mm3 of solder, wet 2 s and 2 s)"],"warnings":[]}
+{"ok":true,"command":"back S1","t0":52.565808,"t1":56.815808,"did":["retract S1 to 0 mm in 4.25 s"],"events":[],"warnings":["U1.3+R1.1 froze: weak (0.4 mm3 of solder, wet 2 s and 2 s)"]}
 {"ok":true,"command":"wait until=U1.3+R1.1 below=100","t0":56.815808,"t1":56.815808,"did":["waited 0 s: U1.3+R1.1 at 52.8 C"],"events":[],"warnings":[]}
-{"ok":true,"command":"inspect U1.3+R1.1","t0":56.815808,"t1":56.815808,"did":[],"events":["U1.3+R1.1: good; 0.4 mm3 of solder, wet 2 s and 2 s, at 52.8 C"],"warnings":[]}
+{"ok":true,"command":"inspect U1.3+R1.1","t0":56.815808,"t1":56.815808,"did":[],"events":["U1.3+R1.1: weak; a butt joint (a lap of 3.2 mm is sound); 0.4 mm3 of solder, wet 2 s and 2 s, at 52.8 C"],"warnings":[]}
 {"ok":true,"command":"unpinch P1","t0":56.815808,"t1":58.174195,"did":["P1 at -80 degrees round the ring, 31.1 mm up, its pole 0 mm out"],"events":["P1 lets R1.1 go","R1 stays: it is soldered to a part the vise holds"],"warnings":[]}
 

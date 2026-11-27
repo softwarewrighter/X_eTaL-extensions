@@ -7,21 +7,25 @@ use xetal_ext_cell::command::{parse_line, parse_program};
 use xetal_ext_cell::kin;
 use xetal_ext_cell::world::{Outcome, World};
 
-/// At the bench: the DIP in the vise, a resistor's lead brought to pin 3
-/// and gripped there by pincer P1, the arm gone, the joint presented to
-/// the iron station S1 (which feeds its own solder).
-const READY: &str = "reset circuit=demo
+/// At the bench: the DIP in the vise legs up, a resistor's lead bent
+/// and laid alongside pin 3 (a lap joint, decision C22) and gripped
+/// there by pincer P1, the arm gone, the joint presented to the iron
+/// station S1 (which feeds its own solder).
+const READY: &str = "reset circuit=lap
 tool A tweezers
 pick A U1 grasp=ends
-place A U1 at=0,0,-24 rpy=0,0,90
+place A U1 at=0,0,-24 rpy=180,0,90
 vise close
 release A U1
 pick A R1 grasp=body
-lift A mm=80
-move A to=0,60,60 rpy=180,0,90
-move A to=34.81,1.27,-14.05
-align A R1.1.tip to=U1.3.tip gap=0.1
-pinch P1 on=R1.1 at=6
+lift A mm=60
+insert A on=R1.1 at=12
+form angle=90
+lift A mm=30
+shear A on=R1.1 at=17.2
+lift A mm=60
+bring A R1.1 to=U1.3.tip along=-0.934,0.356,0 lap=3.2
+pinch P1 on=R1.1 at=3
 release A R1
 lift A mm=60
 present U1.3+R1.1 at=S1";
@@ -61,8 +65,8 @@ fn a_good_joint_holds_two_parts_as_one() {
     let o = w.apply(&parse_line("unpinch P1").unwrap());
     assert!(o.events.iter().any(|e| e.contains("R1 stays")), "{o:?}");
     assert_eq!(w.part("R1").unwrap().holder.as_deref(), Some("vise"));
-    // picked out of the vise, the pair goes up together
-    run(&mut w, "lift A mm=40\npick A U1 grasp=ends\nvise open");
+    // picked out of the vise by the resistor, the pair goes up together
+    run(&mut w, "lift A mm=40\npick A R1 grasp=body\nvise open");
     let gap = |w: &World| {
         kin::sub(
             w.part("R1").unwrap().pose().p,
@@ -72,7 +76,7 @@ fn a_good_joint_holds_two_parts_as_one() {
     let before = gap(&w);
     run(&mut w, "lift A mm=80");
     assert!(kin::norm(kin::sub(gap(&w), before)) < 1e-6);
-    assert_eq!(w.part("R1").unwrap().holder.as_deref(), Some("A"));
+    assert_eq!(w.part("U1").unwrap().holder.as_deref(), Some("A"));
     assert!(!w.part("R1").unwrap().lost && !w.part("U1").unwrap().lost);
 }
 
@@ -92,7 +96,7 @@ fn too_little_or_too_much_solder() {
     let mut w = ready();
     run(
         &mut w,
-        "touch S1 at=U1.3+R1.1 dwell=2\nfeed S1 mm=0.3 rate=0.3\nback S1\nwait until=U1.3+R1.1 below=100",
+        "touch S1 at=U1.3+R1.1 dwell=2\nfeed S1 mm=0.8 rate=0.4\nback S1\nwait until=U1.3+R1.1 below=100",
     );
     assert_eq!(result(&w).as_deref(), Some("starved"));
     let mut w = ready();
@@ -194,9 +198,9 @@ fn heat_is_recorded_for_players() {
     assert!(!w.joints[0].track.is_empty());
 }
 
-/// The bench's solder program, with `extra` after the feed.
+/// The lap joint program, with `extra` after the feed.
 fn solder_with(extra: &str) -> xetal_ext_cell::world::World {
-    let prog = include_str!("../../programs/solder.cell").replace(
+    let prog = include_str!("../../programs/lap.cell").replace(
         "feed S1 mm=2 rate=1\n",
         &format!("feed S1 mm=2 rate=1\n{extra}"),
     );

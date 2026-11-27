@@ -22,7 +22,7 @@ fn the_planned_work_matches_its_netlist() {
 #[test]
 fn a_missing_joint_or_a_bad_one_is_found() {
     // the last resistor never soldered: its net is not made
-    let cut = PLAN.find("pick A R4").unwrap();
+    let cut = PLAN.find("pick A R2").unwrap();
     let mut w = World::default();
     run(&mut w, &PLAN[..cut]);
     let r = w.check_work();
@@ -30,7 +30,7 @@ fn a_missing_joint_or_a_bad_one_is_found() {
     assert!(
         r.lines
             .iter()
-            .any(|l| l == "net N7: R4.1 not joined to U1.7"),
+            .any(|l| l == "net N3: R2.1 not joined to U1.3"),
         "{:?}",
         r.lines
     );
@@ -89,8 +89,8 @@ fn a_jumper_is_cut_to_its_span() {
 #[test]
 fn a_pincer_parks_at_its_rest() {
     let mut w = World::default();
-    run(&mut w, PLAN.split("present U1.2+R1.1").next().unwrap());
-    // P1 gripping R1.1, away from its rest
+    run(&mut w, PLAN.split("present U1.6+R3.1").next().unwrap());
+    // P1 gripping R3.1, away from its rest
     assert!(w.pincers[0].on.is_some());
     let out = run(
         &mut w,

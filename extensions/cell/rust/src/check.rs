@@ -52,9 +52,22 @@ impl World {
         let mut sets = Sets(BTreeMap::new());
         let mut lines = Vec::new();
         let mut ok = true;
-        // joints: good ones conduct; others are faults
+        // joints: good ones conduct; a weak one conducts but is a fault
+        // (decision C22: a butt joint, or too short a lap)
         for j in &self.joints {
-            if j.holds() && (j.result.as_deref() == Some("good") || j.weld.is_some()) {
+            if j.holds() && j.result.as_deref() == Some("weak") && j.weld.is_none() {
+                sets.join(&j.a, &j.b);
+                lines.push(format!(
+                    "{}: weak, {}",
+                    j.name,
+                    if j.lap < 0.05 {
+                        "a butt joint".to_string()
+                    } else {
+                        format!("a lap of {} mm", crate::world::num1(j.lap))
+                    }
+                ));
+                ok = false;
+            } else if j.holds() && (j.result.as_deref() == Some("good") || j.weld.is_some()) {
                 sets.join(&j.a, &j.b);
             } else if let Some(r) = &j.result {
                 lines.push(format!("{}: a {r} joint", j.name));

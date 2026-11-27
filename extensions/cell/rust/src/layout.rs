@@ -212,6 +212,10 @@ pub struct Laid {
     /// Its turn about z, degrees.
     #[serde(default)]
     pub yaw: f64,
+    /// On its back, legs up: a chip kitted for dead-bug (decision C22:
+    /// lap joints are made from above).
+    #[serde(default)]
+    pub back: bool,
     /// What is printed or banded on it (`4.7k`, `104`); its kind's
     /// default if not given.
     #[serde(default)]
@@ -264,13 +268,14 @@ pub fn nets(name: &str) -> Result<Vec<Net>, String> {
     Ok(f.net)
 }
 
-const CIRCUITS: [(&str, &str); 6] = [
+const CIRCUITS: [(&str, &str); 7] = [
     ("demo", include_str!("../../circuits/demo.toml")),
     ("weld", include_str!("../../circuits/weld.toml")),
     ("tester", include_str!("../../circuits/tester.toml")),
     ("tester-b", include_str!("../../circuits/tester-b.toml")),
     ("plan", include_str!("../../circuits/plan.toml")),
     ("blinker", include_str!("../../circuits/blinker.toml")),
+    ("lap", include_str!("../../circuits/lap.toml")),
 ];
 
 /// The circuits a reset can lay out: `none` (empty trays) and those in

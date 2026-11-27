@@ -248,7 +248,7 @@ fn a_program_runs_whole() {
     let mut c = Client::start(0, &session_file("run"));
     let (err, r) = c.tool(
         "cell_run",
-        json!({"program": include_str!("../../programs/solder.cell")}),
+        json!({"program": include_str!("../../programs/lap.cell")}),
     );
     assert!(!err && all_ok(&r), "{r}");
     let (_, j) = c.tool("cell_inspect", json!({"target": "U1.3+R1.1"}));

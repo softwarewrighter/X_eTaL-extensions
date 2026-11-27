@@ -61,7 +61,7 @@ fn a_reset_fills_the_tray_and_the_racks() {
     refused(
         &mut w,
         "reset circuit=nowhere",
-        "no circuit nowhere (circuits: none demo weld tester tester-b plan blinker)",
+        "no circuit nowhere (circuits: none demo weld tester tester-b plan blinker lap)",
     );
 }
 

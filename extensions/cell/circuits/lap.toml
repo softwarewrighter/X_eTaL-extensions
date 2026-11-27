@@ -1,0 +1,35 @@
+# lap: the demo's four parts, the chip kitted on its back, legs up, for
+# dead-bug work with lap joints (decision C22): a lead's bent end laid
+# alongside a leg, from above. Each part: its id, its kind, its tray
+# pocket (1 to 8), its turn about z (degrees), on its back or not, and
+# its mark.
+title = "the demo's parts, the chip legs up, for lap joints"
+
+[[part]]
+id = "U1"
+kind = "dip8"
+pocket = 1
+yaw = 90
+back = true
+mark = "NE555P"
+
+[[part]]
+id = "R1"
+kind = "axial-resistor"
+pocket = 3
+yaw = 90
+mark = "4.7k"
+
+[[part]]
+id = "D1"
+kind = "led-5mm"
+pocket = 6
+yaw = 0
+mark = "red"
+
+[[part]]
+id = "C1"
+kind = "ceramic-disc"
+pocket = 8
+yaw = 0
+mark = "104"

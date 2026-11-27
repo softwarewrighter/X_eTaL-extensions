@@ -326,6 +326,11 @@ pub const COMMANDS: &[Spec] = &[
             ),
             opt("via2", Kind::Vec3("mm"), "with via=: a second corner"),
             opt(
+                "lap",
+                Kind::Number("mm", 0.5, 12.0),
+                "with span=: each end turned to lie alongside its pin's leg, this long (a lap joint, 3.2 or more is sound)",
+            ),
+            opt(
                 "span",
                 Kind::Span,
                 "a jumper's two ends (U1.4.tip+U1.8.tip, frames joined by +): cut to the distance between them, less 0.1 mm at each end",
@@ -546,6 +551,11 @@ pub const COMMANDS: &[Spec] = &[
                 "end",
                 Kind::Frame,
                 "a jumper: where its other end goes; the direction runs to it",
+            ),
+            opt(
+                "lap",
+                Kind::Number("mm", 0.5, 12.0),
+                "a lap joint: the lead's bent end laid alongside the target lead, touching it, this long (3.2 or more is sound)",
             ),
         ],
     },

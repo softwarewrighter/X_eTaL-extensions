@@ -116,7 +116,7 @@ export function cellPlayer(host, calls, options = {}) {
     attach(id, arm, t0, t1) { s.attaches.push({ id, arm, t0, t1 }); },
     place(id, t, pose) { s.places.push({ id, t, pose }); },
     heat(id, rows) { s.heats.push({ id, rows }); },
-    joint(name, part, xyz, rows, result, t) { s.joints.push({ name, part, xyz, rows, result, t }); },
+    joint(name, part, xyz, rows, result, t, lap) { s.joints.push({ name, part, xyz, rows, result, t, lap }); },
     ghost(id, kind, pose) { s.ghosts.push({ id, kind, pose }); },
     step(n, label, t0, t1) { s.steps.push({ n, label, t0, t1 }); },
     expect(arm, t, xyz) { s.expects.push({ arm, t, xyz }); },
@@ -766,9 +766,17 @@ export function cellPlayer(host, calls, options = {}) {
       const mm3 = row ? row[1] : 0;
       j.ball.visible = mm3 > 0;
       if (!j.ball.visible) continue;
-      // larger than life (a ball of 0.4 mm3 is under a millimeter across):
-      // at least a millimeter, so it reads in the cell
-      j.ball.scale.setScalar(Math.max(1.0, Math.cbrt((3 * mm3) / (4 * Math.PI)) * 2.2));
+      if (j.lap) {
+        // a lap joint: a fillet along the two leads, as thick as the
+        // solder spread over its length (at least 0.4 mm, so it reads)
+        const len = j.lap[6];
+        const r = Math.max(0.4, Math.sqrt(mm3 / (Math.PI * len)) * 1.6);
+        j.ball.scale.set(r, len, r);
+      } else {
+        // larger than life (a ball of 0.4 mm3 is under a millimeter across):
+        // at least a millimeter, so it reads in the cell
+        j.ball.scale.setScalar(Math.max(1.0, Math.cbrt((3 * mm3) / (4 * Math.PI)) * 2.2));
+      }
       const frozen = t >= j.t && j.result;
       const colors = { good: '#d9dee7', cold: '#7d8188', disturbed: '#9a8f7f', starved: '#b0a07a', blob: '#c9c2b0', bridged: '#d07070', welded: '#e6c27a', weak: '#a8956a', blown: '#3a2f2a' };
       j.ball.material.color.set(frozen ? colors[j.result] || '#cccccc' : '#f2f2f2');
@@ -1073,8 +1081,18 @@ export function cellPlayer(host, calls, options = {}) {
     for (const j of s.joints) {
       const host = parts[j.part];
       if (!host || !j.rows.length) continue;
-      const ball = new THREE.Mesh(new THREE.SphereGeometry(1, 16, 12), new THREE.MeshStandardMaterial({ color: '#d9dee7', metalness: 0.8, roughness: 0.25 }));
-      ball.position.set(j.xyz[0], j.xyz[1], j.xyz[2]);
+      const material = new THREE.MeshStandardMaterial({ color: '#d9dee7', metalness: 0.8, roughness: 0.25 });
+      // a lap joint's fillet: a capsule of unit length along y, turned
+      // onto the lap; a butt joint's or a weld's: a ball
+      const ball = j.lap
+        ? new THREE.Mesh(new THREE.CapsuleGeometry(1, 1, 4, 12).scale(1, 1 / 3, 1), material)
+        : new THREE.Mesh(new THREE.SphereGeometry(1, 16, 12), material);
+      if (j.lap) {
+        ball.position.set(j.lap[0], j.lap[1], j.lap[2]);
+        ball.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), new THREE.Vector3(j.lap[3], j.lap[4], j.lap[5]).normalize());
+      } else {
+        ball.position.set(j.xyz[0], j.xyz[1], j.xyz[2]);
+      }
       host.g.add(ball);
       joints.push({ ...j, ball });
     }

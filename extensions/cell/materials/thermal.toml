@@ -104,5 +104,12 @@ dry_conductance = 0.005
 # while it is active; held molten longer than dull_seconds without it,
 # the joint oxidizes: dull
 flux_seconds = 4.0
+# lap joints (decision C22): leads joined run alongside each other, at
+# least lap_mm (1/8 inch) of them; less, a butt joint included, is weak;
+# more than lap_long_mm is more metal to heat than a joint needs; leads
+# lap_gap_mm farther apart than touching still count, the solder filling it
+lap_mm = 3.2
+lap_long_mm = 6.4
+lap_gap_mm = 0.15
 dull_seconds = 4.0
-illustrative = ["max_gap", "wet_seconds", "good_mm3", "starved_fraction", "blob_fraction", "bridge_mm", "wet_conductance", "dry_conductance", "flux_seconds", "dull_seconds"]
+illustrative = ["max_gap", "wet_seconds", "good_mm3", "starved_fraction", "blob_fraction", "bridge_mm", "wet_conductance", "dry_conductance", "flux_seconds", "dull_seconds", "lap_long_mm", "lap_gap_mm"]

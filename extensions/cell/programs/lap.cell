@@ -1,0 +1,36 @@
+# lap: a lap joint (decision C22). The chip goes in the vise legs up,
+# dead-bug. The bending rig bends the resistor's lead 90 degrees 12 mm
+# from its body and the rig's shear cuts it, leaving a bent end of about
+# 4 mm; the arm lays that end alongside pin 3, touching it and pointing
+# down the leg toward the chip, a 3.2 mm lap; then it is soldered. Two
+# parallel pieces of metal soldered for 1/8 inch hold far better than a
+# lead's end against a leg: inspect gives the lap. Last, the stage tilts
+# the work so the microscope sees the lap from the side.
+reset circuit=lap
+tool A tweezers
+pick A U1 grasp=ends
+place A U1 at=0,0,-24 rpy=180,0,90
+vise close
+release A U1
+pick A R1 grasp=body
+lift A mm=60
+insert A on=R1.1 at=12
+form angle=90
+lift A mm=30
+shear A on=R1.1 at=17.2
+lift A mm=60
+bring A R1.1 to=U1.3.tip along=-0.934,0.356,0 lap=3.2
+pinch P1 on=R1.1 at=3
+release A R1
+lift A mm=60
+present U1.3+R1.1 at=S1
+scope aim=U1.3+R1.1 zoom=8
+touch S1 at=U1.3+R1.1 dwell=3 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=U1.3+R1.1 below=100
+inspect U1.3+R1.1
+unpinch P1
+park P1
+stage tilt=60
+scope aim=U1.3+R1.1 zoom=10

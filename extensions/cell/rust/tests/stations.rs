@@ -171,7 +171,9 @@ align A R1.1.tip to=U1.3.tip gap=0.1");
 #[test]
 fn soldering_at_stations_makes_a_good_joint() {
     let (w, out) = ok(&program("solder-stations"));
-    assert_eq!(result(&w, "U1.3+R1.1").as_deref(), Some("good"));
+    // a butt joint (a lead's end against a leg): weak, decision C22; this
+    // program shows something else, and moves to a lap joint later
+    assert_eq!(result(&w, "U1.3+R1.1").as_deref(), Some("weak"));
     assert!(out.iter().any(|o| {
         o.events
             .iter()

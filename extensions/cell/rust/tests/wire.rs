@@ -109,7 +109,9 @@ fn the_wire_program_solders_and_bends_a_wire() {
     let mut w = World::default();
     let out = run(&mut w, include_str!("../../programs/wire.cell"));
     let j = w.joints.iter().find(|j| j.name == "U1.3+W1.1").unwrap();
-    assert_eq!(j.result.as_deref(), Some("good"));
+    // a butt joint (a lead's end against a leg): weak, decision C22; this
+    // program shows something else, and moves to a lap joint later
+    assert_eq!(j.result.as_deref(), Some("weak"));
     assert!(out.iter().any(|o| {
         o.events
             .iter()
@@ -140,7 +142,9 @@ fn enamel_burns_off_at_the_iron_before_the_wire_wets() {
         "no stripping"
     );
     let j = w.joints.iter().find(|j| j.name == "U1.3+W1.1").unwrap();
-    assert_eq!(j.result.as_deref(), Some("good"), "{j:?}");
+    // a butt joint (a lead's end against a leg): weak, decision C22; this
+    // program shows something else, and moves to a lap joint later
+    assert_eq!(j.result.as_deref(), Some("weak"), "{j:?}");
     assert!(w.part("W1").unwrap().wire.as_ref().unwrap().stripped[0]);
 }
 
@@ -166,7 +170,9 @@ fn enamel_insulates_but_where_the_iron_burned_it_off() {
         "shorts: none; insulated: W1.1 crosses U1.4"
     );
     let j = w.joints.iter().find(|j| j.name == "U1.3+W1.1").unwrap();
-    assert_eq!(j.result.as_deref(), Some("good"), "{j:?}");
+    // a butt joint (a lead's end against a leg): weak, decision C22; this
+    // program shows something else, and moves to a lap joint later
+    assert_eq!(j.result.as_deref(), Some("weak"), "{j:?}");
     assert!(w.clashes().is_empty(), "{:?}", w.clashes());
     // stripped at the joint only: a few millimeters at the tip of end 1
     let wi = w.part("W1").unwrap().wire.clone().unwrap();

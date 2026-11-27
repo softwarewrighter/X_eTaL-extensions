@@ -71,7 +71,15 @@ type Touch<'a> = (f64, &'a str, V3, Vec<(usize, usize, usize)>);
 
 /// A joint in the network: its index, its solder's node, and the nodes
 /// of its two leads at it.
-type JointNodes = (usize, Option<usize>, Option<usize>, Option<usize>);
+/// A joint's index, its solder's node, each lead's nearest node, and
+/// each lead's nodes along its lap (decision C22).
+type JointNodes = (
+    usize,
+    Option<usize>,
+    Option<usize>,
+    Option<usize>,
+    (Vec<usize>, Vec<usize>),
+);
 
 /// A part's network nodes: where its body and each lead node landed.
 struct Placed {
@@ -502,28 +510,46 @@ impl World {
         for (ji, j) in self.joints.iter().enumerate() {
             let a = pin_of(&j.a).and_then(|(k, pi)| node_of(&placed, k, pi, j.node_a));
             let b = pin_of(&j.b).and_then(|(k, pi)| node_of(&placed, k, pi, j.node_b));
+            // each lead's nodes along the lap, the nearest if none recorded
+            let lap_nodes = |pin: &str, list: &[usize], near: Option<usize>| -> Vec<usize> {
+                let v: Vec<usize> = pin_of(pin)
+                    .map(|(k, pi)| {
+                        list.iter()
+                            .filter_map(|ni| node_of(&placed, k, pi, *ni))
+                            .collect()
+                    })
+                    .unwrap_or_default();
+                if v.is_empty() {
+                    near.into_iter().collect()
+                } else {
+                    v
+                }
+            };
+            let la = lap_nodes(&j.a, &j.nodes_a, a);
+            let lb = lap_nodes(&j.b, &j.nodes_b, b);
             let mut node = None;
             if j.solder > 0.0 {
                 if let (Some(alloy), Some(_), Some(_)) = (th.solder.get(&j.alloy), a, b) {
                     let c = alloy.rho * 1e-3 * j.solder * alloy.c;
                     let n = net.node(c.max(1e-9), j.temp, 1e-6);
-                    for (lead, wet) in [(a, j.wet_a), (b, j.wet_b)] {
-                        if let Some(l) = lead {
-                            net.link(
-                                n,
-                                l,
-                                if wet > 0.0 {
-                                    th.joint.wet_conductance
-                                } else {
-                                    th.joint.dry_conductance
-                                },
-                            );
+                    // the solder touches the lead all along the lap: its
+                    // conductance grows with the lap, shared by the nodes
+                    #[allow(clippy::cast_precision_loss)]
+                    for (lead, wet) in [(&la, j.wet_a), (&lb, j.wet_b)] {
+                        let g = if wet > 0.0 {
+                            th.joint.wet_conductance
+                        } else {
+                            th.joint.dry_conductance
+                        } * j.lap.max(1.0)
+                            / lead.len().max(1) as f64;
+                        for l in lead {
+                            net.link(n, *l, g);
                         }
                     }
                     node = Some(n);
                 }
             }
-            joint_nodes.push((ji, node, a, b));
+            joint_nodes.push((ji, node, a, b, (la, lb)));
         }
         // the tools that touch: an iron held at its set point by its
         // heater, a clip drawing heat away
@@ -541,7 +567,7 @@ impl World {
                         continue;
                     };
                     // through molten solder, a far better contact
-                    let wet = joint_nodes.iter().any(|(ji, jn, a, b)| {
+                    let wet = joint_nodes.iter().any(|(ji, jn, a, b, _)| {
                         jn.is_some() && self.joints[*ji].molten && (*a == Some(l) || *b == Some(l))
                     });
                     net.link(
@@ -554,7 +580,7 @@ impl World {
                         },
                     );
                 }
-                for (ji, jn, _, _) in &joint_nodes {
+                for (ji, jn, _, _, _) in &joint_nodes {
                     if let Some(jn) = jn {
                         if self
                             .joint_point(&self.joints[*ji])
@@ -599,7 +625,7 @@ impl World {
                 let (_, n) = solder::layout(&p.kind);
                 self.parts[p.k].temps = temps[p.first..p.first + n].to_vec();
             }
-            for (ji, jn, a, b) in &joint_nodes {
+            for (ji, jn, a, b, _) in &joint_nodes {
                 self.joints[*ji].temp = match (jn, a, b) {
                     (Some(n), _, _) => temps[*n],
                     (None, Some(a), Some(b)) => (temps[*a] + temps[*b]) / 2.0,
@@ -629,7 +655,7 @@ impl World {
         placed: &[Placed],
         joint_nodes: &[JointNodes],
     ) {
-        for (ji, jn, a, b) in joint_nodes {
+        for (ji, jn, a, b, _) in joint_nodes {
             let Some(alloy) = th.solder.get(&self.joints[*ji].alloy).cloned() else {
                 continue;
             };
@@ -666,6 +692,9 @@ impl World {
                     j.dry += ds;
                 }
                 let j = &mut self.joints[*ji];
+                // a lead wets where the solder first flows, the node nearest
+                // the joint; wet, the solder touches it all along the lap
+                // (more metal drawing heat from it: a longer lap takes more)
                 if fluxed && !ea && a.is_some_and(|a| temps[a] >= alloy.liquidus) {
                     j.wet_a += ds;
                 }
@@ -675,6 +704,7 @@ impl World {
                 if temp < alloy.solidus {
                     j.molten = false;
                     j.set_at = Some(self.t);
+                    self.measure_lap(*ji);
                     let result = self.judge(*ji, th);
                     let j = &mut self.joints[*ji];
                     j.result = Some(result.clone());
@@ -734,7 +764,7 @@ impl World {
                 }),
             }
         }
-        for (ji, jn, _, _) in joint_nodes {
+        for (ji, jn, _, _, _) in joint_nodes {
             let j = &mut self.joints[*ji];
             if j.solder > 0.0 {
                 let temp = jn.map_or(j.temp, |n| temps[n]);
@@ -778,19 +808,53 @@ impl World {
                 }
             }
         }
+        // a lap wants solder along it (decision C22)
+        let good = r.good_mm3 * (j.lap / r.lap_mm).max(1.0);
         if j.wet_a < r.wet_seconds || j.wet_b < r.wet_seconds {
             "cold".into()
         } else if j.moved {
             "disturbed".into()
         } else if j.dry > r.dull_seconds {
             "dull".into()
-        } else if j.solder < r.starved_fraction * r.good_mm3 {
+        } else if j.solder < r.starved_fraction * good {
             "starved".into()
-        } else if j.solder > r.blob_fraction * r.good_mm3 {
+        } else if j.solder > r.blob_fraction * good {
             "blob".into()
+        } else if j.lap < r.lap_mm {
+            // a butt joint, or too short a lap: the solder alone holds it
+            "weak".into()
         } else {
             "good".into()
         }
+    }
+
+    /// A lap joint's solder fillet for players (decision C22): its middle
+    /// and its direction in the frame of the first pin's part, and its
+    /// length; none for a butt joint or a weld.
+    #[must_use]
+    pub fn lap_fillet(&self, j: &Joint) -> Option<(V3, V3, f64)> {
+        if j.weld.is_some() || j.lap < 0.05 {
+            return None;
+        }
+        let th = solder::data().ok()?;
+        let lead = |pin: &str| -> Option<(Vec<V3>, f64)> {
+            let (pid, pn) = pin.split_once('.')?;
+            let part = self.part(pid)?;
+            let kind = part.kind_of().ok()?;
+            let p = kind.pin(pn)?;
+            Some((solder::lead_in(&part.pose(), &p.lead), p.diameter))
+        };
+        let (la, da) = lead(&j.a)?;
+        let (lb, db) = lead(&j.b)?;
+        let touch = (da + db) / 2.0 + th.joint.lap_gap_mm;
+        let (len, middle, dir) = solder::lap_span(&la, &lb, touch);
+        if len < 0.05 {
+            return None;
+        }
+        let host = self.part(j.a.split('.').next()?)?.pose().inverse();
+        let m = host.then(&Pose::from_xyz_rpy(middle, [0.0; 3])).p;
+        let d = kin::mv(&host.r, dir);
+        Some((m, d, len))
     }
 
     /// A joint's place in the cell's frame.
@@ -819,7 +883,7 @@ impl World {
             return Ok(i);
         }
         let th = solder::data()?;
-        let lead = |pin: &str| -> Result<(Pose, Vec<V3>, Vec<V3>), String> {
+        let lead = |pin: &str| -> Result<(Pose, Vec<V3>, Vec<V3>, f64), String> {
             let (pid, pn) = pin
                 .split_once('.')
                 .ok_or_else(|| format!("{pin} is not a pin"))?;
@@ -836,11 +900,13 @@ impl World {
                 .into_iter()
                 .map(|(x, _)| x)
                 .collect();
-            Ok((pose, solder::lead_in(&pose, &p.lead), nodes))
+            Ok((pose, solder::lead_in(&pose, &p.lead), nodes, p.diameter))
         };
-        let (pose_a, la, na) = lead(a)?;
-        let (_, lb, nb) = lead(b)?;
+        let (pose_a, la, na, da) = lead(a)?;
+        let (_, lb, nb, db) = lead(b)?;
         let (d, pa, pb) = solder::nearest(&la, &lb);
+        // apart: surface to surface
+        let d = (d - (da + db) / 2.0).max(0.0);
         if d > th.joint.max_gap {
             return Err(format!(
                 "{a} and {b} are {} mm apart (at most {}): align them first",
@@ -869,8 +935,56 @@ impl World {
             set_at: None,
             track: Vec::new(),
             weld: None,
+            lap: 0.0,
+            nodes_a: Vec::new(),
+            nodes_b: Vec::new(),
         });
-        Ok(self.joints.len() - 1)
+        let ji = self.joints.len() - 1;
+        self.measure_lap(ji);
+        Ok(ji)
+    }
+
+    /// A joint's lap measured where its leads are now (decision C22): how
+    /// far they run alongside each other, touching, and the thermal nodes
+    /// of each along it (the nearest one if none).
+    pub(crate) fn measure_lap(&mut self, ji: usize) {
+        let Ok(th) = solder::data() else {
+            return;
+        };
+        let lead = |pin: &str| -> Option<(Vec<V3>, Vec<V3>, f64)> {
+            let (pid, pn) = pin.split_once('.')?;
+            let part = self.part(pid)?;
+            let kind = part.kind_of().ok()?;
+            let p = kind.pin(pn)?;
+            let pose = part.pose();
+            let nodes = nodes_in(&pose, &p.lead)
+                .into_iter()
+                .map(|(x, _)| x)
+                .collect();
+            Some((solder::lead_in(&pose, &p.lead), nodes, p.diameter))
+        };
+        let j = &self.joints[ji];
+        let (Some((la, na, da)), Some((lb, nb, db))) = (lead(&j.a), lead(&j.b)) else {
+            return;
+        };
+        let touch = (da + db) / 2.0 + th.joint.lap_gap_mm;
+        let lap = solder::lap(&la, &lb, touch).min(solder::lap(&lb, &la, touch));
+        // the nodes along it: within half a node's length of the other lead
+        let along = |nodes: &[V3], other: &[V3], near: usize| -> Vec<usize> {
+            let v: Vec<usize> = nodes
+                .iter()
+                .enumerate()
+                .filter(|(_, q)| solder::nearest_on(other, **q).0 <= touch + 0.5)
+                .map(|(i, _)| i)
+                .collect();
+            if v.is_empty() { vec![near] } else { v }
+        };
+        let nodes_a = along(&na, &lb, j.node_a);
+        let nodes_b = along(&nb, &la, j.node_b);
+        let j = &mut self.joints[ji];
+        j.lap = (lap * 100.0).round() / 100.0;
+        j.nodes_a = nodes_a;
+        j.nodes_b = nodes_b;
     }
 
     /// A pin's hottest lead segment, or a joint's temperature, C.
@@ -1382,8 +1496,23 @@ impl World {
             } else {
                 j.result.clone().unwrap_or_else(|| "no solder yet".into())
             };
+            let rules = solder::data().map(|d| d.joint).ok();
+            let lap = match rules {
+                Some(r) if j.lap < 0.05 => {
+                    format!("a butt joint (a lap of {} mm is sound)", num1(r.lap_mm))
+                }
+                Some(r) if j.lap < r.lap_mm => {
+                    format!("a {} mm lap (at least {})", num1(j.lap), num1(r.lap_mm))
+                }
+                Some(r) if j.lap > r.lap_long_mm => format!(
+                    "a {} mm lap, long: more metal to heat than it needs (over {})",
+                    num1(j.lap),
+                    num1(r.lap_long_mm)
+                ),
+                _ => format!("a {} mm lap", num1(j.lap)),
+            };
             return Ok(format!(
-                "{}: {state}; {} mm3 of solder, wet {} s and {} s, at {} C",
+                "{}: {state}; {lap}; {} mm3 of solder, wet {} s and {} s, at {} C",
                 j.name,
                 num1(j.solder),
                 num1(j.wet_a),

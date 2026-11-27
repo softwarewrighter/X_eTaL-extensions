@@ -215,6 +215,9 @@ fn a_semiconductor_joined_to_both_sides_is_in_the_path() {
             set_at: Some(0.0),
             track: Vec::new(),
             weld: Some(8.0),
+            lap: 0.0,
+            nodes_a: Vec::new(),
+            nodes_b: Vec::new(),
         });
     }
     let o = w.apply_all(&parse_program("weld S3 at=C1.2+C2.1 energy=8").unwrap());

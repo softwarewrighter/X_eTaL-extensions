@@ -83,15 +83,15 @@ h:c_ols := { (a, b, c) z -> 2 1 t_ranspose (3 c_at t_ally a) r_eshape a c_at b c
 h:r_3 := { v -> (f_loat f_loor 0.5 + v * 1000) / 1000.0 }
 
 ## cp:t_ips kind: the kind's pin tips in the cell, a row each, x y z (mm),
-## with the core in the vise as the planner places it: its origin at
-## 0 0 -24, turned 90 degrees about z (x goes to y, y to -x); a DIP-8's
-## pin 2 is at 3.81 -1.27 -29.05. (It asks the cell extension, so run it
-## with xetal-x.)
+## with the core in the vise as the planner places it, dead-bug: legs
+## up (turned over about x), its origin at 0 0 -24, turned 90 degrees
+## about z (x goes to y, y to x, z to -z); a DIP-8's pin 2 is at -3.81
+## -1.27 -18.95. (It asks the cell extension, so run it with xetal-x.)
 l:t_ips := { kind ->
   v := n_umbers ce:t_ips kind
   t := (((t_ally v) d_iv 3) c_at 3) r_eshape v
   c := 2 1 t_ranspose t
-  (n_eg 2 s_elect c, 1 s_elect c, (3 s_elect c) - 24) h:c_ols 0
+  (2 s_elect c, 1 s_elect c, (n_eg 3 s_elect c) - 24) h:c_ols 0
 }
 
 ## cp:d_irections tips: for each pin tip (a row of cp:t_ips), the unit
@@ -99,9 +99,9 @@ l:t_ips := { kind ->
 ## fanned along the row (0.3 of the tip's distance along it), so the
 ## neighbors on one side spread apart
 ## >> "cp:" u_se< "CellPlan"
-## >> cp:d_irections 2 3 r_eshape 3.81 -1.27 -29.05 -3.81 1.27 -29.05
-##  0.934 -0.356 0.0
-## -0.934  0.356 0.0
+## >> cp:d_irections 2 3 r_eshape -3.81 -1.27 -18.95 3.81 1.27 -18.95
+## -0.934 -0.356 0.0
+##  0.934  0.356 0.0
 l:d_irections := { tips ->
   c := 2 1 t_ranspose tips
   x := 1 s_elect c
@@ -116,9 +116,9 @@ l:d_irections := { tips ->
 ## neighbors' bodies (mm), each resting out mm along its direction from
 ## its tip; 1000 for one neighbor
 ## >> "cp:" u_se< "CellPlan"
-## >> t := 2 3 r_eshape 3.81 -1.27 -29.05 3.81 1.27 -29.05
-## >> f_loor (t, cp:d_irections t) cp:c_learance 31
-## 24
+## >> t := 2 3 r_eshape -3.81 -1.27 -18.95 -3.81 1.27 -18.95
+## >> f_loor (t, cp:d_irections t) cp:c_learance 15
+## 13
 l:c_learance := { (tips, dirs) out ->
   c := 2 1 t_ranspose tips + out * dirs
   x := 1 s_elect c
@@ -149,17 +149,23 @@ h:n_um := { v -> f_ormat h:r_3 v }
 # x,y,z
 h:x_yz := { v -> (h:n_um 1 s_elect v) c_at "," c_at (h:n_um 2 s_elect v) c_at "," c_at h:n_um 3 s_elect v }
 
-# the commands that make one join: (neighbor, core, pin, direction)
+# the commands that make one join: (neighbor, core, pin, direction). A
+# lap joint (decision C22): the lead bent 90 degrees in the rig 12 mm
+# from the body and sheared at 17.2 mm, its 4 mm end laid alongside the
+# pin's leg, touching it, a 3.2 mm lap
 h:j_oin := { (nb, core, pin, dir) z ->
   lead := nb c_at ".1"
   to := core c_at "." c_at f_ormat pin
   joint := to c_at "+" c_at lead
   nl := "\n"
   a := "pick A " c_at nb c_at " grasp=body" c_at nl c_at "lift A mm=60" c_at nl
-  b := "bring A " c_at lead c_at " to=" c_at to c_at ".tip along=" c_at (h:x_yz dir) c_at nl
+  r := "insert A on=" c_at lead c_at " at=12" c_at nl c_at "form angle=90" c_at nl c_at "lift A mm=30" c_at nl c_at "shear A on=" c_at lead c_at " at=17.2" c_at nl c_at "lift A mm=60" c_at nl
+  b := r c_at "bring A " c_at lead c_at " to=" c_at to c_at ".tip along=" c_at (h:x_yz dir) c_at " lap=3.2" c_at nl
   # the pincer on its side of the core: each keeps to its own side of the ring
   pz := "P" c_at f_ormat 1 + (1 s_elect dir) < 0
-  c := "pinch " c_at pz c_at " on=" c_at lead c_at " at=3" c_at nl c_at "release A " c_at nb c_at nl c_at "lift A mm=60" c_at nl
+  # let go, up, out from over the work, and home through joint space (the
+  # wrist as a lap left it may face the tray across a singularity)
+  c := "pinch " c_at pz c_at " on=" c_at lead c_at " at=3" c_at nl c_at "release A " c_at nb c_at nl c_at "lift A mm=60" c_at nl c_at "move A to=0,60,60 rpy=180,0,90" c_at nl c_at "joints A 0 0 0 0 90 0" c_at nl
   d := "present " c_at joint c_at " at=S1" c_at nl c_at "touch S1 at=" c_at joint c_at " dwell=2" c_at nl
   e := "feed S1 mm=2 rate=1" c_at nl c_at "back S1" c_at nl c_at "wait until=" c_at joint c_at " below=100" c_at nl
   # let go, and the turntable back to rest for the next one
@@ -183,9 +189,9 @@ l:p_lan := { net ->
   tips := pins s_elect l:t_ips kind
   dirs := l:d_irections tips
   order := (tips, pins) l:o_rder 0
-  clear := (tips, dirs) l:c_learance 31
+  clear := (tips, dirs) l:c_learance 15
   head := "# planned by CellPlan.xtl from a netlist: " c_at (f_ormat t_ally pins) c_at " joins to " c_at id c_at ", the least clearance between bodies " c_at (h:n_um clear) c_at " mm\n"
-  start := "reset circuit=" c_at (l:c_ircuit net) c_at "\ntool A tweezers\npick A " c_at id c_at " grasp=ends\nplace A " c_at id c_at " at=0,0,-24 rpy=0,0,90\nvise close\nrelease A " c_at id c_at "\n"
+  start := "reset circuit=" c_at (l:c_ircuit net) c_at "\ntool A tweezers\npick A " c_at id c_at " grasp=ends\nplace A " c_at id c_at " at=0,0,-24 rpy=180,0,90\nvise close\nrelease A " c_at id c_at "\n"
   one := { k -> (d_isclose k s_elect nbs, id, k s_elect pins, k s_elect dirs) h:j_oin 0 }
   body := d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ one m_ap order
   head c_at start c_at body c_at "inspect shorts\ncheck\n"

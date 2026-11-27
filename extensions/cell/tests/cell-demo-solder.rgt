@@ -1,3 +1,3 @@
 command = "xetal-x --ext .. run demos/solder.xtl"
 exit_code = 0
-desc = "programs/solder.cell through ce:r_un: a DIP in the vise, a resistor lead held to pin 3, the iron on the joint, solder fed and melted, the joint frozen good, the resistor staying when let go, the pair lifted out of the vise together"
+desc = "programs/solder.cell through ce:r_un: a DIP in the vise, a resistor lead held to pin 3, the iron on the joint, solder fed and melted, the joint frozen weak (a butt joint, decision C22: programs/lap.cell makes a sound lap joint), the resistor staying when let go, the pair lifted out of the vise together"

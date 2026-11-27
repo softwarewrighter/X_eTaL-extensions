@@ -43,7 +43,9 @@ fn a_sleeve_insulates_a_crossing_that_would_short() {
     // the joggle keeps the sleeved length off the pins it passes
     assert_eq!(last, "shorts: none; R1.1's sleeve clears U1.1 by 1.5 mm");
     let j = w.joints.iter().find(|j| j.name == "U1.3+R1.1").unwrap();
-    assert_eq!(j.result.as_deref(), Some("good"), "{j:?}");
+    // a butt joint (a lead's end against a leg): weak, decision C22; this
+    // program shows something else, and moves to a lap joint later
+    assert_eq!(j.result.as_deref(), Some("weak"), "{j:?}");
     assert!(w.clashes().is_empty(), "{:?}", w.clashes());
     let s = &w.part("R1").unwrap().sleeves[0];
     assert!(s.shrunk.is_some() && s.color == "blue" && (s.from, s.to) == (15.0, 24.0));

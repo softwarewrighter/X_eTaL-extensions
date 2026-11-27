@@ -272,10 +272,11 @@ impl World {
         roll: f64,
         from: Option<V3>,
         end: Option<&str>,
+        lap: Option<f64>,
         did: &mut Vec<String>,
         events: &mut Vec<String>,
     ) -> Result<(), Halt> {
-        let (k, _, lead, _) = self.bender_lead(pin)?;
+        let (k, _, lead, diameter) = self.bender_lead(pin)?;
         let id = self.parts[k].id.clone();
         self.need_holding(i, &id)?;
         let target = self.frame(to).map_err(Halt::Refused)?.p;
@@ -324,20 +325,30 @@ impl World {
             let n = kin::norm(f).max(1e-9);
             kin::scale(f, FRONT / n)
         });
-        self.carry_lead(
-            i,
-            rig,
-            k,
-            &lead,
-            at,
-            point,
-            kin::scale(u, -1.0),
-            roll,
-            front,
-            &allowed,
-            did,
-        )?;
-        events.push(format!("{pin}.tip is {} mm from {to}", num1(gap)));
+        if let Some(want) = lap {
+            let goal = self.lap_goal(pin, &lead, diameter, to, &to_pin, u, want, events)?;
+            // in from the side it lies on, unless told
+            let side = kin::sub(goal.1, target);
+            let front = from.map_or(kin::scale(side, FRONT / kin::norm(side).max(1e-9)), |_| {
+                front
+            });
+            self.carry_to(i, rig, k, &goal.0, front, &allowed, did)?;
+        } else {
+            self.carry_lead(
+                i,
+                rig,
+                k,
+                &lead,
+                at,
+                point,
+                kin::scale(u, -1.0),
+                roll,
+                front,
+                &allowed,
+                did,
+            )?;
+            events.push(format!("{pin}.tip is {} mm from {to}", num1(gap)));
+        }
         if to_pin.contains('.') {
             let _ = self.joint_for(&format!("{to_pin}+{pin}"));
         }
@@ -357,6 +368,106 @@ impl World {
             let _ = self.joint_for(&format!("{e}+{other_end}"));
         }
         Ok(())
+    }
+
+    /// Where a part goes for a lap joint (decision C22): its lead `pin`
+    /// (`lead` in the part's frame), whose last straight run is its bent
+    /// end, laid alongside the target lead at `to`, touching it, pointing
+    /// back up it toward its body, overlapping `want` mm or as much as both
+    /// straight runs allow; the rest of the lead out along `u`. The pose,
+    /// and where the end's middle is (the cell's frame).
+    #[allow(clippy::too_many_arguments)]
+    fn lap_goal(
+        &self,
+        pin: &str,
+        lead: &[V3],
+        diameter: f64,
+        to: &str,
+        to_pin: &str,
+        u: V3,
+        want: f64,
+        events: &mut Vec<String>,
+    ) -> Result<(Pose, V3), Halt> {
+        const PARALLEL: f64 = 0.9997; // within about 1.4 degrees
+        // the held lead's end: its last straight run
+        let n = lead.len();
+        if n < 2 {
+            return Err(Halt::Refused(format!("{pin} has no lead")));
+        }
+        let dir = |a: V3, b: V3| {
+            let d = kin::sub(b, a);
+            kin::scale(d, 1.0 / kin::norm(d).max(1e-12))
+        };
+        let e = dir(lead[n - 2], lead[n - 1]);
+        let mut c = n - 2;
+        while c > 0 && kin::dot(dir(lead[c - 1], lead[c]), e) >= PARALLEL {
+            c -= 1;
+        }
+        let run = kin::norm(kin::sub(lead[n - 1], lead[c]));
+        let back = kin::sub(lead[c], lead[0]);
+        let back_perp = kin::sub(back, kin::scale(e, kin::dot(back, e)));
+        if c == 0 || kin::norm(back_perp) < 0.2 * kin::norm(back).max(1e-9) {
+            return Err(Halt::Refused(format!(
+                "{pin}'s lead is straight: bend its end first, as long as the lap (insert, form)"
+            )));
+        }
+        // the target lead, in the cell's frame: its last straight run
+        let (tk, _, tlead, tdiameter) = self.bender_lead(to_pin)?;
+        let tpose = self.parts[tk].pose();
+        let tl = crate::solder::lead_in(&tpose, &tlead);
+        let m = tl.len();
+        if m < 2 {
+            return Err(Halt::Refused(format!("{to_pin} has no lead")));
+        }
+        let t = dir(tl[m - 2], tl[m - 1]);
+        let mut tc = m - 2;
+        while tc > 0 && kin::dot(dir(tl[tc - 1], tl[tc]), t) >= PARALLEL {
+            tc -= 1;
+        }
+        let trun = kin::norm(kin::sub(tl[m - 1], tl[tc]));
+        let target = self.frame(to).map_err(Halt::Refused)?.p;
+        // the lap: as asked, or as much as the two runs allow
+        let lap = want.min(run).min(trun - 0.2).max(0.0);
+        if lap + 1e-9 < want {
+            events.push(format!(
+                "a lap of {} mm: {pin}'s bent end is {} mm, {to_pin}'s straight run {} mm",
+                num1(lap),
+                num1(run),
+                num1(trun)
+            ));
+        }
+        // its body out along u, across the target lead
+        let u_perp = kin::sub(u, kin::scale(t, kin::dot(u, t)));
+        if kin::norm(u_perp) < 1e-6 {
+            return Err(Halt::Refused(
+                "along: give a direction across the target lead".into(),
+            ));
+        }
+        let side = kin::scale(u_perp, 1.0 / kin::norm(u_perp));
+        // rotation: the end e onto -t (up the target), the body side onto side
+        let frame_of = |x: V3, y: V3| -> kin::M3 {
+            let y = kin::sub(y, kin::scale(x, kin::dot(y, x)));
+            let y = kin::scale(y, 1.0 / kin::norm(y).max(1e-12));
+            let z = kin::cross(x, y);
+            [[x[0], y[0], z[0]], [x[1], y[1], z[1]], [x[2], y[2], z[2]]]
+        };
+        let local = frame_of(e, kin::scale(back_perp, -1.0));
+        let world = frame_of(kin::scale(t, -1.0), side);
+        let r = kin::mm(&world, &kin::transpose(&local));
+        // its tip `lap` up the target from the target's tip, touching it
+        let touch = (diameter + tdiameter) / 2.0;
+        let up = kin::scale(t, -1.0);
+        let tip = kin::add(
+            kin::add(target, kin::scale(up, lap)),
+            kin::scale(side, touch),
+        );
+        let p = kin::sub(tip, kin::mv(&r, lead[n - 1]));
+        let middle = kin::sub(tip, kin::scale(up, lap / 2.0));
+        events.push(format!(
+            "{pin}'s end alongside {to_pin}: a {} mm lap",
+            num1(lap)
+        ));
+        Ok((Pose { p, r }, middle))
     }
 
     /// `lay ARM WIRE [from=]`: a jumper formed to its route laid on it --
@@ -406,8 +517,18 @@ impl World {
                 .frame(&format!("{id}.{end}.tip"))
                 .and_then(|t| self.frame(f).map(|g| kin::norm(kin::sub(t.p, g.p))))
                 .unwrap_or(f64::INFINITY);
-            events.push(format!("{id}.{end}.tip is {} mm from {f}", num1(off)));
-            let _ = self.joint_for(&format!("{pin}+{id}.{end}"));
+            // a lap end (decision C22) lies alongside its pin's leg
+            let lap = self
+                .joint_for(&format!("{pin}+{id}.{end}"))
+                .map_or(0.0, |ji| self.joints[ji].lap);
+            if lap >= 0.05 {
+                events.push(format!(
+                    "{id}.{end} alongside {pin}: a {} mm lap",
+                    num1(lap)
+                ));
+            } else {
+                events.push(format!("{id}.{end}.tip is {} mm from {f}", num1(off)));
+            }
         }
         Ok(())
     }

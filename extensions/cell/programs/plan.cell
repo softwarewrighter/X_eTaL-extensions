@@ -1,64 +1,92 @@
-# planned by CellPlan.xtl from a netlist: 4 joins to U1, the least clearance between bodies 24.612 mm
+# planned by CellPlan.xtl from a netlist: 4 joins to U1, the least clearance between bodies 13.22 mm
 reset circuit=plan
 tool A tweezers
 pick A U1 grasp=ends
-place A U1 at=0,0,-24 rpy=0,0,90
+place A U1 at=0,0,-24 rpy=180,0,90
 vise close
 release A U1
-pick A R1 grasp=body
-lift A mm=60
-bring A R1.1 to=U1.2.tip along=0.934,-0.356,0.0
-pinch P1 on=R1.1 at=3
-release A R1
-lift A mm=60
-present U1.2+R1.1 at=S1
-touch S1 at=U1.2+R1.1 dwell=2
-feed S1 mm=2 rate=1
-back S1
-wait until=U1.2+R1.1 below=100
-inspect U1.2+R1.1
-unpinch P1
-stage to=0 tilt=0 at=0,0,0
-pick A R2 grasp=body
-lift A mm=60
-bring A R2.1 to=U1.3.tip along=0.934,0.356,0.0
-pinch P1 on=R2.1 at=3
-release A R2
-lift A mm=60
-present U1.3+R2.1 at=S1
-touch S1 at=U1.3+R2.1 dwell=2
-feed S1 mm=2 rate=1
-back S1
-wait until=U1.3+R2.1 below=100
-inspect U1.3+R2.1
-unpinch P1
-stage to=0 tilt=0 at=0,0,0
 pick A R3 grasp=body
 lift A mm=60
-bring A R3.1 to=U1.6.tip along=-0.934,0.356,0.0
-pinch P2 on=R3.1 at=3
+insert A on=R3.1 at=12
+form angle=90
+lift A mm=30
+shear A on=R3.1 at=17.2
+lift A mm=60
+bring A R3.1 to=U1.6.tip along=0.934,0.356,0.0 lap=3.2
+pinch P1 on=R3.1 at=3
 release A R3
 lift A mm=60
+move A to=0,60,60 rpy=180,0,90
+joints A 0 0 0 0 90 0
 present U1.6+R3.1 at=S1
 touch S1 at=U1.6+R3.1 dwell=2
 feed S1 mm=2 rate=1
 back S1
 wait until=U1.6+R3.1 below=100
 inspect U1.6+R3.1
-unpinch P2
+unpinch P1
 stage to=0 tilt=0 at=0,0,0
 pick A R4 grasp=body
 lift A mm=60
-bring A R4.1 to=U1.7.tip along=-0.934,-0.356,0.0
-pinch P2 on=R4.1 at=3
+insert A on=R4.1 at=12
+form angle=90
+lift A mm=30
+shear A on=R4.1 at=17.2
+lift A mm=60
+bring A R4.1 to=U1.7.tip along=0.934,-0.356,0.0 lap=3.2
+pinch P1 on=R4.1 at=3
 release A R4
 lift A mm=60
+move A to=0,60,60 rpy=180,0,90
+joints A 0 0 0 0 90 0
 present U1.7+R4.1 at=S1
 touch S1 at=U1.7+R4.1 dwell=2
 feed S1 mm=2 rate=1
 back S1
 wait until=U1.7+R4.1 below=100
 inspect U1.7+R4.1
+unpinch P1
+stage to=0 tilt=0 at=0,0,0
+pick A R1 grasp=body
+lift A mm=60
+insert A on=R1.1 at=12
+form angle=90
+lift A mm=30
+shear A on=R1.1 at=17.2
+lift A mm=60
+bring A R1.1 to=U1.2.tip along=-0.934,-0.356,0.0 lap=3.2
+pinch P2 on=R1.1 at=3
+release A R1
+lift A mm=60
+move A to=0,60,60 rpy=180,0,90
+joints A 0 0 0 0 90 0
+present U1.2+R1.1 at=S1
+touch S1 at=U1.2+R1.1 dwell=2
+feed S1 mm=2 rate=1
+back S1
+wait until=U1.2+R1.1 below=100
+inspect U1.2+R1.1
+unpinch P2
+stage to=0 tilt=0 at=0,0,0
+pick A R2 grasp=body
+lift A mm=60
+insert A on=R2.1 at=12
+form angle=90
+lift A mm=30
+shear A on=R2.1 at=17.2
+lift A mm=60
+bring A R2.1 to=U1.3.tip along=-0.934,0.356,0.0 lap=3.2
+pinch P2 on=R2.1 at=3
+release A R2
+lift A mm=60
+move A to=0,60,60 rpy=180,0,90
+joints A 0 0 0 0 90 0
+present U1.3+R2.1 at=S1
+touch S1 at=U1.3+R2.1 dwell=2
+feed S1 mm=2 rate=1
+back S1
+wait until=U1.3+R2.1 below=100
+inspect U1.3+R2.1
 unpinch P2
 stage to=0 tilt=0 at=0,0,0
 inspect shorts

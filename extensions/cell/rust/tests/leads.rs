@@ -179,7 +179,9 @@ fn the_leads_program_forms_solders_and_trims() {
     let mut w = World::default();
     let out = run(&mut w, include_str!("../../programs/leads.cell"));
     let joint = w.joints.iter().find(|j| j.name == "U1.3+R1.1").unwrap();
-    assert_eq!(joint.result.as_deref(), Some("good"));
+    // a butt joint (a lead's end against a leg): weak, decision C22; this
+    // program shows something else, and moves to a lap joint later
+    assert_eq!(joint.result.as_deref(), Some("weak"));
     assert!(out.iter().any(|o| {
         o.events
             .iter()
