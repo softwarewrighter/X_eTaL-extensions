@@ -1,0 +1,4 @@
+command = "xetal-x --ext . run tests/plan-blinker.xtl"
+exit_code = 0
+timeout = 1200
+desc = "the planner's search on nets/blinker.net (the 555 LED blinker): the core legs up, jumpers between its pins, each part's lead laid alongside a placed lead (axial bent in the rig, radial lowered), its other leads finished at once (jumpers, a trimmed lead bent up as a post), the battery snap on the turntable; each step tried on the simulator, the first it takes kept, the refusals as comments; check 7 of 7"

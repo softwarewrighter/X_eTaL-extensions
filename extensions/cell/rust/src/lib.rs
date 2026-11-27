@@ -137,6 +137,127 @@ fn scene(args: &[Value]) -> Result<Value, OwnedError> {
     ))
 }
 
+thread_local! {
+    /// The planner's session: one cell kept between calls (`begin`,
+    /// `attempt`, `frame`), so a planner can try a step and keep it only
+    /// if the simulator takes it.
+    static SESSION: std::cell::RefCell<world::World> = std::cell::RefCell::new(world::World::default());
+}
+
+/// A new session cell for a circuit: the reset's outcome as JSON.
+fn begin(args: &[Value]) -> Result<Value, OwnedError> {
+    let circuit = text(&args[0])?;
+    let program = command::parse_program(&format!("reset circuit={circuit}"))
+        .map_err(OwnedError::invalid_argument)?;
+    SESSION.with(|s| {
+        let mut w = world::World::default();
+        let out = w.apply_all(&program);
+        let ok = out.iter().all(|o| o.ok);
+        *s.borrow_mut() = w;
+        if ok {
+            Ok(Value::Text(
+                out.iter().map(|o| world::outcome_json(o) + "\n").collect(),
+            ))
+        } else {
+            Err(OwnedError::failure(format!("no circuit {circuit}")))
+        }
+    })
+}
+
+/// Commands tried on the session's cell: kept if every one is ok
+/// (`ok`, then each outcome as JSON, a line each), else the cell as it
+/// was and `no COMMAND: why`.
+fn attempt(args: &[Value]) -> Result<Value, OwnedError> {
+    let program = command::parse_program(&text(&args[0])?).map_err(OwnedError::invalid_argument)?;
+    SESSION.with(|s| {
+        let mut w = s.borrow().clone();
+        let out = w.apply_all(&program);
+        if let Some(o) = out.iter().find(|o| !o.ok) {
+            let why = o
+                .refused
+                .clone()
+                .or_else(|| o.stopped.clone())
+                .unwrap_or_default();
+            return Ok(Value::Text(format!("no {}: {why}", o.command)));
+        }
+        *s.borrow_mut() = w;
+        Ok(Value::Text(
+            std::iter::once("ok\n".to_string())
+                .chain(out.iter().map(|o| world::outcome_json(o) + "\n"))
+                .collect(),
+        ))
+    })
+}
+
+/// Where a frame of the session's cell is now (`U1.3.tip`, `R1.2.tip`,
+/// `C1`): x y z in the cell's frame, mm.
+fn frame(args: &[Value]) -> Result<Value, OwnedError> {
+    let name = text(&args[0])?;
+    SESSION.with(|s| {
+        let p = s.borrow().frame(&name).map_err(OwnedError::failure)?.p;
+        Ok(Value::Text(format!(
+            "{} {} {}",
+            kin::clean((p[0] * 1000.0).round() / 1000.0),
+            kin::clean((p[1] * 1000.0).round() / 1000.0),
+            kin::clean((p[2] * 1000.0).round() / 1000.0)
+        )))
+    })
+}
+
+/// A part of the session's cell: its kind, and whether it came kitted
+/// with its leads cut (`R1` -> `axial-resistor`, `BT1` ->
+/// `battery-snap kitted`).
+fn kind(args: &[Value]) -> Result<Value, OwnedError> {
+    let id = text(&args[0])?;
+    SESSION.with(|s| {
+        let w = s.borrow();
+        let p = w
+            .part(&id)
+            .ok_or_else(|| OwnedError::failure(format!("no part {id}")))?;
+        let kitted = !p.leads.is_empty() && p.reformed.is_empty() && p.wire.is_none();
+        Ok(Value::Text(format!(
+            "{}{}",
+            p.kind,
+            if kitted { " kitted" } else { "" }
+        )))
+    })
+}
+
+/// The id the session's next wire will have (`W3`).
+fn next_wire(_: &[Value]) -> Result<Value, OwnedError> {
+    SESSION.with(|s| {
+        let w = s.borrow();
+        let n = (1..)
+            .find(|n| w.part(&format!("W{n}")).is_none())
+            .unwrap_or(1);
+        Ok(Value::Text(format!("W{n}")))
+    })
+}
+
+/// The pins a pin of the session's cell is soldered to, space between
+/// (empty: none yet).
+fn joined(args: &[Value]) -> Result<Value, OwnedError> {
+    let pin = text(&args[0])?;
+    SESSION.with(|s| {
+        let w = s.borrow();
+        let others: Vec<String> = w
+            .joints
+            .iter()
+            .filter(|j| j.result.is_some())
+            .filter_map(|j| {
+                if j.a == pin {
+                    Some(j.b.clone())
+                } else if j.b == pin {
+                    Some(j.a.clone())
+                } else {
+                    None
+                }
+            })
+            .collect();
+        Ok(Value::Text(others.join(" ")))
+    })
+}
+
 /// The arm's rig as JSON.
 fn rig(_: &[Value]) -> Result<Value, OwnedError> {
     Ok(Value::Text(
@@ -159,5 +280,11 @@ xetal_ext_sdk::xetal_extension! {
         arm_model: 0, "Unit -> Char", "What a model of the arm must be, as JSON: nodes (one a joint's pivot, local z its axis), links, check poses, the rig.";
         scene: 2, "Char -> Char -> Char", "name program: the program run on a new cell, written as a scene for the players (cell(...), rig, track, step, ...).";
         rig: 0, "Unit -> Char", "The arm's rig as JSON: its joints' DH parameters, limits, speeds and home.";
+        begin: 1, "Char -> Char", "A new session cell for a circuit (the planner's): the reset's outcome.";
+        attempt: 1, "Char -> Char", "Commands tried on the session's cell: kept if all are ok (ok, then the outcomes), else the cell as it was and: no COMMAND: why.";
+        frame: 1, "Char -> Char", "Where a frame of the session's cell is now: x y z, mm.";
+        kind: 1, "Char -> Char", "A part of the session's cell: its kind, then kitted if its leads came cut.";
+        next_wire: 0, "Unit -> Char", "The id the session's next wire will have.";
+        joined: 1, "Char -> Char", "The pins a pin of the session's cell is soldered to, space between.";
     }
 }

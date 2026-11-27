@@ -233,6 +233,12 @@
 <li class="item"><a href="#l.r_un"><span class="c-libfunc">ˡr̲un</span></a></li>
 <li class="item"><a href="#l.s_tate"><span class="c-libfunc">ˡs̲tate</span></a></li>
 <li class="item"><a href="#l.s_cene"><span class="c-libfunc">ˡs̲cene</span></a></li>
+<li class="item"><a href="#l.b_egin"><span class="c-libfunc">ˡb̲egin</span></a></li>
+<li class="item"><a href="#l.a_ttempt"><span class="c-libfunc">ˡa̲ttempt</span></a></li>
+<li class="item"><a href="#l.f_rame"><span class="c-libfunc">ˡf̲rame</span></a></li>
+<li class="item"><a href="#l.k_ind"><span class="c-libfunc">ˡk̲ind</span></a></li>
+<li class="item"><a href="#l.n_extWire"><span class="c-libfunc">ˡn̲extWire</span></a></li>
+<li class="item"><a href="#l.j_oined"><span class="c-libfunc">ˡj̲oined</span></a></li>
 <li class="item"><a href="#l.r_ig"><span class="c-libfunc">ˡr̲ig</span></a></li>
 <li class="item"><a href="#l.a_rmModel"><span class="c-libfunc">ˡa̲rmModel</span></a></li>
 <li class="item"><a href="#l.package">ˡpackage</a></li>
@@ -391,9 +397,94 @@ error naming it.</p>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/scene&quot;</span>
 <span class="c-depth0">}</span></pre></details>
 </div>
+<div class="item" id="l.b_egin">
+<h3><a href="#l.b_egin"><span class="c-libfunc">ˡb̲egin</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L62">line 62</a></div>
+<div class="doc">
+<p>ce:b_egin circuit: a new session cell for a circuit -- one cell kept
+between calls, for a planner to try steps on (ce:a_ttempt) -- the
+reset's outcome as JSON.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;b_egin : text -&gt; text&quot;</span>         <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/begin&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡb̲egin</span> ← <span class="c-depth0">{</span> a →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/begin?text&quot;</span>
+  <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/begin&quot;</span>
+<span class="c-depth0">}</span></pre></details>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellPlan.xtl.html#l.b_uild"><span class="c-libfunc">ˡb̲uild</span></a></div>
+</div>
+<div class="item" id="l.a_ttempt">
+<h3><a href="#l.a_ttempt"><span class="c-libfunc">ˡa̲ttempt</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L67">line 67</a></div>
+<div class="doc">
+<p>ce:a_ttempt commands: the commands tried on the session's cell: kept
+if every one is ok (&quot;ok&quot;, then each outcome as JSON, a line each),
+else the cell as it was and &quot;no COMMAND: why&quot;. The simulator is the
+authority: a planner proposes, it disposes.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;a_ttempt : text -&gt; text&quot;</span>       <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/attempt&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡa̲ttempt</span> ← <span class="c-depth0">{</span> a →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/attempt?text&quot;</span>
+  <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/attempt&quot;</span>
+<span class="c-depth0">}</span></pre></details>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellPlan.xtl.html#h.t_ry"><span class="c-libfunc">ʰt̲ry</span></a></div>
+</div>
+<div class="item" id="l.f_rame">
+<h3><a href="#l.f_rame"><span class="c-libfunc">ˡf̲rame</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L70">line 70</a></div>
+<div class="doc">
+<p>ce:f_rame name: where a frame of the session's cell is now (U1.3.tip,
+R1.2.tip, C1), x y z in the cell's frame, mm.</p>
+</div>
+<pre class="code"><span class="c-string">&quot;f_rame : text -&gt; text&quot;</span>         <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/frame&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡf̲rame</span> ← <span class="c-depth0">{</span> a →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/frame?text&quot;</span>
+  <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/frame&quot;</span>
+<span class="c-depth0">}</span></pre></details>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellPlan.xtl.html#h.a_t"><span class="c-libfunc">ʰa̲t</span></a></div>
+</div>
+<div class="item" id="l.k_ind">
+<h3><a href="#l.k_ind"><span class="c-libfunc">ˡk̲ind</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L73">line 73</a></div>
+<div class="doc">
+<p>ce:k_ind id: a part of the session's cell: its kind, then &quot;kitted&quot;
+if it came with its leads cut (a battery snap's).</p>
+</div>
+<pre class="code"><span class="c-string">&quot;k_ind : text -&gt; text&quot;</span>          <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/kind&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡk̲ind</span> ← <span class="c-depth0">{</span> a →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/kind?text&quot;</span>
+  <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/kind&quot;</span>
+<span class="c-depth0">}</span></pre></details>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellPlan.xtl.html#h.p_art"><span class="c-libfunc">ʰp̲art</span></a>, <a href="extensions-cell-lib-CellPlan.xtl.html#h.o_rdered"><span class="c-libfunc">ʰo̲rdered</span></a>, <a href="extensions-cell-lib-CellPlan.xtl.html#h.p_artOne"><span class="c-libfunc">ʰp̲artOne</span></a></div>
+</div>
+<div class="item" id="l.n_extWire">
+<h3><a href="#l.n_extWire"><span class="c-libfunc">ˡn̲extWire</span></a> <span class="type">: Unit -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L75">line 75</a></div>
+<div class="doc">
+<p>ce:n_extWire @: the id the session's next wire will have (W3).</p>
+</div>
+<pre class="code"><span class="c-string">&quot;n_extWire : unit -&gt; text&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/next_wire&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡn̲extWire</span> ← <span class="c-depth0">{</span> @ →
+  <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/next_wire&quot;</span>
+<span class="c-depth0">}</span></pre></details>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellPlan.xtl.html#h.j_umperBlock"><span class="c-libfunc">ʰj̲umperBlock</span></a></div>
+</div>
+<div class="item" id="l.j_oined">
+<h3><a href="#l.j_oined"><span class="c-libfunc">ˡj̲oined</span></a> <span class="type">: Char -&gt; Char</span></h3>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L78">line 78</a></div>
+<div class="doc">
+<p>ce:j_oined pin: the pins a pin of the session's cell is soldered to,
+a space between (empty: none yet).</p>
+</div>
+<pre class="code"><span class="c-string">&quot;j_oined : text -&gt; text&quot;</span>        <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/joined&quot;</span></pre>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡj̲oined</span> ← <span class="c-depth0">{</span> a →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/joined?text&quot;</span>
+  <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/joined&quot;</span>
+<span class="c-depth0">}</span></pre></details>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellPlan.xtl.html#h.p_laced"><span class="c-libfunc">ʰp̲laced</span></a>, <a href="extensions-cell-lib-CellPlan.xtl.html#h.p_art"><span class="c-libfunc">ʰp̲art</span></a></div>
+</div>
 <div class="item" id="l.r_ig">
 <h3><a href="#l.r_ig"><span class="c-libfunc">ˡr̲ig</span></a> <span class="type">: Unit -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L62">line 62</a></div>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L82">line 82</a></div>
 <div class="doc">
 <p>ce:r_ig @: the arm's rig as JSON -- each joint's DH parameters
 (alpha, a, d, offset), its limits, top speed and acceleration, and
@@ -406,7 +497,7 @@ the home pose; every arm in the cell is this arm.</p>
 </div>
 <div class="item" id="l.a_rmModel">
 <h3><a href="#l.a_rmModel"><span class="c-libfunc">ˡa̲rmModel</span></a> <span class="type">: Unit -&gt; Char</span></h3>
-<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L70">line 70</a></div>
+<div class="meta">function &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L90">line 90</a></div>
 <div class="doc">
 <p>ce:a_rmModel @: what a model of the arm must be, as JSON (the asset
 contract, docs/cell-design.md): its nodes -- arm_base, arm_j1 to
@@ -424,7 +515,7 @@ from it, and Blender writes it back as arm.rig.json.</p>
 </div>
 <div class="item" id="l.package">
 <h3><a href="#l.package">ˡpackage</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L74">line 74</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-Cell.xtl.src.html#L94">line 94</a></div>
 <div class="doc">
 <p>The native package behind these functions (a literal l: name also
 makes this file a library to <code>xetal type</code>: ask E7).</p>

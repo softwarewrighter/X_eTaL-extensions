@@ -56,6 +56,26 @@
 ## player draws it (th:p_age! writes a page). A command not ok is an
 ## error naming it.
 "s_cene : text text -> text"    ffi:b_ind< "cell/scene"
+## ce:b_egin circuit: a new session cell for a circuit -- one cell kept
+## between calls, for a planner to try steps on (ce:a_ttempt) -- the
+## reset's outcome as JSON.
+"b_egin : text -> text"         ffi:b_ind< "cell/begin"
+## ce:a_ttempt commands: the commands tried on the session's cell: kept
+## if every one is ok ("ok", then each outcome as JSON, a line each),
+## else the cell as it was and "no COMMAND: why". The simulator is the
+## authority: a planner proposes, it disposes.
+"a_ttempt : text -> text"       ffi:b_ind< "cell/attempt"
+## ce:f_rame name: where a frame of the session's cell is now (U1.3.tip,
+## R1.2.tip, C1), x y z in the cell's frame, mm.
+"f_rame : text -> text"         ffi:b_ind< "cell/frame"
+## ce:k_ind id: a part of the session's cell: its kind, then "kitted"
+## if it came with its leads cut (a battery snap's).
+"k_ind : text -> text"          ffi:b_ind< "cell/kind"
+## ce:n_extWire @: the id the session's next wire will have (W3).
+"n_extWire : unit -> text"      ffi:b_ind< "cell/next_wire"
+## ce:j_oined pin: the pins a pin of the session's cell is soldered to,
+## a space between (empty: none yet).
+"j_oined : text -> text"        ffi:b_ind< "cell/joined"
 ## ce:r_ig @: the arm's rig as JSON -- each joint's DH parameters
 ## (alpha, a, d, offset), its limits, top speed and acceleration, and
 ## the home pose; every arm in the cell is this arm.

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""The 555 blinker by hand rules, a trial for the planner: prints a
+"""The 555 blinker by hand rules -- the trial the planner learned from
+(programs/blinker.cell is now planned from nets/blinker.net by
+CellPlan.xtl's search, cp:b_uild); kept as the record. It prints a
 command program for circuits/blinker.toml. The chip in the vise legs up
 (dead-bug); every joint a lap joint (decision C22): a lead's end
 alongside a leg or lead, 3.2 mm. Enameled jumpers between legs first,

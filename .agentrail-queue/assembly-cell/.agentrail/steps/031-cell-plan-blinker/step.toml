@@ -1,6 +1,6 @@
 number = 31
 slug = "cell-plan-blinker"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 31 (inserted 2026-11-27, found in step 28): CellPlan.xtl learns ..."
 role = "production"
 context_files = []

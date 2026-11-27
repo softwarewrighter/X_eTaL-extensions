@@ -16,9 +16,13 @@ work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 # the netlist as X_eTaL text: backslashes, quotes and newlines escaped
 text="$(python3 -c 'import sys; print(open(sys.argv[1]).read().replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", "\\n"), end="")' "$net")"
+# a netlist of nets (net lines) is planned by search, each step tried on
+# the simulator (cp:b_uild); one of neighbor lines by cp:p_lan
+plan=p_lan
+grep -q '^net ' "$net" && plan=b_uild
 cat > "$work/plan.xtl" <<XTL
 "cp:" u_se< "CellPlan"
-cp:p_lan "$text"
+cp:$plan "$text"
 XTL
 (cd "$cell" && XETAL_PATH="$cell/lib" "$root/target/debug/xetal-x" --ext . run "$work/plan.xtl" > "$work/out")
 cp "$work/out" "$cell/programs/$name.cell"

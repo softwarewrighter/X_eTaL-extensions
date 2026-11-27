@@ -572,8 +572,9 @@ inspect U1.4+W1.1                 # good; a wrap of 1.75 turns; ...
 (an NE555P, three resistors, a 10 uF electrolytic, a 10 nF disc, a red
 LED and a 9 V battery snap; seven nets) dead-bug, every joint a lap,
 and ends with `check: 7 of 7 nets made, nothing damaged: the work
-matches its netlist`. It is written by `tools/blinker-trial.py`, which
-holds the rules by hand; the planner learns them in a later step.
+matches its netlist`. The planner writes it from `nets/blinker.net`
+by search (below, "Planning by search"); `tools/blinker-trial.py` is
+the hand build it learned from.
 
 1. The chip goes in the vise legs up. Enameled jumpers go between legs
    while they are bare: pin 4 to pin 8 (VCC), then pin 2 to pin 6 (THR)
@@ -670,6 +671,39 @@ four resistors on a DIP").
 - The neighbors are axial parts joined by lead 1 for now. Sleeving or
   enameled wire where nets cross, supports where a part cannot be held,
   and other kinds of neighbor come with the builds that need them.
+
+### Planning by search: a netlist of nets
+
+`nets/blinker.net` names nets rather than neighbors (`net GND U1.1
+C1.2 C2.2 D1.2 BT1.2`); `just ext cell plan blinker` plans it with
+`cp:b_uild`, which writes `programs/blinker.cell`. The planner proposes
+and the simulator disposes: it keeps a session cell in the extension
+(`ce:b_egin circuit`), and tries each step on it (`ce:a_ttempt
+commands`: kept if every command is ok, else the cell as it was and
+why), keeping the first candidate the simulator takes and a comment for
+each it refused (`# refused: no lay A W5: collision: ...`). Its rules:
+
+1. The core goes in the vise legs up; the core's pins that share a net
+   are joined first by jumpers, straight or over the middle, low first.
+2. Then each other part: axial parts first, then the rest, the farthest
+   reaching first (one whose other lead's partner is across the core
+   goes before one that would stand in its way), kitted parts last.
+3. A part's lead is laid alongside a placed partner: every core pin
+   target first (the one nearest the part's other partners first), then
+   a placed lead (a post); axial leads bent in the rig and fanned out,
+   radial leads lowered from above; either pincer.
+4. As soon as a part is soldered, its other leads are finished: an
+   axial part's trimmed; one whose net has nothing placed yet bent up
+   as a post (the LED goes onto R3's); the rest joined by enameled
+   jumpers with lapped ends to partners already placed, straight, over
+   the middle, or routed out to the side and brought in from it.
+5. A kitted part (the battery snap, its leads cut) is set on the
+   turntable beside the vise and jumped up past the jaw.
+
+The planned blinker checks 7 of 7 nets, every joint a lap; planning it
+takes some minutes (each candidate is simulated). `ce:f_rame`,
+`ce:k_ind`, `ce:n_extWire` and `ce:j_oined` answer the planner's
+questions about the session cell.
 
 ## Insulation: heat-shrink sleeving
 

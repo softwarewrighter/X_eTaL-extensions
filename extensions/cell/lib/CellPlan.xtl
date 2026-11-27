@@ -196,3 +196,328 @@ l:p_lan := { net ->
   body := d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ one m_ap order
   head c_at start c_at body c_at "inspect shorts\ncheck\n"
 }
+
+### The search: a netlist of nets, each step tried on the simulator
+
+# the lines of a netlist that name a net, each boxed
+h:n_etLines := { net ->
+  ls := h:l_ines net
+  ((ls, "net") h:w_ith 0) r_eplicate ls
+}
+# each net's pins, each net a box of boxed pins
+h:n_ets := { net -> '{ l -> e_nclose 2 d_rop ((d_isclose l) != f_irst " ") p_artition d_isclose l } e_ach h:n_etLines net }
+# a pin's part (R1.2 -> R1), and a frame's pin (U1.3.tip -> U1.3)
+h:p_artOf := { p -> d_isclose f_irst (p != f_irst ".") p_artition p }
+h:p_in := { f ->
+  ps := (f != f_irst ".") p_artition f
+  (d_isclose 1 s_elect ps) c_at "." c_at d_isclose 2 s_elect ps
+}
+# texts joined, a box of them
+h:c_oncat := { bs ->
+  0 = t_ally bs ? ""
+  d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ bs
+}
+# a text's first line
+h:f_irstLine := { t -> d_isclose f_irst (t != f_irst "\n") p_artition t }
+# the net (its pins) a pin is in; empty if none
+h:n_etOf := { (nets, p) z ->
+  hit := '{ n -> 0 < '+ r_/ '{ q -> (d_isclose q) m_atch p } e_ach d_isclose n } e_ach nets
+  0 = '+ r_/ hit ? 0 t_ake d_isclose f_irst nets
+  d_isclose f_irst hit r_eplicate nets
+}
+# a net's pins on the core, and on other parts
+h:o_nCore := { (pins, core) z -> '{ q -> (h:p_artOf d_isclose q) m_atch core } e_ach pins }
+# where a frame of the session's cell is: x y z
+h:a_t := { f -> n_umbers ce:f_rame f }
+
+# the first candidate (a command block) the simulator takes, after a
+# comment for each it refused first; a comment if it takes none
+h:t_ry := { cs ->
+  0 = t_ally cs ? "#!none\n"
+  c := d_isclose f_irst cs
+  r := ce:a_ttempt c
+  "ok" m_atch 2 t_ake r ? c
+  ("# refused: " c_at (100 t_ake h:f_irstLine r) c_at "\n") c_at h:t_ry 1 d_rop cs
+}
+
+# a joint soldered at the iron station
+h:s_older := { j -> "present " c_at j c_at " at=S1\ntouch S1 at=" c_at j c_at " dwell=1.5 temp=400\nfeed S1 mm=2 rate=1\nback S1\nwait until=" c_at j c_at " below=100\ninspect " c_at j c_at "\n" }
+# the arm out from over the work, home through joint space
+h:a_way := { to -> "lift A mm=60\nmove A to=" c_at to c_at "\njoints A 0 0 0 0 90 0\n" }
+# let go, and the turntable back to rest
+h:d_one := { pz -> "unpinch " c_at pz c_at "\npark " c_at pz c_at "\nstage to=0 tilt=0 at=0,0,0\n" }
+# x,y,z of three numbers
+h:t_hree := { (x, y, h) z -> (h:n_um x) c_at "," c_at (h:n_um y) c_at "," c_at h:n_um h }
+
+# an enameled jumper from frame a to frame b, its ends lapped down their
+# leads: (a, b, via text, from text, pincer)
+h:j_umperBlock := { (a, b, vt, ft, pz) z ->
+  w := ce:n_extWire @
+  s1 := "wire S5 awg=30 span=" c_at a c_at "+" c_at b c_at " lap=3.2" c_at vt c_at " enamel=yes\npick A " c_at w c_at " grasp=middle\ncut S5\nlift A mm=60\nlay A " c_at w c_at ft c_at "\n"
+  s2 := "pinch " c_at pz c_at " on=" c_at w c_at ".1 at=1.5\nrelease A " c_at w c_at "\n" c_at h:a_way "0,60,60"
+  s3 := (h:s_older (h:p_in a) c_at "+" c_at w c_at ".1") c_at h:s_older (h:p_in b) c_at "+" c_at w c_at ".2"
+  s1 c_at s2 c_at s3 c_at h:d_one pz
+}
+# a jumper's candidates: straight; over the core's middle, low then a
+# little higher; routed out from the core at its middle, at its ends'
+# height and higher, brought in from that side; with either pincer
+h:j_umper := { (a, b) z ->
+  pa := h:a_t a
+  pb := h:a_t b
+  m := 0.5 * pa + pb
+  n := s_qrt ((1 s_elect m) ^ 2) + (2 s_elect m) ^ 2
+  ox := (1 s_elect m) / n m_ax 0.001
+  oy := (2 s_elect m) / n m_ax 0.001
+  zt := (3 s_elect pa) m_ax 3 s_elect pb
+  v1 := " via=" c_at ((1 s_elect m) + 4 * ox, (2 s_elect m) + 4 * oy, zt) h:t_hree 0
+  v2 := " via=" c_at ((1 s_elect m) + 4 * ox, (2 s_elect m) + 4 * oy, zt + 5) h:t_hree 0
+  v3 := " via=" c_at (0.0, 0.0, zt + 1.65) h:t_hree 0
+  v4 := " via=" c_at (0.0, 0.0, zt + 3.3) h:t_hree 0
+  f1 := " from=" c_at (ox, oy, 0.8) h:t_hree 0
+  c1 := (e_nclose (a, b, "", "", "P1") h:j_umperBlock 0) c_at (e_nclose (a, b, "", "", "P2") h:j_umperBlock 0) c_at (e_nclose (a, b, v3, "", "P1") h:j_umperBlock 0) c_at e_nclose (a, b, v4, "", "P1") h:j_umperBlock 0
+  c2 := (e_nclose (a, b, v1, "", "P1") h:j_umperBlock 0) c_at (e_nclose (a, b, v1, f1, "P1") h:j_umperBlock 0) c_at e_nclose (a, b, v1, f1, "P2") h:j_umperBlock 0
+  c3 := (e_nclose (a, b, v2, f1, "P1") h:j_umperBlock 0) c_at e_nclose (a, b, v2, f1, "P2") h:j_umperBlock 0
+  h:t_ry c1 c_at c2 c_at c3
+}
+
+
+# taken: the result of a search is a block, not the marker of none
+h:t_aken := { t -> n_ot "#!none\n" m_atch (n_eg 7) t_ake t }
+# -1, 0 or 1
+h:s_ign := { v -> (f_loat v > 0) - f_loat v < 0 }
+# every pin of the nets, each boxed; a part's pins among them
+h:a_llPins := { nets -> d_isclose '{ e_nclose (d_isclose _l) c_at d_isclose _r } r_/ nets }
+h:p_insOf := { (nets, q) z ->
+  ps := h:a_llPins nets
+  ('{ x -> (h:p_artOf d_isclose x) m_atch q } e_ach ps) r_eplicate ps
+}
+# a pin's net's pins on the core
+h:c_orePins := { (nets, p, core) z ->
+  n := (nets, p) h:n_etOf 0
+  ((n, core) h:o_nCore 0) r_eplicate n
+}
+# a part is placed once any of its pins is soldered
+h:p_laced := { (nets, q) z ->
+  ps := (nets, q) h:p_insOf 0
+  0 < '+ r_/ '{ x -> 0 < t_ally ce:j_oined d_isclose x } e_ach ps
+}
+# a pin's partners already placed: the net's core pins first (as tips),
+# then the pins of other placed parts (their tips, and 7 mm along)
+h:p_artners := { (nets, p, core) z ->
+  n := (nets, p) h:n_etOf 0
+  cs := ((n, core) h:o_nCore 0) r_eplicate n
+  others := ('{ x -> (n_ot (h:p_artOf d_isclose x) m_atch h:p_artOf p) & (n_ot (h:p_artOf d_isclose x) m_atch core) } e_ach n) r_eplicate n
+  live := ('{ x -> (nets, h:p_artOf d_isclose x) h:p_laced 0 } e_ach others) r_eplicate others
+  tips := '{ x -> e_nclose (d_isclose x) c_at ".tip" } e_ach cs c_at live
+  tens := '{ x -> e_nclose (d_isclose x) c_at ".7" } e_ach live
+  tips c_at tens
+}
+# the other pincer
+h:o_ther := { pz -> "P1" m_atch pz ? "P2"
+  "P1" }
+
+# a jumper from a pin to the first of its partners it reaches
+h:f_inishTo := { (r, ts) z ->
+  0 = t_ally ts ? "#!none\n"
+  t := ((r c_at ".tip"), d_isclose f_irst ts) h:j_umper 0
+  h:t_aken t ? t
+  rest := (r, 1 d_rop ts) h:f_inishTo 0
+  t c_at rest
+}
+# a placed part's other pins joined: each to a partner already placed
+h:f_inish := { (nets, rs, core) z ->
+  0 = t_ally rs ? ""
+  r := d_isclose f_irst rs
+  ts := (nets, r, core) h:p_artners 0
+  0 = t_ally ts ? (nets, 1 d_rop rs, core) h:f_inish 0
+  t := (r, ts) h:f_inishTo 0
+  rest := (nets, 1 d_rop rs, core) h:f_inish 0
+  t c_at rest
+}
+# after a part is soldered, its other leads: an axial part's trimmed;
+# one whose net has nothing placed yet bent up as a post for a part to
+# come (for a radial part lapped onto it)
+h:a_fter := { (nets, rs, core, axial, pz) z ->
+  0 = t_ally rs ? ""
+  r := d_isclose f_irst rs
+  trim := "present " c_at r c_at ".10 at=S4\ntrim S4 on=" c_at r c_at " at=10\n"
+  post := "bend " c_at (h:o_ther pz) c_at " on=" c_at r c_at " at=6 angle=90 toward=0,0,1\n"
+  lone := 0 = t_ally (nets, r, core) h:p_artners 0
+  t := (axial r_eplicate e_nclose trim) c_at ((axial & lone) r_eplicate e_nclose post)
+  (h:c_oncat t) c_at (nets, 1 d_rop rs, core, axial, pz) h:a_fter 0
+}
+
+# a part's lead laid alongside a target lead and soldered: (part, lead,
+# target frame, along, from, axial, pincer, the arm's way out, after)
+h:l_apBlock := { (q, lead, to, along, frm, axial, pz, out, aft) z ->
+  rig := "insert A on=" c_at lead c_at " at=12\nform angle=90\nlift A mm=30\nshear A on=" c_at lead c_at " at=17.2\nlift A mm=60\n"
+  f := (0 < t_ally frm) r_eplicate e_nclose " from=" c_at frm
+  s1 := "pick A " c_at q c_at " grasp=body\nlift A mm=60\n" c_at h:c_oncat axial r_eplicate e_nclose rig
+  s2 := "bring A " c_at lead c_at " to=" c_at to c_at " along=" c_at along c_at " lap=3.2" c_at (h:c_oncat f) c_at "\npinch " c_at pz c_at " on=" c_at lead c_at " at=3\nrelease A " c_at q c_at "\n" c_at h:a_way out
+  s1 c_at s2 c_at (h:s_older (h:p_in to) c_at "+" c_at lead) c_at aft c_at h:d_one pz
+}
+# the candidate blocks for laying a part's lead a alongside its first
+# placed partner (both pincers, a few directions)
+h:c_ands := { (nets, q, core, a, to, axial) z ->
+  ps := (nets, q) h:p_insOf 0
+  rs := (n_ot '{ x -> (d_isclose x) m_atch a } e_ach ps) r_eplicate ps
+  t := h:a_t to
+  sx := h:s_ign 1 s_elect t
+  sy := h:s_ign 2 s_elect t
+  n3 := s_qrt 1 + (0.3 * 2 s_elect t) ^ 2
+  fan := (sx / n3, 0.3 * (2 s_elect t) / n3, 0.0) h:t_hree 0
+  flat := (sx, 0.0, 0.0) h:t_hree 0
+  pz := ((sx > 0) r_eplicate "P1") c_at (sx <= 0) r_eplicate "P2"
+  aft := (nets, rs, core, axial, pz) h:a_fter 0
+  aft2 := (nets, rs, core, axial, h:o_ther pz) h:a_fter 0
+  ends := (0.0, sy, 0.0) h:t_hree 0
+  up := (sx, sy, 1.0) h:t_hree 0
+  axc := (e_nclose (q, a, to, fan, "", 1, pz, "0,60,60", aft) h:l_apBlock 0) c_at (e_nclose (q, a, to, flat, "", 1, pz, "0,60,60", aft) h:l_apBlock 0) c_at e_nclose (q, a, to, fan, "", 1, h:o_ther pz, "0,60,60", aft2) h:l_apBlock 0
+  rac1 := (e_nclose (q, a, to, flat, "0,0,1", 0, pz, "0,60,60", aft) h:l_apBlock 0) c_at (e_nclose (q, a, to, ends, "0,0,1", 0, pz, "0,60,60", aft) h:l_apBlock 0) c_at e_nclose (q, a, to, flat, "0,0,1", 0, pz, "-40,80,80", aft) h:l_apBlock 0
+  rac2 := (e_nclose (q, a, to, ends, "0,0,1", 0, pz, "-40,80,80", aft) h:l_apBlock 0) c_at (e_nclose (q, a, to, (sy, n_eg sx, 0.0) h:t_hree 0, up, 0, pz, "-40,80,80", aft) h:l_apBlock 0) c_at e_nclose (q, a, to, (n_eg sy, sx, 0.0) h:t_hree 0, up, 0, pz, "-40,80,80", aft) h:l_apBlock 0
+  (axial r_eplicate axc) c_at (n_ot axial) r_eplicate rac1 c_at rac2
+}
+# a lead's targets, each a box of (lead, target frame): its partners,
+# the one nearest the first partner of the part's other leads first
+h:t_argets := { (nets, q, core, a) z ->
+  ts := (nets, a, core) h:p_artners 0
+  ps := (nets, q) h:p_insOf 0
+  others := (n_ot '{ x -> (d_isclose x) m_atch a } e_ach ps) r_eplicate ps
+  withP := ('{ x -> 0 < t_ally (nets, d_isclose x, core) h:p_artners 0 } e_ach others) r_eplicate others
+  far := '{ x -> e_nclose d_isclose f_irst (nets, d_isclose x, core) h:p_artners 0 } e_ach withP
+  0 = t_ally far ? '{ x -> e_nclose (e_nclose a) c_at x } e_ach ts
+  g := h:a_t d_isclose f_irst far
+  d := '{ x -> s_qrt '+ r_/ ((h:a_t d_isclose x) - g) ^ 2 } e_ach ts
+  '{ x -> e_nclose (e_nclose a) c_at x } e_ach (g_rade d) s_elect ts
+}
+# a part placed: one of its leads laid alongside a placed lead (a core
+# pin's first; each such lead in turn), then its leads still free
+# finished; a part that cannot be placed is left, said so
+h:p_art := { (nets, q, core) z ->
+  k := ce:k_ind q
+  axial := "axial" m_atch 5 t_ake k
+  ps := (nets, q) h:p_insOf 0
+  hasCore := '{ x -> 0 < t_ally (nets, d_isclose x, core) h:c_orePins 0 } e_ach ps
+  hasAny := '{ x -> 0 < t_ally (nets, d_isclose x, core) h:p_artners 0 } e_ach ps
+  # a radial part on a post first (the core's legs left free), then on
+  # the core; an axial part on the core
+  post := (n_ot hasCore) & hasAny
+  anchors := ((axial r_eplicate hasCore) c_at (n_ot axial) r_eplicate post c_at hasCore) r_eplicate (ps c_at (n_ot axial) r_eplicate ps)
+  # each anchor's targets, the one nearest the part's other partners first
+  every := h:a_llPins '{ x -> e_nclose (nets, q, core, d_isclose x) h:t_argets 0 } e_ach anchors
+  # every core pin target before any lead's
+  onCore := '{ x -> (h:p_artOf d_isclose 2 s_elect d_isclose x) m_atch core } e_ach every
+  pairs := (onCore r_eplicate every) c_at (n_ot onCore) r_eplicate every
+  cands := h:a_llPins '{ x -> e_nclose (nets, q, core, d_isclose 1 s_elect d_isclose x, d_isclose 2 s_elect d_isclose x, axial) h:c_ands 0 } e_ach pairs
+  placed := h:t_ry cands
+  n_ot h:t_aken placed ? placed c_at "# " c_at q c_at " not placed\n"
+  free := ('{ x -> 0 = t_ally ce:j_oined d_isclose x } e_ach ps) r_eplicate ps
+  rest := (nets, free, core) h:f_inish 0
+  placed c_at rest
+}
+
+# a part kitted with its leads cut (a battery snap) set flat on the
+# turntable beside the vise, its leads toward the core, each jumped up
+# past the jaw to its partner
+h:k_itBlock := { (q, y, yaw) z ->
+  "pick A " c_at q c_at " grasp=body\nlift A mm=60\nmove A to=0," c_at (h:n_um y) c_at ",20\nplace A " c_at q c_at " at=0," c_at (h:n_um y) c_at ",-56.4 rpy=0,0," c_at (h:n_um yaw) c_at "\nrelease A " c_at q c_at "\n" c_at h:a_way "0,60,60"
+}
+# a search's result, or, if it took nothing, a jumper's general search
+h:o_rJumper := { (t, a, b) z ->
+  h:t_aken t ? t
+  t c_at (a, b) h:j_umper 0
+}
+h:k_itJumpers := { (nets, rs, core) z ->
+  0 = t_ally rs ? ""
+  r := d_isclose f_irst rs
+  to := d_isclose f_irst (nets, r, core) h:p_artners 0
+  t := h:a_t r c_at ".tip"
+  s := h:s_ign 2 s_elect t
+  y := (2 s_elect t) + 1.5 * s
+  v1 := " via=" c_at (1 s_elect t, y, -28.0) h:t_hree 0
+  v2 := " via=" c_at (0.25 * 1 s_elect t, y, -28.0) h:t_hree 0
+  cs := (e_nclose ((r c_at ".tip"), to, v1, "", "P1") h:j_umperBlock 0) c_at (e_nclose ((r c_at ".tip"), to, v2, "", "P2") h:j_umperBlock 0) c_at (e_nclose ((r c_at ".tip"), to, v1, "", "P2") h:j_umperBlock 0) c_at e_nclose ((r c_at ".tip"), to, v2, "", "P1") h:j_umperBlock 0
+  here := (h:t_ry cs, r c_at ".tip", to) h:o_rJumper 0
+  rest := (nets, 1 d_rop rs, core) h:k_itJumpers 0
+  here c_at rest
+}
+h:k_it := { (nets, q, core) z ->
+  placed := h:t_ry (e_nclose (q, -38.0, 180.0) h:k_itBlock 0) c_at e_nclose (q, 38.0, 0.0) h:k_itBlock 0
+  placed c_at (nets, (nets, q) h:p_insOf 0, core) h:k_itJumpers 0
+}
+
+# the order parts go in: axial parts, then the rest, the farthest
+# reaching first (a part whose other lead's partner is across the core
+# goes before one that would stand in its way), kitted parts last
+h:r_each := { (nets, q, core) z ->
+  ps := (nets, q) h:p_insOf 0
+  has := '{ x -> 0 < t_ally (nets, d_isclose x, core) h:c_orePins 0 } e_ach ps
+  cs := '{ x -> e_nclose (d_isclose f_irst (nets, d_isclose x, core) h:c_orePins 0) c_at ".tip" } e_ach has r_eplicate ps
+  2 > t_ally cs ? 0.0
+  s_qrt '+ r_/ ((h:a_t d_isclose 1 s_elect cs) - h:a_t d_isclose 2 s_elect cs) ^ 2
+}
+h:o_rdered := { (nets, qs, core) z ->
+  k := '{ x -> e_nclose ce:k_ind d_isclose x } e_ach qs
+  ax := '{ x -> "axial" m_atch 5 t_ake d_isclose x } e_ach k
+  kit := '{ x -> (6 <= t_ally d_isclose x) & "kitted" m_atch (n_eg 6) t_ake d_isclose x } e_ach k
+  rad := (n_ot ax) & n_ot kit
+  r := rad r_eplicate qs
+  far := '{ x -> (nets, d_isclose x, core) h:r_each 0 } e_ach r
+  (ax r_eplicate qs) c_at ((g_rade n_eg far) s_elect r) c_at kit r_eplicate qs
+}
+# one part after another: a part's own steps, then the rest
+h:p_artsAll := { (nets, qs, core) z ->
+  0 = t_ally qs ? ""
+  q := d_isclose f_irst qs
+  here := (nets, e_nclose q, core) h:p_artOne 0
+  rest := (nets, 1 d_rop qs, core) h:p_artsAll 0
+  here c_at rest
+}
+h:p_artOne := { (nets, qs, core) z ->
+  q := d_isclose f_irst qs
+  k := ce:k_ind q
+  (6 <= t_ally k) & "kitted" m_atch (n_eg 6) t_ake k ? (nets, q, core) h:k_it 0
+  (nets, q, core) h:p_art 0
+}
+# the core's pins that share a net, each pair joined by a jumper
+h:c_oreJumpers := { (nets, core) z ->
+  0 = t_ally nets ? ""
+  n := d_isclose f_irst nets
+  cs := ((n, core) h:o_nCore 0) r_eplicate n
+  2 > t_ally cs ? (1 d_rop nets, core) h:c_oreJumpers 0
+  # this step first: an expression runs right to left
+  here := ((d_isclose f_irst cs) c_at ".tip", (d_isclose 2 s_elect cs) c_at ".tip") h:j_umper 0
+  rest := (1 d_rop nets, core) h:c_oreJumpers 0
+  here c_at rest
+}
+
+## cp:b_uild net: a netlist of nets (circuit, core, then net lines: a
+## net's name and its pins, `net GND U1.1 C1.2`) planned by search,
+## each step tried on the simulator's session cell (ce:a_ttempt) and the
+## first candidate it takes kept, a comment for each it refused before
+## it: the core into the vise legs up; the core's pins that share a net
+## joined by jumpers; each other part, axial ones first, then the rest
+## the farthest reaching first, kitted ones last: one of its leads laid
+## alongside a placed lead (a core pin's first: axial leads bent in the
+## rig, radial ones lowered from above), soldered, its other leads
+## trimmed, or bent up as a post where nothing of their net is placed
+## yet, and joined by jumpers to partners already placed; a kitted part
+## set on the turntable and jumped in. It asks the cell extension's
+## session, so run it with xetal-x (`just ext cell plan NAME`).
+l:b_uild := { net ->
+  core := l:c_ore net
+  id := d_isclose 1 s_elect core
+  nets := h:n_ets net
+  circuit := l:c_ircuit net
+  _ := ce:b_egin circuit
+  start := "reset circuit=" c_at circuit c_at "\ntool A tweezers\npick A " c_at id c_at " grasp=ends\nplace A " c_at id c_at " at=0,0,-24 rpy=180,0,90\nvise close\nrelease A " c_at id c_at "\nlift A mm=60\n"
+  s0 := h:t_ry e_nclose start
+  js := (nets, id) h:c_oreJumpers 0
+  every := h:a_llPins nets
+  owners := '{ x -> e_nclose h:p_artOf d_isclose x } e_ach every
+  qs := ('{ x -> n_ot (d_isclose x) m_atch id } e_ach u_nique owners) r_eplicate u_nique owners
+  order := (nets, qs, id) h:o_rdered 0
+  body := (nets, order, id) h:p_artsAll 0
+  head := "# planned by CellPlan.xtl (cp:b_uild) from a netlist, each step tried on the simulator: " c_at (f_ormat t_ally nets) c_at " nets\n"
+  head c_at s0 c_at js c_at body c_at "inspect shorts\ncheck\n"
+}
