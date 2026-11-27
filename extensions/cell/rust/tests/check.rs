@@ -104,3 +104,49 @@ park P1",
         "{p:?}"
     );
 }
+
+#[test]
+fn a_jumper_is_formed_to_its_route_and_laid_on_it() {
+    let mut w = World::default();
+    let out = run(
+        &mut w,
+        "reset circuit=demo\ntool A tweezers\npick A U1 grasp=ends\nplace A U1 at=0,0,-24 rpy=0,0,90\nvise close\nrelease A U1\nlift A mm=60\n\
+         wire S5 awg=30 span=U1.1.tip+U1.8.tip via=6,-8,-19 via2=-6,-8,-19 enamel=yes\npick A W1 grasp=middle\ncut S5\nlift A mm=60\nlay A W1",
+    );
+    assert!(out.iter().all(|o| o.ok), "{:?}", out.iter().find(|o| !o.ok));
+    assert!(
+        out[7]
+            .events
+            .iter()
+            .any(|e| e.starts_with("formed to its route: 2 bends")),
+        "{:?}",
+        out[7]
+    );
+    let last = out.last().unwrap();
+    assert_eq!(
+        last.events,
+        [
+            "W1.1.tip is 0.1 mm from U1.1.tip",
+            "W1.2.tip is 0.1 mm from U1.8.tip"
+        ]
+    );
+    // both joints made, the wire up and over the chip's end, not under it
+    assert!(
+        w.joints.iter().any(|j| j.name == "U1.1+W1.1")
+            && w.joints.iter().any(|j| j.name == "U1.8+W1.2")
+    );
+    assert!(w.clashes().is_empty(), "{:?}", w.clashes());
+    // a wire not formed to a route cannot be laid
+    let out = run(
+        &mut w,
+        "pinch P1 on=W1.2 at=2\nrelease A W1\nlift A mm=60\nwire S5 awg=30 mm=20\npick A W2 grasp=middle\ncut S5\nlift A mm=60\nlay A W2",
+    );
+    let o = out.last().unwrap();
+    assert!(
+        o.refused
+            .as_deref()
+            .unwrap_or("")
+            .contains("is not formed to a route"),
+        "{out:?}"
+    );
+}

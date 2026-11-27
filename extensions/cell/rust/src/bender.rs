@@ -210,6 +210,24 @@ impl World {
         let r = kin::mm(&about(want, roll.to_radians()), &r);
         let goal_p = kin::sub(point, kin::mv(&r, local));
         let goal = Pose { p: goal_p, r };
+        self.carry_to(i, rig, k, &goal, front, allowed, did)
+    }
+
+    /// The held part `k` carried to the pose `goal`: up clear first,
+    /// there in joint space, then in from `front` (an offset from the
+    /// goal), the last of the way slowly, `allowed` touching at the end.
+    #[allow(clippy::too_many_arguments)]
+    pub(crate) fn carry_to(
+        &mut self,
+        i: usize,
+        rig: &crate::rig::Rig,
+        k: usize,
+        goal: &Pose,
+        front: V3,
+        allowed: &[String],
+        did: &mut Vec<String>,
+    ) -> Result<(), Halt> {
+        let now = self.parts[k].pose();
         let arm = self.arms[i].name.clone();
         let tip = self.tip(&arm).map_err(Halt::Refused)?;
         let target = goal.then(&now.inverse().then(&tip));
@@ -337,6 +355,59 @@ impl World {
                 ));
             }
             let _ = self.joint_for(&format!("{e}+{other_end}"));
+        }
+        Ok(())
+    }
+
+    /// `lay ARM WIRE [from=]`: a jumper formed to its route laid on it --
+    /// carried to where its route says (moved with the turntable since),
+    /// both its joints made.
+    pub(crate) fn lay(
+        &mut self,
+        i: usize,
+        rig: &crate::rig::Rig,
+        id: &str,
+        from: Option<V3>,
+        did: &mut Vec<String>,
+        events: &mut Vec<String>,
+    ) -> Result<(), Halt> {
+        let k = self
+            .part_index(id)
+            .ok_or_else(|| Halt::Refused(format!("no part {id}")))?;
+        self.need_holding(i, id)?;
+        let (a, b, on_stage) = self.parts[k]
+            .wire
+            .as_ref()
+            .and_then(|w| w.route.clone())
+            .ok_or_else(|| {
+                Halt::Refused(format!(
+                    "{id} is not formed to a route: wire ... span= via="
+                ))
+            })?;
+        let goal = self.stage_pose().then(&crate::world::pose6(on_stage));
+        let pins = |f: &str| f.splitn(3, '.').take(2).collect::<Vec<_>>().join(".");
+        let (pa, pb) = (pins(&a), pins(&b));
+        let mut allowed: Vec<String> = Vec::new();
+        for f in [&pa, &pb] {
+            allowed.push(format!("part:{}", f.split('.').next().unwrap_or("")));
+            for j in self.joints.iter().filter(|j| j.a == *f || j.b == *f) {
+                for p in [&j.a, &j.b] {
+                    allowed.push(format!("part:{}", p.split('.').next().unwrap_or("")));
+                }
+            }
+        }
+        allowed.retain(|x| x != &format!("part:{id}"));
+        let front = from.map_or([0.0, 0.0, FRONT], |f| {
+            kin::scale(f, FRONT / kin::norm(f).max(1e-9))
+        });
+        self.carry_to(i, rig, k, &goal, front, &allowed, did)?;
+        for (f, pin, end) in [(&a, &pa, "1"), (&b, &pb, "2")] {
+            let off = self
+                .frame(&format!("{id}.{end}.tip"))
+                .and_then(|t| self.frame(f).map(|g| kin::norm(kin::sub(t.p, g.p))))
+                .unwrap_or(f64::INFINITY);
+            events.push(format!("{id}.{end}.tip is {} mm from {f}", num1(off)));
+            let _ = self.joint_for(&format!("{pin}+{id}.{end}"));
         }
         Ok(())
     }

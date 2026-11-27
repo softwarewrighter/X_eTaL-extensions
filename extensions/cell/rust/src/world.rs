@@ -466,7 +466,7 @@ impl Default for World {
     }
 }
 
-fn pose6(p: [f64; 6]) -> Pose {
+pub(crate) fn pose6(p: [f64; 6]) -> Pose {
     Pose::from_xyz_rpy([p[0], p[1], p[2]], [p[3], p[4], p[5]])
 }
 
@@ -1846,6 +1846,14 @@ impl World {
                     events,
                 )?;
             }
+            "lay" => {
+                let id = c.word("part").unwrap_or("").to_string();
+                let from = match c.get("from") {
+                    Some(Value::Numbers(v)) => Some([v[0], v[1], v[2]]),
+                    _ => None,
+                };
+                self.lay(i, &rig, &id, from, did, events)?;
+            }
             "insert" => {
                 let on = c.word("on").unwrap_or("");
                 let at = c.number("at").unwrap_or(3.0);
@@ -2452,6 +2460,10 @@ pub struct WireInfo {
     /// mm along it from the middle (decision C21: elsewhere it insulates).
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub bare: Vec<(String, f64, f64)>,
+    /// A jumper formed to a route: its two ends' frames and the pose (in
+    /// the turntable's frame) that lays it on the route.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub route: Option<(String, String, [f64; 6])>,
     /// Still on this station's spool.
     pub spool: Option<String>,
     /// Its metal: copper, or steel (for supports: it welds well).

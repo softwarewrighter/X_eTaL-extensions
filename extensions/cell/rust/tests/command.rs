@@ -63,9 +63,11 @@ check
 stage to=0 tilt=0
 park P1
 wire S5 awg=30 span=U1.4.tip+U1.8.tip enamel=yes
+wire S5 awg=30 span=U1.1.tip+U1.8.tip via=6,-8,-19 via2=-6,-8,-19
+lay A W1 from=0,0,1
 ";
     let p = parse_program(program).unwrap();
-    assert_eq!(p.len(), 48);
+    assert_eq!(p.len(), 50);
     for c in &p {
         round_trip(&c.to_text());
     }
@@ -83,9 +85,9 @@ fn every_command_has_an_example() {
     let covered = [
         "reset", "tool", "joints", "move", "lift", "back", "grip", "pick", "place", "align",
         "release", "clip", "touch", "feed", "weld", "wire", "cut", "stage", "present", "pinch",
-        "unpinch", "park", "bend", "sleeve", "shrink", "trim", "bring", "insert", "form", "shear",
-        "vise", "wait", "scope", "snap", "inspect", "test", "verify", "check", "identify", "probe",
-        "rewind",
+        "unpinch", "park", "bend", "sleeve", "shrink", "trim", "bring", "lay", "insert", "form",
+        "shear", "vise", "wait", "scope", "snap", "inspect", "test", "verify", "check", "identify",
+        "probe", "rewind",
     ];
     let ops: Vec<&str> = COMMANDS.iter().map(|s| s.op).collect();
     assert_eq!(ops, covered);

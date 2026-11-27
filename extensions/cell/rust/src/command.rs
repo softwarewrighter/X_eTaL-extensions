@@ -320,6 +320,12 @@ pub const COMMANDS: &[Spec] = &[
             req("awg", Kind::Int(22, 40), "the gauge"),
             opt("mm", Kind::Number("mm", 1.0, 120.0), "how much (or span=)"),
             opt(
+                "via",
+                Kind::Vec3("mm"),
+                "with span=: a corner the jumper is bent round on its way (the cell's frame)",
+            ),
+            opt("via2", Kind::Vec3("mm"), "with via=: a second corner"),
+            opt(
                 "span",
                 Kind::Span,
                 "a jumper's two ends (U1.4.tip+U1.8.tip, frames joined by +): cut to the distance between them, less 0.1 mm at each end",
@@ -542,6 +548,17 @@ pub const COMMANDS: &[Spec] = &[
                 "a jumper: where its other end goes; the direction runs to it",
             ),
         ],
+    },
+    Spec {
+        op: "lay",
+        family: "tweezers",
+        summary: "a jumper formed to its route (wire span= via=) carried onto it, both its joints made",
+        positional: &[ARM, req("part", Kind::Part, "the formed wire")],
+        named: &[opt(
+            "from",
+            Kind::Vec3("mm"),
+            "the way it comes in, a direction from the route (from above if not given)",
+        )],
     },
     Spec {
         op: "insert",

@@ -513,6 +513,11 @@ four resistors on a DIP").
   the distance between two frames, less 0.1 mm at each end, so a
   planner needs no geometry of its own for it. `park PINCER` sends a
   pincer back to its rest place on the ring, out of the arm's way.
+- A jumper can be bent to go round something: `wire ... span=A+B
+  via=X,Y,Z [via2=...]` feeds a wire as long as the route from A
+  through the corners to B and forms it as it comes out (as a CNC wire
+  bender does); `lay ARM WIRE` carries it onto the route, wherever the
+  turntable has moved it since, and makes both joints.
 - A jumper is enameled wire cut to the distance between two points
   (less two small gaps) and brought with `end=`: `bring A W1.1
   to=U1.4.tip end=U1.8.tip from=1,0,-0.15` lays it from one to the
@@ -1146,7 +1151,7 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `touch ARM\|STATION at=JOINT [dwell=S] [temp=C]` | iron | put the iron's tip on a joint and hold it there |
 | `feed ARM\|STATION mm=MM [rate=MM/S]` | solder | feed solder wire into the joint the iron is on |
 | `weld ARM\|STATION at=JOINT energy=J [risky=refuse\|allow]` | welder | spot weld a lap of two leads by a capacitor discharge |
-| `wire STATION awg=N [mm=MM] [span=FRAME+FRAME] [enamel=no\|yes] [metal=copper\|steel] [support=no\|yes]` | wire | the wire feeder station feeds bare or enameled wire from its spool out of its nozzle |
+| `wire STATION awg=N [mm=MM] [via=X,Y,Z] [via2=X,Y,Z] [span=FRAME+FRAME] [enamel=no\|yes] [metal=copper\|steel] [support=no\|yes]` | wire | the wire feeder station feeds bare or enameled wire from its spool out of its nozzle |
 | `cut STATION` | wire | the wire feeder cuts its wire at the nozzle: what holds the free end keeps it |
 | `stage [turn=DEG] [to=DEG] [tilt=DEG] [at=X,Y,Z]` | stage | move the positioner: turn the stage by an angle, tilt it, move it |
 | `present FRAME\|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG]` | stage | move the positioner so a pin's frame or a joint is at a tool station's point |
@@ -1158,6 +1163,7 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `shrink STATION on=PIN [dwell=S]` | sleeve | the sleeve station's hot air shrinks the sleeve on a lead, presented at its point |
 | `trim STATION on=PIN at=MM` | cutter | a cutter station cuts a lead, what is past the cut falling into the bin |
 | `bring ARM PIN to=FRAME [along=X,Y,Z] [gap=MM] [roll=DEG] [from=X,Y,Z] [end=FRAME]` | tweezers | the held part turned and carried so a lead's tip comes in toward a frame along a direction (its body out that way), stopping short: for the planner |
+| `lay ARM PART [from=X,Y,Z]` | tweezers | a jumper formed to its route (wire span= via=) carried onto it, both its joints made |
 | `insert ARM on=PIN [at=MM] [roll=DEG]` | bender | the arm slides a held part's lead into the bending rig, at a distance from the body at its mandrel |
 | `form [angle=DEG] [radius=MM]` | bender | the bending rig clamps the lead in it and bends it down round its mandrel, in the rig's plane |
 | `shear ARM on=PIN at=MM` | bender | the arm puts a held part's lead through the rig's shear, which cuts it; what is past the cut falls into the bin |

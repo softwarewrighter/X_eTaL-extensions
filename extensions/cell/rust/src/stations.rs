@@ -741,9 +741,8 @@ impl World {
                         let (a, b) = span.split_once('+').ok_or_else(|| {
                             Halt::Refused(format!("span: {span} is not two frames joined by +"))
                         })?;
-                        let fa = self.frame(a).map_err(Halt::Refused)?.p;
-                        let fb = self.frame(b).map_err(Halt::Refused)?.p;
-                        (kin::norm(kin::sub(fa, fb)) - 0.2).max(1.0)
+                        let path = self.route_path(a, b, c)?;
+                        (crate::leads::length(&path)).max(1.0)
                     }
                     None => c
                         .number("mm")
@@ -753,6 +752,15 @@ impl World {
                 let metal = c.word("metal").unwrap_or("copper").to_string();
                 let support = c.word("support") == Some("yes");
                 self.feed_wire(si, &s, awg, mm, enamel, did, events, warnings)?;
+                // formed to its route as it comes out (the feeder bends as
+                // it feeds, as a CNC wire bender does)
+                if let Some(span) = c.word("span") {
+                    if c.get("via").is_some() {
+                        let (a, b) = span.split_once('+').unwrap_or(("", ""));
+                        let path = self.route_path(a, b, c)?;
+                        self.form_wire(&path, a, b, events)?;
+                    }
+                }
                 if let Some(p) = self.parts.last_mut() {
                     if let Some(w) = p.wire.as_mut() {
                         w.metal.clone_from(&metal);
@@ -974,6 +982,75 @@ impl World {
     /// `wire STATION awg= mm= [enamel=]`: the feeder, retracted, feeds
     /// `mm` of wire straight out of its nozzle toward the work: a new part
     /// (W1, W2, ...) still on the spool, held still by it until cut.
+    /// A jumper's route in the cell's frame: from frame `a` through the
+    /// command's via= and via2= points to frame `b`, each end drawn back
+    /// 0.1 mm.
+    fn route_path(&self, a: &str, b: &str, c: &Command) -> Result<Vec<V3>, Halt> {
+        let fa = self.frame(a).map_err(Halt::Refused)?.p;
+        let fb = self.frame(b).map_err(Halt::Refused)?.p;
+        let mut path = vec![fa];
+        for key in ["via", "via2"] {
+            if let Some(crate::command::Value::Numbers(v)) = c.get(key) {
+                path.push([v[0], v[1], v[2]]);
+            }
+        }
+        path.push(fb);
+        let n = path.len();
+        let back = |p: V3, q: V3| {
+            let d = kin::sub(q, p);
+            let l = kin::norm(d).max(1e-9);
+            kin::add(p, kin::scale(d, 0.1 / l))
+        };
+        path[0] = back(path[0], path[1]);
+        path[n - 1] = back(path[n - 1], path[n - 2]);
+        Ok(path)
+    }
+
+    /// The wire just fed (the last part) formed to `path`: its middle the
+    /// path's, half 1 back to the first end, half 2 on to the last, in the
+    /// wire's own frame as fed; the pose that lays it on the route kept in
+    /// the turntable's frame.
+    fn form_wire(
+        &mut self,
+        path: &[V3],
+        a: &str,
+        b: &str,
+        events: &mut Vec<String>,
+    ) -> Result<(), Halt> {
+        let total = crate::leads::length(path);
+        let (to_a, to_b) = crate::leads::split(path, total / 2.0);
+        let middle = *to_b
+            .first()
+            .ok_or_else(|| Halt::Refused("an empty route".into()))?;
+        let k = self.parts.len() - 1;
+        let pose = self.parts[k].pose();
+        let local = |q: V3| kin::mv(&kin::transpose(&pose.r), kin::sub(q, middle));
+        let half1: Vec<V3> = to_a.iter().rev().map(|q| local(*q)).collect();
+        let half2: Vec<V3> = to_b.iter().map(|q| local(*q)).collect();
+        let t = self.t;
+        let p = &mut self.parts[k];
+        p.reformed.retain(|r| r.0 < t);
+        for (pin, line) in [("1", half1), ("2", half2)] {
+            p.leads.insert(pin.to_string(), line.clone());
+            p.reformed.push((t, pin.to_string(), line));
+        }
+        let goal = Pose {
+            p: middle,
+            r: pose.r,
+        };
+        let on_stage = self.stage_pose().inverse().then(&goal);
+        if let Some(w) = self.parts[k].wire.as_mut() {
+            w.route = Some((a.to_string(), b.to_string(), crate::layout::six(&on_stage)));
+        }
+        events.push(format!(
+            "formed to its route: {} bend{}, {} mm",
+            path.len() - 2,
+            if path.len() == 3 { "" } else { "s" },
+            num1(total)
+        ));
+        Ok(())
+    }
+
     #[allow(clippy::too_many_arguments)]
     fn feed_wire(
         &mut self,
@@ -1041,6 +1118,7 @@ impl World {
             enamel,
             stripped: [false; 2],
             bare: Vec::new(),
+            route: None,
             spool: Some(s.name.clone()),
             metal: "copper".into(),
         });
