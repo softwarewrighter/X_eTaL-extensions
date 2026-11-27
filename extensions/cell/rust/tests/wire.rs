@@ -109,9 +109,7 @@ fn the_wire_program_solders_and_bends_a_wire() {
     let mut w = World::default();
     let out = run(&mut w, include_str!("../../programs/wire.cell"));
     let j = w.joints.iter().find(|j| j.name == "U1.3+W1.1").unwrap();
-    // a butt joint (a lead's end against a leg): weak, decision C22; this
-    // program shows something else, and moves to a lap joint later
-    assert_eq!(j.result.as_deref(), Some("weak"));
+    assert_eq!(j.result.as_deref(), Some("good"));
     assert!(out.iter().any(|o| {
         o.events
             .iter()
@@ -142,15 +140,14 @@ fn enamel_burns_off_at_the_iron_before_the_wire_wets() {
         "no stripping"
     );
     let j = w.joints.iter().find(|j| j.name == "U1.3+W1.1").unwrap();
-    // a butt joint (a lead's end against a leg): weak, decision C22; this
-    // program shows something else, and moves to a lap joint later
-    assert_eq!(j.result.as_deref(), Some("weak"), "{j:?}");
+    assert_eq!(j.result.as_deref(), Some("good"), "{j:?}");
     assert!(w.part("W1").unwrap().wire.as_ref().unwrap().stripped[0]);
 }
 
 /// Enameled wire (decision C21, step 25): run along the chip's pin row
-/// to pin 3, across pin 4; stripped only where the iron heated it.
-const ENAMEL: &str = include_str!("../../programs/enamel.cell");
+/// to pin 3, resting on pin 4's tip; stripped only where the iron heated
+/// it (a fixture: the demo's lap joint keeps the wire off pin 4).
+const ENAMEL: &str = include_str!("fixtures/enamel-crossing.cell");
 
 fn said(o: &Outcome) -> String {
     o.events
@@ -169,9 +166,8 @@ fn enamel_insulates_but_where_the_iron_burned_it_off() {
         said(out.last().unwrap()),
         "shorts: none; insulated: W1.1 crosses U1.4"
     );
+    // a butt joint (the fixture's): it holds, weak
     let j = w.joints.iter().find(|j| j.name == "U1.3+W1.1").unwrap();
-    // a butt joint (a lead's end against a leg): weak, decision C22; this
-    // program shows something else, and moves to a lap joint later
     assert_eq!(j.result.as_deref(), Some("weak"), "{j:?}");
     assert!(w.clashes().is_empty(), "{:?}", w.clashes());
     // stripped at the joint only: a few millimeters at the tip of end 1
@@ -230,4 +226,16 @@ fn an_enameled_wire_is_insulated_but_where_it_is_bare() {
     // AWG 36 to 40 are in the table now
     let d = wire::data().unwrap();
     assert!((d.gauge(40).diameter - 0.0799).abs() < 1e-9);
+}
+
+#[test]
+fn the_enamel_program_laps_its_wire_onto_pin_3() {
+    // the demo: the wire's end alongside pin 3, the wire over pin 4
+    let mut w = World::default();
+    let out = run(&mut w, include_str!("../../programs/enamel.cell"));
+    assert!(out.iter().all(|o| o.ok), "{:?}", out.iter().find(|o| !o.ok));
+    let j = w.joints.iter().find(|j| j.name == "U1.3+W1.1").unwrap();
+    assert_eq!(j.result.as_deref(), Some("good"), "{j:?}");
+    assert!(j.lap >= 3.2, "{j:?}");
+    assert_eq!(said(out.last().unwrap()), "shorts: none");
 }

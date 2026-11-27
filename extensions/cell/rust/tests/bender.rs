@@ -126,9 +126,7 @@ fn the_bend_rig_program_forms_trims_and_solders() {
     let mut w = World::default();
     run(&mut w, include_str!("../../programs/bend-rig.cell"));
     let j = w.joints.iter().find(|j| j.name == "U1.3+R1.1").unwrap();
-    // a butt joint (a lead's end against a leg): weak, decision C22; this
-    // program shows something else, and moves to a lap joint later
-    assert_eq!(j.result.as_deref(), Some("weak"));
+    assert_eq!(j.result.as_deref(), Some("good"));
     assert!((xetal_ext_cell::leads::length(&w.part("R1").unwrap().leads["2"]) - 8.0).abs() < 1e-6);
     assert!(w.clashes().is_empty(), "{:?}", w.clashes());
 }

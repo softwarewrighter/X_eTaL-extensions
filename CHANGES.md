@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-27
 
+- 11:28 `ext` cell, the feature programs moved to lap joints (Saga 17 step 30): solder-stations, bend-rig, leads, wire, enamel and insulate, the chip legs up; solder.cell stays the weak butt joint; the insulate joggle gone (the sleeved lead clears the pins by 0.7 mm); legs-down crossings kept as test fixtures.
 - 09:56 `fix` cell live page: Run program runs the program in a Web Worker, a command at a time, off the page's thread, and hands the cell back (world/set_world); what is being simulated is shown beside the button (the blinker's 366 commands froze the page until the browser offered to kill it; now 48 s, the page answering within 0.15 s throughout). Without a worker (an MCP session) it runs here a command at a time, yielding with setTimeout.
 - 09:17 `ext` cell, wrap joints (Saga 17 step 29, decision C23): the wire-wrap tool on arm A (rack slot 8); `wire ... wrap=` feeds ends past their leads; `wrap` winds a wire's end 1.5 to under 2 turns round a lead and holds it while the iron solders; `snip` cuts the tail; weak under 1.5 turns, 2 or more refused; programs/wrap.cell on the live page, recorded.
 - 08:02 `ext` cell, the 555 LED blinker built (Saga 17 step 28): dead-bug, legs up, every joint a lap; check 7 of 7 nets, no shorts; radial leads laid straight from above; circuit parts kitted with short leads or turned; laps on one leg molten together share flux; the battery snap on the turntable; first on the live page, recorded.

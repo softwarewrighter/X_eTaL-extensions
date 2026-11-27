@@ -342,10 +342,11 @@ inspect U1.3+R1.1                 # good; a 3.6 mm lap; 0.4 mm3 of solder, ...
   0.15 mm the solder fills) and within 15 degrees of parallel, at the
   joint's making and again as it freezes; the start of the bend counts
   (3.2 mm laid measures 3.6).
-- The programs that show something else (the bending rig, leads, wire,
-  enameled wire, sleeving, the stations) still make butt joints, which
-  their `inspect` lines call weak; they move to lap joints in a later
-  step.
+- Every program that joins a lead to a lead makes lap joints, the chip
+  legs up, except `programs/solder.cell`, kept as the butt joint that
+  shows why it is weak. A lap's bent end longer than the lap (4.3 mm
+  laid 3.2) puts the bend about 1 mm above the tips of the pins the
+  lead passes: it clears them.
 
 Heat is a thermal network (`heat.rs`, `thermal.rs`), built each time
 time passes from the cell as it stands: a node for each part's body
@@ -421,10 +422,11 @@ and pincers on the turntable. Built so far:
   back; a part nothing else holds falls.
 - Station S1's iron feeds its own solder: `feed S1 mm= rate=` once its
   iron is on a joint. (The separate feeder station is gone.)
-- `programs/solder-stations.cell`, soldering at the bench: arm A brings
-  the resistor's lead to pin 3, P1 grips it, A lets go and leaves, the
-  turntable presents the joint to S1, which heats it and feeds solder;
-  the joint freezes good; P1 lets go and the resistor stays.
+- `programs/solder-stations.cell`, soldering at the bench: the rig
+  bends the resistor's lead, arm A lays its end alongside pin 3's leg
+  (a lap joint), P1 grips it, A lets go and leaves, the turntable
+  presents the joint to S1, which heats it and feeds solder; the joint
+  freezes good; P1 lets go and the resistor stays.
 
 The four large arms are gone. The arm that remains is slender -- about
 half their thickness (its links 24 to 10 mm in radius, its joint
@@ -467,15 +469,17 @@ tilt (up to 90 degrees), is how the work is turned over.
   lists those crossings as insulated. It is the first insulator for
   connections; heat-shrink sleeving is for component leads.
 
-`programs/enamel.cell`: 40 mm of AWG 30 enameled wire run along the
-chip's pin row to pin 3, across pin 4; soldered at 400 C, stripped
-only at the joint -- `shorts: none; insulated: W1.1 crosses U1.4`
-(bare copper the same way shorts on pin 4).
+`programs/enamel.cell`: 40 mm of AWG 30 enameled wire, its end bent
+in the rig and laid alongside pin 3's leg (a lap joint), run along the
+pin row over pin 4, clear of it; soldered at 400 C, stripped only at
+the joint. Laid legs down, resting on pin 4's tip, the same wire's
+crossing is `insulated: W1.1 crosses U1.4` and bare copper shorts
+there (the tests keep that case).
 
 `programs/wire.cell`: S5 feeds 40 mm of AWG 26; the arm takes it by
-its middle and S5 cuts it; the arm brings its end to pin 3, P1 grips
-it; the iron station solders the joint; P2 bends the wire's other half
-down.
+its middle and S5 cuts it; the rig bends its end, which the arm lays
+alongside pin 3's leg (a lap joint), P1 grips it; the iron station
+solders the joint; P2 bends the wire's other half down.
 
 ### Supports
 
@@ -676,12 +680,11 @@ a cut length onto the lead from its free end, then shrinks it.
 
 ```
 present R1.1.tip at=S6
-sleeve S6 on=R1.1 from=15 to=24 size=1.0 color=blue
-present R1.1.20 at=S6
+sleeve S6 on=R1.1 from=4 to=11 size=1.0 color=blue
+present R1.1.8 at=S6
 shrink S6 on=R1.1
-bend P2 on=R1.1 at=25 angle=60 toward=0,0,1   # a joggle: the sleeve off the pins
-...
-inspect shorts     # shorts: none; R1.1's sleeve clears U1.1 by 1.5 mm
+...                # the lead bent in the rig, laid alongside pin 3's leg
+inspect shorts     # shorts: none; R1.1's sleeve clears U1.1 by 0.7 mm
 ```
 
 - `sleeve STATION on=PIN from= to= [size=] [color=]`: the lead's free
@@ -707,14 +710,14 @@ inspect shorts     # shorts: none; R1.1's sleeve clears U1.1 by 1.5 mm
   tube on the lead, loose until shrunk, snug after; its wall is not yet
   a solid in the collision model.
 - The `insulate` program runs the resistor's lead along the chip's pin
-  row to pin 3, past pins 1 and 2. A sleeve resting on a pin is poor
-  practice: soldering that pin later could melt it. So after sleeving,
-  a pincer bends the last 3 mm of the lead 60 degrees (a joggle): the
-  sleeved length passes the pins 1.5 mm clear, and only the bare tip
-  comes in to pin 3 (with neither the sleeve nor the joggle, the lead
-  rests on pins 1 and 2: two shorts). A sleeve
-  is drawn along the lead as it is at the end, so one sleeved and then
-  bent is drawn bent from the start.
+  row to pin 3, past pins 2 and 1. A sleeve resting on a pin is poor
+  practice: soldering that pin later could melt it. The chip legs up
+  and the lead's bent end longer than its lap, the sleeved length
+  passes over the pins 0.7 mm clear, and the bare end lies alongside
+  pin 3's leg. (Laid legs down, with neither sleeve nor bend, the lead
+  rests on pins 1 and 2: two shorts; the tests keep that case.) A
+  sleeve is drawn along the lead as it is at the end, so one sleeved
+  and then bent is drawn bent from the start.
 
 ## The component tester
 
@@ -890,11 +893,10 @@ in free air (below) stays for small corrections.
   `R1.2.tip` and the drawing all see them. The player draws a
   re-formed lead as a tube in place of the model's.
 
-`programs/leads.cell`: the resistor's lead soldered to pin 3 2.5 mm
-down the pin (`align A R1.1.tip to=U1.3.2.5`), at the bench; S4 trims
-the pin's excess 1 mm past the joint (1.7 mm falls into the bin); P2
-bends the resistor's other lead down round a mandrel 3 mm from the
-body, and S4 trims it to 8 mm (20 mm falls).
+`programs/leads.cell`: the resistor's lead bent in the rig and laid
+alongside pin 3's leg, soldered at the bench (a lap joint); P2 bends
+the resistor's other lead down round a mandrel 3 mm from the body, and
+S4 trims it to 8 mm (20 mm falls).
 
 ## The microscope
 

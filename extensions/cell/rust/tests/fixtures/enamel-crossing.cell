@@ -1,0 +1,32 @@
+# A test fixture, not a demo (programs/enamel.cell is the demo): the
+# chip legs down, so the enameled wire run along the pin row to pin 3
+# rests on pin 4's tip -- a crossing that touches, for what enamel does
+# there. Its joint is a butt joint (weak, decision C22); the crossing is
+# the point.
+reset circuit=demo
+tool A tweezers
+pick A U1 grasp=ends
+place A U1 at=0,0,-24 rpy=0,0,90
+vise close
+release A U1
+lift A mm=60
+wire S5 awg=30 mm=40 enamel=yes
+pick A W1 grasp=middle
+cut S5
+lift A mm=60
+move A to=0,60,60 rpy=180,0,0
+move A to=20,1.27,-14.05 rpy=180,0,0
+align A W1.1.tip to=U1.3.tip gap=0.1
+pinch P1 on=W1.1 at=12
+release A W1
+lift A mm=60
+present U1.3+W1.1 at=S1
+scope aim=U1.3+W1.1 zoom=8
+touch S1 at=U1.3+W1.1 dwell=3 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=U1.3+W1.1 below=100
+scope aim=W1.2 zoom=3
+bend P2 on=W1.2 at=6 angle=90 toward=0,0,-1
+unpinch P1
+inspect shorts

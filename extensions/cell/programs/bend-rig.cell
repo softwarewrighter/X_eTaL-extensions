@@ -1,13 +1,14 @@
-# bend-rig: forming leads in the bending rig (decision C19, the user's
-# design): arm A slides the resistor's lead 2 into the rig, 3 mm from
-# the body at the mandrel; the clamp and anvil close on it from opposite
-# sides and the former bends it down round the mandrel; the arm puts the
-# bent leg through the rig's shear, which trims it to 8 mm; then the
-# resistor is soldered to the chip by its straight lead 1, as in solder.
-reset circuit=demo
+# bend-rig: the bending rig (decision C19). The DIP in the vise legs up.
+# The arm slides the resistor's lead 2 into the rig 3 mm from the body:
+# the clamp and anvil close on it from opposite sides and the former
+# bends it down round the mandrel; the rig's shear cuts it to 8 mm. Then
+# lead 1 the same way, 12 mm from the body, sheared to a 4 mm end, which
+# the arm lays alongside pin 3's leg (a lap joint, decision C22); the
+# iron station solders it.
+reset circuit=lap
 tool A tweezers
 pick A U1 grasp=ends
-place A U1 at=0,0,-24 rpy=0,0,90
+place A U1 at=0,0,-24 rpy=180,0,90
 vise close
 release A U1
 pick A R1 grasp=body
@@ -18,10 +19,13 @@ form angle=90
 lift A mm=30
 shear A on=R1.2 at=8
 lift A mm=60
-move A to=0,60,60 rpy=180,0,90
-move A to=34.81,1.27,-14.05
-align A R1.1.tip to=U1.3.tip gap=0.1
-pinch P1 on=R1.1 at=6
+insert A on=R1.1 at=12
+form angle=90
+lift A mm=30
+shear A on=R1.1 at=17.2
+lift A mm=60
+bring A R1.1 to=U1.3.tip along=-0.934,0.356,0 lap=3.2
+pinch P1 on=R1.1 at=3
 release A R1
 lift A mm=60
 present U1.3+R1.1 at=S1

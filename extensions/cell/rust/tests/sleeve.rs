@@ -40,17 +40,16 @@ fn a_sleeve_insulates_a_crossing_that_would_short() {
     let mut w = World::default();
     let out = run(&mut w, PROGRAM);
     let last = said(out.last().unwrap());
-    // the joggle keeps the sleeved length off the pins it passes
-    assert_eq!(last, "shorts: none; R1.1's sleeve clears U1.1 by 1.5 mm");
+    // the bent end longer than the lap keeps the sleeved length off the
+    // pins it passes
+    assert_eq!(last, "shorts: none; R1.1's sleeve clears U1.1 by 0.7 mm");
     let j = w.joints.iter().find(|j| j.name == "U1.3+R1.1").unwrap();
-    // a butt joint (a lead's end against a leg): weak, decision C22; this
-    // program shows something else, and moves to a lap joint later
-    assert_eq!(j.result.as_deref(), Some("weak"), "{j:?}");
+    assert_eq!(j.result.as_deref(), Some("good"), "{j:?}");
     assert!(w.clashes().is_empty(), "{:?}", w.clashes());
     let s = &w.part("R1").unwrap().sleeves[0];
-    assert!(s.shrunk.is_some() && s.color == "blue" && (s.from, s.to) == (15.0, 24.0));
+    assert!(s.shrunk.is_some() && s.color == "blue" && (s.from, s.to) == (4.0, 11.0));
     assert_eq!(World::from_json(&w.to_json()).unwrap(), w);
-    // with the joggle and no sleeve: still no contact
+    // clear of the pins and no sleeve: still no contact
     let bare: String = PROGRAM
         .lines()
         .filter(|l| !l.starts_with("sleeve ") && !l.starts_with("shrink "))
@@ -59,8 +58,9 @@ fn a_sleeve_insulates_a_crossing_that_would_short() {
     let mut w = World::default();
     let out = run(&mut w, &bare);
     assert_eq!(said(out.last().unwrap()), "shorts: none");
-    // with neither: the lead rests on pins 1 and 2, two shorts
-    let bare: String = PROGRAM
+    // the chip legs down and the lead along its pins (a fixture), neither
+    // sleeve nor joggle: the lead rests on pins 1 and 2, two shorts
+    let bare: String = include_str!("fixtures/insulate-crossing.cell")
         .lines()
         .filter(|l| {
             !l.starts_with("sleeve ") && !l.starts_with("shrink ") && !l.starts_with("bend ")

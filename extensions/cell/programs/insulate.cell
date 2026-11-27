@@ -1,13 +1,14 @@
 # insulate: heat-shrink sleeving (decision C20). The resistor's lead 1
-# runs along the chip's pin row to pin 3, past pins 1 and 2. First the
-# resistor goes in the vise; the sleeve station S6 slides a sleeve onto
-# lead 1 from its free end, 15 to 24 mm from the body, and shrinks it
-# with hot air; then pincer P2 bends the last 3 mm of the lead up 60
-# degrees -- a joggle, so the sleeved length passes the pins with a
-# clearance (1.5 mm) instead of resting on them (where their own
-# soldering later could melt it), and only the bare tip comes in to pin
-# 3. Then the chip takes the vise and the resistor is soldered to pin 3.
-reset circuit=demo
+# will run along the chip's pin row to pin 3, past pins 2 and 1. First
+# the resistor goes in the vise; the sleeve station S6 slides a sleeve
+# onto lead 1 from its free end, 4 to 11 mm from the body, and shrinks
+# it with hot air; the resistor goes back to the tray. Then the chip goes
+# in the vise legs up; the rig bends lead 1 12 mm from the body and
+# shears it to a 4 mm end, and the arm lays that end alongside pin 3's
+# leg (a lap joint, decision C22). The bent end is longer than the lap,
+# so the sleeved lead passes over pins 2 and 1, clear of them, insulated
+# all the same; then it is soldered.
+reset circuit=lap
 tool A tweezers
 pick A R1 grasp=body
 place A R1 at=0,0,-20
@@ -15,26 +16,28 @@ vise close
 release A R1
 lift A mm=60
 present R1.1.tip at=S6
-sleeve S6 on=R1.1 from=15 to=24 size=1.0 color=blue
-present R1.1.20 at=S6
+sleeve S6 on=R1.1 from=4 to=11 size=1.0 color=blue
+present R1.1.8 at=S6
 shrink S6 on=R1.1
 stage to=0 tilt=0 at=0,0,0
-bend P2 on=R1.1 at=25 angle=60 toward=0,0,1
 pick A R1 grasp=body
 vise open
 lift A mm=60
 place A R1 at=222.749,194.464,-138.35 rpy=0,0,90
 release A R1
 pick A U1 grasp=ends
-place A U1 at=0,0,-24 rpy=0,0,90
+place A U1 at=0,0,-24 rpy=180,0,90
 vise close
 release A U1
 pick A R1 grasp=body
-lift A mm=80
-move A to=0,60,60 rpy=180,0,0
-move A to=34.81,1.27,-14.05 rpy=180,0,0
-align A R1.1.tip to=U1.3.tip gap=0.1
-pinch P1 on=R1.1 at=6
+lift A mm=60
+insert A on=R1.1 at=12
+form angle=90
+lift A mm=30
+shear A on=R1.1 at=17.2
+lift A mm=60
+bring A R1.1 to=U1.3.tip along=0,-1,0 lap=3.2 from=0,0,1
+pinch P2 on=R1.1 at=3
 release A R1
 lift A mm=60
 inspect shorts
@@ -45,5 +48,5 @@ feed S1 mm=2 rate=1
 back S1
 wait until=U1.3+R1.1 below=100
 inspect U1.3+R1.1
-unpinch P1
+unpinch P2
 inspect shorts
