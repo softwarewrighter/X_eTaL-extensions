@@ -1481,6 +1481,7 @@ impl World {
                 );
             }
             "unpinch" => return self.unpinch(c.word("pincer").unwrap_or(""), did, events),
+            "park" => return self.park(c.word("pincer").unwrap_or(""), did, events),
             "form" => {
                 return self.bender_form(
                     c.number("angle").unwrap_or(90.0),

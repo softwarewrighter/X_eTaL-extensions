@@ -61,9 +61,11 @@ shrink S6 on=R1.1 dwell=3
 bring A R1.1 to=U1.3.tip along=1,0,0 gap=0.1
 check
 stage to=0 tilt=0
+park P1
+wire S5 awg=30 span=U1.4.tip+U1.8.tip enamel=yes
 ";
     let p = parse_program(program).unwrap();
-    assert_eq!(p.len(), 46);
+    assert_eq!(p.len(), 48);
     for c in &p {
         round_trip(&c.to_text());
     }
@@ -81,8 +83,8 @@ fn every_command_has_an_example() {
     let covered = [
         "reset", "tool", "joints", "move", "lift", "back", "grip", "pick", "place", "align",
         "release", "clip", "touch", "feed", "weld", "wire", "cut", "stage", "present", "pinch",
-        "unpinch", "bend", "sleeve", "shrink", "trim", "bring", "insert", "form", "shear", "vise",
-        "wait", "scope", "snap", "inspect", "test", "verify", "check", "identify", "probe",
+        "unpinch", "park", "bend", "sleeve", "shrink", "trim", "bring", "insert", "form", "shear",
+        "vise", "wait", "scope", "snap", "inspect", "test", "verify", "check", "identify", "probe",
         "rewind",
     ];
     let ops: Vec<&str> = COMMANDS.iter().map(|s| s.op).collect();

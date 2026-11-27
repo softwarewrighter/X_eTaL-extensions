@@ -634,6 +634,77 @@ impl World {
         self.pincer_go(k, to, &allowed, did)
     }
 
+    /// `park PINCER`: back to its rest place on the ring, its pole in
+    /// and its jaws level, out of the arm's way.
+    pub(crate) fn park(
+        &mut self,
+        name: &str,
+        did: &mut Vec<String>,
+        events: &mut Vec<String>,
+    ) -> Result<(), Halt> {
+        let k = self
+            .pincer_index(name)
+            .ok_or_else(|| Halt::Refused(format!("no pincer {name}")))?;
+        if self.pincers[k].on.is_some() {
+            return Err(Halt::Refused(format!(
+                "{name} grips a lead: unpinch {name} first"
+            )));
+        }
+        let rest = fresh()
+            .into_iter()
+            .nth(k)
+            .ok_or_else(|| Halt::Refused(format!("no rest for {name}")))?;
+        // the way round that does not pass the other pincer
+        let now = self.pincers[k].phi;
+        let others: Vec<f64> = self
+            .pincers
+            .iter()
+            .enumerate()
+            .filter(|(j, _)| *j != k)
+            .map(|(_, p)| p.phi)
+            .collect();
+        let short = kin::wrap(rest.phi - now);
+        let long = if short > 0.0 {
+            short - 360.0
+        } else {
+            short + 360.0
+        };
+        let clear = |d: f64| {
+            others.iter().all(|o| {
+                let e = kin::wrap(o - now);
+                let e = if d > 0.0 && e < 0.0 {
+                    e + 360.0
+                } else if d < 0.0 && e > 0.0 {
+                    e - 360.0
+                } else {
+                    e
+                };
+                e.abs() > d.abs() + 20.0
+            })
+        };
+        let d = if clear(short) {
+            short
+        } else if clear(long) {
+            long
+        } else {
+            return Err(Halt::Refused(format!(
+                "{name} cannot get home past the other pincer"
+            )));
+        };
+        let allowed: Vec<String> = self
+            .parts
+            .iter()
+            .map(|x| format!("part:{}", x.id))
+            .collect();
+        let p = &self.pincers[k];
+        let inn = [p.phi, p.z, p.psi, 0.0];
+        self.pincer_go(k, inn, &allowed, did)?;
+        let to = [now + d, rest.z, now + d + 180.0, 0.0];
+        self.pincer_go(k, to, &allowed, did)?;
+        events.push(format!("{name} is parked"));
+        Ok(())
+    }
+
     /// The probe back: pincer `name`'s pole in.
     pub(crate) fn probe_back(&mut self, name: &str, did: &mut Vec<String>) -> Result<(), Halt> {
         let k = self

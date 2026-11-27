@@ -42,6 +42,8 @@ pub enum Kind {
     Frame,
     /// A joint, two pins: `U1.3+R1.1`.
     Joint,
+    /// A span, two frames: `U1.4.tip+U1.8.tip`.
+    Span,
     /// A pin or a joint.
     Target,
     /// A free name: a circuit's, a grasp frame's.
@@ -316,7 +318,12 @@ pub const COMMANDS: &[Spec] = &[
         positional: &[req("arm", Kind::Station, "the wire feeder station")],
         named: &[
             req("awg", Kind::Int(22, 40), "the gauge"),
-            req("mm", Kind::Number("mm", 1.0, 120.0), "how much"),
+            opt("mm", Kind::Number("mm", 1.0, 120.0), "how much (or span=)"),
+            opt(
+                "span",
+                Kind::Span,
+                "a jumper's two ends (U1.4.tip+U1.8.tip, frames joined by +): cut to the distance between them, less 0.1 mm at each end",
+            ),
             opt(
                 "enamel",
                 Kind::Choice(&["no", "yes"]),
@@ -402,7 +409,7 @@ pub const COMMANDS: &[Spec] = &[
             req("on", Kind::Pin, "the pin whose lead it grips"),
             opt(
                 "at",
-                Kind::Number("mm", 0.0, 30.0),
+                Kind::Number("mm", 0.0, 120.0),
                 "from the body, along the lead (5 if not given)",
             ),
         ],
@@ -411,6 +418,13 @@ pub const COMMANDS: &[Spec] = &[
         op: "unpinch",
         family: "pincer",
         summary: "a pincer lets go and draws back",
+        positional: &[req("pincer", Kind::Pincer, "the pincer")],
+        named: &[],
+    },
+    Spec {
+        op: "park",
+        family: "pincer",
+        summary: "a pincer back to its rest place on the ring, its pole in, out of the arm's way",
         positional: &[req("pincer", Kind::Pincer, "the pincer")],
         named: &[],
     },
@@ -869,6 +883,9 @@ fn check_word(kind: Kind, t: &str) -> Result<(), String> {
         Kind::Joint => t
             .split_once('+')
             .is_some_and(|(a, b)| is_pin(a) && is_pin(b) && a != b),
+        Kind::Span => t.split_once('+').is_some_and(|(a, b)| {
+            check_word(Kind::Frame, a).is_ok() && check_word(Kind::Frame, b).is_ok() && a != b
+        }),
         Kind::Target => {
             is_pin(t) || check_word(Kind::Joint, t).is_ok() || t == "supports" || t == "shorts"
         }
@@ -904,6 +921,7 @@ fn check_word(kind: Kind, t: &str) -> Result<(), String> {
         Kind::Pin => format!("{t} is not a pin (U1.3)"),
         Kind::Frame => format!("{t} is not a frame (U1, U1.3, U1.3.tip, U1.3.5)"),
         Kind::Joint => format!("{t} is not a joint (U1.3+R1.1)"),
+        Kind::Span => format!("{t} is not two frames joined by + (U1.4.tip+U1.8.tip)"),
         Kind::Target => format!("{t} is not a pin or a joint (U1.3, U1.3+R1.1)"),
         Kind::Choice(words) => format!("{t} is not one of {}", words.join(" ")),
         _ => format!("{t} is not a name"),
@@ -1167,6 +1185,7 @@ fn placeholder(a: &Arg) -> String {
         Kind::Pin => "PIN".into(),
         Kind::Frame => "FRAME".into(),
         Kind::Joint => "JOINT".into(),
+        Kind::Span => "FRAME+FRAME".into(),
         Kind::Target => "TARGET".into(),
         Kind::Name => "NAME".into(),
         Kind::Choice(w) => w.join("|"),
@@ -1247,6 +1266,9 @@ fn arg_schema(a: &Arg) -> Json {
             "pattern": "^[A-Z][A-Za-z0-9_]*(\\.[A-Za-z0-9]+(\\.tip)?)?$"}),
         Kind::Joint => json!({"type": "string",
             "pattern": "^[A-Z][A-Za-z0-9_]*\\.[A-Za-z0-9]+\\+[A-Z][A-Za-z0-9_]*\\.[A-Za-z0-9]+$"}),
+        Kind::Span => {
+            json!({"type": "string", "description": "two frames joined by +: U1.4.tip+U1.8.tip"})
+        }
         Kind::Target => json!({"type": "string",
             "pattern": "^[A-Z][A-Za-z0-9_]*\\.[A-Za-z0-9]+(\\+[A-Z][A-Za-z0-9_]*\\.[A-Za-z0-9]+)?$"}),
         Kind::Name => json!({"type": "string", "pattern": "^[A-Za-z0-9_-]+$"}),

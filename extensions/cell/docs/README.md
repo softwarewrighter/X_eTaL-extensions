@@ -509,6 +509,10 @@ four resistors on a DIP").
   lead comes in along the direction, its body out that way), pinch,
   release, present, touch, feed, back, wait, inspect, unpinch, and the
   turntable back to rest; at the end `inspect shorts`.
+- `wire STATION awg=N span=FRAME+FRAME enamel=yes` cuts a jumper to
+  the distance between two frames, less 0.1 mm at each end, so a
+  planner needs no geometry of its own for it. `park PINCER` sends a
+  pincer back to its rest place on the ring, out of the arm's way.
 - A jumper is enameled wire cut to the distance between two points
   (less two small gaps) and brought with `end=`: `bring A W1.1
   to=U1.4.tip end=U1.8.tip from=1,0,-0.15` lays it from one to the
@@ -1142,12 +1146,13 @@ Units are in the placeholders: `MM`, `DEG`, `S`, `C`, `J`;
 | `touch ARM\|STATION at=JOINT [dwell=S] [temp=C]` | iron | put the iron's tip on a joint and hold it there |
 | `feed ARM\|STATION mm=MM [rate=MM/S]` | solder | feed solder wire into the joint the iron is on |
 | `weld ARM\|STATION at=JOINT energy=J [risky=refuse\|allow]` | welder | spot weld a lap of two leads by a capacitor discharge |
-| `wire STATION awg=N mm=MM [enamel=no\|yes] [metal=copper\|steel] [support=no\|yes]` | wire | the wire feeder station feeds bare or enameled wire from its spool out of its nozzle |
+| `wire STATION awg=N [mm=MM] [span=FRAME+FRAME] [enamel=no\|yes] [metal=copper\|steel] [support=no\|yes]` | wire | the wire feeder station feeds bare or enameled wire from its spool out of its nozzle |
 | `cut STATION` | wire | the wire feeder cuts its wire at the nozzle: what holds the free end keeps it |
 | `stage [turn=DEG] [to=DEG] [tilt=DEG] [at=X,Y,Z]` | stage | move the positioner: turn the stage by an angle, tilt it, move it |
 | `present FRAME\|JOINT at=STATION [and=STATION] [turn=DEG] [tilt=DEG]` | stage | move the positioner so a pin's frame or a joint is at a tool station's point |
 | `pinch PINCER on=PIN [at=MM]` | pincer | a pincer on the turntable grips a lead from the side: it holds the part there, and sinks heat |
 | `unpinch PINCER` | pincer | a pincer lets go and draws back |
+| `park PINCER` | pincer | a pincer back to its rest place on the ring, its pole in, out of the arm's way |
 | `bend PINCER on=PIN at=MM angle=DEG toward=X,Y,Z [radius=MM]` | pincer | a pincer bends a lead round a mandrel, the rest of it toward a direction |
 | `sleeve STATION on=PIN from=MM to=MM [size=0.6\|0.8\|1.0\|1.5\|2.0] [color=black\|red\|blue\|yellow\|green\|orange\|violet\|white\|gray\|brown\|clear]` | sleeve | the sleeve station slides heat-shrink tubing onto a lead from its free end, presented at its point |
 | `shrink STATION on=PIN [dwell=S]` | sleeve | the sleeve station's hot air shrinks the sleeve on a lead, presented at its point |

@@ -735,7 +735,20 @@ impl World {
                 let awg = c.number("awg").unwrap_or(26.0);
                 #[allow(clippy::cast_possible_truncation)]
                 let awg = awg.round() as i64;
-                let mm = c.number("mm").unwrap_or(20.0);
+                // a jumper sized to its span: the distance between two frames
+                let mm = match c.word("span") {
+                    Some(span) => {
+                        let (a, b) = span.split_once('+').ok_or_else(|| {
+                            Halt::Refused(format!("span: {span} is not two frames joined by +"))
+                        })?;
+                        let fa = self.frame(a).map_err(Halt::Refused)?.p;
+                        let fb = self.frame(b).map_err(Halt::Refused)?.p;
+                        (kin::norm(kin::sub(fa, fb)) - 0.2).max(1.0)
+                    }
+                    None => c
+                        .number("mm")
+                        .ok_or_else(|| Halt::Refused("wire: give mm= or span=".into()))?,
+                };
                 let enamel = c.word("enamel") == Some("yes");
                 let metal = c.word("metal").unwrap_or("copper").to_string();
                 let support = c.word("support") == Some("yes");
