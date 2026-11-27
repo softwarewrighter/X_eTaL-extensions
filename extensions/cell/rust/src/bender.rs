@@ -404,9 +404,16 @@ impl World {
             c -= 1;
         }
         let run = kin::norm(kin::sub(lead[n - 1], lead[c]));
-        let back = kin::sub(lead[c], lead[0]);
-        let back_perp = kin::sub(back, kin::scale(e, kin::dot(back, e)));
-        if c == 0 || kin::norm(back_perp) < 0.2 * kin::norm(back).max(1e-9) {
+        // which way its body lies across the end: back along a bent lead,
+        // or, a straight lead off its body's axis (a radial part's), to
+        // the body's middle; a straight lead on the axis cannot say
+        let toward = if c > 0 {
+            kin::sub(lead[0], lead[c])
+        } else {
+            kin::sub([0.0; 3], lead[n - 1])
+        };
+        let toward_perp = kin::sub(toward, kin::scale(e, kin::dot(toward, e)));
+        if kin::norm(toward_perp) < 0.5 {
             return Err(Halt::Refused(format!(
                 "{pin}'s lead is straight: bend its end first, as long as the lap (insert, form)"
             )));
@@ -451,7 +458,7 @@ impl World {
             let z = kin::cross(x, y);
             [[x[0], y[0], z[0]], [x[1], y[1], z[1]], [x[2], y[2], z[2]]]
         };
-        let local = frame_of(e, kin::scale(back_perp, -1.0));
+        let local = frame_of(e, toward_perp);
         let world = frame_of(kin::scale(t, -1.0), side);
         let r = kin::mm(&world, &kin::transpose(&local));
         // its tip `lap` up the target from the target's tip, touching it

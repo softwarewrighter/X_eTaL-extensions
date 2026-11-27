@@ -8,6 +8,7 @@ id = "U1"
 kind = "dip8"
 pocket = 1
 yaw = 90
+back = true
 mark = "NE555P"
 
 [[part]]
@@ -56,8 +57,10 @@ mark = "red"
 id = "BT1"
 kind = "battery-snap"
 pocket = 8
-# turned so its long leads lie off the tray, clear of the other pockets
+# kitted with its leads cut to 9 mm (the cell does not model a flexible
+# lead); set flat on the turntable beside the vise, they reach its edge
 yaw = 180
+leads = 9.0
 
 # the NE555: 1 GND, 2 TRIG, 3 OUT, 4 RESET, 5 CTRL, 6 THR, 7 DIS, 8 VCC
 [[net]]

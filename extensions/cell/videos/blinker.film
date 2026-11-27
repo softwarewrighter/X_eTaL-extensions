@@ -1,0 +1,11 @@
+# extensions/cell/videos/blinker.webm and .webp: the live page running
+# programs/blinker.cell, as the page itself draws it -- one headless
+# Chrome (no window) seeking each moment of the program, joined (just
+# ext cell live, then just ext cell record blinker:
+# work/record/blinker.mp4; then just videos cell blinker). The video at
+# the page's full width; the README's animated picture smaller.
+demo=blinker
+file=work/record/blinker.mp4
+scale=1280
+webp=320
+fps=12

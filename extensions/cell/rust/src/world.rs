@@ -517,7 +517,7 @@ impl World {
             };
             // on the tray's plate, its lowest point resting on it
             let pocket = layout::pocket(laid.pocket);
-            let roll = if laid.back { 180.0 } else { 0.0 };
+            let roll = if laid.back { 180.0 } else { laid.roll };
             let flat = Pose::from_xyz_rpy([0.0; 3], [roll, 0.0, laid.yaw]);
             let low = collide::part(&laid.id, &kind, &flat)
                 .iter()
@@ -529,6 +529,13 @@ impl World {
             );
             let at = layout::six(&p);
             let mut part = Part::fresh(laid.id, laid.kind, at);
+            // leads kitted cut short
+            if let Some(mm) = laid.leads {
+                for p in &kind.pins {
+                    let (kept, _) = crate::leads::split(&p.lead, mm);
+                    part.leads.insert(p.name.clone(), kept);
+                }
+            }
             part.mark = laid
                 .mark
                 .or_else(|| crate::marks::default_mark(&part.kind).map(str::to_string));

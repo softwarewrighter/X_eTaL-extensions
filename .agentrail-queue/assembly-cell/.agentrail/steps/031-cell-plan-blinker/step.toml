@@ -1,0 +1,8 @@
+number = 31
+slug = "cell-plan-blinker"
+status = "pending"
+description = "Saga 17 step 31 (inserted 2026-11-27, found in step 28): CellPlan.xtl learns ..."
+role = "production"
+context_files = []
+created_at = "2026-11-27T08:02:38"
+commits = []

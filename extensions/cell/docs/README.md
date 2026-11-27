@@ -522,6 +522,52 @@ the 555 blinker's parts and its seven nets.
 `turn=DEG` turns it by an angle: `stage to=0 tilt=0 at=0,0,0` puts the
 positioner back to rest.
 
+## The 555 blinker
+
+![The 555 blinker built, recorded from the live page (just record blinker, just videos cell blinker)](../videos/blinker.webp)
+
+`programs/blinker.cell` builds the whole circuit of `circuits/blinker.toml`
+(an NE555P, three resistors, a 10 uF electrolytic, a 10 nF disc, a red
+LED and a 9 V battery snap; seven nets) dead-bug, every joint a lap,
+and ends with `check: 7 of 7 nets made, nothing damaged: the work
+matches its netlist`. It is written by `tools/blinker-trial.py`, which
+holds the rules by hand; the planner learns them in a later step.
+
+1. The chip goes in the vise legs up. Enameled jumpers go between legs
+   while they are bare: pin 4 to pin 8 (VCC), then pin 2 to pin 6 (THR)
+   over it, each end formed down its leg as the wire is fed.
+2. A lead of each part is laid alongside its pin's leg from outside:
+   the resistors' leads bent 90 degrees in the rig and sheared to 4 mm,
+   the capacitors' straight leads lowered from above (a radial's body
+   lies off its lead, which says which way it faces). R1, R2 and R3 are
+   trimmed at the cutter once soldered; a pincer bends R3's end up, and
+   the LED's anode is lapped onto it.
+3. Jumpers with lapped ends make the rest: R1 and R2 to pin 7 (DIS); C2
+   over the chip to pin 1 (GND), laid before C1 stands over pin 2; C1
+   to pin 1 and the LED's cathode to C1, each brought in from the side
+   (`lay ... from=`) and routed (`via=`) so the tweezers clear the
+   leads and bodies around.
+4. The battery snap, its leads kitted cut to 9 mm, is set flat on the
+   turntable beside the vise, and a jumper from each lead rises past
+   the jaw to pin 8 and pin 1.
+
+What is simulated and what is illustrative:
+
+- Simulated: every motion and its collisions (arms, tools, pincers,
+  parts, leads and wires), the parts resting where they fall, lead and
+  wire forming and cutting, the thermal network (each lead in 1 mm
+  segments, the iron, the solder's wetting, flux and freezing), each
+  joint's lap and result, the enamel burned off where the iron heats,
+  shorts, and the connections against the netlist.
+- Illustrative: the materials' and the machines' numbers (marked so in
+  their data files), the joint rules' thresholds, a battery snap's
+  leads (kitted cut short and rigid: the cell does not model a
+  flexible lead), and electrical behavior (the circuit is checked for
+  its connections, not run).
+- Several laps on one leg, molten together, are one fillet: the fresh
+  solder's flux wets all of it, so a third lap does not leave the
+  first two dull.
+
 ## The planner
 
 The planner turns a netlist into a command program (decision C9, the

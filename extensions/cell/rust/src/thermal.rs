@@ -655,6 +655,7 @@ impl World {
         placed: &[Placed],
         joint_nodes: &[JointNodes],
     ) {
+        self.share_flux();
         for (ji, jn, a, b, _) in joint_nodes {
             let Some(alloy) = th.solder.get(&self.joints[*ji].alloy).cloned() else {
                 continue;
@@ -855,6 +856,35 @@ impl World {
         let m = host.then(&Pose::from_xyz_rpy(middle, [0.0; 3])).p;
         let d = kin::mv(&host.r, dir);
         Some((m, d, len))
+    }
+
+    /// Joints molten together on one pin, within 5 mm of each other, are
+    /// one fillet: the fresh solder's flux wets all of it (a leg carrying
+    /// several laps, heated again for another, flows as one).
+    fn share_flux(&mut self) {
+        const NEAR: f64 = 5.0;
+        let molten: Vec<usize> = (0..self.joints.len())
+            .filter(|&i| self.joints[i].molten && self.joints[i].weld.is_none())
+            .collect();
+        let points: Vec<Option<V3>> = molten
+            .iter()
+            .map(|&i| self.joint_point(&self.joints[i]))
+            .collect();
+        for (x, &i) in molten.iter().enumerate() {
+            for (y, &k) in molten.iter().enumerate().skip(x + 1) {
+                let (ji, jk) = (&self.joints[i], &self.joints[k]);
+                let shared = [&ji.a, &ji.b].iter().any(|p| **p == jk.a || **p == jk.b);
+                let near = match (points[x], points[y]) {
+                    (Some(p), Some(q)) => kin::norm(kin::sub(p, q)) <= NEAR,
+                    _ => false,
+                };
+                if shared && near {
+                    let f = ji.flux.max(jk.flux);
+                    self.joints[i].flux = f;
+                    self.joints[k].flux = f;
+                }
+            }
+        }
     }
 
     /// A joint's place in the cell's frame.

@@ -27,6 +27,10 @@ version.
 | v0.2.0 | 9dec588 | 2026-10-05 | v0.1.0 (512b3ee) | canvas, scene, audio, web; the binding macro; X_eTaL pinned by commit, not copied; the site of recordings |
 | v0.1.0 | fee06a4 | 2026-10-03 | 7b70575 (vendored) | release 1: the native ABI V1, SDK and loader, the xetal-x bridge; hello, clock, sqlite and the data notebook |
 
+## 2026-11-27
+
+- 08:02 `ext` cell, the 555 LED blinker built (Saga 17 step 28): dead-bug, legs up, every joint a lap; check 7 of 7 nets, no shorts; radial leads laid straight from above; circuit parts kitted with short leads or turned; laps on one leg molten together share flux; the battery snap on the turntable; first on the live page, recorded.
+
 ## 2026-11-26
 
 - 21:05 `ext` cell, lap joints (Saga 17 step 27, decision C22): a joint measures how far its leads run alongside each other; under 3.2 mm, a butt joint included, it is weak (it conducts, check lists it); the solder heats every node along the lap; `bring lap=` and `wire lap=` lay bent ends alongside legs; the chip goes in legs up (dead-bug); the planner makes lap joints (4 of 4 good); programs/lap.cell on the live page.

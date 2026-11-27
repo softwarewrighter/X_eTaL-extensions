@@ -71,7 +71,7 @@ fn a_jumper_is_cut_to_its_span() {
     let mut w = World::default();
     let out = run(
         &mut w,
-        "reset circuit=blinker\ntool A tweezers\npick A U1 grasp=ends\nplace A U1 at=0,0,-24 rpy=0,0,90\nvise close\nrelease A U1\nlift A mm=60\nwire S5 awg=30 span=U1.4.tip+U1.8.tip enamel=yes",
+        "reset circuit=blinker\ntool A tweezers\npick A U1 grasp=ends\nplace A U1 at=0,0,-24 rpy=180,0,90\nvise close\nrelease A U1\nlift A mm=60\nwire S5 awg=30 span=U1.4.tip+U1.8.tip enamel=yes",
     );
     assert!(out.iter().all(|o| o.ok), "{:?}", out.iter().find(|o| !o.ok));
     // 7.62 mm square: 10.776 across, less 0.1 mm at each end

@@ -216,6 +216,14 @@ pub struct Laid {
     /// lap joints are made from above).
     #[serde(default)]
     pub back: bool,
+    /// Turned about x as it lies, degrees (a battery snap kitted on its
+    /// end, its leads up: -90); `back` is 180.
+    #[serde(default)]
+    pub roll: f64,
+    /// Every lead kitted cut to this length, mm (a battery snap's
+    /// flexible leads, which the cell does not model as flexible).
+    #[serde(default)]
+    pub leads: Option<f64>,
     /// What is printed or banded on it (`4.7k`, `104`); its kind's
     /// default if not given.
     #[serde(default)]

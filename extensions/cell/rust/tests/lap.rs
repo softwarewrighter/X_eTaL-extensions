@@ -163,3 +163,37 @@ fn inspect_says_a_lap_is_long() {
         "{o:?}"
     );
 }
+
+#[test]
+fn the_blinker_matches_its_netlist() {
+    // the whole 555 blinker, every joint a lap
+    let mut w = World::default();
+    let out = run(&mut w, include_str!("../../programs/blinker.cell"));
+    all_ok(&out);
+    let r = w.check_work();
+    assert!(r.ok && r.made == (7, 7), "{r:?}");
+    assert!(
+        w.joints
+            .iter()
+            .all(|j| j.result.as_deref() == Some("good") && j.lap >= 3.2),
+        "{:?}",
+        w.joints
+            .iter()
+            .filter(|j| j.result.as_deref() != Some("good") || j.lap < 3.2)
+            .collect::<Vec<_>>()
+    );
+    // a radial's straight lead laid alongside a leg, no bend: C1 on pin 2
+    let o = out
+        .iter()
+        .find(|o| o.command.starts_with("bring A C1.1"))
+        .unwrap();
+    assert_eq!(o.events, ["C1.1's end alongside U1.2: a 3.2 mm lap"]);
+    // a leg carrying three laps, heated for the third: one fillet, the
+    // fresh solder's flux over all of it, none of them dull
+    let on8 = w
+        .joints
+        .iter()
+        .filter(|j| j.a == "U1.8" || j.b == "U1.8")
+        .count();
+    assert_eq!(on8, 3);
+}
