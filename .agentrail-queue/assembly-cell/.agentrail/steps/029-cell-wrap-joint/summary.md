@@ -1,0 +1,1 @@
+Wrap joints (C23): the wire-wrap tool on arm A (rack slot 8), wire wrap= ends, wrap (helix held while the iron solders) and snip; weak under 1.5 turns, 2 or more refused; programs/wrap.cell on the live page, recorded. Also the live page's Run program in a Web Worker (the blinker no longer freezes the page). Pushed e19b8676; gate passed on it.
