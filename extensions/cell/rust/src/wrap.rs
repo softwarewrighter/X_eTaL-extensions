@@ -28,6 +28,28 @@ pub(crate) fn lead_end(w: &World, pin: &str) -> Result<(V3, V3, f64), Halt> {
     Ok((line[n - 1], kin::scale(v, 1.0 / kin::norm(v).max(1e-12)), d))
 }
 
+/// A lead's end for a planner or an agent: its tip, the direction it
+/// points (out, toward the tip), and how long its last straight run is,
+/// mm (a bent end's length; a chip leg's straight part).
+pub(crate) fn lead_run(w: &World, pin: &str) -> Result<(V3, V3, f64), Halt> {
+    let (k, _, lead, _) = w.bender_lead(pin)?;
+    let line = crate::solder::lead_in(&w.parts[k].pose(), &lead);
+    let n = line.len();
+    if n < 2 {
+        return Err(Halt::Refused(format!("{pin} has no lead")));
+    }
+    let dir = |a: V3, b: V3| {
+        let d = kin::sub(b, a);
+        kin::scale(d, 1.0 / kin::norm(d).max(1e-12))
+    };
+    let e = dir(line[n - 2], line[n - 1]);
+    let mut c = n - 2;
+    while c > 0 && kin::dot(dir(line[c - 1], line[c]), e) >= 0.9997 {
+        c -= 1;
+    }
+    Ok((line[n - 1], e, kin::norm(kin::sub(line[n - 1], line[c]))))
+}
+
 /// The radius a wire of diameter `dw` winds round a lead of diameter
 /// `dl` at, mm.
 #[must_use]

@@ -62,6 +62,36 @@ impl Session {
         r
     }
 
+    /// Commands tried on a copy of the cell: kept only if every one is
+    /// ok (`{"kept": true, "outcomes", "t0", "t1"}`), else the cell as it
+    /// was and `{"kept": false, "failed": COMMAND, "why", "outcomes"}`.
+    pub fn attempt(&mut self, commands: &[command::Command]) -> Json {
+        let mut w = self.world.clone();
+        let t0 = w.t;
+        let outs = w.apply_all(commands);
+        let outcomes: Vec<Json> = outs
+            .iter()
+            .map(|o| serde_json::from_str(&outcome_json(o)).unwrap_or(Json::Null))
+            .collect();
+        if let Some(o) = outs.iter().find(|o| !o.ok) {
+            let why = o
+                .refused
+                .clone()
+                .or_else(|| o.stopped.clone())
+                .unwrap_or_default();
+            return json!({ "kept": false, "failed": o.command, "why": why, "outcomes": outcomes });
+        }
+        self.world = w;
+        for c in commands {
+            self.program.push(c.to_text());
+        }
+        let r = json!({ "kept": true, "outcomes": outcomes, "t0": t0, "t1": self.world.t });
+        self.version += 1;
+        self.last = r.clone();
+        save(&self.program);
+        r
+    }
+
     /// A new cell, a circuit's tray laid out.
     pub fn reset(&mut self, circuit: &str) -> Json {
         self.world = World::default();
@@ -93,6 +123,69 @@ fn save(program: &[String]) {
     let _ = std::fs::write(path, text);
 }
 
+/// A circuit's netlist as the planner reads it (circuit, core, a net a
+/// line): the core is the part with the most pins in the nets.
+pub fn netlist(circuit: &str) -> Result<String, String> {
+    let nets = xetal_ext_cell::layout::nets(circuit)?;
+    if nets.is_empty() {
+        return Err(format!("{circuit} has no netlist"));
+    }
+    let laid = xetal_ext_cell::layout::circuit(circuit)?;
+    let count = |id: &str| {
+        nets.iter()
+            .flat_map(|n| &n.pins)
+            .filter(|p| p.split('.').next() == Some(id))
+            .count()
+    };
+    let core = laid
+        .iter()
+        .max_by_key(|l| count(&l.id))
+        .ok_or_else(|| format!("{circuit} has no parts"))?;
+    let mut text = format!("circuit {circuit}\ncore {} {}\n", core.id, core.kind);
+    for n in &nets {
+        text.push_str(&format!("net {} {}\n", n.name, n.pins.join(" ")));
+    }
+    Ok(text)
+}
+
+/// A netlist planned by CellPlan.xtl (the search for one of nets, the
+/// neighbor planner for one of neighbor lines): the program, not run.
+/// It runs X_eTaL (target/debug/xetal-x, built with the workspace).
+pub fn plan(netlist: &str) -> Result<String, String> {
+    let cell = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("..");
+    let xetal = cell.join("../../target/debug/xetal-x");
+    if !xetal.is_file() {
+        return Err("no xetal-x: build it (cargo build -p xetal-x)".into());
+    }
+    let search = netlist.lines().any(|l| l.starts_with("net "));
+    let lit = netlist
+        .replace('\\', "\\\\")
+        .replace('"', "\\\"")
+        .replace('\n', "\\n");
+    let script = format!(
+        "\"cp:\" u_se< \"CellPlan\"\ncp:{} \"{lit}\"\n",
+        if search { "b_uild" } else { "p_lan" }
+    );
+    let dir = std::env::temp_dir().join(format!("cell-plan-{}", std::process::id()));
+    std::fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
+    let file = dir.join("plan.xtl");
+    std::fs::write(&file, script).map_err(|e| e.to_string())?;
+    let out = std::process::Command::new(&xetal)
+        .args(["--ext", ".", "run"])
+        .arg(&file)
+        .current_dir(&cell)
+        .env("XETAL_PATH", cell.join("lib"))
+        .output()
+        .map_err(|e| e.to_string())?;
+    if !out.status.success() {
+        return Err(String::from_utf8_lossy(&out.stderr)
+            .chars()
+            .take(2000)
+            .collect());
+    }
+    Ok(String::from_utf8_lossy(&out.stdout).into_owned())
+}
+
 #[derive(Clone)]
 struct Cell {
     session: Arc<Mutex<Session>>,
@@ -119,6 +212,30 @@ fn tools() -> Vec<Tool> {
         object(json!({ "type": "object", "properties": props, "required": required }))
     };
     let mut out = vec![
+        Tool::new(
+            "cell_netlist",
+            "A circuit's netlist: what the build must connect, as the planner reads it -- circuit NAME, core ID KIND (the part with the most pins), then a net a line: net NAME PIN PIN ... (U1.8 is the core's pin 8; R1.1 a resistor's lead 1). cell_check compares the cell's joints with it.",
+            s(
+                json!({ "circuit": { "type": "string", "enum": xetal_ext_cell::layout::circuits(), "description": "the circuit" } }),
+                &["circuit"],
+            ),
+        ),
+        Tool::new(
+            "cell_attempt",
+            "Try commands: they run on a copy of the cell, kept only if every one is ok; otherwise the cell is as it was and the answer says which failed and why (kept: false). A step to try without needing cell_rewind after.",
+            s(
+                json!({ "commands": { "type": "string", "description": "commands, as cell_do takes them" } }),
+                &["commands"],
+            ),
+        ),
+        Tool::new(
+            "cell_plan",
+            "Plan a netlist (cell_netlist's text, or a circuit's own): CellPlan.xtl's search tries each step on a simulator of its own and keeps the first it takes (a comment for each it refused), and returns the whole program -- not run: cell_run runs it, or take what helps. A circuit of nets takes some minutes.",
+            s(
+                json!({ "netlist": { "type": "string", "description": "a netlist's text" }, "circuit": { "type": "string", "description": "a circuit, its netlist planned" } }),
+                &[],
+            ),
+        ),
         Tool::new(
             "cell_reset",
             "A new cell: arms home with no tool, the racks full, the stage at 0, the vise open; the tray laid out for a circuit (demo: a DIP-8, a resistor, an LED, a ceramic disc; weld: two ceramic discs, an LED, a resistor, to try welding with; none: empty). The session's program starts again.",
@@ -225,12 +342,37 @@ impl ServerHandler for Cell {
     ) -> Result<CallToolResponse, ErrorData> {
         let args = request.arguments.unwrap_or_default();
         let arg = |k: &str| args.get(k).and_then(Json::as_str).map(str::to_string);
+        let name = request.name.as_ref();
+        // the planner and the netlist need no cell: no lock held while a
+        // search runs for minutes
+        if name == "cell_netlist" {
+            return Ok(match netlist(&arg("circuit").unwrap_or_default()) {
+                Ok(t) => text(&json!({ "netlist": t })),
+                Err(e) => failed(e),
+            });
+        }
+        if name == "cell_plan" {
+            let net = match (arg("netlist"), arg("circuit")) {
+                (Some(n), _) => Ok(n),
+                (None, Some(c)) => netlist(&c),
+                (None, None) => Err("give netlist= or circuit=".to_string()),
+            };
+            return Ok(match net.and_then(|n| plan(&n)) {
+                Ok(p) => {
+                    text(&json!({ "program": p, "note": "planned, not run: cell_run runs it" }))
+                }
+                Err(e) => failed(e),
+            });
+        }
         let mut s = self
             .session
             .lock()
             .map_err(|_| ErrorData::internal_error("the session is poisoned", None))?;
-        let name = request.name.as_ref();
         Ok(match name {
+            "cell_attempt" => match parse_program(&arg("commands").unwrap_or_default()) {
+                Ok(c) => text(&s.attempt(&c)),
+                Err(e) => failed(e),
+            },
             "cell_reset" => text(&s.reset(&arg("circuit").unwrap_or_else(|| "demo".into()))),
             "cell_do" | "cell_run" => {
                 let key = if name == "cell_do" {

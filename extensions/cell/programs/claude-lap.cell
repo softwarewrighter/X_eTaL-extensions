@@ -1,0 +1,46 @@
+# Claude Code driving the cell over MCP (xetal-cell-mcp, its tools
+# only), given mcp/goals/lap.goal: U1 in the vise legs up, then R1.1 to
+# pin 8 and R2.2 to pin 6 with lap joints, without the planner. Its
+# session as the server saved it (2026-11-27: 25 turns, 254 s; 15
+# cell_attempt calls, 3 kept, 12 refused or stopped and left nothing
+# behind); both joints good, 3.7 mm laps. Run again: just ext cell
+# agent lap. What it said got in its way is on the extension's page.
+reset circuit=blinker
+tool A tweezers
+pick A U1 grasp=ends
+place A U1 at=0,0,-32 rpy=180,0,0
+vise close
+release A U1
+lift A mm=60
+move A to=150,120,-60 rpy=180,0,90
+pick A R1 grasp=body
+insert A on=R1.1 at=3
+form angle=90
+shear A on=R1.1 at=8
+bring A R1.1 to=U1.8.tip along=0,-1,0 from=0,0,1 lap=3.4
+pinch P1 on=R1.1 at=2
+release A R1
+lift A mm=60
+present U1.8+R1.1 at=S1
+touch S1 at=U1.8+R1.1
+feed S1 mm=3
+back S1
+unpinch P1
+stage to=0 tilt=0 at=0,0,0
+move A to=150,120,-60 rpy=180,0,90
+pick A R2 grasp=body
+insert A on=R2.2 at=3
+form angle=90
+shear A on=R2.2 at=8
+bring A R2.2 to=U1.6.tip along=0,-1,0 from=0,0,1 lap=3.4
+pinch P2 on=R2.2 at=2
+release A R2
+lift A mm=60
+present U1.6+R2.2 at=S1
+touch S1 at=U1.6+R2.2
+feed S1 mm=3
+back S1
+unpinch P2
+inspect U1.8+R1.1
+inspect U1.6+R2.2
+check

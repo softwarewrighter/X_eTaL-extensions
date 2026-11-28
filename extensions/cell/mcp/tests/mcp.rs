@@ -105,6 +105,9 @@ fn the_tools_come_from_the_command_table() {
         .clone();
     let names: Vec<&str> = tools.iter().map(|t| t["name"].as_str().unwrap()).collect();
     for generic in [
+        "cell_netlist",
+        "cell_attempt",
+        "cell_plan",
         "cell_reset",
         "cell_do",
         "cell_run",
@@ -120,7 +123,10 @@ fn the_tools_come_from_the_command_table() {
     sorted.sort_unstable();
     sorted.dedup();
     assert_eq!(sorted.len(), names.len(), "a tool named twice");
-    assert_eq!(names.len(), 7 + xetal_ext_cell::command::COMMANDS.len() - 3);
+    assert_eq!(
+        names.len(),
+        10 + xetal_ext_cell::command::COMMANDS.len() - 3
+    );
     // a typed tool's schema is the command's, with op implied
     let mv = tools.iter().find(|t| t["name"] == "cell_move").unwrap();
     let schema = &mv["inputSchema"];
@@ -351,5 +357,52 @@ fn claude_codes_session_stops_where_the_checker_now_sees_a_collision() {
             .unwrap()
             .contains("with the vise's jaw"),
         "{last:?}"
+    );
+}
+
+#[test]
+fn an_agent_reads_a_netlist_and_tries_steps() {
+    let mut c = Client::start(0, &session_file("attempt"));
+    // what the blinker must connect, as the planner reads it
+    let (err, r) = c.tool("cell_netlist", json!({"circuit": "blinker"}));
+    let net = r["netlist"].as_str().unwrap_or_default().to_string();
+    assert!(
+        !err && net.contains("core U1 dip8") && net.contains("net GND U1.1 C1.2 C2.2 D1.2 BT1.2"),
+        "{r}"
+    );
+    // a step tried: refused, the cell as it was
+    let (_, r) = c.tool("cell_reset", json!({"circuit": "lap"}));
+    assert!(all_ok(&r), "{r}");
+    let (_, before) = c.tool("cell_state", json!({}));
+    let (err, r) = c.tool(
+        "cell_attempt",
+        json!({"commands": "tool A tweezers\npick A U1 grasp=ends\nplace A U1 at=0,0,-24 rpy=0,0,90"}),
+    );
+    assert!(
+        !err && r["kept"] == false && r["failed"].as_str().unwrap().starts_with("place A U1"),
+        "{r}"
+    );
+    let (_, after) = c.tool("cell_state", json!({}));
+    assert_eq!(before, after, "a refused attempt changes nothing");
+    // tried again the right way: kept
+    let (_, r) = c.tool(
+        "cell_attempt",
+        json!({"commands": "tool A tweezers\npick A U1 grasp=ends\nplace A U1 at=0,0,-24 rpy=180,0,90\nvise close\nrelease A U1"}),
+    );
+    assert!(r["kept"] == true && all_ok(&r), "{r}");
+    let (_, p) = c.tool("cell_program", json!({}));
+    assert!(
+        p["program"].as_str().unwrap().ends_with("release A U1"),
+        "{p}"
+    );
+    // a neighbor netlist planned (quick): the program, not run
+    let (err, r) = c.tool(
+        "cell_plan",
+        json!({"netlist": "circuit plan\ncore U1 dip8\nR1 U1 2\nR2 U1 3"}),
+    );
+    let prog = r["program"].as_str().unwrap_or_default();
+    assert!(
+        !err && prog.starts_with("# planned by CellPlan.xtl") && prog.contains("lap=3.2"),
+        "{r}"
     );
 }

@@ -104,6 +104,10 @@ mcp:
 mcp-config:
     @printf '{\n  "mcpServers": {\n    "cell": {\n      "command": "%s/target/debug/xetal-cell-mcp"\n    }\n  }\n}\n' "$(cd {{root}} && pwd)"
 
+# An agent (Claude Code, the cell's MCP tools only) given mcp/goals/NAME.goal: its session in work/mcp/NAME.cell (it costs a session)
+agent name turns="80":
+    {{root}}/scripts/cell-agent.sh "$1" "$2"
+
 # The page following an MCP session, checked headlessly (a scripted agent; no window)
 mcp-check: live
     cargo build -q -p xetal-cell-mcp --manifest-path {{root}}/Cargo.toml

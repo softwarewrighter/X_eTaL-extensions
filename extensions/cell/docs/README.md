@@ -275,6 +275,44 @@ commands. That session was recorded while a carried part could pass
 through the vise unchecked, and its resistor lead went through a jaw;
 the checker now stops it there, and a new session will replace it.
 
+Three tools help an agent build a circuit:
+
+- `cell_netlist circuit=`: what the build must connect, as the planner
+  reads it (circuit, core, a net a line: `net GND U1.1 C1.2 ...`).
+- `cell_attempt commands=`: commands tried on a copy of the cell, kept
+  only if every one is ok; otherwise the cell is as it was and the
+  answer says which failed and why. An agent's try, with nothing to
+  rewind.
+- `cell_plan netlist=` (or `circuit=`): CellPlan.xtl's plan, the search
+  for a netlist of nets: the program, not run (a circuit of nets takes
+  some minutes).
+
+`cell_state` gives each part's pins: each lead's tip, which way it
+points (a chip's legs up point +z) and its last straight run (a bent
+end's length).
+
+On 2026-11-27 Claude Code, the cell's tools its only ones, was given
+`mcp/goals/lap.goal`: the blinker's chip in the vise legs up, then R1's
+lead 1 to pin 8 and R2's lead 2 to pin 6 with lap joints, without the
+planner. In 25 turns and 254 s it made both, good, 3.7 mm laps
+(`programs/claude-lap.cell`), trying with `cell_attempt` (15 tries: 3
+kept, 12 refused or stopped, leaving nothing to undo); it found by
+itself that a short bent end, brought in from above (`from=0,0,1`),
+clears the vise. What it said got in its way, and what came of it:
+
+- It could not see a part's pins or which way they point: `cell_state`
+  now gives them (and a bent end's length, which it saw only after the
+  cut).
+- A collision says what touched what, not where: still so.
+- "The vise holds R1" on letting a soldered resistor go was wrong: it
+  now says the resistor stays, soldered to the chip the vise holds.
+- `cell_check` judges the whole netlist, so a part of a build cannot
+  pass it: `cell_inspect` judges each joint.
+
+`just ext cell agent NAME` runs such a session again from
+`mcp/goals/NAME.goal` (it costs a Claude Code session): the session in
+`work/mcp/NAME.cell`, the transcript beside it.
+
 ![The page following an MCP session: the DIP in the vise, arm A bringing the resistor's lead to pin 3](mcp.jpg)
 
 ## Heat and solder

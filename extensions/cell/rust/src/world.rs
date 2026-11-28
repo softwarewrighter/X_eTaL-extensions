@@ -1362,7 +1362,29 @@ impl World {
         {
             self.parts[k].in_vise = true;
             let id = self.parts[k].id.clone();
-            self.notes.push((false, format!("the vise holds {id}")));
+            // a part soldered to what is clamped is held with it, not clamped
+            let with: Vec<String> = self
+                .joints
+                .iter()
+                .filter(|j| j.holds())
+                .filter_map(|j| {
+                    let (a, b) = (j.a.split('.').next()?, j.b.split('.').next()?);
+                    (a == id)
+                        .then(|| b.to_string())
+                        .or_else(|| (b == id).then(|| a.to_string()))
+                })
+                .collect();
+            if with.is_empty() {
+                self.notes.push((false, format!("the vise holds {id}")));
+            } else {
+                self.notes.push((
+                    false,
+                    format!(
+                        "{id} stays, soldered to {}: the vise holds them",
+                        with.join(" and ")
+                    ),
+                ));
+            }
         }
         self.sync_carriers();
         if self.parts[k].holder.is_none() {
@@ -2391,7 +2413,21 @@ impl World {
             .iter()
             .map(|p| {
                 let grasps: Vec<String> = p.kind_of().map(|k| k.grasps.iter().map(|g| g.name.clone()).collect()).unwrap_or_default();
-                json!({ "id": p.id, "kind": p.kind, "at": p.at, "holder": p.holder, "lost": p.lost, "damaged": p.damaged, "grasps": grasps })
+                // each pin's lead end: where its tip is, which way it points
+                // (out, toward the tip: a chip's legs up point +z), and its
+                // last straight run (a bent end's length)
+                let r2 = |x: f64| (x * 100.0).round() / 100.0;
+                let pins: Vec<serde_json::Value> = p
+                    .kind_of()
+                    .map(|k| k.pins.iter().map(|pin| pin.name.clone()).collect::<Vec<_>>())
+                    .unwrap_or_default()
+                    .iter()
+                    .filter_map(|pin| {
+                        let (tip, out, run) = crate::wrap::lead_run(self, &format!("{}.{pin}", p.id)).ok()?;
+                        Some(json!({ "pin": pin, "tip": tip.map(r2), "points": out.map(r2), "run": r2(run) }))
+                    })
+                    .collect();
+                json!({ "id": p.id, "kind": p.kind, "at": p.at, "holder": p.holder, "lost": p.lost, "damaged": p.damaged, "grasps": grasps, "pins": pins })
             })
             .collect();
         let joints: Vec<serde_json::Value> = self

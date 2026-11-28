@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-27
 
+- 16:52 `ext` cell, an agent over MCP again (Saga 17 step 33): cell_netlist, cell_attempt and cell_plan; cell_state gives each part's pins; Claude Code made two lap joints on the blinker's chip with the cell's tools alone (programs/claude-lap.cell); just ext cell agent NAME.
 - 15:24 `ext` cell, render bundles (Saga 17 step 32, decision C11): just ext cell bundle NAME writes a directory and zip a node renders with Blender alone (the cell player posing the simulator's calls each frame, checked to 0.001 mm); a farm job kind bundle; the blinker's end ray-traced from its bundle; the farm's always-on hosts noted.
 - 14:41 `fix` cell, the goldens listing the extension's functions and types rebased for the planner's session functions; programs/zz-bring.cell, a scratch file committed by mistake, removed (with the user's yes).
 - 13:51 `ext` cell, the planner plans the blinker by search (Saga 17 step 31): a session cell in the extension (ce:b_egin, ce:a_ttempt, ce:f_rame, ce:k_ind, ce:n_extWire, ce:j_oined); cp:b_uild tries each step on the simulator and keeps the first it takes; programs/blinker.cell planned from nets/blinker.net, check 7 of 7.
