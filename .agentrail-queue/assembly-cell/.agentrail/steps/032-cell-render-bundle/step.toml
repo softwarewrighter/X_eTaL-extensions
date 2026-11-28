@@ -1,8 +1,9 @@
 number = 32
 slug = "cell-render-bundle"
-status = "in-progress"
+status = "completed"
 description = "Saga 17 step 15 (the user, 2026-11-24: Three.js recordings rather than expens..."
 role = "production"
 context_files = []
 created_at = "2026-11-24T12:30:30"
-commits = []
+completed_at = "2026-11-27T16:04:43"
+commits = ["db87281de9cb40d83fcb1b457b0f8d17d9006015"]
