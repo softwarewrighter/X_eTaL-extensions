@@ -336,7 +336,7 @@ Import: &quot;cm:&quot; u_se&lt; &quot;CellModels&quot;</p>
 <h3><a href="#copper">copper</a> <span class="type">: Float</span></h3>
 <div class="meta">value <span class="private">(private)</span> &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L23">line 23</a></div>
 <pre class="code">copper ← <span class="c-number">0.78</span> <span class="c-number">0.45</span> <span class="c-number">0.25</span></pre>
-<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a></div>
+<div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.clip">ˡclip</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.welder">ˡwelder</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.wire">ˡwire</a>, <a href="extensions-cell-lib-CellModels.xtl.html#l.parts">ˡparts</a></div>
 </div>
 <div class="item" id="silver">
 <h3><a href="#silver">silver</a> <span class="type">: Float</span></h3>
@@ -774,7 +774,7 @@ each, for a resistor (cm:b_ands), else 0 3 r_eshape 0.0</p>
 <p>cm:kinds: the part kinds a model is made of, as the parts library
 lists them</p>
 </div>
-<pre class="code">ˡkinds ← <span class="c-string">&quot;dip8 dip14 dip16 to92 axial-resistor axial-diode radial-electrolytic ceramic-disc led-5mm battery-snap&quot;</span></pre>
+<pre class="code">ˡkinds ← <span class="c-string">&quot;dip8 dip14 dip16 to92 axial-resistor axial-diode radial-electrolytic ceramic-disc led-5mm manhattan-tile battery-snap&quot;</span></pre>
 <div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.names">ˡnames</a></div>
 </div>
 <div class="item" id="none">
@@ -810,12 +810,13 @@ lists them</p>
   <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;radial-electrolytic&quot;</span>, <a href="extensions-cell-lib-CellModels.xtl.html#blue">blue</a>, <a href="extensions-cell-lib-CellModels.xtl.html#pins">pins</a>, <span class="c-number">0.85</span> <span class="c-number">0.85</span> <span class="c-number">0.88</span>, <a href="extensions-cell-lib-CellModels.xtl.html#none">none</a><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#l.p_art" class="c-libfunc">ˡp̲art</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;ceramic-disc&quot;</span>, <span class="c-number">0.85</span> <span class="c-number">0.52</span> <span class="c-number">0.2</span>, <a href="extensions-cell-lib-CellModels.xtl.html#pins">pins</a>, <a href="extensions-cell-lib-CellModels.xtl.html#gray">gray</a>, <a href="extensions-cell-lib-CellModels.xtl.html#none">none</a><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#l.p_art" class="c-libfunc">ˡp̲art</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;led-5mm&quot;</span>, <span class="c-number">0.9</span> <span class="c-number">0.12</span> <span class="c-number">0.1</span>, <a href="extensions-cell-lib-CellModels.xtl.html#pins">pins</a>, <a href="extensions-cell-lib-CellModels.xtl.html#steel">steel</a>, <a href="extensions-cell-lib-CellModels.xtl.html#none">none</a><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#l.p_art" class="c-libfunc">ˡp̲art</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
+  <span class="c-depth1">(</span><span class="c-depth2">(</span><span class="c-string">&quot;manhattan-tile&quot;</span>, <a href="extensions-cell-lib-CellModels.xtl.html#copper">copper</a>, <a href="extensions-cell-lib-CellModels.xtl.html#copper">copper</a>, <a href="extensions-cell-lib-CellModels.xtl.html#gray">gray</a>, <a href="extensions-cell-lib-CellModels.xtl.html#none">none</a><span class="c-depth2">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#l.p_art" class="c-libfunc">ˡp̲art</a> <span class="c-number">0</span><span class="c-depth1">)</span> <a href="builtins.html#c_at" class="c-builtin">c̲at</a>
   <span class="c-depth1">(</span><span class="c-string">&quot;battery-snap&quot;</span>, <a href="extensions-cell-lib-CellModels.xtl.html#black">black</a>, <a href="extensions-cell-lib-CellModels.xtl.html#pins">pins</a>, <a href="extensions-cell-lib-CellModels.xtl.html#silver">silver</a>, <a href="extensions-cell-lib-CellModels.xtl.html#none">none</a><span class="c-depth1">)</span> <a href="extensions-cell-lib-CellModels.xtl.html#l.p_art" class="c-libfunc">ˡp̲art</a> <span class="c-number">0</span><span class="c-depth0">)</span></pre>
 <div class="uses">Used in: <a href="extensions-cell-lib-CellModels.xtl.html#l.script">ˡscript</a></div>
 </div>
 <div class="item" id="l.names">
 <h3><a href="#l.names">ˡnames</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L294">line 294</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L295">line 295</a></div>
 <div class="doc">
 <p>cm:names: every model, as the check and the stills take them</p>
 </div>
@@ -824,7 +825,7 @@ lists them</p>
 </div>
 <div class="item" id="l.script">
 <h3><a href="#l.script">ˡscript</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L299">line 299</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L300">line 300</a></div>
 <div class="doc">
 <p>cm:script: the whole inner script: Bpy's head, the cell's builders
 (the path to cell_models.py is the script's second argument), every
@@ -835,7 +836,7 @@ model, then the check of each .glb against its rig (check.txt)</p>
 </div>
 <div class="item" id="l.stills">
 <h3><a href="#l.stills">ˡstills</a> <span class="type">: Char</span></h3>
-<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L303">line 303</a></div>
+<div class="meta">value &middot; <a href="extensions-cell-lib-CellModels.xtl.src.html#L304">line 304</a></div>
 <div class="doc">
 <p>cm:stills: Python, after cm:script, for each model's turntable
 stills: four, 90 degrees apart, 320 by 240, in stills/</p>

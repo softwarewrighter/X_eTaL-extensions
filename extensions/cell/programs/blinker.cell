@@ -58,7 +58,6 @@ inspect U1.2+W2.2
 unpinch P1
 park P1
 stage to=0 tilt=0 at=0,0,0
-# refused: no bring A R1.1 to=U1.8.tip along=0.658,-0.753,0 lap=3.2: collision: R1.1 lead with the vise's jaw a
 pick A R1 grasp=body
 lift A mm=60
 insert A on=R1.1 at=12
@@ -66,7 +65,7 @@ form angle=90
 lift A mm=30
 shear A on=R1.1 at=17.2
 lift A mm=60
-bring A R1.1 to=U1.8.tip along=1.0,0.0,0.0 lap=3.2
+bring A R1.1 to=U1.8.tip along=0.658,-0.753,0.0 lap=3.2
 pinch P1 on=R1.1 at=3
 release A R1
 lift A mm=60
@@ -108,34 +107,31 @@ inspect U1.7+W3.2
 unpinch P1
 park P1
 stage to=0 tilt=0 at=0,0,0
-# refused: no bring A R2.1 to=U1.7.tip along=0.934,-0.356,0 lap=3.2: collision: R2.1 lead with R1.1 lead at 351
-# refused: no bring A R2.1 to=U1.7.tip along=1,0,0 lap=3.2: collision: arm A's tool with R1.2 lead at 351.898 s
-# refused: no bring A R2.1 to=U1.7.tip along=0.934,-0.356,0 lap=3.2: collision: R2.1 lead with R1.1 lead at 351
 pick A R2 grasp=body
 lift A mm=60
-insert A on=R2.2 at=12
+insert A on=R2.1 at=12
 form angle=90
 lift A mm=30
-shear A on=R2.2 at=17.2
+shear A on=R2.1 at=17.2
 lift A mm=60
-bring A R2.2 to=U1.6.tip along=0.934,0.356,0.0 lap=3.2
-pinch P1 on=R2.2 at=3
+bring A R2.1 to=U1.7.tip along=0.934,-0.356,0.0 lap=3.2
+pinch P1 on=R2.1 at=3
 release A R2
 lift A mm=60
 move A to=0,60,60
 joints A 0 0 0 0 90 0
-present U1.6+R2.2 at=S1
-touch S1 at=U1.6+R2.2 dwell=1.5 temp=400
+present U1.7+R2.1 at=S1
+touch S1 at=U1.7+R2.1 dwell=1.5 temp=400
 feed S1 mm=2 rate=1
 back S1
-wait until=U1.6+R2.2 below=100
-inspect U1.6+R2.2
-present R2.1.10 at=S4
-trim S4 on=R2.1 at=10
+wait until=U1.7+R2.1 below=100
+inspect U1.7+R2.1
+present R2.2.10 at=S4
+trim S4 on=R2.2 at=10
 unpinch P1
 park P1
 stage to=0 tilt=0 at=0,0,0
-wire S5 awg=30 span=R2.1.tip+U1.7.tip lap=3.2 enamel=yes
+wire S5 awg=30 span=R2.2.tip+U1.6.tip lap=3.2 enamel=yes
 pick A W4 grasp=middle
 cut S5
 lift A mm=60
@@ -145,18 +141,18 @@ release A W4
 lift A mm=60
 move A to=0,60,60
 joints A 0 0 0 0 90 0
-present R2.1+W4.1 at=S1
-touch S1 at=R2.1+W4.1 dwell=1.5 temp=400
+present R2.2+W4.1 at=S1
+touch S1 at=R2.2+W4.1 dwell=1.5 temp=400
 feed S1 mm=2 rate=1
 back S1
-wait until=R2.1+W4.1 below=100
-inspect R2.1+W4.1
-present U1.7+W4.2 at=S1
-touch S1 at=U1.7+W4.2 dwell=1.5 temp=400
+wait until=R2.2+W4.1 below=100
+inspect R2.2+W4.1
+present U1.6+W4.2 at=S1
+touch S1 at=U1.6+W4.2 dwell=1.5 temp=400
 feed S1 mm=2 rate=1
 back S1
-wait until=U1.7+W4.2 below=100
-inspect U1.7+W4.2
+wait until=U1.6+W4.2 below=100
+inspect U1.6+W4.2
 unpinch P1
 park P1
 stage to=0 tilt=0 at=0,0,0
@@ -185,10 +181,9 @@ bend P1 on=R3.2 at=6 angle=90 toward=0,0,1
 unpinch P2
 park P2
 stage to=0 tilt=0 at=0,0,0
-# refused: no bring A C2.1 to=U1.5.tip along=1,0,0 from=0,0,1 lap=3.2: collision: C2.2 lead with R2.2 lead at 6
 pick A C2 grasp=body
 lift A mm=60
-bring A C2.1 to=U1.5.tip along=0.0,1.0,0.0 lap=3.2 from=0,0,1
+bring A C2.1 to=U1.5.tip along=1.0,0.0,0.0 lap=3.2 from=0,0,1
 pinch P1 on=C2.1 at=3
 release A C2
 lift A mm=60
@@ -203,14 +198,18 @@ inspect U1.5+C2.1
 unpinch P1
 park P1
 stage to=0 tilt=0 at=0,0,0
-# refused: no lay A W5: collision: arm A's tool with W2 body at 660.341 s                                      
-# refused: no lay A W5: collision: arm A's tool with W2 body at 660.341 s                                      
-# refused: no lay A W5: collision: arm A's tool with W2 body at 660.502 s                                      
-wire S5 awg=30 span=C2.2.tip+U1.1.tip lap=3.2 via=0.0,0.0,-15.65 enamel=yes
+# refused: no lay A W5: collision: arm A's tool with W2 body at 685.654 s                                      
+# refused: no lay A W5: collision: arm A's tool with W2 body at 685.654 s                                      
+# refused: no lay A W5: collision: arm A's tool with W2 body at 685.832 s                                      
+# refused: no lay A W5: collision: arm A's tool with W2 body at 685.983 s                                      
+# refused: no lay A W5: collision: arm A's tool with R2.1 lead at 685.831 s                                    
+# refused: no lay A W5 from=1,0,0.8: collision: arm A's tool with R2.1 lead at 685.704 s                       
+# refused: no lay A W5 from=1,0,0.8: collision: arm A's tool with R2.1 lead at 685.704 s                       
+wire S5 awg=30 span=C2.2.tip+U1.1.tip lap=3.2 via=6.78,0.0,-13.95 enamel=yes
 pick A W5 grasp=middle
 cut S5
 lift A mm=60
-lay A W5
+lay A W5 from=1.0,0.0,0.8
 pinch P1 on=W5.1 at=1.5
 release A W5
 lift A mm=60
@@ -250,11 +249,11 @@ inspect U1.2+C1.1
 unpinch P2
 park P2
 stage to=0 tilt=0 at=0,0,0
-# refused: no lay A W6: collision: W6.2 lead with C1 body at 780.494 s                                         
-# refused: no lay A W6: collision: W6.2 lead with C1 body at 780.494 s                                         
-# refused: no lay A W6: collision: W6.1 lead with C1 body at 780.95 s                                          
-# refused: no lay A W6: collision: W6.1 lead with C1 body at 781.035 s                                         
-# refused: no lay A W6: collision: W6.1 lead with C1 body at 780.751 s                                         
+# refused: no lay A W6: collision: W6.2 lead with C1 body at 807.923 s                                         
+# refused: no lay A W6: collision: W6.2 lead with C1 body at 807.923 s                                         
+# refused: no lay A W6: collision: W6.1 lead with C1 body at 808.379 s                                         
+# refused: no lay A W6: collision: W6.1 lead with C1 body at 808.465 s                                         
+# refused: no lay A W6: collision: W6.1 lead with C1 body at 808.18 s                                          
 wire S5 awg=30 span=C1.2.tip+U1.1.tip lap=3.2 via=-8.623,-4.337,-18.95 enamel=yes
 pick A W6 grasp=middle
 cut S5
@@ -280,12 +279,12 @@ inspect U1.1+W6.2
 unpinch P1
 park P1
 stage to=0 tilt=0 at=0,0,0
-# refused: no bring A D1.2 to=U1.1.tip along=-1,0,0 from=0,0,1 lap=3.2: collision: D1.2 lead with C1 body at 83
-# refused: no bring A D1.2 to=U1.1.tip along=0,-1,0 from=0,0,1 lap=3.2: collision: D1 body with C1 body at 839.
-# refused: no bring A D1.2 to=U1.1.tip along=-1,0,0 from=0,0,1 lap=3.2: collision: D1.2 lead with C1 body at 83
-# refused: no bring A D1.2 to=U1.1.tip along=0,-1,0 from=0,0,1 lap=3.2: collision: D1 body with C1 body at 839.
-# refused: no bring A D1.2 to=U1.1.tip along=-1,1,0 from=-1,-1,1 lap=3.2: collision: D1 body with C1 body at 83
-# refused: no bring A D1.2 to=U1.1.tip along=1,-1,0 from=-1,-1,1 lap=3.2: collision: D1 body with C1 body at 83
+# refused: no bring A D1.2 to=U1.1.tip along=-1,0,0 from=0,0,1 lap=3.2: collision: D1.2 lead with C1 body at 86
+# refused: no bring A D1.2 to=U1.1.tip along=0,-1,0 from=0,0,1 lap=3.2: collision: D1 body with C1 body at 866.
+# refused: no bring A D1.2 to=U1.1.tip along=-1,0,0 from=0,0,1 lap=3.2: collision: D1.2 lead with C1 body at 86
+# refused: no bring A D1.2 to=U1.1.tip along=0,-1,0 from=0,0,1 lap=3.2: collision: D1 body with C1 body at 866.
+# refused: no bring A D1.2 to=U1.1.tip along=-1,1,0 from=-1,-1,1 lap=3.2: collision: D1 body with C1 body at 86
+# refused: no bring A D1.2 to=U1.1.tip along=1,-1,0 from=-1,-1,1 lap=3.2: collision: D1 body with C1 body at 86
 pick A D1 grasp=body
 lift A mm=60
 bring A D1.1 to=R3.2.7 along=-1.0,0.0,0.0 lap=3.2 from=0,0,1
@@ -303,13 +302,13 @@ inspect R3.2+D1.1
 unpinch P2
 park P2
 stage to=0 tilt=0 at=0,0,0
-# refused: no lay A W7: collision: W7.1 lead with D1 body at 905.12 s                                          
-# refused: no lay A W7: collision: W7.1 lead with D1 body at 905.12 s                                          
-# refused: no lay A W7: collision: W7.1 lead with D1 body at 905.514 s                                         
-# refused: no lay A W7: collision: W7.1 lead with D1 body at 905.574 s                                         
-# refused: no lay A W7: collision: W7.1 lead with D1 body at 905.129 s                                         
-# refused: no lay A W7 from=-0.982,0.189,0.8: collision: arm A's tool with R3 body at 906.396 s                
-# refused: no lay A W7 from=-0.982,0.189,0.8: collision: arm A's tool with R3 body at 906.396 s                
+# refused: no lay A W7: collision: W7.1 lead with D1 body at 931.948 s                                         
+# refused: no lay A W7: collision: W7.1 lead with D1 body at 931.948 s                                         
+# refused: no lay A W7: collision: W7.1 lead with D1 body at 932.342 s                                         
+# refused: no lay A W7: collision: W7.1 lead with D1 body at 932.402 s                                         
+# refused: no lay A W7: collision: W7.1 lead with D1 body at 931.957 s                                         
+# refused: no lay A W7 from=-0.982,0.189,0.8: collision: arm A's tool with R3 body at 933.225 s                
+# refused: no lay A W7 from=-0.982,0.189,0.8: collision: arm A's tool with R3 body at 933.225 s                
 wire S5 awg=30 span=D1.2.tip+U1.1.tip lap=3.2 via=-21.491,4.14,-12.714 enamel=yes
 pick A W7 grasp=middle
 cut S5

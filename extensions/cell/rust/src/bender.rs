@@ -327,11 +327,9 @@ impl World {
         });
         if let Some(want) = lap {
             let goal = self.lap_goal(pin, &lead, diameter, to, &to_pin, u, want, events)?;
-            // in from the side it lies on, unless told
-            let side = kin::sub(goal.1, target);
-            let front = from.map_or(kin::scale(side, FRONT / kin::norm(side).max(1e-9)), |_| {
-                front
-            });
+            // in from the side it lies on, level with it, unless told
+            let side = goal.1;
+            let front = from.map_or(kin::scale(side, FRONT), |_| front);
             self.carry_to(i, rig, k, &goal.0, front, &allowed, did)?;
         } else {
             self.carry_lead(
@@ -375,7 +373,8 @@ impl World {
     /// end, laid alongside the target lead at `to`, touching it, pointing
     /// back up it toward its body, overlapping `want` mm or as much as both
     /// straight runs allow; the rest of the lead out along `u`. The pose,
-    /// and where the end's middle is (the cell's frame).
+    /// and the side the end lies on (a unit vector across the target lead:
+    /// the way to come in from).
     #[allow(clippy::too_many_arguments)]
     fn lap_goal(
         &self,
@@ -469,12 +468,11 @@ impl World {
             kin::scale(side, touch),
         );
         let p = kin::sub(tip, kin::mv(&r, lead[n - 1]));
-        let middle = kin::sub(tip, kin::scale(up, lap / 2.0));
         events.push(format!(
             "{pin}'s end alongside {to_pin}: a {} mm lap",
             num1(lap)
         ));
-        Ok((Pose { p, r }, middle))
+        Ok((Pose { p, r }, side))
     }
 
     /// `lay ARM WIRE [from=]`: a jumper formed to its route laid on it --

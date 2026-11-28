@@ -237,11 +237,12 @@
 <li class="item"><a href="#L67"><span class="c-libfunc">ˡa̲ttempt</span></a></li>
 <li class="item"><a href="#L70"><span class="c-libfunc">ˡf̲rame</span></a></li>
 <li class="item"><a href="#L73"><span class="c-libfunc">ˡk̲ind</span></a></li>
-<li class="item"><a href="#L75"><span class="c-libfunc">ˡn̲extWire</span></a></li>
-<li class="item"><a href="#L78"><span class="c-libfunc">ˡj̲oined</span></a></li>
-<li class="item"><a href="#L82"><span class="c-libfunc">ˡr̲ig</span></a></li>
-<li class="item"><a href="#L90"><span class="c-libfunc">ˡa̲rmModel</span></a></li>
-<li class="item"><a href="#L94">ˡpackage</a></li>
+<li class="item"><a href="#L76"><span class="c-libfunc">ˡc̲ommon</span></a></li>
+<li class="item"><a href="#L78"><span class="c-libfunc">ˡn̲extWire</span></a></li>
+<li class="item"><a href="#L81"><span class="c-libfunc">ˡj̲oined</span></a></li>
+<li class="item"><a href="#L85"><span class="c-libfunc">ˡr̲ig</span></a></li>
+<li class="item"><a href="#L93"><span class="c-libfunc">ˡa̲rmModel</span></a></li>
+<li class="item"><a href="#L97">ˡpackage</a></li>
 </ul>
 </nav>
 <main>
@@ -371,40 +372,47 @@
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/kind?text&quot;</span>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/kind&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L74"><a class="ln" href="#L74">74</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:n_extWire @: the id the session's next wire will have (W3).</span></span>
-<span class="line" id="L75"><a class="ln" href="#L75">75</a><span class="c-string">&quot;n_extWire : unit -&gt; text&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/next_wire&quot;</span></span>
+<span class="line" id="L74"><a class="ln" href="#L74">74</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:c_ommon id: a part's pins that are one conductor in it (a ground</span></span>
+<span class="line" id="L75"><a class="ln" href="#L75">75</a><span class="c-doc">⍝│</span><span class="c-doc"> plane's posts), a space between (empty: none).</span></span>
+<span class="line" id="L76"><a class="ln" href="#L76">76</a><span class="c-string">&quot;c_ommon : text -&gt; text&quot;</span>        <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/common&quot;</span></span>
+<details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡc̲ommon</span> ← <span class="c-depth0">{</span> a →
+  pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/common?text&quot;</span>
+  <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/common&quot;</span>
+<span class="c-depth0">}</span></pre></details>
+<span class="line" id="L77"><a class="ln" href="#L77">77</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:n_extWire @: the id the session's next wire will have (W3).</span></span>
+<span class="line" id="L78"><a class="ln" href="#L78">78</a><span class="c-string">&quot;n_extWire : unit -&gt; text&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/next_wire&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡn̲extWire</span> ← <span class="c-depth0">{</span> @ →
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/next_wire&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L76"><a class="ln" href="#L76">76</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:j_oined pin: the pins a pin of the session's cell is soldered to,</span></span>
-<span class="line" id="L77"><a class="ln" href="#L77">77</a><span class="c-doc">⍝│</span><span class="c-doc"> a space between (empty: none yet).</span></span>
-<span class="line" id="L78"><a class="ln" href="#L78">78</a><span class="c-string">&quot;j_oined : text -&gt; text&quot;</span>        <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/joined&quot;</span></span>
+<span class="line" id="L79"><a class="ln" href="#L79">79</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:j_oined pin: the pins a pin of the session's cell is soldered to,</span></span>
+<span class="line" id="L80"><a class="ln" href="#L80">80</a><span class="c-doc">⍝│</span><span class="c-doc"> a space between (empty: none yet).</span></span>
+<span class="line" id="L81"><a class="ln" href="#L81">81</a><span class="c-string">&quot;j_oined : text -&gt; text&quot;</span>        <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/joined&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡj̲oined</span> ← <span class="c-depth0">{</span> a →
   pa ← a <a href="builtins.html#-5b-5dN_PUT" class="c-builtin">⎕N̲PUT</a> <span class="c-string">&quot;ext:cell/joined?text&quot;</span>
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/joined&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L79"><a class="ln" href="#L79">79</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:r_ig @: the arm's rig as JSON -- each joint's DH parameters</span></span>
-<span class="line" id="L80"><a class="ln" href="#L80">80</a><span class="c-doc">⍝│</span><span class="c-doc"> (alpha, a, d, offset), its limits, top speed and acceleration, and</span></span>
-<span class="line" id="L81"><a class="ln" href="#L81">81</a><span class="c-doc">⍝│</span><span class="c-doc"> the home pose; every arm in the cell is this arm.</span></span>
-<span class="line" id="L82"><a class="ln" href="#L82">82</a><span class="c-string">&quot;r_ig : unit -&gt; text&quot;</span>           <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/rig&quot;</span></span>
+<span class="line" id="L82"><a class="ln" href="#L82">82</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:r_ig @: the arm's rig as JSON -- each joint's DH parameters</span></span>
+<span class="line" id="L83"><a class="ln" href="#L83">83</a><span class="c-doc">⍝│</span><span class="c-doc"> (alpha, a, d, offset), its limits, top speed and acceleration, and</span></span>
+<span class="line" id="L84"><a class="ln" href="#L84">84</a><span class="c-doc">⍝│</span><span class="c-doc"> the home pose; every arm in the cell is this arm.</span></span>
+<span class="line" id="L85"><a class="ln" href="#L85">85</a><span class="c-string">&quot;r_ig : unit -&gt; text&quot;</span>           <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/rig&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡr̲ig</span> ← <span class="c-depth0">{</span> @ →
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/rig&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L83"><a class="ln" href="#L83">83</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:a_rmModel @: what a model of the arm must be, as JSON (the asset</span></span>
-<span class="line" id="L84"><a class="ln" href="#L84">84</a><span class="c-doc">⍝│</span><span class="c-doc"> contract, docs/cell-design.md): its nodes -- arm_base, arm_j1 to</span></span>
-<span class="line" id="L85"><a class="ln" href="#L85">85</a><span class="c-doc">⍝│</span><span class="c-doc"> arm_j6, arm_flange -- each placed in its parent (mm, and Euler XYZ</span></span>
-<span class="line" id="L86"><a class="ln" href="#L86">86</a><span class="c-doc">⍝│</span><span class="c-doc"> degrees) with where it is at rest and its local z, the joint's axis;</span></span>
-<span class="line" id="L87"><a class="ln" href="#L87">87</a><span class="c-doc">⍝│</span><span class="c-doc"> the links between the pivots; check poses (joint angles with where</span></span>
-<span class="line" id="L88"><a class="ln" href="#L88">88</a><span class="c-doc">⍝│</span><span class="c-doc"> the flange must then be); and the rig. CellModels.xtl builds the arm</span></span>
-<span class="line" id="L89"><a class="ln" href="#L89">89</a><span class="c-doc">⍝│</span><span class="c-doc"> from it, and Blender writes it back as arm.rig.json.</span></span>
-<span class="line" id="L90"><a class="ln" href="#L90">90</a><span class="c-string">&quot;a_rmModel : unit -&gt; text&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/arm_model&quot;</span></span>
+<span class="line" id="L86"><a class="ln" href="#L86">86</a><span class="c-doc">⍝│</span><span class="c-doc"> ce:a_rmModel @: what a model of the arm must be, as JSON (the asset</span></span>
+<span class="line" id="L87"><a class="ln" href="#L87">87</a><span class="c-doc">⍝│</span><span class="c-doc"> contract, docs/cell-design.md): its nodes -- arm_base, arm_j1 to</span></span>
+<span class="line" id="L88"><a class="ln" href="#L88">88</a><span class="c-doc">⍝│</span><span class="c-doc"> arm_j6, arm_flange -- each placed in its parent (mm, and Euler XYZ</span></span>
+<span class="line" id="L89"><a class="ln" href="#L89">89</a><span class="c-doc">⍝│</span><span class="c-doc"> degrees) with where it is at rest and its local z, the joint's axis;</span></span>
+<span class="line" id="L90"><a class="ln" href="#L90">90</a><span class="c-doc">⍝│</span><span class="c-doc"> the links between the pivots; check poses (joint angles with where</span></span>
+<span class="line" id="L91"><a class="ln" href="#L91">91</a><span class="c-doc">⍝│</span><span class="c-doc"> the flange must then be); and the rig. CellModels.xtl builds the arm</span></span>
+<span class="line" id="L92"><a class="ln" href="#L92">92</a><span class="c-doc">⍝│</span><span class="c-doc"> from it, and Blender writes it back as arm.rig.json.</span></span>
+<span class="line" id="L93"><a class="ln" href="#L93">93</a><span class="c-string">&quot;a_rmModel : unit -&gt; text&quot;</span>      <a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a> <span class="c-string">&quot;cell/arm_model&quot;</span></span>
 <details class="expansion"><summary><code><a href="lib-Ffi.xtlm.html#m.b_ind-3c" class="c-macro">ᶠᶠⁱb̲ind&lt;</a></code> expands to</summary><pre class="code"><span class="c-libfunc">ˡa̲rmModel</span> ← <span class="c-depth0">{</span> @ →
   <a href="builtins.html#-5b-5dN_GET" class="c-builtin">⎕N̲GET</a> <span class="c-string">&quot;ext:cell/arm_model&quot;</span>
 <span class="c-depth0">}</span></pre></details>
-<span class="line" id="L91"><a class="ln" href="#L91">91</a></span>
-<span class="line" id="L92"><a class="ln" href="#L92">92</a><span class="c-doc">⍝│</span><span class="c-doc"> The native package behind these functions (a literal l: name also</span></span>
-<span class="line" id="L93"><a class="ln" href="#L93">93</a><span class="c-doc">⍝│</span><span class="c-doc"> makes this file a library to </span><span class="c-doc"></span>xetal type<span class="c-doc"></span><span class="c-doc">: ask E7).</span></span>
-<span class="line" id="L94"><a class="ln" href="#L94">94</a>ˡpackage ← <span class="c-string">&quot;cell&quot;</span></span>
+<span class="line" id="L94"><a class="ln" href="#L94">94</a></span>
+<span class="line" id="L95"><a class="ln" href="#L95">95</a><span class="c-doc">⍝│</span><span class="c-doc"> The native package behind these functions (a literal l: name also</span></span>
+<span class="line" id="L96"><a class="ln" href="#L96">96</a><span class="c-doc">⍝│</span><span class="c-doc"> makes this file a library to </span><span class="c-doc"></span>xetal type<span class="c-doc"></span><span class="c-doc">: ask E7).</span></span>
+<span class="line" id="L97"><a class="ln" href="#L97">97</a>ˡpackage ← <span class="c-string">&quot;cell&quot;</span></span>
 </div>
 </main>
 </body>

@@ -27,6 +27,10 @@ version.
 | v0.2.0 | 9dec588 | 2026-10-05 | v0.1.0 (512b3ee) | canvas, scene, audio, web; the binding macro; X_eTaL pinned by commit, not copied; the site of recordings |
 | v0.1.0 | fee06a4 | 2026-10-03 | 7b70575 (vendored) | release 1: the native ABI V1, SDK and loader, the xetal-x bridge; hello, clock, sqlite and the data notebook |
 
+## 2026-11-28
+
+- 00:05 `fix` cell, bring lap= comes in level from the side the lead lies on (it came in from below, the lap reaching down the leg: near the vise it hit a jaw); the blinker planned again with it (fewer refusals, 7 of 7); the multivibrator's posts reassigned so a standing part's two nets are neighbors; tools/multivibrator-trial.py.
+
 ## 2026-11-27
 
 - 23:32 `ext` cell, the multivibrator (Saga 17 step 34, part 2): the tile's posts spread out (7.62 mm along a row, rows 10.16 mm apart: room between the parts standing on it); the planner bends a standing part's lead out when its jumper reaches nothing, and tries again. The planned build makes 4 to 5 of the 8 nets so far: next, a hand trial to learn the rules from.
