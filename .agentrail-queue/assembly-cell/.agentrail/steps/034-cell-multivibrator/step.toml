@@ -1,6 +1,6 @@
 number = 34
 slug = "cell-multivibrator"
-status = "pending"
+status = "in-progress"
 description = "Saga 17 step 16: the second circuit: a two-transistor astable multivibrator (..."
 role = "production"
 context_files = []

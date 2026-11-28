@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-28
 
+- 01:11 `ext` cell, the multivibrator in progress on the live page (4 of 8 nets: VCC across the tile, the resistors, transistors, capacitors and the LEDs' anodes, every joint a lap; no refusals, no shorts); the tile is T1 (it was P1, a pincer's name, which the page drew as the pincer); cell-check waits 300 s for a long program.
 - 00:05 `fix` cell, bring lap= comes in level from the side the lead lies on (it came in from below, the lap reaching down the leg: near the vise it hit a jaw); the blinker planned again with it (fewer refusals, 7 of 7); the multivibrator's posts reassigned so a standing part's two nets are neighbors; tools/multivibrator-trial.py.
 
 ## 2026-11-27

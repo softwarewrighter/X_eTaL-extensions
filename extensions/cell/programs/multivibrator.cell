@@ -1,0 +1,507 @@
+# The two-transistor astable multivibrator, in progress (decision C24):
+# the ground-plane tile (T1) in the vise, its posts up; VCC across the far
+# end; the four resistors, the two transistors, the two capacitors and
+# the LEDs' anodes, every joint a lap. Not yet joined: the LEDs' cathodes
+# and the battery snap. Written by tools/multivibrator-trial.py (stage 5).
+reset circuit=multivibrator
+tool A tweezers
+pick A T1 grasp=body
+place A T1 at=0,0,-24 rpy=0,0,90
+vise close
+release A T1
+lift A mm=60
+wire S5 awg=30 span=T1.5.tip+T1.10.tip lap=3.2 via=0,15.24,-16.5 enamel=yes
+pick A W1 grasp=middle
+cut S5
+lift A mm=60
+lay A W1
+pinch P1 on=W1.1 at=1.5
+release A W1
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present T1.5+W1.1 at=S1
+touch S1 at=T1.5+W1.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.5+W1.1 below=100
+inspect T1.5+W1.1
+present T1.10+W1.2 at=S1
+touch S1 at=T1.10+W1.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.10+W1.2 below=100
+inspect T1.10+W1.2
+unpinch P1
+park P1
+stage to=0 tilt=0 at=0,0,0
+pick A R1 grasp=body
+lift A mm=60
+insert A on=R1.2 at=12
+form angle=90
+lift A mm=30
+shear A on=R1.2 at=17.2
+lift A mm=60
+bring A R1.2 to=T1.2.tip along=-0.95,-0.3,0 lap=3.2
+pinch P2 on=R1.2 at=3
+release A R1
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present T1.2+R1.2 at=S1
+touch S1 at=T1.2+R1.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.2+R1.2 below=100
+inspect T1.2+R1.2
+present R1.1.10 at=S4
+trim S4 on=R1.1 at=10
+back S4
+unpinch P2
+park P2
+stage tilt=0 at=0,0,0
+stage to=0
+pick A R2 grasp=body
+lift A mm=60
+insert A on=R2.2 at=12
+form angle=90
+lift A mm=30
+shear A on=R2.2 at=17.2
+lift A mm=60
+bring A R2.2 to=T1.4.tip along=-0.95,0.3,0 lap=3.2
+pinch P2 on=R2.2 at=3
+release A R2
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present T1.4+R2.2 at=S1
+touch S1 at=T1.4+R2.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.4+R2.2 below=100
+inspect T1.4+R2.2
+present R2.1.10 at=S4
+trim S4 on=R2.1 at=10
+back S4
+unpinch P2
+park P2
+stage tilt=0 at=0,0,0
+stage to=0
+pick A R4 grasp=body
+lift A mm=60
+insert A on=R4.2 at=12
+form angle=90
+lift A mm=30
+shear A on=R4.2 at=17.2
+lift A mm=60
+bring A R4.2 to=T1.7.tip along=0.95,-0.3,0 lap=3.2
+pinch P2 on=R4.2 at=3
+release A R4
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present T1.7+R4.2 at=S1
+touch S1 at=T1.7+R4.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.7+R4.2 below=100
+inspect T1.7+R4.2
+present R4.1.10 at=S4
+trim S4 on=R4.1 at=10
+back S4
+unpinch P2
+park P2
+stage tilt=0 at=0,0,0
+stage to=0
+pick A R3 grasp=body
+lift A mm=60
+insert A on=R3.2 at=12
+form angle=90
+lift A mm=30
+shear A on=R3.2 at=17.2
+lift A mm=60
+bring A R3.2 to=T1.9.tip along=0.95,0.3,0 lap=3.2
+pinch P2 on=R3.2 at=3
+release A R3
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present T1.9+R3.2 at=S1
+touch S1 at=T1.9+R3.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.9+R3.2 below=100
+inspect T1.9+R3.2
+present R3.1.10 at=S4
+trim S4 on=R3.1 at=10
+back S4
+unpinch P2
+park P2
+stage tilt=0 at=0,0,0
+stage to=0
+wire S5 awg=30 span=R1.1.tip+T1.5.tip lap=3.2 via=-24,4,-12 enamel=yes
+pick A W2 grasp=middle
+cut S5
+lift A mm=60
+lay A W2
+pinch P2 on=W2.1 at=1.5
+release A W2
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present R1.1+W2.1 at=S1
+touch S1 at=R1.1+W2.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=R1.1+W2.1 below=100
+inspect R1.1+W2.1
+present T1.5+W2.2 at=S1
+touch S1 at=T1.5+W2.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.5+W2.2 below=100
+inspect T1.5+W2.2
+unpinch P2
+park P2
+stage to=0 tilt=0 at=0,0,0
+wire S5 awg=30 span=R2.1.tip+T1.5.tip lap=3.2 enamel=yes
+pick A W3 grasp=middle
+cut S5
+lift A mm=60
+lay A W3
+pinch P2 on=W3.1 at=1.5
+release A W3
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present R2.1+W3.1 at=S1
+touch S1 at=R2.1+W3.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=R2.1+W3.1 below=100
+inspect R2.1+W3.1
+present T1.5+W3.2 at=S1
+touch S1 at=T1.5+W3.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.5+W3.2 below=100
+inspect T1.5+W3.2
+unpinch P2
+park P2
+stage to=0 tilt=0 at=0,0,0
+wire S5 awg=30 span=R4.1.tip+T1.10.tip lap=3.2 via=24,4,-12 enamel=yes
+pick A W4 grasp=middle
+cut S5
+lift A mm=60
+lay A W4
+pinch P1 on=W4.1 at=1.5
+release A W4
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present R4.1+W4.1 at=S1
+touch S1 at=R4.1+W4.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=R4.1+W4.1 below=100
+inspect R4.1+W4.1
+present T1.10+W4.2 at=S1
+touch S1 at=T1.10+W4.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.10+W4.2 below=100
+inspect T1.10+W4.2
+unpinch P1
+park P1
+stage to=0 tilt=0 at=0,0,0
+wire S5 awg=30 span=R3.1.tip+T1.10.tip lap=3.2 enamel=yes
+pick A W5 grasp=middle
+cut S5
+lift A mm=60
+lay A W5
+pinch P1 on=W5.1 at=1.5
+release A W5
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present R3.1+W5.1 at=S1
+touch S1 at=R3.1+W5.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=R3.1+W5.1 below=100
+inspect R3.1+W5.1
+present T1.10+W5.2 at=S1
+touch S1 at=T1.10+W5.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.10+W5.2 below=100
+inspect T1.10+W5.2
+unpinch P1
+park P1
+stage to=0 tilt=0 at=0,0,0
+pick A Q1 grasp=body
+lift A mm=60
+bring A Q1.3 to=T1.3.tip along=-1,0,0 lap=3.2 from=0,0,1
+pinch P2 on=Q1.3 at=3
+release A Q1
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present T1.3+Q1.3 at=S1
+touch S1 at=T1.3+Q1.3 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.3+Q1.3 below=100
+inspect T1.3+Q1.3
+bend P1 on=Q1.1 at=8 angle=90 toward=-0.6,-1,0
+bend P1 on=Q1.2 at=6 angle=90 toward=-0.6,1,0
+unpinch P2
+park P2
+stage tilt=0 at=0,0,0
+stage to=0
+wire S5 awg=30 span=Q1.1.tip+T1.1.tip lap=3.2 via=-9,-8,-12 enamel=yes
+pick A W6 grasp=middle
+cut S5
+lift A mm=60
+lay A W6
+pinch P2 on=W6.1 at=1.5
+release A W6
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present Q1.1+W6.1 at=S1
+touch S1 at=Q1.1+W6.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=Q1.1+W6.1 below=100
+inspect Q1.1+W6.1
+present T1.1+W6.2 at=S1
+touch S1 at=T1.1+W6.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.1+W6.2 below=100
+inspect T1.1+W6.2
+unpinch P2
+park P2
+stage to=0 tilt=0 at=0,0,0
+wire S5 awg=30 span=Q1.2.tip+T1.9.tip lap=3.2 via=0,6,-12 enamel=yes
+pick A W7 grasp=middle
+cut S5
+lift A mm=60
+lay A W7
+pinch P2 on=W7.1 at=1.5
+release A W7
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present Q1.2+W7.1 at=S1
+touch S1 at=Q1.2+W7.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=Q1.2+W7.1 below=100
+inspect Q1.2+W7.1
+present T1.9+W7.2 at=S1
+touch S1 at=T1.9+W7.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.9+W7.2 below=100
+inspect T1.9+W7.2
+unpinch P2
+park P2
+stage to=0 tilt=0 at=0,0,0
+pick A Q2 grasp=body
+lift A mm=60
+bring A Q2.3 to=T1.8.tip along=1,0,0 lap=3.2 from=0,0,1
+pinch P1 on=Q2.3 at=3
+release A Q2
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present T1.8+Q2.3 at=S1
+touch S1 at=T1.8+Q2.3 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.8+Q2.3 below=100
+inspect T1.8+Q2.3
+bend P2 on=Q2.1 at=8 angle=90 toward=0.6,-1,0
+bend P2 on=Q2.2 at=6 angle=90 toward=0.6,1,0
+unpinch P1
+park P1
+stage tilt=0 at=0,0,0
+stage to=0
+wire S5 awg=30 span=Q2.1.tip+T1.6.tip lap=3.2 via=9,-8,-12 enamel=yes
+pick A W8 grasp=middle
+cut S5
+lift A mm=60
+lay A W8
+pinch P1 on=W8.1 at=1.5
+release A W8
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present Q2.1+W8.1 at=S1
+touch S1 at=Q2.1+W8.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=Q2.1+W8.1 below=100
+inspect Q2.1+W8.1
+present T1.6+W8.2 at=S1
+touch S1 at=T1.6+W8.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.6+W8.2 below=100
+inspect T1.6+W8.2
+unpinch P1
+park P1
+stage to=0 tilt=0 at=0,0,0
+wire S5 awg=30 span=Q2.2.tip+T1.4.tip lap=3.2 via=0,9,-8 enamel=yes
+pick A W9 grasp=middle
+cut S5
+lift A mm=60
+lay A W9
+pinch P1 on=W9.1 at=1.5
+release A W9
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present Q2.2+W9.1 at=S1
+touch S1 at=Q2.2+W9.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=Q2.2+W9.1 below=100
+inspect Q2.2+W9.1
+present T1.4+W9.2 at=S1
+touch S1 at=T1.4+W9.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.4+W9.2 below=100
+inspect T1.4+W9.2
+unpinch P1
+park P1
+stage to=0 tilt=0 at=0,0,0
+pick A C1 grasp=body
+lift A mm=60
+bring A C1.2 to=T1.4.tip along=0,-1,0 lap=3.2 from=0,0,1
+pinch P2 on=C1.2 at=3
+release A C1
+lift A mm=60
+move A to=-40,80,80
+joints A 0 0 0 0 90 0
+present T1.4+C1.2 at=S1
+touch S1 at=T1.4+C1.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.4+C1.2 below=100
+inspect T1.4+C1.2
+bend P1 on=C1.1 at=8 angle=90 toward=0,-1,0
+unpinch P2
+park P2
+stage tilt=0 at=0,0,0
+stage to=0
+wire S5 awg=30 span=C1.1.tip+T1.3.tip lap=3.2 enamel=yes
+pick A W10 grasp=middle
+cut S5
+lift A mm=60
+lay A W10
+pinch P2 on=W10.1 at=1.5
+release A W10
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present C1.1+W10.1 at=S1
+touch S1 at=C1.1+W10.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=C1.1+W10.1 below=100
+inspect C1.1+W10.1
+present T1.3+W10.2 at=S1
+touch S1 at=T1.3+W10.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.3+W10.2 below=100
+inspect T1.3+W10.2
+unpinch P2
+park P2
+stage to=0 tilt=0 at=0,0,0
+pick A C2 grasp=body
+lift A mm=60
+bring A C2.2 to=T1.9.tip along=0,-1,0 lap=3.2 from=0,0,1
+pinch P2 on=C2.2 at=3
+release A C2
+lift A mm=60
+move A to=-40,80,80
+joints A 0 0 0 0 90 0
+present T1.9+C2.2 at=S1
+touch S1 at=T1.9+C2.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.9+C2.2 below=100
+inspect T1.9+C2.2
+bend P1 on=C2.1 at=8 angle=90 toward=0,-1,0
+unpinch P2
+park P2
+stage tilt=0 at=0,0,0
+stage to=0
+wire S5 awg=30 span=C2.1.tip+T1.8.tip lap=3.2 enamel=yes
+pick A W11 grasp=middle
+cut S5
+lift A mm=60
+lay A W11
+pinch P1 on=W11.1 at=1.5
+release A W11
+lift A mm=60
+move A to=0,60,60
+joints A 0 0 0 0 90 0
+present C2.1+W11.1 at=S1
+touch S1 at=C2.1+W11.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=C2.1+W11.1 below=100
+inspect C2.1+W11.1
+present T1.8+W11.2 at=S1
+touch S1 at=T1.8+W11.2 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.8+W11.2 below=100
+inspect T1.8+W11.2
+unpinch P1
+park P1
+stage to=0 tilt=0 at=0,0,0
+pick A D1 grasp=body
+lift A mm=60
+bring A D1.1 to=T1.2.tip along=0,1,0 lap=3.2 from=0,0,1
+pinch P2 on=D1.1 at=3
+release A D1
+lift A mm=60
+move A to=-40,80,80
+joints A 0 0 0 0 90 0
+present T1.2+D1.1 at=S1
+touch S1 at=T1.2+D1.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.2+D1.1 below=100
+inspect T1.2+D1.1
+unpinch P2
+park P2
+stage tilt=0 at=0,0,0
+stage to=0
+pick A D2 grasp=body
+lift A mm=60
+bring A D2.1 to=T1.7.tip along=0,1,0 lap=3.2 from=0,0,1
+pinch P1 on=D2.1 at=3
+release A D2
+lift A mm=60
+move A to=-40,80,80
+joints A 0 0 0 0 90 0
+present T1.7+D2.1 at=S1
+touch S1 at=T1.7+D2.1 dwell=1.5 temp=400
+feed S1 mm=2 rate=1
+back S1
+wait until=T1.7+D2.1 below=100
+inspect T1.7+D2.1
+unpinch P1
+park P1
+stage tilt=0 at=0,0,0
+stage to=0
+inspect shorts
+check

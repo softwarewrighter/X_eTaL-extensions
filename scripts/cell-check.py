@@ -53,7 +53,7 @@ def run(c, profile, args, url):
     cmd = [c, "--headless=new", "--use-angle=metal", "--enable-gpu", "--ignore-gpu-blocklist", "--no-first-run",
            "--no-default-browser-check", f"--user-data-dir={profile}", "--hide-scrollbars",
            "--window-size=1280,720", "--virtual-time-budget=15000"] + args + [url]
-    return subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+    return subprocess.run(cmd, capture_output=True, text=True, timeout=300)
 
 
 def stepping(site, query, steps):
