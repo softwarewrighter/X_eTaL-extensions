@@ -56,8 +56,14 @@ pub fn fixtures() -> Vec<(String, String, [f64; 6])> {
         "tray".to_string(),
         [198.0, 198.0, -150.0, 0.0, 0.0, 45.0],
     ));
+    // a second tray beside the first (pockets 9 to 16), for a circuit of
+    // more than eight parts
+    out.push(("tray2".to_string(), "tray".to_string(), TRAY2));
     out
 }
+
+/// The second tray's pose: beside the first, along its own -y.
+pub const TRAY2: [f64; 6] = [268.71, 127.29, -150.0, 0.0, 0.0, 45.0];
 
 fn base(name: &str) -> [f64; 6] {
     ARM_BASES
@@ -151,11 +157,17 @@ pub fn slot_pose(arm: &str, tool: &str) -> Pose {
 /// A tray pocket's middle, on the plate's top, in the cell's frame.
 #[must_use]
 pub fn pocket(n: usize) -> V3 {
+    // pockets 1 to 8 on the first tray, 9 to 16 on the second
+    let (name, k) = if n > 8 {
+        ("tray2", n - 8)
+    } else {
+        ("tray1", n)
+    };
     let tray = fixtures()
         .into_iter()
-        .find(|f| f.0 == "tray1")
+        .find(|f| f.0 == name)
         .map_or([0.0; 6], |f| f.2);
-    let at = node(TRAY, &format!("pocket{n}")).unwrap_or([0.0; 3]);
+    let at = node(TRAY, &format!("pocket{k}")).unwrap_or([0.0; 3]);
     pose6(tray).then(&Pose::from_xyz_rpy(at, [0.0; 3])).p
 }
 
@@ -277,7 +289,7 @@ pub fn nets(name: &str) -> Result<Vec<Net>, String> {
     Ok(f.net)
 }
 
-const CIRCUITS: [(&str, &str); 7] = [
+const CIRCUITS: [(&str, &str); 8] = [
     ("demo", include_str!("../../circuits/demo.toml")),
     ("weld", include_str!("../../circuits/weld.toml")),
     ("tester", include_str!("../../circuits/tester.toml")),
@@ -285,6 +297,10 @@ const CIRCUITS: [(&str, &str); 7] = [
     ("plan", include_str!("../../circuits/plan.toml")),
     ("blinker", include_str!("../../circuits/blinker.toml")),
     ("lap", include_str!("../../circuits/lap.toml")),
+    (
+        "multivibrator",
+        include_str!("../../circuits/multivibrator.toml"),
+    ),
 ];
 
 /// The circuits a reset can lay out: `none` (empty trays) and those in

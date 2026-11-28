@@ -274,10 +274,16 @@ h:j_umper := { (a, b) z ->
   v3 := " via=" c_at (0.0, 0.0, zt + 1.65) h:t_hree 0
   v4 := " via=" c_at (0.0, 0.0, zt + 3.3) h:t_hree 0
   f1 := " from=" c_at (ox, oy, 0.8) h:t_hree 0
+  # brought in nearly level: under a standing part's body (its own leads'
+  # jumpers), from out, then from either side
+  f2 := " from=" c_at (ox, oy, 0.15) h:t_hree 0
+  f3 := " from=" c_at (n_eg oy, ox, 0.15) h:t_hree 0
+  f4 := " from=" c_at (oy, n_eg ox, 0.15) h:t_hree 0
   c1 := (e_nclose (a, b, "", "", "P1") h:j_umperBlock 0) c_at (e_nclose (a, b, "", "", "P2") h:j_umperBlock 0) c_at (e_nclose (a, b, v3, "", "P1") h:j_umperBlock 0) c_at e_nclose (a, b, v4, "", "P1") h:j_umperBlock 0
   c2 := (e_nclose (a, b, v1, "", "P1") h:j_umperBlock 0) c_at (e_nclose (a, b, v1, f1, "P1") h:j_umperBlock 0) c_at e_nclose (a, b, v1, f1, "P2") h:j_umperBlock 0
   c3 := (e_nclose (a, b, v2, f1, "P1") h:j_umperBlock 0) c_at e_nclose (a, b, v2, f1, "P2") h:j_umperBlock 0
-  h:t_ry c1 c_at c2 c_at c3
+  c4 := (e_nclose (a, b, "", f2, "P1") h:j_umperBlock 0) c_at (e_nclose (a, b, "", f3, "P1") h:j_umperBlock 0) c_at (e_nclose (a, b, "", f4, "P1") h:j_umperBlock 0) c_at (e_nclose (a, b, "", f2, "P2") h:j_umperBlock 0) c_at (e_nclose (a, b, v1, f2, "P1") h:j_umperBlock 0) c_at e_nclose (a, b, v1, f3, "P2") h:j_umperBlock 0
+  h:t_ry c1 c_at c2 c_at c3 c_at c4
 }
 
 
@@ -479,11 +485,23 @@ h:p_artOne := { (nets, qs, core) z ->
   (6 <= t_ally k) & "kitted" m_atch (n_eg 6) t_ake k ? (nets, q, core) h:k_it 0
   (nets, q, core) h:p_art 0
 }
+# the first of a list, or the empty list
+h:f_irstOf := { bs ->
+  0 = t_ally bs ? bs
+  1 t_ake bs
+}
 # the core's pins that share a net, each pair joined by a jumper
 h:c_oreJumpers := { (nets, core) z ->
   0 = t_ally nets ? ""
   n := d_isclose f_irst nets
-  cs := ((n, core) h:o_nCore 0) r_eplicate n
+  all := ((n, core) h:o_nCore 0) r_eplicate n
+  # pins one conductor in the core (a ground plane's posts) need no
+  # jumper between them: the first of them only
+  cm := ce:c_ommon core
+  same := (cm != f_irst " ") p_artition cm
+  pin := '{ x -> e_nclose d_isclose 2 s_elect ((d_isclose x) != f_irst ".") p_artition d_isclose x } e_ach all
+  inCommon := '{ x -> 0 < '+ r_/ '{ y -> (d_isclose y) m_atch d_isclose x } e_ach same } e_ach pin
+  cs := (h:f_irstOf inCommon r_eplicate all) c_at (n_ot inCommon) r_eplicate all
   2 > t_ally cs ? (1 d_rop nets, core) h:c_oreJumpers 0
   # this step first: an expression runs right to left
   here := ((d_isclose f_irst cs) c_at ".tip", (d_isclose 2 s_elect cs) c_at ".tip") h:j_umper 0
@@ -510,7 +528,12 @@ l:b_uild := { net ->
   nets := h:n_ets net
   circuit := l:c_ircuit net
   _ := ce:b_egin circuit
-  start := "reset circuit=" c_at circuit c_at "\ntool A tweezers\npick A " c_at id c_at " grasp=ends\nplace A " c_at id c_at " at=0,0,-24 rpy=180,0,90\nvise close\nrelease A " c_at id c_at "\nlift A mm=60\n"
+  # the core with its pins up: a DIP turned over (legs up), taken by its
+  # ends; another (a tile, its posts up) as it lies, by its body
+  dip := "dip" m_atch 3 t_ake d_isclose 2 s_elect core
+  roll := (dip r_eplicate "180") c_at (n_ot dip) r_eplicate "0"
+  grasp := (dip r_eplicate "ends") c_at (n_ot dip) r_eplicate "body"
+  start := "reset circuit=" c_at circuit c_at "\ntool A tweezers\npick A " c_at id c_at " grasp=" c_at grasp c_at "\nplace A " c_at id c_at " at=0,0,-24 rpy=" c_at roll c_at ",0,90\nvise close\nrelease A " c_at id c_at "\nlift A mm=60\n"
   s0 := h:t_ry e_nclose start
   js := (nets, id) h:c_oreJumpers 0
   every := h:a_llPins nets

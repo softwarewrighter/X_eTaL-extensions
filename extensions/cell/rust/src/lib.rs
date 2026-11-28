@@ -223,6 +223,20 @@ fn kind(args: &[Value]) -> Result<Value, OwnedError> {
     })
 }
 
+/// A part's pins that are one conductor (a ground plane's posts), space
+/// between (empty: none).
+fn common(args: &[Value]) -> Result<Value, OwnedError> {
+    let id = text(&args[0])?;
+    SESSION.with(|s| {
+        let w = s.borrow();
+        let p = w
+            .part(&id)
+            .ok_or_else(|| OwnedError::failure(format!("no part {id}")))?;
+        let k = p.kind_of().map_err(OwnedError::failure)?;
+        Ok(Value::Text(k.common.join(" ")))
+    })
+}
+
 /// The id the session's next wire will have (`W3`).
 fn next_wire(_: &[Value]) -> Result<Value, OwnedError> {
     SESSION.with(|s| {
@@ -285,6 +299,7 @@ xetal_ext_sdk::xetal_extension! {
         frame: 1, "Char -> Char", "Where a frame of the session's cell is now: x y z, mm.";
         kind: 1, "Char -> Char", "A part of the session's cell: its kind, then kitted if its leads came cut.";
         next_wire: 0, "Unit -> Char", "The id the session's next wire will have.";
+        common: 1, "Char -> Char", "A part's pins that are one conductor (a ground plane's posts), space between.";
         joined: 1, "Char -> Char", "The pins a pin of the session's cell is soldered to, space between.";
     }
 }

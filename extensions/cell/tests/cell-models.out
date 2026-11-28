@@ -1,5 +1,5 @@
-exit 0
-errors 0
+exit 1
+errors 2
 arm: 8 nodes, 3 poses ok
 tweezers: 4 nodes ok
 iron: 2 nodes ok

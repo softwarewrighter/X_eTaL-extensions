@@ -10,7 +10,7 @@ use std::collections::BTreeSet;
 pub type Vec3 = [f64; 3];
 
 /// The library's files, in the order `kinds` lists them.
-const FILES: [(&str, &str); 10] = [
+const FILES: [(&str, &str); 11] = [
     ("dip8", include_str!("../../parts/dip8.toml")),
     ("dip14", include_str!("../../parts/dip14.toml")),
     ("dip16", include_str!("../../parts/dip16.toml")),
@@ -29,6 +29,10 @@ const FILES: [(&str, &str); 10] = [
         include_str!("../../parts/ceramic-disc.toml"),
     ),
     ("led-5mm", include_str!("../../parts/led-5mm.toml")),
+    (
+        "manhattan-tile",
+        include_str!("../../parts/manhattan-tile.toml"),
+    ),
     (
         "battery-snap",
         include_str!("../../parts/battery-snap.toml"),
@@ -170,6 +174,8 @@ struct PartFile {
     heat_sensitive: bool,
     #[serde(default)]
     semiconductor: bool,
+    #[serde(default)]
+    common: Vec<String>,
     body: Body,
     #[serde(default)]
     pin_pattern: Option<PinPattern>,
@@ -194,6 +200,10 @@ pub struct PartKind {
     /// transient through it can damage it.
     pub semiconductor: bool,
     /// The body.
+    /// Pins that are one conductor in the part (a ground-plane tile's
+    /// posts on the plane): the connections check joins them.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub common: Vec<String>,
     pub body: Body,
     /// The pins, in order.
     pub pins: Vec<Pin>,
@@ -223,6 +233,7 @@ impl PartKind {
             example: f.example,
             heat_sensitive: f.heat_sensitive,
             semiconductor: f.semiconductor,
+            common: f.common,
             body: f.body,
             pins,
             grasps: f.grasp,

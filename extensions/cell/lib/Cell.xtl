@@ -71,6 +71,9 @@
 ## ce:k_ind id: a part of the session's cell: its kind, then "kitted"
 ## if it came with its leads cut (a battery snap's).
 "k_ind : text -> text"          ffi:b_ind< "cell/kind"
+## ce:c_ommon id: a part's pins that are one conductor in it (a ground
+## plane's posts), a space between (empty: none).
+"c_ommon : text -> text"        ffi:b_ind< "cell/common"
 ## ce:n_extWire @: the id the session's next wire will have (W3).
 "n_extWire : unit -> text"      ffi:b_ind< "cell/next_wire"
 ## ce:j_oined pin: the pins a pin of the session's cell is soldered to,

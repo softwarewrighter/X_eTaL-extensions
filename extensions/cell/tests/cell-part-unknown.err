@@ -1,4 +1,4 @@
-error[io]: []N_GET: ext:cell/part: no part kind sot23 (kinds: dip8 dip14 dip16 to92 axial-resistor axial-diode radial-electrolytic ceramic-disc led-5mm battery-snap)
+error[io]: []N_GET: ext:cell/part: no part kind sot23 (kinds: dip8 dip14 dip16 to92 axial-resistor axial-diode radial-electrolytic ceramic-disc led-5mm manhattan-tile battery-snap)
   --> ./lib/Cell.xtl:22:1
    |
 22 | "p_art : text -> text"          ffi:b_ind< "cell/part"

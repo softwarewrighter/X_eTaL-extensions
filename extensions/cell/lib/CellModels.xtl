@@ -272,7 +272,7 @@ l:p_art := { (kind, body, lead, mark, bands) z ->
 
 ## cm:kinds: the part kinds a model is made of, as the parts library
 ## lists them
-l:kinds := "dip8 dip14 dip16 to92 axial-resistor axial-diode radial-electrolytic ceramic-disc led-5mm battery-snap"
+l:kinds := "dip8 dip14 dip16 to92 axial-resistor axial-diode radial-electrolytic ceramic-disc led-5mm manhattan-tile battery-snap"
 
 none := 0 3 r_eshape 0.0
 pins := silver
@@ -288,6 +288,7 @@ l:parts := ((("dip8", black, pins, gray, none) l:p_art 0) c_at
   (("radial-electrolytic", blue, pins, 0.85 0.85 0.88, none) l:p_art 0) c_at
   (("ceramic-disc", 0.85 0.52 0.2, pins, gray, none) l:p_art 0) c_at
   (("led-5mm", 0.9 0.12 0.1, pins, steel, none) l:p_art 0) c_at
+  (("manhattan-tile", copper, copper, gray, none) l:p_art 0) c_at
   ("battery-snap", black, pins, silver, none) l:p_art 0)
 
 ## cm:names: every model, as the check and the stills take them

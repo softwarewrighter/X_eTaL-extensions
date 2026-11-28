@@ -79,7 +79,9 @@ fn a_refused_command_changes_nothing() {
     let o = w.apply(&parse_line("reset circuit=nowhere").unwrap());
     assert_eq!(
         o.refused.as_deref(),
-        Some("no circuit nowhere (circuits: none demo weld tester tester-b plan blinker lap)")
+        Some(
+            "no circuit nowhere (circuits: none demo weld tester tester-b plan blinker lap multivibrator)"
+        )
     );
     // a program stops at the first command that is not ok
     let out = w.apply_all(&parse_program("wait s=1\ngrip A close\nwait s=1").unwrap());

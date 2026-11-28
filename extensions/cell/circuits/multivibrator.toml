@@ -1,0 +1,123 @@
+# multivibrator: a two-transistor astable multivibrator, its two LEDs
+# taking turns, built Manhattan style on a ground-plane tile (decision
+# C24): each net has a post on the tile (VCC two), the emitters and the
+# battery's minus go to the plane's posts. Two NPN transistors (TO-92,
+# heat sensitive), four resistors (470 ohm collector loads, 47 k bases),
+# two 10 uF capacitors, a red and a green LED, a battery snap kitted with
+# short leads. Pockets 9 to 12 are on the second tray.
+title = "a two-transistor astable multivibrator on a ground-plane tile"
+
+[[part]]
+id = "P1"
+kind = "manhattan-tile"
+pocket = 1
+yaw = 90
+
+[[part]]
+id = "Q1"
+kind = "to92"
+pocket = 2
+yaw = 90
+mark = "2N3904"
+
+[[part]]
+id = "Q2"
+kind = "to92"
+pocket = 3
+yaw = 90
+mark = "2N3904"
+
+[[part]]
+id = "R1"
+kind = "axial-resistor"
+pocket = 4
+yaw = 90
+mark = "470"
+
+[[part]]
+id = "R2"
+kind = "axial-resistor"
+pocket = 5
+yaw = 90
+mark = "47k"
+
+[[part]]
+id = "R3"
+kind = "axial-resistor"
+pocket = 6
+yaw = 90
+mark = "47k"
+
+[[part]]
+id = "R4"
+kind = "axial-resistor"
+pocket = 7
+yaw = 90
+mark = "470"
+
+[[part]]
+id = "C1"
+kind = "radial-electrolytic"
+pocket = 8
+mark = "10uF 25V"
+
+[[part]]
+id = "C2"
+kind = "radial-electrolytic"
+pocket = 9
+mark = "10uF 25V"
+
+[[part]]
+id = "D1"
+kind = "led-5mm"
+pocket = 10
+mark = "red"
+
+[[part]]
+id = "D2"
+kind = "led-5mm"
+pocket = 11
+mark = "green"
+
+[[part]]
+id = "BT1"
+kind = "battery-snap"
+pocket = 12
+# kitted with its leads cut to 9 mm (the cell does not model a flexible
+# lead); set flat on the turntable beside the vise, they reach its edge
+yaw = 180
+leads = 9.0
+
+# Each net and the pins it joins: P1's posts first (P1.1 and P1.6 are on
+# the ground plane, one conductor).
+[[net]]
+name = "VCC"
+pins = ["P1.3", "P1.4", "R1.1", "R2.1", "R3.1", "R4.1", "BT1.1"]
+
+[[net]]
+name = "LED1"
+pins = ["P1.5", "R1.2", "D1.1"]
+
+[[net]]
+name = "C1N"
+pins = ["P1.7", "D1.2", "Q1.3", "C1.1"]
+
+[[net]]
+name = "B2"
+pins = ["P1.8", "C1.2", "R2.2", "Q2.2"]
+
+[[net]]
+name = "LED2"
+pins = ["P1.2", "R4.2", "D2.1"]
+
+[[net]]
+name = "C2N"
+pins = ["P1.9", "D2.2", "Q2.3", "C2.1"]
+
+[[net]]
+name = "B1"
+pins = ["P1.10", "C2.2", "R3.2", "Q1.2"]
+
+[[net]]
+name = "GND"
+pins = ["P1.1", "P1.6", "Q1.1", "Q2.1", "BT1.2"]

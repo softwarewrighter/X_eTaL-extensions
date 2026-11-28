@@ -8,6 +8,7 @@ axial-diode 2 pins: axial diode, DO-35 (1N4148)
 radial-electrolytic 2 pins: radial electrolytic capacitor (10 uF 25 V), heat sensitive
 ceramic-disc 2 pins: ceramic disc capacitor (100 nF)
 led-5mm 2 pins: 5 mm LED (red), heat sensitive
+manhattan-tile 10 pins: Manhattan ground-plane tile (copper-clad FR-4, ten turret posts)
 battery-snap 2 pins: 9 V battery snap (9 V snap, 100 mm leads), heat sensitive
 
 reset [circuit=NAME] -- the cell as it starts: arms home, tools in the rack, the trays filled for a circuit

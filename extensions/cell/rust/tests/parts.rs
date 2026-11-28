@@ -20,11 +20,12 @@ fn every_kind_parses_in_order() {
             "radial-electrolytic",
             "ceramic-disc",
             "led-5mm",
+            "manhattan-tile",
             "battery-snap"
         ]
     );
     let pins: Vec<usize> = lib.iter().map(|k| k.pins.len()).collect();
-    assert_eq!(pins, [8, 14, 16, 3, 2, 2, 2, 2, 2, 2]);
+    assert_eq!(pins, [8, 14, 16, 3, 2, 2, 2, 2, 2, 10, 2]);
 }
 
 #[test]

@@ -15,4 +15,5 @@ cell 0.1.0
   cell/frame : Char -> Char    # Where a frame of the session's cell is now: x y z, mm.
   cell/kind : Char -> Char    # A part of the session's cell: its kind, then kitted if its leads came cut.
   cell/next_wire : Unit -> Char    # The id the session's next wire will have.
+  cell/common : Char -> Char    # A part's pins that are one conductor (a ground plane's posts), space between.
   cell/joined : Char -> Char    # The pins a pin of the session's cell is soldered to, space between.

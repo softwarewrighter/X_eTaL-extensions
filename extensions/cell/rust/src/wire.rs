@@ -157,6 +157,7 @@ pub fn kind(awg: i64, d: f64, lead1: &[V3], lead2: &[V3], density: f64, metal: &
         example: "a length of wire".into(),
         heat_sensitive: false,
         semiconductor: false,
+        common: Vec::new(),
         body: Body {
             shape: "cylinder".into(),
             size: None,

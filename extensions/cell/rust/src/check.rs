@@ -79,6 +79,14 @@ impl World {
                 ok = false;
             }
         }
+        // a part's common pins are one conductor (a ground plane's posts)
+        for p in self.parts.iter().filter(|p| !p.lost) {
+            if let Ok(k) = p.kind_of() {
+                for w in k.common.windows(2) {
+                    sets.join(&format!("{}.{}", p.id, w[0]), &format!("{}.{}", p.id, w[1]));
+                }
+            }
+        }
         // a wire is one conductor end to end
         for p in self.parts.iter().filter(|p| p.wire.is_some() && !p.lost) {
             sets.join(&format!("{}.1", p.id), &format!("{}.2", p.id));

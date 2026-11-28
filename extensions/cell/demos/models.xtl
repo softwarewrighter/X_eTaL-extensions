@@ -23,6 +23,7 @@ _ := "work/cell/models/axial-diode.in.json" bl:w_rite! ce:p_art "axial-diode"
 _ := "work/cell/models/radial-electrolytic.in.json" bl:w_rite! ce:p_art "radial-electrolytic"
 _ := "work/cell/models/ceramic-disc.in.json" bl:w_rite! ce:p_art "ceramic-disc"
 _ := "work/cell/models/led-5mm.in.json" bl:w_rite! ce:p_art "led-5mm"
+_ := "work/cell/models/manhattan-tile.in.json" bl:w_rite! ce:p_art "manhattan-tile"
 _ := "work/cell/models/battery-snap.in.json" bl:w_rite! ce:p_art "battery-snap"
 _ := "work/cell/run.py" bl:w_rite! bp:launcher
 _ := "work/cell/models.py" bl:w_rite! cm:script c_at cm:stills

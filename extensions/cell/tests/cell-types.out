@@ -11,6 +11,7 @@ l:b_egin : Char -> Char
 l:a_ttempt : Char -> Char
 l:f_rame : Char -> Char
 l:k_ind : Char -> Char
+l:c_ommon : Char -> Char
 l:n_extWire : Unit -> Char
 l:j_oined : Char -> Char
 l:r_ig : Unit -> Char

@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-27
 
+- 20:56 `ext` cell, the multivibrator's parts (Saga 17 step 34, part 1; decision C24): a Manhattan ground-plane tile (a part kind whose plane posts are one conductor, `common`; its model); a second tray (pockets 9 to 16); circuits/multivibrator.toml and nets/multivibrator.net; the planner places a tile as it lies and needs no jumper between common posts. The planned build is not yet complete.
 - 17:21 `docs` cell live page: the About dialog links the blog post and the video (and its footer line too), and says what the cell is now (one arm, stations, laps and wraps, MCP); the extension's page links them.
 - 16:52 `ext` cell, an agent over MCP again (Saga 17 step 33): cell_netlist, cell_attempt and cell_plan; cell_state gives each part's pins; Claude Code made two lap joints on the blinker's chip with the cell's tools alone (programs/claude-lap.cell); just ext cell agent NAME.
 - 15:24 `ext` cell, render bundles (Saga 17 step 32, decision C11): just ext cell bundle NAME writes a directory and zip a node renders with Blender alone (the cell player posing the simulator's calls each frame, checked to 0.001 mm); a farm job kind bundle; the blinker's end ray-traced from its bundle; the farm's always-on hosts noted.
