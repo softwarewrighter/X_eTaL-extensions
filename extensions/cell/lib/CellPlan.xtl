@@ -337,8 +337,22 @@ h:f_inish := { (nets, rs, core) z ->
   ts := (nets, r, core) h:p_artners 0
   0 = t_ally ts ? (nets, 1 d_rop rs, core) h:f_inish 0
   t := (r, ts) h:f_inishTo 0
+  t2 := (r, ts, t) h:b_endOut 0
   rest := (nets, 1 d_rop rs, core) h:f_inish 0
-  t c_at rest
+  t2 c_at rest
+}
+# a lead whose jumper reached nothing (its end under its own part's body,
+# a standing part's): bent out by a pincer 8 mm from the body, away from
+# the core's middle, clear of the body, and its jumper tried again
+h:b_endOut := { (r, ts, t) z ->
+  h:t_aken t ? t
+  p := h:a_t r c_at ".tip"
+  nh := s_qrt ((1 s_elect p) ^ 2) + (2 s_elect p) ^ 2
+  out := ((1 s_elect p) / nh m_ax 0.001, (2 s_elect p) / nh m_ax 0.001, 0.0) h:t_hree 0
+  b := h:t_ry (e_nclose "bend P1 on=" c_at r c_at " at=8 angle=90 toward=" c_at out c_at "\n") c_at e_nclose "bend P2 on=" c_at r c_at " at=8 angle=90 toward=" c_at out c_at "\n"
+  n_ot h:t_aken b ? t c_at b
+  again := (r, ts) h:f_inishTo 0
+  t c_at b c_at again
 }
 # after a part is soldered, its other leads: an axial part's trimmed;
 # one whose net has nothing placed yet bent up as a post for a part to

@@ -1,6 +1,7 @@
 # A ground-plane tile for Manhattan-style building (decision C24): copper
-# clad board 26 by 16 mm, its top the ground plane, with ten copper
-# turret posts 5 mm tall in two rows of five, 5.08 mm apart. Posts 1 and
+# clad board 38 by 18 mm, its top the ground plane, with ten copper
+# turret posts 5 mm tall in two rows of five, 7.62 mm apart along a row
+# and the rows 10.16 mm apart (room between the parts standing on it). Posts 1 and
 # 6 stand on the plane itself (one conductor: `common`); the other eight
 # stand on small pads glued to it and are each their own node, one a net.
 # Units: mm, degrees, grams, J/K, C, s. The body's center is the origin,
@@ -14,76 +15,76 @@ common = ["1", "6"]
 
 [body]
 shape = "box"
-size = [26.0, 16.0, 1.6]
+size = [38.0, 18.0, 1.6]
 material = "fr4"
 
 [[pin]]
 name = "1"
 role = "GND"
-lead = [[-10.16, 3.81, 0.8], [-10.16, 3.81, 5.8]]
+lead = [[-15.24, 5.08, 0.8], [-15.24, 5.08, 5.8]]
 diameter = 1.0
 material = "copper"
 
 [[pin]]
 name = "2"
 role = "pad"
-lead = [[-5.08, 3.81, 0.8], [-5.08, 3.81, 5.8]]
+lead = [[-7.62, 5.08, 0.8], [-7.62, 5.08, 5.8]]
 diameter = 1.0
 material = "copper"
 
 [[pin]]
 name = "3"
 role = "pad"
-lead = [[0, 3.81, 0.8], [0, 3.81, 5.8]]
+lead = [[0, 5.08, 0.8], [0, 5.08, 5.8]]
 diameter = 1.0
 material = "copper"
 
 [[pin]]
 name = "4"
 role = "pad"
-lead = [[5.08, 3.81, 0.8], [5.08, 3.81, 5.8]]
+lead = [[7.62, 5.08, 0.8], [7.62, 5.08, 5.8]]
 diameter = 1.0
 material = "copper"
 
 [[pin]]
 name = "5"
 role = "pad"
-lead = [[10.16, 3.81, 0.8], [10.16, 3.81, 5.8]]
+lead = [[15.24, 5.08, 0.8], [15.24, 5.08, 5.8]]
 diameter = 1.0
 material = "copper"
 
 [[pin]]
 name = "6"
 role = "GND"
-lead = [[-10.16, -3.81, 0.8], [-10.16, -3.81, 5.8]]
+lead = [[-15.24, -5.08, 0.8], [-15.24, -5.08, 5.8]]
 diameter = 1.0
 material = "copper"
 
 [[pin]]
 name = "7"
 role = "pad"
-lead = [[-5.08, -3.81, 0.8], [-5.08, -3.81, 5.8]]
+lead = [[-7.62, -5.08, 0.8], [-7.62, -5.08, 5.8]]
 diameter = 1.0
 material = "copper"
 
 [[pin]]
 name = "8"
 role = "pad"
-lead = [[0, -3.81, 0.8], [0, -3.81, 5.8]]
+lead = [[0, -5.08, 0.8], [0, -5.08, 5.8]]
 diameter = 1.0
 material = "copper"
 
 [[pin]]
 name = "9"
 role = "pad"
-lead = [[5.08, -3.81, 0.8], [5.08, -3.81, 5.8]]
+lead = [[7.62, -5.08, 0.8], [7.62, -5.08, 5.8]]
 diameter = 1.0
 material = "copper"
 
 [[pin]]
 name = "10"
 role = "pad"
-lead = [[10.16, -3.81, 0.8], [10.16, -3.81, 5.8]]
+lead = [[15.24, -5.08, 0.8], [15.24, -5.08, 5.8]]
 diameter = 1.0
 material = "copper"
 
@@ -93,7 +94,7 @@ material = "copper"
 name = "body"
 at = [0, 0, 0]
 rpy = [0, 0, 90]
-width = 16.0
+width = 18.0
 
 [thermal]
 mass_g = 2.0

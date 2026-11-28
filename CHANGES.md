@@ -29,6 +29,7 @@ version.
 
 ## 2026-11-27
 
+- 23:32 `ext` cell, the multivibrator (Saga 17 step 34, part 2): the tile's posts spread out (7.62 mm along a row, rows 10.16 mm apart: room between the parts standing on it); the planner bends a standing part's lead out when its jumper reaches nothing, and tries again. The planned build makes 4 to 5 of the 8 nets so far: next, a hand trial to learn the rules from.
 - 20:57 `fix` cell, the models golden: its program writes the tile's input too (the previous commit rebased a failed run, exit 1: wrong); exit 0, every model checked.
 - 20:56 `ext` cell, the multivibrator's parts (Saga 17 step 34, part 1; decision C24): a Manhattan ground-plane tile (a part kind whose plane posts are one conductor, `common`; its model); a second tray (pockets 9 to 16); circuits/multivibrator.toml and nets/multivibrator.net; the planner places a tile as it lies and needs no jumper between common posts. The planned build is not yet complete.
 - 17:21 `docs` cell live page: the About dialog links the blog post and the video (and its footer line too), and says what the cell is now (one arm, stations, laps and wraps, MCP); the extension's page links them.
