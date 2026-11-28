@@ -199,8 +199,21 @@ pub fn rendered(src: &str) -> String {
     markup(src)
 }
 
-/// What a footer says (HTML): copyright, license, repository, build.
+/// The blog post about the assembly cell and an agent driving it over
+/// MCP, and its video.
+pub const BLOG: &str = "https://blog.softwarewrighter.com/2026/11/27/ai-tools-assembly-cell-mcp/";
+/// See [`BLOG`].
+pub const VIDEO: &str = "https://www.youtube.com/watch?v=GStCitdYkNo";
+
+/// What a footer says (HTML): copyright, license, repository, the blog
+/// post and its video, build.
 #[must_use]
 pub fn about() -> String {
-    footer_markup("../../")
+    footer_markup("../../").replacen(
+        "<span>X_eTaL ",
+        &format!(
+            "<a href=\"{BLOG}\" target=\"_blank\" rel=\"noopener\">Blog post</a><a href=\"{VIDEO}\" target=\"_blank\" rel=\"noopener\">Video</a><span>X_eTaL "
+        ),
+        1,
+    )
 }

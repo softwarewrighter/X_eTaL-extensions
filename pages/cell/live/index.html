@@ -49,7 +49,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
   dialog button { font: inherit; padding: 5px 14px; border-radius: 6px; border: 1px solid #56607a; background: #1a1f2e; color: #e8eaf0; cursor: pointer; }
 </style>
 <script type="importmap">{ "imports": { "three": "./static/vendor/three/three.module.min.js" } }</script>
-<link rel="modulepreload" href="./cell-web.js" crossorigin="anonymous" integrity="sha384-NfLtNuIbXyI7oN0mjJ6xy8g+VyF4MiUFqlYTUZYCvDs1eFIJ/BKtpPGSckUccOls"><link rel="preload" href="./cell-web_bg.wasm" crossorigin="anonymous" integrity="sha384-k9AGU/g3bfX9rlJNMnF+1XLF2zmjA8/A52IFPolB+KNpff3Y2RJvjTv8zMAjN2j0" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="./cell-web.js" crossorigin="anonymous" integrity="sha384-NfLtNuIbXyI7oN0mjJ6xy8g+VyF4MiUFqlYTUZYCvDs1eFIJ/BKtpPGSckUccOls"><link rel="preload" href="./cell-web_bg.wasm" crossorigin="anonymous" integrity="sha384-Xx75QRDkr0iwaGzCfwoz1/e3ly/NoEEeaMV7hVsRSPKTTeOMkODrYq/Tfxp9C93O" as="fetch" type="application/wasm"></head>
 <body>
 <div id="view"></div>
 <div id="panel">
@@ -85,7 +85,8 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
 </div>
 <dialog id="about">
   <h1>Assembly cell, live</h1>
-  <p>A robot assembly cell, simulated: four six-axis arms on a ring round a work zone, a tool rack beside each, a tray of parts, a rotary stage with a vise, a microscope on a gantry. The simulator -- kinematics, timed moves, collision along every motion, grasping, falling -- runs in this page, compiled to WebAssembly, with X_eTaL beside it; a Three.js player draws the cell's timeline.</p>
+  <p>A robot assembly cell, simulated: one six-axis arm with a tool rack, a tray of parts, a turntable with a vise and two pincers, tool stations (an iron that feeds its own solder, a welder, a cutter, a wire feeder, a sleeve station), a bending rig, a microscope on a gantry. The simulator -- kinematics, timed moves, collision along every motion, grasping, falling, heat and solder, lap and wrap joints, the work checked against its netlist -- runs in this page, compiled to WebAssembly (in a worker while a program runs), with X_eTaL beside it; a Three.js player draws the cell's timeline. An AI agent can drive the same cell over MCP.</p>
+  <p class="links">More: <a href="https://blog.softwarewrighter.com/2026/11/27/ai-tools-assembly-cell-mcp/" target="_blank" rel="noopener">the blog post</a> and <a href="https://www.youtube.com/watch?v=GStCitdYkNo" target="_blank" rel="noopener">the video</a>.</p>
   <p>Every control writes a command in the cell's command language and runs it, as the command box does: <code>tool A tweezers</code>, <code>pick A U1 grasp=ends</code>, <code>place A U1 at=0,0,-32</code>, <code>vise close</code>, <code>release A U1</code>, <code>move A to=0,120,60</code>, <code>stage turn=90</code>. A command that cannot start is refused and changes nothing; one that meets something stops there and says what touched what. A dry run changes nothing; Rewind goes back to the scrubber's time, keeping what came after on the timeline, marked.</p>
   <p>Units are millimeters and degrees, Z up, the work zone at 0 0 0. The design: docs/cell-design.md in the repository.</p>
   <footer id="facts"></footer>

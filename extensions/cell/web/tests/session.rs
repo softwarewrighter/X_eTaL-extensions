@@ -96,3 +96,12 @@ fn a_cell_handed_to_a_worker_and_back_is_the_same_cell() {
     assert_eq!(cell_web::scene("lap"), scene);
     assert!(!cell_web::set_world("{}").is_empty());
 }
+
+#[test]
+fn the_footer_links_the_blog_post_and_its_video() {
+    let f = cell_web::about();
+    assert!(f.contains(&format!("<a href=\"{}\"", cell_web::BLOG)) && f.contains(">Blog post</a>"), "{f}");
+    assert!(f.contains(&format!("<a href=\"{}\"", cell_web::VIDEO)) && f.contains(">Video</a>"), "{f}");
+    // still the shell's: the repository and the build
+    assert!(f.contains(">Repository</a>") && f.contains("<span>X_eTaL "), "{f}");
+}

@@ -1,5 +1,7 @@
 # cell
 
+The cell and an agent driving it over MCP: [the blog post](https://blog.softwarewrighter.com/2026/11/27/ai-tools-assembly-cell-mcp/) and [the video](https://www.youtube.com/watch?v=GStCitdYkNo).
+
 A robot assembly bench, simulated: one arm, a turntable with a vise
 and pincers, tool stations (an iron that feeds its own solder, a
 welder), a tool rack, trays of parts and a microscope that build
