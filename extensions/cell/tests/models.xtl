@@ -14,6 +14,7 @@ _ := "work/models-test/out/axial-diode.in.json" bl:w_rite! ce:p_art "axial-diode
 _ := "work/models-test/out/radial-electrolytic.in.json" bl:w_rite! ce:p_art "radial-electrolytic"
 _ := "work/models-test/out/ceramic-disc.in.json" bl:w_rite! ce:p_art "ceramic-disc"
 _ := "work/models-test/out/led-5mm.in.json" bl:w_rite! ce:p_art "led-5mm"
+_ := "work/models-test/out/manhattan-tile.in.json" bl:w_rite! ce:p_art "manhattan-tile"
 _ := "work/models-test/out/battery-snap.in.json" bl:w_rite! ce:p_art "battery-snap"
 _ := "work/models-test/run.py" bl:w_rite! bp:launcher
 _ := "work/models-test/models.py" bl:w_rite! cm:script

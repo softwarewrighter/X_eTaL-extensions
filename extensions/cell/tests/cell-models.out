@@ -1,5 +1,5 @@
-exit 1
-errors 2
+exit 0
+errors 0
 arm: 8 nodes, 3 poses ok
 tweezers: 4 nodes ok
 iron: 2 nodes ok
@@ -22,5 +22,6 @@ axial-diode: 7 nodes ok
 radial-electrolytic: 5 nodes ok
 ceramic-disc: 5 nodes ok
 led-5mm: 5 nodes ok
+manhattan-tile: 21 nodes ok
 battery-snap: 5 nodes ok
 
